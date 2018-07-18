@@ -1,0 +1,21 @@
+enum enumZero1
+{
+}
+
+message messageOne
+{
+    enum enumOne
+    {
+    }
+
+    message messageTwo
+    {
+        enum enumTwo
+        {
+        }
+    }
+}
+
+enum enumZero2
+{
+}

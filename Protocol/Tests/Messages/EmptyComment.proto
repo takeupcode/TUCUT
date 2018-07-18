@@ -1,0 +1,12 @@
+// A file with just comments and whitespace.
+    // line 2
+    // line 3
+    /* line 4 */    /* still line 4 */    // the end of line 4
+  /* several lines commenting a message
+  
+message empty
+{
+}
+
+   */
+//

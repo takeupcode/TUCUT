@@ -1,0 +1,11 @@
+package abc;
+
+message one
+{
+}
+
+package def;
+
+message two
+{
+}

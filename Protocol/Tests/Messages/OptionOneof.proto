@@ -1,0 +1,8 @@
+message messageOne
+{
+    oneof choicesOne
+    {
+        option optionOne = true;
+        string sOne = 1;
+    }
+}

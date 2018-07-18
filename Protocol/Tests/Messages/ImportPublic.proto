@@ -1,0 +1,10 @@
+import "Message.proto";
+import public "EnumMultipleMessage.proto";
+
+message LocalMessage
+{
+}
+
+enum LocalEnum
+{
+}

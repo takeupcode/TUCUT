@@ -1,0 +1,27 @@
+message messageOne
+{
+    oneof choicesOne
+    {
+        string sOne = 1;
+        bool bOne = 2;
+    }
+
+    message messageTwo
+    {
+        oneof choicesTwo
+        {
+            string sTwo = 1;
+            int32 iTwo = 2;
+        }
+
+        repeated string sExtraTwo = 3;
+    }
+
+    oneof choicesThree
+    {
+        bool bThree = 3;
+        int32 iThree = 4;
+    }
+
+    repeated string sExtraOne = 5;
+}

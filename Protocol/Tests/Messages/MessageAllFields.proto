@@ -1,0 +1,64 @@
+message MessageEmpty
+{
+}
+
+enum EnumSimple
+{
+    yes = 1;
+    no = 2;
+}
+
+message MessageAllFields
+{
+    required MessageEmpty msgEmptyReq = 1;
+    optional MessageEmpty msgEmptyOpt = 2;
+    repeated MessageEmpty msgEmptyRepeat = 3;
+    required EnumSimple enumSimpleReq = 4;
+    optional EnumSimple enumSimpleOpt = 5;
+    repeated EnumSimple enumSimpleRepeat = 6;
+    required double dblReq = 7;
+    optional double dblOpt = 8;
+    repeated double dblRepeat = 9;
+    required float fltReq = 10;
+    optional float fltOpt = 11;
+    repeated float fltRepeat = 12;
+    required int32 i32Req = 13;
+    optional int32 i32Opt = 14;
+    repeated int32 i32Repeat = 15;
+    required int64 i64Req = 16;
+    optional int64 i64Opt = 17;
+    repeated int64 i64Repeat = 18;
+    required uint32 ui32Req = 19;
+    optional uint32 ui32Opt = 20;
+    repeated uint32 ui32Repeat = 21;
+    required uint64 ui64Req = 22;
+    optional uint64 ui64Opt = 23;
+    repeated uint64 ui64Repeat = 24;
+    required sint32 si32Req = 25;
+    optional sint32 si32Opt = 26;
+    repeated sint32 si32Repeat = 27;
+    required sint64 si64Req = 28;
+    optional sint64 si64Opt = 29;
+    repeated sint64 si64Repeat = 30;
+    required fixed32 f32Req = 31;
+    optional fixed32 f32Opt = 32;
+    repeated fixed32 f32Repeat = 33;
+    required fixed64 f64Req = 34;
+    optional fixed64 f64Opt = 35;
+    repeated fixed64 f64Repeat = 36;
+    required sfixed32 sf32Req = 37;
+    optional sfixed32 sf32Opt = 38;
+    repeated sfixed32 sf32Repeat = 39;
+    required sfixed64 sf64Req = 40;
+    optional sfixed64 sf64Opt = 41;
+    repeated sfixed64 sf64Repeat = 42;
+    required bool boolReq = 43;
+    optional bool boolOpt = 44;
+    repeated bool boolRepeat = 45;
+    required string strReq = 46;
+    optional string strOpt = 47;
+    repeated string strRepeat = 48;
+    required bytes byteReq = 49;
+    optional bytes byteOpt = 50;
+    repeated bytes byteRepeat = 51;
+}

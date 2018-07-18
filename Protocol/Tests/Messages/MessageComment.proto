@@ -1,0 +1,5 @@
+// This is an overly commented message
+mes/* inside a keyword */sage /* nothing here */ empty // so many comments...
+//{
+/**/{/*
+*/}//

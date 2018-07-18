@@ -1,0 +1,1223 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 48;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		3E1F75C620FEFBE400028734 /* EnumMultipleMessage.protocol.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E1F75C420FEFBE400028734 /* EnumMultipleMessage.protocol.cpp */; };
+		3E1F75C720FEFBE400028734 /* EnumMultipleMessage.protocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E1F75C520FEFBE400028734 /* EnumMultipleMessage.protocol.h */; };
+		3E1F75C920FEFF8E00028734 /* MessageOneof.protocol.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E259E0520E34B4A00F01379 /* MessageOneof.protocol.cpp */; };
+		3E259DCA20E33E2B00F01379 /* LogManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E259DC820E33E2A00F01379 /* LogManager.cpp */; };
+		3E259DCB20E33E2B00F01379 /* LogManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E259DC920E33E2A00F01379 /* LogManager.h */; };
+		3E259DCE20E33E3800F01379 /* FileManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E259DCC20E33E3800F01379 /* FileManager.h */; };
+		3E259DCF20E33E3800F01379 /* FileManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E259DCD20E33E3800F01379 /* FileManager.cpp */; };
+		3E259DD220E33E4300F01379 /* ConfigInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E259DD020E33E4300F01379 /* ConfigInfo.h */; };
+		3E259DD320E33E4300F01379 /* ConfigInfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E259DD120E33E4300F01379 /* ConfigInfo.cpp */; };
+		3E259DD620E33E5100F01379 /* TextUtil.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E259DD420E33E5100F01379 /* TextUtil.cpp */; };
+		3E259DD720E33E5100F01379 /* TextUtil.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E259DD520E33E5100F01379 /* TextUtil.h */; };
+		3E259DDA20E33E5E00F01379 /* EventSubscriber.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E259DD820E33E5E00F01379 /* EventSubscriber.h */; };
+		3E259DDB20E33E5E00F01379 /* EventPublisher.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E259DD920E33E5E00F01379 /* EventPublisher.h */; };
+		3E259EB820E34BE900F01379 /* EnumValueModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E259E7920E34BE300F01379 /* EnumValueModel.cpp */; };
+		3E259EB920E34BE900F01379 /* OneofFieldParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E259E7A20E34BE300F01379 /* OneofFieldParser.cpp */; };
+		3E259EBA20E34BE900F01379 /* OneofModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E259E7B20E34BE300F01379 /* OneofModel.cpp */; };
+		3E259EBB20E34BE900F01379 /* CodeGeneratorInterface.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E259E7C20E34BE300F01379 /* CodeGeneratorInterface.h */; };
+		3E259EBC20E34BE900F01379 /* Nestable.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E259E7D20E34BE300F01379 /* Nestable.h */; };
+		3E259EBD20E34BE900F01379 /* ImportParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E259E7E20E34BE300F01379 /* ImportParser.cpp */; };
+		3E259EBE20E34BE900F01379 /* EnumModelContainer.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E259E7F20E34BE300F01379 /* EnumModelContainer.h */; };
+		3E259EBF20E34BE900F01379 /* EnumValueModel.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E259E8020E34BE300F01379 /* EnumValueModel.h */; };
+		3E259EC020E34BE900F01379 /* CodeGeneratorCPP.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E259E8120E34BE300F01379 /* CodeGeneratorCPP.h */; };
+		3E259EC120E34BE900F01379 /* EnumModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E259E8220E34BE300F01379 /* EnumModel.cpp */; };
+		3E259EC220E34BE900F01379 /* MessageFieldModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E259E8320E34BE300F01379 /* MessageFieldModel.cpp */; };
+		3E259EC320E34BE900F01379 /* ParserManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E259E8420E34BE300F01379 /* ParserManager.cpp */; };
+		3E259EC420E34BE900F01379 /* CodeGeneratorManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E259E8520E34BE300F01379 /* CodeGeneratorManager.cpp */; };
+		3E259EC520E34BE900F01379 /* CodeGeneratorUtilityCPP.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E259E8620E34BE300F01379 /* CodeGeneratorUtilityCPP.h */; };
+		3E259EC620E34BE900F01379 /* OptionValueParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E259E8720E34BE300F01379 /* OptionValueParser.cpp */; };
+		3E259EC720E34BE900F01379 /* MessageParser.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E259E8820E34BE400F01379 /* MessageParser.h */; };
+		3E259EC820E34BE900F01379 /* CodeGeneratorManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E259E8920E34BE400F01379 /* CodeGeneratorManager.h */; };
+		3E259EC920E34BE900F01379 /* CodeIndenter.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E259E8A20E34BE400F01379 /* CodeIndenter.h */; };
+		3E259ECA20E34BE900F01379 /* EnumParser.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E259E8B20E34BE400F01379 /* EnumParser.h */; };
+		3E259ECB20E34BE900F01379 /* MessageFieldParser.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E259E8C20E34BE400F01379 /* MessageFieldParser.h */; };
+		3E259ECC20E34BE900F01379 /* Packageable.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E259E8D20E34BE400F01379 /* Packageable.h */; };
+		3E259ECD20E34BE900F01379 /* ParserInterface.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E259E8E20E34BE400F01379 /* ParserInterface.h */; };
+		3E259ECE20E34BE900F01379 /* CodeGeneratorCPP.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E259E8F20E34BE400F01379 /* CodeGeneratorCPP.cpp */; };
+		3E259ECF20E34BE900F01379 /* EnumValueModelContainer.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E259E9020E34BE500F01379 /* EnumValueModelContainer.h */; };
+		3E259ED020E34BE900F01379 /* OptionGroupParser.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E259E9120E34BE500F01379 /* OptionGroupParser.h */; };
+		3E259ED120E34BE900F01379 /* OptionSingleParser.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E259E9220E34BE500F01379 /* OptionSingleParser.h */; };
+		3E259ED220E34BE900F01379 /* OptionValueParser.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E259E9320E34BE500F01379 /* OptionValueParser.h */; };
+		3E259ED320E34BE900F01379 /* ProtoModel.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E259E9420E34BE500F01379 /* ProtoModel.h */; };
+		3E259ED420E34BE900F01379 /* ProtoParser.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E259E9520E34BE500F01379 /* ProtoParser.h */; };
+		3E259ED520E34BE900F01379 /* OptionGroupParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E259E9620E34BE500F01379 /* OptionGroupParser.cpp */; };
+		3E259ED620E34BE900F01379 /* InvalidProtoException.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E259E9720E34BE500F01379 /* InvalidProtoException.h */; };
+		3E259ED720E34BE900F01379 /* PackageParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E259E9820E34BE500F01379 /* PackageParser.cpp */; };
+		3E259ED820E34BE900F01379 /* OptionModelContainer.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E259E9920E34BE500F01379 /* OptionModelContainer.h */; };
+		3E259ED920E34BE900F01379 /* EnumParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E259E9A20E34BE600F01379 /* EnumParser.cpp */; };
+		3E259EDA20E34BE900F01379 /* MessageFieldParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E259E9B20E34BE600F01379 /* MessageFieldParser.cpp */; };
+		3E259EDB20E34BE900F01379 /* MessageModel.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E259E9C20E34BE600F01379 /* MessageModel.h */; };
+		3E259EDC20E34BE900F01379 /* TokenReader.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E259E9D20E34BE600F01379 /* TokenReader.h */; };
+		3E259EDD20E34BE900F01379 /* TokenReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E259E9E20E34BE600F01379 /* TokenReader.cpp */; };
+		3E259EDE20E34BE900F01379 /* PackageParser.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E259E9F20E34BE600F01379 /* PackageParser.h */; };
+		3E259EDF20E34BE900F01379 /* ParserManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E259EA020E34BE600F01379 /* ParserManager.h */; };
+		3E259EE020E34BE900F01379 /* OneofModel.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E259EA120E34BE600F01379 /* OneofModel.h */; };
+		3E259EE120E34BE900F01379 /* MessageModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E259EA220E34BE600F01379 /* MessageModel.cpp */; };
+		3E259EE220E34BE900F01379 /* MessageParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E259EA320E34BE700F01379 /* MessageParser.cpp */; };
+		3E259EE320E34BE900F01379 /* OneofFieldParser.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E259EA420E34BE700F01379 /* OneofFieldParser.h */; };
+		3E259EE420E34BE900F01379 /* OptionModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E259EA520E34BE700F01379 /* OptionModel.cpp */; };
+		3E259EE520E34BE900F01379 /* ImportParser.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E259EA620E34BE700F01379 /* ImportParser.h */; };
+		3E259EE620E34BE900F01379 /* OptionSingleParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E259EA720E34BE700F01379 /* OptionSingleParser.cpp */; };
+		3E259EE720E34BE900F01379 /* OneofModelContainer.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E259EA820E34BE700F01379 /* OneofModelContainer.h */; };
+		3E259EE820E34BE900F01379 /* EnumValueParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E259EA920E34BE700F01379 /* EnumValueParser.cpp */; };
+		3E259EE920E34BE900F01379 /* OptionModel.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E259EAA20E34BE700F01379 /* OptionModel.h */; };
+		3E259EEA20E34BE900F01379 /* Nameable.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E259EAB20E34BE700F01379 /* Nameable.h */; };
+		3E259EEB20E34BE900F01379 /* CodeWriterCPP.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E259EAC20E34BE800F01379 /* CodeWriterCPP.h */; };
+		3E259EEC20E34BE900F01379 /* ProtoModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E259EAD20E34BE800F01379 /* ProtoModel.cpp */; };
+		3E259EED20E34BE900F01379 /* ProtoParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E259EAE20E34BE800F01379 /* ProtoParser.cpp */; };
+		3E259EEF20E34BE900F01379 /* MessageFieldModel.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E259EB020E34BE800F01379 /* MessageFieldModel.h */; };
+		3E259EF020E34BE900F01379 /* MessageModelContainer.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E259EB120E34BE800F01379 /* MessageModelContainer.h */; };
+		3E259EF120E34BE900F01379 /* MessageFieldModelContainer.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E259EB220E34BE800F01379 /* MessageFieldModelContainer.h */; };
+		3E259EF220E34BE900F01379 /* ProtoBaseTemplateCPP.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E259EB320E34BE800F01379 /* ProtoBaseTemplateCPP.h */; };
+		3E259EF320E34BE900F01379 /* OneofParser.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E259EB420E34BE800F01379 /* OneofParser.h */; };
+		3E259EF420E34BE900F01379 /* EnumModel.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E259EB520E34BE900F01379 /* EnumModel.h */; };
+		3E259EF520E34BE900F01379 /* EnumValueParser.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E259EB620E34BE900F01379 /* EnumValueParser.h */; };
+		3E259EF620E34BE900F01379 /* OneofParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E259EB720E34BE900F01379 /* OneofParser.cpp */; };
+		3E259EFC20E34C1200F01379 /* Test.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E259EFB20E34C1100F01379 /* Test.h */; };
+		3E2F9C1620FB7D80008C90A9 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E259DE120E34AFD00F01379 /* main.cpp */; };
+		3E2F9C1720FB7D8F008C90A9 /* libTUCUT.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E259DAC20E3398E00F01379 /* libTUCUT.a */; };
+		3E2F9C1D20FB7FED008C90A9 /* libboost_system-mt.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E2F9C1B20FB7FEC008C90A9 /* libboost_system-mt.dylib */; };
+		3E2F9C1E20FB7FED008C90A9 /* libboost_filesystem-mt.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E2F9C1C20FB7FEC008C90A9 /* libboost_filesystem-mt.dylib */; };
+		3ED4127B20FED1FB00BC7226 /* CodeGeneratorCPPScenarios.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E259E6420E34BA700F01379 /* CodeGeneratorCPPScenarios.cpp */; };
+		3ED4127C20FED1FB00BC7226 /* CodeGeneratorManagerScenarios.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E259E5D20E34BA600F01379 /* CodeGeneratorManagerScenarios.cpp */; };
+		3ED4127D20FED1FB00BC7226 /* EnumParserScenarios.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E259E6120E34BA600F01379 /* EnumParserScenarios.cpp */; };
+		3ED4127E20FED1FB00BC7226 /* EnumValueParserScenarios.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E259E5F20E34BA600F01379 /* EnumValueParserScenarios.cpp */; };
+		3ED4127F20FED1FB00BC7226 /* ImportParserScenarios.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E259E6020E34BA600F01379 /* ImportParserScenarios.cpp */; };
+		3ED4128020FED1FB00BC7226 /* MessageFieldParserScenarios.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E259E6720E34BA700F01379 /* MessageFieldParserScenarios.cpp */; };
+		3ED4128120FED1FB00BC7226 /* MessageParserScenarios.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E259E6320E34BA600F01379 /* MessageParserScenarios.cpp */; };
+		3ED4128220FED1FB00BC7226 /* OneofParserScenarios.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E259E6620E34BA700F01379 /* OneofParserScenarios.cpp */; };
+		3ED4128320FED1FB00BC7226 /* OptionParserScenarios.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E259E6A20E34BA700F01379 /* OptionParserScenarios.cpp */; };
+		3ED4128420FED1FB00BC7226 /* PackageParserScenarios.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E259E6820E34BA700F01379 /* PackageParserScenarios.cpp */; };
+		3ED4128520FED1FB00BC7226 /* ProtoModelScenarios.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E259E6520E34BA700F01379 /* ProtoModelScenarios.cpp */; };
+		3ED4128620FED1FB00BC7226 /* ProtoParserScenarios.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E259E6920E34BA700F01379 /* ProtoParserScenarios.cpp */; };
+		3ED4128720FED1FB00BC7226 /* TokenReaderScenarios.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E259E6220E34BA600F01379 /* TokenReaderScenarios.cpp */; };
+		3ED4128820FED1FB00BC7226 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E259EF720E34C0500F01379 /* main.cpp */; };
+		3ED4128920FED1FB00BC7226 /* UnitScenarios.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E259EF820E34C0500F01379 /* UnitScenarios.cpp */; };
+		3ED4128A20FED22700BC7226 /* libTUCUT.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E259DAC20E3398E00F01379 /* libTUCUT.a */; };
+		3ED4128B20FED25800BC7226 /* libboost_filesystem-mt.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E2F9C1C20FB7FEC008C90A9 /* libboost_filesystem-mt.dylib */; };
+		3ED4128C20FED25800BC7226 /* libboost_system-mt.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E2F9C1B20FB7FEC008C90A9 /* libboost_system-mt.dylib */; };
+		3ED4129820FED2E300BC7226 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E259DE320E34B1900F01379 /* main.cpp */; };
+		3ED4129920FED2E300BC7226 /* MessageEmptyScenarios.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E259DE620E34B1A00F01379 /* MessageEmptyScenarios.cpp */; };
+		3ED4129A20FED2E300BC7226 /* MessageFieldScenarios.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E259DE520E34B1900F01379 /* MessageFieldScenarios.cpp */; };
+		3ED4129B20FED2E300BC7226 /* MessageOneofScenarios.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E259DE420E34B1900F01379 /* MessageOneofScenarios.cpp */; };
+		3ED412A120FED37800BC7226 /* Message.protocol.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E259E0620E34B4A00F01379 /* Message.protocol.cpp */; };
+		3ED412A220FED37800BC7226 /* MessageAllFields.protocol.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E259DF620E34B4900F01379 /* MessageAllFields.protocol.cpp */; };
+		3ED412A320FED37800BC7226 /* MessageField.protocol.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E259E0120E34B4A00F01379 /* MessageField.protocol.cpp */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		3E2F9C0D20FB7D0F008C90A9 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+		3ED4127220FED19500BC7226 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 12;
+			dstPath = usr/share/man/man1;
+			dstSubfolderSpec = 16;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3ED4128F20FED29400BC7226 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		3E1F75C420FEFBE400028734 /* EnumMultipleMessage.protocol.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EnumMultipleMessage.protocol.cpp; sourceTree = "<group>"; };
+		3E1F75C520FEFBE400028734 /* EnumMultipleMessage.protocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EnumMultipleMessage.protocol.h; sourceTree = "<group>"; };
+		3E259DAC20E3398E00F01379 /* libTUCUT.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libTUCUT.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		3E259DC820E33E2A00F01379 /* LogManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LogManager.cpp; sourceTree = "<group>"; };
+		3E259DC920E33E2A00F01379 /* LogManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LogManager.h; sourceTree = "<group>"; };
+		3E259DCC20E33E3800F01379 /* FileManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileManager.h; sourceTree = "<group>"; };
+		3E259DCD20E33E3800F01379 /* FileManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FileManager.cpp; sourceTree = "<group>"; };
+		3E259DD020E33E4300F01379 /* ConfigInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConfigInfo.h; sourceTree = "<group>"; };
+		3E259DD120E33E4300F01379 /* ConfigInfo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ConfigInfo.cpp; sourceTree = "<group>"; };
+		3E259DD420E33E5100F01379 /* TextUtil.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TextUtil.cpp; sourceTree = "<group>"; };
+		3E259DD520E33E5100F01379 /* TextUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextUtil.h; sourceTree = "<group>"; };
+		3E259DD820E33E5E00F01379 /* EventSubscriber.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventSubscriber.h; sourceTree = "<group>"; };
+		3E259DD920E33E5E00F01379 /* EventPublisher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventPublisher.h; sourceTree = "<group>"; };
+		3E259DE120E34AFD00F01379 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		3E259DE320E34B1900F01379 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		3E259DE420E34B1900F01379 /* MessageOneofScenarios.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MessageOneofScenarios.cpp; sourceTree = "<group>"; };
+		3E259DE520E34B1900F01379 /* MessageFieldScenarios.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MessageFieldScenarios.cpp; sourceTree = "<group>"; };
+		3E259DE620E34B1A00F01379 /* MessageEmptyScenarios.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MessageEmptyScenarios.cpp; sourceTree = "<group>"; };
+		3E259DEB20E34B4800F01379 /* MessageOneofMultiple.protocol.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MessageOneofMultiple.protocol.cpp; sourceTree = "<group>"; };
+		3E259DEC20E34B4800F01379 /* EnumMultiple.protocol.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EnumMultiple.protocol.cpp; sourceTree = "<group>"; };
+		3E259DED20E34B4800F01379 /* MessageMultiplePackage.protocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageMultiplePackage.protocol.h; sourceTree = "<group>"; };
+		3E259DEE20E34B4900F01379 /* EnumValue.protocol.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EnumValue.protocol.cpp; sourceTree = "<group>"; };
+		3E259DEF20E34B4900F01379 /* MessageNested.protocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageNested.protocol.h; sourceTree = "<group>"; };
+		3E259DF020E34B4900F01379 /* Message.protocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Message.protocol.h; sourceTree = "<group>"; };
+		3E259DF120E34B4900F01379 /* ImportPublic.protocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImportPublic.protocol.h; sourceTree = "<group>"; };
+		3E259DF220E34B4900F01379 /* MessageField.protocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageField.protocol.h; sourceTree = "<group>"; };
+		3E259DF320E34B4900F01379 /* EnumMultiple.protocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EnumMultiple.protocol.h; sourceTree = "<group>"; };
+		3E259DF420E34B4900F01379 /* MessageNamespace.protocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageNamespace.protocol.h; sourceTree = "<group>"; };
+		3E259DF520E34B4900F01379 /* EnumValue.protocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EnumValue.protocol.h; sourceTree = "<group>"; };
+		3E259DF620E34B4900F01379 /* MessageAllFields.protocol.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MessageAllFields.protocol.cpp; sourceTree = "<group>"; };
+		3E259DF720E34B4900F01379 /* MessageMultiplePackage.protocol.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MessageMultiplePackage.protocol.cpp; sourceTree = "<group>"; };
+		3E259DF820E34B4900F01379 /* MessageOneofMultiple.protocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageOneofMultiple.protocol.h; sourceTree = "<group>"; };
+		3E259DF920E34B4900F01379 /* MessageOneof.protocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageOneof.protocol.h; sourceTree = "<group>"; };
+		3E259DFA20E34B4900F01379 /* ImportPublic.protocol.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ImportPublic.protocol.cpp; sourceTree = "<group>"; };
+		3E259DFB20E34B4900F01379 /* MessageAllFields.protocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageAllFields.protocol.h; sourceTree = "<group>"; };
+		3E259DFC20E34B4900F01379 /* Empty.protocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Empty.protocol.h; sourceTree = "<group>"; };
+		3E259DFD20E34B4900F01379 /* MessageNested.protocol.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MessageNested.protocol.cpp; sourceTree = "<group>"; };
+		3E259DFE20E34B4900F01379 /* ProtoBase.protocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProtoBase.protocol.h; sourceTree = "<group>"; };
+		3E259DFF20E34B4A00F01379 /* Empty.protocol.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Empty.protocol.cpp; sourceTree = "<group>"; };
+		3E259E0020E34B4A00F01379 /* EnumMultiplePackage.protocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EnumMultiplePackage.protocol.h; sourceTree = "<group>"; };
+		3E259E0120E34B4A00F01379 /* MessageField.protocol.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MessageField.protocol.cpp; sourceTree = "<group>"; };
+		3E259E0220E34B4A00F01379 /* MessageFieldReference.protocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageFieldReference.protocol.h; sourceTree = "<group>"; };
+		3E259E0320E34B4A00F01379 /* MessageNamespace.protocol.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MessageNamespace.protocol.cpp; sourceTree = "<group>"; };
+		3E259E0420E34B4A00F01379 /* EnumMultiplePackage.protocol.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EnumMultiplePackage.protocol.cpp; sourceTree = "<group>"; };
+		3E259E0520E34B4A00F01379 /* MessageOneof.protocol.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MessageOneof.protocol.cpp; sourceTree = "<group>"; };
+		3E259E0620E34B4A00F01379 /* Message.protocol.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Message.protocol.cpp; sourceTree = "<group>"; };
+		3E259E0720E34B4A00F01379 /* MessageFieldReference.protocol.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MessageFieldReference.protocol.cpp; sourceTree = "<group>"; };
+		3E259E2520E34B7900F01379 /* TextWhitespace.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = TextWhitespace.proto; sourceTree = "<group>"; };
+		3E259E2620E34B7900F01379 /* EnumMultiple.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = EnumMultiple.proto; sourceTree = "<group>"; };
+		3E259E2720E34B7900F01379 /* ImportPublic.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ImportPublic.proto; sourceTree = "<group>"; };
+		3E259E2820E34B7A00F01379 /* OptionProto.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = OptionProto.proto; sourceTree = "<group>"; };
+		3E259E2920E34B7A00F01379 /* TextStringEndingEscape.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = TextStringEndingEscape.proto; sourceTree = "<group>"; };
+		3E259E2A20E34B7A00F01379 /* MessageFieldReference.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = MessageFieldReference.proto; sourceTree = "<group>"; };
+		3E259E2B20E34B7A00F01379 /* TextStringEmpty.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = TextStringEmpty.proto; sourceTree = "<group>"; };
+		3E259E2C20E34B7A00F01379 /* TextCommentSingleLineEOF.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = TextCommentSingleLineEOF.proto; sourceTree = "<group>"; };
+		3E259E2D20E34B7A00F01379 /* Package.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Package.proto; sourceTree = "<group>"; };
+		3E259E2E20E34B7A00F01379 /* EnumMultiplePackage.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = EnumMultiplePackage.proto; sourceTree = "<group>"; };
+		3E259E2F20E34B7A00F01379 /* Message.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Message.proto; sourceTree = "<group>"; };
+		3E259E3020E34B7A00F01379 /* MessageNested.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = MessageNested.proto; sourceTree = "<group>"; };
+		3E259E3120E34B7A00F01379 /* MessageAllFields.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = MessageAllFields.proto; sourceTree = "<group>"; };
+		3E259E3220E34B7A00F01379 /* MessageFieldQualified.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = MessageFieldQualified.proto; sourceTree = "<group>"; };
+		3E259E3320E34B7A00F01379 /* MessageFieldMultiple.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = MessageFieldMultiple.proto; sourceTree = "<group>"; };
+		3E259E3420E34B7A00F01379 /* Text.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Text.proto; sourceTree = "<group>"; };
+		3E259E3520E34B7A00F01379 /* EmptyCommentSingleLineEOF.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = EmptyCommentSingleLineEOF.proto; sourceTree = "<group>"; };
+		3E259E3620E34B7A00F01379 /* PackageRedefined.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = PackageRedefined.proto; sourceTree = "<group>"; };
+		3E259E3720E34B7B00F01379 /* ImportPrivate.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ImportPrivate.proto; sourceTree = "<group>"; };
+		3E259E3820E34B7B00F01379 /* TextCommentMultiLine.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = TextCommentMultiLine.proto; sourceTree = "<group>"; };
+		3E259E3920E34B7B00F01379 /* TextStringEndingQuote.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = TextStringEndingQuote.proto; sourceTree = "<group>"; };
+		3E259E3A20E34B7B00F01379 /* TextStringEOF.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = TextStringEOF.proto; sourceTree = "<group>"; };
+		3E259E3B20E34B7B00F01379 /* OptionValueFloat.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = OptionValueFloat.proto; sourceTree = "<group>"; };
+		3E259E3C20E34B7B00F01379 /* TextCommentMultiLineEOF.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = TextCommentMultiLineEOF.proto; sourceTree = "<group>"; };
+		3E259E3D20E34B7B00F01379 /* EmptyCommentSingleLine.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = EmptyCommentSingleLine.proto; sourceTree = "<group>"; };
+		3E259E3E20E34B7B00F01379 /* EmptyCommentMultiLine.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = EmptyCommentMultiLine.proto; sourceTree = "<group>"; };
+		3E259E3F20E34B7B00F01379 /* MessageEverything.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = MessageEverything.proto; sourceTree = "<group>"; };
+		3E259E4020E34B7B00F01379 /* TextCommentSingleLine.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = TextCommentSingleLine.proto; sourceTree = "<group>"; };
+		3E259E4120E34B7C00F01379 /* Empty.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Empty.proto; sourceTree = "<group>"; };
+		3E259E4220E34B7C00F01379 /* EmptyComment.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = EmptyComment.proto; sourceTree = "<group>"; };
+		3E259E4320E34B7C00F01379 /* OptionEnum.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = OptionEnum.proto; sourceTree = "<group>"; };
+		3E259E4420E34B7C00F01379 /* TextCommentNoSpace.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = TextCommentNoSpace.proto; sourceTree = "<group>"; };
+		3E259E4520E34B7C00F01379 /* OptionOneof.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = OptionOneof.proto; sourceTree = "<group>"; };
+		3E259E4620E34B7C00F01379 /* MessageField.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = MessageField.proto; sourceTree = "<group>"; };
+		3E259E4720E34B7C00F01379 /* MessageWhitespace.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = MessageWhitespace.proto; sourceTree = "<group>"; };
+		3E259E4820E34B7C00F01379 /* OptionValueString.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = OptionValueString.proto; sourceTree = "<group>"; };
+		3E259E4920E34B7C00F01379 /* EnumValue.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = EnumValue.proto; sourceTree = "<group>"; };
+		3E259E4A20E34B7D00F01379 /* EnumMultipleMessage.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = EnumMultipleMessage.proto; sourceTree = "<group>"; };
+		3E259E4B20E34B7D00F01379 /* MessageOneofQualified.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = MessageOneofQualified.proto; sourceTree = "<group>"; };
+		3E259E4C20E34B7D00F01379 /* OptionMessageField.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = OptionMessageField.proto; sourceTree = "<group>"; };
+		3E259E4D20E34B7D00F01379 /* EnumValueMultipleMessage.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = EnumValueMultipleMessage.proto; sourceTree = "<group>"; };
+		3E259E4E20E34B7D00F01379 /* OptionEnumValue.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = OptionEnumValue.proto; sourceTree = "<group>"; };
+		3E259E4F20E34B7D00F01379 /* TextStringMultiLine.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = TextStringMultiLine.proto; sourceTree = "<group>"; };
+		3E259E5020E34B7D00F01379 /* OptionMessage.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = OptionMessage.proto; sourceTree = "<group>"; };
+		3E259E5120E34B7D00F01379 /* MessageNamespace.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = MessageNamespace.proto; sourceTree = "<group>"; };
+		3E259E5220E34B7D00F01379 /* TextDelimiterMultiple.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = TextDelimiterMultiple.proto; sourceTree = "<group>"; };
+		3E259E5320E34B7D00F01379 /* OptionOneofField.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = OptionOneofField.proto; sourceTree = "<group>"; };
+		3E259E5420E34B7E00F01379 /* ImportNone.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ImportNone.proto; sourceTree = "<group>"; };
+		3E259E5520E34B7E00F01379 /* MessageOneofMultiple.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = MessageOneofMultiple.proto; sourceTree = "<group>"; };
+		3E259E5620E34B7E00F01379 /* EmptyCommentMultiLineEOF.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = EmptyCommentMultiLineEOF.proto; sourceTree = "<group>"; };
+		3E259E5720E34B7E00F01379 /* MessageMultiplePackage.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = MessageMultiplePackage.proto; sourceTree = "<group>"; };
+		3E259E5820E34B7E00F01379 /* MessageOneof.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = MessageOneof.proto; sourceTree = "<group>"; };
+		3E259E5920E34B7E00F01379 /* TextString.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = TextString.proto; sourceTree = "<group>"; };
+		3E259E5A20E34B7E00F01379 /* Enum.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Enum.proto; sourceTree = "<group>"; };
+		3E259E5B20E34B7E00F01379 /* MessageComment.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = MessageComment.proto; sourceTree = "<group>"; };
+		3E259E5C20E34B7F00F01379 /* MessageMultiple.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = MessageMultiple.proto; sourceTree = "<group>"; };
+		3E259E5D20E34BA600F01379 /* CodeGeneratorManagerScenarios.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CodeGeneratorManagerScenarios.cpp; sourceTree = "<group>"; };
+		3E259E5F20E34BA600F01379 /* EnumValueParserScenarios.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EnumValueParserScenarios.cpp; sourceTree = "<group>"; };
+		3E259E6020E34BA600F01379 /* ImportParserScenarios.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ImportParserScenarios.cpp; sourceTree = "<group>"; };
+		3E259E6120E34BA600F01379 /* EnumParserScenarios.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EnumParserScenarios.cpp; sourceTree = "<group>"; };
+		3E259E6220E34BA600F01379 /* TokenReaderScenarios.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TokenReaderScenarios.cpp; sourceTree = "<group>"; };
+		3E259E6320E34BA600F01379 /* MessageParserScenarios.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MessageParserScenarios.cpp; sourceTree = "<group>"; };
+		3E259E6420E34BA700F01379 /* CodeGeneratorCPPScenarios.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CodeGeneratorCPPScenarios.cpp; sourceTree = "<group>"; };
+		3E259E6520E34BA700F01379 /* ProtoModelScenarios.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ProtoModelScenarios.cpp; sourceTree = "<group>"; };
+		3E259E6620E34BA700F01379 /* OneofParserScenarios.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OneofParserScenarios.cpp; sourceTree = "<group>"; };
+		3E259E6720E34BA700F01379 /* MessageFieldParserScenarios.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MessageFieldParserScenarios.cpp; sourceTree = "<group>"; };
+		3E259E6820E34BA700F01379 /* PackageParserScenarios.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PackageParserScenarios.cpp; sourceTree = "<group>"; };
+		3E259E6920E34BA700F01379 /* ProtoParserScenarios.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ProtoParserScenarios.cpp; sourceTree = "<group>"; };
+		3E259E6A20E34BA700F01379 /* OptionParserScenarios.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OptionParserScenarios.cpp; sourceTree = "<group>"; };
+		3E259E7920E34BE300F01379 /* EnumValueModel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EnumValueModel.cpp; sourceTree = "<group>"; };
+		3E259E7A20E34BE300F01379 /* OneofFieldParser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OneofFieldParser.cpp; sourceTree = "<group>"; };
+		3E259E7B20E34BE300F01379 /* OneofModel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OneofModel.cpp; sourceTree = "<group>"; };
+		3E259E7C20E34BE300F01379 /* CodeGeneratorInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CodeGeneratorInterface.h; sourceTree = "<group>"; };
+		3E259E7D20E34BE300F01379 /* Nestable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Nestable.h; sourceTree = "<group>"; };
+		3E259E7E20E34BE300F01379 /* ImportParser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ImportParser.cpp; sourceTree = "<group>"; };
+		3E259E7F20E34BE300F01379 /* EnumModelContainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EnumModelContainer.h; sourceTree = "<group>"; };
+		3E259E8020E34BE300F01379 /* EnumValueModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EnumValueModel.h; sourceTree = "<group>"; };
+		3E259E8120E34BE300F01379 /* CodeGeneratorCPP.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CodeGeneratorCPP.h; sourceTree = "<group>"; };
+		3E259E8220E34BE300F01379 /* EnumModel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EnumModel.cpp; sourceTree = "<group>"; };
+		3E259E8320E34BE300F01379 /* MessageFieldModel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MessageFieldModel.cpp; sourceTree = "<group>"; };
+		3E259E8420E34BE300F01379 /* ParserManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ParserManager.cpp; sourceTree = "<group>"; };
+		3E259E8520E34BE300F01379 /* CodeGeneratorManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CodeGeneratorManager.cpp; sourceTree = "<group>"; };
+		3E259E8620E34BE300F01379 /* CodeGeneratorUtilityCPP.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CodeGeneratorUtilityCPP.h; sourceTree = "<group>"; };
+		3E259E8720E34BE300F01379 /* OptionValueParser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OptionValueParser.cpp; sourceTree = "<group>"; };
+		3E259E8820E34BE400F01379 /* MessageParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageParser.h; sourceTree = "<group>"; };
+		3E259E8920E34BE400F01379 /* CodeGeneratorManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CodeGeneratorManager.h; sourceTree = "<group>"; };
+		3E259E8A20E34BE400F01379 /* CodeIndenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CodeIndenter.h; sourceTree = "<group>"; };
+		3E259E8B20E34BE400F01379 /* EnumParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EnumParser.h; sourceTree = "<group>"; };
+		3E259E8C20E34BE400F01379 /* MessageFieldParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageFieldParser.h; sourceTree = "<group>"; };
+		3E259E8D20E34BE400F01379 /* Packageable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Packageable.h; sourceTree = "<group>"; };
+		3E259E8E20E34BE400F01379 /* ParserInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ParserInterface.h; sourceTree = "<group>"; };
+		3E259E8F20E34BE400F01379 /* CodeGeneratorCPP.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CodeGeneratorCPP.cpp; sourceTree = "<group>"; };
+		3E259E9020E34BE500F01379 /* EnumValueModelContainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EnumValueModelContainer.h; sourceTree = "<group>"; };
+		3E259E9120E34BE500F01379 /* OptionGroupParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OptionGroupParser.h; sourceTree = "<group>"; };
+		3E259E9220E34BE500F01379 /* OptionSingleParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OptionSingleParser.h; sourceTree = "<group>"; };
+		3E259E9320E34BE500F01379 /* OptionValueParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OptionValueParser.h; sourceTree = "<group>"; };
+		3E259E9420E34BE500F01379 /* ProtoModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProtoModel.h; sourceTree = "<group>"; };
+		3E259E9520E34BE500F01379 /* ProtoParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProtoParser.h; sourceTree = "<group>"; };
+		3E259E9620E34BE500F01379 /* OptionGroupParser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OptionGroupParser.cpp; sourceTree = "<group>"; };
+		3E259E9720E34BE500F01379 /* InvalidProtoException.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InvalidProtoException.h; sourceTree = "<group>"; };
+		3E259E9820E34BE500F01379 /* PackageParser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PackageParser.cpp; sourceTree = "<group>"; };
+		3E259E9920E34BE500F01379 /* OptionModelContainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OptionModelContainer.h; sourceTree = "<group>"; };
+		3E259E9A20E34BE600F01379 /* EnumParser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EnumParser.cpp; sourceTree = "<group>"; };
+		3E259E9B20E34BE600F01379 /* MessageFieldParser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MessageFieldParser.cpp; sourceTree = "<group>"; };
+		3E259E9C20E34BE600F01379 /* MessageModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageModel.h; sourceTree = "<group>"; };
+		3E259E9D20E34BE600F01379 /* TokenReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TokenReader.h; sourceTree = "<group>"; };
+		3E259E9E20E34BE600F01379 /* TokenReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TokenReader.cpp; sourceTree = "<group>"; };
+		3E259E9F20E34BE600F01379 /* PackageParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PackageParser.h; sourceTree = "<group>"; };
+		3E259EA020E34BE600F01379 /* ParserManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ParserManager.h; sourceTree = "<group>"; };
+		3E259EA120E34BE600F01379 /* OneofModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OneofModel.h; sourceTree = "<group>"; };
+		3E259EA220E34BE600F01379 /* MessageModel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MessageModel.cpp; sourceTree = "<group>"; };
+		3E259EA320E34BE700F01379 /* MessageParser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MessageParser.cpp; sourceTree = "<group>"; };
+		3E259EA420E34BE700F01379 /* OneofFieldParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OneofFieldParser.h; sourceTree = "<group>"; };
+		3E259EA520E34BE700F01379 /* OptionModel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OptionModel.cpp; sourceTree = "<group>"; };
+		3E259EA620E34BE700F01379 /* ImportParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImportParser.h; sourceTree = "<group>"; };
+		3E259EA720E34BE700F01379 /* OptionSingleParser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OptionSingleParser.cpp; sourceTree = "<group>"; };
+		3E259EA820E34BE700F01379 /* OneofModelContainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OneofModelContainer.h; sourceTree = "<group>"; };
+		3E259EA920E34BE700F01379 /* EnumValueParser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EnumValueParser.cpp; sourceTree = "<group>"; };
+		3E259EAA20E34BE700F01379 /* OptionModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OptionModel.h; sourceTree = "<group>"; };
+		3E259EAB20E34BE700F01379 /* Nameable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Nameable.h; sourceTree = "<group>"; };
+		3E259EAC20E34BE800F01379 /* CodeWriterCPP.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CodeWriterCPP.h; sourceTree = "<group>"; };
+		3E259EAD20E34BE800F01379 /* ProtoModel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ProtoModel.cpp; sourceTree = "<group>"; };
+		3E259EAE20E34BE800F01379 /* ProtoParser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ProtoParser.cpp; sourceTree = "<group>"; };
+		3E259EAF20E34BE800F01379 /* CodeGeneratorPrologCPP.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CodeGeneratorPrologCPP.cpp; sourceTree = "<group>"; };
+		3E259EB020E34BE800F01379 /* MessageFieldModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageFieldModel.h; sourceTree = "<group>"; };
+		3E259EB120E34BE800F01379 /* MessageModelContainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageModelContainer.h; sourceTree = "<group>"; };
+		3E259EB220E34BE800F01379 /* MessageFieldModelContainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageFieldModelContainer.h; sourceTree = "<group>"; };
+		3E259EB320E34BE800F01379 /* ProtoBaseTemplateCPP.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProtoBaseTemplateCPP.h; sourceTree = "<group>"; };
+		3E259EB420E34BE800F01379 /* OneofParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OneofParser.h; sourceTree = "<group>"; };
+		3E259EB520E34BE900F01379 /* EnumModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EnumModel.h; sourceTree = "<group>"; };
+		3E259EB620E34BE900F01379 /* EnumValueParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EnumValueParser.h; sourceTree = "<group>"; };
+		3E259EB720E34BE900F01379 /* OneofParser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OneofParser.cpp; sourceTree = "<group>"; };
+		3E259EF720E34C0500F01379 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		3E259EF820E34C0500F01379 /* UnitScenarios.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UnitScenarios.cpp; sourceTree = "<group>"; };
+		3E259EFB20E34C1100F01379 /* Test.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Test.h; sourceTree = "<group>"; };
+		3E2F9C0F20FB7D0F008C90A9 /* ProtocolCompiler */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = ProtocolCompiler; sourceTree = BUILT_PRODUCTS_DIR; };
+		3E2F9C1B20FB7FEC008C90A9 /* libboost_system-mt.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libboost_system-mt.dylib"; path = "../../../../opt/local/lib/libboost_system-mt.dylib"; sourceTree = "<group>"; };
+		3E2F9C1C20FB7FEC008C90A9 /* libboost_filesystem-mt.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libboost_filesystem-mt.dylib"; path = "../../../../opt/local/lib/libboost_filesystem-mt.dylib"; sourceTree = "<group>"; };
+		3ED4127420FED19500BC7226 /* TestTUCUT */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = TestTUCUT; sourceTree = BUILT_PRODUCTS_DIR; };
+		3ED4129120FED29400BC7226 /* TestProtocolCompiler */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = TestProtocolCompiler; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		3E259DA920E3398E00F01379 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3E2F9C0C20FB7D0F008C90A9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3E2F9C1720FB7D8F008C90A9 /* libTUCUT.a in Frameworks */,
+				3E2F9C1D20FB7FED008C90A9 /* libboost_system-mt.dylib in Frameworks */,
+				3E2F9C1E20FB7FED008C90A9 /* libboost_filesystem-mt.dylib in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3ED4127120FED19500BC7226 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3ED4128A20FED22700BC7226 /* libTUCUT.a in Frameworks */,
+				3ED4128B20FED25800BC7226 /* libboost_filesystem-mt.dylib in Frameworks */,
+				3ED4128C20FED25800BC7226 /* libboost_system-mt.dylib in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3ED4128E20FED29400BC7226 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		3E259DA320E3398E00F01379 = {
+			isa = PBXGroup;
+			children = (
+				3E259DC020E33A5F00F01379 /* Protocol */,
+				3E259DBF20E33A4700F01379 /* Test */,
+				3E259DBE20E33A3900F01379 /* Log */,
+				3E259DBD20E33A2B00F01379 /* File */,
+				3E259DBC20E33A1C00F01379 /* Config */,
+				3E259DBB20E33A1100F01379 /* Text */,
+				3E259DBA20E339FD00F01379 /* Event */,
+				3E259DAD20E3398E00F01379 /* Products */,
+				3E2F9BFC20FAC92C008C90A9 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		3E259DAD20E3398E00F01379 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				3E259DAC20E3398E00F01379 /* libTUCUT.a */,
+				3E2F9C0F20FB7D0F008C90A9 /* ProtocolCompiler */,
+				3ED4127420FED19500BC7226 /* TestTUCUT */,
+				3ED4129120FED29400BC7226 /* TestProtocolCompiler */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		3E259DBA20E339FD00F01379 /* Event */ = {
+			isa = PBXGroup;
+			children = (
+				3E259DD920E33E5E00F01379 /* EventPublisher.h */,
+				3E259DD820E33E5E00F01379 /* EventSubscriber.h */,
+				3E259DC520E33DA600F01379 /* Tests */,
+			);
+			path = Event;
+			sourceTree = "<group>";
+		};
+		3E259DBB20E33A1100F01379 /* Text */ = {
+			isa = PBXGroup;
+			children = (
+				3E259DD420E33E5100F01379 /* TextUtil.cpp */,
+				3E259DD520E33E5100F01379 /* TextUtil.h */,
+				3E259DC420E33D9D00F01379 /* Tests */,
+			);
+			path = Text;
+			sourceTree = "<group>";
+		};
+		3E259DBC20E33A1C00F01379 /* Config */ = {
+			isa = PBXGroup;
+			children = (
+				3E259DD120E33E4300F01379 /* ConfigInfo.cpp */,
+				3E259DD020E33E4300F01379 /* ConfigInfo.h */,
+				3E259DC320E33D9400F01379 /* Tests */,
+			);
+			path = Config;
+			sourceTree = "<group>";
+		};
+		3E259DBD20E33A2B00F01379 /* File */ = {
+			isa = PBXGroup;
+			children = (
+				3E259DCD20E33E3800F01379 /* FileManager.cpp */,
+				3E259DCC20E33E3800F01379 /* FileManager.h */,
+				3E259DC220E33D8900F01379 /* Tests */,
+			);
+			path = File;
+			sourceTree = "<group>";
+		};
+		3E259DBE20E33A3900F01379 /* Log */ = {
+			isa = PBXGroup;
+			children = (
+				3E259DC820E33E2A00F01379 /* LogManager.cpp */,
+				3E259DC920E33E2A00F01379 /* LogManager.h */,
+				3E259DC120E33D6C00F01379 /* Tests */,
+			);
+			path = Log;
+			sourceTree = "<group>";
+		};
+		3E259DBF20E33A4700F01379 /* Test */ = {
+			isa = PBXGroup;
+			children = (
+				3E259EFB20E34C1100F01379 /* Test.h */,
+				3E259DC620E33DB200F01379 /* Tests */,
+			);
+			path = Test;
+			sourceTree = "<group>";
+		};
+		3E259DC020E33A5F00F01379 /* Protocol */ = {
+			isa = PBXGroup;
+			children = (
+				3E259E8F20E34BE400F01379 /* CodeGeneratorCPP.cpp */,
+				3E259E8120E34BE300F01379 /* CodeGeneratorCPP.h */,
+				3E259E7C20E34BE300F01379 /* CodeGeneratorInterface.h */,
+				3E259E8520E34BE300F01379 /* CodeGeneratorManager.cpp */,
+				3E259E8920E34BE400F01379 /* CodeGeneratorManager.h */,
+				3E259EAF20E34BE800F01379 /* CodeGeneratorPrologCPP.cpp */,
+				3E259E8620E34BE300F01379 /* CodeGeneratorUtilityCPP.h */,
+				3E259E8A20E34BE400F01379 /* CodeIndenter.h */,
+				3E259EAC20E34BE800F01379 /* CodeWriterCPP.h */,
+				3E259E8220E34BE300F01379 /* EnumModel.cpp */,
+				3E259EB520E34BE900F01379 /* EnumModel.h */,
+				3E259E7F20E34BE300F01379 /* EnumModelContainer.h */,
+				3E259E9A20E34BE600F01379 /* EnumParser.cpp */,
+				3E259E8B20E34BE400F01379 /* EnumParser.h */,
+				3E259E7920E34BE300F01379 /* EnumValueModel.cpp */,
+				3E259E8020E34BE300F01379 /* EnumValueModel.h */,
+				3E259E9020E34BE500F01379 /* EnumValueModelContainer.h */,
+				3E259EA920E34BE700F01379 /* EnumValueParser.cpp */,
+				3E259EB620E34BE900F01379 /* EnumValueParser.h */,
+				3E259E7E20E34BE300F01379 /* ImportParser.cpp */,
+				3E259EA620E34BE700F01379 /* ImportParser.h */,
+				3E259E9720E34BE500F01379 /* InvalidProtoException.h */,
+				3E259E8320E34BE300F01379 /* MessageFieldModel.cpp */,
+				3E259EB020E34BE800F01379 /* MessageFieldModel.h */,
+				3E259EB220E34BE800F01379 /* MessageFieldModelContainer.h */,
+				3E259E9B20E34BE600F01379 /* MessageFieldParser.cpp */,
+				3E259E8C20E34BE400F01379 /* MessageFieldParser.h */,
+				3E259EA220E34BE600F01379 /* MessageModel.cpp */,
+				3E259E9C20E34BE600F01379 /* MessageModel.h */,
+				3E259EB120E34BE800F01379 /* MessageModelContainer.h */,
+				3E259EA320E34BE700F01379 /* MessageParser.cpp */,
+				3E259E8820E34BE400F01379 /* MessageParser.h */,
+				3E259EAB20E34BE700F01379 /* Nameable.h */,
+				3E259E7D20E34BE300F01379 /* Nestable.h */,
+				3E259E7A20E34BE300F01379 /* OneofFieldParser.cpp */,
+				3E259EA420E34BE700F01379 /* OneofFieldParser.h */,
+				3E259E7B20E34BE300F01379 /* OneofModel.cpp */,
+				3E259EA120E34BE600F01379 /* OneofModel.h */,
+				3E259EA820E34BE700F01379 /* OneofModelContainer.h */,
+				3E259EB720E34BE900F01379 /* OneofParser.cpp */,
+				3E259EB420E34BE800F01379 /* OneofParser.h */,
+				3E259E9620E34BE500F01379 /* OptionGroupParser.cpp */,
+				3E259E9120E34BE500F01379 /* OptionGroupParser.h */,
+				3E259EA520E34BE700F01379 /* OptionModel.cpp */,
+				3E259EAA20E34BE700F01379 /* OptionModel.h */,
+				3E259E9920E34BE500F01379 /* OptionModelContainer.h */,
+				3E259EA720E34BE700F01379 /* OptionSingleParser.cpp */,
+				3E259E9220E34BE500F01379 /* OptionSingleParser.h */,
+				3E259E8720E34BE300F01379 /* OptionValueParser.cpp */,
+				3E259E9320E34BE500F01379 /* OptionValueParser.h */,
+				3E259E8D20E34BE400F01379 /* Packageable.h */,
+				3E259E9820E34BE500F01379 /* PackageParser.cpp */,
+				3E259E9F20E34BE600F01379 /* PackageParser.h */,
+				3E259E8E20E34BE400F01379 /* ParserInterface.h */,
+				3E259E8420E34BE300F01379 /* ParserManager.cpp */,
+				3E259EA020E34BE600F01379 /* ParserManager.h */,
+				3E259EB320E34BE800F01379 /* ProtoBaseTemplateCPP.h */,
+				3E259EAD20E34BE800F01379 /* ProtoModel.cpp */,
+				3E259E9420E34BE500F01379 /* ProtoModel.h */,
+				3E259EAE20E34BE800F01379 /* ProtoParser.cpp */,
+				3E259E9520E34BE500F01379 /* ProtoParser.h */,
+				3E259E9E20E34BE600F01379 /* TokenReader.cpp */,
+				3E259E9D20E34BE600F01379 /* TokenReader.h */,
+				3E259DDC20E3457400F01379 /* Compiler */,
+				3E259DC720E33DBF00F01379 /* Tests */,
+			);
+			path = Protocol;
+			sourceTree = "<group>";
+		};
+		3E259DC120E33D6C00F01379 /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Tests;
+			sourceTree = "<group>";
+		};
+		3E259DC220E33D8900F01379 /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Tests;
+			sourceTree = "<group>";
+		};
+		3E259DC320E33D9400F01379 /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Tests;
+			sourceTree = "<group>";
+		};
+		3E259DC420E33D9D00F01379 /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Tests;
+			sourceTree = "<group>";
+		};
+		3E259DC520E33DA600F01379 /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Tests;
+			sourceTree = "<group>";
+		};
+		3E259DC620E33DB200F01379 /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				3E259EF720E34C0500F01379 /* main.cpp */,
+				3E259EF820E34C0500F01379 /* UnitScenarios.cpp */,
+			);
+			path = Tests;
+			sourceTree = "<group>";
+		};
+		3E259DC720E33DBF00F01379 /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				3E259E6420E34BA700F01379 /* CodeGeneratorCPPScenarios.cpp */,
+				3E259E5D20E34BA600F01379 /* CodeGeneratorManagerScenarios.cpp */,
+				3E259E6120E34BA600F01379 /* EnumParserScenarios.cpp */,
+				3E259E5F20E34BA600F01379 /* EnumValueParserScenarios.cpp */,
+				3E259E6020E34BA600F01379 /* ImportParserScenarios.cpp */,
+				3E259E6720E34BA700F01379 /* MessageFieldParserScenarios.cpp */,
+				3E259E6320E34BA600F01379 /* MessageParserScenarios.cpp */,
+				3E259E6620E34BA700F01379 /* OneofParserScenarios.cpp */,
+				3E259E6A20E34BA700F01379 /* OptionParserScenarios.cpp */,
+				3E259E6820E34BA700F01379 /* PackageParserScenarios.cpp */,
+				3E259E6520E34BA700F01379 /* ProtoModelScenarios.cpp */,
+				3E259E6920E34BA700F01379 /* ProtoParserScenarios.cpp */,
+				3E259E6220E34BA600F01379 /* TokenReaderScenarios.cpp */,
+				3E259DDD20E3464C00F01379 /* Messages */,
+			);
+			path = Tests;
+			sourceTree = "<group>";
+		};
+		3E259DDC20E3457400F01379 /* Compiler */ = {
+			isa = PBXGroup;
+			children = (
+				3E259DE120E34AFD00F01379 /* main.cpp */,
+				3E259DE020E34A2000F01379 /* Tests */,
+			);
+			path = Compiler;
+			sourceTree = "<group>";
+		};
+		3E259DDD20E3464C00F01379 /* Messages */ = {
+			isa = PBXGroup;
+			children = (
+				3E259E4120E34B7C00F01379 /* Empty.proto */,
+				3E259E4220E34B7C00F01379 /* EmptyComment.proto */,
+				3E259E3E20E34B7B00F01379 /* EmptyCommentMultiLine.proto */,
+				3E259E5620E34B7E00F01379 /* EmptyCommentMultiLineEOF.proto */,
+				3E259E3D20E34B7B00F01379 /* EmptyCommentSingleLine.proto */,
+				3E259E3520E34B7A00F01379 /* EmptyCommentSingleLineEOF.proto */,
+				3E259E5A20E34B7E00F01379 /* Enum.proto */,
+				3E259E2620E34B7900F01379 /* EnumMultiple.proto */,
+				3E259E4A20E34B7D00F01379 /* EnumMultipleMessage.proto */,
+				3E259E2E20E34B7A00F01379 /* EnumMultiplePackage.proto */,
+				3E259E4920E34B7C00F01379 /* EnumValue.proto */,
+				3E259E4D20E34B7D00F01379 /* EnumValueMultipleMessage.proto */,
+				3E259E5420E34B7E00F01379 /* ImportNone.proto */,
+				3E259E3720E34B7B00F01379 /* ImportPrivate.proto */,
+				3E259E2720E34B7900F01379 /* ImportPublic.proto */,
+				3E259E2F20E34B7A00F01379 /* Message.proto */,
+				3E259E3120E34B7A00F01379 /* MessageAllFields.proto */,
+				3E259E5B20E34B7E00F01379 /* MessageComment.proto */,
+				3E259E3F20E34B7B00F01379 /* MessageEverything.proto */,
+				3E259E4620E34B7C00F01379 /* MessageField.proto */,
+				3E259E3320E34B7A00F01379 /* MessageFieldMultiple.proto */,
+				3E259E3220E34B7A00F01379 /* MessageFieldQualified.proto */,
+				3E259E2A20E34B7A00F01379 /* MessageFieldReference.proto */,
+				3E259E5C20E34B7F00F01379 /* MessageMultiple.proto */,
+				3E259E5720E34B7E00F01379 /* MessageMultiplePackage.proto */,
+				3E259E5120E34B7D00F01379 /* MessageNamespace.proto */,
+				3E259E3020E34B7A00F01379 /* MessageNested.proto */,
+				3E259E5820E34B7E00F01379 /* MessageOneof.proto */,
+				3E259E5520E34B7E00F01379 /* MessageOneofMultiple.proto */,
+				3E259E4B20E34B7D00F01379 /* MessageOneofQualified.proto */,
+				3E259E4720E34B7C00F01379 /* MessageWhitespace.proto */,
+				3E259E4320E34B7C00F01379 /* OptionEnum.proto */,
+				3E259E4E20E34B7D00F01379 /* OptionEnumValue.proto */,
+				3E259E5020E34B7D00F01379 /* OptionMessage.proto */,
+				3E259E4C20E34B7D00F01379 /* OptionMessageField.proto */,
+				3E259E4520E34B7C00F01379 /* OptionOneof.proto */,
+				3E259E5320E34B7D00F01379 /* OptionOneofField.proto */,
+				3E259E2820E34B7A00F01379 /* OptionProto.proto */,
+				3E259E3B20E34B7B00F01379 /* OptionValueFloat.proto */,
+				3E259E4820E34B7C00F01379 /* OptionValueString.proto */,
+				3E259E2D20E34B7A00F01379 /* Package.proto */,
+				3E259E3620E34B7A00F01379 /* PackageRedefined.proto */,
+				3E259E3420E34B7A00F01379 /* Text.proto */,
+				3E259E3820E34B7B00F01379 /* TextCommentMultiLine.proto */,
+				3E259E3C20E34B7B00F01379 /* TextCommentMultiLineEOF.proto */,
+				3E259E4420E34B7C00F01379 /* TextCommentNoSpace.proto */,
+				3E259E4020E34B7B00F01379 /* TextCommentSingleLine.proto */,
+				3E259E2C20E34B7A00F01379 /* TextCommentSingleLineEOF.proto */,
+				3E259E5220E34B7D00F01379 /* TextDelimiterMultiple.proto */,
+				3E259E5920E34B7E00F01379 /* TextString.proto */,
+				3E259E2B20E34B7A00F01379 /* TextStringEmpty.proto */,
+				3E259E2920E34B7A00F01379 /* TextStringEndingEscape.proto */,
+				3E259E3920E34B7B00F01379 /* TextStringEndingQuote.proto */,
+				3E259E3A20E34B7B00F01379 /* TextStringEOF.proto */,
+				3E259E4F20E34B7D00F01379 /* TextStringMultiLine.proto */,
+				3E259E2520E34B7900F01379 /* TextWhitespace.proto */,
+				3E259DDE20E347CB00F01379 /* Generated */,
+			);
+			path = Messages;
+			sourceTree = "<group>";
+		};
+		3E259DDE20E347CB00F01379 /* Generated */ = {
+			isa = PBXGroup;
+			children = (
+				3E1F75C420FEFBE400028734 /* EnumMultipleMessage.protocol.cpp */,
+				3E1F75C520FEFBE400028734 /* EnumMultipleMessage.protocol.h */,
+				3E259DFF20E34B4A00F01379 /* Empty.protocol.cpp */,
+				3E259DFC20E34B4900F01379 /* Empty.protocol.h */,
+				3E259DEC20E34B4800F01379 /* EnumMultiple.protocol.cpp */,
+				3E259DF320E34B4900F01379 /* EnumMultiple.protocol.h */,
+				3E259E0420E34B4A00F01379 /* EnumMultiplePackage.protocol.cpp */,
+				3E259E0020E34B4A00F01379 /* EnumMultiplePackage.protocol.h */,
+				3E259DEE20E34B4900F01379 /* EnumValue.protocol.cpp */,
+				3E259DF520E34B4900F01379 /* EnumValue.protocol.h */,
+				3E259DFA20E34B4900F01379 /* ImportPublic.protocol.cpp */,
+				3E259DF120E34B4900F01379 /* ImportPublic.protocol.h */,
+				3E259E0620E34B4A00F01379 /* Message.protocol.cpp */,
+				3E259DF020E34B4900F01379 /* Message.protocol.h */,
+				3E259DF620E34B4900F01379 /* MessageAllFields.protocol.cpp */,
+				3E259DFB20E34B4900F01379 /* MessageAllFields.protocol.h */,
+				3E259E0120E34B4A00F01379 /* MessageField.protocol.cpp */,
+				3E259DF220E34B4900F01379 /* MessageField.protocol.h */,
+				3E259E0720E34B4A00F01379 /* MessageFieldReference.protocol.cpp */,
+				3E259E0220E34B4A00F01379 /* MessageFieldReference.protocol.h */,
+				3E259DF720E34B4900F01379 /* MessageMultiplePackage.protocol.cpp */,
+				3E259DED20E34B4800F01379 /* MessageMultiplePackage.protocol.h */,
+				3E259E0320E34B4A00F01379 /* MessageNamespace.protocol.cpp */,
+				3E259DF420E34B4900F01379 /* MessageNamespace.protocol.h */,
+				3E259DFD20E34B4900F01379 /* MessageNested.protocol.cpp */,
+				3E259DEF20E34B4900F01379 /* MessageNested.protocol.h */,
+				3E259E0520E34B4A00F01379 /* MessageOneof.protocol.cpp */,
+				3E259DF920E34B4900F01379 /* MessageOneof.protocol.h */,
+				3E259DEB20E34B4800F01379 /* MessageOneofMultiple.protocol.cpp */,
+				3E259DF820E34B4900F01379 /* MessageOneofMultiple.protocol.h */,
+				3E259DFE20E34B4900F01379 /* ProtoBase.protocol.h */,
+			);
+			path = Generated;
+			sourceTree = "<group>";
+		};
+		3E259DE020E34A2000F01379 /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				3E259DE320E34B1900F01379 /* main.cpp */,
+				3E259DE620E34B1A00F01379 /* MessageEmptyScenarios.cpp */,
+				3E259DE520E34B1900F01379 /* MessageFieldScenarios.cpp */,
+				3E259DE420E34B1900F01379 /* MessageOneofScenarios.cpp */,
+			);
+			path = Tests;
+			sourceTree = "<group>";
+		};
+		3E2F9BFC20FAC92C008C90A9 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				3E2F9C1C20FB7FEC008C90A9 /* libboost_filesystem-mt.dylib */,
+				3E2F9C1B20FB7FEC008C90A9 /* libboost_system-mt.dylib */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		3E259DAA20E3398E00F01379 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3E259EE320E34BE900F01379 /* OneofFieldParser.h in Headers */,
+				3E259ECB20E34BE900F01379 /* MessageFieldParser.h in Headers */,
+				3E259ECA20E34BE900F01379 /* EnumParser.h in Headers */,
+				3E259ED820E34BE900F01379 /* OptionModelContainer.h in Headers */,
+				3E259EE520E34BE900F01379 /* ImportParser.h in Headers */,
+				3E259ED620E34BE900F01379 /* InvalidProtoException.h in Headers */,
+				3E259EEF20E34BE900F01379 /* MessageFieldModel.h in Headers */,
+				3E259ECD20E34BE900F01379 /* ParserInterface.h in Headers */,
+				3E259EBB20E34BE900F01379 /* CodeGeneratorInterface.h in Headers */,
+				3E259EC520E34BE900F01379 /* CodeGeneratorUtilityCPP.h in Headers */,
+				3E259DCE20E33E3800F01379 /* FileManager.h in Headers */,
+				3E259EC020E34BE900F01379 /* CodeGeneratorCPP.h in Headers */,
+				3E259EDF20E34BE900F01379 /* ParserManager.h in Headers */,
+				3E259EF020E34BE900F01379 /* MessageModelContainer.h in Headers */,
+				3E259EC920E34BE900F01379 /* CodeIndenter.h in Headers */,
+				3E259EBF20E34BE900F01379 /* EnumValueModel.h in Headers */,
+				3E259DD220E33E4300F01379 /* ConfigInfo.h in Headers */,
+				3E259ED320E34BE900F01379 /* ProtoModel.h in Headers */,
+				3E259ED120E34BE900F01379 /* OptionSingleParser.h in Headers */,
+				3E259DDB20E33E5E00F01379 /* EventPublisher.h in Headers */,
+				3E259EBE20E34BE900F01379 /* EnumModelContainer.h in Headers */,
+				3E259ED220E34BE900F01379 /* OptionValueParser.h in Headers */,
+				3E259EC720E34BE900F01379 /* MessageParser.h in Headers */,
+				3E259ED020E34BE900F01379 /* OptionGroupParser.h in Headers */,
+				3E259EF320E34BE900F01379 /* OneofParser.h in Headers */,
+				3E259EFC20E34C1200F01379 /* Test.h in Headers */,
+				3E259EF420E34BE900F01379 /* EnumModel.h in Headers */,
+				3E259EEA20E34BE900F01379 /* Nameable.h in Headers */,
+				3E259EBC20E34BE900F01379 /* Nestable.h in Headers */,
+				3E259EE920E34BE900F01379 /* OptionModel.h in Headers */,
+				3E259EC820E34BE900F01379 /* CodeGeneratorManager.h in Headers */,
+				3E259ED420E34BE900F01379 /* ProtoParser.h in Headers */,
+				3E259DDA20E33E5E00F01379 /* EventSubscriber.h in Headers */,
+				3E1F75C720FEFBE400028734 /* EnumMultipleMessage.protocol.h in Headers */,
+				3E259EDB20E34BE900F01379 /* MessageModel.h in Headers */,
+				3E259EDC20E34BE900F01379 /* TokenReader.h in Headers */,
+				3E259EEB20E34BE900F01379 /* CodeWriterCPP.h in Headers */,
+				3E259DCB20E33E2B00F01379 /* LogManager.h in Headers */,
+				3E259EF220E34BE900F01379 /* ProtoBaseTemplateCPP.h in Headers */,
+				3E259EE720E34BE900F01379 /* OneofModelContainer.h in Headers */,
+				3E259ECF20E34BE900F01379 /* EnumValueModelContainer.h in Headers */,
+				3E259EF520E34BE900F01379 /* EnumValueParser.h in Headers */,
+				3E259EF120E34BE900F01379 /* MessageFieldModelContainer.h in Headers */,
+				3E259DD720E33E5100F01379 /* TextUtil.h in Headers */,
+				3E259ECC20E34BE900F01379 /* Packageable.h in Headers */,
+				3E259EDE20E34BE900F01379 /* PackageParser.h in Headers */,
+				3E259EE020E34BE900F01379 /* OneofModel.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		3E259DAB20E3398E00F01379 /* TUCUT */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3E259DB720E3398E00F01379 /* Build configuration list for PBXNativeTarget "TUCUT" */;
+			buildPhases = (
+				3E259DA820E3398E00F01379 /* Sources */,
+				3E259DA920E3398E00F01379 /* Frameworks */,
+				3E259DAA20E3398E00F01379 /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = TUCUT;
+			productName = TUCUT;
+			productReference = 3E259DAC20E3398E00F01379 /* libTUCUT.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+		3E2F9C0E20FB7D0F008C90A9 /* ProtocolCompiler */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3E2F9C1320FB7D0F008C90A9 /* Build configuration list for PBXNativeTarget "ProtocolCompiler" */;
+			buildPhases = (
+				3E2F9C0B20FB7D0F008C90A9 /* Sources */,
+				3E2F9C0C20FB7D0F008C90A9 /* Frameworks */,
+				3E2F9C0D20FB7D0F008C90A9 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ProtocolCompiler;
+			productName = ProtocolCompiler;
+			productReference = 3E2F9C0F20FB7D0F008C90A9 /* ProtocolCompiler */;
+			productType = "com.apple.product-type.tool";
+		};
+		3ED4127320FED19500BC7226 /* TestTUCUT */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3ED4127820FED19500BC7226 /* Build configuration list for PBXNativeTarget "TestTUCUT" */;
+			buildPhases = (
+				3ED4127020FED19500BC7226 /* Sources */,
+				3ED4127120FED19500BC7226 /* Frameworks */,
+				3ED4127220FED19500BC7226 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = TestTUCUT;
+			productName = TestTUCUT;
+			productReference = 3ED4127420FED19500BC7226 /* TestTUCUT */;
+			productType = "com.apple.product-type.tool";
+		};
+		3ED4129020FED29400BC7226 /* TestProtocolCompiler */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3ED4129520FED29400BC7226 /* Build configuration list for PBXNativeTarget "TestProtocolCompiler" */;
+			buildPhases = (
+				3ED4128D20FED29400BC7226 /* Sources */,
+				3ED4128E20FED29400BC7226 /* Frameworks */,
+				3ED4128F20FED29400BC7226 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = TestProtocolCompiler;
+			productName = TestProtocolCompiler;
+			productReference = 3ED4129120FED29400BC7226 /* TestProtocolCompiler */;
+			productType = "com.apple.product-type.tool";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		3E259DA420E3398E00F01379 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0920;
+				ORGANIZATIONNAME = "Take Up Code";
+				TargetAttributes = {
+					3E259DAB20E3398E00F01379 = {
+						CreatedOnToolsVersion = 9.2;
+						ProvisioningStyle = Automatic;
+					};
+					3E2F9C0E20FB7D0F008C90A9 = {
+						CreatedOnToolsVersion = 9.2;
+						ProvisioningStyle = Automatic;
+					};
+					3ED4127320FED19500BC7226 = {
+						CreatedOnToolsVersion = 9.2;
+						ProvisioningStyle = Automatic;
+					};
+					3ED4129020FED29400BC7226 = {
+						CreatedOnToolsVersion = 9.2;
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = 3E259DA720E3398E00F01379 /* Build configuration list for PBXProject "TUCUT" */;
+			compatibilityVersion = "Xcode 8.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 3E259DA320E3398E00F01379;
+			productRefGroup = 3E259DAD20E3398E00F01379 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				3E259DAB20E3398E00F01379 /* TUCUT */,
+				3E2F9C0E20FB7D0F008C90A9 /* ProtocolCompiler */,
+				3ED4127320FED19500BC7226 /* TestTUCUT */,
+				3ED4129020FED29400BC7226 /* TestProtocolCompiler */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		3E259DA820E3398E00F01379 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3E259DD620E33E5100F01379 /* TextUtil.cpp in Sources */,
+				3E259ED720E34BE900F01379 /* PackageParser.cpp in Sources */,
+				3E259ED920E34BE900F01379 /* EnumParser.cpp in Sources */,
+				3E259EC120E34BE900F01379 /* EnumModel.cpp in Sources */,
+				3E259EED20E34BE900F01379 /* ProtoParser.cpp in Sources */,
+				3E259EDD20E34BE900F01379 /* TokenReader.cpp in Sources */,
+				3E1F75C620FEFBE400028734 /* EnumMultipleMessage.protocol.cpp in Sources */,
+				3E259EE420E34BE900F01379 /* OptionModel.cpp in Sources */,
+				3E259EC320E34BE900F01379 /* ParserManager.cpp in Sources */,
+				3E259EE120E34BE900F01379 /* MessageModel.cpp in Sources */,
+				3E259DCA20E33E2B00F01379 /* LogManager.cpp in Sources */,
+				3E259EBD20E34BE900F01379 /* ImportParser.cpp in Sources */,
+				3E259EEC20E34BE900F01379 /* ProtoModel.cpp in Sources */,
+				3E259DD320E33E4300F01379 /* ConfigInfo.cpp in Sources */,
+				3E259EE220E34BE900F01379 /* MessageParser.cpp in Sources */,
+				3E259EF620E34BE900F01379 /* OneofParser.cpp in Sources */,
+				3E259ED520E34BE900F01379 /* OptionGroupParser.cpp in Sources */,
+				3E259EBA20E34BE900F01379 /* OneofModel.cpp in Sources */,
+				3E259EC620E34BE900F01379 /* OptionValueParser.cpp in Sources */,
+				3E259EB820E34BE900F01379 /* EnumValueModel.cpp in Sources */,
+				3E259EC420E34BE900F01379 /* CodeGeneratorManager.cpp in Sources */,
+				3E259ECE20E34BE900F01379 /* CodeGeneratorCPP.cpp in Sources */,
+				3E259EDA20E34BE900F01379 /* MessageFieldParser.cpp in Sources */,
+				3E259EB920E34BE900F01379 /* OneofFieldParser.cpp in Sources */,
+				3E259EE820E34BE900F01379 /* EnumValueParser.cpp in Sources */,
+				3E259EE620E34BE900F01379 /* OptionSingleParser.cpp in Sources */,
+				3E259DCF20E33E3800F01379 /* FileManager.cpp in Sources */,
+				3E259EC220E34BE900F01379 /* MessageFieldModel.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3E2F9C0B20FB7D0F008C90A9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3E2F9C1620FB7D80008C90A9 /* main.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3ED4127020FED19500BC7226 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3ED4127B20FED1FB00BC7226 /* CodeGeneratorCPPScenarios.cpp in Sources */,
+				3ED4127C20FED1FB00BC7226 /* CodeGeneratorManagerScenarios.cpp in Sources */,
+				3ED4127D20FED1FB00BC7226 /* EnumParserScenarios.cpp in Sources */,
+				3ED4127E20FED1FB00BC7226 /* EnumValueParserScenarios.cpp in Sources */,
+				3ED4127F20FED1FB00BC7226 /* ImportParserScenarios.cpp in Sources */,
+				3ED4128020FED1FB00BC7226 /* MessageFieldParserScenarios.cpp in Sources */,
+				3ED4128120FED1FB00BC7226 /* MessageParserScenarios.cpp in Sources */,
+				3ED4128220FED1FB00BC7226 /* OneofParserScenarios.cpp in Sources */,
+				3ED4128320FED1FB00BC7226 /* OptionParserScenarios.cpp in Sources */,
+				3ED4128420FED1FB00BC7226 /* PackageParserScenarios.cpp in Sources */,
+				3ED4128520FED1FB00BC7226 /* ProtoModelScenarios.cpp in Sources */,
+				3ED4128620FED1FB00BC7226 /* ProtoParserScenarios.cpp in Sources */,
+				3ED4128720FED1FB00BC7226 /* TokenReaderScenarios.cpp in Sources */,
+				3ED4128820FED1FB00BC7226 /* main.cpp in Sources */,
+				3ED4128920FED1FB00BC7226 /* UnitScenarios.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3ED4128D20FED29400BC7226 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3E1F75C920FEFF8E00028734 /* MessageOneof.protocol.cpp in Sources */,
+				3ED412A120FED37800BC7226 /* Message.protocol.cpp in Sources */,
+				3ED412A220FED37800BC7226 /* MessageAllFields.protocol.cpp in Sources */,
+				3ED412A320FED37800BC7226 /* MessageField.protocol.cpp in Sources */,
+				3ED4129820FED2E300BC7226 /* main.cpp in Sources */,
+				3ED4129920FED2E300BC7226 /* MessageEmptyScenarios.cpp in Sources */,
+				3ED4129A20FED2E300BC7226 /* MessageFieldScenarios.cpp in Sources */,
+				3ED4129B20FED2E300BC7226 /* MessageOneofScenarios.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		3E259DB520E3398E00F01379 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = /opt/local/include;
+				LIBRARY_SEARCH_PATHS = /opt/local/lib;
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				SYSTEM_HEADER_SEARCH_PATHS = /opt/local/include;
+			};
+			name = Debug;
+		};
+		3E259DB620E3398E00F01379 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = /opt/local/include;
+				LIBRARY_SEARCH_PATHS = /opt/local/lib;
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = macosx;
+				SYSTEM_HEADER_SEARCH_PATHS = /opt/local/include;
+			};
+			name = Release;
+		};
+		3E259DB820E3398E00F01379 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				EXECUTABLE_PREFIX = lib;
+				GCC_ENABLE_CPP_EXCEPTIONS = YES;
+				GCC_ENABLE_CPP_RTTI = YES;
+				HEADER_SEARCH_PATHS = "$(inherited)";
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SYSTEM_HEADER_SEARCH_PATHS = "$(inherited)";
+			};
+			name = Debug;
+		};
+		3E259DB920E3398E00F01379 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				EXECUTABLE_PREFIX = lib;
+				GCC_ENABLE_CPP_EXCEPTIONS = YES;
+				GCC_ENABLE_CPP_RTTI = YES;
+				HEADER_SEARCH_PATHS = "$(inherited)";
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SYSTEM_HEADER_SEARCH_PATHS = "$(inherited)";
+			};
+			name = Release;
+		};
+		3E2F9C1420FB7D0F008C90A9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		3E2F9C1520FB7D0F008C90A9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		3ED4127920FED19500BC7226 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		3ED4127A20FED19500BC7226 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		3ED4129620FED29400BC7226 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		3ED4129720FED29400BC7226 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		3E259DA720E3398E00F01379 /* Build configuration list for PBXProject "TUCUT" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3E259DB520E3398E00F01379 /* Debug */,
+				3E259DB620E3398E00F01379 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		3E259DB720E3398E00F01379 /* Build configuration list for PBXNativeTarget "TUCUT" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3E259DB820E3398E00F01379 /* Debug */,
+				3E259DB920E3398E00F01379 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		3E2F9C1320FB7D0F008C90A9 /* Build configuration list for PBXNativeTarget "ProtocolCompiler" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3E2F9C1420FB7D0F008C90A9 /* Debug */,
+				3E2F9C1520FB7D0F008C90A9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		3ED4127820FED19500BC7226 /* Build configuration list for PBXNativeTarget "TestTUCUT" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3ED4127920FED19500BC7226 /* Debug */,
+				3ED4127A20FED19500BC7226 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		3ED4129520FED29400BC7226 /* Build configuration list for PBXNativeTarget "TestProtocolCompiler" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3ED4129620FED29400BC7226 /* Debug */,
+				3ED4129720FED29400BC7226 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 3E259DA420E3398E00F01379 /* Project object */;
+}

@@ -1,0 +1,54 @@
+package Abc.Def;
+
+enum EarlyMeals
+{
+    breakfast = 0;
+    brunch = 1;
+}
+
+package Abc;
+
+message MessageOne
+{
+    message MessageQrs
+    {
+        optional MessageTuv embeddedTuv = 0;
+    }
+
+    message MessageTuv
+    {
+        optional MessageQrs embeddedQrs = 0;
+    }
+
+    required Def.EarlyMeals early = 0;
+    optional MidMeals middle = 1;
+    optional W.Xyz.LateMeals late = 2;
+    required MessageTwo two = 3;
+    required MessageTwo.EnumMealTime time = 4;
+}
+
+enum MidMeals
+{
+    lunch = 0;
+}
+
+message MessageTwo
+{
+    enum EnumMealTime
+    {
+        early = 0;
+        mid = 1;
+        late = 2;
+    }
+
+    required Abc.Def.EarlyMeals earlyTwo = 0;
+    repeated MidMeals middleTwo = 1;
+}
+
+package W.Xyz;
+
+enum LateMeals
+{
+    dinner = 0;
+    supper = 1;
+}

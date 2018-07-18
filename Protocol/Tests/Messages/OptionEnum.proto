@@ -1,0 +1,6 @@
+enum enumOne
+{
+    option optionOne = true;
+    empty = 0;
+    full = 1;
+}

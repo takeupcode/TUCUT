@@ -1,0 +1,32 @@
+//
+//  ProtoModelScenarios.cpp
+//  TUCUT
+//
+//  Created by Wahid Tanner on 9/24/14.
+//  Copyright © 2018 Take Up Code. All rights reserved.
+//
+
+#include <string>
+
+#include "../../Test/Test.h"
+
+#include "../ProtoModel.h"
+
+using namespace std;
+using namespace TUCUT;
+
+SCENARIO( ProtoModel, "Construction/Normal", "ProtoModel can be constructed." )
+{
+    Protocol::ProtoModel model("test.proto");
+
+    verifyEqual("", model.package());
+}
+
+SCENARIO( ProtoModel, "Operation/Properties", "ProtoModel knows current package." )
+{
+    Protocol::ProtoModel model("test.proto");
+    string package = "TUCUT.Protocol";
+
+    model.setPackage(package);
+    verifyEqual(package, model.package());
+}

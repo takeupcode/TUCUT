@@ -1,0 +1,11 @@
+message messageOne
+{
+    required string sOne = 1;
+
+    message messageTwo
+    {
+        optional string sTwo = 1;
+    }
+
+    repeated bool bOne = 2;
+}

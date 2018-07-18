@@ -1,0 +1,11 @@
+package abc;
+
+enum one
+{
+}
+
+package def;
+
+enum two
+{
+}

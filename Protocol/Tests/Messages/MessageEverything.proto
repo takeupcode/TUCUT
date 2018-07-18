@@ -1,0 +1,69 @@
+import public "MessageNamespace.proto";
+
+package Uv.W.Xyz;
+
+message M1
+{
+    oneof choices
+    {
+        string str = 1;
+        bool b = 200; // Numbering does not need to be sequential.
+    }
+}
+
+package Uv; // Package declaration redefinitions are supported in this implementation.
+
+message M2
+{
+    message M3
+    {
+        required Abc.Def.Simple s = 1; // Imported from MessageNamespace.proto
+    }
+
+    enum E1 // This is an enum.
+    {
+        option allow_alias = true;
+        None = 0; // Nothing here.
+        All = 1;
+        Everything = 1;
+    }
+
+    /*
+    enum E2
+    {
+        A = 0;
+        B = 1;
+    }
+    */
+
+    required M1 msg1 = 1;
+    optional M3 msg3 = 2;
+    optional E1 e1 = 3 [default = None];
+    optional double d1 = 4 [default = 3.14];
+    optional float f1 = 5;
+    repeated int32 i1 = 6 [packed = true];
+    optional int64 i64 = 7;
+    optional uint32 ui32 = 8;
+    optional uint64 ui64 = 9;
+    optional sint32 si32 = 10;
+    optional sint64 si64 = 11;
+    optional fixed32 fx32 = 12;
+    optional fixed64 fx64 = 13;
+    optional sfixed32 sfx32 = 14;
+    optional sfixed64 sfx64 = 15;
+    optional bool b = 16;
+    required string str1 = 17; // Required fields can be anywhere.
+    optional bytes bts = 18;
+    optional E3 e3 = 19;
+}
+
+enum E3
+{
+    Good = 0;
+    Better = 1;
+}
+
+message M4
+{
+    repeated M2.M3 msg23 = 1;
+}

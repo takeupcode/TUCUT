@@ -1,0 +1,6 @@
+package Abc.Def;
+
+message Simple
+{
+    required string a = 1;
+}

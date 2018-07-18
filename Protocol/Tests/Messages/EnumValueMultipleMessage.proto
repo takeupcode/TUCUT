@@ -1,0 +1,29 @@
+enum enumZero1
+{
+    abc = 5; // The values do not need to start at 0.
+    def = 10;
+}
+
+message messageOne
+{
+    enum enumOne
+    {
+        and = 0;
+        or = 1;
+        xor = 2;
+    }
+
+    message messageTwo
+    {
+        enum enumTwo
+        {
+            true = 1;
+            false = 0; // The values do not need to be in order.
+        }
+    }
+}
+
+enum enumZero2
+{
+    ghi = 15; // It's okay to have just one value.
+}

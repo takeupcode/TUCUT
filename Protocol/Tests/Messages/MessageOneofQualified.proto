@@ -1,0 +1,7 @@
+message messageOne
+{
+    oneof choicesOne
+    {
+        Abc.Simple sOne = 1;
+    }
+}

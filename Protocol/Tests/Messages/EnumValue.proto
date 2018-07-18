@@ -1,0 +1,5 @@
+enum enumOne
+{
+    empty = 0;
+    full = 1;
+}

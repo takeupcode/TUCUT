@@ -1,0 +1,6 @@
+message messageOne
+{
+    required string sOne = 1;
+    optional bool bOne = 2;
+    repeated int32 iOne = 3;
+}

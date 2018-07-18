@@ -1,0 +1,6 @@
+/* A multi-line comment;
+ * // Still the same comment
+ * "string comment"
+ * [more comments]
+ * {and more}
+ */

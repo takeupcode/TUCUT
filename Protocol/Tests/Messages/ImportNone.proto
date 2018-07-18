@@ -1,0 +1,7 @@
+message LocalMessage
+{
+}
+
+enum LocalEnum
+{
+}

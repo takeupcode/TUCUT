@@ -1,0 +1,5 @@
+message messageOne
+{
+    required string sOne = 1 [optionOne = true];
+    optional bool bOne = 2;
+}

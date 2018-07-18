@@ -1,0 +1,9 @@
+message messageOneof
+{
+    oneof choicesOneof
+    {
+        string sOne = 1;
+        bool bOne = 2;
+        int32 iOne = 3;
+    }
+}
