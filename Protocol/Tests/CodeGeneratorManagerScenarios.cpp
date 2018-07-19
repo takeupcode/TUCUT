@@ -15,14 +15,14 @@
 using namespace std;
 using namespace TUCUT;
 
-SCENARIO( CodeGeneratorManager, "Construction/Normal", "CodeGeneratorManager can be constructed." )
+SCENARIO( CodeGeneratorManager, "Construction/Normal", "unit", "CodeGeneratorManager can be constructed." )
 {
     Protocol::CodeGeneratorManager * pManager = Protocol::CodeGeneratorManager::instance();
 
     verifyTrue(pManager != nullptr);
 }
 
-SCENARIO( CodeGeneratorManager, "Construction/Normal", "CodeGeneratorManager cannot construct unknown generators." )
+SCENARIO( CodeGeneratorManager, "Construction/Normal", "unit", "CodeGeneratorManager cannot construct unknown generators." )
 {
     Protocol::CodeGeneratorManager * pManager = Protocol::CodeGeneratorManager::instance();
 
@@ -33,7 +33,7 @@ SCENARIO( CodeGeneratorManager, "Construction/Normal", "CodeGeneratorManager can
     verifyTrue(generator == nullptr);
 }
 
-SCENARIO( CodeGeneratorManager, "Construction/Normal", "CodeGeneratorManager can construct CPP generator." )
+SCENARIO( CodeGeneratorManager, "Construction/Normal", "unit", "CodeGeneratorManager can construct CPP generator." )
 {
     Protocol::CodeGeneratorManager * pManager = Protocol::CodeGeneratorManager::instance();
 

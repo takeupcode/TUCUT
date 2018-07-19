@@ -18,14 +18,14 @@
 using namespace std;
 using namespace TUCUT;
 
-SCENARIO( OptionParser, "Construction/Normal", "OptionParser can be constructed." )
+SCENARIO( OptionParser, "Construction/Normal", "unit", "OptionParser can be constructed." )
 {
     Protocol::OptionGroupParser groupParser;
     Protocol::OptionSingleParser singleParser;
     Protocol::OptionValueParser valueParser;
 }
 
-SCENARIO( OptionParser, "Parsing/Normal", "OptionParser can parse enum option." )
+SCENARIO( OptionParser, "Parsing/Normal", "unit", "OptionParser can parse enum option." )
 {
     shared_ptr<Protocol::ProtoModel> model;
     Protocol::ProtoParser parser("OptionEnum.proto");
@@ -57,7 +57,7 @@ SCENARIO( OptionParser, "Parsing/Normal", "OptionParser can parse enum option." 
     verifyEqual(1, enumCount);
 }
 
-SCENARIO( OptionParser, "Parsing/Normal", "OptionParser can parse enum value option." )
+SCENARIO( OptionParser, "Parsing/Normal", "unit", "OptionParser can parse enum value option." )
 {
     shared_ptr<Protocol::ProtoModel> model;
     Protocol::ProtoParser parser("OptionEnumValue.proto");
@@ -113,7 +113,7 @@ SCENARIO( OptionParser, "Parsing/Normal", "OptionParser can parse enum value opt
     verifyEqual(1, enumCount);
 }
 
-SCENARIO( OptionParser, "Parsing/Normal", "OptionParser can parse message option." )
+SCENARIO( OptionParser, "Parsing/Normal", "unit", "OptionParser can parse message option." )
 {
     shared_ptr<Protocol::ProtoModel> model;
     Protocol::ProtoParser parser("OptionMessage.proto");
@@ -145,7 +145,7 @@ SCENARIO( OptionParser, "Parsing/Normal", "OptionParser can parse message option
     verifyEqual(1, messageCount);
 }
 
-SCENARIO( OptionParser, "Parsing/Normal", "OptionParser can parse message field option." )
+SCENARIO( OptionParser, "Parsing/Normal", "unit", "OptionParser can parse message field option." )
 {
     shared_ptr<Protocol::ProtoModel> model;
     Protocol::ProtoParser parser("OptionMessageField.proto");
@@ -201,7 +201,7 @@ SCENARIO( OptionParser, "Parsing/Normal", "OptionParser can parse message field 
     verifyEqual(1, messageCount);
 }
 
-SCENARIO( OptionParser, "Parsing/Normal", "OptionParser can parse oneof option." )
+SCENARIO( OptionParser, "Parsing/Normal", "unit", "OptionParser can parse oneof option." )
 {
     shared_ptr<Protocol::ProtoModel> model;
     Protocol::ProtoParser parser("OptionOneof.proto");
@@ -245,7 +245,7 @@ SCENARIO( OptionParser, "Parsing/Normal", "OptionParser can parse oneof option."
     verifyEqual(1, messageCount);
 }
 
-SCENARIO( OptionParser, "Parsing/Normal", "OptionParser can parse oneof field option." )
+SCENARIO( OptionParser, "Parsing/Normal", "unit", "OptionParser can parse oneof field option." )
 {
     shared_ptr<Protocol::ProtoModel> model;
     Protocol::ProtoParser parser("OptionOneofField.proto");
@@ -304,7 +304,7 @@ SCENARIO( OptionParser, "Parsing/Normal", "OptionParser can parse oneof field op
     verifyEqual(1, messageCount);
 }
 
-SCENARIO( OptionParser, "Parsing/Normal", "OptionParser can parse proto option." )
+SCENARIO( OptionParser, "Parsing/Normal", "unit", "OptionParser can parse proto option." )
 {
     shared_ptr<Protocol::ProtoModel> model;
     Protocol::ProtoParser parser("OptionProto.proto");
@@ -324,7 +324,7 @@ SCENARIO( OptionParser, "Parsing/Normal", "OptionParser can parse proto option."
     verifyEqual(1, optionCount);
 }
 
-SCENARIO( OptionParser, "Parsing/Normal", "OptionParser can parse floating point option value." )
+SCENARIO( OptionParser, "Parsing/Normal", "unit", "OptionParser can parse floating point option value." )
 {
     shared_ptr<Protocol::ProtoModel> model;
     Protocol::ProtoParser parser("OptionValueFloat.proto");
@@ -344,7 +344,7 @@ SCENARIO( OptionParser, "Parsing/Normal", "OptionParser can parse floating point
     verifyEqual(1, optionCount);
 }
 
-SCENARIO( OptionParser, "Parsing/Normal", "OptionParser can parse string option value." )
+SCENARIO( OptionParser, "Parsing/Normal", "unit", "OptionParser can parse string option value." )
 {
     shared_ptr<Protocol::ProtoModel> model;
     Protocol::ProtoParser parser("OptionValueString.proto");

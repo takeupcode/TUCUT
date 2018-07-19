@@ -9,13 +9,33 @@
 #ifndef TUCUT_Test_Test_h
 #define TUCUT_Test_Test_h
 
+#include <algorithm>
 #include <iostream>
 #include <locale>
 #include <map>
 #include <memory>
 #include <string>
 #include <stdexcept>
+#include <sstream>
 #include <vector>
+
+namespace {
+    
+std::vector<std::string> splitString(const std::string & src, char delimiter)
+{
+    std::stringstream ss(src);
+    std::string element;
+    std::vector<std::string> result;
+    
+    while (std::getline(ss, element, delimiter))
+    {
+        result.push_back(element);
+    }
+    
+    return result;
+}
+    
+}
 
 namespace TUCUT {
 namespace Test {
@@ -192,6 +212,11 @@ public:
         return mDescription;
     }
     
+    virtual std::string tag () const
+    {
+        return mTag;
+    }
+
     virtual bool exceptionExpected () const
     {
         return mExceptionExpected;
@@ -202,12 +227,33 @@ public:
         return mRunPassed;
     }
     
-    virtual void run ()
+    virtual bool run (const std::vector<std::string> & tags)
     {
+        if (!mTag.empty() && mTag != "all")
+        {
+            bool matchFound = false;
+            
+            std::vector<std::string> scenarioTags = splitString(mTag, ';');
+            for (auto & tag: scenarioTags)
+            {
+                if (std::find(std::begin(tags), std::end(tags), tag) != std::end(tags))
+                {
+                    matchFound = true;
+                    break;
+                }
+            }
+            if (!matchFound)
+            {
+                return false;
+            }
+        }
+        
         // Scenarios will pass unless one of the verify methods fail.
         mRunPassed = true;
         
         runSteps();
+        
+        return true;
     }
     
     virtual void runSteps () = 0;
@@ -324,12 +370,12 @@ public:
     }
     
 protected:
-    ScenarioBase (const std::string & categoryFullName, const std::string & scenarioDescription, bool exceptionExpected)
-    : mCategoryFullName(categoryFullName), mDescription(scenarioDescription), mExceptionExpected(exceptionExpected)
+    ScenarioBase (const std::string & categoryFullName, const std::string & scenarioDescription, bool exceptionExpected, const std::string & scenarioTag)
+    : mCategoryFullName(categoryFullName), mDescription(scenarioDescription), mTag(scenarioTag), mExceptionExpected(exceptionExpected)
     { }
     
     ScenarioBase (const ScenarioBase & src)
-    : mCategoryFullName(src.mCategoryFullName), mDescription(src.mDescription), mExceptionExpected(src.mExceptionExpected)
+    : mCategoryFullName(src.mCategoryFullName), mDescription(src.mDescription), mTag(src.mTag), mExceptionExpected(src.mExceptionExpected)
     { }
     
 private:
@@ -337,6 +383,7 @@ private:
     
     std::string mCategoryFullName;
     std::string mDescription;
+    std::string mTag;
     bool mExceptionExpected;
     bool mRunPassed;
 };
@@ -345,8 +392,8 @@ template <typename ExceptionT = std::exception>
 class Scenario : public ScenarioBase
 {
 public:
-    Scenario (const std::string & categoryFullName, const std::string & scenarioDescription, bool exceptionExpected)
-    : ScenarioBase(categoryFullName, scenarioDescription, exceptionExpected)
+    Scenario (const std::string & categoryFullName, const std::string & scenarioDescription, bool exceptionExpected, const std::string & scenarioTag = "")
+    : ScenarioBase(categoryFullName, scenarioDescription, exceptionExpected, scenarioTag)
     { }
     
     virtual ~Scenario ()
@@ -367,13 +414,13 @@ class Category
     
 public:
     Category (const std::string & name, const std::string & fullName)
-    : mName(name), mFullName(fullName), mPassCount(0), mFailCount(0)
+    : mName(name), mFullName(fullName), mPassCount(0), mFailCount(0), mSkipCount(0)
     {
     }
     
     Category (const Category & src)
     : mName(src.mName), mChildCategories(src.mChildCategories), mChildScenarios(src.mChildScenarios),
-      mPassCount(src.mPassCount), mFailCount(src.mFailCount)
+      mPassCount(src.mPassCount), mFailCount(src.mFailCount), mSkipCount(src.mSkipCount)
     { }
     
     virtual ~Category ()
@@ -399,6 +446,11 @@ public:
         return mFailCount;
     }
 
+    virtual int skipCount () const
+    {
+        return mSkipCount;
+    }
+
     std::vector<std::shared_ptr<Category>> categories ()
     {
         return mChildCategories;
@@ -418,18 +470,21 @@ public:
         return sharedScenario;
     }
     
-    virtual void run (std::ostream & stream)
+    virtual void run (std::ostream & stream, const std::vector<std::string> & tags)
     {
         mPassCount = 0;
         mFailCount = 0;
+        mSkipCount = 0;
 
         int childCategoryPassCount = 0;
         int childCategoryFailCount = 0;
+        int childCategorySkipCount = 0;
         for (auto & category : mChildCategories)
         {
-            category->run(stream);
+            category->run(stream, tags);
             childCategoryPassCount += category->passCount();
             childCategoryFailCount += category->failCount();
+            childCategorySkipCount += category->skipCount();
         }
         
         if (!mChildScenarios.empty())
@@ -438,12 +493,16 @@ public:
         }
         int localPassCount = 0;
         int localFailCount = 0;
+        int localSkipCount = 0;
         for (auto & scenario : mChildScenarios)
         {
             try
             {
-                scenario->run();
-                if (scenario->passed())
+                if (!scenario->run(tags))
+                {
+                    localSkipCount++;
+                }
+                else if (scenario->passed())
                 {
                     localPassCount++;
                     stream << "Scenario passed: " <<
@@ -474,12 +533,13 @@ public:
         }
         if (!mChildScenarios.empty())
         {
-            stream << "----- Passed: " << localPassCount << " Failed: " << localFailCount << " -----" << std::endl;
+            stream << "----- Passed: " << localPassCount << " Failed: " << localFailCount << " Skipped: " << localSkipCount << " -----" << std::endl;
             stream << std::endl;
         }
 
         mPassCount = childCategoryPassCount + localPassCount;
         mFailCount = childCategoryFailCount + localFailCount;
+        mSkipCount = childCategorySkipCount + localSkipCount;
     }
     
 private:
@@ -489,6 +549,7 @@ private:
     std::string mFullName;
     int mPassCount;
     int mFailCount;
+    int mSkipCount;
     // We can use shared_ptr for child stories because there are no cyclic links.
     std::vector<std::shared_ptr<Category>> mChildCategories;
     std::vector<std::shared_ptr<ScenarioBase>> mChildScenarios;
@@ -517,35 +578,33 @@ public:
     virtual std::shared_ptr<Category> registerCategory (const std::string & categoryFullName)
     {
         // Skip over initial forward slash characters.
-        std::string::size_type beginPosition = categoryFullName.find_first_not_of("/");
-        if (beginPosition == std::string::npos)
+        auto beginPosition = std::find_if_not(std::begin(categoryFullName), std::end(categoryFullName),
+                                              [](char c) { return c == '/'; });
+        if (beginPosition == std::end(categoryFullName))
         {
-            throw std::invalid_argument("Category names cannot consist entirely of / characters.");
+            throw std::invalid_argument("Category names cannot be empty or consist entirely of / characters.");
         }
         
-        std::string::size_type currentBeginPosition = beginPosition;
-        std::string::size_type currentEndPosition;
+        std::string trimmedCategoryFullName(beginPosition, std::end(categoryFullName));
+        std::vector<std::string> categories = splitString(trimmedCategoryFullName, '/');
+
         std::shared_ptr<Category> previousCategory;
-        while (currentBeginPosition != std::string::npos)
+        std::string currentFullName;
+        for (auto & currentName: categories)
         {
-            currentEndPosition = categoryFullName.find_first_of("/", currentBeginPosition);
-            if (currentEndPosition == std::string::npos)
-            {
-                currentEndPosition = categoryFullName.length();
-            }
-            
-            std::string currentFullName = categoryFullName.substr(beginPosition,
-                currentEndPosition - beginPosition);
-            std::string currentName = categoryFullName.substr(currentBeginPosition,
-                currentEndPosition - currentBeginPosition);
-            
             if (currentName.empty())
             {
                 throw std::invalid_argument("Category names cannot be empty.");
             }
             
+            if (!currentFullName.empty())
+            {
+                currentFullName += '/';
+            }
+            currentFullName += currentName;
+            
             auto categoryIter = mAllCategories.find(currentFullName);
-            if (categoryIter == mAllCategories.end())
+            if (categoryIter == std::end(mAllCategories))
             {
                 std::shared_ptr<Category> newCategory(new Category(currentName, categoryFullName));
                 categoryIter = mAllCategories.insert({currentFullName, newCategory}).first;
@@ -560,27 +619,28 @@ public:
             }
             
             previousCategory = categoryIter->second;
-            
-            currentBeginPosition = categoryFullName.find_first_not_of("/", currentEndPosition);
         }
         
         return previousCategory;
     }
     
-    virtual void run (std::ostream & stream)
+    virtual void run (std::ostream & stream, const std::vector<std::string> & tags)
     {
         int passCount = 0;
         int failCount = 0;
+        int skipCount = 0;
         for (auto & category : mTopLevelCategories)
         {
-            category->run(stream);
+            category->run(stream, tags);
             passCount += category->passCount();
             failCount += category->failCount();
+            skipCount += category->skipCount();
         }
         stream << "----- Summary -----" << std::endl;
         stream << "Total number of tests run: " << passCount + failCount << std::endl;
         stream << "Tests passed: " << passCount << std::endl;
         stream << "Tests failed: " << failCount << std::endl;
+        stream << "Tests skipped: " << skipCount << std::endl;
     }
     
 private:
@@ -605,12 +665,12 @@ private:
 #define INTERNAL_TUCUT_TEST_SCENARIO_INSTANCE_NAME_RELAY( name, line ) INTERNAL_TUCUT_TEST_SCENARIO_INSTANCE_NAME_FINAL( name, line )
 #define INTERNAL_TUCUT_TEST_SCENARIO_INSTANCE_NAME( name ) INTERNAL_TUCUT_TEST_SCENARIO_INSTANCE_NAME_RELAY( name, __LINE__ )
 
-#define SCENARIO( preprocGroupName, preprocCategoryName, preprocScenarioDescription ) class INTERNAL_TUCUT_TEST_SCENARIO_CLASS_NAME( preprocGroupName ) \
+#define SCENARIO( preprocGroupName, preprocCategoryName, preprocTag, preprocScenarioDescription ) class INTERNAL_TUCUT_TEST_SCENARIO_CLASS_NAME( preprocGroupName ) \
 : public TUCUT::Test::Scenario<> \
 { \
 public: \
-    INTERNAL_TUCUT_TEST_SCENARIO_CLASS_NAME( preprocGroupName ) (const std::string & categoryFullName, const std::string & scenarioDescription, bool exceptionExpected) \
-    : TUCUT::Test::Scenario<>(categoryFullName, scenarioDescription, exceptionExpected) \
+    INTERNAL_TUCUT_TEST_SCENARIO_CLASS_NAME( preprocGroupName ) (const std::string & categoryFullName, const std::string & scenarioDescription, bool exceptionExpected, const std::string & scenarioTag) \
+    : TUCUT::Test::Scenario<>(categoryFullName, scenarioDescription, exceptionExpected, scenarioTag) \
     { \
         auto scenarioManager = TUCUT::Test::ScenarioManager::instance(); \
         auto category = scenarioManager->registerCategory(categoryFullName); \
@@ -626,7 +686,7 @@ protected: \
     : TUCUT::Test::Scenario<>(src) \
     { } \
 }; \
-INTERNAL_TUCUT_TEST_SCENARIO_CLASS_NAME( preprocGroupName ) INTERNAL_TUCUT_TEST_SCENARIO_INSTANCE_NAME( preprocGroupName )(preprocCategoryName, preprocScenarioDescription, false); \
+INTERNAL_TUCUT_TEST_SCENARIO_CLASS_NAME( preprocGroupName ) INTERNAL_TUCUT_TEST_SCENARIO_INSTANCE_NAME( preprocGroupName )(preprocCategoryName, preprocScenarioDescription, false, preprocTag); \
 void INTERNAL_TUCUT_TEST_SCENARIO_CLASS_NAME( preprocGroupName )::runSteps ()
 
 #ifdef TUCUT_TEST_GENERATE_MAIN
@@ -636,9 +696,15 @@ namespace Test {
     
 int main (int argc, const char * argv[])
 {
+    std::vector<std::string> tags;
+    for (int i = 1; i < argc; i++)
+    {
+        tags.push_back(argv[i]);
+    }
+    
     auto scenarioManager = ScenarioManager::instance();
     
-    scenarioManager->run(std::cout);
+    scenarioManager->run(std::cout, tags);
     
     return 0;
 }

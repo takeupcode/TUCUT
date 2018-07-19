@@ -16,12 +16,12 @@
 using namespace std;
 using namespace TUCUT;
 
-SCENARIO( OneofParser, "Construction/Normal", "OneofParser can be constructed." )
+SCENARIO( OneofParser, "Construction/Normal", "unit", "OneofParser can be constructed." )
 {
     Protocol::OneofParser parser;
 }
 
-SCENARIO( OneofParser, "Parsing/Normal", "OneofParser can parse simple message." )
+SCENARIO( OneofParser, "Parsing/Normal", "unit", "OneofParser can parse simple message." )
 {
     shared_ptr<Protocol::ProtoModel> model;
 
@@ -88,7 +88,7 @@ SCENARIO( OneofParser, "Parsing/Normal", "OneofParser can parse simple message."
     verifyEqual(1, messageCount);
 }
 
-SCENARIO( OneofParser, "Parsing/Normal", "OneofParser can parse oneof field with qualified type." )
+SCENARIO( OneofParser, "Parsing/Normal", "unit", "OneofParser can parse oneof field with qualified type." )
 {
     shared_ptr<Protocol::ProtoModel> model;
 
@@ -136,7 +136,7 @@ SCENARIO( OneofParser, "Parsing/Normal", "OneofParser can parse oneof field with
     verifyEqual(1, messageCount);
 }
 
-SCENARIO( OneofParser, "Parsing/Normal", "OneofParser can parse multiple nested messages with oneofs." )
+SCENARIO( OneofParser, "Parsing/Normal", "unit", "OneofParser can parse multiple nested messages with oneofs." )
 {
     shared_ptr<Protocol::ProtoModel> model;
 

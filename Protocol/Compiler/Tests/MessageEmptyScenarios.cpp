@@ -15,7 +15,7 @@
 using namespace std;
 using namespace TUCUT;
 
-SCENARIO( MessageEmpty, "Generation/Normal", "Generated class can be constructed." )
+SCENARIO( MessageEmpty, "Generation/Normal", "unit", "Generated class can be constructed." )
 {
     Empty message;
 }

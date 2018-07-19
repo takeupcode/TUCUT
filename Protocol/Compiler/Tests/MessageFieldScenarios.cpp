@@ -20,7 +20,7 @@
 using namespace std;
 using namespace TUCUT;
 
-SCENARIO( MessageField, "Serialization/Normal", "Generated class can be serialized." )
+SCENARIO( MessageField, "Serialization/Normal", "unit", "Generated class can be serialized." )
 {
     MessageOne originalMessage;
     string stringValue = "managed";

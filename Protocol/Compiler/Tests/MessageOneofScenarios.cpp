@@ -15,7 +15,7 @@
 using namespace std;
 using namespace TUCUT;
 
-SCENARIO( MessageOneof, "Serialization/Normal", "Generated class can be serialized with oneof." )
+SCENARIO( MessageOneof, "Serialization/Normal", "unit", "Generated class can be serialized with oneof." )
 {
     MessageOneof originalMessage;
     string stringValue = "managed";

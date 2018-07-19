@@ -16,12 +16,12 @@
 using namespace std;
 using namespace TUCUT;
 
-SCENARIO( MessageFieldParser, "Construction/Normal", "MessageFieldParser can be constructed." )
+SCENARIO( MessageFieldParser, "Construction/Normal", "unit", "MessageFieldParser can be constructed." )
 {
     Protocol::MessageFieldParser parser;
 }
 
-SCENARIO( MessageFieldParser, "Parsing/Normal", "MessageFieldParser can parse simple message." )
+SCENARIO( MessageFieldParser, "Parsing/Normal", "unit", "MessageFieldParser can parse simple message." )
 {
     shared_ptr<Protocol::ProtoModel> model;
 
@@ -76,7 +76,7 @@ SCENARIO( MessageFieldParser, "Parsing/Normal", "MessageFieldParser can parse si
     verifyEqual(1, messageCount);
 }
 
-SCENARIO( MessageFieldParser, "Parsing/Normal", "MessageFieldParser can parse message field with qualified type." )
+SCENARIO( MessageFieldParser, "Parsing/Normal", "unit", "MessageFieldParser can parse message field with qualified type." )
 {
     shared_ptr<Protocol::ProtoModel> model;
 
@@ -112,7 +112,7 @@ SCENARIO( MessageFieldParser, "Parsing/Normal", "MessageFieldParser can parse me
     verifyEqual(1, messageCount);
 }
 
-SCENARIO( MessageFieldParser, "Parsing/Normal", "MessageFieldParser can parse multiple nested messages with fields." )
+SCENARIO( MessageFieldParser, "Parsing/Normal", "unit", "MessageFieldParser can parse multiple nested messages with fields." )
 {
     shared_ptr<Protocol::ProtoModel> model;
 

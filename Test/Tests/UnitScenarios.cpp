@@ -11,7 +11,7 @@
 
 using namespace TUCUT;
 
-SCENARIO( Scenario, "Registration/Normal", "Scenario is registered automatically." )
+SCENARIO( Scenario, "Registration/Normal", "unit", "Scenario is registered automatically." )
 {
     auto scenarioManager = Test::ScenarioManager::instance();
     auto topLevelCategoryCollection = scenarioManager->categories();
@@ -44,7 +44,7 @@ SCENARIO( Scenario, "Registration/Normal", "Scenario is registered automatically
     verifyTrue(scenarioFound);
 }
 
-SCENARIO( Scenario, "Verification/Types", "Verification supports wide character equality." )
+SCENARIO( Scenario, "Verification/Types", "unit", "Verification supports wide character equality." )
 {
     std::wstring expected = L"Wide";
     std::wstring actual = L"Wide";

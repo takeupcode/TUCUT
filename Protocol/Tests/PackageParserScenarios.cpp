@@ -16,12 +16,12 @@
 using namespace std;
 using namespace TUCUT;
 
-SCENARIO( PackageParser, "Construction/Normal", "PackageParser can be constructed." )
+SCENARIO( PackageParser, "Construction/Normal", "unit", "PackageParser can be constructed." )
 {
     Protocol::PackageParser parser;
 }
 
-SCENARIO( PackageParser, "Parsing/Normal", "PackageParser can parse package." )
+SCENARIO( PackageParser, "Parsing/Normal", "unit", "PackageParser can parse package." )
 {
     shared_ptr<Protocol::ProtoModel> model;
     string package = "TUCUT.Protocol";
@@ -32,7 +32,7 @@ SCENARIO( PackageParser, "Parsing/Normal", "PackageParser can parse package." )
     verifyEqual(package, model->package());
 }
 
-SCENARIO( PackageParser, "Parsing/Normal", "PackageParser can parse multiple packages." )
+SCENARIO( PackageParser, "Parsing/Normal", "unit", "PackageParser can parse multiple packages." )
 {
     shared_ptr<Protocol::ProtoModel> model;
     string package = "TUCUT.Protocol";
