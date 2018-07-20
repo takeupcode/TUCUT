@@ -229,16 +229,18 @@ public:
     
     virtual bool run (const std::vector<std::string> & tags)
     {
-        if (!mTag.empty() && mTag != "all")
+        // Run scenario if either mTag or tags is empty. Otherwise
+        // all tags specified at run time must be present in the scenario.
+        if (!mTag.empty())
         {
-            bool matchFound = false;
+            bool matchFound = true;
             
-            std::vector<std::string> scenarioTags = splitString(mTag, ';');
-            for (auto & tag: scenarioTags)
+            std::vector<std::string> scenarioTags = splitString(mTag, ',');
+            for (auto & tag: tags)
             {
-                if (std::find(std::begin(tags), std::end(tags), tag) != std::end(tags))
+                if (std::find(std::begin(scenarioTags), std::end(scenarioTags), tag) == std::end(scenarioTags))
                 {
-                    matchFound = true;
+                    matchFound = false;
                     break;
                 }
             }
