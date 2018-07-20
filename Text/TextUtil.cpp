@@ -8,12 +8,28 @@
 
 #include "TextUtil.h"
 
+#include <sstream>
+
 namespace TUCUT {
 namespace Text {
 
 bool TextUtil::isWhitespace (char c)
 {
     return c == ' ' || c == '\t' || c == '\n';
+}
+
+std::vector<std::string> TextUtil::splitString(const std::string & src, char delimiter)
+{
+    std::stringstream ss(src);
+    std::string element;
+    std::vector<std::string> result;
+    
+    while (std::getline(ss, element, delimiter))
+    {
+        result.push_back(element);
+    }
+    
+    return result;
 }
 
 } // namespace Text

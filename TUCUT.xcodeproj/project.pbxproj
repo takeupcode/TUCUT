@@ -87,6 +87,7 @@
 		3E2F9C1720FB7D8F008C90A9 /* libTUCUT.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E259DAC20E3398E00F01379 /* libTUCUT.a */; };
 		3E2F9C1D20FB7FED008C90A9 /* libboost_system-mt.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E2F9C1B20FB7FEC008C90A9 /* libboost_system-mt.dylib */; };
 		3E2F9C1E20FB7FED008C90A9 /* libboost_filesystem-mt.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E2F9C1C20FB7FEC008C90A9 /* libboost_filesystem-mt.dylib */; };
+		3E3F82E421019B5500501126 /* TextUtilScenarios.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E3F82E321019B5500501126 /* TextUtilScenarios.cpp */; };
 		3ED4127B20FED1FB00BC7226 /* CodeGeneratorCPPScenarios.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E259E6420E34BA700F01379 /* CodeGeneratorCPPScenarios.cpp */; };
 		3ED4127C20FED1FB00BC7226 /* CodeGeneratorManagerScenarios.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E259E5D20E34BA600F01379 /* CodeGeneratorManagerScenarios.cpp */; };
 		3ED4127D20FED1FB00BC7226 /* EnumParserScenarios.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E259E6120E34BA600F01379 /* EnumParserScenarios.cpp */; };
@@ -330,6 +331,7 @@
 		3E2F9C0F20FB7D0F008C90A9 /* ProtocolCompiler */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = ProtocolCompiler; sourceTree = BUILT_PRODUCTS_DIR; };
 		3E2F9C1B20FB7FEC008C90A9 /* libboost_system-mt.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libboost_system-mt.dylib"; path = "../../../../opt/local/lib/libboost_system-mt.dylib"; sourceTree = "<group>"; };
 		3E2F9C1C20FB7FEC008C90A9 /* libboost_filesystem-mt.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libboost_filesystem-mt.dylib"; path = "../../../../opt/local/lib/libboost_filesystem-mt.dylib"; sourceTree = "<group>"; };
+		3E3F82E321019B5500501126 /* TextUtilScenarios.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = TextUtilScenarios.cpp; sourceTree = "<group>"; };
 		3ED4127420FED19500BC7226 /* TestTUCUT */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = TestTUCUT; sourceTree = BUILT_PRODUCTS_DIR; };
 		3ED4129120FED29400BC7226 /* TestProtocolCompiler */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = TestProtocolCompiler; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -553,6 +555,7 @@
 		3E259DC420E33D9D00F01379 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
+				3E3F82E321019B5500501126 /* TextUtilScenarios.cpp */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -948,6 +951,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3E3F82E421019B5500501126 /* TextUtilScenarios.cpp in Sources */,
 				3ED4127B20FED1FB00BC7226 /* CodeGeneratorCPPScenarios.cpp in Sources */,
 				3ED4127C20FED1FB00BC7226 /* CodeGeneratorManagerScenarios.cpp in Sources */,
 				3ED4127D20FED1FB00BC7226 /* EnumParserScenarios.cpp in Sources */,
