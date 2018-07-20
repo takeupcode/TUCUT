@@ -19,9 +19,10 @@
 #include <sstream>
 #include <vector>
 
-namespace {
+namespace TUCUT {
+namespace Test {
     
-std::vector<std::string> splitString(const std::string & src, char delimiter)
+inline std::vector<std::string> internalSplitString(const std::string & src, char delimiter)
 {
     std::stringstream ss(src);
     std::string element;
@@ -34,12 +35,7 @@ std::vector<std::string> splitString(const std::string & src, char delimiter)
     
     return result;
 }
-    
-}
 
-namespace TUCUT {
-namespace Test {
-    
 class VerificationException : public std::exception
 {
 public:
@@ -235,7 +231,7 @@ public:
         {
             bool matchFound = true;
             
-            std::vector<std::string> scenarioTags = splitString(mTag, ',');
+            std::vector<std::string> scenarioTags = internalSplitString(mTag, ',');
             for (auto & tag: tags)
             {
                 if (std::find(std::begin(scenarioTags), std::end(scenarioTags), tag) == std::end(scenarioTags))
@@ -588,7 +584,7 @@ public:
         }
         
         std::string trimmedCategoryFullName(beginPosition, std::end(categoryFullName));
-        std::vector<std::string> categories = splitString(trimmedCategoryFullName, '/');
+        std::vector<std::string> categories = internalSplitString(trimmedCategoryFullName, '/');
 
         std::shared_ptr<Category> previousCategory;
         std::string currentFullName;
