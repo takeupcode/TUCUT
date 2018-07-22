@@ -6,6 +6,7 @@
 //  Copyright © 2013 Take Up Code. All rights reserved.
 //
 
+#include <memory>
 #include <string>
 
 #include "../../Test/Test.h"
@@ -27,29 +28,28 @@ SCENARIO( Observable, "Operation/Normal", "unit,event", "SimplePublisher can not
 {
     SimplePublisher publisher;
     
-    SimpleSubscriber subscriber;
+    std::shared_ptr<SimpleSubscriber> subscriber(new SimpleSubscriber());
     
-    publisher.propertyChanged()->connect("test", &subscriber);
+    publisher.propertyChanged()->connect("test", subscriber);
     
     std::string parameter = "Name";
     publisher.propertyChanged()->signal(parameter);
     
-    VERIFY_TRUE(subscriber.notified());
-    VERIFY_EQUAL(parameter, subscriber.property());
+    VERIFY_TRUE(subscriber->notified());
+    VERIFY_EQUAL(parameter, subscriber->property());
 }
 
 SCENARIO( Observable, "Operation/Normal", "unit,event", "AdvancedPublisher can notify subscriber." )
 {
     AdvancedPublisher publisher("testName", 10);
 
-    std::string token = "test";
-    AdvancedSubscriber subscriber;
+    std::shared_ptr<AdvancedSubscriber> subscriber(new AdvancedSubscriber());
 
-    publisher.propertyChanged()->connect("test", &subscriber);
+    publisher.propertyChanged()->connect("test", subscriber);
 
     publisher.setName("NewName");
-    VERIFY_TRUE(subscriber.nameNotified());
-    VERIFY_FALSE(subscriber.ageNotified());
-    VERIFY_FALSE(subscriber.adultNotified());
-    VERIFY_FALSE(subscriber.combinedAgeAndAdultNotified());
+    VERIFY_TRUE(subscriber->nameNotified());
+    VERIFY_FALSE(subscriber->ageNotified());
+    VERIFY_FALSE(subscriber->adultNotified());
+    VERIFY_FALSE(subscriber->combinedAgeAndAdultNotified());
 }
