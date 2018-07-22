@@ -93,6 +93,7 @@
 		3E3F82F821043ED200501126 /* AdvancedPublisher.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E3F82F121043ED100501126 /* AdvancedPublisher.cpp */; };
 		3E3F82F921043ED200501126 /* EventPublisherScenarios.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E3F82F221043ED100501126 /* EventPublisherScenarios.cpp */; };
 		3E3F82FA21043ED200501126 /* EventSubscriberScenarios.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E3F82F721043ED200501126 /* EventSubscriberScenarios.cpp */; };
+		3E3F83002104F84500501126 /* IdentifiableScenarios.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E3F82FF2104F84500501126 /* IdentifiableScenarios.cpp */; };
 		3ED4127B20FED1FB00BC7226 /* CodeGeneratorCPPScenarios.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E259E6420E34BA700F01379 /* CodeGeneratorCPPScenarios.cpp */; };
 		3ED4127C20FED1FB00BC7226 /* CodeGeneratorManagerScenarios.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E259E5D20E34BA600F01379 /* CodeGeneratorManagerScenarios.cpp */; };
 		3ED4127D20FED1FB00BC7226 /* EnumParserScenarios.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E259E6120E34BA600F01379 /* EnumParserScenarios.cpp */; };
@@ -351,6 +352,8 @@
 		3E3F82F521043ED200501126 /* AdvancedSubscriber.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AdvancedSubscriber.h; sourceTree = "<group>"; };
 		3E3F82F621043ED200501126 /* SimplePublisher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimplePublisher.h; sourceTree = "<group>"; };
 		3E3F82F721043ED200501126 /* EventSubscriberScenarios.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EventSubscriberScenarios.cpp; sourceTree = "<group>"; };
+		3E3F82FD2104F83900501126 /* Identifiable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Identifiable.h; sourceTree = "<group>"; };
+		3E3F82FF2104F84500501126 /* IdentifiableScenarios.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = IdentifiableScenarios.cpp; sourceTree = "<group>"; };
 		3ED4127420FED19500BC7226 /* TestTUCUT */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = TestTUCUT; sourceTree = BUILT_PRODUCTS_DIR; };
 		3ED4129120FED29400BC7226 /* TestProtocolCompiler */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = TestProtocolCompiler; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -396,6 +399,7 @@
 		3E259DA320E3398E00F01379 = {
 			isa = PBXGroup;
 			children = (
+				3E3F82FB2104F76F00501126 /* Identity */,
 				3E3F82E92104301C00501126 /* Exception */,
 				3E259DC020E33A5F00F01379 /* Protocol */,
 				3E259DBF20E33A4700F01379 /* Test */,
@@ -777,6 +781,23 @@
 			path = Tests;
 			sourceTree = "<group>";
 		};
+		3E3F82FB2104F76F00501126 /* Identity */ = {
+			isa = PBXGroup;
+			children = (
+				3E3F82FD2104F83900501126 /* Identifiable.h */,
+				3E3F82FC2104F79200501126 /* Tests */,
+			);
+			path = Identity;
+			sourceTree = "<group>";
+		};
+		3E3F82FC2104F79200501126 /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				3E3F82FF2104F84500501126 /* IdentifiableScenarios.cpp */,
+			);
+			path = Tests;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -1017,6 +1038,7 @@
 				3E3F82E8210424CF00501126 /* StringLiteralScenarios.cpp in Sources */,
 				3E3F82F921043ED200501126 /* EventPublisherScenarios.cpp in Sources */,
 				3ED4128620FED1FB00BC7226 /* ProtoParserScenarios.cpp in Sources */,
+				3E3F83002104F84500501126 /* IdentifiableScenarios.cpp in Sources */,
 				3ED4128720FED1FB00BC7226 /* TokenReaderScenarios.cpp in Sources */,
 				3ED4128820FED1FB00BC7226 /* main.cpp in Sources */,
 				3E3F82FA21043ED200501126 /* EventSubscriberScenarios.cpp in Sources */,
