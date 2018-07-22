@@ -3,7 +3,7 @@
 //  TestTUCUT
 //
 //  Created by Wahid Tanner on 7/21/18.
-//  Copyright © 2014 Take Up Code. All rights reserved.
+//  Copyright © 2018 Take Up Code. All rights reserved.
 //
 
 #include <string>
@@ -25,4 +25,3 @@ SCENARIO( Exception, "Construction/Normal", "unit,exception", "Exceptions can be
     Exception::InvalidOperationException ex3("test");
     Exception::NullArgumentException ex4("test");
 }
-
