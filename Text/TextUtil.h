@@ -19,7 +19,9 @@ struct TextUtil
 {
     static bool isWhitespace (char c);
 
-    static std::vector<std::string> splitString(const std::string & src, char delimiter);
+    static std::vector<std::string> splitString (const std::string & src, char delimiter);
+    
+    static std::string narrowString (const std::wstring & src);
 };
     
 } // namespace Text

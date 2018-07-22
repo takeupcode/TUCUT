@@ -78,3 +78,10 @@ SCENARIO( TextUtil, "Operation/Edge", "unit,text", "TextUtil can split strings w
     VERIFY_EQUAL("", result[1]);
     VERIFY_EQUAL("", result[2]);
 }
+
+SCENARIO( TextUtil, "Operation/Normal", "unit,text", "TextUtil can narrow strings." )
+{
+    std::wstring src = L"Wide";
+    std::string result = Text::TextUtil::narrowString(src);
+    VERIFY_EQUAL("Wide", result);
+}

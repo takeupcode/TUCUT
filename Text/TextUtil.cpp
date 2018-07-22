@@ -8,6 +8,7 @@
 
 #include "TextUtil.h"
 
+#include <locale>
 #include <sstream>
 
 namespace TUCUT {
@@ -18,7 +19,7 @@ bool TextUtil::isWhitespace (char c)
     return c == ' ' || c == '\t' || c == '\n';
 }
 
-std::vector<std::string> TextUtil::splitString(const std::string & src, char delimiter)
+std::vector<std::string> TextUtil::splitString (const std::string & src, char delimiter)
 {
     std::stringstream ss(src);
     std::string element;
@@ -35,6 +36,19 @@ std::vector<std::string> TextUtil::splitString(const std::string & src, char del
     }
     
     return result;
+}
+    
+std::string TextUtil::narrowString (const std::wstring & src)
+{
+    std::locale loc;
+    std::vector<char> narrowCharBuf(src.size());
+    std::use_facet<std::ctype<wchar_t>>(loc).narrow(
+        src.data(),
+        src.data() + src.size(),
+        '?',
+        narrowCharBuf.data());
+    std::string narrowString = narrowCharBuf.data();
+    return narrowString;
 }
 
 } // namespace Text
