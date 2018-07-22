@@ -16,12 +16,12 @@
 using namespace std;
 using namespace TUCUT;
 
-SCENARIO( ImportParser, "Construction/Normal", "unit", "ImportParser can be constructed." )
+SCENARIO( ImportParser, "Construction/Normal", "unit,protocol", "ImportParser can be constructed." )
 {
     Protocol::ImportParser parser;
 }
 
-SCENARIO( ImportParser, "Parsing/Normal", "unit", "ImportParser can parse no imports." )
+SCENARIO( ImportParser, "Parsing/Normal", "unit,protocol", "ImportParser can parse no imports." )
 {
     shared_ptr<Protocol::ProtoModel> model;
 
@@ -37,7 +37,7 @@ SCENARIO( ImportParser, "Parsing/Normal", "unit", "ImportParser can parse no imp
     VERIFY_EQUAL(expectedSize, model->privateMessageTypes()->size());
 }
 
-SCENARIO( ImportParser, "Parsing/Normal", "unit", "ImportParser can parse private import." )
+SCENARIO( ImportParser, "Parsing/Normal", "unit,protocol", "ImportParser can parse private import." )
 {
     shared_ptr<Protocol::ProtoModel> model;
 
@@ -55,7 +55,7 @@ SCENARIO( ImportParser, "Parsing/Normal", "unit", "ImportParser can parse privat
     VERIFY_EQUAL(expectedSize, model->privateMessageTypes()->size());
 }
 
-SCENARIO( ImportParser, "Parsing/Normal", "unit", "ImportParser can parse public import." )
+SCENARIO( ImportParser, "Parsing/Normal", "unit,protocol", "ImportParser can parse public import." )
 {
     shared_ptr<Protocol::ProtoModel> model;
 

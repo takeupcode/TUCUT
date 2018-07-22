@@ -15,7 +15,7 @@
 using namespace std;
 using namespace TUCUT;
 
-SCENARIO( TextUtil, "Operation/Normal", "unit", "TextUtil knows whitespace." )
+SCENARIO( TextUtil, "Operation/Normal", "unit,text", "TextUtil knows whitespace." )
 {
     auto result = Text::TextUtil::isWhitespace('a');
     VERIFY_FALSE(result);
@@ -33,7 +33,7 @@ SCENARIO( TextUtil, "Operation/Normal", "unit", "TextUtil knows whitespace." )
     VERIFY_TRUE(result);
 }
 
-SCENARIO( TextUtil, "Operation/Normal", "unit", "TextUtil can split strings." )
+SCENARIO( TextUtil, "Operation/Normal", "unit,text", "TextUtil can split strings." )
 {
     std::string input = "1,2,3";
     auto result = Text::TextUtil::splitString(input, ',');
@@ -43,7 +43,7 @@ SCENARIO( TextUtil, "Operation/Normal", "unit", "TextUtil can split strings." )
     VERIFY_EQUAL("3", result[2]);
 }
 
-SCENARIO( TextUtil, "Operation/Edge", "unit", "TextUtil can split strings with empty spots." )
+SCENARIO( TextUtil, "Operation/Edge", "unit,text", "TextUtil can split strings with empty spots." )
 {
     std::string input = "";
     auto result = Text::TextUtil::splitString(input, ',');

@@ -16,12 +16,12 @@
 using namespace std;
 using namespace TUCUT;
 
-SCENARIO( EnumParser, "Construction/Normal", "unit", "EnumParser can be constructed." )
+SCENARIO( EnumParser, "Construction/Normal", "unit,protocol", "EnumParser can be constructed." )
 {
     Protocol::EnumParser parser;
 }
 
-SCENARIO( EnumParser, "Parsing/Normal", "unit", "EnumParser can parse empty enum." )
+SCENARIO( EnumParser, "Parsing/Normal", "unit,protocol", "EnumParser can parse empty enum." )
 {
     shared_ptr<Protocol::ProtoModel> model;
     string name = "empty";
@@ -42,7 +42,7 @@ SCENARIO( EnumParser, "Parsing/Normal", "unit", "EnumParser can parse empty enum
     VERIFY_EQUAL(1, count);
 }
 
-SCENARIO( EnumParser, "Parsing/Normal", "unit", "EnumParser can parse multiple empty enums." )
+SCENARIO( EnumParser, "Parsing/Normal", "unit,protocol", "EnumParser can parse multiple empty enums." )
 {
     shared_ptr<Protocol::ProtoModel> model;
 
@@ -70,7 +70,7 @@ SCENARIO( EnumParser, "Parsing/Normal", "unit", "EnumParser can parse multiple e
     VERIFY_EQUAL(2, count);
 }
 
-SCENARIO( EnumParser, "Parsing/Normal", "unit", "EnumParser can parse multiple empty enums with different parents." )
+SCENARIO( EnumParser, "Parsing/Normal", "unit,protocol", "EnumParser can parse multiple empty enums with different parents." )
 {
     shared_ptr<Protocol::ProtoModel> model;
 
@@ -148,7 +148,7 @@ SCENARIO( EnumParser, "Parsing/Normal", "unit", "EnumParser can parse multiple e
     VERIFY_EQUAL(1, message1Count);
 }
 
-SCENARIO( EnumParser, "Parsing/Normal", "unit", "EnumParser can assign current package." )
+SCENARIO( EnumParser, "Parsing/Normal", "unit,protocol", "EnumParser can assign current package." )
 {
     shared_ptr<Protocol::ProtoModel> model;
 

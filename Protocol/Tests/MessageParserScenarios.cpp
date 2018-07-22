@@ -16,12 +16,12 @@
 using namespace std;
 using namespace TUCUT;
 
-SCENARIO( MessageParser, "Construction/Normal", "unit", "MessageParser can be constructed." )
+SCENARIO( MessageParser, "Construction/Normal", "unit,protocol", "MessageParser can be constructed." )
 {
     Protocol::MessageParser parser;
 }
 
-SCENARIO( MessageParser, "Parsing/Normal", "unit", "MessageParser can parse empty message." )
+SCENARIO( MessageParser, "Parsing/Normal", "unit,protocol", "MessageParser can parse empty message." )
 {
     shared_ptr<Protocol::ProtoModel> model;
     string name = "empty";
@@ -42,7 +42,7 @@ SCENARIO( MessageParser, "Parsing/Normal", "unit", "MessageParser can parse empt
     VERIFY_EQUAL(1, count);
 }
 
-SCENARIO( MessageParser, "Parsing/Normal", "unit", "MessageParser can parse multiple empty messages." )
+SCENARIO( MessageParser, "Parsing/Normal", "unit,protocol", "MessageParser can parse multiple empty messages." )
 {
     shared_ptr<Protocol::ProtoModel> model;
 
@@ -70,7 +70,7 @@ SCENARIO( MessageParser, "Parsing/Normal", "unit", "MessageParser can parse mult
     VERIFY_EQUAL(2, count);
 }
 
-SCENARIO( MessageParser, "Parsing/Normal", "unit", "MessageParser can assign current package." )
+SCENARIO( MessageParser, "Parsing/Normal", "unit,protocol", "MessageParser can assign current package." )
 {
     shared_ptr<Protocol::ProtoModel> model;
 
@@ -97,7 +97,7 @@ SCENARIO( MessageParser, "Parsing/Normal", "unit", "MessageParser can assign cur
     VERIFY_EQUAL(2, count);
 }
 
-SCENARIO( MessageParser, "Parsing/Normal", "unit", "MessageParser can parse multiple nested messages." )
+SCENARIO( MessageParser, "Parsing/Normal", "unit,protocol", "MessageParser can parse multiple nested messages." )
 {
     shared_ptr<Protocol::ProtoModel> model;
 

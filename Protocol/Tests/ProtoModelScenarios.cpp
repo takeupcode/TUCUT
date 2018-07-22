@@ -15,14 +15,14 @@
 using namespace std;
 using namespace TUCUT;
 
-SCENARIO( ProtoModel, "Construction/Normal", "unit", "ProtoModel can be constructed." )
+SCENARIO( ProtoModel, "Construction/Normal", "unit,protocol", "ProtoModel can be constructed." )
 {
     Protocol::ProtoModel model("test.proto");
 
     VERIFY_EQUAL("", model.package());
 }
 
-SCENARIO( ProtoModel, "Operation/Properties", "unit", "ProtoModel knows current package." )
+SCENARIO( ProtoModel, "Operation/Properties", "unit,protocol", "ProtoModel knows current package." )
 {
     Protocol::ProtoModel model("test.proto");
     string package = "TUCUT.Protocol";

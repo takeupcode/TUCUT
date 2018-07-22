@@ -16,7 +16,7 @@
 using namespace std;
 using namespace TUCUT;
 
-SCENARIO( CodeGeneratorCPP, "Operation/Normal", "unit", "CPP generator can create common base classes." )
+SCENARIO( CodeGeneratorCPP, "Operation/Normal", "unit,protocol", "CPP generator can create common base classes." )
 {
     Protocol::CodeGeneratorManager * pManager = Protocol::CodeGeneratorManager::instance();
 
@@ -28,7 +28,7 @@ SCENARIO( CodeGeneratorCPP, "Operation/Normal", "unit", "CPP generator can creat
     generator->generateCode("Generated", model.get(), "TestTUCUT", true);
 }
 
-SCENARIO( CodeGeneratorCPP, "Operation/Normal", "unit", "CPP generator can create empty file." )
+SCENARIO( CodeGeneratorCPP, "Operation/Normal", "unit,protocol", "CPP generator can create empty file." )
 {
     Protocol::CodeGeneratorManager * pManager = Protocol::CodeGeneratorManager::instance();
 
@@ -40,7 +40,7 @@ SCENARIO( CodeGeneratorCPP, "Operation/Normal", "unit", "CPP generator can creat
     generator->generateCode("Generated", model.get(), "TestTUCUT");
 }
 
-SCENARIO( CodeGeneratorCPP, "Operation/Normal", "unit", "CPP generator can create file with empty message." )
+SCENARIO( CodeGeneratorCPP, "Operation/Normal", "unit,protocol", "CPP generator can create file with empty message." )
 {
     Protocol::CodeGeneratorManager * pManager = Protocol::CodeGeneratorManager::instance();
 
@@ -52,7 +52,7 @@ SCENARIO( CodeGeneratorCPP, "Operation/Normal", "unit", "CPP generator can creat
     generator->generateCode("Generated", model.get(), "TestTUCUT");
 }
 
-SCENARIO( CodeGeneratorCPP, "Operation/Normal", "unit", "CPP generator can create file with message and all fields." )
+SCENARIO( CodeGeneratorCPP, "Operation/Normal", "unit,protocol", "CPP generator can create file with message and all fields." )
 {
     Protocol::CodeGeneratorManager * pManager = Protocol::CodeGeneratorManager::instance();
 
@@ -64,7 +64,7 @@ SCENARIO( CodeGeneratorCPP, "Operation/Normal", "unit", "CPP generator can creat
     generator->generateCode("Generated", model.get(), "TestTUCUT");
 }
 
-SCENARIO( CodeGeneratorCPP, "Operation/Normal", "unit", "CPP generator can create file with enums." )
+SCENARIO( CodeGeneratorCPP, "Operation/Normal", "unit,protocol", "CPP generator can create file with enums." )
 {
     Protocol::CodeGeneratorManager * pManager = Protocol::CodeGeneratorManager::instance();
 
@@ -76,7 +76,7 @@ SCENARIO( CodeGeneratorCPP, "Operation/Normal", "unit", "CPP generator can creat
     generator->generateCode("Generated", model.get(), "TestTUCUT");
 }
 
-SCENARIO( CodeGeneratorCPP, "Operation/Normal", "unit", "CPP generator can create file with multiple enums." )
+SCENARIO( CodeGeneratorCPP, "Operation/Normal", "unit,protocol", "CPP generator can create file with multiple enums." )
 {
     Protocol::CodeGeneratorManager * pManager = Protocol::CodeGeneratorManager::instance();
     
@@ -88,7 +88,7 @@ SCENARIO( CodeGeneratorCPP, "Operation/Normal", "unit", "CPP generator can creat
     generator->generateCode("Generated", model.get(), "TestTUCUT");
 }
 
-SCENARIO( CodeGeneratorCPP, "Operation/Normal", "unit", "CPP generator can create file with enum and values." )
+SCENARIO( CodeGeneratorCPP, "Operation/Normal", "unit,protocol", "CPP generator can create file with enum and values." )
 {
     Protocol::CodeGeneratorManager * pManager = Protocol::CodeGeneratorManager::instance();
 
@@ -100,7 +100,7 @@ SCENARIO( CodeGeneratorCPP, "Operation/Normal", "unit", "CPP generator can creat
     generator->generateCode("Generated", model.get(), "TestTUCUT");
 }
 
-SCENARIO( CodeGeneratorCPP, "Operation/Normal", "unit", "CPP generator can create file with imports, message, and enum." )
+SCENARIO( CodeGeneratorCPP, "Operation/Normal", "unit,protocol", "CPP generator can create file with imports, message, and enum." )
 {
     Protocol::CodeGeneratorManager * pManager = Protocol::CodeGeneratorManager::instance();
 
@@ -112,7 +112,7 @@ SCENARIO( CodeGeneratorCPP, "Operation/Normal", "unit", "CPP generator can creat
     generator->generateCode("Generated", model.get(), "TestTUCUT");
 }
 
-SCENARIO( CodeGeneratorCPP, "Operation/Normal", "unit", "CPP generator can create file with message fields." )
+SCENARIO( CodeGeneratorCPP, "Operation/Normal", "unit,protocol", "CPP generator can create file with message fields." )
 {
     Protocol::CodeGeneratorManager * pManager = Protocol::CodeGeneratorManager::instance();
 
@@ -124,7 +124,7 @@ SCENARIO( CodeGeneratorCPP, "Operation/Normal", "unit", "CPP generator can creat
     generator->generateCode("Generated", model.get(), "TestTUCUT");
 }
 
-SCENARIO( CodeGeneratorCPP, "Operation/Normal", "unit", "CPP generator can create file with nested messages." )
+SCENARIO( CodeGeneratorCPP, "Operation/Normal", "unit,protocol", "CPP generator can create file with nested messages." )
 {
     Protocol::CodeGeneratorManager * pManager = Protocol::CodeGeneratorManager::instance();
 
@@ -136,7 +136,7 @@ SCENARIO( CodeGeneratorCPP, "Operation/Normal", "unit", "CPP generator can creat
     generator->generateCode("Generated", model.get(), "TestTUCUT");
 }
 
-SCENARIO( CodeGeneratorCPP, "Operation/Normal", "unit", "CPP generator can create file with oneof fields." )
+SCENARIO( CodeGeneratorCPP, "Operation/Normal", "unit,protocol", "CPP generator can create file with oneof fields." )
 {
     Protocol::CodeGeneratorManager * pManager = Protocol::CodeGeneratorManager::instance();
 
@@ -148,7 +148,7 @@ SCENARIO( CodeGeneratorCPP, "Operation/Normal", "unit", "CPP generator can creat
     generator->generateCode("Generated", model.get(), "TestTUCUT");
 }
 
-SCENARIO( CodeGeneratorCPP, "Operation/Normal", "unit", "CPP generator can create file with nested message, fields, and oneof fields." )
+SCENARIO( CodeGeneratorCPP, "Operation/Normal", "unit,protocol", "CPP generator can create file with nested message, fields, and oneof fields." )
 {
     Protocol::CodeGeneratorManager * pManager = Protocol::CodeGeneratorManager::instance();
 
@@ -160,7 +160,7 @@ SCENARIO( CodeGeneratorCPP, "Operation/Normal", "unit", "CPP generator can creat
     generator->generateCode("Generated", model.get(), "TestTUCUT");
 }
 
-SCENARIO( CodeGeneratorCPP, "Operation/Normal", "unit", "CPP generator can create file with package." )
+SCENARIO( CodeGeneratorCPP, "Operation/Normal", "unit,protocol", "CPP generator can create file with package." )
 {
     Protocol::CodeGeneratorManager * pManager = Protocol::CodeGeneratorManager::instance();
 
@@ -172,7 +172,7 @@ SCENARIO( CodeGeneratorCPP, "Operation/Normal", "unit", "CPP generator can creat
     generator->generateCode("Generated", model.get(), "TestTUCUT");
 }
 
-SCENARIO( CodeGeneratorCPP, "Operation/Normal", "unit", "CPP generator can create file with multiple enum packages." )
+SCENARIO( CodeGeneratorCPP, "Operation/Normal", "unit,protocol", "CPP generator can create file with multiple enum packages." )
 {
     Protocol::CodeGeneratorManager * pManager = Protocol::CodeGeneratorManager::instance();
 
@@ -184,7 +184,7 @@ SCENARIO( CodeGeneratorCPP, "Operation/Normal", "unit", "CPP generator can creat
     generator->generateCode("Generated", model.get(), "TestTUCUT");
 }
 
-SCENARIO( CodeGeneratorCPP, "Operation/Normal", "unit", "CPP generator can create file with multiple message packages." )
+SCENARIO( CodeGeneratorCPP, "Operation/Normal", "unit,protocol", "CPP generator can create file with multiple message packages." )
 {
     Protocol::CodeGeneratorManager * pManager = Protocol::CodeGeneratorManager::instance();
 
@@ -196,7 +196,7 @@ SCENARIO( CodeGeneratorCPP, "Operation/Normal", "unit", "CPP generator can creat
     generator->generateCode("Generated", model.get(), "TestTUCUT");
 }
 
-SCENARIO( CodeGeneratorCPP, "Operation/Normal", "unit", "CPP generator can create file with enum and message field types." )
+SCENARIO( CodeGeneratorCPP, "Operation/Normal", "unit,protocol", "CPP generator can create file with enum and message field types." )
 {
     Protocol::CodeGeneratorManager * pManager = Protocol::CodeGeneratorManager::instance();
 
@@ -270,7 +270,7 @@ namespace A
     }
 }
 
-SCENARIO( CodeGeneratorCPP, "Structure/Nested", "unit", "Nested classes can declare pointers to each other." )
+SCENARIO( CodeGeneratorCPP, "Structure/Nested", "unit,protocol", "Nested classes can declare pointers to each other." )
 {
     // The consumer can still use the classes as if they were nested with their original names.
     VERIFY_EQUAL(1, A::B::M::N::valueN());

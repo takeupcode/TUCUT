@@ -16,12 +16,12 @@
 using namespace std;
 using namespace TUCUT;
 
-SCENARIO( EnumValueParser, "Construction/Normal", "unit", "EnumValueParser can be constructed." )
+SCENARIO( EnumValueParser, "Construction/Normal", "unit,protocol", "EnumValueParser can be constructed." )
 {
     Protocol::EnumValueParser parser;
 }
 
-SCENARIO( EnumValueParser, "Parsing/Normal", "unit", "EnumParser can parse simple enum." )
+SCENARIO( EnumValueParser, "Parsing/Normal", "unit,protocol", "EnumParser can parse simple enum." )
 {
     shared_ptr<Protocol::ProtoModel> model;
 
@@ -65,7 +65,7 @@ SCENARIO( EnumValueParser, "Parsing/Normal", "unit", "EnumParser can parse simpl
     VERIFY_EQUAL(1, count);
 }
 
-SCENARIO( EnumValueParser, "Parsing/Normal", "unit", "EnumValueParser can parse multiple enums with values and different parents." )
+SCENARIO( EnumValueParser, "Parsing/Normal", "unit,protocol", "EnumValueParser can parse multiple enums with values and different parents." )
 {
     shared_ptr<Protocol::ProtoModel> model;
 
