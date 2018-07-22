@@ -88,6 +88,7 @@
 		3E2F9C1D20FB7FED008C90A9 /* libboost_system-mt.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E2F9C1B20FB7FEC008C90A9 /* libboost_system-mt.dylib */; };
 		3E2F9C1E20FB7FED008C90A9 /* libboost_filesystem-mt.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E2F9C1C20FB7FEC008C90A9 /* libboost_filesystem-mt.dylib */; };
 		3E3F82E421019B5500501126 /* TextUtilScenarios.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E3F82E321019B5500501126 /* TextUtilScenarios.cpp */; };
+		3E3F82E8210424CF00501126 /* StringLiteralScenarios.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E3F82E7210424CF00501126 /* StringLiteralScenarios.cpp */; };
 		3ED4127B20FED1FB00BC7226 /* CodeGeneratorCPPScenarios.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E259E6420E34BA700F01379 /* CodeGeneratorCPPScenarios.cpp */; };
 		3ED4127C20FED1FB00BC7226 /* CodeGeneratorManagerScenarios.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E259E5D20E34BA600F01379 /* CodeGeneratorManagerScenarios.cpp */; };
 		3ED4127D20FED1FB00BC7226 /* EnumParserScenarios.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E259E6120E34BA600F01379 /* EnumParserScenarios.cpp */; };
@@ -332,6 +333,8 @@
 		3E2F9C1B20FB7FEC008C90A9 /* libboost_system-mt.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libboost_system-mt.dylib"; path = "../../../../opt/local/lib/libboost_system-mt.dylib"; sourceTree = "<group>"; };
 		3E2F9C1C20FB7FEC008C90A9 /* libboost_filesystem-mt.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libboost_filesystem-mt.dylib"; path = "../../../../opt/local/lib/libboost_filesystem-mt.dylib"; sourceTree = "<group>"; };
 		3E3F82E321019B5500501126 /* TextUtilScenarios.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = TextUtilScenarios.cpp; sourceTree = "<group>"; };
+		3E3F82E6210422B700501126 /* StringLiteral.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StringLiteral.h; sourceTree = "<group>"; };
+		3E3F82E7210424CF00501126 /* StringLiteralScenarios.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = StringLiteralScenarios.cpp; sourceTree = "<group>"; };
 		3ED4127420FED19500BC7226 /* TestTUCUT */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = TestTUCUT; sourceTree = BUILT_PRODUCTS_DIR; };
 		3ED4129120FED29400BC7226 /* TestProtocolCompiler */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = TestProtocolCompiler; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -413,6 +416,7 @@
 		3E259DBB20E33A1100F01379 /* Text */ = {
 			isa = PBXGroup;
 			children = (
+				3E3F82E6210422B700501126 /* StringLiteral.h */,
 				3E259DD420E33E5100F01379 /* TextUtil.cpp */,
 				3E259DD520E33E5100F01379 /* TextUtil.h */,
 				3E259DC420E33D9D00F01379 /* Tests */,
@@ -555,6 +559,7 @@
 		3E259DC420E33D9D00F01379 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
+				3E3F82E7210424CF00501126 /* StringLiteralScenarios.cpp */,
 				3E3F82E321019B5500501126 /* TextUtilScenarios.cpp */,
 			);
 			path = Tests;
@@ -963,6 +968,7 @@
 				3ED4128320FED1FB00BC7226 /* OptionParserScenarios.cpp in Sources */,
 				3ED4128420FED1FB00BC7226 /* PackageParserScenarios.cpp in Sources */,
 				3ED4128520FED1FB00BC7226 /* ProtoModelScenarios.cpp in Sources */,
+				3E3F82E8210424CF00501126 /* StringLiteralScenarios.cpp in Sources */,
 				3ED4128620FED1FB00BC7226 /* ProtoParserScenarios.cpp in Sources */,
 				3ED4128720FED1FB00BC7226 /* TokenReaderScenarios.cpp in Sources */,
 				3ED4128820FED1FB00BC7226 /* main.cpp in Sources */,
