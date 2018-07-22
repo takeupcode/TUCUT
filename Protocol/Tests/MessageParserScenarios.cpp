@@ -36,10 +36,10 @@ SCENARIO( MessageParser, "Parsing/Normal", "unit", "MessageParser can parse empt
     {
         count++;
         auto message = *begin;
-        verifyEqual(name, message->name());
+        VERIFY_EQUAL(name, message->name());
         begin++;
     }
-    verifyEqual(1, count);
+    VERIFY_EQUAL(1, count);
 }
 
 SCENARIO( MessageParser, "Parsing/Normal", "unit", "MessageParser can parse multiple empty messages." )
@@ -58,16 +58,16 @@ SCENARIO( MessageParser, "Parsing/Normal", "unit", "MessageParser can parse mult
         auto message = *begin;
         if (count == 1)
         {
-            verifyEqual("one", message->name());
+            VERIFY_EQUAL("one", message->name());
         }
         else
         {
-            verifyEqual("two", message->name());
+            VERIFY_EQUAL("two", message->name());
         }
-        verifyEqual("", message->package());
+        VERIFY_EQUAL("", message->package());
         begin++;
     }
-    verifyEqual(2, count);
+    VERIFY_EQUAL(2, count);
 }
 
 SCENARIO( MessageParser, "Parsing/Normal", "unit", "MessageParser can assign current package." )
@@ -86,15 +86,15 @@ SCENARIO( MessageParser, "Parsing/Normal", "unit", "MessageParser can assign cur
         auto message = *begin;
         if (count == 1)
         {
-            verifyEqual("abc", message->package());
+            VERIFY_EQUAL("abc", message->package());
         }
         else
         {
-            verifyEqual("def", message->package());
+            VERIFY_EQUAL("def", message->package());
         }
         begin++;
     }
-    verifyEqual(2, count);
+    VERIFY_EQUAL(2, count);
 }
 
 SCENARIO( MessageParser, "Parsing/Normal", "unit", "MessageParser can parse multiple nested messages." )
@@ -111,7 +111,7 @@ SCENARIO( MessageParser, "Parsing/Normal", "unit", "MessageParser can parse mult
     {
         count1++;
         auto message1 = *begin1;
-        verifyEqual("one", message1->name());
+        VERIFY_EQUAL("one", message1->name());
 
         int count2 = 0;
         auto begin2 = message1->messages()->cbegin();
@@ -120,7 +120,7 @@ SCENARIO( MessageParser, "Parsing/Normal", "unit", "MessageParser can parse mult
         {
             count2++;
             auto message2 = *begin2;
-            verifyEqual("two", message2->name());
+            VERIFY_EQUAL("two", message2->name());
 
             int count3 = 0;
             auto begin3 = message2->messages()->cbegin();
@@ -129,14 +129,14 @@ SCENARIO( MessageParser, "Parsing/Normal", "unit", "MessageParser can parse mult
             {
                 count3++;
                 auto message3 = *begin3;
-                verifyEqual("three", message3->name());
+                VERIFY_EQUAL("three", message3->name());
                 begin3++;
             }
-            verifyEqual(1, count3);
+            VERIFY_EQUAL(1, count3);
             begin2++;
         }
-        verifyEqual(1, count2);
+        VERIFY_EQUAL(1, count2);
         begin1++;
     }
-    verifyEqual(1, count1);
+    VERIFY_EQUAL(1, count1);
 }

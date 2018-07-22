@@ -25,7 +25,7 @@ SCENARIO( TokenReader, "Construction/NotFound", "unit", "TokenReader cannot open
 {
     Protocol::TokenReader reader("NotFound.proto");
 
-    verifyTrue(false); // Fail this until it is implemented.
+    VERIFY_TRUE(false); // Fail this until it is implemented.
 }
 
 SCENARIO( TokenReader, "Iteration/Normal", "unit", "TokenReader can iterate empty proto." )
@@ -34,11 +34,11 @@ SCENARIO( TokenReader, "Iteration/Normal", "unit", "TokenReader can iterate empt
     auto iter1 = reader.begin();
     auto iter2 = reader.end();
 
-    verifyFalse(iter1 != iter2);
-    verifyEqual("", *iter1);
-    verifyEqual("", *iter2);
-    verifyEqual(1, iter1.line());
-    verifyEqual(1, iter1.column());
+    VERIFY_FALSE(iter1 != iter2);
+    VERIFY_EQUAL("", *iter1);
+    VERIFY_EQUAL("", *iter2);
+    VERIFY_EQUAL(1, iter1.line());
+    VERIFY_EQUAL(1, iter1.column());
 }
 
 SCENARIO( TokenReader, "Iteration/Normal", "unit", "TokenReader can iterate empty proto with single-line comment." )
@@ -47,11 +47,11 @@ SCENARIO( TokenReader, "Iteration/Normal", "unit", "TokenReader can iterate empt
     auto iter1 = reader.begin();
     auto iter2 = reader.end();
 
-    verifyFalse(iter1 != iter2);
-    verifyEqual("", *iter1);
-    verifyEqual("", *iter2);
-    verifyEqual(2, iter1.line());
-    verifyEqual(1, iter1.column());
+    VERIFY_FALSE(iter1 != iter2);
+    VERIFY_EQUAL("", *iter1);
+    VERIFY_EQUAL("", *iter2);
+    VERIFY_EQUAL(2, iter1.line());
+    VERIFY_EQUAL(1, iter1.column());
 }
 
 SCENARIO( TokenReader, "Iteration/EOF", "unit", "TokenReader can iterate empty proto with single-line comment with no line feed." )
@@ -60,11 +60,11 @@ SCENARIO( TokenReader, "Iteration/EOF", "unit", "TokenReader can iterate empty p
     auto iter1 = reader.begin();
     auto iter2 = reader.end();
 
-    verifyFalse(iter1 != iter2);
-    verifyEqual("", *iter1);
-    verifyEqual("", *iter2);
-    verifyEqual(1, iter1.line());
-    verifyEqual(62, iter1.column());
+    VERIFY_FALSE(iter1 != iter2);
+    VERIFY_EQUAL("", *iter1);
+    VERIFY_EQUAL("", *iter2);
+    VERIFY_EQUAL(1, iter1.line());
+    VERIFY_EQUAL(62, iter1.column());
 }
 
 SCENARIO( TokenReader, "Iteration/Normal", "unit", "TokenReader can iterate empty proto with multi-line comment." )
@@ -73,11 +73,11 @@ SCENARIO( TokenReader, "Iteration/Normal", "unit", "TokenReader can iterate empt
     auto iter1 = reader.begin();
     auto iter2 = reader.end();
 
-    verifyFalse(iter1 != iter2);
-    verifyEqual("", *iter1);
-    verifyEqual("", *iter2);
-    verifyEqual(7, iter1.line());
-    verifyEqual(1, iter1.column());
+    VERIFY_FALSE(iter1 != iter2);
+    VERIFY_EQUAL("", *iter1);
+    VERIFY_EQUAL("", *iter2);
+    VERIFY_EQUAL(7, iter1.line());
+    VERIFY_EQUAL(1, iter1.column());
 }
 
 SCENARIO( TokenReader, "Iteration/EOF", "unit", "TokenReader can iterate empty proto with multi-line comment with no end." )
@@ -86,11 +86,11 @@ SCENARIO( TokenReader, "Iteration/EOF", "unit", "TokenReader can iterate empty p
     auto iter1 = reader.begin();
     auto iter2 = reader.end();
 
-    verifyFalse(iter1 != iter2);
-    verifyEqual("", *iter1);
-    verifyEqual("", *iter2);
-    verifyEqual(3, iter1.line());
-    verifyEqual(1, iter1.column());
+    VERIFY_FALSE(iter1 != iter2);
+    VERIFY_EQUAL("", *iter1);
+    VERIFY_EQUAL("", *iter2);
+    VERIFY_EQUAL(3, iter1.line());
+    VERIFY_EQUAL(1, iter1.column());
 }
 
 SCENARIO( TokenReader, "Iteration/Normal", "unit", "TokenReader can iterate empty proto with many comments." )
@@ -99,11 +99,11 @@ SCENARIO( TokenReader, "Iteration/Normal", "unit", "TokenReader can iterate empt
     auto iter1 = reader.begin();
     auto iter2 = reader.end();
 
-    verifyFalse(iter1 != iter2);
-    verifyEqual("", *iter1);
-    verifyEqual("", *iter2);
-    verifyEqual(12, iter1.line());
-    verifyEqual(3, iter1.column());
+    VERIFY_FALSE(iter1 != iter2);
+    VERIFY_EQUAL("", *iter1);
+    VERIFY_EQUAL("", *iter2);
+    VERIFY_EQUAL(12, iter1.line());
+    VERIFY_EQUAL(3, iter1.column());
 }
 
 SCENARIO( TokenReader, "Iteration/Normal", "unit", "TokenReader can iterate random text." )
@@ -112,67 +112,67 @@ SCENARIO( TokenReader, "Iteration/Normal", "unit", "TokenReader can iterate rand
     auto iter1 = reader.begin();
     auto iter2 = reader.end();
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("Just", *iter1);
-    verifyEqual("", *iter2);
-    verifyEqual(1, iter1.line());
-    verifyEqual(1, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("Just", *iter1);
+    VERIFY_EQUAL("", *iter2);
+    VERIFY_EQUAL(1, iter1.line());
+    VERIFY_EQUAL(1, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("some", *iter1);
-    verifyEqual(1, iter1.line());
-    verifyEqual(6, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("some", *iter1);
+    VERIFY_EQUAL(1, iter1.line());
+    VERIFY_EQUAL(6, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("text", *iter1);
-    verifyEqual(1, iter1.line());
-    verifyEqual(11, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("text", *iter1);
+    VERIFY_EQUAL(1, iter1.line());
+    VERIFY_EQUAL(11, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("on", *iter1);
-    verifyEqual(1, iter1.line());
-    verifyEqual(16, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("on", *iter1);
+    VERIFY_EQUAL(1, iter1.line());
+    VERIFY_EQUAL(16, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("a", *iter1);
-    verifyEqual(1, iter1.line());
-    verifyEqual(19, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("a", *iter1);
+    VERIFY_EQUAL(1, iter1.line());
+    VERIFY_EQUAL(19, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("single", *iter1);
-    verifyEqual(1, iter1.line());
-    verifyEqual(21, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("single", *iter1);
+    VERIFY_EQUAL(1, iter1.line());
+    VERIFY_EQUAL(21, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("line", *iter1);
-    verifyEqual(1, iter1.line());
-    verifyEqual(28, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("line", *iter1);
+    VERIFY_EQUAL(1, iter1.line());
+    VERIFY_EQUAL(28, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual(".", *iter1);
-    verifyEqual(1, iter1.line());
-    verifyEqual(32, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL(".", *iter1);
+    VERIFY_EQUAL(1, iter1.line());
+    VERIFY_EQUAL(32, iter1.column());
 
     ++iter1;
 
-    verifyFalse(iter1 != iter2);
-    verifyEqual("", *iter1);
-    verifyEqual(1, iter1.line());
-    verifyEqual(33, iter1.column());
+    VERIFY_FALSE(iter1 != iter2);
+    VERIFY_EQUAL("", *iter1);
+    VERIFY_EQUAL(1, iter1.line());
+    VERIFY_EQUAL(33, iter1.column());
 }
 
 SCENARIO( TokenReader, "Iteration/Normal", "unit", "TokenReader can iterate random text with a single-line comment." )
@@ -181,18 +181,18 @@ SCENARIO( TokenReader, "Iteration/Normal", "unit", "TokenReader can iterate rand
     auto iter1 = reader.begin();
     auto iter2 = reader.end();
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("text", *iter1);
-    verifyEqual("", *iter2);
-    verifyEqual(1, iter1.line());
-    verifyEqual(1, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("text", *iter1);
+    VERIFY_EQUAL("", *iter2);
+    VERIFY_EQUAL(1, iter1.line());
+    VERIFY_EQUAL(1, iter1.column());
 
     ++iter1;
 
-    verifyFalse(iter1 != iter2);
-    verifyEqual("", *iter1);
-    verifyEqual(2, iter1.line());
-    verifyEqual(1, iter1.column());
+    VERIFY_FALSE(iter1 != iter2);
+    VERIFY_EQUAL("", *iter1);
+    VERIFY_EQUAL(2, iter1.line());
+    VERIFY_EQUAL(1, iter1.column());
 }
 
 SCENARIO( TokenReader, "Iteration/EOF", "unit", "TokenReader can iterate random text with a single-line comment with no line feed." )
@@ -201,18 +201,18 @@ SCENARIO( TokenReader, "Iteration/EOF", "unit", "TokenReader can iterate random 
     auto iter1 = reader.begin();
     auto iter2 = reader.end();
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("text", *iter1);
-    verifyEqual("", *iter2);
-    verifyEqual(1, iter1.line());
-    verifyEqual(1, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("text", *iter1);
+    VERIFY_EQUAL("", *iter2);
+    VERIFY_EQUAL(1, iter1.line());
+    VERIFY_EQUAL(1, iter1.column());
 
     ++iter1;
 
-    verifyFalse(iter1 != iter2);
-    verifyEqual("", *iter1);
-    verifyEqual(1, iter1.line());
-    verifyEqual(32, iter1.column());
+    VERIFY_FALSE(iter1 != iter2);
+    VERIFY_EQUAL("", *iter1);
+    VERIFY_EQUAL(1, iter1.line());
+    VERIFY_EQUAL(32, iter1.column());
 }
 
 SCENARIO( TokenReader, "Iteration/Normal", "unit", "TokenReader can iterate random text with a multi-line comment." )
@@ -221,18 +221,18 @@ SCENARIO( TokenReader, "Iteration/Normal", "unit", "TokenReader can iterate rand
     auto iter1 = reader.begin();
     auto iter2 = reader.end();
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("text", *iter1);
-    verifyEqual("", *iter2);
-    verifyEqual(1, iter1.line());
-    verifyEqual(1, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("text", *iter1);
+    VERIFY_EQUAL("", *iter2);
+    VERIFY_EQUAL(1, iter1.line());
+    VERIFY_EQUAL(1, iter1.column());
 
     ++iter1;
 
-    verifyFalse(iter1 != iter2);
-    verifyEqual("", *iter1);
-    verifyEqual(3, iter1.line());
-    verifyEqual(3, iter1.column());
+    VERIFY_FALSE(iter1 != iter2);
+    VERIFY_EQUAL("", *iter1);
+    VERIFY_EQUAL(3, iter1.line());
+    VERIFY_EQUAL(3, iter1.column());
 }
 
 SCENARIO( TokenReader, "Iteration/EOF", "unit", "TokenReader can iterate random text with a multi-line comment with no end." )
@@ -241,18 +241,18 @@ SCENARIO( TokenReader, "Iteration/EOF", "unit", "TokenReader can iterate random 
     auto iter1 = reader.begin();
     auto iter2 = reader.end();
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("text", *iter1);
-    verifyEqual("", *iter2);
-    verifyEqual(1, iter1.line());
-    verifyEqual(1, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("text", *iter1);
+    VERIFY_EQUAL("", *iter2);
+    VERIFY_EQUAL(1, iter1.line());
+    VERIFY_EQUAL(1, iter1.column());
 
     ++iter1;
 
-    verifyFalse(iter1 != iter2);
-    verifyEqual("", *iter1);
-    verifyEqual(4, iter1.line());
-    verifyEqual(1, iter1.column());
+    VERIFY_FALSE(iter1 != iter2);
+    VERIFY_EQUAL("", *iter1);
+    VERIFY_EQUAL(4, iter1.line());
+    VERIFY_EQUAL(1, iter1.column());
 }
 
 SCENARIO( TokenReader, "Iteration/Normal", "unit", "TokenReader can iterate random text with adjacent comments." )
@@ -261,25 +261,25 @@ SCENARIO( TokenReader, "Iteration/Normal", "unit", "TokenReader can iterate rand
     auto iter1 = reader.begin();
     auto iter2 = reader.end();
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("text", *iter1);
-    verifyEqual("", *iter2);
-    verifyEqual(1, iter1.line());
-    verifyEqual(1, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("text", *iter1);
+    VERIFY_EQUAL("", *iter2);
+    VERIFY_EQUAL(1, iter1.line());
+    VERIFY_EQUAL(1, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("more", *iter1);
-    verifyEqual(2, iter1.line());
-    verifyEqual(1, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("more", *iter1);
+    VERIFY_EQUAL(2, iter1.line());
+    VERIFY_EQUAL(1, iter1.column());
 
     ++iter1;
 
-    verifyFalse(iter1 != iter2);
-    verifyEqual("", *iter1);
-    verifyEqual(3, iter1.line());
-    verifyEqual(1, iter1.column());
+    VERIFY_FALSE(iter1 != iter2);
+    VERIFY_EQUAL("", *iter1);
+    VERIFY_EQUAL(3, iter1.line());
+    VERIFY_EQUAL(1, iter1.column());
 }
 
 SCENARIO( TokenReader, "Iteration/Normal", "unit", "TokenReader can iterate random text with a string." )
@@ -288,39 +288,39 @@ SCENARIO( TokenReader, "Iteration/Normal", "unit", "TokenReader can iterate rand
     auto iter1 = reader.begin();
     auto iter2 = reader.end();
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("text", *iter1);
-    verifyEqual("", *iter2);
-    verifyEqual(1, iter1.line());
-    verifyEqual(1, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("text", *iter1);
+    VERIFY_EQUAL("", *iter2);
+    VERIFY_EQUAL(1, iter1.line());
+    VERIFY_EQUAL(1, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("\"", *iter1);
-    verifyEqual(1, iter1.line());
-    verifyEqual(6, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("\"", *iter1);
+    VERIFY_EQUAL(1, iter1.line());
+    VERIFY_EQUAL(6, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("With /* a */ \\\"string\\\" // that looks like a comment.", *iter1);
-    verifyEqual(1, iter1.line());
-    verifyEqual(7, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("With /* a */ \\\"string\\\" // that looks like a comment.", *iter1);
+    VERIFY_EQUAL(1, iter1.line());
+    VERIFY_EQUAL(7, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("\"", *iter1);
-    verifyEqual(1, iter1.line());
-    verifyEqual(60, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("\"", *iter1);
+    VERIFY_EQUAL(1, iter1.line());
+    VERIFY_EQUAL(60, iter1.column());
 
     ++iter1;
 
-    verifyFalse(iter1 != iter2);
-    verifyEqual("", *iter1);
-    verifyEqual(1, iter1.line());
-    verifyEqual(61, iter1.column());
+    VERIFY_FALSE(iter1 != iter2);
+    VERIFY_EQUAL("", *iter1);
+    VERIFY_EQUAL(1, iter1.line());
+    VERIFY_EQUAL(61, iter1.column());
 }
 
 SCENARIO( TokenReader, "Iteration/Normal", "unit", "TokenReader can iterate random text with multiple delimiters." )
@@ -329,95 +329,95 @@ SCENARIO( TokenReader, "Iteration/Normal", "unit", "TokenReader can iterate rand
     auto iter1 = reader.begin();
     auto iter2 = reader.end();
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual(";", *iter1);
-    verifyEqual("", *iter2);
-    verifyEqual(1, iter1.line());
-    verifyEqual(1, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL(";", *iter1);
+    VERIFY_EQUAL("", *iter2);
+    VERIFY_EQUAL(1, iter1.line());
+    VERIFY_EQUAL(1, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("text", *iter1);
-    verifyEqual(1, iter1.line());
-    verifyEqual(2, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("text", *iter1);
+    VERIFY_EQUAL(1, iter1.line());
+    VERIFY_EQUAL(2, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("{", *iter1);
-    verifyEqual(1, iter1.line());
-    verifyEqual(6, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("{", *iter1);
+    VERIFY_EQUAL(1, iter1.line());
+    VERIFY_EQUAL(6, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("}", *iter1);
-    verifyEqual(1, iter1.line());
-    verifyEqual(7, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("}", *iter1);
+    VERIFY_EQUAL(1, iter1.line());
+    VERIFY_EQUAL(7, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("[", *iter1);
-    verifyEqual(1, iter1.line());
-    verifyEqual(8, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("[", *iter1);
+    VERIFY_EQUAL(1, iter1.line());
+    VERIFY_EQUAL(8, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("]", *iter1);
-    verifyEqual(1, iter1.line());
-    verifyEqual(9, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("]", *iter1);
+    VERIFY_EQUAL(1, iter1.line());
+    VERIFY_EQUAL(9, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("(", *iter1);
-    verifyEqual(1, iter1.line());
-    verifyEqual(10, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("(", *iter1);
+    VERIFY_EQUAL(1, iter1.line());
+    VERIFY_EQUAL(10, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual(")", *iter1);
-    verifyEqual(1, iter1.line());
-    verifyEqual(11, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL(")", *iter1);
+    VERIFY_EQUAL(1, iter1.line());
+    VERIFY_EQUAL(11, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("=", *iter1);
-    verifyEqual(1, iter1.line());
-    verifyEqual(12, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("=", *iter1);
+    VERIFY_EQUAL(1, iter1.line());
+    VERIFY_EQUAL(12, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual(";", *iter1);
-    verifyEqual(1, iter1.line());
-    verifyEqual(13, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL(";", *iter1);
+    VERIFY_EQUAL(1, iter1.line());
+    VERIFY_EQUAL(13, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual(",", *iter1);
-    verifyEqual(1, iter1.line());
-    verifyEqual(14, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL(",", *iter1);
+    VERIFY_EQUAL(1, iter1.line());
+    VERIFY_EQUAL(14, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("\"", *iter1);
-    verifyEqual(1, iter1.line());
-    verifyEqual(15, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("\"", *iter1);
+    VERIFY_EQUAL(1, iter1.line());
+    VERIFY_EQUAL(15, iter1.column());
 
     ++iter1;
 
-    verifyFalse(iter1 != iter2);
-    verifyEqual("", *iter1);
-    verifyEqual(1, iter1.line());
-    verifyEqual(16, iter1.column());
+    VERIFY_FALSE(iter1 != iter2);
+    VERIFY_EQUAL("", *iter1);
+    VERIFY_EQUAL(1, iter1.line());
+    VERIFY_EQUAL(16, iter1.column());
 }
 
 SCENARIO( TokenReader, "Iteration/Normal", "unit", "TokenReader can iterate an empty string." )
@@ -426,32 +426,32 @@ SCENARIO( TokenReader, "Iteration/Normal", "unit", "TokenReader can iterate an e
     auto iter1 = reader.begin();
     auto iter2 = reader.end();
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("\"", *iter1);
-    verifyEqual("", *iter2);
-    verifyEqual(1, iter1.line());
-    verifyEqual(1, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("\"", *iter1);
+    VERIFY_EQUAL("", *iter2);
+    VERIFY_EQUAL(1, iter1.line());
+    VERIFY_EQUAL(1, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("", *iter1);
-    verifyEqual(1, iter1.line());
-    verifyEqual(2, iter1.column()); // The text (empty) and the end quote are both found on the same column.
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("", *iter1);
+    VERIFY_EQUAL(1, iter1.line());
+    VERIFY_EQUAL(2, iter1.column()); // The text (empty) and the end quote are both found on the same column.
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("\"", *iter1);
-    verifyEqual(1, iter1.line());
-    verifyEqual(2, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("\"", *iter1);
+    VERIFY_EQUAL(1, iter1.line());
+    VERIFY_EQUAL(2, iter1.column());
 
     ++iter1;
 
-    verifyFalse(iter1 != iter2);
-    verifyEqual("", *iter1);
-    verifyEqual(1, iter1.line());
-    verifyEqual(3, iter1.column());
+    VERIFY_FALSE(iter1 != iter2);
+    VERIFY_EQUAL("", *iter1);
+    VERIFY_EQUAL(1, iter1.line());
+    VERIFY_EQUAL(3, iter1.column());
 }
 
 SCENARIO( TokenReader, "Iteration/EOF", "unit", "TokenReader can iterate random text with an unterminated string." )
@@ -460,32 +460,32 @@ SCENARIO( TokenReader, "Iteration/EOF", "unit", "TokenReader can iterate random 
     auto iter1 = reader.begin();
     auto iter2 = reader.end();
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("text", *iter1);
-    verifyEqual("", *iter2);
-    verifyEqual(1, iter1.line());
-    verifyEqual(1, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("text", *iter1);
+    VERIFY_EQUAL("", *iter2);
+    VERIFY_EQUAL(1, iter1.line());
+    VERIFY_EQUAL(1, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("\"", *iter1);
-    verifyEqual(1, iter1.line());
-    verifyEqual(6, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("\"", *iter1);
+    VERIFY_EQUAL(1, iter1.line());
+    VERIFY_EQUAL(6, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("With an unterminated string.", *iter1);
-    verifyEqual(1, iter1.line());
-    verifyEqual(7, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("With an unterminated string.", *iter1);
+    VERIFY_EQUAL(1, iter1.line());
+    VERIFY_EQUAL(7, iter1.column());
 
     ++iter1;
 
-    verifyFalse(iter1 != iter2);
-    verifyEqual("", *iter1);
-    verifyEqual(1, iter1.line());
-    verifyEqual(35, iter1.column());
+    VERIFY_FALSE(iter1 != iter2);
+    VERIFY_EQUAL("", *iter1);
+    VERIFY_EQUAL(1, iter1.line());
+    VERIFY_EQUAL(35, iter1.column());
 }
 
 SCENARIO( TokenReader, "Iteration/EOF", "unit", "TokenReader can iterate random text with a string on multiple lines." )
@@ -494,53 +494,53 @@ SCENARIO( TokenReader, "Iteration/EOF", "unit", "TokenReader can iterate random 
     auto iter1 = reader.begin();
     auto iter2 = reader.end();
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("text", *iter1);
-    verifyEqual("", *iter2);
-    verifyEqual(1, iter1.line());
-    verifyEqual(1, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("text", *iter1);
+    VERIFY_EQUAL("", *iter2);
+    VERIFY_EQUAL(1, iter1.line());
+    VERIFY_EQUAL(1, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("\"", *iter1);
-    verifyEqual(1, iter1.line());
-    verifyEqual(6, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("\"", *iter1);
+    VERIFY_EQUAL(1, iter1.line());
+    VERIFY_EQUAL(6, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("With a string on", *iter1);
-    verifyEqual(1, iter1.line());
-    verifyEqual(7, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("With a string on", *iter1);
+    VERIFY_EQUAL(1, iter1.line());
+    VERIFY_EQUAL(7, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("multiple", *iter1);
-    verifyEqual(2, iter1.line());
-    verifyEqual(1, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("multiple", *iter1);
+    VERIFY_EQUAL(2, iter1.line());
+    VERIFY_EQUAL(1, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("lines", *iter1);
-    verifyEqual(2, iter1.line());
-    verifyEqual(10, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("lines", *iter1);
+    VERIFY_EQUAL(2, iter1.line());
+    VERIFY_EQUAL(10, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual(".", *iter1);
-    verifyEqual(2, iter1.line());
-    verifyEqual(15, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL(".", *iter1);
+    VERIFY_EQUAL(2, iter1.line());
+    VERIFY_EQUAL(15, iter1.column());
 
     ++iter1;
 
-    verifyFalse(iter1 != iter2);
-    verifyEqual("", *iter1);
-    verifyEqual(2, iter1.line());
-    verifyEqual(43, iter1.column());
+    VERIFY_FALSE(iter1 != iter2);
+    VERIFY_EQUAL("", *iter1);
+    VERIFY_EQUAL(2, iter1.line());
+    VERIFY_EQUAL(43, iter1.column());
 }
 
 SCENARIO( TokenReader, "Iteration/EOF", "unit", "TokenReader can iterate random text with unterminated strings ending with escape." )
@@ -549,39 +549,39 @@ SCENARIO( TokenReader, "Iteration/EOF", "unit", "TokenReader can iterate random 
     auto iter1 = reader.begin();
     auto iter2 = reader.end();
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("\"", *iter1);
-    verifyEqual("", *iter2);
-    verifyEqual(1, iter1.line());
-    verifyEqual(1, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("\"", *iter1);
+    VERIFY_EQUAL("", *iter2);
+    VERIFY_EQUAL(1, iter1.line());
+    VERIFY_EQUAL(1, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("unterminated string with \\", *iter1);
-    verifyEqual(1, iter1.line());
-    verifyEqual(2, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("unterminated string with \\", *iter1);
+    VERIFY_EQUAL(1, iter1.line());
+    VERIFY_EQUAL(2, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("\"", *iter1);
-    verifyEqual(2, iter1.line());
-    verifyEqual(1, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("\"", *iter1);
+    VERIFY_EQUAL(2, iter1.line());
+    VERIFY_EQUAL(1, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("another at the end \\", *iter1);
-    verifyEqual(2, iter1.line());
-    verifyEqual(2, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("another at the end \\", *iter1);
+    VERIFY_EQUAL(2, iter1.line());
+    VERIFY_EQUAL(2, iter1.column());
 
     ++iter1;
 
-    verifyFalse(iter1 != iter2);
-    verifyEqual("", *iter1);
-    verifyEqual(2, iter1.line());
-    verifyEqual(22, iter1.column());
+    VERIFY_FALSE(iter1 != iter2);
+    VERIFY_EQUAL("", *iter1);
+    VERIFY_EQUAL(2, iter1.line());
+    VERIFY_EQUAL(22, iter1.column());
 }
 
 SCENARIO( TokenReader, "Iteration/EOF", "unit", "TokenReader can iterate random text with unterminated strings at end of line and file." )
@@ -592,39 +592,39 @@ SCENARIO( TokenReader, "Iteration/EOF", "unit", "TokenReader can iterate random 
     auto iter1 = reader.begin();
     auto iter2 = reader.end();
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("\"", *iter1);
-    verifyEqual("", *iter2);
-    verifyEqual(1, iter1.line());
-    verifyEqual(1, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("\"", *iter1);
+    VERIFY_EQUAL("", *iter2);
+    VERIFY_EQUAL(1, iter1.line());
+    VERIFY_EQUAL(1, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("", *iter1);
-    verifyEqual(1, iter1.line());
-    verifyEqual(2, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("", *iter1);
+    VERIFY_EQUAL(1, iter1.line());
+    VERIFY_EQUAL(2, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("text", *iter1);
-    verifyEqual(2, iter1.line());
-    verifyEqual(1, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("text", *iter1);
+    VERIFY_EQUAL(2, iter1.line());
+    VERIFY_EQUAL(1, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("\"", *iter1);
-    verifyEqual(3, iter1.line());
-    verifyEqual(1, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("\"", *iter1);
+    VERIFY_EQUAL(3, iter1.line());
+    VERIFY_EQUAL(1, iter1.column());
 
     ++iter1;
 
-    verifyFalse(iter1 != iter2);
-    verifyEqual("", *iter1);
-    verifyEqual(3, iter1.line());
-    verifyEqual(2, iter1.column());
+    VERIFY_FALSE(iter1 != iter2);
+    VERIFY_EQUAL("", *iter1);
+    VERIFY_EQUAL(3, iter1.line());
+    VERIFY_EQUAL(2, iter1.column());
 }
 
 SCENARIO( TokenReader, "Iteration/Normal", "unit", "TokenReader can iterate random text with whitespace." )
@@ -633,60 +633,60 @@ SCENARIO( TokenReader, "Iteration/Normal", "unit", "TokenReader can iterate rand
     auto iter1 = reader.begin();
     auto iter2 = reader.end();
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("Just", *iter1);
-    verifyEqual("", *iter2);
-    verifyEqual(2, iter1.line());
-    verifyEqual(3, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("Just", *iter1);
+    VERIFY_EQUAL("", *iter2);
+    VERIFY_EQUAL(2, iter1.line());
+    VERIFY_EQUAL(3, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("some", *iter1);
-    verifyEqual(2, iter1.line());
-    verifyEqual(12, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("some", *iter1);
+    VERIFY_EQUAL(2, iter1.line());
+    VERIFY_EQUAL(12, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("text", *iter1);
-    verifyEqual(3, iter1.line());
-    verifyEqual(5, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("text", *iter1);
+    VERIFY_EQUAL(3, iter1.line());
+    VERIFY_EQUAL(5, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("on", *iter1);
-    verifyEqual(3, iter1.line());
-    verifyEqual(10, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("on", *iter1);
+    VERIFY_EQUAL(3, iter1.line());
+    VERIFY_EQUAL(10, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("various", *iter1);
-    verifyEqual(3, iter1.line());
-    verifyEqual(19, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("various", *iter1);
+    VERIFY_EQUAL(3, iter1.line());
+    VERIFY_EQUAL(19, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("lines", *iter1);
-    verifyEqual(3, iter1.line());
-    verifyEqual(27, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("lines", *iter1);
+    VERIFY_EQUAL(3, iter1.line());
+    VERIFY_EQUAL(27, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual(".", *iter1);
-    verifyEqual(3, iter1.line());
-    verifyEqual(32, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL(".", *iter1);
+    VERIFY_EQUAL(3, iter1.line());
+    VERIFY_EQUAL(32, iter1.column());
 
     ++iter1;
 
-    verifyFalse(iter1 != iter2);
-    verifyEqual("", *iter1);
-    verifyEqual(7, iter1.line());
-    verifyEqual(1, iter1.column());
+    VERIFY_FALSE(iter1 != iter2);
+    VERIFY_EQUAL("", *iter1);
+    VERIFY_EQUAL(7, iter1.line());
+    VERIFY_EQUAL(1, iter1.column());
 }
 
 SCENARIO( TokenReader, "Iteration/Normal", "unit", "TokenReader can iterate empty message." )
@@ -695,39 +695,39 @@ SCENARIO( TokenReader, "Iteration/Normal", "unit", "TokenReader can iterate empt
     auto iter1 = reader.begin();
     auto iter2 = reader.end();
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("message", *iter1);
-    verifyEqual("", *iter2);
-    verifyEqual(1, iter1.line());
-    verifyEqual(1, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("message", *iter1);
+    VERIFY_EQUAL("", *iter2);
+    VERIFY_EQUAL(1, iter1.line());
+    VERIFY_EQUAL(1, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("empty", *iter1);
-    verifyEqual(1, iter1.line());
-    verifyEqual(9, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("empty", *iter1);
+    VERIFY_EQUAL(1, iter1.line());
+    VERIFY_EQUAL(9, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("{", *iter1);
-    verifyEqual(2, iter1.line());
-    verifyEqual(1, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("{", *iter1);
+    VERIFY_EQUAL(2, iter1.line());
+    VERIFY_EQUAL(1, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("}", *iter1);
-    verifyEqual(3, iter1.line());
-    verifyEqual(1, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("}", *iter1);
+    VERIFY_EQUAL(3, iter1.line());
+    VERIFY_EQUAL(1, iter1.column());
 
     ++iter1;
 
-    verifyFalse(iter1 != iter2);
-    verifyEqual("", *iter1);
-    verifyEqual(3, iter1.line());
-    verifyEqual(2, iter1.column());
+    VERIFY_FALSE(iter1 != iter2);
+    VERIFY_EQUAL("", *iter1);
+    VERIFY_EQUAL(3, iter1.line());
+    VERIFY_EQUAL(2, iter1.column());
 }
 
 SCENARIO( TokenReader, "Iteration/Normal", "unit", "TokenReader can iterate empty message with whitespace." )
@@ -736,39 +736,39 @@ SCENARIO( TokenReader, "Iteration/Normal", "unit", "TokenReader can iterate empt
     auto iter1 = reader.begin();
     auto iter2 = reader.end();
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("message", *iter1);
-    verifyEqual("", *iter2);
-    verifyEqual(2, iter1.line());
-    verifyEqual(3, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("message", *iter1);
+    VERIFY_EQUAL("", *iter2);
+    VERIFY_EQUAL(2, iter1.line());
+    VERIFY_EQUAL(3, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("empty", *iter1);
-    verifyEqual(2, iter1.line());
-    verifyEqual(15, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("empty", *iter1);
+    VERIFY_EQUAL(2, iter1.line());
+    VERIFY_EQUAL(15, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("{", *iter1);
-    verifyEqual(3, iter1.line());
-    verifyEqual(1, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("{", *iter1);
+    VERIFY_EQUAL(3, iter1.line());
+    VERIFY_EQUAL(1, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("}", *iter1);
-    verifyEqual(6, iter1.line());
-    verifyEqual(9, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("}", *iter1);
+    VERIFY_EQUAL(6, iter1.line());
+    VERIFY_EQUAL(9, iter1.column());
 
     ++iter1;
 
-    verifyFalse(iter1 != iter2);
-    verifyEqual("", *iter1);
-    verifyEqual(9, iter1.line());
-    verifyEqual(1, iter1.column());
+    VERIFY_FALSE(iter1 != iter2);
+    VERIFY_EQUAL("", *iter1);
+    VERIFY_EQUAL(9, iter1.line());
+    VERIFY_EQUAL(1, iter1.column());
 }
 
 SCENARIO( TokenReader, "Iteration/Normal", "unit", "TokenReader can iterate empty message with comments." )
@@ -777,39 +777,39 @@ SCENARIO( TokenReader, "Iteration/Normal", "unit", "TokenReader can iterate empt
     auto iter1 = reader.begin();
     auto iter2 = reader.end();
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("message", *iter1);
-    verifyEqual("", *iter2);
-    verifyEqual(2, iter1.line());
-    verifyEqual(1, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("message", *iter1);
+    VERIFY_EQUAL("", *iter2);
+    VERIFY_EQUAL(2, iter1.line());
+    VERIFY_EQUAL(1, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("empty", *iter1);
-    verifyEqual(2, iter1.line());
-    verifyEqual(50, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("empty", *iter1);
+    VERIFY_EQUAL(2, iter1.line());
+    VERIFY_EQUAL(50, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("{", *iter1);
-    verifyEqual(4, iter1.line());
-    verifyEqual(5, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("{", *iter1);
+    VERIFY_EQUAL(4, iter1.line());
+    VERIFY_EQUAL(5, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("}", *iter1);
-    verifyEqual(5, iter1.line());
-    verifyEqual(3, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("}", *iter1);
+    VERIFY_EQUAL(5, iter1.line());
+    VERIFY_EQUAL(3, iter1.column());
 
     ++iter1;
 
-    verifyFalse(iter1 != iter2);
-    verifyEqual("", *iter1);
-    verifyEqual(5, iter1.line());
-    verifyEqual(6, iter1.column());
+    VERIFY_FALSE(iter1 != iter2);
+    VERIFY_EQUAL("", *iter1);
+    VERIFY_EQUAL(5, iter1.line());
+    VERIFY_EQUAL(6, iter1.column());
 }
 
 SCENARIO( TokenReader, "Iteration/Normal", "unit", "TokenReader can iterate full message." )
@@ -818,1605 +818,1605 @@ SCENARIO( TokenReader, "Iteration/Normal", "unit", "TokenReader can iterate full
     auto iter1 = reader.begin();
     auto iter2 = reader.end();
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("import", *iter1);
-    verifyEqual("", *iter2);
-    verifyEqual(1, iter1.line());
-    verifyEqual(1, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("import", *iter1);
+    VERIFY_EQUAL("", *iter2);
+    VERIFY_EQUAL(1, iter1.line());
+    VERIFY_EQUAL(1, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("public", *iter1);
-    verifyEqual(1, iter1.line());
-    verifyEqual(8, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("public", *iter1);
+    VERIFY_EQUAL(1, iter1.line());
+    VERIFY_EQUAL(8, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("\"", *iter1);
-    verifyEqual(1, iter1.line());
-    verifyEqual(15, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("\"", *iter1);
+    VERIFY_EQUAL(1, iter1.line());
+    VERIFY_EQUAL(15, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("MessageNamespace.proto", *iter1);
-    verifyEqual(1, iter1.line());
-    verifyEqual(16, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("MessageNamespace.proto", *iter1);
+    VERIFY_EQUAL(1, iter1.line());
+    VERIFY_EQUAL(16, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("\"", *iter1);
-    verifyEqual(1, iter1.line());
-    verifyEqual(38, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("\"", *iter1);
+    VERIFY_EQUAL(1, iter1.line());
+    VERIFY_EQUAL(38, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual(";", *iter1);
-    verifyEqual(1, iter1.line());
-    verifyEqual(39, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL(";", *iter1);
+    VERIFY_EQUAL(1, iter1.line());
+    VERIFY_EQUAL(39, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("package", *iter1);
-    verifyEqual(3, iter1.line());
-    verifyEqual(1, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("package", *iter1);
+    VERIFY_EQUAL(3, iter1.line());
+    VERIFY_EQUAL(1, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("Uv", *iter1);
-    verifyEqual(3, iter1.line());
-    verifyEqual(9, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("Uv", *iter1);
+    VERIFY_EQUAL(3, iter1.line());
+    VERIFY_EQUAL(9, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual(".", *iter1);
-    verifyEqual(3, iter1.line());
-    verifyEqual(11, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL(".", *iter1);
+    VERIFY_EQUAL(3, iter1.line());
+    VERIFY_EQUAL(11, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("W", *iter1);
-    verifyEqual(3, iter1.line());
-    verifyEqual(12, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("W", *iter1);
+    VERIFY_EQUAL(3, iter1.line());
+    VERIFY_EQUAL(12, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual(".", *iter1);
-    verifyEqual(3, iter1.line());
-    verifyEqual(13, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL(".", *iter1);
+    VERIFY_EQUAL(3, iter1.line());
+    VERIFY_EQUAL(13, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("Xyz", *iter1);
-    verifyEqual(3, iter1.line());
-    verifyEqual(14, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("Xyz", *iter1);
+    VERIFY_EQUAL(3, iter1.line());
+    VERIFY_EQUAL(14, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual(";", *iter1);
-    verifyEqual(3, iter1.line());
-    verifyEqual(17, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL(";", *iter1);
+    VERIFY_EQUAL(3, iter1.line());
+    VERIFY_EQUAL(17, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("message", *iter1);
-    verifyEqual(5, iter1.line());
-    verifyEqual(1, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("message", *iter1);
+    VERIFY_EQUAL(5, iter1.line());
+    VERIFY_EQUAL(1, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("M1", *iter1);
-    verifyEqual(5, iter1.line());
-    verifyEqual(9, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("M1", *iter1);
+    VERIFY_EQUAL(5, iter1.line());
+    VERIFY_EQUAL(9, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("{", *iter1);
-    verifyEqual(6, iter1.line());
-    verifyEqual(1, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("{", *iter1);
+    VERIFY_EQUAL(6, iter1.line());
+    VERIFY_EQUAL(1, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("oneof", *iter1);
-    verifyEqual(7, iter1.line());
-    verifyEqual(5, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("oneof", *iter1);
+    VERIFY_EQUAL(7, iter1.line());
+    VERIFY_EQUAL(5, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("choices", *iter1);
-    verifyEqual(7, iter1.line());
-    verifyEqual(11, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("choices", *iter1);
+    VERIFY_EQUAL(7, iter1.line());
+    VERIFY_EQUAL(11, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("{", *iter1);
-    verifyEqual(8, iter1.line());
-    verifyEqual(5, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("{", *iter1);
+    VERIFY_EQUAL(8, iter1.line());
+    VERIFY_EQUAL(5, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("string", *iter1);
-    verifyEqual(9, iter1.line());
-    verifyEqual(9, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("string", *iter1);
+    VERIFY_EQUAL(9, iter1.line());
+    VERIFY_EQUAL(9, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("str", *iter1);
-    verifyEqual(9, iter1.line());
-    verifyEqual(16, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("str", *iter1);
+    VERIFY_EQUAL(9, iter1.line());
+    VERIFY_EQUAL(16, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("=", *iter1);
-    verifyEqual(9, iter1.line());
-    verifyEqual(20, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("=", *iter1);
+    VERIFY_EQUAL(9, iter1.line());
+    VERIFY_EQUAL(20, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("1", *iter1);
-    verifyEqual(9, iter1.line());
-    verifyEqual(22, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("1", *iter1);
+    VERIFY_EQUAL(9, iter1.line());
+    VERIFY_EQUAL(22, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual(";", *iter1);
-    verifyEqual(9, iter1.line());
-    verifyEqual(23, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL(";", *iter1);
+    VERIFY_EQUAL(9, iter1.line());
+    VERIFY_EQUAL(23, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("bool", *iter1);
-    verifyEqual(10, iter1.line());
-    verifyEqual(9, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("bool", *iter1);
+    VERIFY_EQUAL(10, iter1.line());
+    VERIFY_EQUAL(9, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("b", *iter1);
-    verifyEqual(10, iter1.line());
-    verifyEqual(14, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("b", *iter1);
+    VERIFY_EQUAL(10, iter1.line());
+    VERIFY_EQUAL(14, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("=", *iter1);
-    verifyEqual(10, iter1.line());
-    verifyEqual(16, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("=", *iter1);
+    VERIFY_EQUAL(10, iter1.line());
+    VERIFY_EQUAL(16, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("200", *iter1);
-    verifyEqual(10, iter1.line());
-    verifyEqual(18, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("200", *iter1);
+    VERIFY_EQUAL(10, iter1.line());
+    VERIFY_EQUAL(18, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual(";", *iter1);
-    verifyEqual(10, iter1.line());
-    verifyEqual(21, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL(";", *iter1);
+    VERIFY_EQUAL(10, iter1.line());
+    VERIFY_EQUAL(21, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("}", *iter1);
-    verifyEqual(11, iter1.line());
-    verifyEqual(5, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("}", *iter1);
+    VERIFY_EQUAL(11, iter1.line());
+    VERIFY_EQUAL(5, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("}", *iter1);
-    verifyEqual(12, iter1.line());
-    verifyEqual(1, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("}", *iter1);
+    VERIFY_EQUAL(12, iter1.line());
+    VERIFY_EQUAL(1, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("package", *iter1);
-    verifyEqual(14, iter1.line());
-    verifyEqual(1, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("package", *iter1);
+    VERIFY_EQUAL(14, iter1.line());
+    VERIFY_EQUAL(1, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("Uv", *iter1);
-    verifyEqual(14, iter1.line());
-    verifyEqual(9, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("Uv", *iter1);
+    VERIFY_EQUAL(14, iter1.line());
+    VERIFY_EQUAL(9, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual(";", *iter1);
-    verifyEqual(14, iter1.line());
-    verifyEqual(11, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL(";", *iter1);
+    VERIFY_EQUAL(14, iter1.line());
+    VERIFY_EQUAL(11, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("message", *iter1);
-    verifyEqual(16, iter1.line());
-    verifyEqual(1, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("message", *iter1);
+    VERIFY_EQUAL(16, iter1.line());
+    VERIFY_EQUAL(1, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("M2", *iter1);
-    verifyEqual(16, iter1.line());
-    verifyEqual(9, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("M2", *iter1);
+    VERIFY_EQUAL(16, iter1.line());
+    VERIFY_EQUAL(9, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("{", *iter1);
-    verifyEqual(17, iter1.line());
-    verifyEqual(1, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("{", *iter1);
+    VERIFY_EQUAL(17, iter1.line());
+    VERIFY_EQUAL(1, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("message", *iter1);
-    verifyEqual(18, iter1.line());
-    verifyEqual(5, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("message", *iter1);
+    VERIFY_EQUAL(18, iter1.line());
+    VERIFY_EQUAL(5, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("M3", *iter1);
-    verifyEqual(18, iter1.line());
-    verifyEqual(13, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("M3", *iter1);
+    VERIFY_EQUAL(18, iter1.line());
+    VERIFY_EQUAL(13, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("{", *iter1);
-    verifyEqual(19, iter1.line());
-    verifyEqual(5, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("{", *iter1);
+    VERIFY_EQUAL(19, iter1.line());
+    VERIFY_EQUAL(5, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("required", *iter1);
-    verifyEqual(20, iter1.line());
-    verifyEqual(9, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("required", *iter1);
+    VERIFY_EQUAL(20, iter1.line());
+    VERIFY_EQUAL(9, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("Abc", *iter1);
-    verifyEqual(20, iter1.line());
-    verifyEqual(18, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("Abc", *iter1);
+    VERIFY_EQUAL(20, iter1.line());
+    VERIFY_EQUAL(18, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual(".", *iter1);
-    verifyEqual(20, iter1.line());
-    verifyEqual(21, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL(".", *iter1);
+    VERIFY_EQUAL(20, iter1.line());
+    VERIFY_EQUAL(21, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("Def", *iter1);
-    verifyEqual(20, iter1.line());
-    verifyEqual(22, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("Def", *iter1);
+    VERIFY_EQUAL(20, iter1.line());
+    VERIFY_EQUAL(22, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual(".", *iter1);
-    verifyEqual(20, iter1.line());
-    verifyEqual(25, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL(".", *iter1);
+    VERIFY_EQUAL(20, iter1.line());
+    VERIFY_EQUAL(25, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("Simple", *iter1);
-    verifyEqual(20, iter1.line());
-    verifyEqual(26, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("Simple", *iter1);
+    VERIFY_EQUAL(20, iter1.line());
+    VERIFY_EQUAL(26, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("s", *iter1);
-    verifyEqual(20, iter1.line());
-    verifyEqual(33, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("s", *iter1);
+    VERIFY_EQUAL(20, iter1.line());
+    VERIFY_EQUAL(33, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("=", *iter1);
-    verifyEqual(20, iter1.line());
-    verifyEqual(35, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("=", *iter1);
+    VERIFY_EQUAL(20, iter1.line());
+    VERIFY_EQUAL(35, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("1", *iter1);
-    verifyEqual(20, iter1.line());
-    verifyEqual(37, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("1", *iter1);
+    VERIFY_EQUAL(20, iter1.line());
+    VERIFY_EQUAL(37, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual(";", *iter1);
-    verifyEqual(20, iter1.line());
-    verifyEqual(38, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL(";", *iter1);
+    VERIFY_EQUAL(20, iter1.line());
+    VERIFY_EQUAL(38, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("}", *iter1);
-    verifyEqual(21, iter1.line());
-    verifyEqual(5, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("}", *iter1);
+    VERIFY_EQUAL(21, iter1.line());
+    VERIFY_EQUAL(5, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("enum", *iter1);
-    verifyEqual(23, iter1.line());
-    verifyEqual(5, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("enum", *iter1);
+    VERIFY_EQUAL(23, iter1.line());
+    VERIFY_EQUAL(5, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("E1", *iter1);
-    verifyEqual(23, iter1.line());
-    verifyEqual(10, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("E1", *iter1);
+    VERIFY_EQUAL(23, iter1.line());
+    VERIFY_EQUAL(10, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("{", *iter1);
-    verifyEqual(24, iter1.line());
-    verifyEqual(5, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("{", *iter1);
+    VERIFY_EQUAL(24, iter1.line());
+    VERIFY_EQUAL(5, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("option", *iter1);
-    verifyEqual(25, iter1.line());
-    verifyEqual(9, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("option", *iter1);
+    VERIFY_EQUAL(25, iter1.line());
+    VERIFY_EQUAL(9, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("allow_alias", *iter1);
-    verifyEqual(25, iter1.line());
-    verifyEqual(16, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("allow_alias", *iter1);
+    VERIFY_EQUAL(25, iter1.line());
+    VERIFY_EQUAL(16, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("=", *iter1);
-    verifyEqual(25, iter1.line());
-    verifyEqual(28, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("=", *iter1);
+    VERIFY_EQUAL(25, iter1.line());
+    VERIFY_EQUAL(28, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("true", *iter1);
-    verifyEqual(25, iter1.line());
-    verifyEqual(30, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("true", *iter1);
+    VERIFY_EQUAL(25, iter1.line());
+    VERIFY_EQUAL(30, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual(";", *iter1);
-    verifyEqual(25, iter1.line());
-    verifyEqual(34, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL(";", *iter1);
+    VERIFY_EQUAL(25, iter1.line());
+    VERIFY_EQUAL(34, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("None", *iter1);
-    verifyEqual(26, iter1.line());
-    verifyEqual(9, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("None", *iter1);
+    VERIFY_EQUAL(26, iter1.line());
+    VERIFY_EQUAL(9, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("=", *iter1);
-    verifyEqual(26, iter1.line());
-    verifyEqual(14, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("=", *iter1);
+    VERIFY_EQUAL(26, iter1.line());
+    VERIFY_EQUAL(14, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("0", *iter1);
-    verifyEqual(26, iter1.line());
-    verifyEqual(16, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("0", *iter1);
+    VERIFY_EQUAL(26, iter1.line());
+    VERIFY_EQUAL(16, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual(";", *iter1);
-    verifyEqual(26, iter1.line());
-    verifyEqual(17, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL(";", *iter1);
+    VERIFY_EQUAL(26, iter1.line());
+    VERIFY_EQUAL(17, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("All", *iter1);
-    verifyEqual(27, iter1.line());
-    verifyEqual(9, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("All", *iter1);
+    VERIFY_EQUAL(27, iter1.line());
+    VERIFY_EQUAL(9, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("=", *iter1);
-    verifyEqual(27, iter1.line());
-    verifyEqual(13, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("=", *iter1);
+    VERIFY_EQUAL(27, iter1.line());
+    VERIFY_EQUAL(13, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("1", *iter1);
-    verifyEqual(27, iter1.line());
-    verifyEqual(15, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("1", *iter1);
+    VERIFY_EQUAL(27, iter1.line());
+    VERIFY_EQUAL(15, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual(";", *iter1);
-    verifyEqual(27, iter1.line());
-    verifyEqual(16, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL(";", *iter1);
+    VERIFY_EQUAL(27, iter1.line());
+    VERIFY_EQUAL(16, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("Everything", *iter1);
-    verifyEqual(28, iter1.line());
-    verifyEqual(9, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("Everything", *iter1);
+    VERIFY_EQUAL(28, iter1.line());
+    VERIFY_EQUAL(9, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("=", *iter1);
-    verifyEqual(28, iter1.line());
-    verifyEqual(20, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("=", *iter1);
+    VERIFY_EQUAL(28, iter1.line());
+    VERIFY_EQUAL(20, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("1", *iter1);
-    verifyEqual(28, iter1.line());
-    verifyEqual(22, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("1", *iter1);
+    VERIFY_EQUAL(28, iter1.line());
+    VERIFY_EQUAL(22, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual(";", *iter1);
-    verifyEqual(28, iter1.line());
-    verifyEqual(23, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL(";", *iter1);
+    VERIFY_EQUAL(28, iter1.line());
+    VERIFY_EQUAL(23, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("}", *iter1);
-    verifyEqual(29, iter1.line());
-    verifyEqual(5, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("}", *iter1);
+    VERIFY_EQUAL(29, iter1.line());
+    VERIFY_EQUAL(5, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("required", *iter1);
-    verifyEqual(39, iter1.line());
-    verifyEqual(5, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("required", *iter1);
+    VERIFY_EQUAL(39, iter1.line());
+    VERIFY_EQUAL(5, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("M1", *iter1);
-    verifyEqual(39, iter1.line());
-    verifyEqual(14, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("M1", *iter1);
+    VERIFY_EQUAL(39, iter1.line());
+    VERIFY_EQUAL(14, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("msg1", *iter1);
-    verifyEqual(39, iter1.line());
-    verifyEqual(17, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("msg1", *iter1);
+    VERIFY_EQUAL(39, iter1.line());
+    VERIFY_EQUAL(17, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("=", *iter1);
-    verifyEqual(39, iter1.line());
-    verifyEqual(22, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("=", *iter1);
+    VERIFY_EQUAL(39, iter1.line());
+    VERIFY_EQUAL(22, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("1", *iter1);
-    verifyEqual(39, iter1.line());
-    verifyEqual(24, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("1", *iter1);
+    VERIFY_EQUAL(39, iter1.line());
+    VERIFY_EQUAL(24, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual(";", *iter1);
-    verifyEqual(39, iter1.line());
-    verifyEqual(25, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL(";", *iter1);
+    VERIFY_EQUAL(39, iter1.line());
+    VERIFY_EQUAL(25, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("optional", *iter1);
-    verifyEqual(40, iter1.line());
-    verifyEqual(5, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("optional", *iter1);
+    VERIFY_EQUAL(40, iter1.line());
+    VERIFY_EQUAL(5, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("M3", *iter1);
-    verifyEqual(40, iter1.line());
-    verifyEqual(14, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("M3", *iter1);
+    VERIFY_EQUAL(40, iter1.line());
+    VERIFY_EQUAL(14, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("msg3", *iter1);
-    verifyEqual(40, iter1.line());
-    verifyEqual(17, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("msg3", *iter1);
+    VERIFY_EQUAL(40, iter1.line());
+    VERIFY_EQUAL(17, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("=", *iter1);
-    verifyEqual(40, iter1.line());
-    verifyEqual(22, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("=", *iter1);
+    VERIFY_EQUAL(40, iter1.line());
+    VERIFY_EQUAL(22, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("2", *iter1);
-    verifyEqual(40, iter1.line());
-    verifyEqual(24, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("2", *iter1);
+    VERIFY_EQUAL(40, iter1.line());
+    VERIFY_EQUAL(24, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual(";", *iter1);
-    verifyEqual(40, iter1.line());
-    verifyEqual(25, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL(";", *iter1);
+    VERIFY_EQUAL(40, iter1.line());
+    VERIFY_EQUAL(25, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("optional", *iter1);
-    verifyEqual(41, iter1.line());
-    verifyEqual(5, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("optional", *iter1);
+    VERIFY_EQUAL(41, iter1.line());
+    VERIFY_EQUAL(5, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("E1", *iter1);
-    verifyEqual(41, iter1.line());
-    verifyEqual(14, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("E1", *iter1);
+    VERIFY_EQUAL(41, iter1.line());
+    VERIFY_EQUAL(14, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("e1", *iter1);
-    verifyEqual(41, iter1.line());
-    verifyEqual(17, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("e1", *iter1);
+    VERIFY_EQUAL(41, iter1.line());
+    VERIFY_EQUAL(17, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("=", *iter1);
-    verifyEqual(41, iter1.line());
-    verifyEqual(20, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("=", *iter1);
+    VERIFY_EQUAL(41, iter1.line());
+    VERIFY_EQUAL(20, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("3", *iter1);
-    verifyEqual(41, iter1.line());
-    verifyEqual(22, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("3", *iter1);
+    VERIFY_EQUAL(41, iter1.line());
+    VERIFY_EQUAL(22, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("[", *iter1);
-    verifyEqual(41, iter1.line());
-    verifyEqual(24, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("[", *iter1);
+    VERIFY_EQUAL(41, iter1.line());
+    VERIFY_EQUAL(24, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("default", *iter1);
-    verifyEqual(41, iter1.line());
-    verifyEqual(25, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("default", *iter1);
+    VERIFY_EQUAL(41, iter1.line());
+    VERIFY_EQUAL(25, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("=", *iter1);
-    verifyEqual(41, iter1.line());
-    verifyEqual(33, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("=", *iter1);
+    VERIFY_EQUAL(41, iter1.line());
+    VERIFY_EQUAL(33, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("None", *iter1);
-    verifyEqual(41, iter1.line());
-    verifyEqual(35, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("None", *iter1);
+    VERIFY_EQUAL(41, iter1.line());
+    VERIFY_EQUAL(35, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("]", *iter1);
-    verifyEqual(41, iter1.line());
-    verifyEqual(39, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("]", *iter1);
+    VERIFY_EQUAL(41, iter1.line());
+    VERIFY_EQUAL(39, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual(";", *iter1);
-    verifyEqual(41, iter1.line());
-    verifyEqual(40, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL(";", *iter1);
+    VERIFY_EQUAL(41, iter1.line());
+    VERIFY_EQUAL(40, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("optional", *iter1);
-    verifyEqual(42, iter1.line());
-    verifyEqual(5, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("optional", *iter1);
+    VERIFY_EQUAL(42, iter1.line());
+    VERIFY_EQUAL(5, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("double", *iter1);
-    verifyEqual(42, iter1.line());
-    verifyEqual(14, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("double", *iter1);
+    VERIFY_EQUAL(42, iter1.line());
+    VERIFY_EQUAL(14, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("d1", *iter1);
-    verifyEqual(42, iter1.line());
-    verifyEqual(21, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("d1", *iter1);
+    VERIFY_EQUAL(42, iter1.line());
+    VERIFY_EQUAL(21, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("=", *iter1);
-    verifyEqual(42, iter1.line());
-    verifyEqual(24, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("=", *iter1);
+    VERIFY_EQUAL(42, iter1.line());
+    VERIFY_EQUAL(24, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("4", *iter1);
-    verifyEqual(42, iter1.line());
-    verifyEqual(26, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("4", *iter1);
+    VERIFY_EQUAL(42, iter1.line());
+    VERIFY_EQUAL(26, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("[", *iter1);
-    verifyEqual(42, iter1.line());
-    verifyEqual(28, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("[", *iter1);
+    VERIFY_EQUAL(42, iter1.line());
+    VERIFY_EQUAL(28, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("default", *iter1);
-    verifyEqual(42, iter1.line());
-    verifyEqual(29, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("default", *iter1);
+    VERIFY_EQUAL(42, iter1.line());
+    VERIFY_EQUAL(29, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("=", *iter1);
-    verifyEqual(42, iter1.line());
-    verifyEqual(37, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("=", *iter1);
+    VERIFY_EQUAL(42, iter1.line());
+    VERIFY_EQUAL(37, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("3", *iter1);
-    verifyEqual(42, iter1.line());
-    verifyEqual(39, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("3", *iter1);
+    VERIFY_EQUAL(42, iter1.line());
+    VERIFY_EQUAL(39, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual(".", *iter1);
-    verifyEqual(42, iter1.line());
-    verifyEqual(40, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL(".", *iter1);
+    VERIFY_EQUAL(42, iter1.line());
+    VERIFY_EQUAL(40, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("14", *iter1);
-    verifyEqual(42, iter1.line());
-    verifyEqual(41, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("14", *iter1);
+    VERIFY_EQUAL(42, iter1.line());
+    VERIFY_EQUAL(41, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("]", *iter1);
-    verifyEqual(42, iter1.line());
-    verifyEqual(43, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("]", *iter1);
+    VERIFY_EQUAL(42, iter1.line());
+    VERIFY_EQUAL(43, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual(";", *iter1);
-    verifyEqual(42, iter1.line());
-    verifyEqual(44, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL(";", *iter1);
+    VERIFY_EQUAL(42, iter1.line());
+    VERIFY_EQUAL(44, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("optional", *iter1);
-    verifyEqual(43, iter1.line());
-    verifyEqual(5, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("optional", *iter1);
+    VERIFY_EQUAL(43, iter1.line());
+    VERIFY_EQUAL(5, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("float", *iter1);
-    verifyEqual(43, iter1.line());
-    verifyEqual(14, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("float", *iter1);
+    VERIFY_EQUAL(43, iter1.line());
+    VERIFY_EQUAL(14, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("f1", *iter1);
-    verifyEqual(43, iter1.line());
-    verifyEqual(20, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("f1", *iter1);
+    VERIFY_EQUAL(43, iter1.line());
+    VERIFY_EQUAL(20, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("=", *iter1);
-    verifyEqual(43, iter1.line());
-    verifyEqual(23, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("=", *iter1);
+    VERIFY_EQUAL(43, iter1.line());
+    VERIFY_EQUAL(23, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("5", *iter1);
-    verifyEqual(43, iter1.line());
-    verifyEqual(25, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("5", *iter1);
+    VERIFY_EQUAL(43, iter1.line());
+    VERIFY_EQUAL(25, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual(";", *iter1);
-    verifyEqual(43, iter1.line());
-    verifyEqual(26, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL(";", *iter1);
+    VERIFY_EQUAL(43, iter1.line());
+    VERIFY_EQUAL(26, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("repeated", *iter1);
-    verifyEqual(44, iter1.line());
-    verifyEqual(5, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("repeated", *iter1);
+    VERIFY_EQUAL(44, iter1.line());
+    VERIFY_EQUAL(5, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("int32", *iter1);
-    verifyEqual(44, iter1.line());
-    verifyEqual(14, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("int32", *iter1);
+    VERIFY_EQUAL(44, iter1.line());
+    VERIFY_EQUAL(14, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("i1", *iter1);
-    verifyEqual(44, iter1.line());
-    verifyEqual(20, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("i1", *iter1);
+    VERIFY_EQUAL(44, iter1.line());
+    VERIFY_EQUAL(20, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("=", *iter1);
-    verifyEqual(44, iter1.line());
-    verifyEqual(23, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("=", *iter1);
+    VERIFY_EQUAL(44, iter1.line());
+    VERIFY_EQUAL(23, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("6", *iter1);
-    verifyEqual(44, iter1.line());
-    verifyEqual(25, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("6", *iter1);
+    VERIFY_EQUAL(44, iter1.line());
+    VERIFY_EQUAL(25, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("[", *iter1);
-    verifyEqual(44, iter1.line());
-    verifyEqual(27, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("[", *iter1);
+    VERIFY_EQUAL(44, iter1.line());
+    VERIFY_EQUAL(27, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("packed", *iter1);
-    verifyEqual(44, iter1.line());
-    verifyEqual(28, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("packed", *iter1);
+    VERIFY_EQUAL(44, iter1.line());
+    VERIFY_EQUAL(28, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("=", *iter1);
-    verifyEqual(44, iter1.line());
-    verifyEqual(35, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("=", *iter1);
+    VERIFY_EQUAL(44, iter1.line());
+    VERIFY_EQUAL(35, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("true", *iter1);
-    verifyEqual(44, iter1.line());
-    verifyEqual(37, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("true", *iter1);
+    VERIFY_EQUAL(44, iter1.line());
+    VERIFY_EQUAL(37, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("]", *iter1);
-    verifyEqual(44, iter1.line());
-    verifyEqual(41, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("]", *iter1);
+    VERIFY_EQUAL(44, iter1.line());
+    VERIFY_EQUAL(41, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual(";", *iter1);
-    verifyEqual(44, iter1.line());
-    verifyEqual(42, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL(";", *iter1);
+    VERIFY_EQUAL(44, iter1.line());
+    VERIFY_EQUAL(42, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("optional", *iter1);
-    verifyEqual(45, iter1.line());
-    verifyEqual(5, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("optional", *iter1);
+    VERIFY_EQUAL(45, iter1.line());
+    VERIFY_EQUAL(5, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("int64", *iter1);
-    verifyEqual(45, iter1.line());
-    verifyEqual(14, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("int64", *iter1);
+    VERIFY_EQUAL(45, iter1.line());
+    VERIFY_EQUAL(14, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("i64", *iter1);
-    verifyEqual(45, iter1.line());
-    verifyEqual(20, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("i64", *iter1);
+    VERIFY_EQUAL(45, iter1.line());
+    VERIFY_EQUAL(20, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("=", *iter1);
-    verifyEqual(45, iter1.line());
-    verifyEqual(24, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("=", *iter1);
+    VERIFY_EQUAL(45, iter1.line());
+    VERIFY_EQUAL(24, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("7", *iter1);
-    verifyEqual(45, iter1.line());
-    verifyEqual(26, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("7", *iter1);
+    VERIFY_EQUAL(45, iter1.line());
+    VERIFY_EQUAL(26, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual(";", *iter1);
-    verifyEqual(45, iter1.line());
-    verifyEqual(27, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL(";", *iter1);
+    VERIFY_EQUAL(45, iter1.line());
+    VERIFY_EQUAL(27, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("optional", *iter1);
-    verifyEqual(46, iter1.line());
-    verifyEqual(5, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("optional", *iter1);
+    VERIFY_EQUAL(46, iter1.line());
+    VERIFY_EQUAL(5, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("uint32", *iter1);
-    verifyEqual(46, iter1.line());
-    verifyEqual(14, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("uint32", *iter1);
+    VERIFY_EQUAL(46, iter1.line());
+    VERIFY_EQUAL(14, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("ui32", *iter1);
-    verifyEqual(46, iter1.line());
-    verifyEqual(21, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("ui32", *iter1);
+    VERIFY_EQUAL(46, iter1.line());
+    VERIFY_EQUAL(21, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("=", *iter1);
-    verifyEqual(46, iter1.line());
-    verifyEqual(26, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("=", *iter1);
+    VERIFY_EQUAL(46, iter1.line());
+    VERIFY_EQUAL(26, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("8", *iter1);
-    verifyEqual(46, iter1.line());
-    verifyEqual(28, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("8", *iter1);
+    VERIFY_EQUAL(46, iter1.line());
+    VERIFY_EQUAL(28, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual(";", *iter1);
-    verifyEqual(46, iter1.line());
-    verifyEqual(29, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL(";", *iter1);
+    VERIFY_EQUAL(46, iter1.line());
+    VERIFY_EQUAL(29, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("optional", *iter1);
-    verifyEqual(47, iter1.line());
-    verifyEqual(5, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("optional", *iter1);
+    VERIFY_EQUAL(47, iter1.line());
+    VERIFY_EQUAL(5, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("uint64", *iter1);
-    verifyEqual(47, iter1.line());
-    verifyEqual(14, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("uint64", *iter1);
+    VERIFY_EQUAL(47, iter1.line());
+    VERIFY_EQUAL(14, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("ui64", *iter1);
-    verifyEqual(47, iter1.line());
-    verifyEqual(21, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("ui64", *iter1);
+    VERIFY_EQUAL(47, iter1.line());
+    VERIFY_EQUAL(21, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("=", *iter1);
-    verifyEqual(47, iter1.line());
-    verifyEqual(26, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("=", *iter1);
+    VERIFY_EQUAL(47, iter1.line());
+    VERIFY_EQUAL(26, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("9", *iter1);
-    verifyEqual(47, iter1.line());
-    verifyEqual(28, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("9", *iter1);
+    VERIFY_EQUAL(47, iter1.line());
+    VERIFY_EQUAL(28, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual(";", *iter1);
-    verifyEqual(47, iter1.line());
-    verifyEqual(29, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL(";", *iter1);
+    VERIFY_EQUAL(47, iter1.line());
+    VERIFY_EQUAL(29, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("optional", *iter1);
-    verifyEqual(48, iter1.line());
-    verifyEqual(5, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("optional", *iter1);
+    VERIFY_EQUAL(48, iter1.line());
+    VERIFY_EQUAL(5, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("sint32", *iter1);
-    verifyEqual(48, iter1.line());
-    verifyEqual(14, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("sint32", *iter1);
+    VERIFY_EQUAL(48, iter1.line());
+    VERIFY_EQUAL(14, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("si32", *iter1);
-    verifyEqual(48, iter1.line());
-    verifyEqual(21, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("si32", *iter1);
+    VERIFY_EQUAL(48, iter1.line());
+    VERIFY_EQUAL(21, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("=", *iter1);
-    verifyEqual(48, iter1.line());
-    verifyEqual(26, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("=", *iter1);
+    VERIFY_EQUAL(48, iter1.line());
+    VERIFY_EQUAL(26, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("10", *iter1);
-    verifyEqual(48, iter1.line());
-    verifyEqual(28, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("10", *iter1);
+    VERIFY_EQUAL(48, iter1.line());
+    VERIFY_EQUAL(28, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual(";", *iter1);
-    verifyEqual(48, iter1.line());
-    verifyEqual(30, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL(";", *iter1);
+    VERIFY_EQUAL(48, iter1.line());
+    VERIFY_EQUAL(30, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("optional", *iter1);
-    verifyEqual(49, iter1.line());
-    verifyEqual(5, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("optional", *iter1);
+    VERIFY_EQUAL(49, iter1.line());
+    VERIFY_EQUAL(5, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("sint64", *iter1);
-    verifyEqual(49, iter1.line());
-    verifyEqual(14, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("sint64", *iter1);
+    VERIFY_EQUAL(49, iter1.line());
+    VERIFY_EQUAL(14, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("si64", *iter1);
-    verifyEqual(49, iter1.line());
-    verifyEqual(21, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("si64", *iter1);
+    VERIFY_EQUAL(49, iter1.line());
+    VERIFY_EQUAL(21, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("=", *iter1);
-    verifyEqual(49, iter1.line());
-    verifyEqual(26, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("=", *iter1);
+    VERIFY_EQUAL(49, iter1.line());
+    VERIFY_EQUAL(26, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("11", *iter1);
-    verifyEqual(49, iter1.line());
-    verifyEqual(28, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("11", *iter1);
+    VERIFY_EQUAL(49, iter1.line());
+    VERIFY_EQUAL(28, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual(";", *iter1);
-    verifyEqual(49, iter1.line());
-    verifyEqual(30, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL(";", *iter1);
+    VERIFY_EQUAL(49, iter1.line());
+    VERIFY_EQUAL(30, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("optional", *iter1);
-    verifyEqual(50, iter1.line());
-    verifyEqual(5, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("optional", *iter1);
+    VERIFY_EQUAL(50, iter1.line());
+    VERIFY_EQUAL(5, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("fixed32", *iter1);
-    verifyEqual(50, iter1.line());
-    verifyEqual(14, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("fixed32", *iter1);
+    VERIFY_EQUAL(50, iter1.line());
+    VERIFY_EQUAL(14, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("fx32", *iter1);
-    verifyEqual(50, iter1.line());
-    verifyEqual(22, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("fx32", *iter1);
+    VERIFY_EQUAL(50, iter1.line());
+    VERIFY_EQUAL(22, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("=", *iter1);
-    verifyEqual(50, iter1.line());
-    verifyEqual(27, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("=", *iter1);
+    VERIFY_EQUAL(50, iter1.line());
+    VERIFY_EQUAL(27, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("12", *iter1);
-    verifyEqual(50, iter1.line());
-    verifyEqual(29, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("12", *iter1);
+    VERIFY_EQUAL(50, iter1.line());
+    VERIFY_EQUAL(29, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual(";", *iter1);
-    verifyEqual(50, iter1.line());
-    verifyEqual(31, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL(";", *iter1);
+    VERIFY_EQUAL(50, iter1.line());
+    VERIFY_EQUAL(31, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("optional", *iter1);
-    verifyEqual(51, iter1.line());
-    verifyEqual(5, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("optional", *iter1);
+    VERIFY_EQUAL(51, iter1.line());
+    VERIFY_EQUAL(5, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("fixed64", *iter1);
-    verifyEqual(51, iter1.line());
-    verifyEqual(14, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("fixed64", *iter1);
+    VERIFY_EQUAL(51, iter1.line());
+    VERIFY_EQUAL(14, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("fx64", *iter1);
-    verifyEqual(51, iter1.line());
-    verifyEqual(22, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("fx64", *iter1);
+    VERIFY_EQUAL(51, iter1.line());
+    VERIFY_EQUAL(22, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("=", *iter1);
-    verifyEqual(51, iter1.line());
-    verifyEqual(27, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("=", *iter1);
+    VERIFY_EQUAL(51, iter1.line());
+    VERIFY_EQUAL(27, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("13", *iter1);
-    verifyEqual(51, iter1.line());
-    verifyEqual(29, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("13", *iter1);
+    VERIFY_EQUAL(51, iter1.line());
+    VERIFY_EQUAL(29, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual(";", *iter1);
-    verifyEqual(51, iter1.line());
-    verifyEqual(31, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL(";", *iter1);
+    VERIFY_EQUAL(51, iter1.line());
+    VERIFY_EQUAL(31, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("optional", *iter1);
-    verifyEqual(52, iter1.line());
-    verifyEqual(5, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("optional", *iter1);
+    VERIFY_EQUAL(52, iter1.line());
+    VERIFY_EQUAL(5, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("sfixed32", *iter1);
-    verifyEqual(52, iter1.line());
-    verifyEqual(14, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("sfixed32", *iter1);
+    VERIFY_EQUAL(52, iter1.line());
+    VERIFY_EQUAL(14, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("sfx32", *iter1);
-    verifyEqual(52, iter1.line());
-    verifyEqual(23, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("sfx32", *iter1);
+    VERIFY_EQUAL(52, iter1.line());
+    VERIFY_EQUAL(23, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("=", *iter1);
-    verifyEqual(52, iter1.line());
-    verifyEqual(29, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("=", *iter1);
+    VERIFY_EQUAL(52, iter1.line());
+    VERIFY_EQUAL(29, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("14", *iter1);
-    verifyEqual(52, iter1.line());
-    verifyEqual(31, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("14", *iter1);
+    VERIFY_EQUAL(52, iter1.line());
+    VERIFY_EQUAL(31, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual(";", *iter1);
-    verifyEqual(52, iter1.line());
-    verifyEqual(33, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL(";", *iter1);
+    VERIFY_EQUAL(52, iter1.line());
+    VERIFY_EQUAL(33, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("optional", *iter1);
-    verifyEqual(53, iter1.line());
-    verifyEqual(5, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("optional", *iter1);
+    VERIFY_EQUAL(53, iter1.line());
+    VERIFY_EQUAL(5, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("sfixed64", *iter1);
-    verifyEqual(53, iter1.line());
-    verifyEqual(14, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("sfixed64", *iter1);
+    VERIFY_EQUAL(53, iter1.line());
+    VERIFY_EQUAL(14, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("sfx64", *iter1);
-    verifyEqual(53, iter1.line());
-    verifyEqual(23, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("sfx64", *iter1);
+    VERIFY_EQUAL(53, iter1.line());
+    VERIFY_EQUAL(23, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("=", *iter1);
-    verifyEqual(53, iter1.line());
-    verifyEqual(29, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("=", *iter1);
+    VERIFY_EQUAL(53, iter1.line());
+    VERIFY_EQUAL(29, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("15", *iter1);
-    verifyEqual(53, iter1.line());
-    verifyEqual(31, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("15", *iter1);
+    VERIFY_EQUAL(53, iter1.line());
+    VERIFY_EQUAL(31, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual(";", *iter1);
-    verifyEqual(53, iter1.line());
-    verifyEqual(33, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL(";", *iter1);
+    VERIFY_EQUAL(53, iter1.line());
+    VERIFY_EQUAL(33, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("optional", *iter1);
-    verifyEqual(54, iter1.line());
-    verifyEqual(5, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("optional", *iter1);
+    VERIFY_EQUAL(54, iter1.line());
+    VERIFY_EQUAL(5, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("bool", *iter1);
-    verifyEqual(54, iter1.line());
-    verifyEqual(14, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("bool", *iter1);
+    VERIFY_EQUAL(54, iter1.line());
+    VERIFY_EQUAL(14, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("b", *iter1);
-    verifyEqual(54, iter1.line());
-    verifyEqual(19, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("b", *iter1);
+    VERIFY_EQUAL(54, iter1.line());
+    VERIFY_EQUAL(19, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("=", *iter1);
-    verifyEqual(54, iter1.line());
-    verifyEqual(21, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("=", *iter1);
+    VERIFY_EQUAL(54, iter1.line());
+    VERIFY_EQUAL(21, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("16", *iter1);
-    verifyEqual(54, iter1.line());
-    verifyEqual(23, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("16", *iter1);
+    VERIFY_EQUAL(54, iter1.line());
+    VERIFY_EQUAL(23, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual(";", *iter1);
-    verifyEqual(54, iter1.line());
-    verifyEqual(25, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL(";", *iter1);
+    VERIFY_EQUAL(54, iter1.line());
+    VERIFY_EQUAL(25, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("required", *iter1);
-    verifyEqual(55, iter1.line());
-    verifyEqual(5, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("required", *iter1);
+    VERIFY_EQUAL(55, iter1.line());
+    VERIFY_EQUAL(5, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("string", *iter1);
-    verifyEqual(55, iter1.line());
-    verifyEqual(14, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("string", *iter1);
+    VERIFY_EQUAL(55, iter1.line());
+    VERIFY_EQUAL(14, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("str1", *iter1);
-    verifyEqual(55, iter1.line());
-    verifyEqual(21, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("str1", *iter1);
+    VERIFY_EQUAL(55, iter1.line());
+    VERIFY_EQUAL(21, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("=", *iter1);
-    verifyEqual(55, iter1.line());
-    verifyEqual(26, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("=", *iter1);
+    VERIFY_EQUAL(55, iter1.line());
+    VERIFY_EQUAL(26, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("17", *iter1);
-    verifyEqual(55, iter1.line());
-    verifyEqual(28, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("17", *iter1);
+    VERIFY_EQUAL(55, iter1.line());
+    VERIFY_EQUAL(28, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual(";", *iter1);
-    verifyEqual(55, iter1.line());
-    verifyEqual(30, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL(";", *iter1);
+    VERIFY_EQUAL(55, iter1.line());
+    VERIFY_EQUAL(30, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("optional", *iter1);
-    verifyEqual(56, iter1.line());
-    verifyEqual(5, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("optional", *iter1);
+    VERIFY_EQUAL(56, iter1.line());
+    VERIFY_EQUAL(5, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("bytes", *iter1);
-    verifyEqual(56, iter1.line());
-    verifyEqual(14, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("bytes", *iter1);
+    VERIFY_EQUAL(56, iter1.line());
+    VERIFY_EQUAL(14, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("bts", *iter1);
-    verifyEqual(56, iter1.line());
-    verifyEqual(20, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("bts", *iter1);
+    VERIFY_EQUAL(56, iter1.line());
+    VERIFY_EQUAL(20, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("=", *iter1);
-    verifyEqual(56, iter1.line());
-    verifyEqual(24, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("=", *iter1);
+    VERIFY_EQUAL(56, iter1.line());
+    VERIFY_EQUAL(24, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("18", *iter1);
-    verifyEqual(56, iter1.line());
-    verifyEqual(26, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("18", *iter1);
+    VERIFY_EQUAL(56, iter1.line());
+    VERIFY_EQUAL(26, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual(";", *iter1);
-    verifyEqual(56, iter1.line());
-    verifyEqual(28, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL(";", *iter1);
+    VERIFY_EQUAL(56, iter1.line());
+    VERIFY_EQUAL(28, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("optional", *iter1);
-    verifyEqual(57, iter1.line());
-    verifyEqual(5, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("optional", *iter1);
+    VERIFY_EQUAL(57, iter1.line());
+    VERIFY_EQUAL(5, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("E3", *iter1);
-    verifyEqual(57, iter1.line());
-    verifyEqual(14, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("E3", *iter1);
+    VERIFY_EQUAL(57, iter1.line());
+    VERIFY_EQUAL(14, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("e3", *iter1);
-    verifyEqual(57, iter1.line());
-    verifyEqual(17, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("e3", *iter1);
+    VERIFY_EQUAL(57, iter1.line());
+    VERIFY_EQUAL(17, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("=", *iter1);
-    verifyEqual(57, iter1.line());
-    verifyEqual(20, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("=", *iter1);
+    VERIFY_EQUAL(57, iter1.line());
+    VERIFY_EQUAL(20, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("19", *iter1);
-    verifyEqual(57, iter1.line());
-    verifyEqual(22, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("19", *iter1);
+    VERIFY_EQUAL(57, iter1.line());
+    VERIFY_EQUAL(22, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual(";", *iter1);
-    verifyEqual(57, iter1.line());
-    verifyEqual(24, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL(";", *iter1);
+    VERIFY_EQUAL(57, iter1.line());
+    VERIFY_EQUAL(24, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("}", *iter1);
-    verifyEqual(58, iter1.line());
-    verifyEqual(1, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("}", *iter1);
+    VERIFY_EQUAL(58, iter1.line());
+    VERIFY_EQUAL(1, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("enum", *iter1);
-    verifyEqual(60, iter1.line());
-    verifyEqual(1, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("enum", *iter1);
+    VERIFY_EQUAL(60, iter1.line());
+    VERIFY_EQUAL(1, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("E3", *iter1);
-    verifyEqual(60, iter1.line());
-    verifyEqual(6, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("E3", *iter1);
+    VERIFY_EQUAL(60, iter1.line());
+    VERIFY_EQUAL(6, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("{", *iter1);
-    verifyEqual(61, iter1.line());
-    verifyEqual(1, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("{", *iter1);
+    VERIFY_EQUAL(61, iter1.line());
+    VERIFY_EQUAL(1, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("Good", *iter1);
-    verifyEqual(62, iter1.line());
-    verifyEqual(5, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("Good", *iter1);
+    VERIFY_EQUAL(62, iter1.line());
+    VERIFY_EQUAL(5, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("=", *iter1);
-    verifyEqual(62, iter1.line());
-    verifyEqual(10, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("=", *iter1);
+    VERIFY_EQUAL(62, iter1.line());
+    VERIFY_EQUAL(10, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("0", *iter1);
-    verifyEqual(62, iter1.line());
-    verifyEqual(12, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("0", *iter1);
+    VERIFY_EQUAL(62, iter1.line());
+    VERIFY_EQUAL(12, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual(";", *iter1);
-    verifyEqual(62, iter1.line());
-    verifyEqual(13, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL(";", *iter1);
+    VERIFY_EQUAL(62, iter1.line());
+    VERIFY_EQUAL(13, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("Better", *iter1);
-    verifyEqual(63, iter1.line());
-    verifyEqual(5, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("Better", *iter1);
+    VERIFY_EQUAL(63, iter1.line());
+    VERIFY_EQUAL(5, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("=", *iter1);
-    verifyEqual(63, iter1.line());
-    verifyEqual(12, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("=", *iter1);
+    VERIFY_EQUAL(63, iter1.line());
+    VERIFY_EQUAL(12, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("1", *iter1);
-    verifyEqual(63, iter1.line());
-    verifyEqual(14, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("1", *iter1);
+    VERIFY_EQUAL(63, iter1.line());
+    VERIFY_EQUAL(14, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual(";", *iter1);
-    verifyEqual(63, iter1.line());
-    verifyEqual(15, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL(";", *iter1);
+    VERIFY_EQUAL(63, iter1.line());
+    VERIFY_EQUAL(15, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("}", *iter1);
-    verifyEqual(64, iter1.line());
-    verifyEqual(1, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("}", *iter1);
+    VERIFY_EQUAL(64, iter1.line());
+    VERIFY_EQUAL(1, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("message", *iter1);
-    verifyEqual(66, iter1.line());
-    verifyEqual(1, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("message", *iter1);
+    VERIFY_EQUAL(66, iter1.line());
+    VERIFY_EQUAL(1, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("M4", *iter1);
-    verifyEqual(66, iter1.line());
-    verifyEqual(9, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("M4", *iter1);
+    VERIFY_EQUAL(66, iter1.line());
+    VERIFY_EQUAL(9, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("{", *iter1);
-    verifyEqual(67, iter1.line());
-    verifyEqual(1, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("{", *iter1);
+    VERIFY_EQUAL(67, iter1.line());
+    VERIFY_EQUAL(1, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("repeated", *iter1);
-    verifyEqual(68, iter1.line());
-    verifyEqual(5, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("repeated", *iter1);
+    VERIFY_EQUAL(68, iter1.line());
+    VERIFY_EQUAL(5, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("M2", *iter1);
-    verifyEqual(68, iter1.line());
-    verifyEqual(14, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("M2", *iter1);
+    VERIFY_EQUAL(68, iter1.line());
+    VERIFY_EQUAL(14, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual(".", *iter1);
-    verifyEqual(68, iter1.line());
-    verifyEqual(16, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL(".", *iter1);
+    VERIFY_EQUAL(68, iter1.line());
+    VERIFY_EQUAL(16, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("M3", *iter1);
-    verifyEqual(68, iter1.line());
-    verifyEqual(17, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("M3", *iter1);
+    VERIFY_EQUAL(68, iter1.line());
+    VERIFY_EQUAL(17, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("msg23", *iter1);
-    verifyEqual(68, iter1.line());
-    verifyEqual(20, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("msg23", *iter1);
+    VERIFY_EQUAL(68, iter1.line());
+    VERIFY_EQUAL(20, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("=", *iter1);
-    verifyEqual(68, iter1.line());
-    verifyEqual(26, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("=", *iter1);
+    VERIFY_EQUAL(68, iter1.line());
+    VERIFY_EQUAL(26, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual("1", *iter1);
-    verifyEqual(68, iter1.line());
-    verifyEqual(28, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("1", *iter1);
+    VERIFY_EQUAL(68, iter1.line());
+    VERIFY_EQUAL(28, iter1.column());
 
     ++iter1;
 
-    verifyTrue(iter1 != iter2);
-    verifyEqual(";", *iter1);
-    verifyEqual(68, iter1.line());
-    verifyEqual(29, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL(";", *iter1);
+    VERIFY_EQUAL(68, iter1.line());
+    VERIFY_EQUAL(29, iter1.column());
 
     ++iter1;
     
-    verifyTrue(iter1 != iter2);
-    verifyEqual("}", *iter1);
-    verifyEqual(69, iter1.line());
-    verifyEqual(1, iter1.column());
+    VERIFY_TRUE(iter1 != iter2);
+    VERIFY_EQUAL("}", *iter1);
+    VERIFY_EQUAL(69, iter1.line());
+    VERIFY_EQUAL(1, iter1.column());
 
     ++iter1;
 
-    verifyFalse(iter1 != iter2);
-    verifyEqual("", *iter1);
-    verifyEqual(70, iter1.line());
-    verifyEqual(1, iter1.column());
+    VERIFY_FALSE(iter1 != iter2);
+    VERIFY_EQUAL("", *iter1);
+    VERIFY_EQUAL(70, iter1.line());
+    VERIFY_EQUAL(1, iter1.column());
 }

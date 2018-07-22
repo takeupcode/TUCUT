@@ -27,9 +27,9 @@ SCENARIO( MessageOneof, "Serialization/Normal", "unit", "Generated class can be 
     MessageOneof parsedMessage;
     parsedMessage.parse(serialized.data());
 
-    verifyTrue(parsedMessage.hasSOne());
-    verifyFalse(parsedMessage.hasBOne());
-    verifyFalse(parsedMessage.hasIOne());
+    VERIFY_TRUE(parsedMessage.hasSOne());
+    VERIFY_FALSE(parsedMessage.hasBOne());
+    VERIFY_FALSE(parsedMessage.hasIOne());
 
-    verifyEqual(stringValue, parsedMessage.sOne());
+    VERIFY_EQUAL(stringValue, parsedMessage.sOne());
 }

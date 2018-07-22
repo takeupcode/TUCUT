@@ -38,10 +38,10 @@ SCENARIO( MessageField, "Serialization/Normal", "unit", "Generated class can be 
     MessageOne parsedMessage;
     parsedMessage.parse(serialized.data());
 
-    verifyTrue(parsedMessage.hasSOne());
-    verifyFalse(parsedMessage.hasBOne());
-    verifyTrue(parsedMessage.sizeIOne() == 1);
+    VERIFY_TRUE(parsedMessage.hasSOne());
+    VERIFY_FALSE(parsedMessage.hasBOne());
+    VERIFY_TRUE(parsedMessage.sizeIOne() == 1);
 
-    verifyEqual(stringValue, parsedMessage.sOne());
-    verifyEqual(42, parsedMessage.iOne(0));
+    VERIFY_EQUAL(stringValue, parsedMessage.sOne());
+    VERIFY_EQUAL(42, parsedMessage.iOne(0));
 }

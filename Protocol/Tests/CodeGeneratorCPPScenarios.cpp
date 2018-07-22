@@ -273,7 +273,7 @@ namespace A
 SCENARIO( CodeGeneratorCPP, "Structure/Nested", "unit", "Nested classes can declare pointers to each other." )
 {
     // The consumer can still use the classes as if they were nested with their original names.
-    verifyEqual(1, A::B::M::N::valueN());
-    verifyEqual(2, A::B::M::O::valueO());
-    verifyEqual(3, A::B::M::N::X::valueX());
+    VERIFY_EQUAL(1, A::B::M::N::valueN());
+    VERIFY_EQUAL(2, A::B::M::O::valueO());
+    VERIFY_EQUAL(3, A::B::M::N::X::valueX());
 }

@@ -35,7 +35,7 @@ SCENARIO( EnumValueParser, "Parsing/Normal", "unit", "EnumParser can parse simpl
     {
         count++;
         auto enumeration = *begin;
-        verifyEqual("enumOne", enumeration->name());
+        VERIFY_EQUAL("enumOne", enumeration->name());
 
         int valueCount = 0;
         auto begin1 = enumeration->enumValues()->cbegin();
@@ -47,22 +47,22 @@ SCENARIO( EnumValueParser, "Parsing/Normal", "unit", "EnumParser can parse simpl
             unsigned int expectedValue = 0;
             if (valueCount == 1)
             {
-                verifyEqual("empty", value->name());
+                VERIFY_EQUAL("empty", value->name());
                 expectedValue = 0;
-                verifyEqual(expectedValue, value->value());
+                VERIFY_EQUAL(expectedValue, value->value());
             }
             else
             {
-                verifyEqual("full", value->name());
+                VERIFY_EQUAL("full", value->name());
                 expectedValue = 1;
-                verifyEqual(expectedValue, value->value());
+                VERIFY_EQUAL(expectedValue, value->value());
             }
             begin1++;
         }
-        verifyEqual(2, valueCount);
+        VERIFY_EQUAL(2, valueCount);
         begin++;
     }
-    verifyEqual(1, count);
+    VERIFY_EQUAL(1, count);
 }
 
 SCENARIO( EnumValueParser, "Parsing/Normal", "unit", "EnumValueParser can parse multiple enums with values and different parents." )
@@ -81,7 +81,7 @@ SCENARIO( EnumValueParser, "Parsing/Normal", "unit", "EnumValueParser can parse 
         auto enumeration = *begin;
         if (enum0Count == 1)
         {
-            verifyEqual("enumZero1", enumeration->name());
+            VERIFY_EQUAL("enumZero1", enumeration->name());
 
             int valueCount = 0;
             auto begin5 = enumeration->enumValues()->cbegin();
@@ -93,23 +93,23 @@ SCENARIO( EnumValueParser, "Parsing/Normal", "unit", "EnumValueParser can parse 
                 unsigned int expectedValue = 0;
                 if (valueCount == 1)
                 {
-                    verifyEqual("abc", value->name());
+                    VERIFY_EQUAL("abc", value->name());
                     expectedValue = 5;
-                    verifyEqual(expectedValue, value->value());
+                    VERIFY_EQUAL(expectedValue, value->value());
                 }
                 else
                 {
-                    verifyEqual("def", value->name());
+                    VERIFY_EQUAL("def", value->name());
                     expectedValue = 10;
-                    verifyEqual(expectedValue, value->value());
+                    VERIFY_EQUAL(expectedValue, value->value());
                 }
                 begin5++;
             }
-            verifyEqual(2, valueCount);
+            VERIFY_EQUAL(2, valueCount);
         }
         else
         {
-            verifyEqual("enumZero2", enumeration->name());
+            VERIFY_EQUAL("enumZero2", enumeration->name());
 
             int valueCount = 0;
             auto begin5 = enumeration->enumValues()->cbegin();
@@ -119,13 +119,13 @@ SCENARIO( EnumValueParser, "Parsing/Normal", "unit", "EnumValueParser can parse 
                 valueCount++;
                 auto value = *begin5;
                 unsigned int expectedValue = 15;
-                verifyEqual("ghi", value->name());
-                verifyEqual(expectedValue, value->value());
+                VERIFY_EQUAL("ghi", value->name());
+                VERIFY_EQUAL(expectedValue, value->value());
                 begin5++;
             }
-            verifyEqual(1, valueCount);
+            VERIFY_EQUAL(1, valueCount);
         }
-        verifyEqual("", enumeration->package());
+        VERIFY_EQUAL("", enumeration->package());
         begin++;
     }
 
@@ -136,7 +136,7 @@ SCENARIO( EnumValueParser, "Parsing/Normal", "unit", "EnumValueParser can parse 
     {
         message1Count++;
         auto message1 = *begin1;
-        verifyEqual("messageOne", message1->name());
+        VERIFY_EQUAL("messageOne", message1->name());
 
         int message2Count = 0;
         auto begin2 = message1->messages()->cbegin();
@@ -145,7 +145,7 @@ SCENARIO( EnumValueParser, "Parsing/Normal", "unit", "EnumValueParser can parse 
         {
             message2Count++;
             auto message2 = *begin2;
-            verifyEqual("messageTwo", message2->name());
+            VERIFY_EQUAL("messageTwo", message2->name());
 
             int enum2Count = 0;
             auto begin3 = message2->enums()->cbegin();
@@ -154,8 +154,8 @@ SCENARIO( EnumValueParser, "Parsing/Normal", "unit", "EnumValueParser can parse 
             {
                 enum2Count++;
                 auto enumeration = *begin3;
-                verifyEqual("enumTwo", enumeration->name());
-                verifyEqual("", enumeration->package());
+                VERIFY_EQUAL("enumTwo", enumeration->name());
+                VERIFY_EQUAL("", enumeration->package());
 
                 int valueCount = 0;
                 auto begin5 = enumeration->enumValues()->cbegin();
@@ -167,22 +167,22 @@ SCENARIO( EnumValueParser, "Parsing/Normal", "unit", "EnumValueParser can parse 
                     unsigned int expectedValue = 0;
                     if (valueCount == 1)
                     {
-                        verifyEqual("true", value->name());
+                        VERIFY_EQUAL("true", value->name());
                         expectedValue = 1;
-                        verifyEqual(expectedValue, value->value());
+                        VERIFY_EQUAL(expectedValue, value->value());
                     }
                     else
                     {
-                        verifyEqual("false", value->name());
+                        VERIFY_EQUAL("false", value->name());
                         expectedValue = 0;
-                        verifyEqual(expectedValue, value->value());
+                        VERIFY_EQUAL(expectedValue, value->value());
                     }
                     begin5++;
                 }
-                verifyEqual(2, valueCount);
+                VERIFY_EQUAL(2, valueCount);
                 begin3++;
             }
-            verifyEqual(1, enum2Count);
+            VERIFY_EQUAL(1, enum2Count);
             begin2++;
         }
 
@@ -193,8 +193,8 @@ SCENARIO( EnumValueParser, "Parsing/Normal", "unit", "EnumValueParser can parse 
         {
             enum1Count++;
             auto enumeration = *begin4;
-            verifyEqual("enumOne", enumeration->name());
-            verifyEqual("", enumeration->package());
+            VERIFY_EQUAL("enumOne", enumeration->name());
+            VERIFY_EQUAL("", enumeration->package());
 
             int valueCount = 0;
             auto begin5 = enumeration->enumValues()->cbegin();
@@ -206,31 +206,31 @@ SCENARIO( EnumValueParser, "Parsing/Normal", "unit", "EnumValueParser can parse 
                 unsigned int expectedValue = 0;
                 if (valueCount == 1)
                 {
-                    verifyEqual("and", value->name());
+                    VERIFY_EQUAL("and", value->name());
                     expectedValue = 0;
-                    verifyEqual(expectedValue, value->value());
+                    VERIFY_EQUAL(expectedValue, value->value());
                 }
                 else if (valueCount == 2)
                 {
-                    verifyEqual("or", value->name());
+                    VERIFY_EQUAL("or", value->name());
                     expectedValue = 1;
-                    verifyEqual(expectedValue, value->value());
+                    VERIFY_EQUAL(expectedValue, value->value());
                 }
                 else
                 {
-                    verifyEqual("xor", value->name());
+                    VERIFY_EQUAL("xor", value->name());
                     expectedValue = 2;
-                    verifyEqual(expectedValue, value->value());
+                    VERIFY_EQUAL(expectedValue, value->value());
                 }
                 begin5++;
             }
-            verifyEqual(3, valueCount);
+            VERIFY_EQUAL(3, valueCount);
             begin4++;
         }
-        verifyEqual(1, enum1Count);
-        verifyEqual(1, message2Count);
+        VERIFY_EQUAL(1, enum1Count);
+        VERIFY_EQUAL(1, message2Count);
         begin1++;
     }
-    verifyEqual(2, enum0Count);
-    verifyEqual(1, message1Count);
+    VERIFY_EQUAL(2, enum0Count);
+    VERIFY_EQUAL(1, message1Count);
 }

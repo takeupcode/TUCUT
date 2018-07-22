@@ -41,12 +41,12 @@ SCENARIO( Scenario, "Registration/Normal", "unit", "Scenario is registered autom
             break;
         }
     }
-    verifyTrue(scenarioFound);
+    VERIFY_TRUE(scenarioFound);
 }
 
 SCENARIO( Scenario, "Verification/Types", "unit", "Verification supports wide character equality." )
 {
     std::wstring expected = L"Wide";
     std::wstring actual = L"Wide";
-    verifyEqual(expected, actual);
+    VERIFY_EQUAL(expected, actual);
 }

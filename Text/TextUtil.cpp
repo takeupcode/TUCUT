@@ -29,6 +29,11 @@ std::vector<std::string> TextUtil::splitString(const std::string & src, char del
         result.push_back(element);
     }
     
+    if (src.empty() || src[src.size() - 1] == delimiter)
+    {
+        result.push_back("");
+    }
+    
     return result;
 }
 

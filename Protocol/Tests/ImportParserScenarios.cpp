@@ -29,12 +29,12 @@ SCENARIO( ImportParser, "Parsing/Normal", "unit", "ImportParser can parse no imp
     model = parser.parse();
 
     unsigned long expectedSize = 1;
-    verifyEqual(expectedSize, model->publicEnumTypes()->size());
-    verifyEqual(expectedSize, model->publicMessageTypes()->size());
+    VERIFY_EQUAL(expectedSize, model->publicEnumTypes()->size());
+    VERIFY_EQUAL(expectedSize, model->publicMessageTypes()->size());
 
     expectedSize = 0;
-    verifyEqual(expectedSize, model->privateEnumTypes()->size());
-    verifyEqual(expectedSize, model->privateMessageTypes()->size());
+    VERIFY_EQUAL(expectedSize, model->privateEnumTypes()->size());
+    VERIFY_EQUAL(expectedSize, model->privateMessageTypes()->size());
 }
 
 SCENARIO( ImportParser, "Parsing/Normal", "unit", "ImportParser can parse private import." )
@@ -45,14 +45,14 @@ SCENARIO( ImportParser, "Parsing/Normal", "unit", "ImportParser can parse privat
     model = parser.parse();
 
     unsigned long expectedSize = 1;
-    verifyEqual(expectedSize, model->publicEnumTypes()->size());
-    verifyEqual(expectedSize, model->publicMessageTypes()->size());
+    VERIFY_EQUAL(expectedSize, model->publicEnumTypes()->size());
+    VERIFY_EQUAL(expectedSize, model->publicMessageTypes()->size());
 
     expectedSize = 4;
-    verifyEqual(expectedSize, model->privateEnumTypes()->size());
+    VERIFY_EQUAL(expectedSize, model->privateEnumTypes()->size());
 
     expectedSize = 3;
-    verifyEqual(expectedSize, model->privateMessageTypes()->size());
+    VERIFY_EQUAL(expectedSize, model->privateMessageTypes()->size());
 }
 
 SCENARIO( ImportParser, "Parsing/Normal", "unit", "ImportParser can parse public import." )
@@ -63,14 +63,14 @@ SCENARIO( ImportParser, "Parsing/Normal", "unit", "ImportParser can parse public
     model = parser.parse();
 
     unsigned long expectedSize = 5;
-    verifyEqual(expectedSize, model->publicEnumTypes()->size());
+    VERIFY_EQUAL(expectedSize, model->publicEnumTypes()->size());
 
     expectedSize = 3;
-    verifyEqual(expectedSize, model->publicMessageTypes()->size());
+    VERIFY_EQUAL(expectedSize, model->publicMessageTypes()->size());
 
     expectedSize = 0;
-    verifyEqual(expectedSize, model->privateEnumTypes()->size());
+    VERIFY_EQUAL(expectedSize, model->privateEnumTypes()->size());
 
     expectedSize = 1;
-    verifyEqual(expectedSize, model->privateMessageTypes()->size());
+    VERIFY_EQUAL(expectedSize, model->privateMessageTypes()->size());
 }

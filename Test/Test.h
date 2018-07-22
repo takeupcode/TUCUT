@@ -39,7 +39,8 @@ inline std::vector<std::string> internalSplitString(const std::string & src, cha
 class VerificationException : public std::exception
 {
 public:
-    VerificationException ()
+    VerificationException (int line)
+    : mLine(line)
     { }
     
     virtual const char * what () const noexcept
@@ -62,13 +63,14 @@ protected:
     }
 
     std::string mMessage;
+    int mLine;
 };
 
 class BoolVerificationException : public VerificationException
 {
 public:
-    BoolVerificationException (bool expectedValue)
-    : mExpectedValue(expectedValue)
+    BoolVerificationException (bool expectedValue, int line)
+    : VerificationException(line), mExpectedValue(expectedValue)
     {
         initialize();
     }
@@ -91,7 +93,7 @@ protected:
 private:
     void initialize ()
     {
-        mMessage = "    Bool verification failed.\n"
+        mMessage = "    Bool verification failed on line " + std::to_string(mLine) + ".\n"
                    "        Expected: " + expectedValue() + "\n";
     }
 };
@@ -99,7 +101,8 @@ private:
 class SameVerificationException : public VerificationException
 {
 public:
-    SameVerificationException ()
+    SameVerificationException (int line)
+    : VerificationException(line)
     {
         initialize();
     }
@@ -107,64 +110,63 @@ public:
 private:
     void initialize ()
     {
-        mMessage = "    Verification that objects are the same failed.\n";
+        mMessage = "    Verification that objects are the same failed on line " + std::to_string(mLine) + ".\n";
     }
 };
 
 class EqualVerificationException : public VerificationException
 {
 public:
-    EqualVerificationException (bool expectedValue, bool actualValue)
-    : mExpectedValue(std::to_string(expectedValue)), mActualValue(std::to_string(actualValue))
+    EqualVerificationException (bool expectedValue, bool actualValue, int line)
+    : VerificationException(line), mExpectedValue(std::to_string(expectedValue)), mActualValue(std::to_string(actualValue))
     {
         initialize();
     }
     
-    EqualVerificationException (int expectedValue, int actualValue)
-    : mExpectedValue(std::to_string(expectedValue)), mActualValue(std::to_string(actualValue))
+    EqualVerificationException (int expectedValue, int actualValue, int line)
+    : VerificationException(line), mExpectedValue(std::to_string(expectedValue)), mActualValue(std::to_string(actualValue))
     {
         initialize();
     }
 
-    EqualVerificationException (unsigned int expectedValue, unsigned int actualValue)
-    : mExpectedValue(std::to_string(expectedValue)), mActualValue(std::to_string(actualValue))
+    EqualVerificationException (unsigned int expectedValue, unsigned int actualValue, int line)
+    : VerificationException(line), mExpectedValue(std::to_string(expectedValue)), mActualValue(std::to_string(actualValue))
     {
         initialize();
     }
 
-    EqualVerificationException (long expectedValue, long actualValue)
-    : mExpectedValue(std::to_string(expectedValue)), mActualValue(std::to_string(actualValue))
+    EqualVerificationException (long expectedValue, long actualValue, int line)
+    : VerificationException(line), mExpectedValue(std::to_string(expectedValue)), mActualValue(std::to_string(actualValue))
     {
         initialize();
     }
 
-    EqualVerificationException (unsigned long expectedValue, unsigned long actualValue)
-    : mExpectedValue(std::to_string(expectedValue)), mActualValue(std::to_string(actualValue))
+    EqualVerificationException (unsigned long expectedValue, unsigned long actualValue, int line)
+    : VerificationException(line), mExpectedValue(std::to_string(expectedValue)), mActualValue(std::to_string(actualValue))
     {
         initialize();
     }
 
-    EqualVerificationException (float expectedValue, float actualValue)
-    : mExpectedValue(std::to_string(expectedValue)), mActualValue(std::to_string(actualValue))
+    EqualVerificationException (float expectedValue, float actualValue, int line)
+    : VerificationException(line), mExpectedValue(std::to_string(expectedValue)), mActualValue(std::to_string(actualValue))
     {
         initialize();
     }
 
-    EqualVerificationException (double expectedValue, double actualValue)
-    : mExpectedValue(std::to_string(expectedValue)), mActualValue(std::to_string(actualValue))
+    EqualVerificationException (double expectedValue, double actualValue, int line)
+    : VerificationException(line), mExpectedValue(std::to_string(expectedValue)), mActualValue(std::to_string(actualValue))
     {
         initialize();
     }
 
-    EqualVerificationException (const std::string & expectedValue, const std::string & actualValue)
-    : mExpectedValue(expectedValue), mActualValue(actualValue)
+    EqualVerificationException (const std::string & expectedValue, const std::string & actualValue, int line)
+    : VerificationException(line), mExpectedValue(expectedValue), mActualValue(actualValue)
     {
         initialize();
     }
 
-    EqualVerificationException (const std::wstring & expectedValue, const std::wstring & actualValue)
-    : mExpectedValue(narrow(expectedValue)),
-      mActualValue(narrow(actualValue))
+    EqualVerificationException (const std::wstring & expectedValue, const std::wstring & actualValue, int line)
+    : VerificationException(line), mExpectedValue(narrow(expectedValue)), mActualValue(narrow(actualValue))
     {
         initialize();
     }
@@ -186,7 +188,7 @@ protected:
 private:
     void initialize ()
     {
-        mMessage = "    Equal verification failed.\n"
+        mMessage = "    Equal verification failed on line " + std::to_string(mLine) + ".\n"
                    "        Expected: " + expectedValue() + "\n"
                    "          Actual: " + actualValue() + "\n";
     }
@@ -258,112 +260,112 @@ public:
     
     virtual std::shared_ptr<ScenarioBase> clone () const = 0;
 
-    virtual void verifyTrue (bool actualValue)
+    virtual void verifyTrue (bool actualValue, int line)
     {
         if (!actualValue)
         {
             mRunPassed = false;
-            throw BoolVerificationException(true);
+            throw BoolVerificationException(true, line);
         }
     }
     
-    virtual void verifyFalse (bool actualValue)
+    virtual void verifyFalse (bool actualValue, int line)
     {
         if (actualValue)
         {
             mRunPassed = false;
-            throw BoolVerificationException(false);
+            throw BoolVerificationException(false, line);
         }
     }
     
-    virtual void verifyEqual (bool expectedValue, bool actualValue)
+    virtual void verifyEqual (bool expectedValue, bool actualValue, int line)
     {
         if (actualValue != expectedValue)
         {
             mRunPassed = false;
-            throw EqualVerificationException(expectedValue, actualValue);
+            throw EqualVerificationException(expectedValue, actualValue, line);
         }
     }
 
-    virtual void verifyEqual (int expectedValue, int actualValue)
+    virtual void verifyEqual (int expectedValue, int actualValue, int line)
     {
         if (actualValue != expectedValue)
         {
             mRunPassed = false;
-            throw EqualVerificationException(expectedValue, actualValue);
+            throw EqualVerificationException(expectedValue, actualValue, line);
         }
     }
 
-    virtual void verifyEqual (unsigned int expectedValue, unsigned int actualValue)
+    virtual void verifyEqual (unsigned int expectedValue, unsigned int actualValue, int line)
     {
         if (actualValue != expectedValue)
         {
             mRunPassed = false;
-            throw EqualVerificationException(expectedValue, actualValue);
+            throw EqualVerificationException(expectedValue, actualValue, line);
         }
     }
 
-    virtual void verifyEqual (long expectedValue, long actualValue)
+    virtual void verifyEqual (long expectedValue, long actualValue, int line)
     {
         if (actualValue != expectedValue)
         {
             mRunPassed = false;
-            throw EqualVerificationException(expectedValue, actualValue);
+            throw EqualVerificationException(expectedValue, actualValue, line);
         }
     }
 
-    virtual void verifyEqual (unsigned long expectedValue, unsigned long actualValue)
+    virtual void verifyEqual (unsigned long expectedValue, unsigned long actualValue, int line)
     {
         if (actualValue != expectedValue)
         {
             mRunPassed = false;
-            throw EqualVerificationException(expectedValue, actualValue);
+            throw EqualVerificationException(expectedValue, actualValue, line);
         }
     }
 
-    virtual void verifyEqual (float expectedValue, float actualValue)
+    virtual void verifyEqual (float expectedValue, float actualValue, int line)
     {
         if (actualValue != expectedValue)
         {
             mRunPassed = false;
-            throw EqualVerificationException(expectedValue, actualValue);
+            throw EqualVerificationException(expectedValue, actualValue, line);
         }
     }
 
-    virtual void verifyEqual (double expectedValue, double actualValue)
+    virtual void verifyEqual (double expectedValue, double actualValue, int line)
     {
         if (actualValue != expectedValue)
         {
             mRunPassed = false;
-            throw EqualVerificationException(expectedValue, actualValue);
+            throw EqualVerificationException(expectedValue, actualValue, line);
         }
     }
 
-    virtual void verifyEqual (const std::string & expectedValue, const std::string & actualValue)
+    virtual void verifyEqual (const std::string & expectedValue, const std::string & actualValue, int line)
     {
         if (actualValue != expectedValue)
         {
             mRunPassed = false;
-            throw EqualVerificationException(expectedValue, actualValue);
+            throw EqualVerificationException(expectedValue, actualValue, line);
         }
     }
 
-    virtual void verifyEqual (const std::wstring & expectedValue, const std::wstring & actualValue)
+    virtual void verifyEqual (const std::wstring & expectedValue, const std::wstring & actualValue, int line)
     {
         if (actualValue != expectedValue)
         {
             mRunPassed = false;
-            throw EqualVerificationException(expectedValue, actualValue);
+            throw EqualVerificationException(expectedValue, actualValue, line);
         }
     }
     
     template <typename T>
-    void verifySame (T * expectedValue, T * actualValue)
+    void verifySame (T * expectedValue, T * actualValue, int line)
     {
         if (actualValue != expectedValue)
         {
             mRunPassed = false;
-            throw SameVerificationException();
+            throw SameVerificationException(line);
         }
     }
     
@@ -651,7 +653,7 @@ private:
     std::map<std::string, std::shared_ptr<Category>> mAllCategories;
     std::vector<std::shared_ptr<Category>> mTopLevelCategories;
 };
-        
+
 } // namespace Test
 } // namespace TUCUT
 
@@ -684,8 +686,13 @@ protected: \
     : TUCUT::Test::Scenario<>(src) \
     { } \
 }; \
-INTERNAL_TUCUT_TEST_SCENARIO_CLASS_NAME( preprocGroupName ) INTERNAL_TUCUT_TEST_SCENARIO_INSTANCE_NAME( preprocGroupName )(preprocCategoryName, preprocScenarioDescription, false, preprocTag); \
+static INTERNAL_TUCUT_TEST_SCENARIO_CLASS_NAME( preprocGroupName ) INTERNAL_TUCUT_TEST_SCENARIO_INSTANCE_NAME( preprocGroupName )(preprocCategoryName, preprocScenarioDescription, false, preprocTag); \
 void INTERNAL_TUCUT_TEST_SCENARIO_CLASS_NAME( preprocGroupName )::runSteps ()
+
+#define VERIFY_TRUE(actual) verifyTrue(actual, __LINE__)
+#define VERIFY_FALSE(actual) verifyFalse(actual, __LINE__)
+#define VERIFY_EQUAL(expected, actual) verifyEqual(expected, actual, __LINE__)
+#define VERIFY_SAME(expected, actual) verifySame(expected, actual, __LINE__)
 
 #ifdef TUCUT_TEST_GENERATE_MAIN
 

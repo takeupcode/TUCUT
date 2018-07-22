@@ -19,7 +19,7 @@ SCENARIO( ProtoModel, "Construction/Normal", "unit", "ProtoModel can be construc
 {
     Protocol::ProtoModel model("test.proto");
 
-    verifyEqual("", model.package());
+    VERIFY_EQUAL("", model.package());
 }
 
 SCENARIO( ProtoModel, "Operation/Properties", "unit", "ProtoModel knows current package." )
@@ -28,5 +28,5 @@ SCENARIO( ProtoModel, "Operation/Properties", "unit", "ProtoModel knows current 
     string package = "TUCUT.Protocol";
 
     model.setPackage(package);
-    verifyEqual(package, model.package());
+    VERIFY_EQUAL(package, model.package());
 }

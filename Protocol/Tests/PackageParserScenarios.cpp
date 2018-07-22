@@ -29,7 +29,7 @@ SCENARIO( PackageParser, "Parsing/Normal", "unit", "PackageParser can parse pack
     Protocol::ProtoParser parser("Package.proto");
     model = parser.parse();
 
-    verifyEqual(package, model->package());
+    VERIFY_EQUAL(package, model->package());
 }
 
 SCENARIO( PackageParser, "Parsing/Normal", "unit", "PackageParser can parse multiple packages." )
@@ -40,5 +40,5 @@ SCENARIO( PackageParser, "Parsing/Normal", "unit", "PackageParser can parse mult
     Protocol::ProtoParser parser("PackageRedefined.proto");
     model = parser.parse();
 
-    verifyEqual(package, model->package());
+    VERIFY_EQUAL(package, model->package());
 }

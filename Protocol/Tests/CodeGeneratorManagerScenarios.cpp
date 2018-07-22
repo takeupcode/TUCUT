@@ -19,7 +19,7 @@ SCENARIO( CodeGeneratorManager, "Construction/Normal", "unit", "CodeGeneratorMan
 {
     Protocol::CodeGeneratorManager * pManager = Protocol::CodeGeneratorManager::instance();
 
-    verifyTrue(pManager != nullptr);
+    VERIFY_TRUE(pManager != nullptr);
 }
 
 SCENARIO( CodeGeneratorManager, "Construction/Normal", "unit", "CodeGeneratorManager cannot construct unknown generators." )
@@ -27,10 +27,10 @@ SCENARIO( CodeGeneratorManager, "Construction/Normal", "unit", "CodeGeneratorMan
     Protocol::CodeGeneratorManager * pManager = Protocol::CodeGeneratorManager::instance();
 
     auto generator = pManager->generator("");
-    verifyTrue(generator == nullptr);
+    VERIFY_TRUE(generator == nullptr);
 
     generator = pManager->generator("unknown");
-    verifyTrue(generator == nullptr);
+    VERIFY_TRUE(generator == nullptr);
 }
 
 SCENARIO( CodeGeneratorManager, "Construction/Normal", "unit", "CodeGeneratorManager can construct CPP generator." )
@@ -38,5 +38,5 @@ SCENARIO( CodeGeneratorManager, "Construction/Normal", "unit", "CodeGeneratorMan
     Protocol::CodeGeneratorManager * pManager = Protocol::CodeGeneratorManager::instance();
 
     auto generator = pManager->generator("CPlusPlus");
-    verifyTrue(generator != nullptr);
+    VERIFY_TRUE(generator != nullptr);
 }

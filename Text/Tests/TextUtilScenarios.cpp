@@ -15,30 +15,66 @@
 using namespace std;
 using namespace TUCUT;
 
-SCENARIO( ImportParser, "Operation/Normal", "unit", "TextUtil knows whitespace." )
+SCENARIO( TextUtil, "Operation/Normal", "unit", "TextUtil knows whitespace." )
 {
     auto result = Text::TextUtil::isWhitespace('a');
-    verifyFalse(result);
+    VERIFY_FALSE(result);
     
     result = Text::TextUtil::isWhitespace('0');
-    verifyFalse(result);
+    VERIFY_FALSE(result);
     
     result = Text::TextUtil::isWhitespace(' ');
-    verifyTrue(result);
+    VERIFY_TRUE(result);
     
     result = Text::TextUtil::isWhitespace('\t');
-    verifyTrue(result);
+    VERIFY_TRUE(result);
     
     result = Text::TextUtil::isWhitespace('\n');
-    verifyTrue(result);
+    VERIFY_TRUE(result);
 }
 
-SCENARIO( ImportParser, "Operation/Normal", "unit", "TextUtil can split strings." )
+SCENARIO( TextUtil, "Operation/Normal", "unit", "TextUtil can split strings." )
 {
     std::string input = "1,2,3";
     auto result = Text::TextUtil::splitString(input, ',');
-    verifyEqual(3, static_cast<int>(result.size()));
-    verifyEqual("1", result[0]);
-    verifyEqual("2", result[1]);
-    verifyEqual("3", result[2]);
+    VERIFY_EQUAL(3, static_cast<int>(result.size()));
+    VERIFY_EQUAL("1", result[0]);
+    VERIFY_EQUAL("2", result[1]);
+    VERIFY_EQUAL("3", result[2]);
+}
+
+SCENARIO( TextUtil, "Operation/Edge", "unit", "TextUtil can split strings with empty spots." )
+{
+    std::string input = "";
+    auto result = Text::TextUtil::splitString(input, ',');
+    VERIFY_EQUAL(1, static_cast<int>(result.size()));
+    VERIFY_EQUAL("", result[0]);
+    
+    input = ",2,3";
+    result = Text::TextUtil::splitString(input, ',');
+    VERIFY_EQUAL(3, static_cast<int>(result.size()));
+    VERIFY_EQUAL("", result[0]);
+    VERIFY_EQUAL("2", result[1]);
+    VERIFY_EQUAL("3", result[2]);
+    
+    input = "1,,3";
+    result = Text::TextUtil::splitString(input, ',');
+    VERIFY_EQUAL(3, static_cast<int>(result.size()));
+    VERIFY_EQUAL("1", result[0]);
+    VERIFY_EQUAL("", result[1]);
+    VERIFY_EQUAL("3", result[2]);
+    
+    input = "1,2,";
+    result = Text::TextUtil::splitString(input, ',');
+    VERIFY_EQUAL(3, static_cast<int>(result.size()));
+    VERIFY_EQUAL("1", result[0]);
+    VERIFY_EQUAL("2", result[1]);
+    VERIFY_EQUAL("", result[2]);
+    
+    input = ",,";
+    result = Text::TextUtil::splitString(input, ',');
+    VERIFY_EQUAL(3, static_cast<int>(result.size()));
+    VERIFY_EQUAL("", result[0]);
+    VERIFY_EQUAL("", result[1]);
+    VERIFY_EQUAL("", result[2]);
 }

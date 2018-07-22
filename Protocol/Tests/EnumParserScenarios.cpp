@@ -36,10 +36,10 @@ SCENARIO( EnumParser, "Parsing/Normal", "unit", "EnumParser can parse empty enum
     {
         count++;
         auto enumeration = *begin;
-        verifyEqual(name, enumeration->name());
+        VERIFY_EQUAL(name, enumeration->name());
         begin++;
     }
-    verifyEqual(1, count);
+    VERIFY_EQUAL(1, count);
 }
 
 SCENARIO( EnumParser, "Parsing/Normal", "unit", "EnumParser can parse multiple empty enums." )
@@ -58,16 +58,16 @@ SCENARIO( EnumParser, "Parsing/Normal", "unit", "EnumParser can parse multiple e
         auto enumeration = *begin;
         if (count == 1)
         {
-            verifyEqual("one", enumeration->name());
+            VERIFY_EQUAL("one", enumeration->name());
         }
         else
         {
-            verifyEqual("two", enumeration->name());
+            VERIFY_EQUAL("two", enumeration->name());
         }
-        verifyEqual("", enumeration->package());
+        VERIFY_EQUAL("", enumeration->package());
         begin++;
     }
-    verifyEqual(2, count);
+    VERIFY_EQUAL(2, count);
 }
 
 SCENARIO( EnumParser, "Parsing/Normal", "unit", "EnumParser can parse multiple empty enums with different parents." )
@@ -86,13 +86,13 @@ SCENARIO( EnumParser, "Parsing/Normal", "unit", "EnumParser can parse multiple e
         auto enumeration = *begin;
         if (enum0Count == 1)
         {
-            verifyEqual("enumZero1", enumeration->name());
+            VERIFY_EQUAL("enumZero1", enumeration->name());
         }
         else
         {
-            verifyEqual("enumZero2", enumeration->name());
+            VERIFY_EQUAL("enumZero2", enumeration->name());
         }
-        verifyEqual("", enumeration->package());
+        VERIFY_EQUAL("", enumeration->package());
         begin++;
     }
 
@@ -103,7 +103,7 @@ SCENARIO( EnumParser, "Parsing/Normal", "unit", "EnumParser can parse multiple e
     {
         message1Count++;
         auto message1 = *begin1;
-        verifyEqual("messageOne", message1->name());
+        VERIFY_EQUAL("messageOne", message1->name());
 
         int message2Count = 0;
         auto begin2 = message1->messages()->cbegin();
@@ -112,7 +112,7 @@ SCENARIO( EnumParser, "Parsing/Normal", "unit", "EnumParser can parse multiple e
         {
             message2Count++;
             auto message2 = *begin2;
-            verifyEqual("messageTwo", message2->name());
+            VERIFY_EQUAL("messageTwo", message2->name());
 
             int enum2Count = 0;
             auto begin3 = message2->enums()->cbegin();
@@ -121,11 +121,11 @@ SCENARIO( EnumParser, "Parsing/Normal", "unit", "EnumParser can parse multiple e
             {
                 enum2Count++;
                 auto enumeration = *begin3;
-                verifyEqual("enumTwo", enumeration->name());
-                verifyEqual("", enumeration->package());
+                VERIFY_EQUAL("enumTwo", enumeration->name());
+                VERIFY_EQUAL("", enumeration->package());
                 begin3++;
             }
-            verifyEqual(1, enum2Count);
+            VERIFY_EQUAL(1, enum2Count);
             begin2++;
         }
 
@@ -136,16 +136,16 @@ SCENARIO( EnumParser, "Parsing/Normal", "unit", "EnumParser can parse multiple e
         {
             enum1Count++;
             auto enumeration = *begin4;
-            verifyEqual("enumOne", enumeration->name());
-            verifyEqual("", enumeration->package());
+            VERIFY_EQUAL("enumOne", enumeration->name());
+            VERIFY_EQUAL("", enumeration->package());
             begin4++;
         }
-        verifyEqual(1, enum1Count);
-        verifyEqual(1, message2Count);
+        VERIFY_EQUAL(1, enum1Count);
+        VERIFY_EQUAL(1, message2Count);
         begin1++;
     }
-    verifyEqual(2, enum0Count);
-    verifyEqual(1, message1Count);
+    VERIFY_EQUAL(2, enum0Count);
+    VERIFY_EQUAL(1, message1Count);
 }
 
 SCENARIO( EnumParser, "Parsing/Normal", "unit", "EnumParser can assign current package." )
@@ -164,13 +164,13 @@ SCENARIO( EnumParser, "Parsing/Normal", "unit", "EnumParser can assign current p
         auto enumeration = *begin;
         if (count == 1)
         {
-            verifyEqual("abc", enumeration->package());
+            VERIFY_EQUAL("abc", enumeration->package());
         }
         else
         {
-            verifyEqual("def", enumeration->package());
+            VERIFY_EQUAL("def", enumeration->package());
         }
         begin++;
     }
-    verifyEqual(2, count);
+    VERIFY_EQUAL(2, count);
 }

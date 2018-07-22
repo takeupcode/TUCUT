@@ -35,7 +35,7 @@ SCENARIO( MessageFieldParser, "Parsing/Normal", "unit", "MessageFieldParser can 
     {
         messageCount++;
         auto message = *messageBegin;
-        verifyEqual("messageOne", message->name());
+        VERIFY_EQUAL("messageOne", message->name());
 
         int fieldCount = 0;
         auto fieldBegin = message->fields()->cbegin();
@@ -46,34 +46,34 @@ SCENARIO( MessageFieldParser, "Parsing/Normal", "unit", "MessageFieldParser can 
             auto field = *fieldBegin;
             if (fieldCount == 1)
             {
-                verifyTrue(Protocol::MessageFieldModel::Requiredness::required == field->requiredness());
-                verifyEqual("string", field->fieldType());
-                verifyEqual("sOne", field->name());
+                VERIFY_TRUE(Protocol::MessageFieldModel::Requiredness::required == field->requiredness());
+                VERIFY_EQUAL("string", field->fieldType());
+                VERIFY_EQUAL("sOne", field->name());
                 unsigned int expectedIndex = 1;
-                verifyEqual(expectedIndex, field->index());
+                VERIFY_EQUAL(expectedIndex, field->index());
             }
             else if (fieldCount == 2)
             {
-                verifyTrue(Protocol::MessageFieldModel::Requiredness::optional == field->requiredness());
-                verifyEqual("bool", field->fieldType());
-                verifyEqual("bOne", field->name());
+                VERIFY_TRUE(Protocol::MessageFieldModel::Requiredness::optional == field->requiredness());
+                VERIFY_EQUAL("bool", field->fieldType());
+                VERIFY_EQUAL("bOne", field->name());
                 unsigned int expectedIndex = 2;
-                verifyEqual(expectedIndex, field->index());
+                VERIFY_EQUAL(expectedIndex, field->index());
             }
             else if (fieldCount == 3)
             {
-                verifyTrue(Protocol::MessageFieldModel::Requiredness::repeated == field->requiredness());
-                verifyEqual("int32", field->fieldType());
-                verifyEqual("iOne", field->name());
+                VERIFY_TRUE(Protocol::MessageFieldModel::Requiredness::repeated == field->requiredness());
+                VERIFY_EQUAL("int32", field->fieldType());
+                VERIFY_EQUAL("iOne", field->name());
                 unsigned int expectedIndex = 3;
-                verifyEqual(expectedIndex, field->index());
+                VERIFY_EQUAL(expectedIndex, field->index());
             }
             fieldBegin++;
         }
-        verifyEqual(3, fieldCount);
+        VERIFY_EQUAL(3, fieldCount);
         messageBegin++;
     }
-    verifyEqual(1, messageCount);
+    VERIFY_EQUAL(1, messageCount);
 }
 
 SCENARIO( MessageFieldParser, "Parsing/Normal", "unit", "MessageFieldParser can parse message field with qualified type." )
@@ -90,7 +90,7 @@ SCENARIO( MessageFieldParser, "Parsing/Normal", "unit", "MessageFieldParser can 
     {
         messageCount++;
         auto message = *messageBegin;
-        verifyEqual("messageOne", message->name());
+        VERIFY_EQUAL("messageOne", message->name());
 
         int fieldCount = 0;
         auto fieldBegin = message->fields()->cbegin();
@@ -99,17 +99,17 @@ SCENARIO( MessageFieldParser, "Parsing/Normal", "unit", "MessageFieldParser can 
         {
             fieldCount++;
             auto field = *fieldBegin;
-            verifyTrue(Protocol::MessageFieldModel::Requiredness::required == field->requiredness());
-            verifyEqual("Abc.Simple", field->fieldType());
-            verifyEqual("sOne", field->name());
+            VERIFY_TRUE(Protocol::MessageFieldModel::Requiredness::required == field->requiredness());
+            VERIFY_EQUAL("Abc.Simple", field->fieldType());
+            VERIFY_EQUAL("sOne", field->name());
             unsigned int expectedIndex = 1;
-            verifyEqual(expectedIndex, field->index());
+            VERIFY_EQUAL(expectedIndex, field->index());
             fieldBegin++;
         }
-        verifyEqual(1, fieldCount);
+        VERIFY_EQUAL(1, fieldCount);
         messageBegin++;
     }
-    verifyEqual(1, messageCount);
+    VERIFY_EQUAL(1, messageCount);
 }
 
 SCENARIO( MessageFieldParser, "Parsing/Normal", "unit", "MessageFieldParser can parse multiple nested messages with fields." )
@@ -126,7 +126,7 @@ SCENARIO( MessageFieldParser, "Parsing/Normal", "unit", "MessageFieldParser can 
     {
         messageCount++;
         auto messageOne = *messageBegin;
-        verifyEqual("messageOne", messageOne->name());
+        VERIFY_EQUAL("messageOne", messageOne->name());
 
         int messageOneFieldCount = 0;
         auto messageOneFieldBegin = messageOne->fields()->cbegin();
@@ -137,11 +137,11 @@ SCENARIO( MessageFieldParser, "Parsing/Normal", "unit", "MessageFieldParser can 
             auto field = *messageOneFieldBegin;
             if (messageOneFieldCount == 1)
             {
-                verifyEqual("sOne", field->name());
+                VERIFY_EQUAL("sOne", field->name());
             }
             else
             {
-                verifyEqual("bOne", field->name());
+                VERIFY_EQUAL("bOne", field->name());
             }
             messageOneFieldBegin++;
         }
@@ -153,7 +153,7 @@ SCENARIO( MessageFieldParser, "Parsing/Normal", "unit", "MessageFieldParser can 
         {
             messageOneMessageCount++;
             auto messageTwo = *messageOneMessageBegin;
-            verifyEqual("messageTwo", messageTwo->name());
+            VERIFY_EQUAL("messageTwo", messageTwo->name());
 
             int messageTwoFieldCount = 0;
             auto messageTwoFieldBegin = messageTwo->fields()->cbegin();
@@ -162,15 +162,15 @@ SCENARIO( MessageFieldParser, "Parsing/Normal", "unit", "MessageFieldParser can 
             {
                 messageTwoFieldCount++;
                 auto field = *messageTwoFieldBegin;
-                verifyEqual("sTwo", field->name());
+                VERIFY_EQUAL("sTwo", field->name());
                 messageTwoFieldBegin++;
             }
-            verifyEqual(1, messageTwoFieldCount);
+            VERIFY_EQUAL(1, messageTwoFieldCount);
             messageOneMessageBegin++;
         }
-        verifyEqual(2, messageOneFieldCount);
-        verifyEqual(1, messageOneMessageCount);
+        VERIFY_EQUAL(2, messageOneFieldCount);
+        VERIFY_EQUAL(1, messageOneMessageCount);
         messageBegin++;
     }
-    verifyEqual(1, messageCount);
+    VERIFY_EQUAL(1, messageCount);
 }

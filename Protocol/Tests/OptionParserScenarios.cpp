@@ -38,7 +38,7 @@ SCENARIO( OptionParser, "Parsing/Normal", "unit", "OptionParser can parse enum o
     {
         enumCount++;
         auto enumeration = *enumBegin;
-        verifyEqual("enumOne", enumeration->name());
+        VERIFY_EQUAL("enumOne", enumeration->name());
 
         int optionCount = 0;
         auto optionBegin = enumeration->options()->cbegin();
@@ -47,14 +47,14 @@ SCENARIO( OptionParser, "Parsing/Normal", "unit", "OptionParser can parse enum o
         {
             optionCount++;
             auto option = *optionBegin;
-            verifyEqual("optionOne", option->name());
-            verifyEqual("true", option->value());
+            VERIFY_EQUAL("optionOne", option->name());
+            VERIFY_EQUAL("true", option->value());
             optionBegin++;
         }
-        verifyEqual(1, optionCount);
+        VERIFY_EQUAL(1, optionCount);
         enumBegin++;
     }
-    verifyEqual(1, enumCount);
+    VERIFY_EQUAL(1, enumCount);
 }
 
 SCENARIO( OptionParser, "Parsing/Normal", "unit", "OptionParser can parse enum value option." )
@@ -70,7 +70,7 @@ SCENARIO( OptionParser, "Parsing/Normal", "unit", "OptionParser can parse enum v
     {
         enumCount++;
         auto enumeration = *enumBegin;
-        verifyEqual("enumOne", enumeration->name());
+        VERIFY_EQUAL("enumOne", enumeration->name());
 
         int valueCount = 0;
         auto valueBegin = enumeration->enumValues()->cbegin();
@@ -82,9 +82,9 @@ SCENARIO( OptionParser, "Parsing/Normal", "unit", "OptionParser can parse enum v
             unsigned int expectedIndex = 0;
             if (valueCount == 1)
             {
-                verifyEqual("empty", value->name());
+                VERIFY_EQUAL("empty", value->name());
                 expectedIndex = 0;
-                verifyEqual(expectedIndex, value->value());
+                VERIFY_EQUAL(expectedIndex, value->value());
 
                 int optionCount = 0;
                 auto optionBegin = value->options()->cbegin();
@@ -93,24 +93,24 @@ SCENARIO( OptionParser, "Parsing/Normal", "unit", "OptionParser can parse enum v
                 {
                     optionCount++;
                     auto option = *optionBegin;
-                    verifyEqual("optionOne", option->name());
-                    verifyEqual("true", option->value());
+                    VERIFY_EQUAL("optionOne", option->name());
+                    VERIFY_EQUAL("true", option->value());
                     optionBegin++;
                 }
-                verifyEqual(1, optionCount);
+                VERIFY_EQUAL(1, optionCount);
             }
             else if (valueCount == 2)
             {
-                verifyEqual("full", value->name());
+                VERIFY_EQUAL("full", value->name());
                 expectedIndex = 1;
-                verifyEqual(expectedIndex, value->value());
+                VERIFY_EQUAL(expectedIndex, value->value());
             }
             valueBegin++;
         }
-        verifyEqual(2, valueCount);
+        VERIFY_EQUAL(2, valueCount);
         enumBegin++;
     }
-    verifyEqual(1, enumCount);
+    VERIFY_EQUAL(1, enumCount);
 }
 
 SCENARIO( OptionParser, "Parsing/Normal", "unit", "OptionParser can parse message option." )
@@ -126,7 +126,7 @@ SCENARIO( OptionParser, "Parsing/Normal", "unit", "OptionParser can parse messag
     {
         messageCount++;
         auto message = *messageBegin;
-        verifyEqual("messageOne", message->name());
+        VERIFY_EQUAL("messageOne", message->name());
 
         int optionCount = 0;
         auto optionBegin = message->options()->cbegin();
@@ -135,14 +135,14 @@ SCENARIO( OptionParser, "Parsing/Normal", "unit", "OptionParser can parse messag
         {
             optionCount++;
             auto option = *optionBegin;
-            verifyEqual("optionOne", option->name());
-            verifyEqual("true", option->value());
+            VERIFY_EQUAL("optionOne", option->name());
+            VERIFY_EQUAL("true", option->value());
             optionBegin++;
         }
-        verifyEqual(1, optionCount);
+        VERIFY_EQUAL(1, optionCount);
         messageBegin++;
     }
-    verifyEqual(1, messageCount);
+    VERIFY_EQUAL(1, messageCount);
 }
 
 SCENARIO( OptionParser, "Parsing/Normal", "unit", "OptionParser can parse message field option." )
@@ -158,7 +158,7 @@ SCENARIO( OptionParser, "Parsing/Normal", "unit", "OptionParser can parse messag
     {
         messageCount++;
         auto message = *messageBegin;
-        verifyEqual("messageOne", message->name());
+        VERIFY_EQUAL("messageOne", message->name());
 
         int fieldCount = 0;
         auto fieldBegin = message->fields()->cbegin();
@@ -170,9 +170,9 @@ SCENARIO( OptionParser, "Parsing/Normal", "unit", "OptionParser can parse messag
             unsigned int expectedIndex = 0;
             if (fieldCount == 1)
             {
-                verifyEqual("sOne", field->name());
+                VERIFY_EQUAL("sOne", field->name());
                 expectedIndex = 1;
-                verifyEqual(expectedIndex, field->index());
+                VERIFY_EQUAL(expectedIndex, field->index());
 
                 int optionCount = 0;
                 auto optionBegin = field->options()->cbegin();
@@ -181,24 +181,24 @@ SCENARIO( OptionParser, "Parsing/Normal", "unit", "OptionParser can parse messag
                 {
                     optionCount++;
                     auto option = *optionBegin;
-                    verifyEqual("optionOne", option->name());
-                    verifyEqual("true", option->value());
+                    VERIFY_EQUAL("optionOne", option->name());
+                    VERIFY_EQUAL("true", option->value());
                     optionBegin++;
                 }
-                verifyEqual(1, optionCount);
+                VERIFY_EQUAL(1, optionCount);
             }
             else if (fieldCount == 2)
             {
-                verifyEqual("bOne", field->name());
+                VERIFY_EQUAL("bOne", field->name());
                 expectedIndex = 2;
-                verifyEqual(expectedIndex, field->index());
+                VERIFY_EQUAL(expectedIndex, field->index());
             }
             fieldBegin++;
         }
-        verifyEqual(2, fieldCount);
+        VERIFY_EQUAL(2, fieldCount);
         messageBegin++;
     }
-    verifyEqual(1, messageCount);
+    VERIFY_EQUAL(1, messageCount);
 }
 
 SCENARIO( OptionParser, "Parsing/Normal", "unit", "OptionParser can parse oneof option." )
@@ -214,7 +214,7 @@ SCENARIO( OptionParser, "Parsing/Normal", "unit", "OptionParser can parse oneof 
     {
         messageCount++;
         auto message = *messageBegin;
-        verifyEqual("messageOne", message->name());
+        VERIFY_EQUAL("messageOne", message->name());
 
         int oneofCount = 0;
         auto oneofBegin = message->oneofs()->cbegin();
@@ -223,7 +223,7 @@ SCENARIO( OptionParser, "Parsing/Normal", "unit", "OptionParser can parse oneof 
         {
             oneofCount++;
             auto oneof = *oneofBegin;
-            verifyEqual("choicesOne", oneof->name());
+            VERIFY_EQUAL("choicesOne", oneof->name());
 
             int optionCount = 0;
             auto optionBegin = oneof->options()->cbegin();
@@ -232,17 +232,17 @@ SCENARIO( OptionParser, "Parsing/Normal", "unit", "OptionParser can parse oneof 
             {
                 optionCount++;
                 auto option = *optionBegin;
-                verifyEqual("optionOne", option->name());
-                verifyEqual("true", option->value());
+                VERIFY_EQUAL("optionOne", option->name());
+                VERIFY_EQUAL("true", option->value());
                 optionBegin++;
             }
-            verifyEqual(1, optionCount);
+            VERIFY_EQUAL(1, optionCount);
             oneofBegin++;
         }
-        verifyEqual(1, oneofCount);
+        VERIFY_EQUAL(1, oneofCount);
         messageBegin++;
     }
-    verifyEqual(1, messageCount);
+    VERIFY_EQUAL(1, messageCount);
 }
 
 SCENARIO( OptionParser, "Parsing/Normal", "unit", "OptionParser can parse oneof field option." )
@@ -258,7 +258,7 @@ SCENARIO( OptionParser, "Parsing/Normal", "unit", "OptionParser can parse oneof 
     {
         messageCount++;
         auto message = *messageBegin;
-        verifyEqual("messageOne", message->name());
+        VERIFY_EQUAL("messageOne", message->name());
 
         int oneofCount = 0;
         auto oneofBegin = message->oneofs()->cbegin();
@@ -267,7 +267,7 @@ SCENARIO( OptionParser, "Parsing/Normal", "unit", "OptionParser can parse oneof 
         {
             oneofCount++;
             auto oneof = *oneofBegin;
-            verifyEqual("choicesOne", oneof->name());
+            VERIFY_EQUAL("choicesOne", oneof->name());
 
             int fieldCount = 0;
             auto fieldBegin = oneof->fields()->cbegin();
@@ -277,9 +277,9 @@ SCENARIO( OptionParser, "Parsing/Normal", "unit", "OptionParser can parse oneof 
                 fieldCount++;
                 auto field = *fieldBegin;
                 unsigned int expectedIndex = 0;
-                verifyEqual("sOne", field->name());
+                VERIFY_EQUAL("sOne", field->name());
                 expectedIndex = 1;
-                verifyEqual(expectedIndex, field->index());
+                VERIFY_EQUAL(expectedIndex, field->index());
 
                 int optionCount = 0;
                 auto optionBegin = field->options()->cbegin();
@@ -288,20 +288,20 @@ SCENARIO( OptionParser, "Parsing/Normal", "unit", "OptionParser can parse oneof 
                 {
                     optionCount++;
                     auto option = *optionBegin;
-                    verifyEqual("optionOne", option->name());
-                    verifyEqual("true", option->value());
+                    VERIFY_EQUAL("optionOne", option->name());
+                    VERIFY_EQUAL("true", option->value());
                     optionBegin++;
                 }
-                verifyEqual(1, optionCount);
+                VERIFY_EQUAL(1, optionCount);
                 fieldBegin++;
             }
-            verifyEqual(1, fieldCount);
+            VERIFY_EQUAL(1, fieldCount);
             oneofBegin++;
         }
-        verifyEqual(1, oneofCount);
+        VERIFY_EQUAL(1, oneofCount);
         messageBegin++;
     }
-    verifyEqual(1, messageCount);
+    VERIFY_EQUAL(1, messageCount);
 }
 
 SCENARIO( OptionParser, "Parsing/Normal", "unit", "OptionParser can parse proto option." )
@@ -317,11 +317,11 @@ SCENARIO( OptionParser, "Parsing/Normal", "unit", "OptionParser can parse proto 
     {
         optionCount++;
         auto option = *optionBegin;
-        verifyEqual("optionOne", option->name());
-        verifyEqual("true", option->value());
+        VERIFY_EQUAL("optionOne", option->name());
+        VERIFY_EQUAL("true", option->value());
         optionBegin++;
     }
-    verifyEqual(1, optionCount);
+    VERIFY_EQUAL(1, optionCount);
 }
 
 SCENARIO( OptionParser, "Parsing/Normal", "unit", "OptionParser can parse floating point option value." )
@@ -337,11 +337,11 @@ SCENARIO( OptionParser, "Parsing/Normal", "unit", "OptionParser can parse floati
     {
         optionCount++;
         auto option = *optionBegin;
-        verifyEqual("optionOne", option->name());
-        verifyEqual("3.14", option->value());
+        VERIFY_EQUAL("optionOne", option->name());
+        VERIFY_EQUAL("3.14", option->value());
         optionBegin++;
     }
-    verifyEqual(1, optionCount);
+    VERIFY_EQUAL(1, optionCount);
 }
 
 SCENARIO( OptionParser, "Parsing/Normal", "unit", "OptionParser can parse string option value." )
@@ -357,9 +357,9 @@ SCENARIO( OptionParser, "Parsing/Normal", "unit", "OptionParser can parse string
     {
         optionCount++;
         auto option = *optionBegin;
-        verifyEqual("optionOne", option->name());
-        verifyEqual("This is a string option value.", option->value());
+        VERIFY_EQUAL("optionOne", option->name());
+        VERIFY_EQUAL("This is a string option value.", option->value());
         optionBegin++;
     }
-    verifyEqual(1, optionCount);
+    VERIFY_EQUAL(1, optionCount);
 }

@@ -35,8 +35,8 @@ SCENARIO( OneofParser, "Parsing/Normal", "unit", "OneofParser can parse simple m
     {
         messageCount++;
         auto message = *begin1;
-        verifyEqual("messageOneof", message->name());
-        verifyTrue(message->fields()->empty());
+        VERIFY_EQUAL("messageOneof", message->name());
+        VERIFY_TRUE(message->fields()->empty());
 
         int oneofCount = 0;
         auto begin2 = message->oneofs()->cbegin();
@@ -55,37 +55,37 @@ SCENARIO( OneofParser, "Parsing/Normal", "unit", "OneofParser can parse simple m
                 auto field = *begin3;
                 if (fieldCount == 1)
                 {
-                    verifyTrue(Protocol::MessageFieldModel::Requiredness::optional == field->requiredness());
-                    verifyEqual("string", field->fieldType());
-                    verifyEqual("sOne", field->name());
+                    VERIFY_TRUE(Protocol::MessageFieldModel::Requiredness::optional == field->requiredness());
+                    VERIFY_EQUAL("string", field->fieldType());
+                    VERIFY_EQUAL("sOne", field->name());
                     unsigned int expectedIndex = 1;
-                    verifyEqual(expectedIndex, field->index());
+                    VERIFY_EQUAL(expectedIndex, field->index());
                 }
                 else if (fieldCount == 2)
                 {
-                    verifyTrue(Protocol::MessageFieldModel::Requiredness::optional == field->requiredness());
-                    verifyEqual("bool", field->fieldType());
-                    verifyEqual("bOne", field->name());
+                    VERIFY_TRUE(Protocol::MessageFieldModel::Requiredness::optional == field->requiredness());
+                    VERIFY_EQUAL("bool", field->fieldType());
+                    VERIFY_EQUAL("bOne", field->name());
                     unsigned int expectedIndex = 2;
-                    verifyEqual(expectedIndex, field->index());
+                    VERIFY_EQUAL(expectedIndex, field->index());
                 }
                 else if (fieldCount == 3)
                 {
-                    verifyTrue(Protocol::MessageFieldModel::Requiredness::optional == field->requiredness());
-                    verifyEqual("int32", field->fieldType());
-                    verifyEqual("iOne", field->name());
+                    VERIFY_TRUE(Protocol::MessageFieldModel::Requiredness::optional == field->requiredness());
+                    VERIFY_EQUAL("int32", field->fieldType());
+                    VERIFY_EQUAL("iOne", field->name());
                     unsigned int expectedIndex = 3;
-                    verifyEqual(expectedIndex, field->index());
+                    VERIFY_EQUAL(expectedIndex, field->index());
                 }
                 begin3++;
             }
-            verifyEqual(3, fieldCount);
+            VERIFY_EQUAL(3, fieldCount);
             begin2++;
         }
-        verifyEqual(1, oneofCount);
+        VERIFY_EQUAL(1, oneofCount);
         begin1++;
     }
-    verifyEqual(1, messageCount);
+    VERIFY_EQUAL(1, messageCount);
 }
 
 SCENARIO( OneofParser, "Parsing/Normal", "unit", "OneofParser can parse oneof field with qualified type." )
@@ -102,7 +102,7 @@ SCENARIO( OneofParser, "Parsing/Normal", "unit", "OneofParser can parse oneof fi
     {
         messageCount++;
         auto message = *messageBegin;
-        verifyEqual("messageOne", message->name());
+        VERIFY_EQUAL("messageOne", message->name());
 
         int oneofCount = 0;
         auto oneofBegin = message->oneofs()->cbegin();
@@ -111,7 +111,7 @@ SCENARIO( OneofParser, "Parsing/Normal", "unit", "OneofParser can parse oneof fi
         {
             oneofCount++;
             auto oneof = *oneofBegin;
-            verifyEqual("choicesOne", oneof->name());
+            VERIFY_EQUAL("choicesOne", oneof->name());
 
             int fieldCount = 0;
             auto fieldBegin = oneof->fields()->cbegin();
@@ -120,20 +120,20 @@ SCENARIO( OneofParser, "Parsing/Normal", "unit", "OneofParser can parse oneof fi
             {
                 fieldCount++;
                 auto field = *fieldBegin;
-                verifyTrue(Protocol::MessageFieldModel::Requiredness::optional == field->requiredness());
-                verifyEqual("Abc.Simple", field->fieldType());
-                verifyEqual("sOne", field->name());
+                VERIFY_TRUE(Protocol::MessageFieldModel::Requiredness::optional == field->requiredness());
+                VERIFY_EQUAL("Abc.Simple", field->fieldType());
+                VERIFY_EQUAL("sOne", field->name());
                 unsigned int expectedIndex = 1;
-                verifyEqual(expectedIndex, field->index());
+                VERIFY_EQUAL(expectedIndex, field->index());
                 fieldBegin++;
             }
-            verifyEqual(1, fieldCount);
+            VERIFY_EQUAL(1, fieldCount);
             oneofBegin++;
         }
-        verifyEqual(1, oneofCount);
+        VERIFY_EQUAL(1, oneofCount);
         messageBegin++;
     }
-    verifyEqual(1, messageCount);
+    VERIFY_EQUAL(1, messageCount);
 }
 
 SCENARIO( OneofParser, "Parsing/Normal", "unit", "OneofParser can parse multiple nested messages with oneofs." )
@@ -151,8 +151,8 @@ SCENARIO( OneofParser, "Parsing/Normal", "unit", "OneofParser can parse multiple
         message1Count++;
         auto message1 = *begin1;
         unsigned long expectedSize = 1;
-        verifyEqual("messageOne", message1->name());
-        verifyEqual(expectedSize, message1->fields()->size());
+        VERIFY_EQUAL("messageOne", message1->name());
+        VERIFY_EQUAL(expectedSize, message1->fields()->size());
 
         int oneof1Count = 0;
         auto begin2 = message1->oneofs()->cbegin();
@@ -173,43 +173,43 @@ SCENARIO( OneofParser, "Parsing/Normal", "unit", "OneofParser can parse multiple
                 {
                     if (fieldCount == 1)
                     {
-                        verifyTrue(Protocol::MessageFieldModel::Requiredness::optional == field->requiredness());
-                        verifyEqual("string", field->fieldType());
-                        verifyEqual("sOne", field->name());
+                        VERIFY_TRUE(Protocol::MessageFieldModel::Requiredness::optional == field->requiredness());
+                        VERIFY_EQUAL("string", field->fieldType());
+                        VERIFY_EQUAL("sOne", field->name());
                         unsigned int expectedIndex = 1;
-                        verifyEqual(expectedIndex, field->index());
+                        VERIFY_EQUAL(expectedIndex, field->index());
                     }
                     else if (fieldCount == 2)
                     {
-                        verifyTrue(Protocol::MessageFieldModel::Requiredness::optional == field->requiredness());
-                        verifyEqual("bool", field->fieldType());
-                        verifyEqual("bOne", field->name());
+                        VERIFY_TRUE(Protocol::MessageFieldModel::Requiredness::optional == field->requiredness());
+                        VERIFY_EQUAL("bool", field->fieldType());
+                        VERIFY_EQUAL("bOne", field->name());
                         unsigned int expectedIndex = 2;
-                        verifyEqual(expectedIndex, field->index());
+                        VERIFY_EQUAL(expectedIndex, field->index());
                     }
                 }
                 else if (oneof1Count == 2)
                 {
                     if (fieldCount == 1)
                     {
-                        verifyTrue(Protocol::MessageFieldModel::Requiredness::optional == field->requiredness());
-                        verifyEqual("bool", field->fieldType());
-                        verifyEqual("bThree", field->name());
+                        VERIFY_TRUE(Protocol::MessageFieldModel::Requiredness::optional == field->requiredness());
+                        VERIFY_EQUAL("bool", field->fieldType());
+                        VERIFY_EQUAL("bThree", field->name());
                         unsigned int expectedIndex = 3;
-                        verifyEqual(expectedIndex, field->index());
+                        VERIFY_EQUAL(expectedIndex, field->index());
                     }
                     else if (fieldCount == 2)
                     {
-                        verifyTrue(Protocol::MessageFieldModel::Requiredness::optional == field->requiredness());
-                        verifyEqual("int32", field->fieldType());
-                        verifyEqual("iThree", field->name());
+                        VERIFY_TRUE(Protocol::MessageFieldModel::Requiredness::optional == field->requiredness());
+                        VERIFY_EQUAL("int32", field->fieldType());
+                        VERIFY_EQUAL("iThree", field->name());
                         unsigned int expectedIndex = 4;
-                        verifyEqual(expectedIndex, field->index());
+                        VERIFY_EQUAL(expectedIndex, field->index());
                     }
                 }
                 begin3++;
             }
-            verifyEqual(2, fieldCount);
+            VERIFY_EQUAL(2, fieldCount);
             begin2++;
         }
 
@@ -220,8 +220,8 @@ SCENARIO( OneofParser, "Parsing/Normal", "unit", "OneofParser can parse multiple
         {
             message2Count++;
             auto message2 = *begin4;
-            verifyEqual("messageTwo", message2->name());
-            verifyEqual(expectedSize, message2->fields()->size());
+            VERIFY_EQUAL("messageTwo", message2->name());
+            VERIFY_EQUAL(expectedSize, message2->fields()->size());
 
             int oneof2Count = 0;
             auto begin5 = message2->oneofs()->cbegin();
@@ -240,31 +240,31 @@ SCENARIO( OneofParser, "Parsing/Normal", "unit", "OneofParser can parse multiple
                     auto field = *begin6;
                     if (fieldCount == 1)
                     {
-                        verifyTrue(Protocol::MessageFieldModel::Requiredness::optional == field->requiredness());
-                        verifyEqual("string", field->fieldType());
-                        verifyEqual("sTwo", field->name());
+                        VERIFY_TRUE(Protocol::MessageFieldModel::Requiredness::optional == field->requiredness());
+                        VERIFY_EQUAL("string", field->fieldType());
+                        VERIFY_EQUAL("sTwo", field->name());
                         unsigned int expectedIndex = 1;
-                        verifyEqual(expectedIndex, field->index());
+                        VERIFY_EQUAL(expectedIndex, field->index());
                     }
                     else if (fieldCount == 2)
                     {
-                        verifyTrue(Protocol::MessageFieldModel::Requiredness::optional == field->requiredness());
-                        verifyEqual("int32", field->fieldType());
-                        verifyEqual("iTwo", field->name());
+                        VERIFY_TRUE(Protocol::MessageFieldModel::Requiredness::optional == field->requiredness());
+                        VERIFY_EQUAL("int32", field->fieldType());
+                        VERIFY_EQUAL("iTwo", field->name());
                         unsigned int expectedIndex = 2;
-                        verifyEqual(expectedIndex, field->index());
+                        VERIFY_EQUAL(expectedIndex, field->index());
                     }
                     begin6++;
                 }
-                verifyEqual(2, fieldCount);
+                VERIFY_EQUAL(2, fieldCount);
                 begin5++;
             }
-            verifyEqual(1, oneof2Count);
+            VERIFY_EQUAL(1, oneof2Count);
             begin4++;
         }
-        verifyEqual(1, message2Count);
-        verifyEqual(2, oneof1Count);
+        VERIFY_EQUAL(1, message2Count);
+        VERIFY_EQUAL(2, oneof1Count);
         begin1++;
     }
-    verifyEqual(1, message1Count);
+    VERIFY_EQUAL(1, message1Count);
 }
