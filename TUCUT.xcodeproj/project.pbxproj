@@ -89,6 +89,7 @@
 		3E2F9C1E20FB7FED008C90A9 /* libboost_filesystem-mt.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E2F9C1C20FB7FEC008C90A9 /* libboost_filesystem-mt.dylib */; };
 		3E3F82E421019B5500501126 /* TextUtilScenarios.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E3F82E321019B5500501126 /* TextUtilScenarios.cpp */; };
 		3E3F82E8210424CF00501126 /* StringLiteralScenarios.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E3F82E7210424CF00501126 /* StringLiteralScenarios.cpp */; };
+		3E3F82F02104347000501126 /* ExceptionScenarios.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E3F82EF2104347000501126 /* ExceptionScenarios.cpp */; };
 		3ED4127B20FED1FB00BC7226 /* CodeGeneratorCPPScenarios.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E259E6420E34BA700F01379 /* CodeGeneratorCPPScenarios.cpp */; };
 		3ED4127C20FED1FB00BC7226 /* CodeGeneratorManagerScenarios.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E259E5D20E34BA600F01379 /* CodeGeneratorManagerScenarios.cpp */; };
 		3ED4127D20FED1FB00BC7226 /* EnumParserScenarios.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E259E6120E34BA600F01379 /* EnumParserScenarios.cpp */; };
@@ -335,6 +336,11 @@
 		3E3F82E321019B5500501126 /* TextUtilScenarios.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = TextUtilScenarios.cpp; sourceTree = "<group>"; };
 		3E3F82E6210422B700501126 /* StringLiteral.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StringLiteral.h; sourceTree = "<group>"; };
 		3E3F82E7210424CF00501126 /* StringLiteralScenarios.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = StringLiteralScenarios.cpp; sourceTree = "<group>"; };
+		3E3F82EB210430F100501126 /* InvalidOperationException.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InvalidOperationException.h; sourceTree = "<group>"; };
+		3E3F82EC210430F100501126 /* NullArgumentException.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NullArgumentException.h; sourceTree = "<group>"; };
+		3E3F82ED210430F200501126 /* InvalidArgumentException.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InvalidArgumentException.h; sourceTree = "<group>"; };
+		3E3F82EE210430F200501126 /* InvalidExtensionException.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InvalidExtensionException.h; sourceTree = "<group>"; };
+		3E3F82EF2104347000501126 /* ExceptionScenarios.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ExceptionScenarios.cpp; sourceTree = "<group>"; };
 		3ED4127420FED19500BC7226 /* TestTUCUT */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = TestTUCUT; sourceTree = BUILT_PRODUCTS_DIR; };
 		3ED4129120FED29400BC7226 /* TestProtocolCompiler */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = TestProtocolCompiler; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -380,6 +386,7 @@
 		3E259DA320E3398E00F01379 = {
 			isa = PBXGroup;
 			children = (
+				3E3F82E92104301C00501126 /* Exception */,
 				3E259DC020E33A5F00F01379 /* Protocol */,
 				3E259DBF20E33A4700F01379 /* Test */,
 				3E259DBE20E33A3900F01379 /* Log */,
@@ -733,6 +740,26 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		3E3F82E92104301C00501126 /* Exception */ = {
+			isa = PBXGroup;
+			children = (
+				3E3F82ED210430F200501126 /* InvalidArgumentException.h */,
+				3E3F82EE210430F200501126 /* InvalidExtensionException.h */,
+				3E3F82EB210430F100501126 /* InvalidOperationException.h */,
+				3E3F82EC210430F100501126 /* NullArgumentException.h */,
+				3E3F82EA2104303B00501126 /* Tests */,
+			);
+			path = Exception;
+			sourceTree = "<group>";
+		};
+		3E3F82EA2104303B00501126 /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				3E3F82EF2104347000501126 /* ExceptionScenarios.cpp */,
+			);
+			path = Tests;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -965,6 +992,7 @@
 				3ED4128020FED1FB00BC7226 /* MessageFieldParserScenarios.cpp in Sources */,
 				3ED4128120FED1FB00BC7226 /* MessageParserScenarios.cpp in Sources */,
 				3ED4128220FED1FB00BC7226 /* OneofParserScenarios.cpp in Sources */,
+				3E3F82F02104347000501126 /* ExceptionScenarios.cpp in Sources */,
 				3ED4128320FED1FB00BC7226 /* OptionParserScenarios.cpp in Sources */,
 				3ED4128420FED1FB00BC7226 /* PackageParserScenarios.cpp in Sources */,
 				3ED4128520FED1FB00BC7226 /* ProtoModelScenarios.cpp in Sources */,
