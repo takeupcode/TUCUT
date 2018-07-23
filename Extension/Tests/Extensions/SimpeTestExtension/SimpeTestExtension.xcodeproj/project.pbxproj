@@ -1,0 +1,322 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 48;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		3E3F833E21051D6300501126 /* SimpleTestEntry.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E3F833A21051D6200501126 /* SimpleTestEntry.cpp */; };
+		3E3F833F21051D6300501126 /* SimpleTestClass.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E3F833B21051D6300501126 /* SimpleTestClass.h */; };
+		3E3F834021051D6300501126 /* SimpleTestClass.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E3F833C21051D6300501126 /* SimpleTestClass.cpp */; };
+		3E3F834121051D6300501126 /* SimpleTestEntry.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E3F833D21051D6300501126 /* SimpleTestEntry.h */; };
+		3E3F834321051FC500501126 /* libTUCUT.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E3F834421051FC500501126 /* libTUCUT.a */; };
+		3E3F83472105200D00501126 /* libboost_system-mt.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E3F83452105200D00501126 /* libboost_system-mt.dylib */; };
+		3E3F83482105200D00501126 /* libboost_filesystem-mt.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E3F83462105200D00501126 /* libboost_filesystem-mt.dylib */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		3E3F832621051CAB00501126 /* libSimpeTestExtension.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libSimpeTestExtension.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
+		3E3F833A21051D6200501126 /* SimpleTestEntry.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SimpleTestEntry.cpp; sourceTree = "<group>"; };
+		3E3F833B21051D6300501126 /* SimpleTestClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimpleTestClass.h; sourceTree = "<group>"; };
+		3E3F833C21051D6300501126 /* SimpleTestClass.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SimpleTestClass.cpp; sourceTree = "<group>"; };
+		3E3F833D21051D6300501126 /* SimpleTestEntry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimpleTestEntry.h; sourceTree = "<group>"; };
+		3E3F834421051FC500501126 /* libTUCUT.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libTUCUT.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		3E3F83452105200D00501126 /* libboost_system-mt.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libboost_system-mt.dylib"; path = "../../../../../../../../opt/local/lib/libboost_system-mt.dylib"; sourceTree = "<group>"; };
+		3E3F83462105200D00501126 /* libboost_filesystem-mt.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libboost_filesystem-mt.dylib"; path = "../../../../../../../../opt/local/lib/libboost_filesystem-mt.dylib"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		3E3F832321051CAB00501126 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3E3F834321051FC500501126 /* libTUCUT.a in Frameworks */,
+				3E3F83472105200D00501126 /* libboost_system-mt.dylib in Frameworks */,
+				3E3F83482105200D00501126 /* libboost_filesystem-mt.dylib in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		3E3F831D21051CAB00501126 = {
+			isa = PBXGroup;
+			children = (
+				3E3F832821051CAB00501126 /* SimpeTestExtension */,
+				3E3F832721051CAB00501126 /* Products */,
+				3E3F834221051FC500501126 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		3E3F832721051CAB00501126 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				3E3F832621051CAB00501126 /* libSimpeTestExtension.dylib */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		3E3F832821051CAB00501126 /* SimpeTestExtension */ = {
+			isa = PBXGroup;
+			children = (
+				3E3F833C21051D6300501126 /* SimpleTestClass.cpp */,
+				3E3F833B21051D6300501126 /* SimpleTestClass.h */,
+				3E3F833A21051D6200501126 /* SimpleTestEntry.cpp */,
+				3E3F833D21051D6300501126 /* SimpleTestEntry.h */,
+			);
+			path = SimpeTestExtension;
+			sourceTree = "<group>";
+		};
+		3E3F834221051FC500501126 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				3E3F83462105200D00501126 /* libboost_filesystem-mt.dylib */,
+				3E3F83452105200D00501126 /* libboost_system-mt.dylib */,
+				3E3F834421051FC500501126 /* libTUCUT.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		3E3F832421051CAB00501126 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3E3F833F21051D6300501126 /* SimpleTestClass.h in Headers */,
+				3E3F834121051D6300501126 /* SimpleTestEntry.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		3E3F832521051CAB00501126 /* SimpeTestExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3E3F833121051CAB00501126 /* Build configuration list for PBXNativeTarget "SimpeTestExtension" */;
+			buildPhases = (
+				3E3F832221051CAB00501126 /* Sources */,
+				3E3F832321051CAB00501126 /* Frameworks */,
+				3E3F832421051CAB00501126 /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SimpeTestExtension;
+			productName = SimpeTestExtension;
+			productReference = 3E3F832621051CAB00501126 /* libSimpeTestExtension.dylib */;
+			productType = "com.apple.product-type.library.dynamic";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		3E3F831E21051CAB00501126 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0920;
+				ORGANIZATIONNAME = "Take Up Code";
+				TargetAttributes = {
+					3E3F832521051CAB00501126 = {
+						CreatedOnToolsVersion = 9.2;
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = 3E3F832121051CAB00501126 /* Build configuration list for PBXProject "SimpeTestExtension" */;
+			compatibilityVersion = "Xcode 8.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 3E3F831D21051CAB00501126;
+			productRefGroup = 3E3F832721051CAB00501126 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				3E3F832521051CAB00501126 /* SimpeTestExtension */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		3E3F832221051CAB00501126 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3E3F834021051D6300501126 /* SimpleTestClass.cpp in Sources */,
+				3E3F833E21051D6300501126 /* SimpleTestEntry.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		3E3F832F21051CAB00501126 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		3E3F833021051CAB00501126 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		3E3F833221051CAB00501126 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				EXECUTABLE_PREFIX = lib;
+				GCC_ENABLE_CPP_EXCEPTIONS = YES;
+				GCC_ENABLE_CPP_RTTI = YES;
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					/opt/local/lib,
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		3E3F833321051CAB00501126 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				EXECUTABLE_PREFIX = lib;
+				GCC_ENABLE_CPP_EXCEPTIONS = YES;
+				GCC_ENABLE_CPP_RTTI = YES;
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					/opt/local/lib,
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		3E3F832121051CAB00501126 /* Build configuration list for PBXProject "SimpeTestExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3E3F832F21051CAB00501126 /* Debug */,
+				3E3F833021051CAB00501126 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		3E3F833121051CAB00501126 /* Build configuration list for PBXNativeTarget "SimpeTestExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3E3F833221051CAB00501126 /* Debug */,
+				3E3F833321051CAB00501126 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 3E3F831E21051CAB00501126 /* Project object */;
+}

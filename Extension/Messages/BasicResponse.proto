@@ -1,0 +1,16 @@
+package TUCUT.Extension;
+
+message ResponseError
+{
+    optional string errorIdentity = 1;
+    repeated string errorCodes = 2;
+    repeated string errorMessages = 3;
+}
+
+message BasicResponse
+{
+    required bool errorEncountered = 1;
+    optional string reservationToken = 2;
+    optional string reservationTimeFrame = 3;
+    repeated ResponseError errors = 4;
+}

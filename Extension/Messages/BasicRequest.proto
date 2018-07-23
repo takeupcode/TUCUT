@@ -1,0 +1,74 @@
+package TUCUT.Extension;
+
+message RequestParameterValue
+{
+    enum ParameterValueOperation
+    {
+        NoValueOp = 0;
+        EqualValueOp = 1;
+        GreaterValueOp = 2;
+        GreaterInclusiveValueOp = 3;
+        LesserValueOp = 4;
+        LesserInclusiveValueOp = 5;
+        ContainValueOp = 6;
+        ContainByValueOp = 7;
+        IntersectValueOp = 8;
+        MatchPatternValueOp = 9;
+    }
+
+    enum ParameterValueType
+    {
+        SingleValue = 0;
+        RangeOfValues = 1;
+        SetOfValues = 2;
+    }
+
+    enum ParameterValueModifier
+    {
+        NormalValue = 0;
+        InvertedValue = 1;
+    }
+
+    optional string label = 1;
+    optional ParameterValueOperation operation = 2;
+    optional ParameterValueModifier modifier = 3;
+    optional ParameterValueType valueType = 4;
+    optional int32 order = 5;
+    repeated string values = 6;
+}
+
+message RequestParameterGroup
+{
+    enum ParameterGroupOperation
+    {
+        AndGroupOp = 0;
+        OrGroupOp = 1;
+        ExclusiveGroupOp = 2;
+    }
+
+    enum ParameterGroupModifier
+    {
+        NormalGroup = 0;
+        InvertedGroup = 1;
+    }
+
+    required ParameterGroupOperation operation = 1;
+    optional ParameterGroupModifier modifier = 2;
+    optional int32 order = 3;
+    repeated RequestParameterValue values = 4;
+    repeated RequestParameterGroup groups = 5;
+}
+
+message RequestParameter
+{
+    required string name = 1;
+    optional RequestParameterValue value = 2;
+    optional RequestParameterGroup group = 3;
+}
+
+message BasicRequest
+{
+    required string action = 1;
+    repeated RequestParameter parameters = 2;
+    optional string reservationToken = 3;
+}

@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		3E1F75C620FEFBE400028734 /* EnumMultipleMessage.protocol.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E1F75C420FEFBE400028734 /* EnumMultipleMessage.protocol.cpp */; };
-		3E1F75C720FEFBE400028734 /* EnumMultipleMessage.protocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E1F75C520FEFBE400028734 /* EnumMultipleMessage.protocol.h */; };
 		3E1F75C920FEFF8E00028734 /* MessageOneof.protocol.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E259E0520E34B4A00F01379 /* MessageOneof.protocol.cpp */; };
 		3E259DCA20E33E2B00F01379 /* LogManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E259DC820E33E2A00F01379 /* LogManager.cpp */; };
 		3E259DCB20E33E2B00F01379 /* LogManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E259DC920E33E2A00F01379 /* LogManager.h */; };
@@ -94,6 +93,26 @@
 		3E3F82F921043ED200501126 /* EventPublisherScenarios.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E3F82F221043ED100501126 /* EventPublisherScenarios.cpp */; };
 		3E3F82FA21043ED200501126 /* EventSubscriberScenarios.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E3F82F721043ED200501126 /* EventSubscriberScenarios.cpp */; };
 		3E3F83002104F84500501126 /* IdentifiableScenarios.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E3F82FF2104F84500501126 /* IdentifiableScenarios.cpp */; };
+		3E3F831521051B4800501126 /* ExtensionScenarios.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E3F831421051B4800501126 /* ExtensionScenarios.cpp */; };
+		3E3F83572105758E00501126 /* ExtensionManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E3F8308210518EC00501126 /* ExtensionManager.cpp */; };
+		3E3F8358210575AA00501126 /* Extension.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E3F830C210518FE00501126 /* Extension.cpp */; };
+		3E3F8359210575AA00501126 /* ExtensionLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E3F830E210518FE00501126 /* ExtensionLoader.cpp */; };
+		3E3F835A210575BE00501126 /* BasicRequest.protocol.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E3F83522105651800501126 /* BasicRequest.protocol.cpp */; };
+		3E3F835B210575BE00501126 /* BasicResponse.protocol.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E3F83502105651800501126 /* BasicResponse.protocol.cpp */; };
+		3E3F835C210575BE00501126 /* ExtensionManager.protocol.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E3F83512105651800501126 /* ExtensionManager.protocol.cpp */; };
+		3E3F835D2105766200501126 /* ExtensionInterface.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E3F830A210518EC00501126 /* ExtensionInterface.h */; };
+		3E3F835E2105766200501126 /* ExtensionManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E3F8309210518EC00501126 /* ExtensionManager.h */; };
+		3E3F835F2105766200501126 /* Extension.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E3F830D210518FE00501126 /* Extension.h */; };
+		3E3F83602105766200501126 /* BasicRequest.protocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E3F834E2105651800501126 /* BasicRequest.protocol.h */; };
+		3E3F83612105766200501126 /* BasicResponse.protocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E3F83532105651800501126 /* BasicResponse.protocol.h */; };
+		3E3F83622105766200501126 /* ExtensionManager.protocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E3F834D2105651800501126 /* ExtensionManager.protocol.h */; };
+		3E3F83632105766200501126 /* ProtoBase.protocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E3F834F2105651800501126 /* ProtoBase.protocol.h */; };
+		3E3F83642105766200501126 /* Identifiable.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E3F82FD2104F83900501126 /* Identifiable.h */; };
+		3E3F83652105766200501126 /* InvalidArgumentException.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E3F82ED210430F200501126 /* InvalidArgumentException.h */; };
+		3E3F83662105766200501126 /* InvalidExtensionException.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E3F82EE210430F200501126 /* InvalidExtensionException.h */; };
+		3E3F83672105766200501126 /* InvalidOperationException.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E3F82EB210430F100501126 /* InvalidOperationException.h */; };
+		3E3F83682105766200501126 /* NullArgumentException.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E3F82EC210430F100501126 /* NullArgumentException.h */; };
+		3E3F83692105766200501126 /* StringLiteral.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E3F82E6210422B700501126 /* StringLiteral.h */; };
 		3ED4127B20FED1FB00BC7226 /* CodeGeneratorCPPScenarios.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E259E6420E34BA700F01379 /* CodeGeneratorCPPScenarios.cpp */; };
 		3ED4127C20FED1FB00BC7226 /* CodeGeneratorManagerScenarios.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E259E5D20E34BA600F01379 /* CodeGeneratorManagerScenarios.cpp */; };
 		3ED4127D20FED1FB00BC7226 /* EnumParserScenarios.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E259E6120E34BA600F01379 /* EnumParserScenarios.cpp */; };
@@ -120,6 +139,16 @@
 		3ED412A220FED37800BC7226 /* MessageAllFields.protocol.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E259DF620E34B4900F01379 /* MessageAllFields.protocol.cpp */; };
 		3ED412A320FED37800BC7226 /* MessageField.protocol.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E259E0120E34B4A00F01379 /* MessageField.protocol.cpp */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		3E3F833821051CAC00501126 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3E3F833421051CAB00501126 /* SimpeTestExtension.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 3E3F832621051CAB00501126;
+			remoteInfo = SimpeTestExtension;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		3E2F9C0D20FB7D0F008C90A9 /* CopyFiles */ = {
@@ -354,6 +383,25 @@
 		3E3F82F721043ED200501126 /* EventSubscriberScenarios.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EventSubscriberScenarios.cpp; sourceTree = "<group>"; };
 		3E3F82FD2104F83900501126 /* Identifiable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Identifiable.h; sourceTree = "<group>"; };
 		3E3F82FF2104F84500501126 /* IdentifiableScenarios.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = IdentifiableScenarios.cpp; sourceTree = "<group>"; };
+		3E3F8308210518EC00501126 /* ExtensionManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ExtensionManager.cpp; sourceTree = "<group>"; };
+		3E3F8309210518EC00501126 /* ExtensionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExtensionManager.h; sourceTree = "<group>"; };
+		3E3F830A210518EC00501126 /* ExtensionInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExtensionInterface.h; sourceTree = "<group>"; };
+		3E3F830C210518FE00501126 /* Extension.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Extension.cpp; sourceTree = "<group>"; };
+		3E3F830D210518FE00501126 /* Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Extension.h; sourceTree = "<group>"; };
+		3E3F830E210518FE00501126 /* ExtensionLoader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ExtensionLoader.cpp; sourceTree = "<group>"; };
+		3E3F83112105193A00501126 /* BasicResponse.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = BasicResponse.proto; sourceTree = "<group>"; };
+		3E3F83122105193A00501126 /* ExtensionManager.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ExtensionManager.proto; sourceTree = "<group>"; };
+		3E3F83132105193A00501126 /* BasicRequest.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = BasicRequest.proto; sourceTree = "<group>"; };
+		3E3F831421051B4800501126 /* ExtensionScenarios.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ExtensionScenarios.cpp; sourceTree = "<group>"; };
+		3E3F833421051CAB00501126 /* SimpeTestExtension.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SimpeTestExtension.xcodeproj; path = SimpeTestExtension/SimpeTestExtension.xcodeproj; sourceTree = "<group>"; };
+		3E3F834C2105639C00501126 /* ProtocolCompiler */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = ProtocolCompiler; sourceTree = "<group>"; };
+		3E3F834D2105651800501126 /* ExtensionManager.protocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExtensionManager.protocol.h; sourceTree = "<group>"; };
+		3E3F834E2105651800501126 /* BasicRequest.protocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BasicRequest.protocol.h; sourceTree = "<group>"; };
+		3E3F834F2105651800501126 /* ProtoBase.protocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProtoBase.protocol.h; sourceTree = "<group>"; };
+		3E3F83502105651800501126 /* BasicResponse.protocol.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BasicResponse.protocol.cpp; sourceTree = "<group>"; };
+		3E3F83512105651800501126 /* ExtensionManager.protocol.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ExtensionManager.protocol.cpp; sourceTree = "<group>"; };
+		3E3F83522105651800501126 /* BasicRequest.protocol.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BasicRequest.protocol.cpp; sourceTree = "<group>"; };
+		3E3F83532105651800501126 /* BasicResponse.protocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BasicResponse.protocol.h; sourceTree = "<group>"; };
 		3ED4127420FED19500BC7226 /* TestTUCUT */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = TestTUCUT; sourceTree = BUILT_PRODUCTS_DIR; };
 		3ED4129120FED29400BC7226 /* TestProtocolCompiler */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = TestProtocolCompiler; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -399,6 +447,8 @@
 		3E259DA320E3398E00F01379 = {
 			isa = PBXGroup;
 			children = (
+				3E3F834A2105629900501126 /* Tools */,
+				3E3F8301210515A000501126 /* Extension */,
 				3E3F82FB2104F76F00501126 /* Identity */,
 				3E3F82E92104301C00501126 /* Exception */,
 				3E259DC020E33A5F00F01379 /* Protocol */,
@@ -798,6 +848,103 @@
 			path = Tests;
 			sourceTree = "<group>";
 		};
+		3E3F8301210515A000501126 /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				3E3F830A210518EC00501126 /* ExtensionInterface.h */,
+				3E3F8308210518EC00501126 /* ExtensionManager.cpp */,
+				3E3F8309210518EC00501126 /* ExtensionManager.h */,
+				3E3F8304210515EE00501126 /* OSDependent */,
+				3E3F8303210515C300501126 /* Tests */,
+				3E3F8302210515B600501126 /* Messages */,
+			);
+			path = Extension;
+			sourceTree = "<group>";
+		};
+		3E3F8302210515B600501126 /* Messages */ = {
+			isa = PBXGroup;
+			children = (
+				3E3F83132105193A00501126 /* BasicRequest.proto */,
+				3E3F83112105193A00501126 /* BasicResponse.proto */,
+				3E3F83122105193A00501126 /* ExtensionManager.proto */,
+				3E3F83062105160B00501126 /* Generated */,
+			);
+			path = Messages;
+			sourceTree = "<group>";
+		};
+		3E3F8303210515C300501126 /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				3E3F831421051B4800501126 /* ExtensionScenarios.cpp */,
+				3E3F83072105178F00501126 /* Extensions */,
+			);
+			path = Tests;
+			sourceTree = "<group>";
+		};
+		3E3F8304210515EE00501126 /* OSDependent */ = {
+			isa = PBXGroup;
+			children = (
+				3E3F8305210515FE00501126 /* Mac */,
+			);
+			path = OSDependent;
+			sourceTree = "<group>";
+		};
+		3E3F8305210515FE00501126 /* Mac */ = {
+			isa = PBXGroup;
+			children = (
+				3E3F830C210518FE00501126 /* Extension.cpp */,
+				3E3F830D210518FE00501126 /* Extension.h */,
+				3E3F830E210518FE00501126 /* ExtensionLoader.cpp */,
+			);
+			path = Mac;
+			sourceTree = "<group>";
+		};
+		3E3F83062105160B00501126 /* Generated */ = {
+			isa = PBXGroup;
+			children = (
+				3E3F83522105651800501126 /* BasicRequest.protocol.cpp */,
+				3E3F834E2105651800501126 /* BasicRequest.protocol.h */,
+				3E3F83502105651800501126 /* BasicResponse.protocol.cpp */,
+				3E3F83532105651800501126 /* BasicResponse.protocol.h */,
+				3E3F83512105651800501126 /* ExtensionManager.protocol.cpp */,
+				3E3F834D2105651800501126 /* ExtensionManager.protocol.h */,
+				3E3F834F2105651800501126 /* ProtoBase.protocol.h */,
+			);
+			path = Generated;
+			sourceTree = "<group>";
+		};
+		3E3F83072105178F00501126 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				3E3F833421051CAB00501126 /* SimpeTestExtension.xcodeproj */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		3E3F833521051CAB00501126 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				3E3F833921051CAC00501126 /* libSimpeTestExtension.dylib */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		3E3F834A2105629900501126 /* Tools */ = {
+			isa = PBXGroup;
+			children = (
+				3E3F834B210562AE00501126 /* Mac */,
+			);
+			path = Tools;
+			sourceTree = "<group>";
+		};
+		3E3F834B210562AE00501126 /* Mac */ = {
+			isa = PBXGroup;
+			children = (
+				3E3F834C2105639C00501126 /* ProtocolCompiler */,
+			);
+			path = Mac;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -805,6 +952,19 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3E3F835D2105766200501126 /* ExtensionInterface.h in Headers */,
+				3E3F835E2105766200501126 /* ExtensionManager.h in Headers */,
+				3E3F835F2105766200501126 /* Extension.h in Headers */,
+				3E3F83602105766200501126 /* BasicRequest.protocol.h in Headers */,
+				3E3F83612105766200501126 /* BasicResponse.protocol.h in Headers */,
+				3E3F83622105766200501126 /* ExtensionManager.protocol.h in Headers */,
+				3E3F83632105766200501126 /* ProtoBase.protocol.h in Headers */,
+				3E3F83642105766200501126 /* Identifiable.h in Headers */,
+				3E3F83652105766200501126 /* InvalidArgumentException.h in Headers */,
+				3E3F83662105766200501126 /* InvalidExtensionException.h in Headers */,
+				3E3F83672105766200501126 /* InvalidOperationException.h in Headers */,
+				3E3F83682105766200501126 /* NullArgumentException.h in Headers */,
+				3E3F83692105766200501126 /* StringLiteral.h in Headers */,
 				3E259EE320E34BE900F01379 /* OneofFieldParser.h in Headers */,
 				3E259ECB20E34BE900F01379 /* MessageFieldParser.h in Headers */,
 				3E259ECA20E34BE900F01379 /* EnumParser.h in Headers */,
@@ -838,7 +998,6 @@
 				3E259EC820E34BE900F01379 /* CodeGeneratorManager.h in Headers */,
 				3E259ED420E34BE900F01379 /* ProtoParser.h in Headers */,
 				3E259DDA20E33E5E00F01379 /* EventSubscriber.h in Headers */,
-				3E1F75C720FEFBE400028734 /* EnumMultipleMessage.protocol.h in Headers */,
 				3E259EDB20E34BE900F01379 /* MessageModel.h in Headers */,
 				3E259EDC20E34BE900F01379 /* TokenReader.h in Headers */,
 				3E259EEB20E34BE900F01379 /* CodeWriterCPP.h in Headers */,
@@ -896,6 +1055,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 3ED4127820FED19500BC7226 /* Build configuration list for PBXNativeTarget "TestTUCUT" */;
 			buildPhases = (
+				3E3F83492105610D00501126 /* ShellScript */,
 				3ED4127020FED19500BC7226 /* Sources */,
 				3ED4127120FED19500BC7226 /* Frameworks */,
 				3ED4127220FED19500BC7226 /* CopyFiles */,
@@ -963,6 +1123,12 @@
 			mainGroup = 3E259DA320E3398E00F01379;
 			productRefGroup = 3E259DAD20E3398E00F01379 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 3E3F833521051CAB00501126 /* Products */;
+					ProjectRef = 3E3F833421051CAB00501126 /* SimpeTestExtension.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				3E259DAB20E3398E00F01379 /* TUCUT */,
@@ -973,11 +1139,43 @@
 		};
 /* End PBXProject section */
 
+/* Begin PBXReferenceProxy section */
+		3E3F833921051CAC00501126 /* libSimpeTestExtension.dylib */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.dylib";
+			path = libSimpeTestExtension.dylib;
+			remoteRef = 3E3F833821051CAC00501126 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		3E3F83492105610D00501126 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "cd ${SRCROOT}/Extension/Messages\n../../Tools/Mac/ProtocolCompiler -c -p TUCUT -o Generated\n../../Tools/Mac/ProtocolCompiler -p TUCUT -o Generated BasicRequest.proto\n../../Tools/Mac/ProtocolCompiler -p TUCUT -o Generated BasicResponse.proto\n../../Tools/Mac/ProtocolCompiler -p TUCUT -o Generated ExtensionManager.proto";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		3E259DA820E3398E00F01379 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3E3F835A210575BE00501126 /* BasicRequest.protocol.cpp in Sources */,
+				3E3F835B210575BE00501126 /* BasicResponse.protocol.cpp in Sources */,
+				3E3F835C210575BE00501126 /* ExtensionManager.protocol.cpp in Sources */,
+				3E3F8358210575AA00501126 /* Extension.cpp in Sources */,
+				3E3F8359210575AA00501126 /* ExtensionLoader.cpp in Sources */,
+				3E3F83572105758E00501126 /* ExtensionManager.cpp in Sources */,
 				3E259DD620E33E5100F01379 /* TextUtil.cpp in Sources */,
 				3E259ED720E34BE900F01379 /* PackageParser.cpp in Sources */,
 				3E259ED920E34BE900F01379 /* EnumParser.cpp in Sources */,
@@ -1022,6 +1220,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3E3F82E421019B5500501126 /* TextUtilScenarios.cpp in Sources */,
+				3E3F831521051B4800501126 /* ExtensionScenarios.cpp in Sources */,
 				3ED4127B20FED1FB00BC7226 /* CodeGeneratorCPPScenarios.cpp in Sources */,
 				3ED4127C20FED1FB00BC7226 /* CodeGeneratorManagerScenarios.cpp in Sources */,
 				3ED4127D20FED1FB00BC7226 /* EnumParserScenarios.cpp in Sources */,
