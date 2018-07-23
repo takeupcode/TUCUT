@@ -31,16 +31,21 @@ public:
         return mNamePascal;
     }
 
+    virtual std::string nameOriginal () const
+    {
+        return mNameOriginal;
+    }
+
 protected:
     Nameable (const std::string & name = "")
-    : mNameCamel(name), mNamePascal(name)
+    : mNameOriginal(name), mNameCamel(name), mNamePascal(name)
     {
         mNameCamel[0] = std::tolower(mNameCamel[0]);
         mNamePascal[0] = std::toupper(mNamePascal[0]);
     }
 
     Nameable (const Nameable & src)
-    : mNameCamel(src.mNameCamel), mNamePascal(src.mNamePascal)
+    : mNameOriginal(src.mNameOriginal), mNameCamel(src.mNameCamel), mNamePascal(src.mNamePascal)
     { }
 
     Nameable & operator = (const Nameable & rhs)
@@ -50,6 +55,7 @@ protected:
             return *this;
         }
 
+        mNameOriginal = rhs.mNameOriginal;
         mNameCamel = rhs.mNameCamel;
         mNamePascal = rhs.mNamePascal;
 
@@ -57,6 +63,7 @@ protected:
     }
 
 private:
+    std::string mNameOriginal;
     std::string mNameCamel;
     std::string mNamePascal;
 };

@@ -8,6 +8,8 @@
 
 #include <memory>
 
+#include <boost/filesystem/path.hpp>
+
 #include "ImportParser.h"
 #include "ProtoParser.h"
 #include "InvalidProtoException.h"
@@ -60,8 +62,12 @@ bool Protocol::ImportParser::parse (TokenReader::iterator current, TokenReader::
 
         model->addImportedProtoName(current, protoName);
 
+        boost::filesystem::path currentPath(model->nameOriginal());
+        boost::filesystem::path importedPath(protoName);
+        boost::filesystem::path fullPath(currentPath.parent_path() / importedPath);
+
         shared_ptr<Protocol::ProtoModel> importedModel;
-        Protocol::ProtoParser parser(protoName);
+        Protocol::ProtoParser parser(fullPath.string());
         importedModel = parser.parse();
 
         if (publicFlag)
