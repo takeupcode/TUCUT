@@ -23,3 +23,13 @@ SCENARIO( Extension, "Construction/Singleton", "unit,extension", "Extension mana
     VERIFY_TRUE(pExtMgr1 != nullptr);
     VERIFY_SAME(pExtMgr1, pExtMgr2);
 }
+
+SCENARIO( Extension, "Operation/Normal", "unit,extension", "Extension manager can send message and receive reply." )
+{
+    Extension::ExtensionManager * pExtMgr = Extension::ExtensionManager::instance();
+    
+    pExtMgr->loadAll("Extensions");
+    
+    string result = pExtMgr->sendMessage("com.takeupcode.simpletestextension", "test");
+    VERIFY_EQUAL("Success from SimpleTestClass: test", result);
+}
