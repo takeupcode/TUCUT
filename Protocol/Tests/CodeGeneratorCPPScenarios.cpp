@@ -22,7 +22,7 @@ SCENARIO( CodeGeneratorCPP, "Operation/Normal", "unit,protocol", "CPP generator 
 
     auto generator = pManager->generator("CPlusPlus");
 
-    Protocol::ProtoParser parser("Empty.proto");
+    Protocol::ProtoParser parser("Messages/Empty.proto");
     auto model = parser.parse();
 
     generator->generateCode("Generated", model.get(), "TestTUCUT", true);
@@ -34,7 +34,7 @@ SCENARIO( CodeGeneratorCPP, "Operation/Normal", "unit,protocol", "CPP generator 
 
     auto generator = pManager->generator("CPlusPlus");
 
-    Protocol::ProtoParser parser("Empty.proto");
+    Protocol::ProtoParser parser("Messages/Empty.proto");
     auto model = parser.parse();
 
     generator->generateCode("Generated", model.get(), "TestTUCUT");
@@ -46,7 +46,7 @@ SCENARIO( CodeGeneratorCPP, "Operation/Normal", "unit,protocol", "CPP generator 
 
     auto generator = pManager->generator("CPlusPlus");
 
-    Protocol::ProtoParser parser("Message.proto");
+    Protocol::ProtoParser parser("Messages/Message.proto");
     auto model = parser.parse();
 
     generator->generateCode("Generated", model.get(), "TestTUCUT");
@@ -58,7 +58,7 @@ SCENARIO( CodeGeneratorCPP, "Operation/Normal", "unit,protocol", "CPP generator 
 
     auto generator = pManager->generator("CPlusPlus");
 
-    Protocol::ProtoParser parser("MessageAllFields.proto");
+    Protocol::ProtoParser parser("Messages/MessageAllFields.proto");
     auto model = parser.parse();
 
     generator->generateCode("Generated", model.get(), "TestTUCUT");
@@ -70,7 +70,7 @@ SCENARIO( CodeGeneratorCPP, "Operation/Normal", "unit,protocol", "CPP generator 
 
     auto generator = pManager->generator("CPlusPlus");
 
-    Protocol::ProtoParser parser("EnumMultiple.proto");
+    Protocol::ProtoParser parser("Messages/EnumMultiple.proto");
     auto model = parser.parse();
 
     generator->generateCode("Generated", model.get(), "TestTUCUT");
@@ -82,7 +82,7 @@ SCENARIO( CodeGeneratorCPP, "Operation/Normal", "unit,protocol", "CPP generator 
     
     auto generator = pManager->generator("CPlusPlus");
     
-    Protocol::ProtoParser parser("EnumMultipleMessage.proto");
+    Protocol::ProtoParser parser("Messages/EnumMultipleMessage.proto");
     auto model = parser.parse();
     
     generator->generateCode("Generated", model.get(), "TestTUCUT");
@@ -94,7 +94,7 @@ SCENARIO( CodeGeneratorCPP, "Operation/Normal", "unit,protocol", "CPP generator 
 
     auto generator = pManager->generator("CPlusPlus");
 
-    Protocol::ProtoParser parser("EnumValue.proto");
+    Protocol::ProtoParser parser("Messages/EnumValue.proto");
     auto model = parser.parse();
 
     generator->generateCode("Generated", model.get(), "TestTUCUT");
@@ -106,7 +106,7 @@ SCENARIO( CodeGeneratorCPP, "Operation/Normal", "unit,protocol", "CPP generator 
 
     auto generator = pManager->generator("CPlusPlus");
 
-    Protocol::ProtoParser parser("ImportPublic.proto");
+    Protocol::ProtoParser parser("Messages/ImportPublic.proto");
     auto model = parser.parse();
 
     generator->generateCode("Generated", model.get(), "TestTUCUT");
@@ -118,7 +118,7 @@ SCENARIO( CodeGeneratorCPP, "Operation/Normal", "unit,protocol", "CPP generator 
 
     auto generator = pManager->generator("CPlusPlus");
 
-    Protocol::ProtoParser parser("MessageField.proto");
+    Protocol::ProtoParser parser("Messages/MessageField.proto");
     auto model = parser.parse();
 
     generator->generateCode("Generated", model.get(), "TestTUCUT");
@@ -130,7 +130,7 @@ SCENARIO( CodeGeneratorCPP, "Operation/Normal", "unit,protocol", "CPP generator 
 
     auto generator = pManager->generator("CPlusPlus");
 
-    Protocol::ProtoParser parser("MessageNested.proto");
+    Protocol::ProtoParser parser("Messages/MessageNested.proto");
     auto model = parser.parse();
 
     generator->generateCode("Generated", model.get(), "TestTUCUT");
@@ -142,7 +142,7 @@ SCENARIO( CodeGeneratorCPP, "Operation/Normal", "unit,protocol", "CPP generator 
 
     auto generator = pManager->generator("CPlusPlus");
 
-    Protocol::ProtoParser parser("MessageOneof.proto");
+    Protocol::ProtoParser parser("Messages/MessageOneof.proto");
     auto model = parser.parse();
 
     generator->generateCode("Generated", model.get(), "TestTUCUT");
@@ -154,7 +154,7 @@ SCENARIO( CodeGeneratorCPP, "Operation/Normal", "unit,protocol", "CPP generator 
 
     auto generator = pManager->generator("CPlusPlus");
 
-    Protocol::ProtoParser parser("MessageOneofMultiple.proto");
+    Protocol::ProtoParser parser("Messages/MessageOneofMultiple.proto");
     auto model = parser.parse();
 
     generator->generateCode("Generated", model.get(), "TestTUCUT");
@@ -166,7 +166,7 @@ SCENARIO( CodeGeneratorCPP, "Operation/Normal", "unit,protocol", "CPP generator 
 
     auto generator = pManager->generator("CPlusPlus");
 
-    Protocol::ProtoParser parser("MessageNamespace.proto");
+    Protocol::ProtoParser parser("Messages/MessageNamespace.proto");
     auto model = parser.parse();
 
     generator->generateCode("Generated", model.get(), "TestTUCUT");
@@ -178,7 +178,7 @@ SCENARIO( CodeGeneratorCPP, "Operation/Normal", "unit,protocol", "CPP generator 
 
     auto generator = pManager->generator("CPlusPlus");
 
-    Protocol::ProtoParser parser("EnumMultiplePackage.proto");
+    Protocol::ProtoParser parser("Messages/EnumMultiplePackage.proto");
     auto model = parser.parse();
 
     generator->generateCode("Generated", model.get(), "TestTUCUT");
@@ -190,7 +190,7 @@ SCENARIO( CodeGeneratorCPP, "Operation/Normal", "unit,protocol", "CPP generator 
 
     auto generator = pManager->generator("CPlusPlus");
 
-    Protocol::ProtoParser parser("MessageMultiplePackage.proto");
+    Protocol::ProtoParser parser("Messages/MessageMultiplePackage.proto");
     auto model = parser.parse();
 
     generator->generateCode("Generated", model.get(), "TestTUCUT");
@@ -202,7 +202,7 @@ SCENARIO( CodeGeneratorCPP, "Operation/Normal", "unit,protocol", "CPP generator 
 
     auto generator = pManager->generator("CPlusPlus");
 
-    Protocol::ProtoParser parser("MessageFieldReference.proto");
+    Protocol::ProtoParser parser("Messages/MessageFieldReference.proto");
     auto model = parser.parse();
 
     generator->generateCode("Generated", model.get(), "TestTUCUT");

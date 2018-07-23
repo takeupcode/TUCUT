@@ -25,7 +25,7 @@ SCENARIO( OneofParser, "Parsing/Normal", "unit,protocol", "OneofParser can parse
 {
     shared_ptr<Protocol::ProtoModel> model;
 
-    Protocol::ProtoParser parser("MessageOneof.proto");
+    Protocol::ProtoParser parser("Messages/MessageOneof.proto");
     model = parser.parse();
 
     int messageCount = 0;
@@ -92,7 +92,7 @@ SCENARIO( OneofParser, "Parsing/Normal", "unit,protocol", "OneofParser can parse
 {
     shared_ptr<Protocol::ProtoModel> model;
 
-    Protocol::ProtoParser parser("MessageOneofQualified.proto");
+    Protocol::ProtoParser parser("Messages/MessageOneofQualified.proto");
     model = parser.parse();
 
     int messageCount = 0;
@@ -140,7 +140,7 @@ SCENARIO( OneofParser, "Parsing/Normal", "unit,protocol", "OneofParser can parse
 {
     shared_ptr<Protocol::ProtoModel> model;
 
-    Protocol::ProtoParser parser("MessageOneofMultiple.proto");
+    Protocol::ProtoParser parser("Messages/MessageOneofMultiple.proto");
     model = parser.parse();
 
     int message1Count = 0;

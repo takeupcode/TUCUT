@@ -28,7 +28,7 @@ SCENARIO( OptionParser, "Construction/Normal", "unit,protocol", "OptionParser ca
 SCENARIO( OptionParser, "Parsing/Normal", "unit,protocol", "OptionParser can parse enum option." )
 {
     shared_ptr<Protocol::ProtoModel> model;
-    Protocol::ProtoParser parser("OptionEnum.proto");
+    Protocol::ProtoParser parser("Messages/OptionEnum.proto");
     model = parser.parse();
 
     int enumCount = 0;
@@ -60,7 +60,7 @@ SCENARIO( OptionParser, "Parsing/Normal", "unit,protocol", "OptionParser can par
 SCENARIO( OptionParser, "Parsing/Normal", "unit,protocol", "OptionParser can parse enum value option." )
 {
     shared_ptr<Protocol::ProtoModel> model;
-    Protocol::ProtoParser parser("OptionEnumValue.proto");
+    Protocol::ProtoParser parser("Messages/OptionEnumValue.proto");
     model = parser.parse();
 
     int enumCount = 0;
@@ -116,7 +116,7 @@ SCENARIO( OptionParser, "Parsing/Normal", "unit,protocol", "OptionParser can par
 SCENARIO( OptionParser, "Parsing/Normal", "unit,protocol", "OptionParser can parse message option." )
 {
     shared_ptr<Protocol::ProtoModel> model;
-    Protocol::ProtoParser parser("OptionMessage.proto");
+    Protocol::ProtoParser parser("Messages/OptionMessage.proto");
     model = parser.parse();
 
     int messageCount = 0;
@@ -148,7 +148,7 @@ SCENARIO( OptionParser, "Parsing/Normal", "unit,protocol", "OptionParser can par
 SCENARIO( OptionParser, "Parsing/Normal", "unit,protocol", "OptionParser can parse message field option." )
 {
     shared_ptr<Protocol::ProtoModel> model;
-    Protocol::ProtoParser parser("OptionMessageField.proto");
+    Protocol::ProtoParser parser("Messages/OptionMessageField.proto");
     model = parser.parse();
 
     int messageCount = 0;
@@ -204,7 +204,7 @@ SCENARIO( OptionParser, "Parsing/Normal", "unit,protocol", "OptionParser can par
 SCENARIO( OptionParser, "Parsing/Normal", "unit,protocol", "OptionParser can parse oneof option." )
 {
     shared_ptr<Protocol::ProtoModel> model;
-    Protocol::ProtoParser parser("OptionOneof.proto");
+    Protocol::ProtoParser parser("Messages/OptionOneof.proto");
     model = parser.parse();
 
     int messageCount = 0;
@@ -248,7 +248,7 @@ SCENARIO( OptionParser, "Parsing/Normal", "unit,protocol", "OptionParser can par
 SCENARIO( OptionParser, "Parsing/Normal", "unit,protocol", "OptionParser can parse oneof field option." )
 {
     shared_ptr<Protocol::ProtoModel> model;
-    Protocol::ProtoParser parser("OptionOneofField.proto");
+    Protocol::ProtoParser parser("Messages/OptionOneofField.proto");
     model = parser.parse();
 
     int messageCount = 0;
@@ -307,7 +307,7 @@ SCENARIO( OptionParser, "Parsing/Normal", "unit,protocol", "OptionParser can par
 SCENARIO( OptionParser, "Parsing/Normal", "unit,protocol", "OptionParser can parse proto option." )
 {
     shared_ptr<Protocol::ProtoModel> model;
-    Protocol::ProtoParser parser("OptionProto.proto");
+    Protocol::ProtoParser parser("Messages/OptionProto.proto");
     model = parser.parse();
 
     int optionCount = 0;
@@ -327,7 +327,7 @@ SCENARIO( OptionParser, "Parsing/Normal", "unit,protocol", "OptionParser can par
 SCENARIO( OptionParser, "Parsing/Normal", "unit,protocol", "OptionParser can parse floating point option value." )
 {
     shared_ptr<Protocol::ProtoModel> model;
-    Protocol::ProtoParser parser("OptionValueFloat.proto");
+    Protocol::ProtoParser parser("Messages/OptionValueFloat.proto");
     model = parser.parse();
 
     int optionCount = 0;
@@ -347,7 +347,7 @@ SCENARIO( OptionParser, "Parsing/Normal", "unit,protocol", "OptionParser can par
 SCENARIO( OptionParser, "Parsing/Normal", "unit,protocol", "OptionParser can parse string option value." )
 {
     shared_ptr<Protocol::ProtoModel> model;
-    Protocol::ProtoParser parser("OptionValueString.proto");
+    Protocol::ProtoParser parser("Messages/OptionValueString.proto");
     model = parser.parse();
 
     int optionCount = 0;

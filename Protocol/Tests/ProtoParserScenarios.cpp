@@ -17,5 +17,5 @@ using namespace TUCUT;
 
 SCENARIO( ProtoParser, "Construction/Normal", "unit,protocol", "ProtoParser can be constructed." )
 {
-    Protocol::ProtoParser parser("Package.proto");
+    Protocol::ProtoParser parser("Messages/Package.proto");
 }

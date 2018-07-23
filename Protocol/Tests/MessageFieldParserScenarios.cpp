@@ -25,7 +25,7 @@ SCENARIO( MessageFieldParser, "Parsing/Normal", "unit,protocol", "MessageFieldPa
 {
     shared_ptr<Protocol::ProtoModel> model;
 
-    Protocol::ProtoParser parser("MessageField.proto");
+    Protocol::ProtoParser parser("Messages/MessageField.proto");
     model = parser.parse();
 
     int messageCount = 0;
@@ -80,7 +80,7 @@ SCENARIO( MessageFieldParser, "Parsing/Normal", "unit,protocol", "MessageFieldPa
 {
     shared_ptr<Protocol::ProtoModel> model;
 
-    Protocol::ProtoParser parser("MessageFieldQualified.proto");
+    Protocol::ProtoParser parser("Messages/MessageFieldQualified.proto");
     model = parser.parse();
 
     int messageCount = 0;
@@ -116,7 +116,7 @@ SCENARIO( MessageFieldParser, "Parsing/Normal", "unit,protocol", "MessageFieldPa
 {
     shared_ptr<Protocol::ProtoModel> model;
 
-    Protocol::ProtoParser parser("MessageFieldMultiple.proto");
+    Protocol::ProtoParser parser("Messages/MessageFieldMultiple.proto");
     model = parser.parse();
 
     int messageCount = 0;

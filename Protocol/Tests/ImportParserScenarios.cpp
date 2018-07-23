@@ -25,7 +25,7 @@ SCENARIO( ImportParser, "Parsing/Normal", "unit,protocol", "ImportParser can par
 {
     shared_ptr<Protocol::ProtoModel> model;
 
-    Protocol::ProtoParser parser("ImportNone.proto");
+    Protocol::ProtoParser parser("Messages/ImportNone.proto");
     model = parser.parse();
 
     unsigned long expectedSize = 1;
@@ -41,7 +41,7 @@ SCENARIO( ImportParser, "Parsing/Normal", "unit,protocol", "ImportParser can par
 {
     shared_ptr<Protocol::ProtoModel> model;
 
-    Protocol::ProtoParser parser("ImportPrivate.proto");
+    Protocol::ProtoParser parser("Messages/ImportPrivate.proto");
     model = parser.parse();
 
     unsigned long expectedSize = 1;
@@ -59,7 +59,7 @@ SCENARIO( ImportParser, "Parsing/Normal", "unit,protocol", "ImportParser can par
 {
     shared_ptr<Protocol::ProtoModel> model;
 
-    Protocol::ProtoParser parser("ImportPublic.proto");
+    Protocol::ProtoParser parser("Messages/ImportPublic.proto");
     model = parser.parse();
 
     unsigned long expectedSize = 5;

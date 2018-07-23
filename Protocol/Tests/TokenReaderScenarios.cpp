@@ -17,20 +17,20 @@ using namespace TUCUT;
 
 SCENARIO( TokenReader, "Construction/Normal", "unit,protocol", "TokenReader can open proto file." )
 {
-    Protocol::TokenReader reader1("Empty.proto");
-    Protocol::TokenReader reader2("Message.proto");
+    Protocol::TokenReader reader1("Messages/Empty.proto");
+    Protocol::TokenReader reader2("Messages/Message.proto");
 }
 
 SCENARIO( TokenReader, "Construction/NotFound", "unit,protocol", "TokenReader cannot open nonexisting proto file." )
 {
-    Protocol::TokenReader reader("NotFound.proto");
+    Protocol::TokenReader reader("Messages/NotFound.proto");
 
     VERIFY_TRUE(false); // Fail this until it is implemented.
 }
 
 SCENARIO( TokenReader, "Iteration/Normal", "unit,protocol", "TokenReader can iterate empty proto." )
 {
-    Protocol::TokenReader reader("Empty.proto");
+    Protocol::TokenReader reader("Messages/Empty.proto");
     auto iter1 = reader.begin();
     auto iter2 = reader.end();
 
@@ -43,7 +43,7 @@ SCENARIO( TokenReader, "Iteration/Normal", "unit,protocol", "TokenReader can ite
 
 SCENARIO( TokenReader, "Iteration/Normal", "unit,protocol", "TokenReader can iterate empty proto with single-line comment." )
 {
-    Protocol::TokenReader reader("EmptyCommentSingleLine.proto");
+    Protocol::TokenReader reader("Messages/EmptyCommentSingleLine.proto");
     auto iter1 = reader.begin();
     auto iter2 = reader.end();
 
@@ -56,7 +56,7 @@ SCENARIO( TokenReader, "Iteration/Normal", "unit,protocol", "TokenReader can ite
 
 SCENARIO( TokenReader, "Iteration/EOF", "unit,protocol", "TokenReader can iterate empty proto with single-line comment with no line feed." )
 {
-    Protocol::TokenReader reader("EmptyCommentSingleLineEOF.proto");
+    Protocol::TokenReader reader("Messages/EmptyCommentSingleLineEOF.proto");
     auto iter1 = reader.begin();
     auto iter2 = reader.end();
 
@@ -69,7 +69,7 @@ SCENARIO( TokenReader, "Iteration/EOF", "unit,protocol", "TokenReader can iterat
 
 SCENARIO( TokenReader, "Iteration/Normal", "unit,protocol", "TokenReader can iterate empty proto with multi-line comment." )
 {
-    Protocol::TokenReader reader("EmptyCommentMultiLine.proto");
+    Protocol::TokenReader reader("Messages/EmptyCommentMultiLine.proto");
     auto iter1 = reader.begin();
     auto iter2 = reader.end();
 
@@ -82,7 +82,7 @@ SCENARIO( TokenReader, "Iteration/Normal", "unit,protocol", "TokenReader can ite
 
 SCENARIO( TokenReader, "Iteration/EOF", "unit,protocol", "TokenReader can iterate empty proto with multi-line comment with no end." )
 {
-    Protocol::TokenReader reader("EmptyCommentMultiLineEOF.proto");
+    Protocol::TokenReader reader("Messages/EmptyCommentMultiLineEOF.proto");
     auto iter1 = reader.begin();
     auto iter2 = reader.end();
 
@@ -95,7 +95,7 @@ SCENARIO( TokenReader, "Iteration/EOF", "unit,protocol", "TokenReader can iterat
 
 SCENARIO( TokenReader, "Iteration/Normal", "unit,protocol", "TokenReader can iterate empty proto with many comments." )
 {
-    Protocol::TokenReader reader("EmptyComment.proto");
+    Protocol::TokenReader reader("Messages/EmptyComment.proto");
     auto iter1 = reader.begin();
     auto iter2 = reader.end();
 
@@ -108,7 +108,7 @@ SCENARIO( TokenReader, "Iteration/Normal", "unit,protocol", "TokenReader can ite
 
 SCENARIO( TokenReader, "Iteration/Normal", "unit,protocol", "TokenReader can iterate random text." )
 {
-    Protocol::TokenReader reader("Text.proto");
+    Protocol::TokenReader reader("Messages/Text.proto");
     auto iter1 = reader.begin();
     auto iter2 = reader.end();
 
@@ -177,7 +177,7 @@ SCENARIO( TokenReader, "Iteration/Normal", "unit,protocol", "TokenReader can ite
 
 SCENARIO( TokenReader, "Iteration/Normal", "unit,protocol", "TokenReader can iterate random text with a single-line comment." )
 {
-    Protocol::TokenReader reader("TextCommentSingleLine.proto");
+    Protocol::TokenReader reader("Messages/TextCommentSingleLine.proto");
     auto iter1 = reader.begin();
     auto iter2 = reader.end();
 
@@ -197,7 +197,7 @@ SCENARIO( TokenReader, "Iteration/Normal", "unit,protocol", "TokenReader can ite
 
 SCENARIO( TokenReader, "Iteration/EOF", "unit,protocol", "TokenReader can iterate random text with a single-line comment with no line feed." )
 {
-    Protocol::TokenReader reader("TextCommentSingleLineEOF.proto");
+    Protocol::TokenReader reader("Messages/TextCommentSingleLineEOF.proto");
     auto iter1 = reader.begin();
     auto iter2 = reader.end();
 
@@ -217,7 +217,7 @@ SCENARIO( TokenReader, "Iteration/EOF", "unit,protocol", "TokenReader can iterat
 
 SCENARIO( TokenReader, "Iteration/Normal", "unit,protocol", "TokenReader can iterate random text with a multi-line comment." )
 {
-    Protocol::TokenReader reader("TextCommentMultiLine.proto");
+    Protocol::TokenReader reader("Messages/TextCommentMultiLine.proto");
     auto iter1 = reader.begin();
     auto iter2 = reader.end();
 
@@ -237,7 +237,7 @@ SCENARIO( TokenReader, "Iteration/Normal", "unit,protocol", "TokenReader can ite
 
 SCENARIO( TokenReader, "Iteration/EOF", "unit,protocol", "TokenReader can iterate random text with a multi-line comment with no end." )
 {
-    Protocol::TokenReader reader("TextCommentMultiLineEOF.proto");
+    Protocol::TokenReader reader("Messages/TextCommentMultiLineEOF.proto");
     auto iter1 = reader.begin();
     auto iter2 = reader.end();
 
@@ -257,7 +257,7 @@ SCENARIO( TokenReader, "Iteration/EOF", "unit,protocol", "TokenReader can iterat
 
 SCENARIO( TokenReader, "Iteration/Normal", "unit,protocol", "TokenReader can iterate random text with adjacent comments." )
 {
-    Protocol::TokenReader reader("TextCommentNoSpace.proto");
+    Protocol::TokenReader reader("Messages/TextCommentNoSpace.proto");
     auto iter1 = reader.begin();
     auto iter2 = reader.end();
 
@@ -284,7 +284,7 @@ SCENARIO( TokenReader, "Iteration/Normal", "unit,protocol", "TokenReader can ite
 
 SCENARIO( TokenReader, "Iteration/Normal", "unit,protocol", "TokenReader can iterate random text with a string." )
 {
-    Protocol::TokenReader reader("TextString.proto");
+    Protocol::TokenReader reader("Messages/TextString.proto");
     auto iter1 = reader.begin();
     auto iter2 = reader.end();
 
@@ -325,7 +325,7 @@ SCENARIO( TokenReader, "Iteration/Normal", "unit,protocol", "TokenReader can ite
 
 SCENARIO( TokenReader, "Iteration/Normal", "unit,protocol", "TokenReader can iterate random text with multiple delimiters." )
 {
-    Protocol::TokenReader reader("TextDelimiterMultiple.proto");
+    Protocol::TokenReader reader("Messages/TextDelimiterMultiple.proto");
     auto iter1 = reader.begin();
     auto iter2 = reader.end();
 
@@ -422,7 +422,7 @@ SCENARIO( TokenReader, "Iteration/Normal", "unit,protocol", "TokenReader can ite
 
 SCENARIO( TokenReader, "Iteration/Normal", "unit,protocol", "TokenReader can iterate an empty string." )
 {
-    Protocol::TokenReader reader("TextStringEmpty.proto");
+    Protocol::TokenReader reader("Messages/TextStringEmpty.proto");
     auto iter1 = reader.begin();
     auto iter2 = reader.end();
 
@@ -456,7 +456,7 @@ SCENARIO( TokenReader, "Iteration/Normal", "unit,protocol", "TokenReader can ite
 
 SCENARIO( TokenReader, "Iteration/EOF", "unit,protocol", "TokenReader can iterate random text with an unterminated string." )
 {
-    Protocol::TokenReader reader("TextStringEOF.proto");
+    Protocol::TokenReader reader("Messages/TextStringEOF.proto");
     auto iter1 = reader.begin();
     auto iter2 = reader.end();
 
@@ -490,7 +490,7 @@ SCENARIO( TokenReader, "Iteration/EOF", "unit,protocol", "TokenReader can iterat
 
 SCENARIO( TokenReader, "Iteration/EOF", "unit,protocol", "TokenReader can iterate random text with a string on multiple lines." )
 {
-    Protocol::TokenReader reader("TextStringMultiLine.proto");
+    Protocol::TokenReader reader("Messages/TextStringMultiLine.proto");
     auto iter1 = reader.begin();
     auto iter2 = reader.end();
 
@@ -545,7 +545,7 @@ SCENARIO( TokenReader, "Iteration/EOF", "unit,protocol", "TokenReader can iterat
 
 SCENARIO( TokenReader, "Iteration/EOF", "unit,protocol", "TokenReader can iterate random text with unterminated strings ending with escape." )
 {
-    Protocol::TokenReader reader("TextStringEndingEscape.proto");
+    Protocol::TokenReader reader("Messages/TextStringEndingEscape.proto");
     auto iter1 = reader.begin();
     auto iter2 = reader.end();
 
@@ -588,7 +588,7 @@ SCENARIO( TokenReader, "Iteration/EOF", "unit,protocol", "TokenReader can iterat
 {
     // The empty token after the first quote is needed to differentiate
     // this scenario from a legitimate "text"
-    Protocol::TokenReader reader("TextStringEndingQuote.proto");
+    Protocol::TokenReader reader("Messages/TextStringEndingQuote.proto");
     auto iter1 = reader.begin();
     auto iter2 = reader.end();
 
@@ -629,7 +629,7 @@ SCENARIO( TokenReader, "Iteration/EOF", "unit,protocol", "TokenReader can iterat
 
 SCENARIO( TokenReader, "Iteration/Normal", "unit,protocol", "TokenReader can iterate random text with whitespace." )
 {
-    Protocol::TokenReader reader("TextWhitespace.proto");
+    Protocol::TokenReader reader("Messages/TextWhitespace.proto");
     auto iter1 = reader.begin();
     auto iter2 = reader.end();
 
@@ -691,7 +691,7 @@ SCENARIO( TokenReader, "Iteration/Normal", "unit,protocol", "TokenReader can ite
 
 SCENARIO( TokenReader, "Iteration/Normal", "unit,protocol", "TokenReader can iterate empty message." )
 {
-    Protocol::TokenReader reader("Message.proto");
+    Protocol::TokenReader reader("Messages/Message.proto");
     auto iter1 = reader.begin();
     auto iter2 = reader.end();
 
@@ -732,7 +732,7 @@ SCENARIO( TokenReader, "Iteration/Normal", "unit,protocol", "TokenReader can ite
 
 SCENARIO( TokenReader, "Iteration/Normal", "unit,protocol", "TokenReader can iterate empty message with whitespace." )
 {
-    Protocol::TokenReader reader("MessageWhitespace.proto");
+    Protocol::TokenReader reader("Messages/MessageWhitespace.proto");
     auto iter1 = reader.begin();
     auto iter2 = reader.end();
 
@@ -773,7 +773,7 @@ SCENARIO( TokenReader, "Iteration/Normal", "unit,protocol", "TokenReader can ite
 
 SCENARIO( TokenReader, "Iteration/Normal", "unit,protocol", "TokenReader can iterate empty message with comments." )
 {
-    Protocol::TokenReader reader("MessageComment.proto");
+    Protocol::TokenReader reader("Messages/MessageComment.proto");
     auto iter1 = reader.begin();
     auto iter2 = reader.end();
 
@@ -814,7 +814,7 @@ SCENARIO( TokenReader, "Iteration/Normal", "unit,protocol", "TokenReader can ite
 
 SCENARIO( TokenReader, "Iteration/Normal", "unit,protocol", "TokenReader can iterate full message." )
 {
-    Protocol::TokenReader reader("MessageEverything.proto");
+    Protocol::TokenReader reader("Messages/MessageEverything.proto");
     auto iter1 = reader.begin();
     auto iter2 = reader.end();
 

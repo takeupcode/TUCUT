@@ -26,7 +26,7 @@ SCENARIO( PackageParser, "Parsing/Normal", "unit,protocol", "PackageParser can p
     shared_ptr<Protocol::ProtoModel> model;
     string package = "TUCUT.Protocol";
 
-    Protocol::ProtoParser parser("Package.proto");
+    Protocol::ProtoParser parser("Messages/Package.proto");
     model = parser.parse();
 
     VERIFY_EQUAL(package, model->package());
@@ -37,7 +37,7 @@ SCENARIO( PackageParser, "Parsing/Normal", "unit,protocol", "PackageParser can p
     shared_ptr<Protocol::ProtoModel> model;
     string package = "TUCUT.Protocol";
 
-    Protocol::ProtoParser parser("PackageRedefined.proto");
+    Protocol::ProtoParser parser("Messages/PackageRedefined.proto");
     model = parser.parse();
 
     VERIFY_EQUAL(package, model->package());

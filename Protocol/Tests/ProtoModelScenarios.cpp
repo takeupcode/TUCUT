@@ -17,14 +17,14 @@ using namespace TUCUT;
 
 SCENARIO( ProtoModel, "Construction/Normal", "unit,protocol", "ProtoModel can be constructed." )
 {
-    Protocol::ProtoModel model("test.proto");
+    Protocol::ProtoModel model("Messages/Empty.proto");
 
     VERIFY_EQUAL("", model.package());
 }
 
 SCENARIO( ProtoModel, "Operation/Properties", "unit,protocol", "ProtoModel knows current package." )
 {
-    Protocol::ProtoModel model("test.proto");
+    Protocol::ProtoModel model("Messages/Empty.proto");
     string package = "TUCUT.Protocol";
 
     model.setPackage(package);

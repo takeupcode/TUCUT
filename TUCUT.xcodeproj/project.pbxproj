@@ -113,6 +113,64 @@
 		3E3F83672105766200501126 /* InvalidOperationException.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E3F82EB210430F100501126 /* InvalidOperationException.h */; };
 		3E3F83682105766200501126 /* NullArgumentException.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E3F82EC210430F100501126 /* NullArgumentException.h */; };
 		3E3F83692105766200501126 /* StringLiteral.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E3F82E6210422B700501126 /* StringLiteral.h */; };
+		3E3F836A2106211E00501126 /* libSimpeTestExtension.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E3F833921051CAC00501126 /* libSimpeTestExtension.dylib */; };
+		3E3F836B2106219900501126 /* libSimpeTestExtension.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3E3F833921051CAC00501126 /* libSimpeTestExtension.dylib */; };
+		3E3F836D210622C000501126 /* Empty.proto in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3E259E4120E34B7C00F01379 /* Empty.proto */; };
+		3E3F836E210622C000501126 /* EmptyComment.proto in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3E259E4220E34B7C00F01379 /* EmptyComment.proto */; };
+		3E3F836F210622C000501126 /* EmptyCommentMultiLine.proto in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3E259E3E20E34B7B00F01379 /* EmptyCommentMultiLine.proto */; };
+		3E3F8370210622C000501126 /* EmptyCommentMultiLineEOF.proto in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3E259E5620E34B7E00F01379 /* EmptyCommentMultiLineEOF.proto */; };
+		3E3F8371210622C000501126 /* EmptyCommentSingleLine.proto in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3E259E3D20E34B7B00F01379 /* EmptyCommentSingleLine.proto */; };
+		3E3F8372210622C000501126 /* EmptyCommentSingleLineEOF.proto in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3E259E3520E34B7A00F01379 /* EmptyCommentSingleLineEOF.proto */; };
+		3E3F8373210622C000501126 /* Enum.proto in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3E259E5A20E34B7E00F01379 /* Enum.proto */; };
+		3E3F8374210622C000501126 /* EnumMultiple.proto in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3E259E2620E34B7900F01379 /* EnumMultiple.proto */; };
+		3E3F8375210622C000501126 /* EnumMultipleMessage.proto in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3E259E4A20E34B7D00F01379 /* EnumMultipleMessage.proto */; };
+		3E3F8376210622C000501126 /* EnumMultiplePackage.proto in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3E259E2E20E34B7A00F01379 /* EnumMultiplePackage.proto */; };
+		3E3F8377210622C000501126 /* EnumValue.proto in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3E259E4920E34B7C00F01379 /* EnumValue.proto */; };
+		3E3F8378210622C000501126 /* EnumValueMultipleMessage.proto in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3E259E4D20E34B7D00F01379 /* EnumValueMultipleMessage.proto */; };
+		3E3F8379210622C000501126 /* ImportNone.proto in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3E259E5420E34B7E00F01379 /* ImportNone.proto */; };
+		3E3F837A210622C000501126 /* ImportPrivate.proto in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3E259E3720E34B7B00F01379 /* ImportPrivate.proto */; };
+		3E3F837B210622C000501126 /* ImportPublic.proto in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3E259E2720E34B7900F01379 /* ImportPublic.proto */; };
+		3E3F837C210622C000501126 /* Message.proto in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3E259E2F20E34B7A00F01379 /* Message.proto */; };
+		3E3F837D210622C000501126 /* MessageAllFields.proto in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3E259E3120E34B7A00F01379 /* MessageAllFields.proto */; };
+		3E3F837E210622C000501126 /* MessageComment.proto in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3E259E5B20E34B7E00F01379 /* MessageComment.proto */; };
+		3E3F837F210622C000501126 /* MessageEverything.proto in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3E259E3F20E34B7B00F01379 /* MessageEverything.proto */; };
+		3E3F8380210622C000501126 /* MessageField.proto in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3E259E4620E34B7C00F01379 /* MessageField.proto */; };
+		3E3F8381210622C000501126 /* MessageFieldMultiple.proto in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3E259E3320E34B7A00F01379 /* MessageFieldMultiple.proto */; };
+		3E3F8382210622C000501126 /* MessageFieldQualified.proto in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3E259E3220E34B7A00F01379 /* MessageFieldQualified.proto */; };
+		3E3F8383210622C000501126 /* MessageFieldReference.proto in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3E259E2A20E34B7A00F01379 /* MessageFieldReference.proto */; };
+		3E3F8384210622C000501126 /* MessageMultiple.proto in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3E259E5C20E34B7F00F01379 /* MessageMultiple.proto */; };
+		3E3F8385210622C000501126 /* MessageMultiplePackage.proto in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3E259E5720E34B7E00F01379 /* MessageMultiplePackage.proto */; };
+		3E3F8386210622C000501126 /* MessageNamespace.proto in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3E259E5120E34B7D00F01379 /* MessageNamespace.proto */; };
+		3E3F8387210622C000501126 /* MessageNested.proto in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3E259E3020E34B7A00F01379 /* MessageNested.proto */; };
+		3E3F8388210622C000501126 /* MessageOneof.proto in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3E259E5820E34B7E00F01379 /* MessageOneof.proto */; };
+		3E3F8389210622C000501126 /* MessageOneofMultiple.proto in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3E259E5520E34B7E00F01379 /* MessageOneofMultiple.proto */; };
+		3E3F838A210622C000501126 /* MessageOneofQualified.proto in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3E259E4B20E34B7D00F01379 /* MessageOneofQualified.proto */; };
+		3E3F838B210622C000501126 /* MessageWhitespace.proto in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3E259E4720E34B7C00F01379 /* MessageWhitespace.proto */; };
+		3E3F838C210622C000501126 /* OptionEnum.proto in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3E259E4320E34B7C00F01379 /* OptionEnum.proto */; };
+		3E3F838D210622C000501126 /* OptionEnumValue.proto in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3E259E4E20E34B7D00F01379 /* OptionEnumValue.proto */; };
+		3E3F838E210622C000501126 /* OptionMessage.proto in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3E259E5020E34B7D00F01379 /* OptionMessage.proto */; };
+		3E3F838F210622C000501126 /* OptionMessageField.proto in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3E259E4C20E34B7D00F01379 /* OptionMessageField.proto */; };
+		3E3F8390210622C000501126 /* OptionOneof.proto in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3E259E4520E34B7C00F01379 /* OptionOneof.proto */; };
+		3E3F8391210622C000501126 /* OptionOneofField.proto in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3E259E5320E34B7D00F01379 /* OptionOneofField.proto */; };
+		3E3F8392210622C000501126 /* OptionProto.proto in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3E259E2820E34B7A00F01379 /* OptionProto.proto */; };
+		3E3F8393210622C000501126 /* OptionValueFloat.proto in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3E259E3B20E34B7B00F01379 /* OptionValueFloat.proto */; };
+		3E3F8394210622C000501126 /* OptionValueString.proto in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3E259E4820E34B7C00F01379 /* OptionValueString.proto */; };
+		3E3F8395210622C000501126 /* Package.proto in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3E259E2D20E34B7A00F01379 /* Package.proto */; };
+		3E3F8396210622C000501126 /* PackageRedefined.proto in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3E259E3620E34B7A00F01379 /* PackageRedefined.proto */; };
+		3E3F8397210622C000501126 /* Text.proto in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3E259E3420E34B7A00F01379 /* Text.proto */; };
+		3E3F8398210622C000501126 /* TextCommentMultiLine.proto in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3E259E3820E34B7B00F01379 /* TextCommentMultiLine.proto */; };
+		3E3F8399210622C000501126 /* TextCommentMultiLineEOF.proto in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3E259E3C20E34B7B00F01379 /* TextCommentMultiLineEOF.proto */; };
+		3E3F839A210622C000501126 /* TextCommentNoSpace.proto in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3E259E4420E34B7C00F01379 /* TextCommentNoSpace.proto */; };
+		3E3F839B210622C000501126 /* TextCommentSingleLine.proto in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3E259E4020E34B7B00F01379 /* TextCommentSingleLine.proto */; };
+		3E3F839C210622C000501126 /* TextCommentSingleLineEOF.proto in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3E259E2C20E34B7A00F01379 /* TextCommentSingleLineEOF.proto */; };
+		3E3F839D210622C000501126 /* TextDelimiterMultiple.proto in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3E259E5220E34B7D00F01379 /* TextDelimiterMultiple.proto */; };
+		3E3F839E210622C000501126 /* TextString.proto in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3E259E5920E34B7E00F01379 /* TextString.proto */; };
+		3E3F839F210622C000501126 /* TextStringEmpty.proto in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3E259E2B20E34B7A00F01379 /* TextStringEmpty.proto */; };
+		3E3F83A0210622C000501126 /* TextStringEndingEscape.proto in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3E259E2920E34B7A00F01379 /* TextStringEndingEscape.proto */; };
+		3E3F83A1210622C000501126 /* TextStringEndingQuote.proto in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3E259E3920E34B7B00F01379 /* TextStringEndingQuote.proto */; };
+		3E3F83A2210622C000501126 /* TextStringEOF.proto in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3E259E3A20E34B7B00F01379 /* TextStringEOF.proto */; };
+		3E3F83A3210622C000501126 /* TextStringMultiLine.proto in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3E259E4F20E34B7D00F01379 /* TextStringMultiLine.proto */; };
+		3E3F83A4210622C000501126 /* TextWhitespace.proto in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3E259E2520E34B7900F01379 /* TextWhitespace.proto */; };
 		3ED4127B20FED1FB00BC7226 /* CodeGeneratorCPPScenarios.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E259E6420E34BA700F01379 /* CodeGeneratorCPPScenarios.cpp */; };
 		3ED4127C20FED1FB00BC7226 /* CodeGeneratorManagerScenarios.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E259E5D20E34BA600F01379 /* CodeGeneratorManagerScenarios.cpp */; };
 		3ED4127D20FED1FB00BC7226 /* EnumParserScenarios.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E259E6120E34BA600F01379 /* EnumParserScenarios.cpp */; };
@@ -160,12 +218,78 @@
 			);
 			runOnlyForDeploymentPostprocessing = 1;
 		};
+		3E3F836C2106228400501126 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = Messages;
+			dstSubfolderSpec = 16;
+			files = (
+				3E3F836D210622C000501126 /* Empty.proto in CopyFiles */,
+				3E3F836E210622C000501126 /* EmptyComment.proto in CopyFiles */,
+				3E3F836F210622C000501126 /* EmptyCommentMultiLine.proto in CopyFiles */,
+				3E3F8370210622C000501126 /* EmptyCommentMultiLineEOF.proto in CopyFiles */,
+				3E3F8371210622C000501126 /* EmptyCommentSingleLine.proto in CopyFiles */,
+				3E3F8372210622C000501126 /* EmptyCommentSingleLineEOF.proto in CopyFiles */,
+				3E3F8373210622C000501126 /* Enum.proto in CopyFiles */,
+				3E3F8374210622C000501126 /* EnumMultiple.proto in CopyFiles */,
+				3E3F8375210622C000501126 /* EnumMultipleMessage.proto in CopyFiles */,
+				3E3F8376210622C000501126 /* EnumMultiplePackage.proto in CopyFiles */,
+				3E3F8377210622C000501126 /* EnumValue.proto in CopyFiles */,
+				3E3F8378210622C000501126 /* EnumValueMultipleMessage.proto in CopyFiles */,
+				3E3F8379210622C000501126 /* ImportNone.proto in CopyFiles */,
+				3E3F837A210622C000501126 /* ImportPrivate.proto in CopyFiles */,
+				3E3F837B210622C000501126 /* ImportPublic.proto in CopyFiles */,
+				3E3F837C210622C000501126 /* Message.proto in CopyFiles */,
+				3E3F837D210622C000501126 /* MessageAllFields.proto in CopyFiles */,
+				3E3F837E210622C000501126 /* MessageComment.proto in CopyFiles */,
+				3E3F837F210622C000501126 /* MessageEverything.proto in CopyFiles */,
+				3E3F8380210622C000501126 /* MessageField.proto in CopyFiles */,
+				3E3F8381210622C000501126 /* MessageFieldMultiple.proto in CopyFiles */,
+				3E3F8382210622C000501126 /* MessageFieldQualified.proto in CopyFiles */,
+				3E3F8383210622C000501126 /* MessageFieldReference.proto in CopyFiles */,
+				3E3F8384210622C000501126 /* MessageMultiple.proto in CopyFiles */,
+				3E3F8385210622C000501126 /* MessageMultiplePackage.proto in CopyFiles */,
+				3E3F8386210622C000501126 /* MessageNamespace.proto in CopyFiles */,
+				3E3F8387210622C000501126 /* MessageNested.proto in CopyFiles */,
+				3E3F8388210622C000501126 /* MessageOneof.proto in CopyFiles */,
+				3E3F8389210622C000501126 /* MessageOneofMultiple.proto in CopyFiles */,
+				3E3F838A210622C000501126 /* MessageOneofQualified.proto in CopyFiles */,
+				3E3F838B210622C000501126 /* MessageWhitespace.proto in CopyFiles */,
+				3E3F838C210622C000501126 /* OptionEnum.proto in CopyFiles */,
+				3E3F838D210622C000501126 /* OptionEnumValue.proto in CopyFiles */,
+				3E3F838E210622C000501126 /* OptionMessage.proto in CopyFiles */,
+				3E3F838F210622C000501126 /* OptionMessageField.proto in CopyFiles */,
+				3E3F8390210622C000501126 /* OptionOneof.proto in CopyFiles */,
+				3E3F8391210622C000501126 /* OptionOneofField.proto in CopyFiles */,
+				3E3F8392210622C000501126 /* OptionProto.proto in CopyFiles */,
+				3E3F8393210622C000501126 /* OptionValueFloat.proto in CopyFiles */,
+				3E3F8394210622C000501126 /* OptionValueString.proto in CopyFiles */,
+				3E3F8395210622C000501126 /* Package.proto in CopyFiles */,
+				3E3F8396210622C000501126 /* PackageRedefined.proto in CopyFiles */,
+				3E3F8397210622C000501126 /* Text.proto in CopyFiles */,
+				3E3F8398210622C000501126 /* TextCommentMultiLine.proto in CopyFiles */,
+				3E3F8399210622C000501126 /* TextCommentMultiLineEOF.proto in CopyFiles */,
+				3E3F839A210622C000501126 /* TextCommentNoSpace.proto in CopyFiles */,
+				3E3F839B210622C000501126 /* TextCommentSingleLine.proto in CopyFiles */,
+				3E3F839C210622C000501126 /* TextCommentSingleLineEOF.proto in CopyFiles */,
+				3E3F839D210622C000501126 /* TextDelimiterMultiple.proto in CopyFiles */,
+				3E3F839E210622C000501126 /* TextString.proto in CopyFiles */,
+				3E3F839F210622C000501126 /* TextStringEmpty.proto in CopyFiles */,
+				3E3F83A0210622C000501126 /* TextStringEndingEscape.proto in CopyFiles */,
+				3E3F83A1210622C000501126 /* TextStringEndingQuote.proto in CopyFiles */,
+				3E3F83A2210622C000501126 /* TextStringEOF.proto in CopyFiles */,
+				3E3F83A3210622C000501126 /* TextStringMultiLine.proto in CopyFiles */,
+				3E3F83A4210622C000501126 /* TextWhitespace.proto in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		3ED4127220FED19500BC7226 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 12;
-			dstPath = usr/share/man/man1;
+			dstPath = Extensions;
 			dstSubfolderSpec = 16;
 			files = (
+				3E3F836B2106219900501126 /* libSimpeTestExtension.dylib in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -428,6 +552,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3E3F836A2106211E00501126 /* libSimpeTestExtension.dylib in Frameworks */,
 				3ED4128A20FED22700BC7226 /* libTUCUT.a in Frameworks */,
 				3ED4128B20FED25800BC7226 /* libboost_filesystem-mt.dylib in Frameworks */,
 				3ED4128C20FED25800BC7226 /* libboost_system-mt.dylib in Frameworks */,
@@ -1059,6 +1184,7 @@
 				3ED4127020FED19500BC7226 /* Sources */,
 				3ED4127120FED19500BC7226 /* Frameworks */,
 				3ED4127220FED19500BC7226 /* CopyFiles */,
+				3E3F836C2106228400501126 /* CopyFiles */,
 			);
 			buildRules = (
 			);

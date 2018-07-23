@@ -25,7 +25,7 @@ SCENARIO( EnumValueParser, "Parsing/Normal", "unit,protocol", "EnumParser can pa
 {
     shared_ptr<Protocol::ProtoModel> model;
 
-    Protocol::ProtoParser parser("EnumValue.proto");
+    Protocol::ProtoParser parser("Messages/EnumValue.proto");
     model = parser.parse();
 
     int count = 0;
@@ -69,7 +69,7 @@ SCENARIO( EnumValueParser, "Parsing/Normal", "unit,protocol", "EnumValueParser c
 {
     shared_ptr<Protocol::ProtoModel> model;
 
-    Protocol::ProtoParser parser("EnumValueMultipleMessage.proto");
+    Protocol::ProtoParser parser("Messages/EnumValueMultipleMessage.proto");
     model = parser.parse();
 
     int enum0Count = 0;

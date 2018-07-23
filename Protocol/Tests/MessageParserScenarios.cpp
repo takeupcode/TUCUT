@@ -26,7 +26,7 @@ SCENARIO( MessageParser, "Parsing/Normal", "unit,protocol", "MessageParser can p
     shared_ptr<Protocol::ProtoModel> model;
     string name = "empty";
 
-    Protocol::ProtoParser parser("Message.proto");
+    Protocol::ProtoParser parser("Messages/Message.proto");
     model = parser.parse();
 
     int count = 0;
@@ -46,7 +46,7 @@ SCENARIO( MessageParser, "Parsing/Normal", "unit,protocol", "MessageParser can p
 {
     shared_ptr<Protocol::ProtoModel> model;
 
-    Protocol::ProtoParser parser("MessageMultiple.proto");
+    Protocol::ProtoParser parser("Messages/MessageMultiple.proto");
     model = parser.parse();
 
     int count = 0;
@@ -74,7 +74,7 @@ SCENARIO( MessageParser, "Parsing/Normal", "unit,protocol", "MessageParser can a
 {
     shared_ptr<Protocol::ProtoModel> model;
 
-    Protocol::ProtoParser parser("MessageMultiplePackage.proto");
+    Protocol::ProtoParser parser("Messages/MessageMultiplePackage.proto");
     model = parser.parse();
 
     int count = 0;
@@ -101,7 +101,7 @@ SCENARIO( MessageParser, "Parsing/Normal", "unit,protocol", "MessageParser can p
 {
     shared_ptr<Protocol::ProtoModel> model;
 
-    Protocol::ProtoParser parser("MessageNested.proto");
+    Protocol::ProtoParser parser("Messages/MessageNested.proto");
     model = parser.parse();
 
     int count1 = 0;
