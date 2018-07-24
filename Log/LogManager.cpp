@@ -15,6 +15,9 @@
 #include <iomanip>
 #include <stdexcept>
 
+#include <boost/filesystem/path.hpp>
+#include <boost/filesystem/operations.hpp>
+
 namespace TUCUT {
 namespace Log {
 
@@ -24,14 +27,20 @@ LogManager::LogManager (const std::string & logFileName)
 : mLogFileName(logFileName)
 { }
 
-void LogManager::initialize (const std::string & logFileName)
+void LogManager::initialize (const std::string & logPath, const std::string baseName, const std::string extName)
 {
     if (mInstance)
     {
         throw std::logic_error("LogManager is already initialized.");
     }
     
-    mInstance = new LogManager(logFileName);
+    boost::filesystem::create_directory(logPath);
+    
+    boost::filesystem::path logFileName(logPath);
+    logFileName /= baseName;
+    logFileName += "-" + time(false) + extName;
+
+    mInstance = new LogManager(logFileName.string());
 }
 
 void LogManager::deinitialize ()
@@ -53,6 +62,11 @@ LogManager * LogManager::instance ()
     }
 
     return mInstance;
+}
+    
+std::string LogManager::logFileName ()
+{
+    return mLogFileName;
 }
 
 void LogManager::logDebug(const std::string & message) const
@@ -102,7 +116,7 @@ void LogManager::close (std::ofstream & fs) const
     fs.close();
 }
 
-std::string LogManager::time () const
+std::string LogManager::time (bool includePunctuation)
 {
     auto timeNow = std::chrono::system_clock::now();
     
@@ -114,7 +128,13 @@ std::string LogManager::time () const
     auto timetNow = std::chrono::system_clock::to_time_t(timeNow);
     
     char dtBuffer[30];
-    strftime(dtBuffer, sizeof(dtBuffer), "%Y-%m-%dT%H:%M:%S:", localtime(&timetNow));
+    const char * format = "%Y-%m-%dT%H:%M:%S:";
+    if (!includePunctuation)
+    {
+        format = "%Y%m%dT%H%M%S";
+    }
+    
+    strftime(dtBuffer, sizeof(dtBuffer), format, localtime(&timetNow));
     
     std::stringstream ss;
     ss << dtBuffer << std::setfill('0') << std::setw(3) << milli.count();

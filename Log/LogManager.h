@@ -18,11 +18,13 @@ namespace Log {
 class LogManager
 {
 public:
-    static void initialize (const std::string & logFileName);
+    static void initialize (const std::string & logPath, const std::string baseName, const std::string extName = ".log");
     
     static void deinitialize ();
     
     static LogManager * instance ();
+    
+    std::string logFileName ();
     
     void logDebug(const std::string & message) const;
     
@@ -37,9 +39,10 @@ private:
     
     void close (std::ofstream & fs) const;
     
-    std::string time () const;
+    static std::string time (bool includePunctuation = true);
     
     static LogManager * mInstance;
+    std::string mLogPath;
     std::string mLogFileName;
 };
 
@@ -50,7 +53,7 @@ private:
 do { \
     std::stringstream ss; \
     ss << msg; \
-    LogManager::instance()->INTERNAL_TUCUTLOG_FUNC(level)(ss.str()); \
+    TUCUT::Log::LogManager::instance()->INTERNAL_TUCUTLOG_FUNC(level)(ss.str()); \
 } while(false)
     
 } // namespace Log

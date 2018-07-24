@@ -27,18 +27,11 @@ public:
     template <typename F, typename... Ts>
     static void processLines (const std::string & fileName, F && func, Ts &&... params)
     {
-        std::ifstream fs;
-        fs.exceptions(std::ifstream::failbit | std::ifstream::badbit);
-        try
-        {
-            fs.open(fileName);
-        }
-        catch (std::system_error & ex)
+        std::ifstream fs(fileName);
+        if (!fs.is_open())
         {
             std::string message = "Could not open ";
             message += fileName;
-            message += "\r\nError: ";
-            message += ex.code().message();
             throw std::runtime_error(message);
         }
         
@@ -46,6 +39,13 @@ public:
         while (getline(fs, line))
         {
             func(std::move(line), std::forward<Ts>(params)...);
+        }
+        
+        if (fs.bad())
+        {
+            std::string message = "Could not read ";
+            message += fileName;
+            throw std::runtime_error(message);
         }
         
         fs.close();

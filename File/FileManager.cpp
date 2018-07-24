@@ -17,7 +17,7 @@ namespace File {
 std::vector<char> FileManager::readBytes (const std::string & fileName)
 {
     std::ifstream fs(fileName, std::ios_base::binary);
-    if (fs.fail())
+    if (!fs.is_open())
     {
         std::string message = "Could not open ";
         message += fileName;
@@ -33,6 +33,13 @@ std::vector<char> FileManager::readBytes (const std::string & fileName)
     fs.seekg(std::ios::beg);
     fs.read(&content[0], length);
     
+    if (fs.bad())
+    {
+        std::string message = "Could not read ";
+        message += fileName;
+        throw std::runtime_error(message);
+    }
+
     fs.close();
     
     return content;
