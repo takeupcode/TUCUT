@@ -23,6 +23,10 @@ public:
     static std::vector<char> readBytes (const std::string & fileName);
     
     static std::vector<std::string> readLines (const std::string & fileName);
+
+    static void writeBytes (const std::string & fileName, const std::vector<char> & bytes);
+    
+    static void writeLines (const std::string & fileName, const std::vector<std::string> lines);
     
     template <typename F, typename... Ts>
     static void processLines (const std::string & fileName, F && func, Ts &&... params)

@@ -172,6 +172,7 @@
 		3E3F83A3210622C000501126 /* TextStringMultiLine.proto in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3E259E4F20E34B7D00F01379 /* TextStringMultiLine.proto */; };
 		3E3F83A4210622C000501126 /* TextWhitespace.proto in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3E259E2520E34B7900F01379 /* TextWhitespace.proto */; };
 		3E3F83A621067B5200501126 /* LogManagerScenarios.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E3F83A521067B5200501126 /* LogManagerScenarios.cpp */; };
+		3E3F83A82106D7B700501126 /* FileManagerScenarios.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E3F83A72106D7B700501126 /* FileManagerScenarios.cpp */; };
 		3ED4127B20FED1FB00BC7226 /* CodeGeneratorCPPScenarios.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E259E6420E34BA700F01379 /* CodeGeneratorCPPScenarios.cpp */; };
 		3ED4127C20FED1FB00BC7226 /* CodeGeneratorManagerScenarios.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E259E5D20E34BA600F01379 /* CodeGeneratorManagerScenarios.cpp */; };
 		3ED4127D20FED1FB00BC7226 /* EnumParserScenarios.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E259E6120E34BA600F01379 /* EnumParserScenarios.cpp */; };
@@ -528,6 +529,7 @@
 		3E3F83522105651800501126 /* BasicRequest.protocol.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BasicRequest.protocol.cpp; sourceTree = "<group>"; };
 		3E3F83532105651800501126 /* BasicResponse.protocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BasicResponse.protocol.h; sourceTree = "<group>"; };
 		3E3F83A521067B5200501126 /* LogManagerScenarios.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = LogManagerScenarios.cpp; sourceTree = "<group>"; };
+		3E3F83A72106D7B700501126 /* FileManagerScenarios.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = FileManagerScenarios.cpp; sourceTree = "<group>"; };
 		3ED4127420FED19500BC7226 /* TestTUCUT */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = TestTUCUT; sourceTree = BUILT_PRODUCTS_DIR; };
 		3ED4129120FED29400BC7226 /* TestProtocolCompiler */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = TestProtocolCompiler; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -744,6 +746,7 @@
 		3E259DC220E33D8900F01379 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
+				3E3F83A72106D7B700501126 /* FileManagerScenarios.cpp */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -1360,6 +1363,7 @@
 				3ED4128120FED1FB00BC7226 /* MessageParserScenarios.cpp in Sources */,
 				3ED4128220FED1FB00BC7226 /* OneofParserScenarios.cpp in Sources */,
 				3E3F82F02104347000501126 /* ExceptionScenarios.cpp in Sources */,
+				3E3F83A82106D7B700501126 /* FileManagerScenarios.cpp in Sources */,
 				3ED4128320FED1FB00BC7226 /* OptionParserScenarios.cpp in Sources */,
 				3ED4128420FED1FB00BC7226 /* PackageParserScenarios.cpp in Sources */,
 				3ED4128520FED1FB00BC7226 /* ProtoModelScenarios.cpp in Sources */,
