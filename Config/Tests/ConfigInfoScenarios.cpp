@@ -6,6 +6,7 @@
 //  Copyright © 2018 Take Up Code. All rights reserved.
 //
 
+#include <algorithm>
 #include <string>
 
 #include "../../Test/Test.h"
@@ -18,10 +19,8 @@
 using namespace std;
 using namespace TUCUT;
 
-SCENARIO( Config, "Operation/Normal", "unit,config", "Config info can read properties." )
+void createTestConfig (const std::string & fileName)
 {
-    string fileName = "test_config";
-    
     vector<string> content {
         "# Define a type called nest with some single and multiple values.",
         "item:nest=\"beehive\"; name=\"Beehive\"; location=\"tree\",\"log\";",
@@ -29,6 +28,17 @@ SCENARIO( Config, "Operation/Normal", "unit,config", "Config info can read prope
     };
     
     File::FileManager::writeLines(fileName, content);
+}
+
+void deleteTestConfig (const std::string & fileName)
+{
+    boost::filesystem::remove(fileName);
+}
+
+SCENARIO( Config, "Operation/Normal", "unit,config", "Config info can read properties." )
+{
+    string fileName = "test_config";
+    createTestConfig(fileName);
     
     Config::ConfigInfo config;
     config.load(fileName);
@@ -46,5 +56,33 @@ SCENARIO( Config, "Operation/Normal", "unit,config", "Config info can read prope
     VERIFY_EQUAL("tree", config.getProperty("nest", "birdnest", "location", 0));
     VERIFY_EQUAL("grass", config.getProperty("nest", "birdnest", "location", 1));
 
-    boost::filesystem::remove(fileName);
+    deleteTestConfig(fileName);
+}
+
+SCENARIO( Config, "Operation/Normal", "unit,config", "Config info can browse properties." )
+{
+    string fileName = "test_config";
+    createTestConfig(fileName);
+    
+    Config::ConfigInfo config;
+    config.load(fileName);
+    
+    auto result = config.getItemTypes();
+    
+    VERIFY_EQUAL(1, static_cast<int>(result.size()));
+    VERIFY_EQUAL("nest", result[0]);
+    
+    result = config.getItemIds("nest");
+    
+    VERIFY_EQUAL(2, static_cast<int>(result.size()));
+    VERIFY_TRUE(std::find(std::begin(result), std::end(result), "beehive") != std::end(result));
+    VERIFY_TRUE(std::find(std::begin(result), std::end(result), "birdnest") != std::end(result));
+    
+    result = config.getItemPropertyNames("nest", "beehive");
+    
+    VERIFY_EQUAL(2, static_cast<int>(result.size()));
+    VERIFY_TRUE(std::find(std::begin(result), std::end(result), "name") != std::end(result));
+    VERIFY_TRUE(std::find(std::begin(result), std::end(result), "location") != std::end(result));
+
+    deleteTestConfig(fileName);
 }

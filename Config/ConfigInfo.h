@@ -71,10 +71,18 @@ public:
         }
 
     private:
+        friend class ConfigInfo;
+        
         std::unordered_map<std::string, std::vector<std::string>> mProperties;
     };
     
     void load (const std::string & fileName);
+    
+    std::vector<std::string> getItemTypes ();
+    
+    std::vector<std::string> getItemIds (const std::string & type);
+    
+    std::vector<std::string> getItemPropertyNames (const std::string & type, const std::string & id);
 
     size_t getPropertySize (const std::string & type, const std::string & id, const std::string & name) const
     {

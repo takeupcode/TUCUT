@@ -33,6 +33,63 @@ void ConfigInfo::load (const std::string & fileName)
     File::FileManager::processLines(fileName, parseLine);
     addCurrentItem();
 }
+    
+std::vector<std::string> ConfigInfo::getItemTypes ()
+{
+    std::vector<std::string> result;
+    
+    result.reserve(mConfigMap.size());
+    for (auto const & iter: mConfigMap)
+    {
+        result.push_back(iter.first);
+    }
+    
+    return result;
+}
+
+std::vector<std::string> ConfigInfo::getItemIds (const std::string & type)
+{
+    std::vector<std::string> result;
+    
+    auto configMapResult = mConfigMap.find(type);
+    if (configMapResult == mConfigMap.end())
+    {
+        return result;
+    }
+    
+    result.reserve(configMapResult->second.size());
+    for (auto const & iter: configMapResult->second)
+    {
+        result.push_back(iter.first);
+    }
+    
+    return result;
+}
+
+std::vector<std::string> ConfigInfo::getItemPropertyNames (const std::string & type, const std::string & id)
+{
+    std::vector<std::string> result;
+    
+    auto configMapResult = mConfigMap.find(type);
+    if (configMapResult == mConfigMap.end())
+    {
+        return result;
+    }
+    
+    auto itemMapResult = configMapResult->second.find(id);
+    if (itemMapResult == configMapResult->second.end())
+    {
+        return result;
+    }
+    
+    result.reserve(itemMapResult->second.mProperties.size());
+    for (auto const & iter: itemMapResult->second.mProperties)
+    {
+        result.push_back(iter.first);
+    }
+    
+    return result;
+}
 
 void ConfigInfo::addCurrentItem ()
 {
