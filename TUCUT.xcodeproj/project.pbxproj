@@ -1267,6 +1267,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 3E259DB720E3398E00F01379 /* Build configuration list for PBXNativeTarget "TUCUT" */;
 			buildPhases = (
+				3E3F8404210D65B300501126 /* ShellScript */,
 				3E259DA820E3398E00F01379 /* Sources */,
 				3E259DA920E3398E00F01379 /* Frameworks */,
 				3E259DAA20E3398E00F01379 /* Headers */,
@@ -1431,6 +1432,20 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "cd ${SRCROOT}/Extension/Messages\n../../Tools/Mac/ProtocolCompiler -c -p TUCUT -o Generated\n../../Tools/Mac/ProtocolCompiler -p TUCUT -o Generated BasicRequest.proto\n../../Tools/Mac/ProtocolCompiler -p TUCUT -o Generated BasicResponse.proto\n../../Tools/Mac/ProtocolCompiler -p TUCUT -o Generated ExtensionManager.proto";
+		};
+		3E3F8404210D65B300501126 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "cd ${SRCROOT}/Extension/Messages\n../../Tools/Mac/ProtocolCompiler -c -p TUCUT -o Generated\n../../Tools/Mac/ProtocolCompiler -p TUCUT -o Generated BasicRequest.proto\n../../Tools/Mac/ProtocolCompiler -p TUCUT -o Generated BasicResponse.proto\n../../Tools/Mac/ProtocolCompiler -p TUCUT -o Generated ExtensionManager.proto";
+			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
 
