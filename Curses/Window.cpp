@@ -31,7 +31,10 @@ Window::Window (const std::string & name, int y, int x, int height, int width, i
 {
     mMinHeight = mBorder ? 3 : 1;
     mMinWidth = mBorder ? 3 : 1;
+}
     
+void Window::initialize ()
+{
     createWindows();
     
     setFocus(true);
@@ -44,7 +47,11 @@ Window::~Window ()
     
 std::shared_ptr<Window> Window::createSharedWindow (const std::string & name, int y, int x, int height, int width, int clientForeColor, int clientBackColor, int borderForeColor, int borderBackColor, int focusForeColor, int focusBackColor, bool border)
 {
-    return std::shared_ptr<Window>(new Window(name, y, x, height, width, clientForeColor, clientBackColor, borderForeColor, borderBackColor, focusForeColor, focusBackColor, border));
+    auto result = std::shared_ptr<Window>(new Window(name, y, x, height, width, clientForeColor, clientBackColor, borderForeColor, borderBackColor, focusForeColor, focusBackColor, border));
+    
+    result->initialize();
+    
+    return result;
 }
 
 std::shared_ptr<Window> Window::getSharedWindow ()

@@ -191,6 +191,8 @@ public:
 protected:
     Window (const std::string & name, int y, int x, int height, int width, int clientForeColor, int clientBackColor, int borderForeColor, int borderBackColor, int focusForeColor, int focusBackColor, bool border);
     
+    virtual void initialize ();
+    
     void setFillClientArea (bool value);
     
     void createWindows ();

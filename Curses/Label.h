@@ -33,6 +33,8 @@ public:
 protected:
     Label (const std::string & name, const std::string & text, int y, int x, int height, int width, int foreColor, int backColor, Justification::Horizontal horizontalJustification, Justification::Vertical verticalJustification, bool multiline);
     
+    void initialize () override;
+
 private:
     std::string mText;
     Justification::Horizontal mHorizontalJustification;

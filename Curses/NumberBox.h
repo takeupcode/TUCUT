@@ -49,6 +49,8 @@ public:
 
 protected:
     NumberBox (const std::string & name, int number, int y, int x, int width, int foreColor, int backColor);
+    
+    void initialize () override;
 
 private:
     void notify (GameManager * gm, const Button * button) override;

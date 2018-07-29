@@ -62,6 +62,11 @@ TextBox::TextBox (const std::string & name, const std::string & text, int y, int
     setFillClientArea(false);
     
     setText(text);
+}
+
+void TextBox::initialize ()
+{
+    Control::initialize();
     
     mMoveCursorLeftButton = Button::createSharedButton(moveCursorLeftButtonName, "<", 0, 0, 1, 1, Colors::COLOR_DIM_BLACK, Colors::COLOR_DIM_WHITE, Colors::COLOR_DIM_BLACK, Colors::COLOR_DIM_WHITE);
     mMoveCursorLeftButton->clicked()->connect(windowName, getSharedTextBox());
@@ -71,7 +76,7 @@ TextBox::TextBox (const std::string & name, const std::string & text, int y, int
     mMoveCursorRightButton->clicked()->connect(windowName, getSharedTextBox());
     mMoveCursorRightButton->setIsDirectFocusPossible(false);
     
-    if (multiline)
+    if (mMultiline)
     {
         mMoveCursorUpButton = Button::createSharedButton(moveCursorUpButtonName, "+", 0, 0, 1, 1, Colors::COLOR_DIM_BLACK, Colors::COLOR_DIM_WHITE, Colors::COLOR_DIM_BLACK, Colors::COLOR_DIM_WHITE);
         mMoveCursorUpButton->clicked()->connect(windowName, getSharedTextBox());
@@ -88,7 +93,7 @@ TextBox::TextBox (const std::string & name, const std::string & text, int y, int
         
         mMoveCursorDownButton->setAnchorTop(1);
         mMoveCursorDownButton->setAnchorRight(0);
-
+        
         mMoveCursorLeftButton->setAnchorTop(2);
         mMoveCursorLeftButton->setAnchorRight(0);
         
@@ -110,7 +115,11 @@ TextBox::TextBox (const std::string & name, const std::string & text, int y, int
 
 std::shared_ptr<TextBox> TextBox::createSharedTextBox (const std::string & name, const std::string & text, int y, int x, int height, int width, int foreColor, int backColor, bool multiline)
 {
-    return std::shared_ptr<TextBox>(new TextBox(name, text, y, x, height, width, foreColor, backColor, multiline));
+    auto result = std::shared_ptr<TextBox>(new TextBox(name, text, y, x, height, width, foreColor, backColor, multiline));
+    
+    result->initialize();
+    
+    return result;
 }
 
 std::shared_ptr<TextBox> TextBox::getSharedTextBox ()

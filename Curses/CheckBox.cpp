@@ -29,9 +29,18 @@ mText(text), mClicked(new ClickedEvent())
     setFillClientArea(false);
 }
 
+void CheckBox::initialize ()
+{
+    Control::initialize();
+}
+
 std::shared_ptr<CheckBox> CheckBox::createSharedCheckBox (const std::string & name, const std::string & text, int y, int x, int height, int width, int foreColor, int backColor, int focusForeColor, int focusBackColor)
 {
-    return std::shared_ptr<CheckBox>(new CheckBox(name, text, y, x, height, width, foreColor, backColor, focusForeColor, focusBackColor));
+    auto result = std::shared_ptr<CheckBox>(new CheckBox(name, text, y, x, height, width, foreColor, backColor, focusForeColor, focusBackColor));
+    
+    result->initialize();
+    
+    return result;
 }
 
 std::shared_ptr<CheckBox> CheckBox::getSharedCheckBox ()

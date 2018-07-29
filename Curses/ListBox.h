@@ -68,6 +68,8 @@ public:
 
 protected:
     ListBox (const std::string & name, const std::vector<std::string> & items, int y, int x, int height, int width, int foreColor, int backColor, int selectionForeColor, int selectionBackColor);
+    
+    void initialize () override;
 
 private:
     void notify (GameManager * gm, const Button * button) override;

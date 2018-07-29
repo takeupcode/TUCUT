@@ -23,6 +23,25 @@ Label::Label (const std::string & name, const std::string & text, int y, int x, 
     setFillClientArea(false);
 }
 
+void Label::initialize ()
+{
+    Control::initialize();
+}
+
+std::shared_ptr<Label> Label::createSharedLabel (const std::string & name, const std::string & text, int y, int x, int height, int width, int foreColor, int backColor, Justification::Horizontal horizontalJustification, Justification::Vertical verticalJustification, bool multiline)
+{
+    auto result = std::shared_ptr<Label>(new Label(name, text, y, x, height, width, foreColor, backColor, horizontalJustification, verticalJustification, multiline));
+    
+    result->initialize();
+    
+    return result;
+}
+
+std::shared_ptr<Label> Label::getSharedLabel ()
+{
+    return std::static_pointer_cast<Label>(shared_from_this());
+}
+
 void Label::onDrawClient () const
 {
     if (visibleState() != Window::VisibleState::shown)
@@ -74,16 +93,6 @@ void Label::onDrawClient () const
         int vertCenter = clientHeight() / 2;
         ConsoleManager::printMessage(*this, vertCenter, 0, clientWidth(), mText, clientForeColor(), clientBackColor(), mHorizontalJustification, true);
     }
-}
-
-std::shared_ptr<Label> Label::createSharedLabel (const std::string & name, const std::string & text, int y, int x, int height, int width, int foreColor, int backColor, Justification::Horizontal horizontalJustification, Justification::Vertical verticalJustification, bool multiline)
-{
-    return std::shared_ptr<Label>(new Label(name, text, y, x, height, width, foreColor, backColor, horizontalJustification, verticalJustification, multiline));
-}
-
-std::shared_ptr<Label> Label::getSharedLabel ()
-{
-    return std::static_pointer_cast<Label>(shared_from_this());
 }
     
 void Label::onDrawNonClient () const

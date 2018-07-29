@@ -44,6 +44,11 @@ ListBox::ListBox (const std::string & name, const std::vector<std::string> & ite
     setFillClientArea(false);
     
     appendItems(items);
+}
+
+void ListBox::initialize ()
+{
+    Control::initialize();
     
     mMoveSelectionUpButton = Button::createSharedButton(moveSelectionUpButtonName, "+", 0, 0, 1, 1, Colors::COLOR_DIM_BLACK, Colors::COLOR_DIM_WHITE, Colors::COLOR_DIM_BLACK, Colors::COLOR_DIM_WHITE);
     mMoveSelectionUpButton->clicked()->connect(windowName, getSharedListBox());
@@ -61,10 +66,14 @@ ListBox::ListBox (const std::string & name, const std::vector<std::string> & ite
     mMoveSelectionDownButton->setAnchorTop(1);
     mMoveSelectionDownButton->setAnchorRight(0);
 }
-    
+
 std::shared_ptr<ListBox> ListBox::createSharedListBox (const std::string & name, const std::vector<std::string> & items, int y, int x, int height, int width, int foreColor, int backColor, int selectionForeColor, int selectionBackColor)
 {
-    return std::shared_ptr<ListBox>(new ListBox(name, items, y, x, height, width, foreColor, backColor, selectionForeColor, selectionBackColor));
+    auto result = std::shared_ptr<ListBox>(new ListBox(name, items, y, x, height, width, foreColor, backColor, selectionForeColor, selectionBackColor));
+    
+    result->initialize();
+    
+    return result;
 }
 
 std::shared_ptr<ListBox> ListBox::getSharedListBox ()

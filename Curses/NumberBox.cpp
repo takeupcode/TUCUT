@@ -38,6 +38,11 @@ NumberBox::NumberBox (const std::string & name, int number, int y, int x, int wi
     setFillClientArea(false);
     
     setNumber(number);
+}
+
+void NumberBox::initialize ()
+{
+    Control::initialize();
     
     mIncrementButton = Button::createSharedButton(incrementButtonName, "+", 0, 0, 1, 1, Colors::COLOR_DIM_BLACK, Colors::COLOR_DIM_WHITE, Colors::COLOR_DIM_BLACK, Colors::COLOR_DIM_WHITE);
     mIncrementButton->clicked()->connect(windowName, getSharedNumberBox());
@@ -56,10 +61,14 @@ NumberBox::NumberBox (const std::string & name, int number, int y, int x, int wi
     addControl(mIncrementButton);
     addControl(mDecrementButton);
 }
-    
+
 std::shared_ptr<NumberBox> NumberBox::createSharedNumberBox (const std::string & name, int number, int y, int x, int width, int foreColor, int backColor)
 {
-    return std::shared_ptr<NumberBox>(new NumberBox(name, number, y, x, width, foreColor, backColor));
+    auto result = std::shared_ptr<NumberBox>(new NumberBox(name, number, y, x, width, foreColor, backColor));
+    
+    result->initialize();
+    
+    return result;
 }
 
 std::shared_ptr<NumberBox> NumberBox::getSharedNumberBox ()
