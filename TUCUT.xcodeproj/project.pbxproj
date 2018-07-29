@@ -174,6 +174,31 @@
 		3E3F83A621067B5200501126 /* LogManagerScenarios.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E3F83A521067B5200501126 /* LogManagerScenarios.cpp */; };
 		3E3F83A82106D7B700501126 /* FileManagerScenarios.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E3F83A72106D7B700501126 /* FileManagerScenarios.cpp */; };
 		3E3F83AA2106E8DE00501126 /* ConfigInfoScenarios.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E3F83A92106E8DE00501126 /* ConfigInfoScenarios.cpp */; };
+		3E3F83D3210A4B8600501126 /* Label.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E3F83BA210A4B8400501126 /* Label.h */; };
+		3E3F83D4210A4B8600501126 /* Colors.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E3F83BB210A4B8400501126 /* Colors.cpp */; };
+		3E3F83D5210A4B8600501126 /* CursesUtil.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E3F83BC210A4B8400501126 /* CursesUtil.cpp */; };
+		3E3F83D6210A4B8600501126 /* Label.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E3F83BD210A4B8400501126 /* Label.cpp */; };
+		3E3F83D7210A4B8600501126 /* Colors.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E3F83BE210A4B8400501126 /* Colors.h */; };
+		3E3F83D8210A4B8600501126 /* Button.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E3F83BF210A4B8400501126 /* Button.h */; };
+		3E3F83D9210A4B8600501126 /* TextBox.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E3F83C0210A4B8400501126 /* TextBox.h */; };
+		3E3F83DA210A4B8600501126 /* Window.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E3F83C1210A4B8400501126 /* Window.h */; };
+		3E3F83DB210A4B8600501126 /* GameManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E3F83C2210A4B8400501126 /* GameManager.cpp */; };
+		3E3F83DC210A4B8600501126 /* ConsoleManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E3F83C3210A4B8400501126 /* ConsoleManager.cpp */; };
+		3E3F83DD210A4B8600501126 /* Control.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E3F83C4210A4B8500501126 /* Control.cpp */; };
+		3E3F83DE210A4B8600501126 /* NumberBox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E3F83C5210A4B8500501126 /* NumberBox.cpp */; };
+		3E3F83DF210A4B8600501126 /* ConsoleManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E3F83C6210A4B8500501126 /* ConsoleManager.h */; };
+		3E3F83E0210A4B8600501126 /* GameManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E3F83C7210A4B8500501126 /* GameManager.h */; };
+		3E3F83E1210A4B8600501126 /* CheckBox.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E3F83C8210A4B8500501126 /* CheckBox.h */; };
+		3E3F83E2210A4B8600501126 /* Justification.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E3F83C9210A4B8500501126 /* Justification.h */; };
+		3E3F83E3210A4B8600501126 /* Button.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E3F83CA210A4B8500501126 /* Button.cpp */; };
+		3E3F83E4210A4B8600501126 /* CheckBox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E3F83CB210A4B8500501126 /* CheckBox.cpp */; };
+		3E3F83E5210A4B8600501126 /* TextBox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E3F83CC210A4B8500501126 /* TextBox.cpp */; };
+		3E3F83E6210A4B8600501126 /* ListBox.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E3F83CD210A4B8600501126 /* ListBox.h */; };
+		3E3F83E7210A4B8600501126 /* CursesUtil.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E3F83CE210A4B8600501126 /* CursesUtil.h */; };
+		3E3F83E8210A4B8600501126 /* Window.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E3F83CF210A4B8600501126 /* Window.cpp */; };
+		3E3F83E9210A4B8600501126 /* Control.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E3F83D0210A4B8600501126 /* Control.h */; };
+		3E3F83EA210A4B8600501126 /* NumberBox.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E3F83D1210A4B8600501126 /* NumberBox.h */; };
+		3E3F83EB210A4B8600501126 /* ListBox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E3F83D2210A4B8600501126 /* ListBox.cpp */; };
 		3ED4127B20FED1FB00BC7226 /* CodeGeneratorCPPScenarios.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E259E6420E34BA700F01379 /* CodeGeneratorCPPScenarios.cpp */; };
 		3ED4127C20FED1FB00BC7226 /* CodeGeneratorManagerScenarios.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E259E5D20E34BA600F01379 /* CodeGeneratorManagerScenarios.cpp */; };
 		3ED4127D20FED1FB00BC7226 /* EnumParserScenarios.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E259E6120E34BA600F01379 /* EnumParserScenarios.cpp */; };
@@ -532,6 +557,32 @@
 		3E3F83A521067B5200501126 /* LogManagerScenarios.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = LogManagerScenarios.cpp; sourceTree = "<group>"; };
 		3E3F83A72106D7B700501126 /* FileManagerScenarios.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = FileManagerScenarios.cpp; sourceTree = "<group>"; };
 		3E3F83A92106E8DE00501126 /* ConfigInfoScenarios.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ConfigInfoScenarios.cpp; sourceTree = "<group>"; };
+		3E3F83AF210A36CD00501126 /* libTUCUT-curses.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libTUCUT-curses.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		3E3F83BA210A4B8400501126 /* Label.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Label.h; sourceTree = "<group>"; };
+		3E3F83BB210A4B8400501126 /* Colors.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Colors.cpp; sourceTree = "<group>"; };
+		3E3F83BC210A4B8400501126 /* CursesUtil.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CursesUtil.cpp; sourceTree = "<group>"; };
+		3E3F83BD210A4B8400501126 /* Label.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Label.cpp; sourceTree = "<group>"; };
+		3E3F83BE210A4B8400501126 /* Colors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Colors.h; sourceTree = "<group>"; };
+		3E3F83BF210A4B8400501126 /* Button.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Button.h; sourceTree = "<group>"; };
+		3E3F83C0210A4B8400501126 /* TextBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextBox.h; sourceTree = "<group>"; };
+		3E3F83C1210A4B8400501126 /* Window.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Window.h; sourceTree = "<group>"; };
+		3E3F83C2210A4B8400501126 /* GameManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameManager.cpp; sourceTree = "<group>"; };
+		3E3F83C3210A4B8400501126 /* ConsoleManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ConsoleManager.cpp; sourceTree = "<group>"; };
+		3E3F83C4210A4B8500501126 /* Control.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Control.cpp; sourceTree = "<group>"; };
+		3E3F83C5210A4B8500501126 /* NumberBox.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NumberBox.cpp; sourceTree = "<group>"; };
+		3E3F83C6210A4B8500501126 /* ConsoleManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConsoleManager.h; sourceTree = "<group>"; };
+		3E3F83C7210A4B8500501126 /* GameManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameManager.h; sourceTree = "<group>"; };
+		3E3F83C8210A4B8500501126 /* CheckBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CheckBox.h; sourceTree = "<group>"; };
+		3E3F83C9210A4B8500501126 /* Justification.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Justification.h; sourceTree = "<group>"; };
+		3E3F83CA210A4B8500501126 /* Button.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Button.cpp; sourceTree = "<group>"; };
+		3E3F83CB210A4B8500501126 /* CheckBox.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CheckBox.cpp; sourceTree = "<group>"; };
+		3E3F83CC210A4B8500501126 /* TextBox.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TextBox.cpp; sourceTree = "<group>"; };
+		3E3F83CD210A4B8600501126 /* ListBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ListBox.h; sourceTree = "<group>"; };
+		3E3F83CE210A4B8600501126 /* CursesUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CursesUtil.h; sourceTree = "<group>"; };
+		3E3F83CF210A4B8600501126 /* Window.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Window.cpp; sourceTree = "<group>"; };
+		3E3F83D0210A4B8600501126 /* Control.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Control.h; sourceTree = "<group>"; };
+		3E3F83D1210A4B8600501126 /* NumberBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NumberBox.h; sourceTree = "<group>"; };
+		3E3F83D2210A4B8600501126 /* ListBox.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ListBox.cpp; sourceTree = "<group>"; };
 		3ED4127420FED19500BC7226 /* TestTUCUT */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = TestTUCUT; sourceTree = BUILT_PRODUCTS_DIR; };
 		3ED4129120FED29400BC7226 /* TestProtocolCompiler */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = TestProtocolCompiler; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -551,6 +602,13 @@
 				3E2F9C1720FB7D8F008C90A9 /* libTUCUT.a in Frameworks */,
 				3E2F9C1D20FB7FED008C90A9 /* libboost_system-mt.dylib in Frameworks */,
 				3E2F9C1E20FB7FED008C90A9 /* libboost_filesystem-mt.dylib in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3E3F83AC210A36CD00501126 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -589,6 +647,7 @@
 				3E259DBC20E33A1C00F01379 /* Config */,
 				3E259DBB20E33A1100F01379 /* Text */,
 				3E259DBA20E339FD00F01379 /* Event */,
+				3E3F83B0210A36CD00501126 /* Curses */,
 				3E259DAD20E3398E00F01379 /* Products */,
 				3E2F9BFC20FAC92C008C90A9 /* Frameworks */,
 			);
@@ -601,6 +660,7 @@
 				3E2F9C0F20FB7D0F008C90A9 /* ProtocolCompiler */,
 				3ED4127420FED19500BC7226 /* TestTUCUT */,
 				3ED4129120FED29400BC7226 /* TestProtocolCompiler */,
+				3E3F83AF210A36CD00501126 /* libTUCUT-curses.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1079,6 +1139,38 @@
 			path = Mac;
 			sourceTree = "<group>";
 		};
+		3E3F83B0210A36CD00501126 /* Curses */ = {
+			isa = PBXGroup;
+			children = (
+				3E3F83CA210A4B8500501126 /* Button.cpp */,
+				3E3F83BF210A4B8400501126 /* Button.h */,
+				3E3F83CB210A4B8500501126 /* CheckBox.cpp */,
+				3E3F83C8210A4B8500501126 /* CheckBox.h */,
+				3E3F83BB210A4B8400501126 /* Colors.cpp */,
+				3E3F83BE210A4B8400501126 /* Colors.h */,
+				3E3F83C3210A4B8400501126 /* ConsoleManager.cpp */,
+				3E3F83C6210A4B8500501126 /* ConsoleManager.h */,
+				3E3F83C4210A4B8500501126 /* Control.cpp */,
+				3E3F83D0210A4B8600501126 /* Control.h */,
+				3E3F83BC210A4B8400501126 /* CursesUtil.cpp */,
+				3E3F83CE210A4B8600501126 /* CursesUtil.h */,
+				3E3F83C2210A4B8400501126 /* GameManager.cpp */,
+				3E3F83C7210A4B8500501126 /* GameManager.h */,
+				3E3F83C9210A4B8500501126 /* Justification.h */,
+				3E3F83BD210A4B8400501126 /* Label.cpp */,
+				3E3F83BA210A4B8400501126 /* Label.h */,
+				3E3F83D2210A4B8600501126 /* ListBox.cpp */,
+				3E3F83CD210A4B8600501126 /* ListBox.h */,
+				3E3F83C5210A4B8500501126 /* NumberBox.cpp */,
+				3E3F83D1210A4B8600501126 /* NumberBox.h */,
+				3E3F83CC210A4B8500501126 /* TextBox.cpp */,
+				3E3F83C0210A4B8400501126 /* TextBox.h */,
+				3E3F83CF210A4B8600501126 /* Window.cpp */,
+				3E3F83C1210A4B8400501126 /* Window.h */,
+			);
+			path = Curses;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -1148,6 +1240,26 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		3E3F83AD210A36CD00501126 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3E3F83D7210A4B8600501126 /* Colors.h in Headers */,
+				3E3F83E7210A4B8600501126 /* CursesUtil.h in Headers */,
+				3E3F83D9210A4B8600501126 /* TextBox.h in Headers */,
+				3E3F83E6210A4B8600501126 /* ListBox.h in Headers */,
+				3E3F83E9210A4B8600501126 /* Control.h in Headers */,
+				3E3F83DF210A4B8600501126 /* ConsoleManager.h in Headers */,
+				3E3F83D3210A4B8600501126 /* Label.h in Headers */,
+				3E3F83E0210A4B8600501126 /* GameManager.h in Headers */,
+				3E3F83D8210A4B8600501126 /* Button.h in Headers */,
+				3E3F83DA210A4B8600501126 /* Window.h in Headers */,
+				3E3F83EA210A4B8600501126 /* NumberBox.h in Headers */,
+				3E3F83E2210A4B8600501126 /* Justification.h in Headers */,
+				3E3F83E1210A4B8600501126 /* CheckBox.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
@@ -1184,6 +1296,23 @@
 			productName = ProtocolCompiler;
 			productReference = 3E2F9C0F20FB7D0F008C90A9 /* ProtocolCompiler */;
 			productType = "com.apple.product-type.tool";
+		};
+		3E3F83AE210A36CD00501126 /* TUCUT-curses */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3E3F83B7210A36CD00501126 /* Build configuration list for PBXNativeTarget "TUCUT-curses" */;
+			buildPhases = (
+				3E3F83AB210A36CD00501126 /* Sources */,
+				3E3F83AC210A36CD00501126 /* Frameworks */,
+				3E3F83AD210A36CD00501126 /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "TUCUT-curses";
+			productName = "TUCUT-curses";
+			productReference = 3E3F83AF210A36CD00501126 /* libTUCUT-curses.a */;
+			productType = "com.apple.product-type.library.static";
 		};
 		3ED4127320FED19500BC7226 /* TestTUCUT */ = {
 			isa = PBXNativeTarget;
@@ -1238,6 +1367,10 @@
 						CreatedOnToolsVersion = 9.2;
 						ProvisioningStyle = Automatic;
 					};
+					3E3F83AE210A36CD00501126 = {
+						CreatedOnToolsVersion = 9.2;
+						ProvisioningStyle = Automatic;
+					};
 					3ED4127320FED19500BC7226 = {
 						CreatedOnToolsVersion = 9.2;
 						ProvisioningStyle = Automatic;
@@ -1270,6 +1403,7 @@
 				3E2F9C0E20FB7D0F008C90A9 /* ProtocolCompiler */,
 				3ED4127320FED19500BC7226 /* TestTUCUT */,
 				3ED4129020FED29400BC7226 /* TestProtocolCompiler */,
+				3E3F83AE210A36CD00501126 /* TUCUT-curses */,
 			);
 		};
 /* End PBXProject section */
@@ -1347,6 +1481,25 @@
 			buildActionMask = 2147483647;
 			files = (
 				3E2F9C1620FB7D80008C90A9 /* main.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3E3F83AB210A36CD00501126 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3E3F83E8210A4B8600501126 /* Window.cpp in Sources */,
+				3E3F83D6210A4B8600501126 /* Label.cpp in Sources */,
+				3E3F83DB210A4B8600501126 /* GameManager.cpp in Sources */,
+				3E3F83E5210A4B8600501126 /* TextBox.cpp in Sources */,
+				3E3F83D5210A4B8600501126 /* CursesUtil.cpp in Sources */,
+				3E3F83D4210A4B8600501126 /* Colors.cpp in Sources */,
+				3E3F83DC210A4B8600501126 /* ConsoleManager.cpp in Sources */,
+				3E3F83E4210A4B8600501126 /* CheckBox.cpp in Sources */,
+				3E3F83DE210A4B8600501126 /* NumberBox.cpp in Sources */,
+				3E3F83EB210A4B8600501126 /* ListBox.cpp in Sources */,
+				3E3F83DD210A4B8600501126 /* Control.cpp in Sources */,
+				3E3F83E3210A4B8600501126 /* Button.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1554,6 +1707,28 @@
 			};
 			name = Release;
 		};
+		3E3F83B8210A36CD00501126 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				EXECUTABLE_PREFIX = lib;
+				GCC_ENABLE_CPP_EXCEPTIONS = YES;
+				GCC_ENABLE_CPP_RTTI = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		3E3F83B9210A36CD00501126 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				EXECUTABLE_PREFIX = lib;
+				GCC_ENABLE_CPP_EXCEPTIONS = YES;
+				GCC_ENABLE_CPP_RTTI = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 		3ED4127920FED19500BC7226 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1612,6 +1787,15 @@
 			buildConfigurations = (
 				3E2F9C1420FB7D0F008C90A9 /* Debug */,
 				3E2F9C1520FB7D0F008C90A9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		3E3F83B7210A36CD00501126 /* Build configuration list for PBXNativeTarget "TUCUT-curses" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3E3F83B8210A36CD00501126 /* Debug */,
+				3E3F83B9210A36CD00501126 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
