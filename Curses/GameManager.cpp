@@ -44,7 +44,12 @@ void GameManager::exit ()
     mExit = true;
 }
 
-void GameManager::addWindow(std::unique_ptr<Window> && window)
+void GameManager::addWindow(const std::shared_ptr<Window> & window)
+{
+    mWindows.push_back(window);
+}
+
+void GameManager::addWindow(std::shared_ptr<Window> && window)
 {
     mWindows.push_back(std::move(window));
 }

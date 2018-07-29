@@ -460,6 +460,17 @@ void Window::setFocusBackColor (int color)
     mFocusBackColor = color;
 }
 
+void Window::addControl (const std::shared_ptr<Window> & control)
+{
+    control->setParent(this);
+    
+    anchorWindow(control.get());
+    
+    mControls.push_back(control);
+    
+    setFocus(true);
+}
+
 void Window::addControl (std::shared_ptr<Window> && control)
 {
     control->setParent(this);

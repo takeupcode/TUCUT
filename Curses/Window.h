@@ -152,6 +152,8 @@ public:
     
     void setFocusBackColor (int color);
     
+    void addControl(const std::shared_ptr<Window> & control);
+
     void addControl(std::shared_ptr<Window> && control);
     
     Window * findWindow (int y, int x);

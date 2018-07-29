@@ -32,7 +32,9 @@ public:
     
     void exit ();
     
-    void addWindow(std::unique_ptr<Window> && window);
+    void addWindow(const std::shared_ptr<Window> & window);
+
+    void addWindow(std::shared_ptr<Window> && window);
     
     void selectNextWindow(const std::string & name);
     
@@ -82,7 +84,7 @@ private:
     int mMaxScreenHeight;
     Window * mNextWindow;
     Window * mCurrentWindow;
-    std::vector<std::unique_ptr<Window>> mWindows;
+    std::vector<std::shared_ptr<Window>> mWindows;
     TimePoint mLastTime;
     TimeResolution mElapsed;
     TimeResolution mFixedFrameTotal;
