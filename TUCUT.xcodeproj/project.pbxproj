@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		3E1F75C620FEFBE400028734 /* EnumMultipleMessage.protocol.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E1F75C420FEFBE400028734 /* EnumMultipleMessage.protocol.cpp */; };
 		3E1F75C920FEFF8E00028734 /* MessageOneof.protocol.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E259E0520E34B4A00F01379 /* MessageOneof.protocol.cpp */; };
 		3E259DCA20E33E2B00F01379 /* LogManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E259DC820E33E2A00F01379 /* LogManager.cpp */; };
 		3E259DCB20E33E2B00F01379 /* LogManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E259DC920E33E2A00F01379 /* LogManager.h */; };
@@ -1466,7 +1465,6 @@
 				3E259EC120E34BE900F01379 /* EnumModel.cpp in Sources */,
 				3E259EED20E34BE900F01379 /* ProtoParser.cpp in Sources */,
 				3E259EDD20E34BE900F01379 /* TokenReader.cpp in Sources */,
-				3E1F75C620FEFBE400028734 /* EnumMultipleMessage.protocol.cpp in Sources */,
 				3E259EE420E34BE900F01379 /* OptionModel.cpp in Sources */,
 				3E259EC320E34BE900F01379 /* ParserManager.cpp in Sources */,
 				3E259EE120E34BE900F01379 /* MessageModel.cpp in Sources */,
