@@ -187,6 +187,8 @@ public:
     virtual EnableState enableState () const;
     
     virtual void setEnableState (EnableState value);
+    
+    virtual void drawInsideBorder () const;
 
 protected:
     Window (const std::string & name, int y, int x, int height, int width, int clientForeColor, int clientBackColor, int borderForeColor, int borderBackColor, int focusForeColor, int focusBackColor, bool border);
@@ -200,8 +202,6 @@ protected:
     void destroyWindows ();
     
     void anchorWindow (Window * win);
-    
-    void drawBorder () const;
     
     void setNonClientColor () const;
 

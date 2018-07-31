@@ -111,7 +111,7 @@ void Window::draw () const
 {
     if (mBorder)
     {
-        mBorderWindow->drawBorder();
+        mBorderWindow->drawInsideBorder();
         touchwin(mBorderWindow->cursesWindow());
         wnoutrefresh(mBorderWindow->cursesWindow());
     }
@@ -125,7 +125,7 @@ void Window::draw () const
     onDrawNonClient();
     touchwin(mClientCursesWindow);
     wnoutrefresh(mClientCursesWindow);
-    
+
     for (const auto & control: mControls)
     {
         control->draw();
@@ -767,6 +767,9 @@ void Window::createWindows ()
         }
         
         mBorderWindow.reset(new Window("border", mY, mX, mHeight, mWidth, mBorderForeColor, mBorderBackColor, mBorderForeColor, mBorderBackColor, mBorderForeColor, mBorderBackColor, false));
+        
+        mBorderWindow->initialize();
+        mBorderWindow->setFillClientArea(false);
     }
     else
     {
@@ -870,10 +873,9 @@ void Window::anchorWindow (Window * win)
     win->moveAndResize(newTop, newLeft, newBottom - newTop, newRight - newLeft);
 }
 
-void Window::drawBorder () const
+void Window::drawInsideBorder () const
 {
-    // Draw an inside border. This should normally only need to be called for a border window.
-    ConsoleManager::drawBox(*this, mY, mX, mHeight, mWidth, mBorderForeColor, mBorderBackColor);
+    ConsoleManager::drawBox(*this, y(), x(), clientHeight(), clientWidth(), mBorderForeColor, mBorderBackColor);
 }
 
 void Window::setNonClientColor () const
