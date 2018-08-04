@@ -24,7 +24,7 @@ class Button;
 class DisplayBox : public Control, public Event::EventSubscriber<GameManager *, const Button *>
 {
 public:
-    using ClickedEvent = Event::EventPublisher<GameManager *, const DisplayBox *, int, int>;
+    using CursorChangedEvent = Event::EventPublisher<GameManager *, const DisplayBox *, int, int>;
     
     static std::shared_ptr<DisplayBox> createSharedDisplayBox (const std::string & name, int y, int x, int height, int width, int contentHeight, int contentWidth, int foreColor, int backColor, bool allowCursor = false, bool wrapContent = false);
     
@@ -46,7 +46,7 @@ public:
     
     void setSymbol (char symbol, int y, int x);
     
-    ClickedEvent * clicked ();
+    CursorChangedEvent * cursorChanged ();
     
 protected:
     DisplayBox (const std::string & name, int y, int x, int height, int width, int contentHeight, int contentWidth, int foreColor, int backColor, bool allowCursor, bool wrapContent);
@@ -56,12 +56,12 @@ protected:
 private:
     void notify (GameManager * gm, const Button * button) override;
     
-    void handleClick (GameManager * gm, int y, int x) const;
+    void handleCursorChanged (GameManager * gm, int y, int x) const;
 
-    void moveCursorUp ();
-    void moveCursorDown ();
-    void moveCursorLeft ();
-    void moveCursorRight ();
+    bool moveCursorUp ();
+    bool moveCursorDown ();
+    bool moveCursorLeft ();
+    bool moveCursorRight ();
     
     static const std::string windowName;
     static const std::string moveCursorUpButtonName;
@@ -70,7 +70,7 @@ private:
     static const std::string moveCursorRightButtonName;
     
     std::vector<std::string> mContent;
-    std::unique_ptr<ClickedEvent> mClicked;
+    std::unique_ptr<CursorChangedEvent> mCursorChanged;
     std::shared_ptr<Button> mMoveCursorUpButton;
     std::shared_ptr<Button> mMoveCursorDownButton;
     std::shared_ptr<Button> mMoveCursorLeftButton;

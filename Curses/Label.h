@@ -30,6 +30,10 @@ public:
     
     void setMultiline (bool multiline);
     
+    std::string text () const;
+    
+    void setText (const std::string & text);
+
 protected:
     Label (const std::string & name, const std::string & text, int y, int x, int height, int width, int foreColor, int backColor, Justification::Horizontal horizontalJustification, Justification::Vertical verticalJustification, bool multiline);
     

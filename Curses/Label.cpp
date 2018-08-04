@@ -108,5 +108,15 @@ void Label::setMultiline (bool multiline)
     mMultiline = multiline;
 }
 
+std::string Label::text () const
+{
+    return mText;
+}
+
+void Label::setText (const std::string & text)
+{
+    mText = text;
+}
+
 } // namespace Curses
 } // namespace TUCUT

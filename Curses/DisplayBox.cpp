@@ -27,7 +27,7 @@ const std::string DisplayBox::moveCursorRightButtonName = "moveRightButton";
 
 DisplayBox::DisplayBox (const std::string & name, int y, int x, int height, int width, int contentHeight, int contentWidth, int foreColor, int backColor, bool allowCursor, bool wrapContent)
 : Control(name, y, x, height, width, foreColor, backColor, foreColor, backColor),
-mClicked(new ClickedEvent()),
+mCursorChanged(new CursorChangedEvent()),
 mScrollLine(0), mScrollColumn(0), mCursorLine(0), mCursorColumn(0),
 mContentHeight(contentHeight), mContentWidth(contentWidth), mAllowCursor(allowCursor), mWrapContent(wrapContent)
 {
@@ -55,7 +55,7 @@ mContentHeight(contentHeight), mContentWidth(contentWidth), mAllowCursor(allowCu
     
     for (int i = 0; i < mContentHeight; i++)
     {
-        mContent.push_back(std::string(' ', mContentWidth));
+        mContent.push_back(std::string(mContentWidth, ' '));
     }
 }
 
@@ -129,22 +129,24 @@ bool DisplayBox::onKeyPress (GameManager * gm, int key)
     }
     else
     {
+        bool cursorMoved = false;
+        
         switch (key)
         {
             case KEY_UP:
-                moveCursorUp();
+                cursorMoved = moveCursorUp();
                 break;
                 
             case KEY_DOWN:
-                moveCursorDown();
+                cursorMoved = moveCursorDown();
                 break;
                 
             case KEY_LEFT:
-                moveCursorLeft();
+                cursorMoved = moveCursorLeft();
                 break;
                 
             case KEY_RIGHT:
-                moveCursorRight();
+                cursorMoved = moveCursorRight();
                 break;
                 
             default:
@@ -153,6 +155,11 @@ bool DisplayBox::onKeyPress (GameManager * gm, int key)
                     return parent()->onKeyPress(gm, key);
                 }
                 break;
+        }
+        
+        if (cursorMoved)
+        {
+            handleCursorChanged(gm, mCursorLine, mCursorColumn);
         }
     }
     
@@ -193,10 +200,13 @@ void DisplayBox::onMouseEvent (GameManager * gm, short id, int y, int x, mmask_t
             column = static_cast<int>(mContent[line].size());
         }
         
-        mCursorLine = line;
-        mCursorColumn = column;
-        
-        handleClick(gm, mCursorLine, mCursorColumn);
+        if (mCursorLine != line || mCursorColumn != column)
+        {
+            mCursorLine = line;
+            mCursorColumn = column;
+            
+            handleCursorChanged(gm, mCursorLine, mCursorColumn);
+        }
     }
 }
 
@@ -221,7 +231,7 @@ void DisplayBox::onDrawClient () const
             lineText = mContent[i + mScrollLine].substr(mScrollColumn, textClientWidth());
         }
         
-        if (hasDirectFocus())
+        if (hasDirectFocus() && mAllowCursor)
         {
             ConsoleManager::printMessage(*this, i, 1, textClientWidth(), lineText, clientForeColor(), clientBackColor(), Justification::Horizontal::left, true, mCursorLine - mScrollLine, mCursorColumn - mScrollColumn + 1);
         }
@@ -272,66 +282,91 @@ void DisplayBox::setSymbol (char symbol, int y, int x)
     mContent[y][x] = symbol;
 }
 
-DisplayBox::ClickedEvent * DisplayBox::clicked ()
+DisplayBox::CursorChangedEvent * DisplayBox::cursorChanged ()
 {
-    return mClicked.get();
+    return mCursorChanged.get();
 }
 
 void DisplayBox::notify (GameManager * gm, const Button * button)
 {
+    bool cursorMoved = false;
+    
     if (button->name() == moveCursorUpButtonName)
     {
-        moveCursorUp();
+        cursorMoved = moveCursorUp();
     }
     else if (button->name() == moveCursorDownButtonName)
     {
-        moveCursorDown();
+        cursorMoved = moveCursorDown();
     }
     else if (button->name() == moveCursorLeftButtonName)
     {
-        moveCursorLeft();
+        cursorMoved = moveCursorLeft();
     }
     else if (button->name() == moveCursorRightButtonName)
     {
-        moveCursorRight();
+        cursorMoved = moveCursorRight();
+    }
+    
+    if (cursorMoved)
+    {
+        handleCursorChanged(gm, mCursorLine, mCursorColumn);
     }
 }
 
-void DisplayBox::handleClick (GameManager * gm, int y, int x) const
+void DisplayBox::handleCursorChanged (GameManager * gm, int y, int x) const
 {
-    mClicked->signal(gm, this, y, x);
+    mCursorChanged->signal(gm, this, y, x);
 }
 
-void DisplayBox::moveCursorUp ()
+bool DisplayBox::moveCursorUp ()
 {
     if (mCursorLine > mScrollLine)
     {
         --mCursorLine;
+        
+        return true;
     }
+    
+    return false;
 }
 
-void DisplayBox::moveCursorDown ()
+bool DisplayBox::moveCursorDown ()
 {
-    if (mCursorLine < (mContentHeight - mScrollLine - 1))
+    if (mCursorLine < (mContentHeight - 1) &&
+        mCursorLine < (clientHeight() - mScrollLine - 1))
     {
         ++mCursorLine;
+        
+        return true;
     }
+    
+    return false;
 }
 
-void DisplayBox::moveCursorLeft ()
+bool DisplayBox::moveCursorLeft ()
 {
     if (mCursorColumn > mScrollColumn)
     {
         --mCursorColumn;
+        
+        return true;
     }
+    
+    return false;
 }
 
-void DisplayBox::moveCursorRight ()
+bool DisplayBox::moveCursorRight ()
 {
-    if (mCursorColumn < (mContentWidth - mScrollColumn - 1))
+    if (mCursorColumn < (mContentWidth - 1) &&
+        mCursorColumn < (textClientWidth() - mScrollColumn - 1))
     {
         ++mCursorColumn;
+        
+        return true;
     }
+    
+    return false;
 }
     
 } // namespace Curses
