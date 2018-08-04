@@ -33,13 +33,15 @@ private:
     
     struct EventPublisherData
     {
+        int mId;
         MappedWeakSubscriberType mSubscribers;
         
-        EventPublisherData ()
+        explicit EventPublisherData (int id)
+        : mId(id)
         { }
         
         EventPublisherData (const EventPublisherData & src)
-        : mSubscribers(src.mSubscribers)
+        : mId(src.mId), mSubscribers(src.mSubscribers)
         { }
         
         ~EventPublisherData ()
@@ -52,6 +54,7 @@ private:
                 return *this;
             }
             
+            mId = rhs.mId;
             mSubscribers = rhs.mSubscribers;
             
             return *this;
@@ -61,8 +64,8 @@ private:
     std::unique_ptr<EventPublisherData> mData;
 
 public:
-    EventPublisher ()
-    : mData(new EventPublisherData())
+    explicit EventPublisher (int id)
+    : mData(new EventPublisherData(id))
     { }
     
     EventPublisher (const PublisherType & src)
@@ -123,7 +126,7 @@ public:
             {
                 SharedSubscriberType sharedSubscriber(identifiedSubscriberPair.second);
                 
-                sharedSubscriber->notify(args...);
+                sharedSubscriber->notify(mData->mId, args...);
             }
             catch (const std::bad_weak_ptr &)
             {

@@ -18,22 +18,29 @@ class SimpleSubscriber : public TUCUT::Event::EventSubscriber<const std::string 
 {
 public:
     explicit SimpleSubscriber ()
+    : mNotified(false), mId(0)
     { }
     
     virtual ~SimpleSubscriber ()
     { }
     
-    virtual void notify (const std::string & stringArg)
+    virtual void notify (int id, const std::string & stringArg)
     {
         mNotified = true;
+        mId = id;
         mProperty = stringArg;
     }
-    
+
     bool notified ()
     {
         return mNotified;
     }
     
+    int id ()
+    {
+        return mId;
+    }
+
     std::string property ()
     {
         return mProperty;
@@ -41,6 +48,7 @@ public:
     
 private:
     bool mNotified;
+    int mId;
     std::string mProperty;
 };
 

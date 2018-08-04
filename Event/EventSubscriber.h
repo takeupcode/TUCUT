@@ -25,7 +25,7 @@ public:
 protected:
     friend class EventPublisher<Args...>;
     
-    virtual void notify (Args... args) = 0;
+    virtual void notify (int id, Args... args) = 0;
 };
     
 } // namespace Event

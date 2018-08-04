@@ -36,6 +36,7 @@ SCENARIO( Observable, "Operation/Normal", "unit,event", "SimplePublisher can not
     publisher.propertyChanged()->signal(parameter);
     
     VERIFY_TRUE(subscriber->notified());
+    VERIFY_EQUAL(1, subscriber->id());
     VERIFY_EQUAL(parameter, subscriber->property());
 }
 
@@ -48,8 +49,27 @@ SCENARIO( Observable, "Operation/Normal", "unit,event", "AdvancedPublisher can n
     publisher.propertyChanged()->connect("test", subscriber);
 
     publisher.setName("NewName");
+    VERIFY_EQUAL(1, subscriber->id());
     VERIFY_TRUE(subscriber->nameNotified());
     VERIFY_FALSE(subscriber->ageNotified());
     VERIFY_FALSE(subscriber->adultNotified());
     VERIFY_FALSE(subscriber->combinedAgeAndAdultNotified());
+    
+    subscriber->resetData();
+    publisher.setAge(11);
+    VERIFY_EQUAL(1, subscriber->id());
+    VERIFY_FALSE(subscriber->nameNotified());
+    VERIFY_TRUE(subscriber->ageNotified());
+    VERIFY_FALSE(subscriber->adultNotified());
+    VERIFY_FALSE(subscriber->combinedAgeAndAdultNotified());
+
+    publisher.ageAndAdult()->connect("test", subscriber);
+
+    subscriber->resetData();
+    publisher.setAge(30);
+    VERIFY_EQUAL(2, subscriber->id());
+    VERIFY_FALSE(subscriber->nameNotified());
+    VERIFY_TRUE(subscriber->ageNotified());
+    VERIFY_TRUE(subscriber->adultNotified());
+    VERIFY_TRUE(subscriber->combinedAgeAndAdultNotified());
 }

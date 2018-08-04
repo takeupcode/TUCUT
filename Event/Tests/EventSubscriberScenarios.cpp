@@ -28,9 +28,10 @@ SCENARIO( Observer, "Operation/Direct", "unit,event", "SimpleSubscriber can be n
     // This is not the normal usage. This class is designed to be notified through an
     // Observable signal.
     std::string parameter = "Name";
-    subscriber.notify(parameter);
+    subscriber.notify(3, parameter);
     
     VERIFY_TRUE(subscriber.notified());
+    VERIFY_EQUAL(3, subscriber.id());
     VERIFY_EQUAL(parameter, subscriber.property());
 }
 
@@ -38,7 +39,8 @@ SCENARIO( Observer, "Operation/Direct", "unit,event", "AdvancedSubscriber can be
 {
     AdvancedSubscriber subscriber;
 
-    subscriber.reset();
+    subscriber.resetData();
+    VERIFY_EQUAL(0, subscriber.id());
     VERIFY_FALSE(subscriber.nameNotified());
     VERIFY_FALSE(subscriber.ageNotified());
     VERIFY_FALSE(subscriber.adultNotified());
@@ -46,31 +48,34 @@ SCENARIO( Observer, "Operation/Direct", "unit,event", "AdvancedSubscriber can be
 
     // This is not the normal usage. This class is designed to be notified through an
     // Observable signal.
-    subscriber.notify(AdvancedPublisher::nameProperty);
+    subscriber.notify(1, AdvancedPublisher::nameProperty);
+    VERIFY_EQUAL(1, subscriber.id());
     VERIFY_TRUE(subscriber.nameNotified());
     VERIFY_FALSE(subscriber.ageNotified());
     VERIFY_FALSE(subscriber.adultNotified());
     VERIFY_FALSE(subscriber.combinedAgeAndAdultNotified());
-    subscriber.reset();
-
-    subscriber.notify(AdvancedPublisher::ageProperty);
+    
+    subscriber.resetData();
+    subscriber.notify(2, AdvancedPublisher::ageProperty);
+    VERIFY_EQUAL(2, subscriber.id());
     VERIFY_FALSE(subscriber.nameNotified());
     VERIFY_TRUE(subscriber.ageNotified());
     VERIFY_FALSE(subscriber.adultNotified());
     VERIFY_FALSE(subscriber.combinedAgeAndAdultNotified());
-    subscriber.reset();
-
-    subscriber.notify(AdvancedPublisher::adultProperty);
+    
+    subscriber.resetData();
+    subscriber.notify(3, AdvancedPublisher::adultProperty);
+    VERIFY_EQUAL(3, subscriber.id());
     VERIFY_FALSE(subscriber.nameNotified());
     VERIFY_FALSE(subscriber.ageNotified());
     VERIFY_TRUE(subscriber.adultNotified());
     VERIFY_FALSE(subscriber.combinedAgeAndAdultNotified());
-    subscriber.reset();
-
-    subscriber.notify(50, true);
+    
+    subscriber.resetData();
+    subscriber.notify(4, 50, true);
+    VERIFY_EQUAL(4, subscriber.id());
     VERIFY_FALSE(subscriber.nameNotified());
     VERIFY_FALSE(subscriber.ageNotified());
     VERIFY_FALSE(subscriber.adultNotified());
     VERIFY_TRUE(subscriber.combinedAgeAndAdultNotified());
-    subscriber.reset();
 }

@@ -28,8 +28,8 @@ public:
     static const std::string adultProperty;
 
     AdvancedPublisher (const std::string & name, int age)
-    : mName(name), mAge(age), mPropertyChanged(new PropertyChangedEvent()),
-    mAgeAndAdult(new AgeAndAdultEvent())
+    : mName(name), mAge(age), mPropertyChanged(new PropertyChangedEvent(1)),
+    mAgeAndAdult(new AgeAndAdultEvent(2))
     {
         if (mAge < minimumAdultAge)
         {

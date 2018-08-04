@@ -21,13 +21,15 @@ class AdvancedSubscriber : public TUCUT::Event::EventSubscriber<const std::strin
 private:
     struct AdvancedSubscriberData
     {
+        int mId;
         bool mNameNotified;
         bool mAgeNotified;
         bool mAdultNotified;
         bool mCombinedAgeAndAdultNotified;
 
-        void reset ()
+        void resetData ()
         {
+            mId = 0;
             mNameNotified = false;
             mAgeNotified = false;
             mAdultNotified = false;
@@ -39,7 +41,7 @@ public:
     explicit AdvancedSubscriber ()
     : mData(new AdvancedSubscriberData())
     {
-        reset();
+        resetData();
     }
 
     virtual ~AdvancedSubscriber ()
@@ -54,8 +56,10 @@ public:
         other.mData.reset(thisData.release());
     }
 
-    virtual void notify (const std::string & property)
+    virtual void notify (int id, const std::string & property)
     {
+        mData->mId = id;
+        
         if (property == AdvancedPublisher::nameProperty)
         {
             mData->mNameNotified = true;
@@ -70,14 +74,20 @@ public:
         }
     }
 
-    virtual void notify (int age, bool adult)
+    virtual void notify (int id, int age, bool adult)
     {
+        mData->mId = id;
         mData->mCombinedAgeAndAdultNotified = true;
     }
 
-    void reset ()
+    void resetData ()
     {
-        mData->reset();
+        mData->resetData();
+    }
+
+    int id ()
+    {
+        return mData->mId;
     }
 
     bool nameNotified ()

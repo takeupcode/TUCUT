@@ -20,7 +20,7 @@ public:
     using PropertyChangedEvent = TUCUT::Event::EventPublisher<const std::string &>;
 
     SimplePublisher ()
-    : mPropertyChanged(new PropertyChangedEvent())
+    : mPropertyChanged(new PropertyChangedEvent(1))
     { }
     
     virtual ~SimplePublisher ()
