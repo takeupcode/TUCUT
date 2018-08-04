@@ -23,6 +23,8 @@ class Button;
 class NumberBox : public Control, public Event::EventSubscriber<GameManager *, const Button *>
 {
 public:
+    const static int NumberChangedEventId = 1;
+    
     using NumberChangedEvent = Event::EventPublisher<GameManager *, const NumberBox *>;
     
     static std::shared_ptr<NumberBox> createSharedNumberBox (const std::string & name, int number, int y, int x, int width, int foreColor, int backColor);
@@ -53,7 +55,7 @@ protected:
     void initialize () override;
 
 private:
-    void notify (GameManager * gm, const Button * button) override;
+    void notify (int id, GameManager * gm, const Button * button) override;
     
     void handleNumberChange (GameManager * gm) const;
     

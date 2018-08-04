@@ -25,7 +25,7 @@ const std::string ListBox::moveSelectionDownButtonName = "moveDownButton";
 
 ListBox::ListBox (const std::string & name, const std::vector<std::string> & items, int y, int x, int height, int width, int foreColor, int backColor, int selectionForeColor, int selectionBackColor)
 : Control(name, y, x, height, width, foreColor, backColor, foreColor, backColor),
-  mSelectionChanged(new SelectionChangedEvent()),
+  mSelectionChanged(new SelectionChangedEvent(SelectionChangedEventId)),
   mSelectionForeColor(selectionForeColor), mSelectionBackColor(selectionBackColor),
   mScrollItem(0), mSelectionItem(0)
 {
@@ -275,8 +275,13 @@ ListBox::SelectionChangedEvent * ListBox::selectionChanged ()
     return mSelectionChanged.get();
 }
 
-void ListBox::notify (GameManager * gm, const Button * button)
+void ListBox::notify (int id, GameManager * gm, const Button * button)
 {
+    if (id != Button::ClickedEventId)
+    {
+        return;
+    }
+    
     if (button->name() == moveSelectionUpButtonName)
     {
         moveSelectionUp();

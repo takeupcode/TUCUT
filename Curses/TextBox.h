@@ -24,6 +24,8 @@ class Button;
 class TextBox : public Control, public Event::EventSubscriber<GameManager *, const Button *>
 {
 public:
+    const static int TextChangedEventId = 1;
+    
     using TextChangedEvent = Event::EventPublisher<GameManager *, const TextBox *>;
     
     static std::shared_ptr<TextBox> createSharedTextBox (const std::string & name, const std::string & text, int y, int x, int height, int width, int foreColor, int backColor, bool multiline = false);
@@ -62,7 +64,7 @@ protected:
     void initialize () override;
 
 private:
-    void notify (GameManager * gm, const Button * button) override;
+    void notify (int id, GameManager * gm, const Button * button) override;
     
     void handleTextChange (GameManager * gm) const;
     

@@ -27,7 +27,7 @@ const std::string TextBox::moveCursorRightButtonName = "moveRightButton";
 
 TextBox::TextBox (const std::string & name, const std::string & text, int y, int x, int height, int width, int foreColor, int backColor, bool multiline)
 : Control(name, y, x, height, width, foreColor, backColor, foreColor, backColor),
-  mTextChanged(new TextChangedEvent()),
+  mTextChanged(new TextChangedEvent(TextChangedEventId)),
   mScrollLine(0), mScrollColumn(0), mCursorLine(0), mCursorColumn(0), mDesiredColumn(0), mMultiline(multiline)
 {
     if (multiline)
@@ -427,8 +427,13 @@ TextBox::TextChangedEvent * TextBox::textChanged ()
     return mTextChanged.get();
 }
 
-void TextBox::notify (GameManager * gm, const Button * button)
+void TextBox::notify (int id, GameManager * gm, const Button * button)
 {
+    if (id != Button::ClickedEventId)
+    {
+        return;
+    }
+    
     if (button->name() == moveCursorUpButtonName)
     {
         moveCursorUp();

@@ -27,9 +27,10 @@ const std::string DisplayBox::moveCursorRightButtonName = "moveRightButton";
 
 DisplayBox::DisplayBox (const std::string & name, int y, int x, int height, int width, int contentHeight, int contentWidth, int foreColor, int backColor, bool allowCursor, bool wrapContent)
 : Control(name, y, x, height, width, foreColor, backColor, foreColor, backColor),
-mCursorChanged(new CursorChangedEvent()),
-mScrollLine(0), mScrollColumn(0), mCursorLine(0), mCursorColumn(0),
-mContentHeight(contentHeight), mContentWidth(contentWidth), mAllowCursor(allowCursor), mWrapContent(wrapContent)
+  mClicked(new ClickedEvent(ClickedEventId)),
+  mCursorChanged(new CursorChangedEvent(CursorChangedEventId)),
+  mScrollLine(0), mScrollColumn(0), mCursorLine(0), mCursorColumn(0),
+  mContentHeight(contentHeight), mContentWidth(contentWidth), mAllowCursor(allowCursor), mWrapContent(wrapContent)
 {
     if (height < 4)
     {
@@ -200,6 +201,8 @@ void DisplayBox::onMouseEvent (GameManager * gm, short id, int y, int x, mmask_t
             column = static_cast<int>(mContent[line].size());
         }
         
+        handleClicked(gm, line, column);
+        
         if (mCursorLine != line || mCursorColumn != column)
         {
             mCursorLine = line;
@@ -282,13 +285,23 @@ void DisplayBox::setSymbol (char symbol, int y, int x)
     mContent[y][x] = symbol;
 }
 
+DisplayBox::ClickedEvent * DisplayBox::clicked ()
+{
+    return mClicked.get();
+}
+
 DisplayBox::CursorChangedEvent * DisplayBox::cursorChanged ()
 {
     return mCursorChanged.get();
 }
 
-void DisplayBox::notify (GameManager * gm, const Button * button)
+void DisplayBox::notify (int id, GameManager * gm, const Button * button)
 {
+    if (id != Button::ClickedEventId)
+    {
+        return;
+    }
+    
     bool cursorMoved = false;
     
     if (button->name() == moveCursorUpButtonName)
@@ -312,6 +325,11 @@ void DisplayBox::notify (GameManager * gm, const Button * button)
     {
         handleCursorChanged(gm, mCursorLine, mCursorColumn);
     }
+}
+
+void DisplayBox::handleClicked (GameManager * gm, int y, int x) const
+{
+    mClicked->signal(gm, this, y, x);
 }
 
 void DisplayBox::handleCursorChanged (GameManager * gm, int y, int x) const

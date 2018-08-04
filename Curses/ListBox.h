@@ -24,6 +24,8 @@ class Button;
 class ListBox : public Control, public Event::EventSubscriber<GameManager *, const Button *>
 {
 public:
+    const static int SelectionChangedEventId = 1;
+    
     using SelectionChangedEvent = Event::EventPublisher<GameManager *, const ListBox *>;
     
     static std::shared_ptr<ListBox> createSharedListBox (const std::string & name, const std::vector<std::string> & items, int y, int x, int height, int width, int foreColor, int backColor, int selectionForeColor, int selectionBackColor);
@@ -72,7 +74,7 @@ protected:
     void initialize () override;
 
 private:
-    void notify (GameManager * gm, const Button * button) override;
+    void notify (int id, GameManager * gm, const Button * button) override;
     
     void handleSelectionChange (GameManager * gm) const;
     

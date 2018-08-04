@@ -25,7 +25,7 @@ const std::string NumberBox::decrementButtonName = "decrementButton";
 
 NumberBox::NumberBox (const std::string & name, int number, int y, int x, int width, int foreColor, int backColor)
 : Control(name, y, x, 1, width, foreColor, backColor, foreColor, backColor),
-  mText("0"), mNumberChanged(new NumberChangedEvent())
+  mText("0"), mNumberChanged(new NumberChangedEvent(NumberChangedEventId))
 {
     if (width < 5)
     {
@@ -211,8 +211,13 @@ NumberBox::NumberChangedEvent * NumberBox::numberChanged ()
     return mNumberChanged.get();
 }
 
-void NumberBox::notify (GameManager * gm, const Button * button)
+void NumberBox::notify (int id, GameManager * gm, const Button * button)
 {
+    if (id != Button::ClickedEventId)
+    {
+        return;
+    }
+    
     int oldValue = number();
     
     if (button->name() == incrementButtonName)

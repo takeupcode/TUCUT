@@ -19,7 +19,7 @@ namespace Curses {
 
 CheckBox::CheckBox (const std::string & name, const std::string & text, int y, int x, int height, int width, int foreColor, int backColor, int focusForeColor, int focusBackColor)
 : Control(name, y, x, height, width, foreColor, backColor, focusForeColor, focusBackColor),
-mText(text), mClicked(new ClickedEvent())
+mText(text), mClicked(new ClickedEvent(ClickedEventId))
 {
     if (width < 6)
     {

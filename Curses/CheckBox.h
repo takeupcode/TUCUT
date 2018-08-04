@@ -20,6 +20,8 @@ namespace Curses {
 class CheckBox : public Control
 {
 public:
+    const static int ClickedEventId = 1;
+    
     using ClickedEvent = Event::EventPublisher<GameManager *, const CheckBox *>;
     
     static std::shared_ptr<CheckBox> createSharedCheckBox (const std::string & name, const std::string & text, int y, int x, int height, int width, int foreColor, int backColor, int focusForeColor, int focusBackColor);
