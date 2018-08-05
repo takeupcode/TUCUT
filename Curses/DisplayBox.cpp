@@ -20,17 +20,23 @@ namespace TUCUT {
 namespace Curses {
         
 const std::string DisplayBox::windowName = "parent";
+const std::string DisplayBox::scrollUpButtonName = "scrollUpButton";
+const std::string DisplayBox::scrollDownButtonName = "scrollDownButton";
+const std::string DisplayBox::scrollLeftButtonName = "scrollLeftButton";
+const std::string DisplayBox::scrollRightButtonName = "scrollRightButton";
 const std::string DisplayBox::moveCursorUpButtonName = "moveUpButton";
 const std::string DisplayBox::moveCursorDownButtonName = "moveDownButton";
 const std::string DisplayBox::moveCursorLeftButtonName = "moveLeftButton";
 const std::string DisplayBox::moveCursorRightButtonName = "moveRightButton";
 
-DisplayBox::DisplayBox (const std::string & name, int y, int x, int height, int width, int contentHeight, int contentWidth, int foreColor, int backColor, bool allowCursor, bool wrapContent)
+DisplayBox::DisplayBox (const std::string & name, int y, int x, int height, int width, int contentHeight, int contentWidth, int foreColor, int backColor, bool allowScrolling, bool allowCursor)
 : Control(name, y, x, height, width, foreColor, backColor, foreColor, backColor),
   mClicked(new ClickedEvent(ClickedEventId)),
+  mScrollChanged(new ScrollChangedEvent(ScrollChangedEventId)),
   mCursorChanged(new CursorChangedEvent(CursorChangedEventId)),
   mScrollLine(0), mScrollColumn(0), mCursorLine(0), mCursorColumn(0),
-  mContentHeight(contentHeight), mContentWidth(contentWidth), mAllowCursor(allowCursor), mWrapContent(wrapContent)
+  mContentHeight(contentHeight), mContentWidth(contentWidth),
+  mAllowScrolling(allowScrolling), mAllowCursor(allowCursor)
 {
     if (height < 4)
     {
@@ -64,6 +70,41 @@ void DisplayBox::initialize ()
 {
     Control::initialize();
     
+    if (mAllowScrolling)
+    {
+        mScrollLeftButton = Button::createSharedButton(scrollLeftButtonName, "<", 0, 0, 1, 1, Colors::COLOR_DIM_BLACK, Colors::COLOR_DIM_WHITE, Colors::COLOR_DIM_BLACK, Colors::COLOR_DIM_WHITE);
+        mScrollLeftButton->clicked()->connect(windowName, getSharedDisplayBox());
+        mScrollLeftButton->setIsDirectFocusPossible(false);
+        addControl(mScrollLeftButton);
+        
+        mScrollRightButton = Button::createSharedButton(scrollRightButtonName, ">", 0, 0, 1, 1, Colors::COLOR_DIM_BLACK, Colors::COLOR_DIM_WHITE, Colors::COLOR_DIM_BLACK, Colors::COLOR_DIM_WHITE);
+        mScrollRightButton->clicked()->connect(windowName, getSharedDisplayBox());
+        mScrollRightButton->setIsDirectFocusPossible(false);
+        addControl(mScrollRightButton);
+        
+        mScrollUpButton = Button::createSharedButton(scrollUpButtonName, "+", 0, 0, 1, 1, Colors::COLOR_DIM_BLACK, Colors::COLOR_DIM_WHITE, Colors::COLOR_DIM_BLACK, Colors::COLOR_DIM_WHITE);
+        mScrollUpButton->clicked()->connect(windowName, getSharedDisplayBox());
+        mScrollUpButton->setIsDirectFocusPossible(false);
+        addControl(mScrollUpButton);
+        
+        mScrollDownButton = Button::createSharedButton(scrollDownButtonName, "-", 0, 0, 1, 1, Colors::COLOR_DIM_BLACK, Colors::COLOR_DIM_WHITE, Colors::COLOR_DIM_BLACK, Colors::COLOR_DIM_WHITE);
+        mScrollDownButton->clicked()->connect(windowName, getSharedDisplayBox());
+        mScrollDownButton->setIsDirectFocusPossible(false);
+        addControl(mScrollDownButton);
+        
+        mScrollUpButton->setAnchorTop(0);
+        mScrollUpButton->setAnchorLeft(0);
+        
+        mScrollDownButton->setAnchorTop(1);
+        mScrollDownButton->setAnchorLeft(0);
+        
+        mScrollLeftButton->setAnchorTop(2);
+        mScrollLeftButton->setAnchorLeft(0);
+        
+        mScrollRightButton->setAnchorTop(3);
+        mScrollRightButton->setAnchorLeft(0);
+    }
+
     if (mAllowCursor)
     {
         mMoveCursorLeftButton = Button::createSharedButton(moveCursorLeftButtonName, "<", 0, 0, 1, 1, Colors::COLOR_DIM_BLACK, Colors::COLOR_DIM_WHITE, Colors::COLOR_DIM_BLACK, Colors::COLOR_DIM_WHITE);
@@ -100,9 +141,9 @@ void DisplayBox::initialize ()
     }
 }
 
-std::shared_ptr<DisplayBox> DisplayBox::createSharedDisplayBox (const std::string & name, int y, int x, int height, int width, int contentHeight, int contentWidth, int foreColor, int backColor, bool allowCursor, bool wrapContent)
+std::shared_ptr<DisplayBox> DisplayBox::createSharedDisplayBox (const std::string & name, int y, int x, int height, int width, int contentHeight, int contentWidth, int foreColor, int backColor, bool allowScrolling, bool allowCursor)
 {
-    auto result = std::shared_ptr<DisplayBox>(new DisplayBox(name, y, x, height, width, contentHeight, contentWidth, foreColor, backColor, allowCursor, wrapContent));
+    auto result = std::shared_ptr<DisplayBox>(new DisplayBox(name, y, x, height, width, contentHeight, contentWidth, foreColor, backColor, allowScrolling, allowCursor));
     
     result->initialize();
     
@@ -186,19 +227,16 @@ void DisplayBox::onMouseEvent (GameManager * gm, short id, int y, int x, mmask_t
             return;
         }
         int line = winY + mScrollLine;
-        int column = winX + mScrollColumn - 1; // Subtract one for the focus marker.
+        int column = winX + mScrollColumn;
         
-        bool goToMaxColumn = false;
-        if (line >= (static_cast<int>(mContent.size())))
+        if (line >= mContentHeight)
         {
-            line = static_cast<int>(mContent.size()) - 1;
-            goToMaxColumn = true;
+            line = mContentHeight - 1;
         }
         
-        if (goToMaxColumn ||
-            column > (static_cast<int>(mContent[line].size())))
+        if (column >= mContentWidth)
         {
-            column = static_cast<int>(mContent[line].size());
+            column = mContentWidth - 1;
         }
         
         handleClicked(gm, line, column);
@@ -223,20 +261,16 @@ void DisplayBox::onDrawClient () const
     int i = 0;
     for (; i < clientHeight(); ++i)
     {
-        if (i + mScrollLine >= static_cast<int>(mContent.size()))
+        if (i + mScrollLine >= mContentHeight)
         {
             break;
         }
         
-        std::string lineText = "";
-        if (mScrollColumn < static_cast<int>(mContent[i + mScrollLine].size()))
-        {
-            lineText = mContent[i + mScrollLine].substr(mScrollColumn, textClientWidth());
-        }
+        std::string lineText = mContent[i + mScrollLine].substr(mScrollColumn, textClientWidth());
         
         if (hasDirectFocus() && mAllowCursor)
         {
-            ConsoleManager::printMessage(*this, i, 1, textClientWidth(), lineText, clientForeColor(), clientBackColor(), Justification::Horizontal::left, true, mCursorLine - mScrollLine, mCursorColumn - mScrollColumn + 1);
+            ConsoleManager::printMessage(*this, i, 1, textClientWidth(), lineText, clientForeColor(), clientBackColor(), Justification::Horizontal::left, true, mCursorLine - mScrollLine, mCursorColumn - mScrollColumn);
         }
         else
         {
@@ -290,6 +324,11 @@ DisplayBox::ClickedEvent * DisplayBox::clicked ()
     return mClicked.get();
 }
 
+DisplayBox::ScrollChangedEvent * DisplayBox::scrollChanged ()
+{
+    return mScrollChanged.get();
+}
+
 DisplayBox::CursorChangedEvent * DisplayBox::cursorChanged ()
 {
     return mCursorChanged.get();
@@ -302,9 +341,26 @@ void DisplayBox::notify (int id, GameManager * gm, const Button * button)
         return;
     }
     
+    bool scrollMoved = false;
     bool cursorMoved = false;
     
-    if (button->name() == moveCursorUpButtonName)
+    if (button->name() == scrollUpButtonName)
+    {
+        scrollMoved = scrollUp();
+    }
+    else if (button->name() == scrollDownButtonName)
+    {
+        scrollMoved = scrollDown();
+    }
+    else if (button->name() == scrollLeftButtonName)
+    {
+        scrollMoved = scrollLeft();
+    }
+    else if (button->name() == scrollRightButtonName)
+    {
+        scrollMoved = scrollRight();
+    }
+    else if (button->name() == moveCursorUpButtonName)
     {
         cursorMoved = moveCursorUp();
     }
@@ -321,7 +377,11 @@ void DisplayBox::notify (int id, GameManager * gm, const Button * button)
         cursorMoved = moveCursorRight();
     }
     
-    if (cursorMoved)
+    if (scrollMoved)
+    {
+        handleScrollChanged(gm, mScrollLine, mScrollColumn);
+    }
+    else if (cursorMoved)
     {
         handleCursorChanged(gm, mCursorLine, mCursorColumn);
     }
@@ -332,14 +392,87 @@ void DisplayBox::handleClicked (GameManager * gm, int y, int x) const
     mClicked->signal(gm, this, y, x);
 }
 
+void DisplayBox::handleScrollChanged (GameManager * gm, int y, int x) const
+{
+    mScrollChanged->signal(gm, this, y, x);
+}
+
 void DisplayBox::handleCursorChanged (GameManager * gm, int y, int x) const
 {
     mCursorChanged->signal(gm, this, y, x);
 }
 
+int DisplayBox::getScrollY () const
+{
+    return mScrollLine;
+}
+
+int DisplayBox::getScrollX () const
+{
+    return mScrollColumn;
+}
+
+bool DisplayBox::scrollUp ()
+{
+    if ((mContentHeight - mScrollLine) > clientHeight())
+    {
+        ++mScrollLine;
+        
+        return true;
+    }
+    
+    return false;
+}
+
+bool DisplayBox::scrollDown ()
+{
+    if (mScrollLine > 0)
+    {
+        --mScrollLine;
+        
+        return true;
+    }
+
+    return false;
+}
+
+bool DisplayBox::scrollLeft ()
+{
+    if ((mContentWidth - mScrollColumn) > textClientWidth())
+    {
+        ++mScrollColumn;
+        
+        return true;
+    }
+    
+    return false;
+}
+
+bool DisplayBox::scrollRight ()
+{
+    if (mScrollColumn > 0)
+    {
+        --mScrollColumn;
+        
+        return true;
+    }
+
+    return false;
+}
+
+int DisplayBox::getCursorY () const
+{
+    return mCursorLine;
+}
+
+int DisplayBox::getCursorX () const
+{
+    return mCursorColumn;
+}
+
 bool DisplayBox::moveCursorUp ()
 {
-    if (mCursorLine > mScrollLine)
+    if (mCursorLine > 0)
     {
         --mCursorLine;
         
@@ -351,8 +484,7 @@ bool DisplayBox::moveCursorUp ()
 
 bool DisplayBox::moveCursorDown ()
 {
-    if (mCursorLine < (mContentHeight - 1) &&
-        mCursorLine < (clientHeight() - mScrollLine - 1))
+    if (mCursorLine < (mContentHeight - 1))
     {
         ++mCursorLine;
         
@@ -364,7 +496,7 @@ bool DisplayBox::moveCursorDown ()
 
 bool DisplayBox::moveCursorLeft ()
 {
-    if (mCursorColumn > mScrollColumn)
+    if (mCursorColumn > 0)
     {
         --mCursorColumn;
         
@@ -376,8 +508,7 @@ bool DisplayBox::moveCursorLeft ()
 
 bool DisplayBox::moveCursorRight ()
 {
-    if (mCursorColumn < (mContentWidth - 1) &&
-        mCursorColumn < (textClientWidth() - mScrollColumn - 1))
+    if (mCursorColumn < (mContentWidth - 1))
     {
         ++mCursorColumn;
         
@@ -386,6 +517,6 @@ bool DisplayBox::moveCursorRight ()
     
     return false;
 }
-    
+
 } // namespace Curses
 } // namespace TUCUT
