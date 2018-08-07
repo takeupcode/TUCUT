@@ -20,23 +20,22 @@ namespace TUCUT {
 namespace Curses {
         
 const std::string DisplayBox::windowName = "parent";
-const std::string DisplayBox::scrollUpButtonName = "scrollUpButton";
-const std::string DisplayBox::scrollDownButtonName = "scrollDownButton";
-const std::string DisplayBox::scrollLeftButtonName = "scrollLeftButton";
-const std::string DisplayBox::scrollRightButtonName = "scrollRightButton";
-const std::string DisplayBox::moveCursorUpButtonName = "moveUpButton";
-const std::string DisplayBox::moveCursorDownButtonName = "moveDownButton";
-const std::string DisplayBox::moveCursorLeftButtonName = "moveLeftButton";
-const std::string DisplayBox::moveCursorRightButtonName = "moveRightButton";
+const std::string DisplayBox::moveCenterUpButtonName = "moveCenterUpButton";
+const std::string DisplayBox::moveCenterDownButtonName = "moveCenterDownButton";
+const std::string DisplayBox::moveCenterLeftButtonName = "moveCenterLeftButton";
+const std::string DisplayBox::moveCenterRightButtonName = "moveCenterRightButton";
 
-DisplayBox::DisplayBox (const std::string & name, int y, int x, int height, int width, int contentHeight, int contentWidth, int foreColor, int backColor, bool allowScrolling, bool allowCursor)
+DisplayBox::DisplayBox (const std::string & name, int y, int x, int height, int width, int contentHeight, int contentWidth, int foreColor, int backColor, bool autoScrolling, bool allowCenterControls, bool showClickLocation)
 : Control(name, y, x, height, width, foreColor, backColor, foreColor, backColor),
   mClicked(new ClickedEvent(ClickedEventId)),
   mScrollChanged(new ScrollChangedEvent(ScrollChangedEventId)),
-  mCursorChanged(new CursorChangedEvent(CursorChangedEventId)),
-  mScrollLine(0), mScrollColumn(0), mCursorLine(0), mCursorColumn(0),
+  mCenterChanged(new CenterChangedEvent(CenterChangedEventId)),
+  mClickedLine(0), mClickedColumn(0),
+  mScrollLine(0), mScrollColumn(0),
+  mCenterLine(0), mCenterColumn(0),
   mContentHeight(contentHeight), mContentWidth(contentWidth),
-  mAllowScrolling(allowScrolling), mAllowCursor(allowCursor)
+  mAutoScrolling(autoScrolling), mAllowCenterControls(allowCenterControls),
+  mShowClickLocation(showClickLocation), mIsClickLocationCurrent(false)
 {
     if (height < 4)
     {
@@ -83,80 +82,45 @@ void DisplayBox::initialize ()
 {
     Control::initialize();
     
-    if (mAllowScrolling)
+    if (mAllowCenterControls)
     {
-        mScrollLeftButton = Button::createSharedButton(scrollLeftButtonName, "<", 0, 0, 1, 1, Colors::COLOR_DIM_BLACK, Colors::COLOR_DIM_WHITE, Colors::COLOR_DIM_BLACK, Colors::COLOR_DIM_WHITE);
-        mScrollLeftButton->clicked()->connect(windowName, getSharedDisplayBox());
-        mScrollLeftButton->setIsDirectFocusPossible(false);
-        addControl(mScrollLeftButton);
-        
-        mScrollRightButton = Button::createSharedButton(scrollRightButtonName, ">", 0, 0, 1, 1, Colors::COLOR_DIM_BLACK, Colors::COLOR_DIM_WHITE, Colors::COLOR_DIM_BLACK, Colors::COLOR_DIM_WHITE);
-        mScrollRightButton->clicked()->connect(windowName, getSharedDisplayBox());
-        mScrollRightButton->setIsDirectFocusPossible(false);
-        addControl(mScrollRightButton);
-        
-        mScrollUpButton = Button::createSharedButton(scrollUpButtonName, "+", 0, 0, 1, 1, Colors::COLOR_DIM_BLACK, Colors::COLOR_DIM_WHITE, Colors::COLOR_DIM_BLACK, Colors::COLOR_DIM_WHITE);
-        mScrollUpButton->clicked()->connect(windowName, getSharedDisplayBox());
-        mScrollUpButton->setIsDirectFocusPossible(false);
-        addControl(mScrollUpButton);
-        
-        mScrollDownButton = Button::createSharedButton(scrollDownButtonName, "-", 0, 0, 1, 1, Colors::COLOR_DIM_BLACK, Colors::COLOR_DIM_WHITE, Colors::COLOR_DIM_BLACK, Colors::COLOR_DIM_WHITE);
-        mScrollDownButton->clicked()->connect(windowName, getSharedDisplayBox());
-        mScrollDownButton->setIsDirectFocusPossible(false);
-        addControl(mScrollDownButton);
-        
-        mScrollUpButton->setAnchorTop(0);
-        mScrollUpButton->setAnchorLeft(0);
-        
-        mScrollDownButton->setAnchorTop(1);
-        mScrollDownButton->setAnchorLeft(0);
-        
-        mScrollLeftButton->setAnchorTop(2);
-        mScrollLeftButton->setAnchorLeft(0);
-        
-        mScrollRightButton->setAnchorTop(3);
-        mScrollRightButton->setAnchorLeft(0);
-    }
+        mMoveCenterLeftButton = Button::createSharedButton(moveCenterLeftButtonName, "<", 0, 0, 1, 1, Colors::COLOR_DIM_BLACK, Colors::COLOR_DIM_WHITE, Colors::COLOR_DIM_BLACK, Colors::COLOR_DIM_WHITE);
+        mMoveCenterLeftButton->clicked()->connect(windowName, getSharedDisplayBox());
+        mMoveCenterLeftButton->setIsDirectFocusPossible(false);
+        addControl(mMoveCenterLeftButton);
 
-    if (mAllowCursor)
-    {
-        mMoveCursorLeftButton = Button::createSharedButton(moveCursorLeftButtonName, "<", 0, 0, 1, 1, Colors::COLOR_DIM_BLACK, Colors::COLOR_DIM_WHITE, Colors::COLOR_DIM_BLACK, Colors::COLOR_DIM_WHITE);
-        mMoveCursorLeftButton->clicked()->connect(windowName, getSharedDisplayBox());
-        mMoveCursorLeftButton->setIsDirectFocusPossible(false);
-        addControl(mMoveCursorLeftButton);
+        mMoveCenterRightButton = Button::createSharedButton(moveCenterRightButtonName, ">", 0, 0, 1, 1, Colors::COLOR_DIM_BLACK, Colors::COLOR_DIM_WHITE, Colors::COLOR_DIM_BLACK, Colors::COLOR_DIM_WHITE);
+        mMoveCenterRightButton->clicked()->connect(windowName, getSharedDisplayBox());
+        mMoveCenterRightButton->setIsDirectFocusPossible(false);
+        addControl(mMoveCenterRightButton);
 
-        mMoveCursorRightButton = Button::createSharedButton(moveCursorRightButtonName, ">", 0, 0, 1, 1, Colors::COLOR_DIM_BLACK, Colors::COLOR_DIM_WHITE, Colors::COLOR_DIM_BLACK, Colors::COLOR_DIM_WHITE);
-        mMoveCursorRightButton->clicked()->connect(windowName, getSharedDisplayBox());
-        mMoveCursorRightButton->setIsDirectFocusPossible(false);
-        addControl(mMoveCursorRightButton);
-
-        mMoveCursorUpButton = Button::createSharedButton(moveCursorUpButtonName, "+", 0, 0, 1, 1, Colors::COLOR_DIM_BLACK, Colors::COLOR_DIM_WHITE, Colors::COLOR_DIM_BLACK, Colors::COLOR_DIM_WHITE);
-        mMoveCursorUpButton->clicked()->connect(windowName, getSharedDisplayBox());
-        mMoveCursorUpButton->setIsDirectFocusPossible(false);
-        addControl(mMoveCursorUpButton);
+        mMoveCenterUpButton = Button::createSharedButton(moveCenterUpButtonName, "+", 0, 0, 1, 1, Colors::COLOR_DIM_BLACK, Colors::COLOR_DIM_WHITE, Colors::COLOR_DIM_BLACK, Colors::COLOR_DIM_WHITE);
+        mMoveCenterUpButton->clicked()->connect(windowName, getSharedDisplayBox());
+        mMoveCenterUpButton->setIsDirectFocusPossible(false);
+        addControl(mMoveCenterUpButton);
         
-        mMoveCursorDownButton = Button::createSharedButton(moveCursorDownButtonName, "-", 0, 0, 1, 1, Colors::COLOR_DIM_BLACK, Colors::COLOR_DIM_WHITE, Colors::COLOR_DIM_BLACK, Colors::COLOR_DIM_WHITE);
-        mMoveCursorDownButton->clicked()->connect(windowName, getSharedDisplayBox());
-        mMoveCursorDownButton->setIsDirectFocusPossible(false);
-        addControl(mMoveCursorDownButton);
+        mMoveCenterDownButton = Button::createSharedButton(moveCenterDownButtonName, "-", 0, 0, 1, 1, Colors::COLOR_DIM_BLACK, Colors::COLOR_DIM_WHITE, Colors::COLOR_DIM_BLACK, Colors::COLOR_DIM_WHITE);
+        mMoveCenterDownButton->clicked()->connect(windowName, getSharedDisplayBox());
+        mMoveCenterDownButton->setIsDirectFocusPossible(false);
+        addControl(mMoveCenterDownButton);
         
-        mMoveCursorUpButton->setAnchorTop(0);
-        mMoveCursorUpButton->setAnchorRight(0);
+        mMoveCenterUpButton->setAnchorTop(0);
+        mMoveCenterUpButton->setAnchorRight(0);
         
-        mMoveCursorDownButton->setAnchorTop(1);
-        mMoveCursorDownButton->setAnchorRight(0);
+        mMoveCenterDownButton->setAnchorTop(1);
+        mMoveCenterDownButton->setAnchorRight(0);
         
-        mMoveCursorLeftButton->setAnchorTop(2);
-        mMoveCursorLeftButton->setAnchorRight(0);
+        mMoveCenterLeftButton->setAnchorTop(2);
+        mMoveCenterLeftButton->setAnchorRight(0);
         
-        mMoveCursorRightButton->setAnchorTop(3);
-        mMoveCursorRightButton->setAnchorRight(0);
+        mMoveCenterRightButton->setAnchorTop(3);
+        mMoveCenterRightButton->setAnchorRight(0);
     }
 }
 
-std::shared_ptr<DisplayBox> DisplayBox::createSharedDisplayBox (const std::string & name, int y, int x, int height, int width, int contentHeight, int contentWidth, int foreColor, int backColor, bool allowScrolling, bool allowCursor)
+std::shared_ptr<DisplayBox> DisplayBox::createSharedDisplayBox (const std::string & name, int y, int x, int height, int width, int contentHeight, int contentWidth, int foreColor, int backColor, bool autoScrolling, bool allowCenterControls, bool showClickLocation)
 {
-    auto result = std::shared_ptr<DisplayBox>(new DisplayBox(name, y, x, height, width, contentHeight, contentWidth, foreColor, backColor, allowScrolling, allowCursor));
+    auto result = std::shared_ptr<DisplayBox>(new DisplayBox(name, y, x, height, width, contentHeight, contentWidth, foreColor, backColor, autoScrolling, allowCenterControls, showClickLocation));
     
     result->initialize();
     
@@ -175,7 +139,7 @@ bool DisplayBox::onKeyPress (GameManager * gm, int key)
         return false;
     }
 
-    if (!mAllowCursor)
+    if (!mAllowCenterControls)
     {
         if (parent())
         {
@@ -184,24 +148,41 @@ bool DisplayBox::onKeyPress (GameManager * gm, int key)
     }
     else
     {
-        bool cursorMoved = false;
-        
+        bool scrollMoved = false;
+        bool centerMoved = false;
+
         switch (key)
         {
             case KEY_UP:
-                cursorMoved = moveCursorUp();
+                if (mAutoScrolling)
+                {
+                    scrollMoved = scrollDown();
+                }
+                centerMoved = moveCenterUp();
                 break;
                 
             case KEY_DOWN:
-                cursorMoved = moveCursorDown();
+                if (mAutoScrolling)
+                {
+                    scrollMoved = scrollUp();
+                }
+                centerMoved = moveCenterDown();
                 break;
                 
             case KEY_LEFT:
-                cursorMoved = moveCursorLeft();
+                if (mAutoScrolling)
+                {
+                    scrollMoved = scrollRight();
+                }
+                centerMoved = moveCenterLeft();
                 break;
                 
             case KEY_RIGHT:
-                cursorMoved = moveCursorRight();
+                if (mAutoScrolling)
+                {
+                    scrollMoved = scrollLeft();
+                }
+                centerMoved = moveCenterRight();
                 break;
                 
             default:
@@ -212,9 +193,13 @@ bool DisplayBox::onKeyPress (GameManager * gm, int key)
                 break;
         }
         
-        if (cursorMoved)
+        if (scrollMoved)
         {
-            handleCursorChanged(gm, mCursorLine, mCursorColumn);
+            handleScrollChanged(gm, mScrollLine, mScrollColumn);
+        }
+        if (centerMoved)
+        {
+            handleCenterChanged(gm, mCenterLine, mCenterColumn);
         }
     }
     
@@ -252,15 +237,14 @@ void DisplayBox::onMouseEvent (GameManager * gm, short id, int y, int x, mmask_t
             column = mContentWidth - 1;
         }
         
-        handleClicked(gm, line, column);
-        
-        if (mCursorLine != line || mCursorColumn != column)
+        if (mClickedLine != line || mClickedColumn != column)
         {
-            mCursorLine = line;
-            mCursorColumn = column;
-            
-            handleCursorChanged(gm, mCursorLine, mCursorColumn);
+            mClickedLine = line;
+            mClickedColumn = column;
         }
+
+        mIsClickLocationCurrent = true;
+        handleClicked(gm, mClickedLine, mClickedColumn);
     }
 }
 
@@ -281,9 +265,9 @@ void DisplayBox::onDrawClient () const
         
         std::string lineText = mContent[i + mScrollLine].substr(mScrollColumn, textClientWidth());
         
-        if (hasDirectFocus() && mAllowCursor)
+        if (hasDirectFocus() && mShowClickLocation && mIsClickLocationCurrent)
         {
-            ConsoleManager::printMessage(*this, i, 1, textClientWidth(), lineText, clientForeColor(), clientBackColor(), Justification::Horizontal::left, true, mCursorLine - mScrollLine, mCursorColumn - mScrollColumn + 1);
+            ConsoleManager::printMessage(*this, i, 1, textClientWidth(), lineText, clientForeColor(), clientBackColor(), Justification::Horizontal::left, true, mClickedLine - mScrollLine, mClickedColumn - mScrollColumn + 1);
         }
         else
         {
@@ -342,9 +326,9 @@ DisplayBox::ScrollChangedEvent * DisplayBox::scrollChanged ()
     return mScrollChanged.get();
 }
 
-DisplayBox::CursorChangedEvent * DisplayBox::cursorChanged ()
+DisplayBox::CenterChangedEvent * DisplayBox::centerChanged ()
 {
-    return mCursorChanged.get();
+    return mCenterChanged.get();
 }
 
 void DisplayBox::notify (int id, GameManager * gm, const Button * button)
@@ -355,48 +339,48 @@ void DisplayBox::notify (int id, GameManager * gm, const Button * button)
     }
     
     bool scrollMoved = false;
-    bool cursorMoved = false;
+    bool centerMoved = false;
     
-    if (button->name() == scrollUpButtonName)
+    if (button->name() == moveCenterUpButtonName)
     {
-        scrollMoved = scrollUp();
+        if (mAutoScrolling)
+        {
+            scrollMoved = scrollDown();
+        }
+        centerMoved = moveCenterUp();
     }
-    else if (button->name() == scrollDownButtonName)
+    else if (button->name() == moveCenterDownButtonName)
     {
-        scrollMoved = scrollDown();
+        if (mAutoScrolling)
+        {
+            scrollMoved = scrollUp();
+        }
+        centerMoved = moveCenterDown();
     }
-    else if (button->name() == scrollLeftButtonName)
+    else if (button->name() == moveCenterLeftButtonName)
     {
-        scrollMoved = scrollLeft();
+        if (mAutoScrolling)
+        {
+            scrollMoved = scrollRight();
+        }
+        centerMoved = moveCenterLeft();
     }
-    else if (button->name() == scrollRightButtonName)
+    else if (button->name() == moveCenterRightButtonName)
     {
-        scrollMoved = scrollRight();
-    }
-    else if (button->name() == moveCursorUpButtonName)
-    {
-        cursorMoved = moveCursorUp();
-    }
-    else if (button->name() == moveCursorDownButtonName)
-    {
-        cursorMoved = moveCursorDown();
-    }
-    else if (button->name() == moveCursorLeftButtonName)
-    {
-        cursorMoved = moveCursorLeft();
-    }
-    else if (button->name() == moveCursorRightButtonName)
-    {
-        cursorMoved = moveCursorRight();
+        if (mAutoScrolling)
+        {
+            scrollMoved = scrollLeft();
+        }
+        centerMoved = moveCenterRight();
     }
     
     if (scrollMoved)
     {
         handleScrollChanged(gm, mScrollLine, mScrollColumn);
     }
-    else if (cursorMoved)
+    if (centerMoved)
     {
-        handleCursorChanged(gm, mCursorLine, mCursorColumn);
+        handleCenterChanged(gm, mCenterLine, mCenterColumn);
     }
 }
 
@@ -410,9 +394,24 @@ void DisplayBox::handleScrollChanged (GameManager * gm, int y, int x) const
     mScrollChanged->signal(gm, this, y, x);
 }
 
-void DisplayBox::handleCursorChanged (GameManager * gm, int y, int x) const
+void DisplayBox::handleCenterChanged (GameManager * gm, int y, int x) const
 {
-    mCursorChanged->signal(gm, this, y, x);
+    mCenterChanged->signal(gm, this, y, x);
+}
+
+bool DisplayBox::isClickLocationCurrent () const
+{
+    return mIsClickLocationCurrent;
+}
+
+int DisplayBox::getClickedY () const
+{
+    return mClickedLine;
+}
+
+int DisplayBox::getClickedX () const
+{
+    return mClickedColumn;
 }
 
 int DisplayBox::getScrollY () const
@@ -431,6 +430,7 @@ bool DisplayBox::scrollUp ()
     {
         ++mScrollLine;
         
+        mIsClickLocationCurrent = false;
         return true;
     }
     
@@ -443,6 +443,7 @@ bool DisplayBox::scrollDown ()
     {
         --mScrollLine;
         
+        mIsClickLocationCurrent = false;
         return true;
     }
 
@@ -455,6 +456,7 @@ bool DisplayBox::scrollLeft ()
     {
         ++mScrollColumn;
         
+        mIsClickLocationCurrent = false;
         return true;
     }
     
@@ -467,64 +469,69 @@ bool DisplayBox::scrollRight ()
     {
         --mScrollColumn;
         
+        mIsClickLocationCurrent = false;
         return true;
     }
 
     return false;
 }
 
-int DisplayBox::getCursorY () const
+int DisplayBox::getCenterY () const
 {
-    return mCursorLine;
+    return mCenterLine;
 }
 
-int DisplayBox::getCursorX () const
+int DisplayBox::getCenterX () const
 {
-    return mCursorColumn;
+    return mCenterColumn;
 }
 
-bool DisplayBox::moveCursorUp ()
+bool DisplayBox::moveCenterUp ()
 {
-    if (mCursorLine > 0)
+    if (mCenterLine > 0)
     {
-        --mCursorLine;
+        --mCenterLine;
         
-        return true;
-    }
-    
-    return false;
-}
-
-bool DisplayBox::moveCursorDown ()
-{
-    if (mCursorLine < (mContentHeight - 1))
-    {
-        ++mCursorLine;
-        
+        mIsClickLocationCurrent = false;
         return true;
     }
     
     return false;
 }
 
-bool DisplayBox::moveCursorLeft ()
+bool DisplayBox::moveCenterDown ()
 {
-    if (mCursorColumn > 0)
+    if (mCenterLine < (mContentHeight - 1))
     {
-        --mCursorColumn;
+        ++mCenterLine;
         
+        mIsClickLocationCurrent = false;
         return true;
     }
     
     return false;
 }
 
-bool DisplayBox::moveCursorRight ()
+bool DisplayBox::moveCenterLeft ()
 {
-    if (mCursorColumn < (mContentWidth - 1))
+    if (mCenterColumn > 0)
     {
-        ++mCursorColumn;
+        --mCenterColumn;
         
+        mIsClickLocationCurrent = false;
+        return true;
+    }
+    
+    return false;
+}
+
+bool DisplayBox::moveCenterRight ()
+{
+    if (mCenterColumn < (mContentWidth - 1))
+    {
+        ++mCenterColumn;
+        
+        mIsClickLocationCurrent = false;
         return true;
     }
     

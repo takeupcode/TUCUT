@@ -26,13 +26,13 @@ class DisplayBox : public Control, public Event::EventSubscriber<GameManager *, 
 public:
     const static int ClickedEventId = 1;
     const static int ScrollChangedEventId = 2;
-    const static int CursorChangedEventId = 3;
+    const static int CenterChangedEventId = 3;
 
     using ClickedEvent = Event::EventPublisher<GameManager *, const DisplayBox *, int, int>;
     using ScrollChangedEvent = Event::EventPublisher<GameManager *, const DisplayBox *, int, int>;
-    using CursorChangedEvent = Event::EventPublisher<GameManager *, const DisplayBox *, int, int>;
+    using CenterChangedEvent = Event::EventPublisher<GameManager *, const DisplayBox *, int, int>;
 
-    static std::shared_ptr<DisplayBox> createSharedDisplayBox (const std::string & name, int y, int x, int height, int width, int contentHeight, int contentWidth, int foreColor, int backColor, bool allowScrolling = false, bool allowCursor = false);
+    static std::shared_ptr<DisplayBox> createSharedDisplayBox (const std::string & name, int y, int x, int height, int width, int contentHeight, int contentWidth, int foreColor, int backColor, bool autoScrolling = false, bool allowCenterControls = false, bool showClickLocation = false);
     
     std::shared_ptr<DisplayBox> getSharedDisplayBox ();
     
@@ -52,6 +52,10 @@ public:
     
     void setSymbol (char symbol, int y, int x);
 
+    bool isClickLocationCurrent () const;
+    int getClickedY () const;
+    int getClickedX () const;
+
     int getScrollY () const;
     int getScrollX () const;
     
@@ -60,22 +64,22 @@ public:
     bool scrollLeft ();
     bool scrollRight ();
 
-    int getCursorY () const;
-    int getCursorX () const;
+    int getCenterY () const;
+    int getCenterX () const;
 
-    bool moveCursorUp ();
-    bool moveCursorDown ();
-    bool moveCursorLeft ();
-    bool moveCursorRight ();
+    bool moveCenterUp ();
+    bool moveCenterDown ();
+    bool moveCenterLeft ();
+    bool moveCenterRight ();
 
     ClickedEvent * clicked ();
     
     ScrollChangedEvent * scrollChanged ();
     
-    CursorChangedEvent * cursorChanged ();
+    CenterChangedEvent * centerChanged ();
 
 protected:
-    DisplayBox (const std::string & name, int y, int x, int height, int width, int contentHeight, int contentWidth, int foreColor, int backColor, bool allowScrolling, bool allowCursor);
+    DisplayBox (const std::string & name, int y, int x, int height, int width, int contentHeight, int contentWidth, int foreColor, int backColor, bool autoScrolling, bool allowCenterControls, bool showClickLocation);
     
     void initialize () override;
     
@@ -86,38 +90,34 @@ private:
     
     void handleScrollChanged (GameManager * gm, int y, int x) const;
     
-    void handleCursorChanged (GameManager * gm, int y, int x) const;
+    void handleCenterChanged (GameManager * gm, int y, int x) const;
 
     static const std::string windowName;
-    static const std::string scrollUpButtonName;
-    static const std::string scrollDownButtonName;
-    static const std::string scrollLeftButtonName;
-    static const std::string scrollRightButtonName;
-    static const std::string moveCursorUpButtonName;
-    static const std::string moveCursorDownButtonName;
-    static const std::string moveCursorLeftButtonName;
-    static const std::string moveCursorRightButtonName;
+    static const std::string moveCenterUpButtonName;
+    static const std::string moveCenterDownButtonName;
+    static const std::string moveCenterLeftButtonName;
+    static const std::string moveCenterRightButtonName;
 
     std::vector<std::string> mContent;
     std::unique_ptr<ClickedEvent> mClicked;
     std::unique_ptr<ScrollChangedEvent> mScrollChanged;
-    std::unique_ptr<CursorChangedEvent> mCursorChanged;
-    std::shared_ptr<Button> mScrollUpButton;
-    std::shared_ptr<Button> mScrollDownButton;
-    std::shared_ptr<Button> mScrollLeftButton;
-    std::shared_ptr<Button> mScrollRightButton;
-    std::shared_ptr<Button> mMoveCursorUpButton;
-    std::shared_ptr<Button> mMoveCursorDownButton;
-    std::shared_ptr<Button> mMoveCursorLeftButton;
-    std::shared_ptr<Button> mMoveCursorRightButton;
+    std::unique_ptr<CenterChangedEvent> mCenterChanged;
+    std::shared_ptr<Button> mMoveCenterUpButton;
+    std::shared_ptr<Button> mMoveCenterDownButton;
+    std::shared_ptr<Button> mMoveCenterLeftButton;
+    std::shared_ptr<Button> mMoveCenterRightButton;
+    int mClickedLine;
+    int mClickedColumn;
     int mScrollLine;
     int mScrollColumn;
-    int mCursorLine;
-    int mCursorColumn;
+    int mCenterLine;
+    int mCenterColumn;
     int mContentHeight;
     int mContentWidth;
-    bool mAllowScrolling;
-    bool mAllowCursor;
+    bool mAutoScrolling;
+    bool mAllowCenterControls;
+    bool mShowClickLocation;
+    bool mIsClickLocationCurrent;
 };
         
 } // namespace Curses
