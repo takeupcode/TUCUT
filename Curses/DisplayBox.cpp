@@ -60,9 +60,22 @@ DisplayBox::DisplayBox (const std::string & name, int y, int x, int height, int 
     
     setFillClientArea(false);
     
+    std::string columnMarkers;
+    for (int i = 0; i < mContentWidth; i++)
+    {
+        columnMarkers += '0' + i % 10;
+    }
+
     for (int i = 0; i < mContentHeight; i++)
     {
-        mContent.push_back(std::string(mContentWidth, ' '));
+        if (i % 2)
+        {
+            mContent.push_back(columnMarkers);
+        }
+        else
+        {
+            mContent.push_back(std::string(mContentWidth, '0' + i % 10));
+        }
     }
 }
 
@@ -227,7 +240,7 @@ void DisplayBox::onMouseEvent (GameManager * gm, short id, int y, int x, mmask_t
             return;
         }
         int line = winY + mScrollLine;
-        int column = winX + mScrollColumn;
+        int column = winX + mScrollColumn - 1; // Subtract one for the focus marker.
         
         if (line >= mContentHeight)
         {
@@ -270,7 +283,7 @@ void DisplayBox::onDrawClient () const
         
         if (hasDirectFocus() && mAllowCursor)
         {
-            ConsoleManager::printMessage(*this, i, 1, textClientWidth(), lineText, clientForeColor(), clientBackColor(), Justification::Horizontal::left, true, mCursorLine - mScrollLine, mCursorColumn - mScrollColumn);
+            ConsoleManager::printMessage(*this, i, 1, textClientWidth(), lineText, clientForeColor(), clientBackColor(), Justification::Horizontal::left, true, mCursorLine - mScrollLine, mCursorColumn - mScrollColumn + 1);
         }
         else
         {
