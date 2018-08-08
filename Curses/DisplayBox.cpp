@@ -25,7 +25,7 @@ const std::string DisplayBox::moveCenterDownButtonName = "moveCenterDownButton";
 const std::string DisplayBox::moveCenterLeftButtonName = "moveCenterLeftButton";
 const std::string DisplayBox::moveCenterRightButtonName = "moveCenterRightButton";
 
-DisplayBox::DisplayBox (const std::string & name, int y, int x, int height, int width, int contentHeight, int contentWidth, int foreColor, int backColor, bool autoScrolling, bool allowCenterControls, bool showClickLocation)
+DisplayBox::DisplayBox (const std::string & name, char centerChar, int y, int x, int height, int width, int contentHeight, int contentWidth, int foreColor, int backColor, bool autoScrolling, bool allowCenterControls, bool showClickLocation)
 : Control(name, y, x, height, width, foreColor, backColor, foreColor, backColor),
   mClicked(new ClickedEvent(ClickedEventId)),
   mScrollChanged(new ScrollChangedEvent(ScrollChangedEventId)),
@@ -33,7 +33,7 @@ DisplayBox::DisplayBox (const std::string & name, int y, int x, int height, int 
   mClickedLine(0), mClickedColumn(0),
   mScrollLine(0), mScrollColumn(0),
   mCenterLine(0), mCenterColumn(0),
-  mContentHeight(contentHeight), mContentWidth(contentWidth),
+  mContentHeight(contentHeight), mContentWidth(contentWidth), mCenterChar(centerChar),
   mAutoScrolling(autoScrolling), mAllowCenterControls(allowCenterControls),
   mShowClickLocation(showClickLocation), mIsClickLocationCurrent(false)
 {
@@ -118,9 +118,9 @@ void DisplayBox::initialize ()
     }
 }
 
-std::shared_ptr<DisplayBox> DisplayBox::createSharedDisplayBox (const std::string & name, int y, int x, int height, int width, int contentHeight, int contentWidth, int foreColor, int backColor, bool autoScrolling, bool allowCenterControls, bool showClickLocation)
+std::shared_ptr<DisplayBox> DisplayBox::createSharedDisplayBox (const std::string & name, char centerChar, int y, int x, int height, int width, int contentHeight, int contentWidth, int foreColor, int backColor, bool autoScrolling, bool allowCenterControls, bool showClickLocation)
 {
-    auto result = std::shared_ptr<DisplayBox>(new DisplayBox(name, y, x, height, width, contentHeight, contentWidth, foreColor, backColor, autoScrolling, allowCenterControls, showClickLocation));
+    auto result = std::shared_ptr<DisplayBox>(new DisplayBox(name, centerChar, y, x, height, width, contentHeight, contentWidth, foreColor, backColor, autoScrolling, allowCenterControls, showClickLocation));
     
     result->initialize();
     
@@ -148,41 +148,22 @@ bool DisplayBox::onKeyPress (GameManager * gm, int key)
     }
     else
     {
-        bool scrollMoved = false;
-        bool centerMoved = false;
-
         switch (key)
         {
             case KEY_UP:
-                if (mAutoScrolling)
-                {
-                    scrollMoved = scrollDown();
-                }
-                centerMoved = moveCenterUp();
+                handleMoveCenterUp(gm);
                 break;
                 
             case KEY_DOWN:
-                if (mAutoScrolling)
-                {
-                    scrollMoved = scrollUp();
-                }
-                centerMoved = moveCenterDown();
+                handleMoveCenterDown(gm);
                 break;
                 
             case KEY_LEFT:
-                if (mAutoScrolling)
-                {
-                    scrollMoved = scrollRight();
-                }
-                centerMoved = moveCenterLeft();
+                handleMoveCenterLeft(gm);
                 break;
                 
             case KEY_RIGHT:
-                if (mAutoScrolling)
-                {
-                    scrollMoved = scrollLeft();
-                }
-                centerMoved = moveCenterRight();
+                handleMoveCenterRight(gm);
                 break;
                 
             default:
@@ -191,15 +172,6 @@ bool DisplayBox::onKeyPress (GameManager * gm, int key)
                     return parent()->onKeyPress(gm, key);
                 }
                 break;
-        }
-        
-        if (scrollMoved)
-        {
-            handleScrollChanged(gm, mScrollLine, mScrollColumn);
-        }
-        if (centerMoved)
-        {
-            handleCenterChanged(gm, mCenterLine, mCenterColumn);
         }
     }
     
@@ -264,7 +236,11 @@ void DisplayBox::onDrawClient () const
         }
         
         std::string lineText = mContent[i + mScrollLine].substr(mScrollColumn, textClientWidth());
-        
+        if (mCenterChar && mCenterLine == (i + mScrollLine) && mCenterColumn >= mScrollColumn)
+        {
+            lineText[mCenterColumn - mScrollColumn] = mCenterChar;
+        }
+
         if (hasDirectFocus() && mShowClickLocation && mIsClickLocationCurrent)
         {
             ConsoleManager::printMessage(*this, i, 1, textClientWidth(), lineText, clientForeColor(), clientBackColor(), Justification::Horizontal::left, true, mClickedLine - mScrollLine, mClickedColumn - mScrollColumn + 1);
@@ -338,49 +314,21 @@ void DisplayBox::notify (int id, GameManager * gm, const Button * button)
         return;
     }
     
-    bool scrollMoved = false;
-    bool centerMoved = false;
-    
     if (button->name() == moveCenterUpButtonName)
     {
-        if (mAutoScrolling)
-        {
-            scrollMoved = scrollDown();
-        }
-        centerMoved = moveCenterUp();
+        handleMoveCenterUp(gm);
     }
     else if (button->name() == moveCenterDownButtonName)
     {
-        if (mAutoScrolling)
-        {
-            scrollMoved = scrollUp();
-        }
-        centerMoved = moveCenterDown();
+        handleMoveCenterDown(gm);
     }
     else if (button->name() == moveCenterLeftButtonName)
     {
-        if (mAutoScrolling)
-        {
-            scrollMoved = scrollRight();
-        }
-        centerMoved = moveCenterLeft();
+        handleMoveCenterLeft(gm);
     }
     else if (button->name() == moveCenterRightButtonName)
     {
-        if (mAutoScrolling)
-        {
-            scrollMoved = scrollLeft();
-        }
-        centerMoved = moveCenterRight();
-    }
-    
-    if (scrollMoved)
-    {
-        handleScrollChanged(gm, mScrollLine, mScrollColumn);
-    }
-    if (centerMoved)
-    {
-        handleCenterChanged(gm, mCenterLine, mCenterColumn);
+        handleMoveCenterRight(gm);
     }
 }
 
@@ -397,6 +345,102 @@ void DisplayBox::handleScrollChanged (GameManager * gm, int y, int x) const
 void DisplayBox::handleCenterChanged (GameManager * gm, int y, int x) const
 {
     mCenterChanged->signal(gm, this, y, x);
+}
+    
+void DisplayBox::handleMoveCenterUp (GameManager * gm)
+{
+    bool centerMoved = moveCenterUp();
+    
+    bool scrollMoved = false;
+    if (mAutoScrolling)
+    {
+        int scrollPoint = clientHeight() / 2;
+        if (mCenterLine < mScrollLine || (mCenterLine - mScrollLine) < (scrollPoint - 1))
+        {
+            scrollMoved = scrollDown();
+        }
+    }
+    
+    if (centerMoved)
+    {
+        handleCenterChanged(gm, mCenterLine, mCenterColumn);
+    }
+    if (scrollMoved)
+    {
+        handleScrollChanged(gm, mScrollLine, mScrollColumn);
+    }
+}
+
+void DisplayBox::handleMoveCenterDown (GameManager * gm)
+{
+    bool centerMoved = moveCenterDown();
+    
+    bool scrollMoved = false;
+    if (mAutoScrolling)
+    {
+        int scrollPoint = (clientHeight() + 1) / 2;
+        if (mCenterLine > (mScrollLine + scrollPoint - 1))
+        {
+            scrollMoved = scrollUp();
+        }
+    }
+    
+    if (centerMoved)
+    {
+        handleCenterChanged(gm, mCenterLine, mCenterColumn);
+    }
+    if (scrollMoved)
+    {
+        handleScrollChanged(gm, mScrollLine, mScrollColumn);
+    }
+}
+
+void DisplayBox::handleMoveCenterLeft (GameManager * gm)
+{
+    bool centerMoved = moveCenterLeft();
+    
+    bool scrollMoved = false;
+    if (mAutoScrolling)
+    {
+        int scrollPoint = textClientWidth() / 2;
+        if (mCenterColumn < mScrollColumn || (mCenterColumn - mScrollColumn) < (scrollPoint - 1))
+        {
+            scrollMoved = scrollRight();
+        }
+    }
+    
+    if (centerMoved)
+    {
+        handleCenterChanged(gm, mCenterLine, mCenterColumn);
+    }
+    if (scrollMoved)
+    {
+        handleScrollChanged(gm, mScrollLine, mScrollColumn);
+    }
+}
+
+void DisplayBox::handleMoveCenterRight (GameManager * gm)
+{
+    bool centerMoved = moveCenterRight();
+    
+    bool scrollMoved = false;
+    if (mAutoScrolling)
+    {
+        int scrollPoint = (textClientWidth() + 1) / 2;
+        if (mCenterColumn > (mScrollColumn + scrollPoint - 1))
+        {
+            scrollMoved = scrollLeft();
+        }
+    }
+    
+    if (centerMoved)
+    {
+        handleCenterChanged(gm, mCenterLine, mCenterColumn);
+    }
+    if (scrollMoved)
+    {
+        handleScrollChanged(gm, mScrollLine, mScrollColumn);
+    }
 }
 
 bool DisplayBox::isClickLocationCurrent () const

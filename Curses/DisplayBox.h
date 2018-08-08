@@ -32,7 +32,7 @@ public:
     using ScrollChangedEvent = Event::EventPublisher<GameManager *, const DisplayBox *, int, int>;
     using CenterChangedEvent = Event::EventPublisher<GameManager *, const DisplayBox *, int, int>;
 
-    static std::shared_ptr<DisplayBox> createSharedDisplayBox (const std::string & name, int y, int x, int height, int width, int contentHeight, int contentWidth, int foreColor, int backColor, bool autoScrolling = false, bool allowCenterControls = false, bool showClickLocation = false);
+    static std::shared_ptr<DisplayBox> createSharedDisplayBox (const std::string & name, char centerChar, int y, int x, int height, int width, int contentHeight, int contentWidth, int foreColor, int backColor, bool autoScrolling = false, bool allowCenterControls = false, bool showClickLocation = false);
     
     std::shared_ptr<DisplayBox> getSharedDisplayBox ();
     
@@ -79,7 +79,7 @@ public:
     CenterChangedEvent * centerChanged ();
 
 protected:
-    DisplayBox (const std::string & name, int y, int x, int height, int width, int contentHeight, int contentWidth, int foreColor, int backColor, bool autoScrolling, bool allowCenterControls, bool showClickLocation);
+    DisplayBox (const std::string & name, char centerChar, int y, int x, int height, int width, int contentHeight, int contentWidth, int foreColor, int backColor, bool autoScrolling, bool allowCenterControls, bool showClickLocation);
     
     void initialize () override;
     
@@ -91,6 +91,11 @@ private:
     void handleScrollChanged (GameManager * gm, int y, int x) const;
     
     void handleCenterChanged (GameManager * gm, int y, int x) const;
+    
+    void handleMoveCenterUp (GameManager * gm);
+    void handleMoveCenterDown (GameManager * gm);
+    void handleMoveCenterLeft (GameManager * gm);
+    void handleMoveCenterRight (GameManager * gm);
 
     static const std::string windowName;
     static const std::string moveCenterUpButtonName;
@@ -114,6 +119,7 @@ private:
     int mCenterColumn;
     int mContentHeight;
     int mContentWidth;
+    char mCenterChar;
     bool mAutoScrolling;
     bool mAllowCenterControls;
     bool mShowClickLocation;
