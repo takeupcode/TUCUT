@@ -353,7 +353,7 @@ void DisplayBox::handleMoveCenterUp (GameManager * gm)
     bool scrollMoved = false;
     if (mAutoScrolling)
     {
-        int scrollPoint = clientHeight() / 2;
+        int scrollPoint = clientHeight() / 3;
         if (mCenterLine < mScrollLine || (mCenterLine - mScrollLine) < (scrollPoint - 1))
         {
             scrollMoved = scrollDown();
@@ -377,7 +377,7 @@ void DisplayBox::handleMoveCenterDown (GameManager * gm)
     bool scrollMoved = false;
     if (mAutoScrolling)
     {
-        int scrollPoint = (clientHeight() + 1) / 2;
+        int scrollPoint = (clientHeight() + 1) * 2 / 3;
         if (mCenterLine > (mScrollLine + scrollPoint - 1))
         {
             scrollMoved = scrollUp();
@@ -401,7 +401,7 @@ void DisplayBox::handleMoveCenterLeft (GameManager * gm)
     bool scrollMoved = false;
     if (mAutoScrolling)
     {
-        int scrollPoint = textClientWidth() / 2;
+        int scrollPoint = textClientWidth() / 3;
         if (mCenterColumn < mScrollColumn || (mCenterColumn - mScrollColumn) < (scrollPoint - 1))
         {
             scrollMoved = scrollRight();
@@ -425,7 +425,7 @@ void DisplayBox::handleMoveCenterRight (GameManager * gm)
     bool scrollMoved = false;
     if (mAutoScrolling)
     {
-        int scrollPoint = (textClientWidth() + 1) / 2;
+        int scrollPoint = (textClientWidth() + 1) * 2 / 3;
         if (mCenterColumn > (mScrollColumn + scrollPoint - 1))
         {
             scrollMoved = scrollLeft();
