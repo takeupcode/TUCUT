@@ -427,7 +427,7 @@ TextBox::TextChangedEvent * TextBox::textChanged ()
     return mTextChanged.get();
 }
 
-void TextBox::notify (int id, GameManager * gm, const Button * button)
+void TextBox::notify (int id, GameManager * gm, Button * button)
 {
     if (id != Button::ClickedEventId)
     {
@@ -452,7 +452,7 @@ void TextBox::notify (int id, GameManager * gm, const Button * button)
     }
 }
 
-void TextBox::handleTextChange (GameManager * gm) const
+void TextBox::handleTextChange (GameManager * gm)
 {
     mTextChanged->signal(gm, this);
 }

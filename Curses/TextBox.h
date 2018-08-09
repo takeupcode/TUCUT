@@ -21,12 +21,12 @@ namespace Curses {
 
 class Button;
 
-class TextBox : public Control, public Event::EventSubscriber<GameManager *, const Button *>
+class TextBox : public Control, public Event::EventSubscriber<GameManager *, Button *>
 {
 public:
     const static int TextChangedEventId = 1;
     
-    using TextChangedEvent = Event::EventPublisher<GameManager *, const TextBox *>;
+    using TextChangedEvent = Event::EventPublisher<GameManager *, TextBox *>;
     
     static std::shared_ptr<TextBox> createSharedTextBox (const std::string & name, const std::string & text, int y, int x, int height, int width, int foreColor, int backColor, bool multiline = false);
     
@@ -64,9 +64,9 @@ protected:
     void initialize () override;
 
 private:
-    void notify (int id, GameManager * gm, const Button * button) override;
+    void notify (int id, GameManager * gm, Button * button) override;
     
-    void handleTextChange (GameManager * gm) const;
+    void handleTextChange (GameManager * gm);
     
     void moveCursorUp ();
     void moveCursorDown ();

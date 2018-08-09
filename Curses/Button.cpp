@@ -98,7 +98,7 @@ void Button::onDrawClient () const
     }
 }
 
-void Button::handleClick (GameManager * gm) const
+void Button::handleClick (GameManager * gm)
 {
     mClicked->signal(gm, this);
 }

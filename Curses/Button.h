@@ -22,7 +22,7 @@ class Button : public Control
 public:
     const static int ClickedEventId = 1;
     
-    using ClickedEvent = Event::EventPublisher<GameManager *, const Button *>;
+    using ClickedEvent = Event::EventPublisher<GameManager *, Button *>;
     
     static std::shared_ptr<Button> createSharedButton (const std::string & name, const std::string & text, int y, int x, int height, int width, int foreColor, int backColor, int focusForeColor, int focusBackColor);
     
@@ -42,7 +42,7 @@ protected:
     void initialize () override;
 
 private:
-    void handleClick (GameManager * gm) const;
+    void handleClick (GameManager * gm);
     
     std::string mText;
     std::unique_ptr<ClickedEvent> mClicked;

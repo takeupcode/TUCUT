@@ -275,7 +275,7 @@ ListBox::SelectionChangedEvent * ListBox::selectionChanged ()
     return mSelectionChanged.get();
 }
 
-void ListBox::notify (int id, GameManager * gm, const Button * button)
+void ListBox::notify (int id, GameManager * gm, Button * button)
 {
     if (id != Button::ClickedEventId)
     {
@@ -292,7 +292,7 @@ void ListBox::notify (int id, GameManager * gm, const Button * button)
     }
 }
 
-void ListBox::handleSelectionChange (GameManager * gm) const
+void ListBox::handleSelectionChange (GameManager * gm)
 {
     mSelectionChanged->signal(gm, this);
 }

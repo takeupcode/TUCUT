@@ -211,7 +211,7 @@ NumberBox::NumberChangedEvent * NumberBox::numberChanged ()
     return mNumberChanged.get();
 }
 
-void NumberBox::notify (int id, GameManager * gm, const Button * button)
+void NumberBox::notify (int id, GameManager * gm, Button * button)
 {
     if (id != Button::ClickedEventId)
     {
@@ -237,7 +237,7 @@ void NumberBox::notify (int id, GameManager * gm, const Button * button)
     }
 }
 
-void NumberBox::handleNumberChange (GameManager * gm) const
+void NumberBox::handleNumberChange (GameManager * gm)
 {
     mNumberChanged->signal(gm, this);
 }

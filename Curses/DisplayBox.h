@@ -21,18 +21,18 @@ namespace Curses {
 
 class Button;
 
-class DisplayBox : public Control, public Event::EventSubscriber<GameManager *, const Button *>
+class DisplayBox : public Control, public Event::EventSubscriber<GameManager *, Button *>
 {
 public:
     const static int ClickedEventId = 1;
     const static int ScrollChangedEventId = 2;
     const static int CenterChangedEventId = 3;
 
-    using ClickedEvent = Event::EventPublisher<GameManager *, const DisplayBox *, int, int>;
-    using ScrollChangedEvent = Event::EventPublisher<GameManager *, const DisplayBox *, int, int>;
-    using CenterChangedEvent = Event::EventPublisher<GameManager *, const DisplayBox *, int, int>;
+    using ClickedEvent = Event::EventPublisher<GameManager *, DisplayBox *, int, int>;
+    using ScrollChangedEvent = Event::EventPublisher<GameManager *, DisplayBox *, int, int>;
+    using CenterChangedEvent = Event::EventPublisher<GameManager *, DisplayBox *, int, int>;
 
-    static std::shared_ptr<DisplayBox> createSharedDisplayBox (const std::string & name, char centerChar, int y, int x, int height, int width, int contentHeight, int contentWidth, int foreColor, int backColor, bool autoScrolling = false, bool allowCenterControls = false, bool showClickLocation = false);
+    static std::shared_ptr<DisplayBox> createSharedDisplayBox (const std::string & name, char centerChar, int y, int x, int height, int width, int contentHeight, int contentWidth, int foreColor, int backColor, bool autoScrolling = false, bool allowCenterControls = false);
     
     std::shared_ptr<DisplayBox> getSharedDisplayBox ();
     
@@ -52,7 +52,9 @@ public:
     
     void setSymbol (char symbol, int y, int x);
 
-    bool isClickLocationCurrent () const;
+    bool isClickLocationShown () const;
+    void showClickLocation (bool show);
+    
     int getClickedY () const;
     int getClickedX () const;
 
@@ -79,18 +81,18 @@ public:
     CenterChangedEvent * centerChanged ();
 
 protected:
-    DisplayBox (const std::string & name, char centerChar, int y, int x, int height, int width, int contentHeight, int contentWidth, int foreColor, int backColor, bool autoScrolling, bool allowCenterControls, bool showClickLocation);
+    DisplayBox (const std::string & name, char centerChar, int y, int x, int height, int width, int contentHeight, int contentWidth, int foreColor, int backColor, bool autoScrolling, bool allowCenterControls);
     
     void initialize () override;
     
 private:
-    void notify (int id, GameManager * gm, const Button * button) override;
+    void notify (int id, GameManager * gm, Button * button) override;
     
-    void handleClicked (GameManager * gm, int y, int x) const;
+    void handleClicked (GameManager * gm, int y, int x);
     
-    void handleScrollChanged (GameManager * gm, int y, int x) const;
+    void handleScrollChanged (GameManager * gm, int y, int x);
     
-    void handleCenterChanged (GameManager * gm, int y, int x) const;
+    void handleCenterChanged (GameManager * gm, int y, int x);
     
     void handleMoveCenterUp (GameManager * gm);
     void handleMoveCenterDown (GameManager * gm);
@@ -123,7 +125,6 @@ private:
     bool mAutoScrolling;
     bool mAllowCenterControls;
     bool mShowClickLocation;
-    bool mIsClickLocationCurrent;
 };
         
 } // namespace Curses
