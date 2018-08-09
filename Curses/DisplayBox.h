@@ -51,6 +51,8 @@ public:
     char symbol (int y, int x) const;
     
     void setSymbol (char symbol, int y, int x);
+    
+    void setSymbols (const std::string & symbols, int y);
 
     bool isClickLocationShown () const;
     void showClickLocation (bool show);

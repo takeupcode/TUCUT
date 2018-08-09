@@ -58,23 +58,10 @@ DisplayBox::DisplayBox (const std::string & name, char centerChar, int y, int x,
     mMinWidth = 3;
     
     setFillClientArea(false);
-    
-    std::string columnMarkers;
-    for (int i = 0; i < mContentWidth; i++)
-    {
-        columnMarkers += '0' + i % 10;
-    }
 
     for (int i = 0; i < mContentHeight; i++)
     {
-        if (i % 2)
-        {
-            mContent.push_back(columnMarkers);
-        }
-        else
-        {
-            mContent.push_back(std::string(mContentWidth, '0' + i % 10));
-        }
+        mContent.push_back(std::string(mContentWidth, ' '));
     }
 }
 
@@ -289,6 +276,16 @@ char DisplayBox::symbol (int y, int x) const
 void DisplayBox::setSymbol (char symbol, int y, int x)
 {
     mContent[y][x] = symbol;
+}
+    
+void DisplayBox::setSymbols (const std::string & symbols, int y)
+{
+    if (mContentWidth != static_cast<int>(symbols.size()))
+    {
+        throw std::out_of_range("symbols width must equal content width.");
+    }
+    
+    mContent[y] = symbols;
 }
 
 DisplayBox::ClickedEvent * DisplayBox::clicked ()
