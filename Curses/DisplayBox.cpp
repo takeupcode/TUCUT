@@ -29,7 +29,8 @@ DisplayBox::DisplayBox (const std::string & name, char centerChar, int y, int x,
 : Control(name, y, x, height, width, foreColor, backColor, foreColor, backColor),
   mClicked(new ClickedEvent(ClickedEventId)),
   mScrollChanged(new ScrollChangedEvent(ScrollChangedEventId)),
-  mCenterChanged(new CenterChangedEvent(CenterChangedEventId)),
+  mBeforeCenterChanged(new BeforeCenterChangedEvent(BeforeCenterChangedEventId)),
+  mAfterCenterChanged(new AfterCenterChangedEvent(AfterCenterChangedEventId)),
   mClickedLine(0), mClickedColumn(0),
   mScrollLine(0), mScrollColumn(0),
   mCenterLine(0), mCenterColumn(0),
@@ -270,16 +271,38 @@ void DisplayBox::setMinWidth (int width)
 
 char DisplayBox::symbol (int y, int x) const
 {
+    if (y < 0 || y >= mContentHeight)
+    {
+        throw std::out_of_range("y must be less than content height.");
+    }
+    if (x < 0 || x >= mContentWidth)
+    {
+        throw std::out_of_range("x must be less than content width.");
+    }
+    
     return mContent[y][x];
 }
 
 void DisplayBox::setSymbol (char symbol, int y, int x)
 {
+    if (y < 0 || y >= mContentHeight)
+    {
+        throw std::out_of_range("y must be less than content height.");
+    }
+    if (x < 0 || x >= mContentWidth)
+    {
+        throw std::out_of_range("x must be less than content width.");
+    }
+    
     mContent[y][x] = symbol;
 }
     
 void DisplayBox::setSymbols (const std::string & symbols, int y)
 {
+    if (y < 0 || y >= mContentHeight)
+    {
+        throw std::out_of_range("y must be less than content height.");
+    }
     if (mContentWidth != static_cast<int>(symbols.size()))
     {
         throw std::out_of_range("symbols width must equal content width.");
@@ -298,9 +321,14 @@ DisplayBox::ScrollChangedEvent * DisplayBox::scrollChanged ()
     return mScrollChanged.get();
 }
 
-DisplayBox::CenterChangedEvent * DisplayBox::centerChanged ()
+DisplayBox::BeforeCenterChangedEvent * DisplayBox::beforeCenterChanged ()
 {
-    return mCenterChanged.get();
+    return mBeforeCenterChanged.get();
+}
+
+DisplayBox::AfterCenterChangedEvent * DisplayBox::afterCenterChanged ()
+{
+    return mAfterCenterChanged.get();
 }
 
 void DisplayBox::notify (int id, GameManager * gm, Button * button)
@@ -338,17 +366,37 @@ void DisplayBox::handleScrollChanged (GameManager * gm, int y, int x)
     mScrollChanged->signal(gm, this, y, x);
 }
 
-void DisplayBox::handleCenterChanged (GameManager * gm, int y, int x)
+void DisplayBox::handleBeforeCenterChanged (GameManager * gm, int y, int x, bool & cancel)
 {
-    mCenterChanged->signal(gm, this, y, x);
+    mBeforeCenterChanged->signal(gm, this, y, x, cancel);
 }
-    
+
+void DisplayBox::handleAfterCenterChanged (GameManager * gm, int y, int x)
+{
+    mAfterCenterChanged->signal(gm, this, y, x);
+}
+
 void DisplayBox::handleMoveCenterUp (GameManager * gm)
 {
+    if (canMoveCenterUp())
+    {
+        bool cancel = false;
+        
+        handleBeforeCenterChanged(gm, getCenterY() - 1, getCenterX(), cancel);
+        if (cancel)
+        {
+            return;
+        }
+    }
+    else
+    {
+        return;
+    }
+    
     bool centerMoved = moveCenterUp();
     
     bool scrollMoved = false;
-    if (mAutoScrolling)
+    if (centerMoved && mAutoScrolling)
     {
         int scrollPoint = clientHeight() / 3;
         if (mCenterLine < mScrollLine || (mCenterLine - mScrollLine) < (scrollPoint - 1))
@@ -359,7 +407,7 @@ void DisplayBox::handleMoveCenterUp (GameManager * gm)
     
     if (centerMoved)
     {
-        handleCenterChanged(gm, mCenterLine, mCenterColumn);
+        handleAfterCenterChanged(gm, mCenterLine, mCenterColumn);
     }
     if (scrollMoved)
     {
@@ -369,10 +417,25 @@ void DisplayBox::handleMoveCenterUp (GameManager * gm)
 
 void DisplayBox::handleMoveCenterDown (GameManager * gm)
 {
+    if (canMoveCenterDown())
+    {
+        bool cancel = false;
+        
+        handleBeforeCenterChanged(gm, getCenterY() + 1, getCenterX(), cancel);
+        if (cancel)
+        {
+            return;
+        }
+    }
+    else
+    {
+        return;
+    }
+    
     bool centerMoved = moveCenterDown();
     
     bool scrollMoved = false;
-    if (mAutoScrolling)
+    if (centerMoved && mAutoScrolling)
     {
         int scrollPoint = (clientHeight() + 1) * 2 / 3;
         if (mCenterLine > (mScrollLine + scrollPoint - 1))
@@ -383,7 +446,7 @@ void DisplayBox::handleMoveCenterDown (GameManager * gm)
     
     if (centerMoved)
     {
-        handleCenterChanged(gm, mCenterLine, mCenterColumn);
+        handleAfterCenterChanged(gm, mCenterLine, mCenterColumn);
     }
     if (scrollMoved)
     {
@@ -393,10 +456,25 @@ void DisplayBox::handleMoveCenterDown (GameManager * gm)
 
 void DisplayBox::handleMoveCenterLeft (GameManager * gm)
 {
+    if (canMoveCenterLeft())
+    {
+        bool cancel = false;
+        
+        handleBeforeCenterChanged(gm, getCenterY(), getCenterX() - 1, cancel);
+        if (cancel)
+        {
+            return;
+        }
+    }
+    else
+    {
+        return;
+    }
+    
     bool centerMoved = moveCenterLeft();
     
     bool scrollMoved = false;
-    if (mAutoScrolling)
+    if (centerMoved && mAutoScrolling)
     {
         int scrollPoint = textClientWidth() / 3;
         if (mCenterColumn < mScrollColumn || (mCenterColumn - mScrollColumn) < (scrollPoint - 1))
@@ -407,7 +485,7 @@ void DisplayBox::handleMoveCenterLeft (GameManager * gm)
     
     if (centerMoved)
     {
-        handleCenterChanged(gm, mCenterLine, mCenterColumn);
+        handleAfterCenterChanged(gm, mCenterLine, mCenterColumn);
     }
     if (scrollMoved)
     {
@@ -417,10 +495,25 @@ void DisplayBox::handleMoveCenterLeft (GameManager * gm)
 
 void DisplayBox::handleMoveCenterRight (GameManager * gm)
 {
+    if (canMoveCenterRight())
+    {
+        bool cancel = false;
+        
+        handleBeforeCenterChanged(gm, getCenterY(), getCenterX() + 1, cancel);
+        if (cancel)
+        {
+            return;
+        }
+    }
+    else
+    {
+        return;
+    }
+    
     bool centerMoved = moveCenterRight();
     
     bool scrollMoved = false;
-    if (mAutoScrolling)
+    if (centerMoved && mAutoScrolling)
     {
         int scrollPoint = (textClientWidth() + 1) * 2 / 3;
         if (mCenterColumn > (mScrollColumn + scrollPoint - 1))
@@ -431,7 +524,7 @@ void DisplayBox::handleMoveCenterRight (GameManager * gm)
     
     if (centerMoved)
     {
-        handleCenterChanged(gm, mCenterLine, mCenterColumn);
+        handleAfterCenterChanged(gm, mCenterLine, mCenterColumn);
     }
     if (scrollMoved)
     {
@@ -527,9 +620,29 @@ int DisplayBox::getCenterX () const
     return mCenterColumn;
 }
 
+bool DisplayBox::canMoveCenterUp ()
+{
+    return mCenterLine > 0;
+}
+
+bool DisplayBox::canMoveCenterDown ()
+{
+    return mCenterLine < (mContentHeight - 1);
+}
+
+bool DisplayBox::canMoveCenterLeft ()
+{
+    return mCenterColumn > 0;
+}
+
+bool DisplayBox::canMoveCenterRight ()
+{
+    return mCenterColumn < (mContentWidth - 1);
+}
+
 bool DisplayBox::moveCenterUp ()
 {
-    if (mCenterLine > 0)
+    if (canMoveCenterUp())
     {
         --mCenterLine;
         
@@ -541,7 +654,7 @@ bool DisplayBox::moveCenterUp ()
 
 bool DisplayBox::moveCenterDown ()
 {
-    if (mCenterLine < (mContentHeight - 1))
+    if (canMoveCenterDown())
     {
         ++mCenterLine;
         
@@ -553,7 +666,7 @@ bool DisplayBox::moveCenterDown ()
 
 bool DisplayBox::moveCenterLeft ()
 {
-    if (mCenterColumn > 0)
+    if (canMoveCenterLeft())
     {
         --mCenterColumn;
         
@@ -565,7 +678,7 @@ bool DisplayBox::moveCenterLeft ()
 
 bool DisplayBox::moveCenterRight ()
 {
-    if (mCenterColumn < (mContentWidth - 1))
+    if (canMoveCenterRight())
     {
         ++mCenterColumn;
         

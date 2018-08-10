@@ -26,11 +26,13 @@ class DisplayBox : public Control, public Event::EventSubscriber<GameManager *, 
 public:
     const static int ClickedEventId = 1;
     const static int ScrollChangedEventId = 2;
-    const static int CenterChangedEventId = 3;
+    const static int BeforeCenterChangedEventId = 3;
+    const static int AfterCenterChangedEventId = 4;
 
     using ClickedEvent = Event::EventPublisher<GameManager *, DisplayBox *, int, int>;
     using ScrollChangedEvent = Event::EventPublisher<GameManager *, DisplayBox *, int, int>;
-    using CenterChangedEvent = Event::EventPublisher<GameManager *, DisplayBox *, int, int>;
+    using BeforeCenterChangedEvent = Event::EventPublisher<GameManager *, DisplayBox *, int, int, bool &>;
+    using AfterCenterChangedEvent = Event::EventPublisher<GameManager *, DisplayBox *, int, int>;
 
     static std::shared_ptr<DisplayBox> createSharedDisplayBox (const std::string & name, char centerChar, int y, int x, int height, int width, int contentHeight, int contentWidth, int foreColor, int backColor, bool autoScrolling = false, bool allowCenterControls = false);
     
@@ -80,7 +82,9 @@ public:
     
     ScrollChangedEvent * scrollChanged ();
     
-    CenterChangedEvent * centerChanged ();
+    BeforeCenterChangedEvent * beforeCenterChanged ();
+    
+    AfterCenterChangedEvent * afterCenterChanged ();
 
 protected:
     DisplayBox (const std::string & name, char centerChar, int y, int x, int height, int width, int contentHeight, int contentWidth, int foreColor, int backColor, bool autoScrolling, bool allowCenterControls);
@@ -94,8 +98,15 @@ private:
     
     void handleScrollChanged (GameManager * gm, int y, int x);
     
-    void handleCenterChanged (GameManager * gm, int y, int x);
+    void handleBeforeCenterChanged (GameManager * gm, int y, int x, bool & cancel);
     
+    void handleAfterCenterChanged (GameManager * gm, int y, int x);
+
+    bool canMoveCenterUp ();
+    bool canMoveCenterDown ();
+    bool canMoveCenterLeft ();
+    bool canMoveCenterRight ();
+
     void handleMoveCenterUp (GameManager * gm);
     void handleMoveCenterDown (GameManager * gm);
     void handleMoveCenterLeft (GameManager * gm);
@@ -110,7 +121,8 @@ private:
     std::vector<std::string> mContent;
     std::unique_ptr<ClickedEvent> mClicked;
     std::unique_ptr<ScrollChangedEvent> mScrollChanged;
-    std::unique_ptr<CenterChangedEvent> mCenterChanged;
+    std::unique_ptr<BeforeCenterChangedEvent> mBeforeCenterChanged;
+    std::unique_ptr<AfterCenterChangedEvent> mAfterCenterChanged;
     std::shared_ptr<Button> mMoveCenterUpButton;
     std::shared_ptr<Button> mMoveCenterDownButton;
     std::shared_ptr<Button> mMoveCenterLeftButton;
