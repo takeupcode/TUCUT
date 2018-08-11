@@ -69,9 +69,13 @@ public:
     bool scrollDown ();
     bool scrollLeft ();
     bool scrollRight ();
+    
+    void ensurePointIsVisible (int y, int x, int verticalMargin = 0, int horizontalMargin = 0);
 
     int getCenterY () const;
     int getCenterX () const;
+    
+    void setCenter (int y, int x);
 
     bool moveCenterUp ();
     bool moveCenterDown ();
@@ -101,6 +105,10 @@ private:
     void handleBeforeCenterChanged (GameManager * gm, int y, int x, bool & cancel);
     
     void handleAfterCenterChanged (GameManager * gm, int y, int x);
+    
+    void verifyY (int y) const;
+    void verifyX (int x) const;
+    void verifyYX (int y, int x) const;
 
     bool canMoveCenterUp ();
     bool canMoveCenterDown ();

@@ -42,9 +42,9 @@ DisplayBox::DisplayBox (const std::string & name, char centerChar, int y, int x,
     {
         throw std::out_of_range("height cannot be less than 4.");
     }
-    if (width < 3)
+    if (width < 4)
     {
-        throw std::out_of_range("width cannot be less than 3.");
+        throw std::out_of_range("width cannot be less than 4.");
     }
     if (contentHeight < 1)
     {
@@ -56,7 +56,7 @@ DisplayBox::DisplayBox (const std::string & name, char centerChar, int y, int x,
     }
 
     mMinHeight = 4;
-    mMinWidth = 3;
+    mMinWidth = 4;
     
     setFillClientArea(false);
 
@@ -261,48 +261,54 @@ void DisplayBox::setMinHeight (int height)
 
 void DisplayBox::setMinWidth (int width)
 {
-    if (width < 3)
+    if (width < 4)
     {
-        throw std::out_of_range("width cannot be less than 3.");
+        throw std::out_of_range("width cannot be less than 4.");
     }
     
     mMinWidth = width;
 }
-
-char DisplayBox::symbol (int y, int x) const
+    
+void DisplayBox::verifyY (int y) const
 {
     if (y < 0 || y >= mContentHeight)
     {
         throw std::out_of_range("y must be less than content height.");
     }
+}
+
+void DisplayBox::verifyX (int x) const
+{
     if (x < 0 || x >= mContentWidth)
     {
         throw std::out_of_range("x must be less than content width.");
     }
+}
+
+void DisplayBox::verifyYX (int y, int x) const
+{
+    verifyY(y);
+    verifyX(x);
+}
+
+char DisplayBox::symbol (int y, int x) const
+{
+    verifyYX(y, x);
     
     return mContent[y][x];
 }
 
 void DisplayBox::setSymbol (char symbol, int y, int x)
 {
-    if (y < 0 || y >= mContentHeight)
-    {
-        throw std::out_of_range("y must be less than content height.");
-    }
-    if (x < 0 || x >= mContentWidth)
-    {
-        throw std::out_of_range("x must be less than content width.");
-    }
-    
+    verifyYX(y, x);
+
     mContent[y][x] = symbol;
 }
     
 void DisplayBox::setSymbols (const std::string & symbols, int y)
 {
-    if (y < 0 || y >= mContentHeight)
-    {
-        throw std::out_of_range("y must be less than content height.");
-    }
+    verifyY(y);
+    
     if (mContentWidth != static_cast<int>(symbols.size()))
     {
         throw std::out_of_range("symbols width must equal content width.");
@@ -609,6 +615,55 @@ bool DisplayBox::scrollRight ()
 
     return false;
 }
+    
+void DisplayBox::ensurePointIsVisible (int y, int x, int verticalMargin, int horizontalMargin)
+{
+    verifyYX(y, x);
+    
+    if (verticalMargin < 0 || verticalMargin >= clientHeight() / 2)
+    {
+        throw std::out_of_range("verticalMargin must be less than half the window height.");
+    }
+    if (horizontalMargin < 0 || horizontalMargin >= textClientWidth() / 2)
+    {
+        throw std::out_of_range("horizontalMargin must be less than half the widnow width.");
+    }
+
+
+    if (y < mScrollLine)
+    {
+        mScrollLine = y - verticalMargin;
+        if (mScrollLine < 0)
+        {
+            mScrollLine = 0;
+        }
+    }
+    else if (y >= mScrollLine + clientHeight())
+    {
+        mScrollLine = y - clientHeight() + 1 + verticalMargin;
+        if ((mScrollLine + clientHeight()) > mContentHeight)
+        {
+            mScrollLine = mContentHeight - clientHeight();
+        }
+    }
+    
+    if (x < mScrollColumn)
+    {
+        mScrollColumn = x - horizontalMargin;
+        if (mScrollColumn < 0)
+        {
+            mScrollColumn = 0;
+        }
+    }
+    else if (x >= mScrollColumn + textClientWidth())
+    {
+        mScrollColumn = x - textClientWidth() + 1 + horizontalMargin;
+        if ((mScrollColumn + textClientWidth()) > mContentWidth)
+        {
+            mScrollColumn = mContentWidth - textClientWidth();
+        }
+    }
+}
 
 int DisplayBox::getCenterY () const
 {
@@ -618,6 +673,14 @@ int DisplayBox::getCenterY () const
 int DisplayBox::getCenterX () const
 {
     return mCenterColumn;
+}
+    
+void DisplayBox::setCenter (int y, int x)
+{
+    verifyYX(y, x);
+
+    mCenterLine = y;
+    mCenterColumn = x;
 }
 
 bool DisplayBox::canMoveCenterUp ()
