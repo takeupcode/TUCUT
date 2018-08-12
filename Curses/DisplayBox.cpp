@@ -247,7 +247,7 @@ void DisplayBox::onDrawClient () const
             lineText[mCenterColumn - mScrollColumn] = mCenterChar;
         }
 
-        if (hasDirectFocus() && mShowClickLocation && (mClickedLine >= mScrollLine) && (mClickedColumn >= mScrollColumn))
+        if (mShowClickLocation && (mClickedLine >= mScrollLine) && (mClickedColumn >= mScrollColumn))
         {
             ConsoleManager::printMessage(*this, i, 1, textClientWidth(), lineText, clientForeColor(), clientBackColor(), Justification::Horizontal::left, true, mClickedLine - mScrollLine, mClickedColumn - mScrollColumn + 1);
         }
