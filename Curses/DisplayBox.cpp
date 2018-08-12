@@ -25,7 +25,7 @@ const std::string DisplayBox::moveCenterDownButtonName = "moveCenterDownButton";
 const std::string DisplayBox::moveCenterLeftButtonName = "moveCenterLeftButton";
 const std::string DisplayBox::moveCenterRightButtonName = "moveCenterRightButton";
 
-DisplayBox::DisplayBox (const std::string & name, char centerChar, int y, int x, int height, int width, int contentHeight, int contentWidth, int foreColor, int backColor, bool autoScrolling, bool allowCenterControls)
+DisplayBox::DisplayBox (const std::string & name, char centerChar, int y, int x, int height, int width, int contentHeight, int contentWidth, int foreColor, int backColor, bool autoScrolling, bool allowCenterControls, int scrollMarginTop, int scrollMarginRight, int scrollMarginBottom, int scrollMarginLeft)
 : Control(name, y, x, height, width, foreColor, backColor, foreColor, backColor),
   mClicked(new ClickedEvent(ClickedEventId)),
   mScrollChanged(new ScrollChangedEvent(ScrollChangedEventId)),
@@ -34,7 +34,10 @@ DisplayBox::DisplayBox (const std::string & name, char centerChar, int y, int x,
   mClickedLine(0), mClickedColumn(0),
   mScrollLine(0), mScrollColumn(0),
   mCenterLine(0), mCenterColumn(0),
-  mContentHeight(contentHeight), mContentWidth(contentWidth), mCenterChar(centerChar),
+  mContentHeight(contentHeight), mContentWidth(contentWidth),
+  mScrollMarginTop(scrollMarginTop), mScrollMarginRight(scrollMarginRight),
+  mScrollMarginBottom(scrollMarginBottom), mScrollMarginLeft(scrollMarginLeft),
+  mCenterChar(centerChar),
   mAutoScrolling(autoScrolling), mAllowCenterControls(allowCenterControls),
   mShowClickLocation(false)
 {
@@ -53,6 +56,22 @@ DisplayBox::DisplayBox (const std::string & name, char centerChar, int y, int x,
     if (contentWidth < 1)
     {
         throw std::out_of_range("content width cannot be less than 1.");
+    }
+    if (scrollMarginTop < 0 || scrollMarginTop >= clientHeight() / 2)
+    {
+        throw std::out_of_range("scrollMarginTop must be less than half the window height.");
+    }
+    if (scrollMarginRight < 0 || scrollMarginRight >= textClientWidth() / 2)
+    {
+        throw std::out_of_range("scrollMarginRight must be less than half the window width.");
+    }
+    if (scrollMarginBottom < 0 || scrollMarginBottom >= clientHeight() / 2)
+    {
+        throw std::out_of_range("scrollMarginBottom must be less than half the window height.");
+    }
+    if (scrollMarginLeft < 0 || scrollMarginLeft >= textClientWidth() / 2)
+    {
+        throw std::out_of_range("scrollMarginLeft must be less than half the window width.");
     }
 
     mMinHeight = 4;
@@ -106,9 +125,9 @@ void DisplayBox::initialize ()
     }
 }
 
-std::shared_ptr<DisplayBox> DisplayBox::createSharedDisplayBox (const std::string & name, char centerChar, int y, int x, int height, int width, int contentHeight, int contentWidth, int foreColor, int backColor, bool autoScrolling, bool allowCenterControls)
+std::shared_ptr<DisplayBox> DisplayBox::createSharedDisplayBox (const std::string & name, char centerChar, int y, int x, int height, int width, int contentHeight, int contentWidth, int foreColor, int backColor, bool autoScrolling, bool allowCenterControls, int scrollMarginTop, int scrollMarginRight, int scrollMarginBottom, int scrollMarginLeft)
 {
-    auto result = std::shared_ptr<DisplayBox>(new DisplayBox(name, centerChar, y, x, height, width, contentHeight, contentWidth, foreColor, backColor, autoScrolling, allowCenterControls));
+    auto result = std::shared_ptr<DisplayBox>(new DisplayBox(name, centerChar, y, x, height, width, contentHeight, contentWidth, foreColor, backColor, autoScrolling, allowCenterControls, scrollMarginTop, scrollMarginRight, scrollMarginBottom, scrollMarginLeft));
     
     result->initialize();
     
@@ -404,8 +423,8 @@ void DisplayBox::handleMoveCenterUp (GameManager * gm)
     bool scrollMoved = false;
     if (centerMoved && mAutoScrolling)
     {
-        int scrollPoint = clientHeight() / 3;
-        if (mCenterLine < mScrollLine || (mCenterLine - mScrollLine) < (scrollPoint - 1))
+        int scrollPoint = mScrollMarginTop;
+        if (mCenterLine < mScrollLine || (mCenterLine - mScrollLine) < scrollPoint)
         {
             scrollMoved = scrollDown();
         }
@@ -443,7 +462,7 @@ void DisplayBox::handleMoveCenterDown (GameManager * gm)
     bool scrollMoved = false;
     if (centerMoved && mAutoScrolling)
     {
-        int scrollPoint = (clientHeight() + 1) * 2 / 3;
+        int scrollPoint = clientHeight() - mScrollMarginBottom;
         if (mCenterLine > (mScrollLine + scrollPoint - 1))
         {
             scrollMoved = scrollUp();
@@ -482,8 +501,8 @@ void DisplayBox::handleMoveCenterLeft (GameManager * gm)
     bool scrollMoved = false;
     if (centerMoved && mAutoScrolling)
     {
-        int scrollPoint = textClientWidth() / 3;
-        if (mCenterColumn < mScrollColumn || (mCenterColumn - mScrollColumn) < (scrollPoint - 1))
+        int scrollPoint = mScrollMarginLeft;
+        if (mCenterColumn < mScrollColumn || (mCenterColumn - mScrollColumn) < scrollPoint)
         {
             scrollMoved = scrollRight();
         }
@@ -521,7 +540,7 @@ void DisplayBox::handleMoveCenterRight (GameManager * gm)
     bool scrollMoved = false;
     if (centerMoved && mAutoScrolling)
     {
-        int scrollPoint = (textClientWidth() + 1) * 2 / 3;
+        int scrollPoint = textClientWidth() - mScrollMarginRight;
         if (mCenterColumn > (mScrollColumn + scrollPoint - 1))
         {
             scrollMoved = scrollLeft();
@@ -615,24 +634,14 @@ bool DisplayBox::scrollRight ()
 
     return false;
 }
-    
-void DisplayBox::ensurePointIsVisible (int y, int x, int verticalMargin, int horizontalMargin)
+
+void DisplayBox::ensurePointIsVisible (int y, int x)
 {
     verifyYX(y, x);
-    
-    if (verticalMargin < 0 || verticalMargin >= clientHeight() / 2)
-    {
-        throw std::out_of_range("verticalMargin must be less than half the window height.");
-    }
-    if (horizontalMargin < 0 || horizontalMargin >= textClientWidth() / 2)
-    {
-        throw std::out_of_range("horizontalMargin must be less than half the widnow width.");
-    }
-
 
     if (y < mScrollLine)
     {
-        mScrollLine = y - verticalMargin;
+        mScrollLine = y - mScrollMarginTop;
         if (mScrollLine < 0)
         {
             mScrollLine = 0;
@@ -640,7 +649,7 @@ void DisplayBox::ensurePointIsVisible (int y, int x, int verticalMargin, int hor
     }
     else if (y >= mScrollLine + clientHeight())
     {
-        mScrollLine = y - clientHeight() + 1 + verticalMargin;
+        mScrollLine = y - clientHeight() + 1 + mScrollMarginBottom;
         if ((mScrollLine + clientHeight()) > mContentHeight)
         {
             mScrollLine = mContentHeight - clientHeight();
@@ -649,7 +658,7 @@ void DisplayBox::ensurePointIsVisible (int y, int x, int verticalMargin, int hor
     
     if (x < mScrollColumn)
     {
-        mScrollColumn = x - horizontalMargin;
+        mScrollColumn = x - mScrollMarginLeft;
         if (mScrollColumn < 0)
         {
             mScrollColumn = 0;
@@ -657,12 +666,17 @@ void DisplayBox::ensurePointIsVisible (int y, int x, int verticalMargin, int hor
     }
     else if (x >= mScrollColumn + textClientWidth())
     {
-        mScrollColumn = x - textClientWidth() + 1 + horizontalMargin;
+        mScrollColumn = x - textClientWidth() + 1 + mScrollMarginRight;
         if ((mScrollColumn + textClientWidth()) > mContentWidth)
         {
             mScrollColumn = mContentWidth - textClientWidth();
         }
     }
+}
+    
+void DisplayBox::ensureCenterIsVisible ()
+{
+    ensurePointIsVisible(mCenterLine, mCenterColumn);
 }
 
 int DisplayBox::getCenterY () const

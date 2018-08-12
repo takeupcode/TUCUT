@@ -34,7 +34,7 @@ public:
     using BeforeCenterChangedEvent = Event::EventPublisher<GameManager *, DisplayBox *, int, int, bool &>;
     using AfterCenterChangedEvent = Event::EventPublisher<GameManager *, DisplayBox *, int, int>;
 
-    static std::shared_ptr<DisplayBox> createSharedDisplayBox (const std::string & name, char centerChar, int y, int x, int height, int width, int contentHeight, int contentWidth, int foreColor, int backColor, bool autoScrolling = false, bool allowCenterControls = false);
+    static std::shared_ptr<DisplayBox> createSharedDisplayBox (const std::string & name, char centerChar, int y, int x, int height, int width, int contentHeight, int contentWidth, int foreColor, int backColor, bool autoScrolling = false, bool allowCenterControls = false, int scrollMarginTop = 0, int scrollMarginRight = 0, int scrollMarginBottom = 0, int scrollMarginLeft = 0);
     
     std::shared_ptr<DisplayBox> getSharedDisplayBox ();
     
@@ -70,7 +70,8 @@ public:
     bool scrollLeft ();
     bool scrollRight ();
     
-    void ensurePointIsVisible (int y, int x, int verticalMargin = 0, int horizontalMargin = 0);
+    void ensurePointIsVisible (int y, int x);
+    void ensureCenterIsVisible ();
 
     int getCenterY () const;
     int getCenterX () const;
@@ -91,7 +92,7 @@ public:
     AfterCenterChangedEvent * afterCenterChanged ();
 
 protected:
-    DisplayBox (const std::string & name, char centerChar, int y, int x, int height, int width, int contentHeight, int contentWidth, int foreColor, int backColor, bool autoScrolling, bool allowCenterControls);
+    DisplayBox (const std::string & name, char centerChar, int y, int x, int height, int width, int contentHeight, int contentWidth, int foreColor, int backColor, bool autoScrolling, bool allowCenterControls, int scrollMarginTop, int scrollMarginRight, int scrollMarginBottom, int scrollMarginLeft);
     
     void initialize () override;
     
@@ -143,6 +144,10 @@ private:
     int mCenterColumn;
     int mContentHeight;
     int mContentWidth;
+    int mScrollMarginTop;
+    int mScrollMarginRight;
+    int mScrollMarginBottom;
+    int mScrollMarginLeft;
     char mCenterChar;
     bool mAutoScrolling;
     bool mAllowCenterControls;
