@@ -7,6 +7,21 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3E061815212A2FAE000B634B /* GameObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E061813212A2FAE000B634B /* GameObject.cpp */; };
+		3E061816212A2FAE000B634B /* GameObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E061814212A2FAE000B634B /* GameObject.h */; };
+		3E061819212A3057000B634B /* GameObjectManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E061817212A3057000B634B /* GameObjectManager.cpp */; };
+		3E06181A212A3057000B634B /* GameObjectManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E061818212A3057000B634B /* GameObjectManager.h */; };
+		3E061821212A31A2000B634B /* PropertyValue.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E06181B212A31A0000B634B /* PropertyValue.h */; };
+		3E061822212A31A2000B634B /* PropertyGroup.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E06181C212A31A1000B634B /* PropertyGroup.cpp */; };
+		3E061823212A31A2000B634B /* PropertyContainer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E06181D212A31A1000B634B /* PropertyContainer.cpp */; };
+		3E061824212A31A2000B634B /* PropertyContainer.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E06181E212A31A1000B634B /* PropertyContainer.h */; };
+		3E061825212A31A2000B634B /* PropertyGroup.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E06181F212A31A1000B634B /* PropertyGroup.h */; };
+		3E061826212A31A2000B634B /* PropertyValue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E061820212A31A1000B634B /* PropertyValue.cpp */; };
+		3E061828212A5D06000B634B /* PropertyValueScenarios.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E061827212A5D06000B634B /* PropertyValueScenarios.cpp */; };
+		3E06182A212A65CC000B634B /* PropertyGroupScenarios.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E061829212A65CC000B634B /* PropertyGroupScenarios.cpp */; };
+		3E06182C212A65FB000B634B /* PropertyContainerScenarios.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E06182B212A65FB000B634B /* PropertyContainerScenarios.cpp */; };
+		3E06182E212A6628000B634B /* GameObjectScenarios.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E06182D212A6628000B634B /* GameObjectScenarios.cpp */; };
+		3E061830212A6646000B634B /* GameObjectManagerScenarios.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E06182F212A6646000B634B /* GameObjectManagerScenarios.cpp */; };
 		3E1F75C920FEFF8E00028734 /* MessageOneof.protocol.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E259E0520E34B4A00F01379 /* MessageOneof.protocol.cpp */; };
 		3E259DCA20E33E2B00F01379 /* LogManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E259DC820E33E2A00F01379 /* LogManager.cpp */; };
 		3E259DCB20E33E2B00F01379 /* LogManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E259DC920E33E2A00F01379 /* LogManager.h */; };
@@ -334,6 +349,21 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		3E061813212A2FAE000B634B /* GameObject.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = GameObject.cpp; sourceTree = "<group>"; };
+		3E061814212A2FAE000B634B /* GameObject.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GameObject.h; sourceTree = "<group>"; };
+		3E061817212A3057000B634B /* GameObjectManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = GameObjectManager.cpp; sourceTree = "<group>"; };
+		3E061818212A3057000B634B /* GameObjectManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GameObjectManager.h; sourceTree = "<group>"; };
+		3E06181B212A31A0000B634B /* PropertyValue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PropertyValue.h; sourceTree = "<group>"; };
+		3E06181C212A31A1000B634B /* PropertyGroup.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PropertyGroup.cpp; sourceTree = "<group>"; };
+		3E06181D212A31A1000B634B /* PropertyContainer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PropertyContainer.cpp; sourceTree = "<group>"; };
+		3E06181E212A31A1000B634B /* PropertyContainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PropertyContainer.h; sourceTree = "<group>"; };
+		3E06181F212A31A1000B634B /* PropertyGroup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PropertyGroup.h; sourceTree = "<group>"; };
+		3E061820212A31A1000B634B /* PropertyValue.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PropertyValue.cpp; sourceTree = "<group>"; };
+		3E061827212A5D06000B634B /* PropertyValueScenarios.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PropertyValueScenarios.cpp; sourceTree = "<group>"; };
+		3E061829212A65CC000B634B /* PropertyGroupScenarios.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PropertyGroupScenarios.cpp; sourceTree = "<group>"; };
+		3E06182B212A65FB000B634B /* PropertyContainerScenarios.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PropertyContainerScenarios.cpp; sourceTree = "<group>"; };
+		3E06182D212A6628000B634B /* GameObjectScenarios.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = GameObjectScenarios.cpp; sourceTree = "<group>"; };
+		3E06182F212A6646000B634B /* GameObjectManagerScenarios.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = GameObjectManagerScenarios.cpp; sourceTree = "<group>"; };
 		3E1F75C420FEFBE400028734 /* EnumMultipleMessage.protocol.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EnumMultipleMessage.protocol.cpp; sourceTree = "<group>"; };
 		3E1F75C520FEFBE400028734 /* EnumMultipleMessage.protocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EnumMultipleMessage.protocol.h; sourceTree = "<group>"; };
 		3E259DAC20E3398E00F01379 /* libTUCUT.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libTUCUT.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -636,9 +666,40 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3E061810212A2EC4000B634B /* Game */ = {
+			isa = PBXGroup;
+			children = (
+				3E06181D212A31A1000B634B /* PropertyContainer.cpp */,
+				3E06181E212A31A1000B634B /* PropertyContainer.h */,
+				3E06181C212A31A1000B634B /* PropertyGroup.cpp */,
+				3E06181F212A31A1000B634B /* PropertyGroup.h */,
+				3E061820212A31A1000B634B /* PropertyValue.cpp */,
+				3E06181B212A31A0000B634B /* PropertyValue.h */,
+				3E061812212A2EF3000B634B /* Tests */,
+				3E061813212A2FAE000B634B /* GameObject.cpp */,
+				3E061814212A2FAE000B634B /* GameObject.h */,
+				3E061817212A3057000B634B /* GameObjectManager.cpp */,
+				3E061818212A3057000B634B /* GameObjectManager.h */,
+			);
+			path = Game;
+			sourceTree = "<group>";
+		};
+		3E061812212A2EF3000B634B /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				3E061827212A5D06000B634B /* PropertyValueScenarios.cpp */,
+				3E061829212A65CC000B634B /* PropertyGroupScenarios.cpp */,
+				3E06182B212A65FB000B634B /* PropertyContainerScenarios.cpp */,
+				3E06182D212A6628000B634B /* GameObjectScenarios.cpp */,
+				3E06182F212A6646000B634B /* GameObjectManagerScenarios.cpp */,
+			);
+			path = Tests;
+			sourceTree = "<group>";
+		};
 		3E259DA320E3398E00F01379 = {
 			isa = PBXGroup;
 			children = (
+				3E061810212A2EC4000B634B /* Game */,
 				3E3F834A2105629900501126 /* Tools */,
 				3E3F8301210515A000501126 /* Extension */,
 				3E3F82FB2104F76F00501126 /* Identity */,
@@ -1192,6 +1253,7 @@
 				3E3F83632105766200501126 /* ProtoBase.protocol.h in Headers */,
 				3E3F83642105766200501126 /* Identifiable.h in Headers */,
 				3E3F83652105766200501126 /* InvalidArgumentException.h in Headers */,
+				3E061816212A2FAE000B634B /* GameObject.h in Headers */,
 				3E3F83662105766200501126 /* InvalidExtensionException.h in Headers */,
 				3E3F83672105766200501126 /* InvalidOperationException.h in Headers */,
 				3E3F83682105766200501126 /* NullArgumentException.h in Headers */,
@@ -1205,10 +1267,13 @@
 				3E259EEF20E34BE900F01379 /* MessageFieldModel.h in Headers */,
 				3E259ECD20E34BE900F01379 /* ParserInterface.h in Headers */,
 				3E259EBB20E34BE900F01379 /* CodeGeneratorInterface.h in Headers */,
+				3E061825212A31A2000B634B /* PropertyGroup.h in Headers */,
 				3E259EC520E34BE900F01379 /* CodeGeneratorUtilityCPP.h in Headers */,
 				3E259DCE20E33E3800F01379 /* FileManager.h in Headers */,
 				3E259EC020E34BE900F01379 /* CodeGeneratorCPP.h in Headers */,
 				3E259EDF20E34BE900F01379 /* ParserManager.h in Headers */,
+				3E061821212A31A2000B634B /* PropertyValue.h in Headers */,
+				3E06181A212A3057000B634B /* GameObjectManager.h in Headers */,
 				3E259EF020E34BE900F01379 /* MessageModelContainer.h in Headers */,
 				3E259EC920E34BE900F01379 /* CodeIndenter.h in Headers */,
 				3E259EBF20E34BE900F01379 /* EnumValueModel.h in Headers */,
@@ -1235,6 +1300,7 @@
 				3E259DCB20E33E2B00F01379 /* LogManager.h in Headers */,
 				3E259EF220E34BE900F01379 /* ProtoBaseTemplateCPP.h in Headers */,
 				3E259EE720E34BE900F01379 /* OneofModelContainer.h in Headers */,
+				3E061824212A31A2000B634B /* PropertyContainer.h in Headers */,
 				3E259ECF20E34BE900F01379 /* EnumValueModelContainer.h in Headers */,
 				3E259EF520E34BE900F01379 /* EnumValueParser.h in Headers */,
 				3E259EF120E34BE900F01379 /* MessageFieldModelContainer.h in Headers */,
@@ -1460,8 +1526,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3E061823212A31A2000B634B /* PropertyContainer.cpp in Sources */,
+				3E061822212A31A2000B634B /* PropertyGroup.cpp in Sources */,
 				3E3F835A210575BE00501126 /* BasicRequest.protocol.cpp in Sources */,
 				3E3F835B210575BE00501126 /* BasicResponse.protocol.cpp in Sources */,
+				3E061815212A2FAE000B634B /* GameObject.cpp in Sources */,
 				3E3F835C210575BE00501126 /* ExtensionManager.protocol.cpp in Sources */,
 				3E3F8358210575AA00501126 /* Extension.cpp in Sources */,
 				3E3F8359210575AA00501126 /* ExtensionLoader.cpp in Sources */,
@@ -1473,11 +1542,13 @@
 				3E259EED20E34BE900F01379 /* ProtoParser.cpp in Sources */,
 				3E259EDD20E34BE900F01379 /* TokenReader.cpp in Sources */,
 				3E259EE420E34BE900F01379 /* OptionModel.cpp in Sources */,
+				3E061826212A31A2000B634B /* PropertyValue.cpp in Sources */,
 				3E259EC320E34BE900F01379 /* ParserManager.cpp in Sources */,
 				3E259EE120E34BE900F01379 /* MessageModel.cpp in Sources */,
 				3E259DCA20E33E2B00F01379 /* LogManager.cpp in Sources */,
 				3E259EBD20E34BE900F01379 /* ImportParser.cpp in Sources */,
 				3E259EEC20E34BE900F01379 /* ProtoModel.cpp in Sources */,
+				3E061819212A3057000B634B /* GameObjectManager.cpp in Sources */,
 				3E259DD320E33E4300F01379 /* ConfigInfo.cpp in Sources */,
 				3E259EE220E34BE900F01379 /* MessageParser.cpp in Sources */,
 				3E259EF620E34BE900F01379 /* OneofParser.cpp in Sources */,
@@ -1533,6 +1604,7 @@
 				3E3F831521051B4800501126 /* ExtensionScenarios.cpp in Sources */,
 				3ED4127B20FED1FB00BC7226 /* CodeGeneratorCPPScenarios.cpp in Sources */,
 				3ED4127C20FED1FB00BC7226 /* CodeGeneratorManagerScenarios.cpp in Sources */,
+				3E06182C212A65FB000B634B /* PropertyContainerScenarios.cpp in Sources */,
 				3ED4127D20FED1FB00BC7226 /* EnumParserScenarios.cpp in Sources */,
 				3ED4127E20FED1FB00BC7226 /* EnumValueParserScenarios.cpp in Sources */,
 				3E3F82F821043ED200501126 /* AdvancedPublisher.cpp in Sources */,
@@ -1544,15 +1616,19 @@
 				3E3F83A82106D7B700501126 /* FileManagerScenarios.cpp in Sources */,
 				3ED4128320FED1FB00BC7226 /* OptionParserScenarios.cpp in Sources */,
 				3ED4128420FED1FB00BC7226 /* PackageParserScenarios.cpp in Sources */,
+				3E06182A212A65CC000B634B /* PropertyGroupScenarios.cpp in Sources */,
 				3ED4128520FED1FB00BC7226 /* ProtoModelScenarios.cpp in Sources */,
 				3E3F82E8210424CF00501126 /* StringLiteralScenarios.cpp in Sources */,
+				3E06182E212A6628000B634B /* GameObjectScenarios.cpp in Sources */,
 				3E3F82F921043ED200501126 /* EventPublisherScenarios.cpp in Sources */,
+				3E061830212A6646000B634B /* GameObjectManagerScenarios.cpp in Sources */,
 				3ED4128620FED1FB00BC7226 /* ProtoParserScenarios.cpp in Sources */,
 				3E3F83002104F84500501126 /* IdentifiableScenarios.cpp in Sources */,
 				3ED4128720FED1FB00BC7226 /* TokenReaderScenarios.cpp in Sources */,
 				3E3F83A621067B5200501126 /* LogManagerScenarios.cpp in Sources */,
 				3ED4128820FED1FB00BC7226 /* main.cpp in Sources */,
 				3E3F82FA21043ED200501126 /* EventSubscriberScenarios.cpp in Sources */,
+				3E061828212A5D06000B634B /* PropertyValueScenarios.cpp in Sources */,
 				3ED4128920FED1FB00BC7226 /* ScenarioScenarios.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1581,7 +1657,7 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++17";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -1639,7 +1715,7 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++17";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
