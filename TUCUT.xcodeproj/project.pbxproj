@@ -22,6 +22,8 @@
 		3E06182C212A65FB000B634B /* PropertyContainerScenarios.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E06182B212A65FB000B634B /* PropertyContainerScenarios.cpp */; };
 		3E06182E212A6628000B634B /* GameObjectScenarios.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E06182D212A6628000B634B /* GameObjectScenarios.cpp */; };
 		3E061830212A6646000B634B /* GameObjectManagerScenarios.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E06182F212A6646000B634B /* GameObjectManagerScenarios.cpp */; };
+		3E061836213E0F37000B634B /* Hash.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E061835213E0F37000B634B /* Hash.h */; };
+		3E061838214F6417000B634B /* HashScenarios.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E061837214F6417000B634B /* HashScenarios.cpp */; };
 		3E1F75C920FEFF8E00028734 /* MessageOneof.protocol.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E259E0520E34B4A00F01379 /* MessageOneof.protocol.cpp */; };
 		3E259DCA20E33E2B00F01379 /* LogManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E259DC820E33E2A00F01379 /* LogManager.cpp */; };
 		3E259DCB20E33E2B00F01379 /* LogManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E259DC920E33E2A00F01379 /* LogManager.h */; };
@@ -364,6 +366,8 @@
 		3E06182B212A65FB000B634B /* PropertyContainerScenarios.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PropertyContainerScenarios.cpp; sourceTree = "<group>"; };
 		3E06182D212A6628000B634B /* GameObjectScenarios.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = GameObjectScenarios.cpp; sourceTree = "<group>"; };
 		3E06182F212A6646000B634B /* GameObjectManagerScenarios.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = GameObjectManagerScenarios.cpp; sourceTree = "<group>"; };
+		3E061835213E0F37000B634B /* Hash.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Hash.h; sourceTree = "<group>"; };
+		3E061837214F6417000B634B /* HashScenarios.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = HashScenarios.cpp; sourceTree = "<group>"; };
 		3E1F75C420FEFBE400028734 /* EnumMultipleMessage.protocol.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EnumMultipleMessage.protocol.cpp; sourceTree = "<group>"; };
 		3E1F75C520FEFBE400028734 /* EnumMultipleMessage.protocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EnumMultipleMessage.protocol.h; sourceTree = "<group>"; };
 		3E259DAC20E3398E00F01379 /* libTUCUT.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libTUCUT.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -696,9 +700,27 @@
 			path = Tests;
 			sourceTree = "<group>";
 		};
+		3E061832213E0C9A000B634B /* Hash */ = {
+			isa = PBXGroup;
+			children = (
+				3E061834213E0CB2000B634B /* Tests */,
+				3E061835213E0F37000B634B /* Hash.h */,
+			);
+			path = Hash;
+			sourceTree = "<group>";
+		};
+		3E061834213E0CB2000B634B /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				3E061837214F6417000B634B /* HashScenarios.cpp */,
+			);
+			path = Tests;
+			sourceTree = "<group>";
+		};
 		3E259DA320E3398E00F01379 = {
 			isa = PBXGroup;
 			children = (
+				3E061832213E0C9A000B634B /* Hash */,
 				3E061810212A2EC4000B634B /* Game */,
 				3E3F834A2105629900501126 /* Tools */,
 				3E3F8301210515A000501126 /* Extension */,
@@ -1244,6 +1266,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3E061836213E0F37000B634B /* Hash.h in Headers */,
 				3E3F835D2105766200501126 /* ExtensionInterface.h in Headers */,
 				3E3F835E2105766200501126 /* ExtensionManager.h in Headers */,
 				3E3F835F2105766200501126 /* Extension.h in Headers */,
@@ -1612,6 +1635,7 @@
 				3ED4128020FED1FB00BC7226 /* MessageFieldParserScenarios.cpp in Sources */,
 				3ED4128120FED1FB00BC7226 /* MessageParserScenarios.cpp in Sources */,
 				3ED4128220FED1FB00BC7226 /* OneofParserScenarios.cpp in Sources */,
+				3E061838214F6417000B634B /* HashScenarios.cpp in Sources */,
 				3E3F82F02104347000501126 /* ExceptionScenarios.cpp in Sources */,
 				3E3F83A82106D7B700501126 /* FileManagerScenarios.cpp in Sources */,
 				3ED4128320FED1FB00BC7226 /* OptionParserScenarios.cpp in Sources */,
