@@ -34,7 +34,7 @@ void GameObjectManager::deinitialize ()
 
 bool GameObjectManager::addGameObject (const std::string & gameObjectName, const std::shared_ptr<GameObject> & gameObject)
 {
-    auto result = mGameObjects.try_emplace(gameObjectName, gameObject);
+    auto result = mGameObjects.insert(std::make_pair(gameObjectName, gameObject));
     
     return result.second;
 }

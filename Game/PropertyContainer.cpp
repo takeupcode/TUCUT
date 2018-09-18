@@ -13,7 +13,7 @@ namespace Game {
 
 PropertyGroup * PropertyContainer::addGroup (const std::string & groupName)
 {
-    auto result = mGroups.try_emplace(groupName, std::make_unique<PropertyGroup>());
+    auto result = mGroups.insert(std::make_pair(groupName, std::make_unique<PropertyGroup>()));
     
     //return result.first->second.get();
     auto & group = result.first->second;
