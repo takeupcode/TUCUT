@@ -39,8 +39,10 @@ public:
     
     virtual ~HashGenerator () = default;
     
-    virtual HashValue generate (char * data, std::size_t byteCount, HashValue seed) const = 0;
+    virtual HashValue generate (const char * str, HashValue seed) const = 0;
     
+    virtual HashValue generate (const char * data, std::size_t byteCount, HashValue seed) const = 0;
+
 protected:
     HashGenerator () = default;
 };
@@ -102,16 +104,38 @@ public:
     : HashGenerator()
     { }
     
-    HashValue generate (char * data, std::size_t byteCount, HashValue seed) const override
+    HashValue generate (const char * str, HashValue seed) const override
     {
-        unsigned char *bp = reinterpret_cast<unsigned char *>(data);
-        unsigned char *be = bp + byteCount;
+        const unsigned char *bp = reinterpret_cast<const unsigned char *>(str);
         
         // The original code expected the offset to be passed in as the seed. This modification
         // allows the caller to specify a true seed that's independent from the offset.
         seed ^= offset;
         seed *= prime;
 
+        // FNV-1a hash each octet in the buffer
+        while (*bp)
+        {
+            // xor the bottom with the current octet
+            seed ^= static_cast<HashValue>(*bp++);
+            
+            // multiply by the 32 bit FNV magic prime mod 2^32
+            seed *= prime;
+        }
+        
+        return seed;
+    }
+    
+    HashValue generate (const char * data, std::size_t byteCount, HashValue seed) const override
+    {
+        const unsigned char *bp = reinterpret_cast<const unsigned char *>(data);
+        const unsigned char *be = bp + byteCount;
+        
+        // The original code expected the offset to be passed in as the seed. This modification
+        // allows the caller to specify a true seed that's independent from the offset.
+        seed ^= offset;
+        seed *= prime;
+        
         // FNV-1a hash each octet in the buffer
         while (bp < be)
         {
@@ -138,10 +162,32 @@ public:
     : HashGenerator()
     { }
     
-    HashValue generate (char * data, std::size_t byteCount, HashValue seed) const override
+    HashValue generate (const char * str, HashValue seed) const override
     {
-        unsigned char *bp = reinterpret_cast<unsigned char *>(data);
-        unsigned char *be = bp + byteCount;
+        const unsigned char *bp = reinterpret_cast<const unsigned char *>(str);
+
+        // The original code expected the offset to be passed in as the seed. This modification
+        // allows the caller to specify a true seed that's independent from the offset.
+        seed ^= offset;
+        seed *= prime;
+        
+        // FNV-1a hash each octet in the buffer
+        while (*bp)
+        {
+            // xor the bottom with the current octet
+            seed ^= static_cast<HashValue>(*bp++);
+            
+            // multiply by the 64 bit FNV magic prime mod 2^64
+            seed *= prime;
+        }
+        
+        return seed;
+    }
+    
+    HashValue generate (const char * data, std::size_t byteCount, HashValue seed) const override
+    {
+        const unsigned char *bp = reinterpret_cast<const unsigned char *>(data);
+        const unsigned char *be = bp + byteCount;
         
         // The original code expected the offset to be passed in as the seed. This modification
         // allows the caller to specify a true seed that's independent from the offset.
@@ -236,26 +282,59 @@ public:
     
     virtual ~HashAdapter () = default;
     
-    HashValue getHash (char * data, std::size_t byteCount, HashValue seed) const
+    HashValue getHash (const char * str, HashValue seed) const
+    {
+        HashValue hash = mGenerator.generate(str, seed);
+        
+        fold(hash);
+        
+        return hash;
+    }
+    
+    HashValue getHash (const std::string & str, HashValue seed) const
+    {
+        HashValue hash = mGenerator.generate(str.c_str(), str.length(), seed);
+        
+        fold(hash);
+        
+        return hash;
+    }
+
+    template <typename T>
+    HashValue getHash (T value, HashValue seed) const
+    {
+        HashValue hash = mGenerator.generate(reinterpret_cast<const char *>(&value), sizeof(T), seed);
+        
+        fold(hash);
+        
+        return hash;
+    }
+
+    HashValue getHash (const char * data, std::size_t byteCount, HashValue seed) const
     {
         HashValue hash = mGenerator.generate(data, byteCount, seed);
         
-        switch (strategy)
-        {
-        case HashAdapterStrategies::XorFoldTiny:
-            hash = ((hash >> BitCount) ^ hash) & mask;
-            break;
-                
-        case HashAdapterStrategies::XorFold32:
-        case HashAdapterStrategies::XorFold64:
-            hash = (hash >> BitCount) ^ (hash & mask);
-            break;
-        }
+        fold(hash);
         
         return hash;
     }
 
 protected:
+    void fold (HashValue & hash) const
+    {
+        switch (strategy)
+        {
+            case HashAdapterStrategies::XorFoldTiny:
+                hash = ((hash >> BitCount) ^ hash) & mask;
+                break;
+                
+            case HashAdapterStrategies::XorFold32:
+            case HashAdapterStrategies::XorFold64:
+                hash = (hash >> BitCount) ^ (hash & mask);
+                break;
+        }
+    }
+    
     const HashGenerator<nativeSize> & mGenerator;
 };
 
