@@ -24,6 +24,11 @@
 		3E061830212A6646000B634B /* GameObjectManagerScenarios.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E06182F212A6646000B634B /* GameObjectManagerScenarios.cpp */; };
 		3E061836213E0F37000B634B /* Hash.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E061835213E0F37000B634B /* Hash.h */; };
 		3E061838214F6417000B634B /* HashScenarios.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E061837214F6417000B634B /* HashScenarios.cpp */; };
+		3E06183C215342DF000B634B /* Noise.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E06183B215342DF000B634B /* Noise.h */; };
+		3E06183E21535396000B634B /* ClassicNoise.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E06183D21535396000B634B /* ClassicNoise.cpp */; };
+		3E061840215353C1000B634B /* SimpleNoise.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E06183F215353C1000B634B /* SimpleNoise.cpp */; };
+		3E0618422153567D000B634B /* NoiseUtil.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E0618412153567D000B634B /* NoiseUtil.h */; };
+		3E0618442154977F000B634B /* NoiseUtil.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E0618432154977F000B634B /* NoiseUtil.cpp */; };
 		3E1F75C920FEFF8E00028734 /* MessageOneof.protocol.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E259E0520E34B4A00F01379 /* MessageOneof.protocol.cpp */; };
 		3E259DCA20E33E2B00F01379 /* LogManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E259DC820E33E2A00F01379 /* LogManager.cpp */; };
 		3E259DCB20E33E2B00F01379 /* LogManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E259DC920E33E2A00F01379 /* LogManager.h */; };
@@ -368,6 +373,11 @@
 		3E06182F212A6646000B634B /* GameObjectManagerScenarios.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = GameObjectManagerScenarios.cpp; sourceTree = "<group>"; };
 		3E061835213E0F37000B634B /* Hash.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Hash.h; sourceTree = "<group>"; };
 		3E061837214F6417000B634B /* HashScenarios.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = HashScenarios.cpp; sourceTree = "<group>"; };
+		3E06183B215342DF000B634B /* Noise.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Noise.h; sourceTree = "<group>"; };
+		3E06183D21535396000B634B /* ClassicNoise.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ClassicNoise.cpp; sourceTree = "<group>"; };
+		3E06183F215353C1000B634B /* SimpleNoise.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SimpleNoise.cpp; sourceTree = "<group>"; };
+		3E0618412153567D000B634B /* NoiseUtil.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NoiseUtil.h; sourceTree = "<group>"; };
+		3E0618432154977F000B634B /* NoiseUtil.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = NoiseUtil.cpp; sourceTree = "<group>"; };
 		3E1F75C420FEFBE400028734 /* EnumMultipleMessage.protocol.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EnumMultipleMessage.protocol.cpp; sourceTree = "<group>"; };
 		3E1F75C520FEFBE400028734 /* EnumMultipleMessage.protocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EnumMultipleMessage.protocol.h; sourceTree = "<group>"; };
 		3E259DAC20E3398E00F01379 /* libTUCUT.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libTUCUT.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -717,9 +727,30 @@
 			path = Tests;
 			sourceTree = "<group>";
 		};
+		3E06183921534285000B634B /* Noise */ = {
+			isa = PBXGroup;
+			children = (
+				3E06183A215342A6000B634B /* Tests */,
+				3E06183B215342DF000B634B /* Noise.h */,
+				3E06183D21535396000B634B /* ClassicNoise.cpp */,
+				3E06183F215353C1000B634B /* SimpleNoise.cpp */,
+				3E0618412153567D000B634B /* NoiseUtil.h */,
+				3E0618432154977F000B634B /* NoiseUtil.cpp */,
+			);
+			path = Noise;
+			sourceTree = "<group>";
+		};
+		3E06183A215342A6000B634B /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Tests;
+			sourceTree = "<group>";
+		};
 		3E259DA320E3398E00F01379 = {
 			isa = PBXGroup;
 			children = (
+				3E06183921534285000B634B /* Noise */,
 				3E061832213E0C9A000B634B /* Hash */,
 				3E061810212A2EC4000B634B /* Game */,
 				3E3F834A2105629900501126 /* Tools */,
@@ -1281,12 +1312,14 @@
 				3E3F83672105766200501126 /* InvalidOperationException.h in Headers */,
 				3E3F83682105766200501126 /* NullArgumentException.h in Headers */,
 				3E3F83692105766200501126 /* StringLiteral.h in Headers */,
+				3E06183C215342DF000B634B /* Noise.h in Headers */,
 				3E259EE320E34BE900F01379 /* OneofFieldParser.h in Headers */,
 				3E259ECB20E34BE900F01379 /* MessageFieldParser.h in Headers */,
 				3E259ECA20E34BE900F01379 /* EnumParser.h in Headers */,
 				3E259ED820E34BE900F01379 /* OptionModelContainer.h in Headers */,
 				3E259EE520E34BE900F01379 /* ImportParser.h in Headers */,
 				3E259ED620E34BE900F01379 /* InvalidProtoException.h in Headers */,
+				3E0618422153567D000B634B /* NoiseUtil.h in Headers */,
 				3E259EEF20E34BE900F01379 /* MessageFieldModel.h in Headers */,
 				3E259ECD20E34BE900F01379 /* ParserInterface.h in Headers */,
 				3E259EBB20E34BE900F01379 /* CodeGeneratorInterface.h in Headers */,
@@ -1550,6 +1583,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3E061823212A31A2000B634B /* PropertyContainer.cpp in Sources */,
+				3E06183E21535396000B634B /* ClassicNoise.cpp in Sources */,
 				3E061822212A31A2000B634B /* PropertyGroup.cpp in Sources */,
 				3E3F835A210575BE00501126 /* BasicRequest.protocol.cpp in Sources */,
 				3E3F835B210575BE00501126 /* BasicResponse.protocol.cpp in Sources */,
@@ -1580,12 +1614,14 @@
 				3E259EC620E34BE900F01379 /* OptionValueParser.cpp in Sources */,
 				3E259EB820E34BE900F01379 /* EnumValueModel.cpp in Sources */,
 				3E259EC420E34BE900F01379 /* CodeGeneratorManager.cpp in Sources */,
+				3E061840215353C1000B634B /* SimpleNoise.cpp in Sources */,
 				3E259ECE20E34BE900F01379 /* CodeGeneratorCPP.cpp in Sources */,
 				3E259EDA20E34BE900F01379 /* MessageFieldParser.cpp in Sources */,
 				3E259EB920E34BE900F01379 /* OneofFieldParser.cpp in Sources */,
 				3E259EE820E34BE900F01379 /* EnumValueParser.cpp in Sources */,
 				3E259EE620E34BE900F01379 /* OptionSingleParser.cpp in Sources */,
 				3E259DCF20E33E3800F01379 /* FileManager.cpp in Sources */,
+				3E0618442154977F000B634B /* NoiseUtil.cpp in Sources */,
 				3E259EC220E34BE900F01379 /* MessageFieldModel.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
