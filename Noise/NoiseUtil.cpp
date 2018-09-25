@@ -35,7 +35,19 @@ unsigned char randomBytes[] =
 
 constexpr double sqrt3 = 1.73205080756887729352744634150587237;
 
-double gradient2[][2] =
+// This is different from the other dimensions because 1 dimension doesn't
+// use unit-length vectors. With one dimension, we can only define 2 unit-vectors
+// (1 and -1) and that's not enough.
+double gradients1[] =
+{
+    -8.0, -7.0, -6.0 -5.0 -4.0 -3.0, -2.0, -1.0,
+     8.0,  7.0,  6.0  5.0  4.0  3.0,  2.0,  1.0
+};
+
+// This is a set of 12 unit-length vectors around a circle with a radius of 1.
+// We won't have enough values if we limit the choices to just 0, 1, and -1 so
+// this uses regularly spaced double points every 30 degrees around the circle.
+double unitVectors2[][2] =
 {
     { 1.0,    0.0},
     { sqrt3,  0.5},
@@ -51,14 +63,18 @@ double gradient2[][2] =
     { sqrt3, -0.5}
 };
 
-int gradient3[][3] =
+// This is a set of 12 unit-length vectors around a 2x2x2 cube centered around
+// the origin. The vectors point to the middle of each edge of the cube.
+int unitVectors3[][3] =
 {
     { 0, 1, 1},{ 0, 1,-1},{ 0,-1, 1},{ 0,-1,-1},
     { 1, 0, 1},{ 1, 0,-1},{-1, 0, 1},{-1, 0,-1},
     { 1, 1, 0},{ 1,-1, 0},{-1, 1, 0},{-1,-1, 0}
 };
 
-int gradient4[][4] =
+// This is a set of 32 unit-length vectors around a 2x2x2x2 hyper-cube centered around
+// the origin. The vectors point to the middle of each edge of the hyper-cube.
+int unitVectors4[][4] =
 {
     { 0, 1, 1, 1},{ 0, 1, 1,-1},{ 0, 1,-1, 1},{ 0, 1,-1,-1},
     { 0,-1, 1, 1},{ 0,-1, 1,-1},{ 0,-1,-1, 1},{ 0,-1,-1,-1},

@@ -5,6 +5,16 @@
       <![CDATA[00010001N0005Debug000000000000]]>
     </Plugin>
   </Plugins>
+  <VirtualDirectory Name="Noise">
+    <VirtualDirectory Name="Tests">
+      <File Name="Noise/Tests/NoiseScenarios.cpp"/>
+    </VirtualDirectory>
+    <File Name="Noise/Noise.h"/>
+    <File Name="Noise/SimpleNoise.cpp"/>
+    <File Name="Noise/ClassicNoise.cpp"/>
+    <File Name="Noise/NoiseUtil.h"/>
+    <File Name="Noise/NoiseUtil.cpp"/>
+  </VirtualDirectory>
   <VirtualDirectory Name="Exception">
     <File Name="Exception/NullArgumentException.h"/>
     <File Name="Exception/InvalidExtensionException.h"/>
@@ -101,6 +111,9 @@
     <File Name="Protocol/ProtoModel.cpp"/>
   </VirtualDirectory>
   <VirtualDirectory Name="Hash">
+    <VirtualDirectory Name="Tests">
+      <File Name="Hash/Tests/HashScenarios.cpp"/>
+    </VirtualDirectory>
     <File Name="Hash/Hash.h"/>
   </VirtualDirectory>
   <VirtualDirectory Name="Game">
