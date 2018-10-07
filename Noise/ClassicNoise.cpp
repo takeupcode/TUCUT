@@ -9,6 +9,8 @@
 #include "Noise.h"
 #include "NoiseUtil.h"
 
+#include "../Hash/Hash.h"
+
 namespace TUCUT {
 namespace Noise {
 
@@ -23,54 +25,54 @@ std::vector<double> ClassicNoiseGenerator::generate (double x, double angle, boo
 {
     std::vector<double> result;
     
-    // First, calculate the nearest whole indices next to the point.
-    // If x is not negative, this makes sure that ix0 is less than or
-    // equal to x and ix1 is greater than x.
-    // If x is negative, this makes sure that ix0 is less than x and
-    // ix1 is greater to or equal to x.
+    // First, calculate the nearest whole grid coordinates next to each
+    // coordinate of the noise point.
     int ix0 = dtoiflr(x);
     int ix1 = ix0 + 1;
     
-    // Then wrap the indices so the random values will form a cycle.
-    ix0 = cyclicIndex(ix0);
-    ix1 = cyclicIndex(ix1);
-    
-    // Then calculate vectors to the point from each index.
+    // Get hashes for each grid point using the grid coordinates.
+    Hash::FNVHashGenerator32 fnvGen(mSeed);
+    Hash::HashAdapter<5> adapt5(fnvGen);
+    int hp0 = adapt5.getHash(ix0);
+    int hp1 = adapt5.getHash(ix1);
+
+    // Then calculate individual dimension vectors to the noise point
+    // from each grid coordinate.
     double x0 = x - ix0;
     double x1 = x0 - 1.0;
 
-    // Define and calculate smooth blends and their derivative
-    // starting with the letter s.
-    double sx = blend(x0);
+    // Define and calculate smooth blends starting with the letter s.
+    // Only one blend is needed for each dimension.
+    double s = blend(x0);
     
-    // Define and calculate nodes.
+    // Define and calculate nodes based on the grid points.
     double a, b;
-    a = node(ix0, x0);
-    b = node(ix1, x1);
+    a = node(hp0, x0);
+    b = node(hp1, x1);
     
     // This method returns:
-    //   lerp(a, b, sx)
+    //   lerp(a, b, s)
     // which substitutes to create:
-    //   a(1 - sx) + b(sx))
+    //   a(1 - s) + bs)
     // which becomes:
-    //   a - a(sx) + b(sx)
+    //   a - as + bs
     // and after regrouping:
-    // ==>  a + sx(b - a)
+    // ==>  a + s(b - a)
     // The derivative is:
-    // ==>  sx'(b - a)
+    // ==>  s'(b - a)
     
     // Define and calculate the constants needed.
     double c0 = b - a;
     
-    result.push_back(a + sx * c0);
+    result.push_back(a + s * c0);
     
     if (calcDerivatives)
     {
         // Calculate smooth blend derivatives
         // starting with the letters ds.
-        double dsx = derivativeBlend(x0);
+        double ds = derivativeBlend(x0);
         
-        result.push_back(dsx * c0);
+        result.push_back(ds * c0);
     }
     
     return result;
@@ -80,38 +82,81 @@ std::vector<double> ClassicNoiseGenerator::generate (double x, double y, double 
 {
     std::vector<double> result;
     
+    // First, calculate the nearest whole grid coordinates next to each
+    // coordinate of the noise point.
     int ix0 = dtoiflr(x);
     int ix1 = ix0 + 1;
     int iy0 = dtoiflr(y);
     int iy1 = iy0 + 1;
-    
-    double fracX0 = x - ix0;
-    double fracX1 = fracX0 - 1.0;
-    double fracY0 = y - iy0;
-    double fracY1 = fracY0 - 1.0;
-    
-    Hash::FNVHashGenerator32 fnvGen;
-    Hash::HashAdapter<8> adapt8(fnvGen);
 
-    int hashX0 = adapt8.getHash(ix0, 0);
-    int hashX1 = adapt8.getHash(ix1, 0);
-    int hashY0 = adapt8.getHash(iy0, 0);
-    int hashY1 = adapt8.getHash(iy1, 0);
+    // Get hashes for each grid point using the grid coordinates.
+    Hash::FNVHashGenerator32 fnvGen(mSeed);
+    Hash::HashAdapter<5> adapt5(fnvGen);
+    int hp00 = adapt5.getHash(ix0 + iy0);
+    int hp01 = adapt5.getHash(ix0 + iy1);
+    int hp10 = adapt5.getHash(ix1 + iy0);
+    int hp11 = adapt5.getHash(ix1 + iy1);
 
-    double alphaX = blend(fracX0);
-    double alphaY = blend(fracY0);
+    // Then calculate individual dimension vectors to the noise point
+    // from each grid coordinate.
+    double x0 = x - ix0;
+    double x1 = x0 - 1.0;
+    double y0 = y - iy0;
+    double y1 = y0 - 1.0;
+
+    // Define and calculate smooth blends starting with the letter s.
+    // Only one blend is needed for each dimension.
+    double s = blend(x0);
+    double t = blend(y0);
+
+    // Define and calculate nodes based on the grid points.
+    double a, b, c, d;
+    a = node(hp00, x0, y0);
+    b = node(hp01, x0, y1);
+    c = node(hp10, x1, y0);
+    d = node(hp11, x1, y1);
+
+    // This method returns:
+    //   lerp(
+    //     lerp(a, b, s),
+    //     lerp(c, d, s),
+    //     t)
+    // which substitutes to create:
+    //   (a(1 - s) + bs))(1 - t) +
+    //   (c(1 - s) + ds))(t)
+    // which becomes:
+    //   a - as + bs - (a - as + bs)t +
+    //   (c - cs + ds)t
+    // which becomes:
+    //   a - as + bs - at - ast + bst +
+    //   ct - cst + dst
+    // and after regrouping:
+    // ==>  a + s(b - a) + t(c - a) + st(b + d - a - c)
+    // The partial derivatives are:
+    //      s'(b - a) + s't(b + d - a - c)
+    // ==>  s'((b - a) + t(b + d - a - c))
+    //
+    //      t'(c - a) + st'(b + d - a - c)
+    // ==>  t'((c - a) + s(b + d - a - c))
+
+    // Define and calculate the constants needed.
+    double c0 = b - a;
+    double c1 = c - a;
+    double c2 = b + d - a - c;
     
-    double node1a, node1b, node2a, node2b;
-    node2a = node(hashX0 ^ hashY0, fracX0, fracY0);
-    node2b = node(hashX0 ^ hashY1, fracX0, fracY1);
-    node1a = lerp(node2a, node2b, alphaY);
+    result.push_back(a + s * c0 + t * c1 + s * t * c2);
     
-    node2a = node(hashX1 ^ hashY0, fracX1, fracY0);
-    node2b = node(hashX1 ^ hashY1, fracX1, fracY1);
-    node1b = lerp(node2a, node2b, alphaY);
-    
-    result.push_back(lerp(node1a, node1b, alphaX));
-    
+    if (calcDerivatives)
+    {
+        // Calculate smooth blend derivatives
+        // starting with the letters ds.
+        double ds = derivativeBlend(x0);
+        double dt = derivativeBlend(y0);
+
+        result.push_back(ds * (c0 + t * c2));
+        result.push_back(dt * (c1 + s * c2));
+    }
+
     return result;
 }
 
@@ -119,54 +164,6 @@ std::vector<double> ClassicNoiseGenerator::generate (double x, double y, double 
 {
     std::vector<double> result;
     
-    int ix0 = dtoiflr(x);
-    int ix1 = ix0 + 1;
-    int iy0 = dtoiflr(y);
-    int iy1 = iy0 + 1;
-    int iz0 = dtoiflr(z);
-    int iz1 = iz0 + 1;
-    
-    double fracX0 = x - ix0;
-    double fracX1 = fracX0 - 1.0;
-    double fracY0 = y - iy0;
-    double fracY1 = fracY0 - 1.0;
-    double fracZ0 = z - iz0;
-    double fracZ1 = fracZ0 - 1.0;
-    
-    Hash::FNVHashGenerator32 fnvGen;
-    Hash::HashAdapter<8> adapt8(fnvGen);
-
-    int hashX0 = adapt8.getHash(ix0, 0);
-    int hashX1 = adapt8.getHash(ix1, 0);
-    int hashY0 = adapt8.getHash(iy0, 0);
-    int hashY1 = adapt8.getHash(iy1, 0);
-    int hashZ0 = adapt8.getHash(iz0, 0);
-    int hashZ1 = adapt8.getHash(iz1, 0);
-
-    double alphaX = blend(fracX0);
-    double alphaY = blend(fracY0);
-    double alphaZ = blend(fracZ0);
-    
-    double node1a, node1b, node2a, node2b, node3a, node3b;
-    node3a = node(hashX0 ^ hashY0 ^ hashZ0, fracX0, fracY0, fracZ0);
-    node3b = node(hashX0 ^ hashY0 ^ hashZ1, fracX0, fracY0, fracZ1);
-    node2a = lerp(node3a, node3b, alphaZ);
-    
-    node3a = node(hashX0 ^ hashY1 ^ hashZ0, fracX0, fracY1, fracZ0);
-    node3b = node(hashX0 ^ hashY1 ^ hashZ1, fracX0, fracY1, fracZ1);
-    node2b = lerp(node3a, node3b, alphaZ);
-    node1a = lerp(node2a, node2b, alphaY);
-    
-    node3a = node(hashX1 ^ hashY0 ^ hashZ0, fracX1, fracY0, fracZ0);
-    node3b = node(hashX1 ^ hashY0 ^ hashZ1, fracX1, fracY0, fracZ1);
-    node2a = lerp(node3a, node3b, alphaZ);
-    
-    node3a = node(hashX1 ^ hashY1 ^ hashZ0, fracX1, fracY1, fracZ0);
-    node3b = node(hashX1 ^ hashY1 ^ hashZ1, fracX1, fracY1, fracZ1);
-    node2b = lerp(node3a, node3b, alphaZ);
-    node1b = lerp(node2a, node2b, alphaY);
-    
-    result.push_back(lerp(node1a, node1b, alphaX));
     
     return result;
 }
@@ -175,81 +172,6 @@ std::vector<double> ClassicNoiseGenerator::generate (double x, double y, double 
 {
     std::vector<double> result;
     
-    int ix0 = dtoiflr(x);
-    int ix1 = ix0 + 1;
-    int iy0 = dtoiflr(y);
-    int iy1 = iy0 + 1;
-    int iz0 = dtoiflr(z);
-    int iz1 = iz0 + 1;
-    int iw0 = dtoiflr(w);
-    int iw1 = iw0 + 1;
-    
-    double fracX0 = x - ix0;
-    double fracX1 = fracX0 - 1.0;
-    double fracY0 = y - iy0;
-    double fracY1 = fracY0 - 1.0;
-    double fracZ0 = z - iz0;
-    double fracZ1 = fracZ0 - 1.0;
-    double fracW0 = w - iw0;
-    double fracW1 = fracW0 - 1.0;
-    
-    Hash::FNVHashGenerator32 fnvGen;
-    Hash::HashAdapter<8> adapt8(fnvGen);
-
-    int hashX0 = adapt8.getHash(ix0, 0);
-    int hashX1 = adapt8.getHash(ix1, 0);
-    int hashY0 = adapt8.getHash(iy0, 0);
-    int hashY1 = adapt8.getHash(iy1, 0);
-    int hashZ0 = adapt8.getHash(iz0, 0);
-    int hashZ1 = adapt8.getHash(iz1, 0);
-    int hashW0 = adapt8.getHash(iw0, 0);
-    int hashW1 = adapt8.getHash(iw1, 0);
-
-    double alphaX = blend(fracX0);
-    double alphaY = blend(fracY0);
-    double alphaZ = blend(fracZ0);
-    double alphaW = blend(fracW0);
-    
-    double node1a, node1b, node2a, node2b, node3a, node3b, node4a, node4b;
-    node4a = node(hashX0 ^ hashY0 ^ hashZ0 ^ hashW0, fracX0, fracY0, fracZ0, fracW0);
-    node4b = node(hashX0 ^ hashY0 ^ hashZ0 ^ hashW1, fracX0, fracY0, fracZ0, fracW1);
-    node3a = lerp(node4a, node4b, alphaW);
-    
-    node4a = node(hashX0 ^ hashY0 ^ hashZ1 ^ hashW0, fracX0, fracY0, fracZ1, fracW0);
-    node4b = node(hashX0 ^ hashY0 ^ hashZ1 ^ hashW1, fracX0, fracY0, fracZ1, fracW1);
-    node3b = lerp(node4a, node4b, alphaW);
-    node2a = lerp(node3a, node3b, alphaZ);
-    
-    node4a = node(hashX0 ^ hashY1 ^ hashZ0 ^ hashW0, fracX0, fracY1, fracZ0, fracW0);
-    node4b = node(hashX0 ^ hashY1 ^ hashZ0 ^ hashW1, fracX0, fracY1, fracZ0, fracW1);
-    node3a = lerp(node4a, node4b, alphaW);
-    
-    node4a = node(hashX0 ^ hashY1 ^ hashZ1 ^ hashW0, fracX0, fracY1, fracZ1, fracW0);
-    node4b = node(hashX0 ^ hashY1 ^ hashZ1 ^ hashW1, fracX0, fracY1, fracZ1, fracW1);
-    node3b = lerp(node4a, node4b, alphaW);
-    node2b = lerp(node3a, node3b, alphaZ);
-    node1a = lerp(node2a, node2b, alphaY);
-
-    node4a = node(hashX1 ^ hashY0 ^ hashZ0 ^ hashW0, fracX1, fracY0, fracZ0, fracW0);
-    node4b = node(hashX1 ^ hashY0 ^ hashZ0 ^ hashW1, fracX1, fracY0, fracZ0, fracW1);
-    node3a = lerp(node4a, node4b, alphaW);
-    
-    node4a = node(hashX1 ^ hashY0 ^ hashZ1 ^ hashW0, fracX1, fracY0, fracZ1, fracW0);
-    node4b = node(hashX1 ^ hashY0 ^ hashZ1 ^ hashW1, fracX1, fracY0, fracZ1, fracW1);
-    node3b = lerp(node4a, node4b, alphaW);
-    node2a = lerp(node3a, node3b, alphaZ);
-    
-    node4a = node(hashX1 ^ hashY1 ^ hashZ0 ^ hashW0, fracX1, fracY1, fracZ0, fracW0);
-    node4b = node(hashX1 ^ hashY1 ^ hashZ0 ^ hashW1, fracX1, fracY1, fracZ0, fracW1);
-    node3a = lerp(node4a, node4b, alphaW);
-    
-    node4a = node(hashX1 ^ hashY1 ^ hashZ1 ^ hashW0, fracX1, fracY1, fracZ1, fracW0);
-    node4b = node(hashX1 ^ hashY1 ^ hashZ1 ^ hashW1, fracX1, fracY1, fracZ1, fracW1);
-    node3b = lerp(node4a, node4b, alphaW);
-    node2b = lerp(node3a, node3b, alphaZ);
-    node1b = lerp(node2a, node2b, alphaY);
-    
-    result.push_back(lerp(node1a, node1b, alphaX));
     
     return result;
 }

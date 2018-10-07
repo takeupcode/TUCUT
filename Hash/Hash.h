@@ -10,6 +10,7 @@
 #define TUCUT_Hash_Hash_h
 
 #include <cstdint>
+#include <string>
 #include <type_traits>
 
 namespace TUCUT {
@@ -39,9 +40,9 @@ public:
     
     virtual ~HashGenerator () = default;
     
-    virtual HashValue generate (const char * str, HashValue seed) const = 0;
+    virtual HashValue generate (const char * str) const = 0;
     
-    virtual HashValue generate (const char * data, std::size_t byteCount, HashValue seed) const = 0;
+    virtual HashValue generate (const char * data, std::size_t byteCount) const = 0;
 
 protected:
     HashGenerator () = default;
@@ -100,54 +101,59 @@ public:
     static constexpr HashValue prime = 16777619u;
     static constexpr HashValue offset = 2166136261u;
 
-    FNVHashGenerator32 ()
-    : HashGenerator()
+    FNVHashGenerator32 (HashValue seed = 0)
+    : HashGenerator(), mSeed(seed)
     { }
     
-    HashValue generate (const char * str, HashValue seed) const override
+    HashValue generate (const char * str) const override
     {
         const unsigned char *bp = reinterpret_cast<const unsigned char *>(str);
         
         // The original code expected the offset to be passed in as the seed. This modification
-        // allows the caller to specify a true seed that's independent from the offset.
-        seed ^= offset;
-        seed *= prime;
+        // allows the caller to specify a true seed during construction that's independent from the offset.
+        HashValue result = mSeed;
+        result ^= offset;
+        result *= prime;
 
         // FNV-1a hash each octet in the buffer
         while (*bp)
         {
             // xor the bottom with the current octet
-            seed ^= static_cast<HashValue>(*bp++);
+            result ^= static_cast<HashValue>(*bp++);
             
             // multiply by the 32 bit FNV magic prime mod 2^32
-            seed *= prime;
+            result *= prime;
         }
         
-        return seed;
+        return result;
     }
     
-    HashValue generate (const char * data, std::size_t byteCount, HashValue seed) const override
+    HashValue generate (const char * data, std::size_t byteCount) const override
     {
         const unsigned char *bp = reinterpret_cast<const unsigned char *>(data);
         const unsigned char *be = bp + byteCount;
         
         // The original code expected the offset to be passed in as the seed. This modification
-        // allows the caller to specify a true seed that's independent from the offset.
-        seed ^= offset;
-        seed *= prime;
+        // allows the caller to specify a true seed during construction that's independent from the offset.
+        HashValue result = mSeed;
+        result ^= offset;
+        result *= prime;
         
         // FNV-1a hash each octet in the buffer
         while (bp < be)
         {
             // xor the bottom with the current octet
-            seed ^= static_cast<HashValue>(*bp++);
+            result ^= static_cast<HashValue>(*bp++);
             
             // multiply by the 32 bit FNV magic prime mod 2^32
-            seed *= prime;
+            result *= prime;
         }
         
-        return seed;
+        return result;
     }
+    
+private:
+    HashValue mSeed;
 };
 
 class FNVHashGenerator64 : public HashGenerator<64>
@@ -158,54 +164,59 @@ public:
     static constexpr HashValue prime = 1099511628211u;
     static constexpr HashValue offset = 14695981039346656037u;
 
-    FNVHashGenerator64 ()
-    : HashGenerator()
+    FNVHashGenerator64 (HashValue seed = 0)
+    : HashGenerator(), mSeed(seed)
     { }
     
-    HashValue generate (const char * str, HashValue seed) const override
+    HashValue generate (const char * str) const override
     {
         const unsigned char *bp = reinterpret_cast<const unsigned char *>(str);
 
         // The original code expected the offset to be passed in as the seed. This modification
-        // allows the caller to specify a true seed that's independent from the offset.
-        seed ^= offset;
-        seed *= prime;
+        // allows the caller to specify a true seed during construction that's independent from the offset.
+        HashValue result = mSeed;
+        result ^= offset;
+        result *= prime;
         
         // FNV-1a hash each octet in the buffer
         while (*bp)
         {
             // xor the bottom with the current octet
-            seed ^= static_cast<HashValue>(*bp++);
+            result ^= static_cast<HashValue>(*bp++);
             
             // multiply by the 64 bit FNV magic prime mod 2^64
-            seed *= prime;
+            result *= prime;
         }
         
-        return seed;
+        return result;
     }
     
-    HashValue generate (const char * data, std::size_t byteCount, HashValue seed) const override
+    HashValue generate (const char * data, std::size_t byteCount) const override
     {
         const unsigned char *bp = reinterpret_cast<const unsigned char *>(data);
         const unsigned char *be = bp + byteCount;
         
         // The original code expected the offset to be passed in as the seed. This modification
-        // allows the caller to specify a true seed that's independent from the offset.
-        seed ^= offset;
-        seed *= prime;
+        // allows the caller to specify a true seed during construction that's independent from the offset.
+        HashValue result = mSeed;
+        result ^= offset;
+        result *= prime;
         
         // FNV-1a hash each octet in the buffer
         while (bp < be)
         {
             // xor the bottom with the current octet
-            seed ^= static_cast<HashValue>(*bp++);
+            result ^= static_cast<HashValue>(*bp++);
             
             // multiply by the 64 bit FNV magic prime mod 2^64
-            seed *= prime;
+            result *= prime;
         }
         
-        return seed;
+        return result;
     }
+    
+private:
+    HashValue mSeed;
 };
 
 enum class HashAdapterStrategies
@@ -233,7 +244,7 @@ struct HashAdapterStrategy
 { };
 
 template <int BitCount>
-struct HashAdapterStrategy<BitCount, typename HashRange<BitCount, 8, 16>::ValidRange>
+struct HashAdapterStrategy<BitCount, typename HashRange<BitCount, 4, 16>::ValidRange>
 {
     static constexpr int nativeSize = 32;
     static constexpr HashAdapterStrategies strategy = HashAdapterStrategies::XorFoldTiny;
@@ -282,18 +293,18 @@ public:
     
     virtual ~HashAdapter () = default;
     
-    HashValue getHash (const char * str, HashValue seed) const
+    HashValue getHash (const char * str) const
     {
-        HashValue hash = mGenerator.generate(str, seed);
+        HashValue hash = mGenerator.generate(str);
         
         fold(hash);
         
         return hash;
     }
     
-    HashValue getHash (const std::string & str, HashValue seed) const
+    HashValue getHash (const std::string & str) const
     {
-        HashValue hash = mGenerator.generate(str.c_str(), str.length(), seed);
+        HashValue hash = mGenerator.generate(str.c_str(), str.length());
         
         fold(hash);
         
@@ -301,18 +312,18 @@ public:
     }
 
     template <typename T>
-    HashValue getHash (T value, HashValue seed) const
+    HashValue getHash (T value) const
     {
-        HashValue hash = mGenerator.generate(reinterpret_cast<const char *>(&value), sizeof(T), seed);
+        HashValue hash = mGenerator.generate(reinterpret_cast<const char *>(&value), sizeof(T));
         
         fold(hash);
         
         return hash;
     }
 
-    HashValue getHash (const char * data, std::size_t byteCount, HashValue seed) const
+    HashValue getHash (const char * data, std::size_t byteCount) const
     {
-        HashValue hash = mGenerator.generate(data, byteCount, seed);
+        HashValue hash = mGenerator.generate(data, byteCount);
         
         fold(hash);
         

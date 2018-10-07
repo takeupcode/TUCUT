@@ -28,13 +28,19 @@ public:
     virtual std::vector<double> generate (double x, double y, double z, double w, double angle = 0.0, bool calcDerivatives = false) const = 0;
 
 protected:
-    NoiseGenerator () = default;
+    NoiseGenerator (int seed)
+    : mSeed(seed)
+    { }
+    
+    int mSeed;
 };
 
 class ClassicNoiseGenerator : public NoiseGenerator
 {
 public:
-    ClassicNoiseGenerator () = default;
+    explicit ClassicNoiseGenerator (int seed)
+    : NoiseGenerator(seed)
+    { }
     
     virtual ~ClassicNoiseGenerator () = default;
     
@@ -50,7 +56,9 @@ public:
 class SimpleNoiseGenerator : public NoiseGenerator
 {
 public:
-    SimpleNoiseGenerator () = default;
+    explicit SimpleNoiseGenerator (int seed)
+    : NoiseGenerator(seed)
+    { }
     
     virtual ~SimpleNoiseGenerator () = default;
     
