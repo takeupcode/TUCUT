@@ -11,28 +11,28 @@
 namespace TUCUT {
 namespace Noise {
         
-std::vector<double> SimpleNoiseGenerator::generate (double x, double angle, bool calcDerivatives) const
+std::vector<double> SimpleNoiseGenerator::generate (double x, size_t layers, bool calcDerivatives) const
 {
     std::vector<double> result;
     
     return result;
 }
 
-std::vector<double> SimpleNoiseGenerator::generate (double x, double y, double angle, bool calcDerivatives) const
+std::vector<double> SimpleNoiseGenerator::generate (double x, double y, size_t layers, bool calcDerivatives) const
 {
     std::vector<double> result;
     
     return result;
 }
 
-std::vector<double> SimpleNoiseGenerator::generate (double x, double y, double z, double angle, bool calcDerivatives) const
+std::vector<double> SimpleNoiseGenerator::generate (double x, double y, double z, size_t layers, bool calcDerivatives) const
 {
     std::vector<double> result;
     
     return result;
 }
 
-std::vector<double> SimpleNoiseGenerator::generate (double x, double y, double z, double w, double angle, bool calcDerivatives) const
+std::vector<double> SimpleNoiseGenerator::generate (double x, double y, double z, double w, size_t layers, bool calcDerivatives) const
 {
     std::vector<double> result;
     
