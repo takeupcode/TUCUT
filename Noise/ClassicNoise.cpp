@@ -125,11 +125,11 @@ std::vector<double> ClassicNoiseGenerator::generate (double x, double y, size_t 
 
         // Get hashes for each grid point using the grid coordinates.
         Hash::FNVHashGenerator32 fnvGen(mSeed);
-        Hash::HashAdapter<5> adapt5(fnvGen);
-        int hp00 = adapt5.getHash(ix0 + iy0);
-        int hp01 = adapt5.getHash(ix0 + iy1);
-        int hp10 = adapt5.getHash(ix1 + iy0);
-        int hp11 = adapt5.getHash(ix1 + iy1);
+        Hash::HashAdapter<8> adapt(fnvGen);
+        int hp00 = adapt.getHash(ix0) + adapt.getHash(iy0);
+        int hp01 = adapt.getHash(ix0) + adapt.getHash(iy1);
+        int hp10 = adapt.getHash(ix1) + adapt.getHash(iy0);
+        int hp11 = adapt.getHash(ix1) + adapt.getHash(iy1);
 
         // Then calculate individual dimension vectors to the noise point
         // from each grid coordinate.
