@@ -127,8 +127,8 @@ std::vector<double> ClassicNoiseGenerator::generate (double x, double y, size_t 
         Hash::FNVHashGenerator32 fnvGen(mSeed);
         Hash::HashAdapter<8> adapt(fnvGen);
         int hp00 = adapt.getHash(ix0) + adapt.getHash(iy0);
-        int hp01 = adapt.getHash(ix0) + adapt.getHash(iy1);
         int hp10 = adapt.getHash(ix1) + adapt.getHash(iy0);
+        int hp01 = adapt.getHash(ix0) + adapt.getHash(iy1);
         int hp11 = adapt.getHash(ix1) + adapt.getHash(iy1);
 
         // Then calculate individual dimension vectors to the noise point
@@ -146,8 +146,8 @@ std::vector<double> ClassicNoiseGenerator::generate (double x, double y, size_t 
         // Define and calculate nodes based on the grid points.
         double a, b, c, d;
         a = node(hp00, x0, y0);
-        b = node(hp01, x0, y1);
-        c = node(hp10, x1, y0);
+        b = node(hp10, x1, y0);
+        c = node(hp01, x0, y1);
         d = node(hp11, x1, y1);
 
         // This method returns:
@@ -162,21 +162,21 @@ std::vector<double> ClassicNoiseGenerator::generate (double x, double y, size_t 
         //   a - as + bs - (a - as + bs)t +
         //   (c - cs + ds)t
         // which becomes:
-        //   a - as + bs - at - ast + bst +
+        //   a - as + bs - at + ast - bst +
         //   ct - cst + dst
         // and after regrouping:
-        // ==>  a + s(b - a) + t(c - a) + st(b + d - a - c)
+        // ==>  a + s(b - a) + t(c - a) + st(a + d - b - c)
         // The partial derivatives are:
-        //      s'(b - a) + s't(b + d - a - c)
-        // ==>  s'((b - a) + t(b + d - a - c))
+        //      s'(b - a) + s't(a + d - b - c)
+        // ==>  s'((b - a) + t(a + d - b - c))
         //
-        //      t'(c - a) + st'(b + d - a - c)
-        // ==>  t'((c - a) + s(b + d - a - c))
+        //      t'(c - a) + st'(a + d - b - c)
+        // ==>  t'((c - a) + s(a + d - b - c))
 
         // Define and calculate the constants needed.
         double c0 = b - a;
         double c1 = c - a;
-        double c2 = b + d - a - c;
+        double c2 = a + d - b - c;
         
         noise += amplitude * (a + s * c0 + t * c1 + s * t * c2);
         
