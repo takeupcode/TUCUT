@@ -14,6 +14,14 @@
 namespace TUCUT {
 namespace Noise {
 
+// This noise code was inspired by the classic Perlin noise. It has some
+// differences designed to add more noise at the expense of extra calculations.
+// For example, it starts off with a regularly spaced grid but then shifts
+// the grid points by a random but deterministic amount based on the grid
+// point coordinate hash. The following factor is based on an 8 bit hash.
+constexpr double shiftFactor = 0.4 / 255;
+constexpr int shiftDirectionComp = 128;
+
 // lerp is a method to interpolate a value between two nodes, n1 and n2.
 // By using blended values for r, we get a smooth curve. We're not calling
 // lerp directly. Instead, we expand the formulas so that we can calculate
@@ -34,26 +42,58 @@ std::vector<double> NoiseGenerator::generate (double x, size_t layers, bool calc
     for (size_t currentLayer = 0; currentLayer < layers; currentLayer++)
     {
         x = originalX * frequency;
-        
-        // First, calculate the nearest whole grid coordinates next to each
+
+        // First, calculate the nearest whole unshifted grid coordinates next to each
         // coordinate of the noise point.
         int ix0 = dtoiflr(x);
         int ix1 = ix0 + 1;
         
-        // Get hashes for each grid point using the grid coordinates.
+        // Get hashes for each grid point using the grid coordinates. 1 dimension is
+        // easier because we can combine the hash of the dimension and the hash of the
+        // grid point because they're the same.
         Hash::FNVHashGenerator32 fnvGen(mSeed);
-        Hash::HashAdapter<5> adapt5(fnvGen);
-        int hp0 = adapt5.getHash(ix0);
-        int hp1 = adapt5.getHash(ix1);
+        Hash::HashAdapter<8> adapt(fnvGen);
+        int hp0 = adapt.getHash(ix0);
+        int hp1 = adapt.getHash(ix1);
+
+        // These are the grid point coordinates. They might change if the point
+        // is determined to be in a different grid cell after shifting.
+        double gx0 = ix0;
+        double gx1 = ix1;
+        gx0 += (hp0 > shiftDirectionComp) ? shiftFactor * hp0: -shiftFactor * hp0;
+        gx1 += (hp1 > shiftDirectionComp) ? shiftFactor * hp1: -shiftFactor * hp1;
+
+        if (x < gx0)
+        {
+            // We need to use the previous cell.
+            --ix0;
+            --ix1;
+            hp1 = hp0;
+            gx1 = gx0;
+            hp0 = adapt.getHash(ix0);
+            gx0 = ix0;
+            gx0 += (hp0 > shiftDirectionComp) ? shiftFactor * hp0: -shiftFactor * hp0;
+        }
+        else if (x > gx1)
+        {
+            // We need to use the next cell.
+            ++ix0;
+            ++ix1;
+            hp0 = hp1;
+            gx0 = gx1;
+            hp1 = adapt.getHash(ix1);
+            gx1 = ix1;
+            gx1 += (hp1 > shiftDirectionComp) ? shiftFactor * hp1: -shiftFactor * hp1;
+        }
 
         // Then calculate individual dimension vectors to the noise point
         // from each grid coordinate.
-        double x0 = x - ix0;
-        double x1 = x0 - 1.0;
+        double x0 = x - gx0;
+        double x1 = x - gx1;
 
         // Define and calculate smooth blends starting with the letter s.
         // Only one blend is needed for each dimension.
-        double s = blend(x0);
+        double s = blend(x0 / gx1 - gx0);
         
         // Define and calculate nodes based on the grid points.
         double a, b;
@@ -63,7 +103,7 @@ std::vector<double> NoiseGenerator::generate (double x, size_t layers, bool calc
         // This method returns:
         //   lerp(a, b, s)
         // which substitutes to create:
-        //   a(1 - s) + bs)
+        //   a(1 - s) + bs
         // which becomes:
         //   a - as + bs
         // and after regrouping:
@@ -116,32 +156,95 @@ std::vector<double> NoiseGenerator::generate (double x, double y, size_t layers,
         x = originalX * frequency;
         y = originalY * frequency;
 
-        // First, calculate the nearest whole grid coordinates next to each
+        // First, calculate the nearest whole unshifted grid coordinates next to each
         // coordinate of the noise point.
         int ix0 = dtoiflr(x);
         int ix1 = ix0 + 1;
         int iy0 = dtoiflr(y);
         int iy1 = iy0 + 1;
 
-        // Get hashes for each grid point using the grid coordinates.
+        // Get hashes for each grid point dimension.
         Hash::FNVHashGenerator32 fnvGen(mSeed);
         Hash::HashAdapter<8> adapt(fnvGen);
-        int hp00 = adapt.getHash(ix0) + adapt.getHash(iy0);
-        int hp10 = adapt.getHash(ix1) + adapt.getHash(iy0);
-        int hp01 = adapt.getHash(ix0) + adapt.getHash(iy1);
-        int hp11 = adapt.getHash(ix1) + adapt.getHash(iy1);
+        int hx0 = adapt.getHash(ix0);
+        int hx1 = adapt.getHash(ix1);
+        int hy0 = adapt.getHash(iy0);
+        int hy1 = adapt.getHash(iy1);
+
+        // These are the grid point coordinates. They might change if the point
+        // is determined to be in a different grid cell after shifting.
+        double gx0 = ix0;
+        double gx1 = ix1;
+        double gy0 = iy0;
+        double gy1 = iy1;
+        gx0 += (hx0 > shiftDirectionComp) ? shiftFactor * hx0: -shiftFactor * hx0;
+        gx1 += (hx1 > shiftDirectionComp) ? shiftFactor * hx1: -shiftFactor * hx1;
+        gy0 += (hy0 > shiftDirectionComp) ? shiftFactor * hy0: -shiftFactor * hy0;
+        gy1 += (hy1 > shiftDirectionComp) ? shiftFactor * hy1: -shiftFactor * hy1;
+
+        if (x < gx0)
+        {
+            // We need to use the previous cell.
+            --ix0;
+            --ix1;
+            hx1 = hx0;
+            gx1 = gx0;
+            hx0 = adapt.getHash(ix0);
+            gx0 = ix0;
+            gx0 += (hx0 > shiftDirectionComp) ? shiftFactor * hx0: -shiftFactor * hx0;
+        }
+        else if (x > gx1)
+        {
+            // We need to use the next cell.
+            ++ix0;
+            ++ix1;
+            hx0 = hx1;
+            gx0 = gx1;
+            hx1 = adapt.getHash(ix1);
+            gx1 = ix1;
+            gx1 += (hx1 > shiftDirectionComp) ? shiftFactor * hx1: -shiftFactor * hx1;
+        }
+
+        if (y < gy0)
+        {
+            // We need to use the previous cell.
+            --iy0;
+            --iy1;
+            hy1 = hy0;
+            gy1 = gy0;
+            hy0 = adapt.getHash(iy0);
+            gy0 = iy0;
+            gy0 += (hy0 > shiftDirectionComp) ? shiftFactor * hy0: -shiftFactor * hy0;
+        }
+        else if (y > gy1)
+        {
+            // We need to use the next cell.
+            ++iy0;
+            ++iy1;
+            hy0 = hy1;
+            gy0 = gy1;
+            hy1 = adapt.getHash(iy1);
+            gy1 = iy1;
+            gy1 += (hy1 > shiftDirectionComp) ? shiftFactor * hy1: -shiftFactor * hy1;
+        }
 
         // Then calculate individual dimension vectors to the noise point
         // from each grid coordinate.
-        double x0 = x - ix0;
-        double x1 = x0 - 1.0;
-        double y0 = y - iy0;
-        double y1 = y0 - 1.0;
+        double x0 = x - gx0;
+        double x1 = x - gx1;
+        double y0 = y - gy0;
+        double y1 = y - gy1;
 
         // Define and calculate smooth blends starting with the letter s.
         // Only one blend is needed for each dimension.
-        double s = blend(x0);
-        double t = blend(y0);
+        double s = blend(x0 / gx1 - gx0);
+        double t = blend(y0 / gy1 - gy0);
+
+        // Get hashes for each grid point using the grid coordinates.
+        int hp00 = hx0 + hy0;
+        int hp10 = hx1 + hy0;
+        int hp01 = hx0 + hy1;
+        int hp11 = hx1 + hy1;
 
         // Define and calculate nodes based on the grid points.
         double a, b, c, d;

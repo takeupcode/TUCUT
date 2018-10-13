@@ -36,7 +36,7 @@ SCENARIO( Hash, "Operation/Normal", "unit,hash", "NoiseGenerator can generate 2D
     {
         for (uint32_t x = 0; x < width; ++x)
         {
-            noiseMap[y * width + x] = noise.generate(static_cast<double>(x) / 64, static_cast<double>(y) / 64)[0];
+            noiseMap[y * width + x] = noise.generate(static_cast<double>(x) / 128, static_cast<double>(y) / 128)[0];
         }
     }
 
