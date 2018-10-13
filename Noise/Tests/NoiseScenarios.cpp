@@ -2,9 +2,12 @@
 //  NoiseScenarios.cpp
 //  TestTUCUT
 //
-//  Created by Abdul Wahid Tanner on 9/24/18.
+//  Created by Abdul Wahid Tanner on 10/8/18.
 //  Copyright © 2018 Take Up Code. All rights reserved.
 //
+
+#include <fstream>
+#include <string>
 
 #include "../../Test/Test.h"
 
@@ -13,18 +16,50 @@
 using namespace std;
 using namespace TUCUT;
 
-SCENARIO( Noise, "Construction/Normal", "unit,noise", "Noise generators can be constructed." )
+SCENARIO( Hash, "Construction/Normal", "unit,hash", "NoiseGenerator can be constructed." )
 {
-    Noise::ClassicNoiseGenerator classicGen;
-    Noise::SimpleNoiseGenerator simpleGen;
+    Noise::NoiseGenerator gen1;
+    Noise::NoiseGenerator gen2(123, 3.0);
+    Noise::NoiseGenerator gen3(123, 3.0, 4.0);
+    Noise::NoiseGenerator gen4(123, 3.0, 4.0, 5.0);
+    Noise::NoiseGenerator gen5(123, 3.0, 4.0, 5.0, 6.0);
 }
 
-SCENARIO( Noise, "Operation/Normal", "unit,noise", "Classic generator can generate 1d noise." )
+SCENARIO( Hash, "Operation/Normal", "unit,hash", "NoiseGenerator can generate 2D noise." )
 {
-    Noise::ClassicNoiseGenerator classicGen;
+    Noise::NoiseGenerator noise;
     
-    double noise0 = classicGen.generate(0.0)[0];
-    double noise1 = classicGen.generate(1.0)[0];
+    const uint32_t width = 512, height = 512;
+    double *noiseMap = new double[width * height];
+
+    for (uint32_t y = 0; y < height; ++y)
+    {
+        for (uint32_t x = 0; x < width; ++x)
+        {
+            noiseMap[y * width + x] = noise.generate(static_cast<double>(x) / 64, static_cast<double>(y) / 64)[0];
+        }
+    }
+
+    std::ofstream ofs;
+    ofs.open("./noise.ppm", std::ios::out | std::ios::binary | std::ios::trunc);
+    ofs << "P6\n" << width << " " << height << "\n255\n";
+    double min = 0.0;
+    double max = 0.0;
+    for (unsigned i = 0; i < width * height; ++i)
+    {
+        if (noiseMap[i] < min)
+        {
+            min = noiseMap[i];
+        }
+        else if (noiseMap[i] > max)
+        {
+            max = noiseMap[i];
+        }
+        unsigned char n = static_cast<unsigned char>((noiseMap[i] + 1) / 2 * 255);
+        ofs << n << n << n;
+    }
+    ofs.close();
+    std::cout << "min=" << min << "\nmax=" << max << "\n";
     
-    VERIFY_FALSE(noise0 == noise1);
+    delete[] noiseMap;
 }

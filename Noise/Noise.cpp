@@ -1,5 +1,5 @@
 //
-//  ClassicNoise.cpp
+//  Noise.cpp
 //  TUCUT (Take Up Code Utility)
 //
 //  Created by Abdul Wahid Tanner on 9/20/18.
@@ -21,7 +21,7 @@ namespace Noise {
 // lerp is defined as: lerp (n1, n2, r)
 //   (n1 * (1 - r) + n2 * r)
         
-std::vector<double> ClassicNoiseGenerator::generate (double x, size_t layers, bool calcDerivatives) const
+std::vector<double> NoiseGenerator::generate (double x, size_t layers, bool calcDerivatives) const
 {
     std::vector<double> result;
     
@@ -99,7 +99,7 @@ std::vector<double> ClassicNoiseGenerator::generate (double x, size_t layers, bo
     return result;
 }
 
-std::vector<double> ClassicNoiseGenerator::generate (double x, double y, size_t layers, bool calcDerivatives) const
+std::vector<double> NoiseGenerator::generate (double x, double y, size_t layers, bool calcDerivatives) const
 {
     std::vector<double> result;
     
@@ -206,7 +206,7 @@ std::vector<double> ClassicNoiseGenerator::generate (double x, double y, size_t 
     return result;
 }
 
-std::vector<double> ClassicNoiseGenerator::generate (double x, double y, double z, size_t layers, bool calcDerivatives) const
+std::vector<double> NoiseGenerator::generate (double x, double y, double z, size_t layers, bool calcDerivatives) const
 {
     std::vector<double> result;
     
@@ -214,7 +214,7 @@ std::vector<double> ClassicNoiseGenerator::generate (double x, double y, double 
     return result;
 }
 
-std::vector<double> ClassicNoiseGenerator::generate (double x, double y, double z, double w, size_t layers, bool calcDerivatives) const
+std::vector<double> NoiseGenerator::generate (double x, double y, double z, double w, size_t layers, bool calcDerivatives) const
 {
     std::vector<double> result;
     
