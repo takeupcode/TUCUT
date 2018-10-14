@@ -19,8 +19,7 @@ namespace Noise {
 // For example, it starts off with a regularly spaced grid but then shifts
 // the grid points by a random but deterministic amount based on the grid
 // point coordinate hash. The following factor is based on an 8 bit hash.
-constexpr double shiftFactor = 0.4 / 255;
-constexpr int shiftDirectionComp = 128;
+constexpr double shiftFactor = 0.2 / 255;
 
 // lerp is a method to interpolate a value between two nodes, n1 and n2.
 // By using blended values for r, we get a smooth curve. We're not calling
@@ -60,8 +59,8 @@ std::vector<double> NoiseGenerator::generate (double x, size_t layers, bool calc
         // is determined to be in a different grid cell after shifting.
         double gx0 = ix0;
         double gx1 = ix1;
-        gx0 += (hp0 > shiftDirectionComp) ? shiftFactor * hp0: -shiftFactor * hp0;
-        gx1 += (hp1 > shiftDirectionComp) ? shiftFactor * hp1: -shiftFactor * hp1;
+        gx0 += (hp0 & 1) ? shiftFactor * hp0: -shiftFactor * hp0;
+        gx1 += (hp1 & 1) ? shiftFactor * hp1: -shiftFactor * hp1;
 
         if (x < gx0)
         {
@@ -72,7 +71,7 @@ std::vector<double> NoiseGenerator::generate (double x, size_t layers, bool calc
             gx1 = gx0;
             hp0 = adapt.getHash(ix0);
             gx0 = ix0;
-            gx0 += (hp0 > shiftDirectionComp) ? shiftFactor * hp0: -shiftFactor * hp0;
+            gx0 += (hp0 & 1) ? shiftFactor * hp0: -shiftFactor * hp0;
         }
         else if (x > gx1)
         {
@@ -83,7 +82,7 @@ std::vector<double> NoiseGenerator::generate (double x, size_t layers, bool calc
             gx0 = gx1;
             hp1 = adapt.getHash(ix1);
             gx1 = ix1;
-            gx1 += (hp1 > shiftDirectionComp) ? shiftFactor * hp1: -shiftFactor * hp1;
+            gx1 += (hp1 & 1) ? shiftFactor * hp1: -shiftFactor * hp1;
         }
 
         // Then calculate individual dimension vectors to the noise point
@@ -93,7 +92,7 @@ std::vector<double> NoiseGenerator::generate (double x, size_t layers, bool calc
 
         // Define and calculate smooth blends starting with the letter s.
         // Only one blend is needed for each dimension.
-        double s = blend(x0 / gx1 - gx0);
+        double s = blend(x0 / (gx1 - gx0));
         
         // Define and calculate nodes based on the grid points.
         double a, b;
@@ -177,10 +176,10 @@ std::vector<double> NoiseGenerator::generate (double x, double y, size_t layers,
         double gx1 = ix1;
         double gy0 = iy0;
         double gy1 = iy1;
-        gx0 += (hx0 > shiftDirectionComp) ? shiftFactor * hx0: -shiftFactor * hx0;
-        gx1 += (hx1 > shiftDirectionComp) ? shiftFactor * hx1: -shiftFactor * hx1;
-        gy0 += (hy0 > shiftDirectionComp) ? shiftFactor * hy0: -shiftFactor * hy0;
-        gy1 += (hy1 > shiftDirectionComp) ? shiftFactor * hy1: -shiftFactor * hy1;
+        gx0 += (hx0 & 1) ? shiftFactor * hx0: -shiftFactor * hx0;
+        gx1 += (hx1 & 1) ? shiftFactor * hx1: -shiftFactor * hx1;
+        gy0 += (hy0 & 1) ? shiftFactor * hy0: -shiftFactor * hy0;
+        gy1 += (hy1 & 1) ? shiftFactor * hy1: -shiftFactor * hy1;
 
         if (x < gx0)
         {
@@ -191,7 +190,7 @@ std::vector<double> NoiseGenerator::generate (double x, double y, size_t layers,
             gx1 = gx0;
             hx0 = adapt.getHash(ix0);
             gx0 = ix0;
-            gx0 += (hx0 > shiftDirectionComp) ? shiftFactor * hx0: -shiftFactor * hx0;
+            gx0 += (hx0 & 1) ? shiftFactor * hx0: -shiftFactor * hx0;
         }
         else if (x > gx1)
         {
@@ -202,7 +201,7 @@ std::vector<double> NoiseGenerator::generate (double x, double y, size_t layers,
             gx0 = gx1;
             hx1 = adapt.getHash(ix1);
             gx1 = ix1;
-            gx1 += (hx1 > shiftDirectionComp) ? shiftFactor * hx1: -shiftFactor * hx1;
+            gx1 += (hx1 & 1) ? shiftFactor * hx1: -shiftFactor * hx1;
         }
 
         if (y < gy0)
@@ -214,7 +213,7 @@ std::vector<double> NoiseGenerator::generate (double x, double y, size_t layers,
             gy1 = gy0;
             hy0 = adapt.getHash(iy0);
             gy0 = iy0;
-            gy0 += (hy0 > shiftDirectionComp) ? shiftFactor * hy0: -shiftFactor * hy0;
+            gy0 += (hy0 & 1) ? shiftFactor * hy0: -shiftFactor * hy0;
         }
         else if (y > gy1)
         {
@@ -225,7 +224,7 @@ std::vector<double> NoiseGenerator::generate (double x, double y, size_t layers,
             gy0 = gy1;
             hy1 = adapt.getHash(iy1);
             gy1 = iy1;
-            gy1 += (hy1 > shiftDirectionComp) ? shiftFactor * hy1: -shiftFactor * hy1;
+            gy1 += (hy1 & 1) ? shiftFactor * hy1: -shiftFactor * hy1;
         }
 
         // Then calculate individual dimension vectors to the noise point
@@ -237,8 +236,8 @@ std::vector<double> NoiseGenerator::generate (double x, double y, size_t layers,
 
         // Define and calculate smooth blends starting with the letter s.
         // Only one blend is needed for each dimension.
-        double s = blend(x0 / gx1 - gx0);
-        double t = blend(y0 / gy1 - gy0);
+        double s = blend(x0 / (gx1 - gx0));
+        double t = blend(y0 / (gy1 - gy0));
 
         // Get hashes for each grid point using the grid coordinates.
         int hp00 = hx0 + hy0;

@@ -31,12 +31,13 @@ SCENARIO( Hash, "Operation/Normal", "unit,hash", "NoiseGenerator can generate 2D
     
     const uint32_t width = 512, height = 512;
     double *noiseMap = new double[width * height];
+    size_t layers = 3;
 
     for (uint32_t y = 0; y < height; ++y)
     {
         for (uint32_t x = 0; x < width; ++x)
         {
-            noiseMap[y * width + x] = noise.generate(static_cast<double>(x) / 128, static_cast<double>(y) / 128)[0];
+            noiseMap[y * width + x] = noise.generate(static_cast<double>(x) / 64, static_cast<double>(y) / 64, layers)[0];
         }
     }
 
@@ -55,7 +56,7 @@ SCENARIO( Hash, "Operation/Normal", "unit,hash", "NoiseGenerator can generate 2D
         {
             max = noiseMap[i];
         }
-        unsigned char n = static_cast<unsigned char>((noiseMap[i] + 1) / 2 * 255);
+        unsigned char n = static_cast<unsigned char>((noiseMap[i] + .8) / 1.6 * 255);
         ofs << n << n << n;
     }
     ofs.close();

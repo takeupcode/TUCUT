@@ -105,7 +105,7 @@ inline double node (int hash, double x)
 
 inline double node (int hash, double x, double y)
 {
-    return dot(unitVectors2[hash % 12], x, y);
+    return dot(unitVectors2[hash % 13], x, y);
 }
 
 inline double node (int hash, double x, double y, double z)
