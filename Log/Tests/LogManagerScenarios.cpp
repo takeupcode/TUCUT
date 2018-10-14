@@ -21,6 +21,8 @@ using namespace TUCUT;
 
 SCENARIO( Log, "Construction/Singleton", "unit,log", "Log manager instances are the same." )
 {
+    Log::LogManager::initialize("logs", "testlogging");
+    
     Log::LogManager * pLogMgr1 = Log::LogManager::instance();
     Log::LogManager * pLogMgr2 = Log::LogManager::instance();
     
@@ -38,10 +40,29 @@ SCENARIO( Log, "Operation/Normal", "unit,log", "Log manager can log." )
     TUCUTLOG(Info, informingStr);
     
     Log::LogManager * pLogMgr = Log::LogManager::instance();
-    auto result = File::FileManager::readLines(pLogMgr->logFileName());
+    auto lines = File::FileManager::readLines(pLogMgr->logFileName());
     
-    VERIFY_TRUE(search(begin(result[0]), end(result[0]), begin(debuggingStr), end(debuggingStr)) != end(result[0]));
-    VERIFY_TRUE(search(begin(result[1]), end(result[1]), begin(informingStr), end(informingStr)) != end(result[1]));
+    bool lineFound = false;
+    for (const auto & line: lines)
+    {
+        if (search(begin(line), end(line), begin(debuggingStr), end(debuggingStr)) != end(line))
+        {
+            lineFound = true;
+            break;
+        }
+    }
+    VERIFY_TRUE(lineFound);
+    
+    lineFound = false;
+    for (const auto & line: lines)
+    {
+        if (search(begin(line), end(line), begin(informingStr), end(informingStr)) != end(line))
+        {
+            lineFound = true;
+            break;
+        }
+    }
+    VERIFY_TRUE(lineFound);
     
     boost::filesystem::remove(pLogMgr->logFileName());
 }

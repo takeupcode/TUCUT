@@ -27,11 +27,13 @@ LogManager::LogManager (const std::string & logFileName)
 : mLogFileName(logFileName)
 { }
 
-void LogManager::initialize (const std::string & logPath, const std::string baseName, const std::string extName)
+LogManager * LogManager::initialize (const std::string & logPath, const std::string baseName, const std::string extName)
 {
     if (mInstance)
     {
-        throw std::logic_error("LogManager is already initialized.");
+        mInstance->logInfo("LogManager is already initialized.");
+        
+        return mInstance;
     }
     
     boost::filesystem::create_directory(logPath);
@@ -41,6 +43,8 @@ void LogManager::initialize (const std::string & logPath, const std::string base
     logFileName += "-" + time(false) + extName;
 
     mInstance = new LogManager(logFileName.string());
+    
+    return mInstance;
 }
 
 void LogManager::deinitialize ()

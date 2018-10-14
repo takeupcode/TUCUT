@@ -18,7 +18,7 @@ namespace Log {
 class LogManager
 {
 public:
-    static void initialize (const std::string & logPath, const std::string baseName, const std::string extName = ".log");
+    static LogManager * initialize (const std::string & logPath, const std::string baseName, const std::string extName = ".log");
     
     static void deinitialize ();
     

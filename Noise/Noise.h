@@ -11,6 +11,8 @@
 
 #include <vector>
 
+#include "../Geometry/Point.h"
+
 namespace TUCUT {
 namespace Noise {
 
@@ -27,13 +29,13 @@ public:
     
     virtual ~NoiseGenerator () = default;
     
-    virtual std::vector<double> generate (double x, size_t layers = 1, bool calcDerivatives = false) const;
+    virtual double generate (double x, size_t layers = 1, Geometry::Point1d * derivative = nullptr) const;
     
-    virtual std::vector<double> generate (double x, double y, size_t layers = 1, bool calcDerivatives = false) const;
+    virtual double generate (double x, double y, size_t layers = 1, Geometry::Point2d * derivative = nullptr) const;
     
-    virtual std::vector<double> generate (double x, double y, double z, size_t layers = 1, bool calcDerivatives = false) const;
+    virtual double generate (double x, double y, double z, size_t layers = 1, Geometry::Point3d * derivative = nullptr) const;
     
-    virtual std::vector<double> generate (double x, double y, double z, double w, size_t layers = 1, bool calcDerivatives = false) const;
+    virtual double generate (double x, double y, double z, double w, size_t layers = 1, Geometry::Point4d * derivative = nullptr) const;
 
 protected:
     int mSeed;

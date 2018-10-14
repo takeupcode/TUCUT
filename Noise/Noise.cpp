@@ -28,9 +28,9 @@ constexpr double shiftFactor = 0.2 / 255;
 // lerp is defined as: lerp (n1, n2, r)
 //   (n1 * (1 - r) + n2 * r)
         
-std::vector<double> NoiseGenerator::generate (double x, size_t layers, bool calcDerivatives) const
+double NoiseGenerator::generate (double x, size_t layers, Geometry::Point1d * derivative) const
 {
-    std::vector<double> result;
+    double result;
     
     double frequency = mFrequency;
     double amplitude = mAmplitude;
@@ -115,7 +115,7 @@ std::vector<double> NoiseGenerator::generate (double x, size_t layers, bool calc
         
         noise += amplitude * (a + s * c0);
         
-        if (calcDerivatives)
+        if (derivative)
         {
             // Calculate smooth blend derivatives
             // starting with the letters ds.
@@ -128,19 +128,19 @@ std::vector<double> NoiseGenerator::generate (double x, size_t layers, bool calc
         amplitude *= mPersistence;
     }
     
-    result.push_back(noise);
+    result = noise;
     
-    if (calcDerivatives)
+    if (derivative)
     {
-        result.push_back(dx);
+        derivative->x = dx;
     }
 
     return result;
 }
 
-std::vector<double> NoiseGenerator::generate (double x, double y, size_t layers, bool calcDerivatives) const
+double NoiseGenerator::generate (double x, double y, size_t layers, Geometry::Point2d * derivative) const
 {
-    std::vector<double> result;
+    double result;
     
     double frequency = mFrequency;
     double amplitude = mAmplitude;
@@ -282,7 +282,7 @@ std::vector<double> NoiseGenerator::generate (double x, double y, size_t layers,
         
         noise += amplitude * (a + s * c0 + t * c1 + s * t * c2);
         
-        if (calcDerivatives)
+        if (derivative)
         {
             // Calculate smooth blend derivatives
             // starting with the letters ds.
@@ -297,28 +297,28 @@ std::vector<double> NoiseGenerator::generate (double x, double y, size_t layers,
         amplitude *= mPersistence;
     }
     
-    result.push_back(noise);
+    result = noise;
     
-    if (calcDerivatives)
+    if (derivative)
     {
-        result.push_back(dx);
-        result.push_back(dy);
+        derivative->x = dx;
+        derivative->y = dy;
     }
 
     return result;
 }
 
-std::vector<double> NoiseGenerator::generate (double x, double y, double z, size_t layers, bool calcDerivatives) const
+double NoiseGenerator::generate (double x, double y, double z, size_t layers, Geometry::Point3d * derivative) const
 {
-    std::vector<double> result;
+    double result = 0.0;
     
     
     return result;
 }
 
-std::vector<double> NoiseGenerator::generate (double x, double y, double z, double w, size_t layers, bool calcDerivatives) const
+double NoiseGenerator::generate (double x, double y, double z, double w, size_t layers, Geometry::Point4d * derivative) const
 {
-    std::vector<double> result;
+    double result = 0.0;
     
     
     return result;
