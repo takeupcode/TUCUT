@@ -7,8 +7,10 @@
 //
 
 #include "Noise.h"
-#include "NoiseUtil.h"
 
+#include <random>
+
+#include "NoiseUtil.h"
 #include "../Hash/Hash.h"
 
 namespace TUCUT {
@@ -27,11 +29,34 @@ constexpr double shiftFactor = 0.2 / 255;
 // the various constants shared between the noise and the derivatives.
 // lerp is defined as: lerp (n1, n2, r)
 //   (n1 * (1 - r) + n2 * r)
-        
-double NoiseGenerator::generate (double x, size_t layers, Geometry::Point1d * derivative) const
+
+NoiseGenerator::NoiseGenerator (int seed,
+                                double frequency,
+                                double amplitude,
+                                double lacunarity,
+                                double persistence)
+: mSeed(seed), mFrequency(frequency), mAmplitude(amplitude), mLacunarity(lacunarity), mPersistence(persistence)
+{
+    if (mSeed == 0)
+    {
+        mSeed = std::random_device()();
+    }
+}
+
+int NoiseGenerator::seed () const
+{
+    return mSeed;
+}
+
+double NoiseGenerator::generate (double x, Geometry::Point1d * offset, size_t layers, Geometry::Point1d * derivative) const
 {
     double result;
     
+    std::mt19937 rng;
+    rng.seed(mSeed);
+    // An int distribution seems to be more reliable.
+    std::uniform_int_distribution<std::mt19937::result_type> dist(1, 10000);
+
     double frequency = mFrequency;
     double amplitude = mAmplitude;
     double originalX = x;
@@ -40,7 +65,11 @@ double NoiseGenerator::generate (double x, size_t layers, Geometry::Point1d * de
     
     for (size_t currentLayer = 0; currentLayer < layers; currentLayer++)
     {
-        x = originalX * frequency;
+        x = originalX * frequency + dist(rng);
+        if (offset)
+        {
+            x += offset->x;
+        }
 
         // First, calculate the nearest whole unshifted grid coordinates next to each
         // coordinate of the noise point.
@@ -138,10 +167,15 @@ double NoiseGenerator::generate (double x, size_t layers, Geometry::Point1d * de
     return result;
 }
 
-double NoiseGenerator::generate (double x, double y, size_t layers, Geometry::Point2d * derivative) const
+double NoiseGenerator::generate (double x, double y, Geometry::Point2d * offset, size_t layers, Geometry::Point2d * derivative) const
 {
     double result;
     
+    std::mt19937 rng;
+    rng.seed(mSeed);
+    // An int distribution seems to be more reliable.
+    std::uniform_int_distribution<std::mt19937::result_type> dist(1, 10000);
+
     double frequency = mFrequency;
     double amplitude = mAmplitude;
     double originalX = x;
@@ -152,8 +186,13 @@ double NoiseGenerator::generate (double x, double y, size_t layers, Geometry::Po
 
     for (size_t currentLayer = 0; currentLayer < layers; currentLayer++)
     {
-        x = originalX * frequency;
-        y = originalY * frequency;
+        x = originalX * frequency + dist(rng);
+        y = originalY * frequency + dist(rng);
+        if (offset)
+        {
+            x += offset->x;
+            y += offset->y;
+        }
 
         // First, calculate the nearest whole unshifted grid coordinates next to each
         // coordinate of the noise point.
@@ -308,7 +347,7 @@ double NoiseGenerator::generate (double x, double y, size_t layers, Geometry::Po
     return result;
 }
 
-double NoiseGenerator::generate (double x, double y, double z, size_t layers, Geometry::Point3d * derivative) const
+double NoiseGenerator::generate (double x, double y, double z, Geometry::Point3d * offset, size_t layers, Geometry::Point3d * derivative) const
 {
     double result = 0.0;
     
@@ -316,7 +355,7 @@ double NoiseGenerator::generate (double x, double y, double z, size_t layers, Ge
     return result;
 }
 
-double NoiseGenerator::generate (double x, double y, double z, double w, size_t layers, Geometry::Point4d * derivative) const
+double NoiseGenerator::generate (double x, double y, double z, double w, Geometry::Point4d * offset, size_t layers, Geometry::Point4d * derivative) const
 {
     double result = 0.0;
     

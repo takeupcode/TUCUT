@@ -7,6 +7,7 @@
 //
 
 #include <fstream>
+#include <limits>
 #include <string>
 
 #include "../../Test/Test.h"
@@ -31,36 +32,45 @@ SCENARIO( Hash, "Operation/Normal", "unit,hash", "NoiseGenerator can generate 2D
     
     const uint32_t width = 512, height = 512;
     double *noiseMap = new double[width * height];
-    size_t layers = 3;
+    size_t layers = 4;
 
     for (uint32_t y = 0; y < height; ++y)
     {
         for (uint32_t x = 0; x < width; ++x)
         {
-            noiseMap[y * width + x] = noise.generate(static_cast<double>(x) / 64, static_cast<double>(y) / 64, layers);
+            noiseMap[y * width + x] = noise.generate(static_cast<double>(x) / 64, static_cast<double>(y) / 64, nullptr, layers);
         }
     }
-
-    std::ofstream ofs;
-    ofs.open("./noise.ppm", std::ios::out | std::ios::binary | std::ios::trunc);
-    ofs << "P6\n" << width << " " << height << "\n255\n";
-    double min = 0.0;
-    double max = 0.0;
+    
+    double min = std::numeric_limits<double>::max();
+    double max = std::numeric_limits<double>::min();
     for (unsigned i = 0; i < width * height; ++i)
     {
         if (noiseMap[i] < min)
         {
             min = noiseMap[i];
         }
-        else if (noiseMap[i] > max)
+        if (noiseMap[i] > max)
         {
             max = noiseMap[i];
         }
-        unsigned char n = static_cast<unsigned char>((noiseMap[i] + .8) / 1.6 * 255);
+    }
+    double minMaxShift = -min;
+    double minMaxRange = max - min;
+    if (minMaxRange == 0)
+    {
+        minMaxRange = 1;
+    }
+
+    std::ofstream ofs;
+    ofs.open("./noise.ppm", std::ios::out | std::ios::binary | std::ios::trunc);
+    ofs << "P6\n" << width << " " << height << "\n255\n";
+    for (unsigned i = 0; i < width * height; ++i)
+    {
+        unsigned char n = static_cast<unsigned char>((noiseMap[i] + minMaxShift) / minMaxRange * 255);
         ofs << n << n << n;
     }
     ofs.close();
-    std::cout << "min=" << min << "\nmax=" << max << "\n";
     
     delete[] noiseMap;
 }
