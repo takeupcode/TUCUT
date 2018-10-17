@@ -6,8 +6,6 @@
 //  Copyright © 2018 Take Up Code. All rights reserved.
 //
 
-#include <string>
-
 #include "../../Test/Test.h"
 
 #include "../Point.h"

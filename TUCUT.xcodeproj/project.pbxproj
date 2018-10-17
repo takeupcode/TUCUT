@@ -104,6 +104,10 @@
 		3E259EFC20E34C1200F01379 /* Test.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E259EFB20E34C1100F01379 /* Test.h */; };
 		3E289F342173B2B8002FFBDC /* PointScenarios.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E289F332173B2B8002FFBDC /* PointScenarios.cpp */; };
 		3E289F362173B47C002FFBDC /* Point.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E289F352173B47C002FFBDC /* Point.h */; };
+		3E289F382176A670002FFBDC /* Lerp.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E289F372176A670002FFBDC /* Lerp.h */; };
+		3E289F3C2176B19F002FFBDC /* Color.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E289F3B2176B19F002FFBDC /* Color.h */; };
+		3E289F3E2176E5BD002FFBDC /* LerpScenarios.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E289F3D2176E5BD002FFBDC /* LerpScenarios.cpp */; };
+		3E289F402176ED50002FFBDC /* ColorScenarios.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E289F3F2176ED50002FFBDC /* ColorScenarios.cpp */; };
 		3E2F9C1620FB7D80008C90A9 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E259DE120E34AFD00F01379 /* main.cpp */; };
 		3E2F9C1720FB7D8F008C90A9 /* libTUCUT.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E259DAC20E3398E00F01379 /* libTUCUT.a */; };
 		3E2F9C1D20FB7FED008C90A9 /* libboost_system-mt.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E2F9C1B20FB7FEC008C90A9 /* libboost_system-mt.dylib */; };
@@ -563,6 +567,10 @@
 		3E259EFB20E34C1100F01379 /* Test.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Test.h; sourceTree = "<group>"; };
 		3E289F332173B2B8002FFBDC /* PointScenarios.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PointScenarios.cpp; sourceTree = "<group>"; };
 		3E289F352173B47C002FFBDC /* Point.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Point.h; sourceTree = "<group>"; };
+		3E289F372176A670002FFBDC /* Lerp.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Lerp.h; sourceTree = "<group>"; };
+		3E289F3B2176B19F002FFBDC /* Color.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Color.h; sourceTree = "<group>"; };
+		3E289F3D2176E5BD002FFBDC /* LerpScenarios.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = LerpScenarios.cpp; sourceTree = "<group>"; };
+		3E289F3F2176ED50002FFBDC /* ColorScenarios.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ColorScenarios.cpp; sourceTree = "<group>"; };
 		3E2F9C0F20FB7D0F008C90A9 /* ProtocolCompiler */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = ProtocolCompiler; sourceTree = BUILT_PRODUCTS_DIR; };
 		3E2F9C1B20FB7FEC008C90A9 /* libboost_system-mt.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libboost_system-mt.dylib"; path = "../../../../opt/local/lib/libboost_system-mt.dylib"; sourceTree = "<group>"; };
 		3E2F9C1C20FB7FEC008C90A9 /* libboost_filesystem-mt.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libboost_filesystem-mt.dylib"; path = "../../../../opt/local/lib/libboost_filesystem-mt.dylib"; sourceTree = "<group>"; };
@@ -754,6 +762,7 @@
 		3E259DA320E3398E00F01379 = {
 			isa = PBXGroup;
 			children = (
+				3E289F392176B14C002FFBDC /* Color */,
 				3E289F312173B21A002FFBDC /* Geometry */,
 				3E06183921534285000B634B /* Noise */,
 				3E061832213E0C9A000B634B /* Hash */,
@@ -1123,6 +1132,7 @@
 			children = (
 				3E289F322173B23F002FFBDC /* Tests */,
 				3E289F352173B47C002FFBDC /* Point.h */,
+				3E289F372176A670002FFBDC /* Lerp.h */,
 			);
 			path = Geometry;
 			sourceTree = "<group>";
@@ -1131,6 +1141,24 @@
 			isa = PBXGroup;
 			children = (
 				3E289F332173B2B8002FFBDC /* PointScenarios.cpp */,
+				3E289F3D2176E5BD002FFBDC /* LerpScenarios.cpp */,
+			);
+			path = Tests;
+			sourceTree = "<group>";
+		};
+		3E289F392176B14C002FFBDC /* Color */ = {
+			isa = PBXGroup;
+			children = (
+				3E289F3A2176B15D002FFBDC /* Tests */,
+				3E289F3B2176B19F002FFBDC /* Color.h */,
+			);
+			path = Color;
+			sourceTree = "<group>";
+		};
+		3E289F3A2176B15D002FFBDC /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				3E289F3F2176ED50002FFBDC /* ColorScenarios.cpp */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -1361,6 +1389,7 @@
 				3E259ED120E34BE900F01379 /* OptionSingleParser.h in Headers */,
 				3E259DDB20E33E5E00F01379 /* EventPublisher.h in Headers */,
 				3E259EBE20E34BE900F01379 /* EnumModelContainer.h in Headers */,
+				3E289F3C2176B19F002FFBDC /* Color.h in Headers */,
 				3E259ED220E34BE900F01379 /* OptionValueParser.h in Headers */,
 				3E259EC720E34BE900F01379 /* MessageParser.h in Headers */,
 				3E259ED020E34BE900F01379 /* OptionGroupParser.h in Headers */,
@@ -1373,6 +1402,7 @@
 				3E259EC820E34BE900F01379 /* CodeGeneratorManager.h in Headers */,
 				3E259ED420E34BE900F01379 /* ProtoParser.h in Headers */,
 				3E259DDA20E33E5E00F01379 /* EventSubscriber.h in Headers */,
+				3E289F382176A670002FFBDC /* Lerp.h in Headers */,
 				3E259EDB20E34BE900F01379 /* MessageModel.h in Headers */,
 				3E259EDC20E34BE900F01379 /* TokenReader.h in Headers */,
 				3E259EEB20E34BE900F01379 /* CodeWriterCPP.h in Headers */,
@@ -1692,6 +1722,7 @@
 				3E3F82F821043ED200501126 /* AdvancedPublisher.cpp in Sources */,
 				3ED4127F20FED1FB00BC7226 /* ImportParserScenarios.cpp in Sources */,
 				3ED4128020FED1FB00BC7226 /* MessageFieldParserScenarios.cpp in Sources */,
+				3E289F3E2176E5BD002FFBDC /* LerpScenarios.cpp in Sources */,
 				3ED4128120FED1FB00BC7226 /* MessageParserScenarios.cpp in Sources */,
 				3ED4128220FED1FB00BC7226 /* OneofParserScenarios.cpp in Sources */,
 				3E061838214F6417000B634B /* HashScenarios.cpp in Sources */,
@@ -1700,6 +1731,7 @@
 				3ED4128320FED1FB00BC7226 /* OptionParserScenarios.cpp in Sources */,
 				3ED4128420FED1FB00BC7226 /* PackageParserScenarios.cpp in Sources */,
 				3E06182A212A65CC000B634B /* PropertyGroupScenarios.cpp in Sources */,
+				3E289F402176ED50002FFBDC /* ColorScenarios.cpp in Sources */,
 				3ED4128520FED1FB00BC7226 /* ProtoModelScenarios.cpp in Sources */,
 				3E3F82E8210424CF00501126 /* StringLiteralScenarios.cpp in Sources */,
 				3E06182E212A6628000B634B /* GameObjectScenarios.cpp in Sources */,

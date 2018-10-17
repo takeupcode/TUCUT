@@ -11,10 +11,8 @@
 namespace TUCUT {
 namespace Noise {
 
-constexpr double sqrt3   = 1.73205080756887729352744634150587237;
-constexpr double sqrt3d2 = 0.86602540378443864676372317075293618;
-constexpr double sqrt2   = 1.41421356237309504880168872420969808;
-constexpr double sqrt2d2 = 0.70710678118654752440084436210484904;
+constexpr double sqrt2d2 = 0.70710678118654752440084436210484904; // sqrt(2) / 2
+constexpr double sqrt3d2 = 0.86602540378443864676372317075293618; // sqrt(3) / 2
     
 // This is different from the other dimensions because 1 dimension doesn't
 // use unit-length vectors. With one dimension, we can only define 2 unit-vectors

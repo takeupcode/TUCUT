@@ -325,7 +325,8 @@ public:
 
     virtual void verifyEqual (float expectedValue, float actualValue, int line)
     {
-        if (actualValue != expectedValue)
+        if (actualValue < (expectedValue - 0.0001f) ||
+            actualValue > (expectedValue + 0.0001f))
         {
             mRunPassed = false;
             throw EqualVerificationException(expectedValue, actualValue, line);
@@ -334,7 +335,8 @@ public:
 
     virtual void verifyEqual (double expectedValue, double actualValue, int line)
     {
-        if (actualValue != expectedValue)
+        if (actualValue < (expectedValue - 0.000001) ||
+            actualValue > (expectedValue + 0.000001))
         {
             mRunPassed = false;
             throw EqualVerificationException(expectedValue, actualValue, line);
