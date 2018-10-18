@@ -15,8 +15,8 @@ using namespace TUCUT;
 
 SCENARIO( Color, "Operation/Normal", "unit,geometry", "Colors can be lerped." )
 {
-    Color::ColorRGB indigo = Color::ColorRGB::Indigo();
-    Color::ColorRGB silver = Color::ColorRGB::Silver();
+    Color::ColorRGB indigo = Color::ColorRGB::createIndigo();
+    Color::ColorRGB silver = Color::ColorRGB::createSilver();
     Color::ColorRGB lerpedColor = Color::lerpColor(indigo, silver, 0.5);
     
     VERIFY_EQUAL(133, lerpedColor.red());

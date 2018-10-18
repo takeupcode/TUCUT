@@ -77,76 +77,76 @@ public:
         return mAlpha;
     }
 
-    static ColorRGB Black ()
+    static ColorRGB createBlack ()
     { return ColorRGB(0, 0, 0); }
-    static ColorRGB White ()
+    static ColorRGB createWhite ()
     { return ColorRGB(255, 255, 255); }
-    static ColorRGB LightGrey ()
+    static ColorRGB createLightGrey ()
     { return ColorRGB(211, 211, 211); }
-    static ColorRGB Silver ()
+    static ColorRGB createSilver ()
     { return ColorRGB(192, 192, 192); }
-    static ColorRGB DarkGrey ()
+    static ColorRGB createDarkGrey ()
     { return ColorRGB(169, 169, 169); }
-    static ColorRGB Grey ()
+    static ColorRGB createGrey ()
     { return ColorRGB(128, 128, 128); }
 
-    static ColorRGB Red ()
+    static ColorRGB createRed ()
     { return ColorRGB(255, 0, 0); }
-    static ColorRGB Lime ()
+    static ColorRGB createLime ()
     { return ColorRGB(0, 255, 0); }
-    static ColorRGB Blue ()
+    static ColorRGB createBlue ()
     { return ColorRGB(0, 0, 255); }
-    static ColorRGB Yellow ()
+    static ColorRGB createYellow ()
     { return ColorRGB(255, 255, 0); }
-    static ColorRGB Aqua ()
+    static ColorRGB createAqua ()
     { return ColorRGB(0, 255, 255); }
-    static ColorRGB Magenta ()
+    static ColorRGB createMagenta ()
     { return ColorRGB(255, 0, 255); }
 
-    static ColorRGB Maroon ()
+    static ColorRGB createMaroon ()
     { return ColorRGB(128, 0, 0); }
-    static ColorRGB Green ()
+    static ColorRGB createGreen ()
     { return ColorRGB(0, 128, 0); }
-    static ColorRGB Navy ()
+    static ColorRGB createNavy ()
     { return ColorRGB(0, 0, 128); }
-    static ColorRGB Olive ()
+    static ColorRGB createOlive ()
     { return ColorRGB(128, 128, 0); }
-    static ColorRGB Teal ()
+    static ColorRGB createTeal ()
     { return ColorRGB(0, 128, 128); }
-    static ColorRGB Purple ()
+    static ColorRGB createPurple ()
     { return ColorRGB(128, 0, 128); }
 
-    static ColorRGB Pink ()
+    static ColorRGB createPink ()
     { return ColorRGB(255, 192, 203); }
-    static ColorRGB Brown ()
+    static ColorRGB createBrown ()
     { return ColorRGB(139, 69, 19); }
-    static ColorRGB Tan ()
+    static ColorRGB createTan ()
     { return ColorRGB(210, 180, 140); }
-    static ColorRGB Lavender ()
+    static ColorRGB createLavender ()
     { return ColorRGB(230, 230, 250); }
-    static ColorRGB Gold ()
+    static ColorRGB createGold ()
     { return ColorRGB(255, 215, 0); }
-    static ColorRGB Orange ()
+    static ColorRGB createOrange ()
     { return ColorRGB(255, 165, 0); }
-    static ColorRGB Khaki ()
+    static ColorRGB createKhaki ()
     { return ColorRGB(240, 230, 140); }
-    static ColorRGB Turquoise ()
+    static ColorRGB createTurquoise ()
     { return ColorRGB(64, 224, 208); }
-    static ColorRGB Indigo ()
+    static ColorRGB createIndigo ()
     { return ColorRGB(75, 0, 130); }
-    static ColorRGB Plum ()
+    static ColorRGB createPlum ()
     { return ColorRGB(221, 160, 221); }
-    static ColorRGB Violet ()
+    static ColorRGB createViolet ()
     { return ColorRGB(238, 130, 238); }
-    static ColorRGB Beige ()
+    static ColorRGB createBeige ()
     { return ColorRGB(245, 245, 220); }
-    static ColorRGB Wheat ()
+    static ColorRGB createWheat ()
     { return ColorRGB(245, 222, 179); }
-    static ColorRGB Wood ()
+    static ColorRGB createWood ()
     { return ColorRGB(222, 184, 135); }
-    static ColorRGB Peach ()
+    static ColorRGB createPeach ()
     { return ColorRGB(255, 218, 185); }
-    static ColorRGB Ivory ()
+    static ColorRGB createIvory ()
     { return ColorRGB(255, 255, 240); }
 
 private:
