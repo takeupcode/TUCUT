@@ -27,7 +27,7 @@ SCENARIO( GameObject, "Operation/Normal", "unit,game", "GameObject can get share
     auto sharedPtr = gameObj->getSharedGameObject();
     
     VERIFY_EQUAL(2, static_cast<int>(sharedPtr.use_count()));
-    VERIFY_EQUAL(gameObj.get(), sharedPtr.get());
+    VERIFY_SAMEPTR(gameObj.get(), sharedPtr.get());
 }
 
 SCENARIO( GameObject, "Operation/Normal", "unit,game", "GameObject has properties." )

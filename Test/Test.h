@@ -362,7 +362,27 @@ public:
     }
     
     template <typename T>
-    void verifySame (T * expectedValue, T * actualValue, int line)
+    void verifyEqual (const T & expectedValue, const T & actualValue, int line)
+    {
+        if (actualValue != expectedValue)
+        {
+            mRunPassed = false;
+            throw EqualVerificationException(expectedValue, actualValue, line);
+        }
+    }
+    
+    template <typename T>
+    void verifyEqual (T * expectedValue, T * actualValue, int line)
+    {
+        if (*actualValue != *expectedValue)
+        {
+            mRunPassed = false;
+            throw EqualVerificationException(*expectedValue, *actualValue, line);
+        }
+    }
+
+    template <typename T>
+    void verifySamePtr (T * expectedValue, T * actualValue, int line)
     {
         if (actualValue != expectedValue)
         {
@@ -370,7 +390,7 @@ public:
             throw SameVerificationException(line);
         }
     }
-    
+
 protected:
     ScenarioBase (const std::string & categoryFullName, const std::string & scenarioDescription, bool exceptionExpected, const std::string & scenarioTag)
     : mCategoryFullName(categoryFullName), mDescription(scenarioDescription), mTag(scenarioTag), mExceptionExpected(exceptionExpected)
@@ -694,7 +714,7 @@ void INTERNAL_TUCUT_TEST_SCENARIO_CLASS_NAME( preprocGroupName )::runSteps ()
 #define VERIFY_TRUE(actual) verifyTrue(actual, __LINE__)
 #define VERIFY_FALSE(actual) verifyFalse(actual, __LINE__)
 #define VERIFY_EQUAL(expected, actual) verifyEqual(expected, actual, __LINE__)
-#define VERIFY_SAME(expected, actual) verifySame(expected, actual, __LINE__)
+#define VERIFY_SAMEPTR(expected, actual) verifySamePtr(expected, actual, __LINE__)
 
 #ifdef TUCUT_TEST_GENERATE_MAIN
 

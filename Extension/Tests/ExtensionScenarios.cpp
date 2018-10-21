@@ -21,7 +21,7 @@ SCENARIO( Extension, "Construction/Singleton", "unit,extension", "Extension mana
     Extension::ExtensionManager * pExtMgr2 = Extension::ExtensionManager::instance();
 
     VERIFY_TRUE(pExtMgr1 != nullptr);
-    VERIFY_SAME(pExtMgr1, pExtMgr2);
+    VERIFY_SAMEPTR(pExtMgr1, pExtMgr2);
 }
 
 SCENARIO( Extension, "Operation/Normal", "unit,extension", "Extension manager can send message and receive reply." )

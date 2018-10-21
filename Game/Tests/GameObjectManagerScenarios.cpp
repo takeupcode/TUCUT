@@ -21,7 +21,7 @@ SCENARIO( GameObjectManager, "Construction/Singleton", "unit,game", "GameObjectM
     Game::GameObjectManager * pGameObjectMgr2 = Game::GameObjectManager::instance();
     
     VERIFY_TRUE(pGameObjectMgr1 != nullptr);
-    VERIFY_SAME(pGameObjectMgr1, pGameObjectMgr2);
+    VERIFY_SAMEPTR(pGameObjectMgr1, pGameObjectMgr2);
 }
 
 SCENARIO( GameObjectManager, "Operation/Normal", "unit,game", "GameObjectManager can add and remove GameObjects." )

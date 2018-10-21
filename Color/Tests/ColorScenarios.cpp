@@ -13,7 +13,7 @@
 using namespace std;
 using namespace TUCUT;
 
-SCENARIO( Color, "Operation/Normal", "unit,geometry", "Colors can be lerped." )
+SCENARIO( Color, "Operation/Normal", "unit,color", "Colors can be lerped." )
 {
     Color::ColorRGB indigo = Color::ColorRGB::createIndigo();
     Color::ColorRGB silver = Color::ColorRGB::createSilver();

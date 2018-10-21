@@ -48,7 +48,7 @@ int NoiseGenerator::seed () const
     return mSeed;
 }
 
-double NoiseGenerator::generate (double x, Geometry::Point1d * offset, size_t layers, Geometry::Point1d * derivative) const
+double NoiseGenerator::generate (double x, Math::Point1d * offset, size_t layers, Math::Point1d * derivative) const
 {
     double result;
     
@@ -167,7 +167,7 @@ double NoiseGenerator::generate (double x, Geometry::Point1d * offset, size_t la
     return result;
 }
 
-double NoiseGenerator::generate (double x, double y, Geometry::Point2d * offset, size_t layers, Geometry::Point2d * derivative) const
+double NoiseGenerator::generate (double x, double y, Math::Point2d * offset, size_t layers, Math::Point2d * derivative) const
 {
     double result;
     
@@ -347,7 +347,7 @@ double NoiseGenerator::generate (double x, double y, Geometry::Point2d * offset,
     return result;
 }
 
-double NoiseGenerator::generate (double x, double y, double z, Geometry::Point3d * offset, size_t layers, Geometry::Point3d * derivative) const
+double NoiseGenerator::generate (double x, double y, double z, Math::Point3d * offset, size_t layers, Math::Point3d * derivative) const
 {
     double result = 0.0;
     
@@ -355,7 +355,7 @@ double NoiseGenerator::generate (double x, double y, double z, Geometry::Point3d
     return result;
 }
 
-double NoiseGenerator::generate (double x, double y, double z, double w, Geometry::Point4d * offset, size_t layers, Geometry::Point4d * derivative) const
+double NoiseGenerator::generate (double x, double y, double z, double w, Math::Point4d * offset, size_t layers, Math::Point4d * derivative) const
 {
     double result = 0.0;
     

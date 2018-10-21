@@ -9,7 +9,7 @@
 #ifndef TUCUT_Color_Color_h
 #define TUCUT_Color_Color_h
 
-#include "../Geometry/Lerp.h"
+#include "../Math/Lerp.h"
 
 namespace TUCUT {
 namespace Color {
@@ -159,10 +159,10 @@ private:
 template <typename T>
 ColorRGB lerpColor (const ColorRGB & n1, const ColorRGB & n2, T t)
 {
-    int r = static_cast<int>(Geometry::lerp(n1.red(), n2.red(), t));
-    int g = static_cast<int>(Geometry::lerp(n1.green(), n2.green(), t));
-    int b = static_cast<int>(Geometry::lerp(n1.blue(), n2.blue(), t));
-    int a = static_cast<int>(Geometry::lerp(n1.alpha(), n2.alpha(), t));
+    int r = static_cast<int>(Math::lerp(n1.red(), n2.red(), t));
+    int g = static_cast<int>(Math::lerp(n1.green(), n2.green(), t));
+    int b = static_cast<int>(Math::lerp(n1.blue(), n2.blue(), t));
+    int a = static_cast<int>(Math::lerp(n1.alpha(), n2.alpha(), t));
     
     return ColorRGB(r, g, b, a);
 }

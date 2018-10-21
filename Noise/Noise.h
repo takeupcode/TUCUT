@@ -11,7 +11,7 @@
 
 #include <vector>
 
-#include "../Geometry/Point.h"
+#include "../Math/Point.h"
 
 namespace TUCUT {
 namespace Noise {
@@ -29,13 +29,13 @@ public:
     
     int seed () const;
     
-    virtual double generate (double x, Geometry::Point1d * offset = nullptr, size_t layers = 1, Geometry::Point1d * derivative = nullptr) const;
+    virtual double generate (double x, Math::Point1d * offset = nullptr, size_t layers = 1, Math::Point1d * derivative = nullptr) const;
     
-    virtual double generate (double x, double y, Geometry::Point2d * offset = nullptr, size_t layers = 1, Geometry::Point2d * derivative = nullptr) const;
+    virtual double generate (double x, double y, Math::Point2d * offset = nullptr, size_t layers = 1, Math::Point2d * derivative = nullptr) const;
     
-    virtual double generate (double x, double y, double z, Geometry::Point3d * offset = nullptr, size_t layers = 1, Geometry::Point3d * derivative = nullptr) const;
+    virtual double generate (double x, double y, double z, Math::Point3d * offset = nullptr, size_t layers = 1, Math::Point3d * derivative = nullptr) const;
     
-    virtual double generate (double x, double y, double z, double w, Geometry::Point4d * offset = nullptr, size_t layers = 1, Geometry::Point4d * derivative = nullptr) const;
+    virtual double generate (double x, double y, double z, double w, Math::Point4d * offset = nullptr, size_t layers = 1, Math::Point4d * derivative = nullptr) const;
 
 protected:
     int mSeed;

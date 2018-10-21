@@ -6,19 +6,19 @@
 //  Copyright © 2018 Take Up Code. All rights reserved.
 //
 
-#ifndef TUCUT_Geometry_Lerp_h
-#define TUCUT_Geometry_Lerp_h
+#ifndef TUCUT_Math_Lerp_h
+#define TUCUT_Math_Lerp_h
 
 namespace TUCUT {
-namespace Geometry {
+namespace Math {
         
 template <typename N, typename T>
-T lerp (N n1, N n2, T t)
+T lerp (N n0, N n1, T t)
 {
-    return (n1 * (1 - t) + n2 * t);
+    return (n0 * (1 - t) + n1 * t);
 }
 
-} // namespace Geometry
+} // namespace Math
 } // namespace TUCUT
 
-#endif // TUCUT_Geometry_Lerp_h
+#endif // TUCUT_Math_Lerp_h

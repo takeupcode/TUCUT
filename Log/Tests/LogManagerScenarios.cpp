@@ -27,7 +27,7 @@ SCENARIO( Log, "Construction/Singleton", "unit,log", "Log manager instances are 
     Log::LogManager * pLogMgr2 = Log::LogManager::instance();
     
     VERIFY_TRUE(pLogMgr1 != nullptr);
-    VERIFY_SAME(pLogMgr1, pLogMgr2);
+    VERIFY_SAMEPTR(pLogMgr1, pLogMgr2);
 }
 
 SCENARIO( Log, "Operation/Normal", "unit,log", "Log manager can log." )

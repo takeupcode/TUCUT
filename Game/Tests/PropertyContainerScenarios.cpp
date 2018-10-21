@@ -34,8 +34,7 @@ SCENARIO( PropertyContainer, "Operation/Normal", "unit,game", "PropertyContainer
     VERIFY_TRUE(result);
     
     auto group2 = container.getGroup("test1");
-    VERIFY_TRUE(group != nullptr);
-    VERIFY_EQUAL(group, group2);
+    VERIFY_SAMEPTR(group, group2);
     
     auto value = container.getValue("test1", "testValue1");
     VERIFY_TRUE(value != nullptr);
