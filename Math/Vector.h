@@ -68,6 +68,12 @@ public:
 };
 
 template <typename T>
+Vector1<T> operator * (T lhs, const Vector1<T> & rhs)
+{
+    return Vector1<T>(lhs * rhs.x);
+}
+
+template <typename T>
 class Vector2
 {
 public:
@@ -123,6 +129,12 @@ public:
     T x;
     T y;
 };
+
+template <typename T>
+Vector2<T> operator * (T lhs, const Vector2<T> & rhs)
+{
+    return Vector2<T>(lhs * rhs.x, lhs * rhs.y);
+}
 
 template <typename T>
 class Vector3
@@ -190,6 +202,12 @@ public:
 };
 
 template <typename T>
+Vector3<T> operator * (T lhs, const Vector3<T> & rhs)
+{
+    return Vector3<T>(lhs * rhs.x, lhs * rhs.y, lhs * rhs.z);
+}
+
+template <typename T>
 class Vector4
 {
 public:
@@ -250,6 +268,12 @@ public:
     T z;
     T w;
 };
+
+template <typename T>
+Vector4<T> operator * (T lhs, const Vector4<T> & rhs)
+{
+    return Vector4<T>(lhs * rhs.x, lhs * rhs.y, lhs * rhs.z, lhs * rhs.w);
+}
 
 using Vector1i = Vector1<int>;
 using Vector2i = Vector2<int>;

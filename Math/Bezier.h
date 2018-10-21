@@ -32,7 +32,7 @@ namespace Math {
 // Higher orders are possible with more points. Note that
 // each point can itself be 2D, 3D, or 4D.
 template <typename T, typename P, typename V>
-P calculateImpl (const std::vector<P> & points, T t) const
+P calculateImpl (const std::vector<P> & points, T t)
 {
     if (points.size() == 2)
     {
@@ -88,27 +88,27 @@ P calculateImpl (const std::vector<P> & points, T t) const
 }
 
 template <typename T>
-struct Bezier2<T>
+struct Bezier2
 {
-    Point2<T> calculate (const std::vector<Point2<T>> & points, T t) const
+    static Point2<T> calculate (const std::vector<Point2<T>> & points, T t)
     {
         return calculateImpl<T, Point2<T>, Vector2<T>>(points, t);
     }
 };
 
 template <typename T>
-struct Bezier3<T>
+struct Bezier3
 {
-    Point3<T> calculate (const std::vector<Point3<T>> & points, T t) const
+    static Point3<T> calculate (const std::vector<Point3<T>> & points, T t)
     {
         return calculateImpl<T, Point3<T>, Vector3<T>>(points, t);
     }
 };
 
 template <typename T>
-struct Bezier4<T>
+struct Bezier4
 {
-    Point4<T> calculate (const std::vector<Point4<T>> & points, T t) const
+    static Point4<T> calculate (const std::vector<Point4<T>> & points, T t)
     {
         return calculateImpl<T, Point4<T>, Vector4<T>>(points, t);
     }
