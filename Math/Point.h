@@ -20,11 +20,14 @@ template <typename T>
 class Point1
 {
 public:
-    Point1 ()
+    static constexpr std::size_t dimensions = 1;
+    using type = T;
+    
+    constexpr Point1 ()
     : x()
     { }
     
-    explicit Point1 (T x)
+    explicit constexpr Point1 (T x)
     : x(x)
     { }
 
@@ -70,11 +73,14 @@ template <typename T>
 class Point2
 {
 public:
-    Point2 ()
+    static constexpr std::size_t dimensions = 2;
+    using type = T;
+
+    constexpr Point2 ()
     : x(), y()
     { }
     
-    Point2 (T x, T y)
+    constexpr Point2 (T x, T y)
     : x(x), y(y)
     { }
 
@@ -122,11 +128,14 @@ template <typename T>
 class Point3
 {
 public:
-    Point3 ()
+    static constexpr std::size_t dimensions = 3;
+    using type = T;
+
+    constexpr Point3 ()
     : x(), y(), z()
     { }
     
-    Point3 (T x, T y, T z)
+    constexpr Point3 (T x, T y, T z)
     : x(x), y(y), z(z)
     { }
 
@@ -177,11 +186,14 @@ template <typename T>
 class Point4
 {
 public:
-    Point4 ()
+    static constexpr std::size_t dimensions = 4;
+    using type = T;
+
+    constexpr Point4 ()
     : x(), y(), z(), w()
     { }
     
-    Point4 (T x, T y, T z, T w)
+    constexpr Point4 (T x, T y, T z, T w)
     : x(x), y(y), z(z), w(w)
     { }
 

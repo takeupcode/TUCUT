@@ -112,6 +112,7 @@
 		3E289F44217987D6002FFBDC /* Vector.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E289F43217987D6002FFBDC /* Vector.h */; };
 		3E289F46217C2618002FFBDC /* VectorScenarios.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E289F45217C2618002FFBDC /* VectorScenarios.cpp */; };
 		3E289F49217CD947002FFBDC /* BezierScenarios.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E289F48217CD947002FFBDC /* BezierScenarios.cpp */; };
+		3E289F4B217CEDCB002FFBDC /* Easing.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E289F4A217CEDCB002FFBDC /* Easing.h */; };
 		3E2F9C1620FB7D80008C90A9 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E259DE120E34AFD00F01379 /* main.cpp */; };
 		3E2F9C1720FB7D8F008C90A9 /* libTUCUT.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E259DAC20E3398E00F01379 /* libTUCUT.a */; };
 		3E2F9C1D20FB7FED008C90A9 /* libboost_system-mt.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E2F9C1B20FB7FEC008C90A9 /* libboost_system-mt.dylib */; };
@@ -579,6 +580,7 @@
 		3E289F43217987D6002FFBDC /* Vector.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Vector.h; sourceTree = "<group>"; };
 		3E289F45217C2618002FFBDC /* VectorScenarios.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = VectorScenarios.cpp; sourceTree = "<group>"; };
 		3E289F48217CD947002FFBDC /* BezierScenarios.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = BezierScenarios.cpp; sourceTree = "<group>"; };
+		3E289F4A217CEDCB002FFBDC /* Easing.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Easing.h; sourceTree = "<group>"; };
 		3E2F9C0F20FB7D0F008C90A9 /* ProtocolCompiler */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = ProtocolCompiler; sourceTree = BUILT_PRODUCTS_DIR; };
 		3E2F9C1B20FB7FEC008C90A9 /* libboost_system-mt.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libboost_system-mt.dylib"; path = "../../../../opt/local/lib/libboost_system-mt.dylib"; sourceTree = "<group>"; };
 		3E2F9C1C20FB7FEC008C90A9 /* libboost_filesystem-mt.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libboost_filesystem-mt.dylib"; path = "../../../../opt/local/lib/libboost_filesystem-mt.dylib"; sourceTree = "<group>"; };
@@ -1143,6 +1145,7 @@
 				3E289F372176A670002FFBDC /* Lerp.h */,
 				3E289F4121784092002FFBDC /* Bezier.h */,
 				3E289F43217987D6002FFBDC /* Vector.h */,
+				3E289F4A217CEDCB002FFBDC /* Easing.h */,
 			);
 			path = Math;
 			sourceTree = "<group>";
@@ -1400,6 +1403,7 @@
 				3E259DD220E33E4300F01379 /* ConfigInfo.h in Headers */,
 				3E259ED320E34BE900F01379 /* ProtoModel.h in Headers */,
 				3E259ED120E34BE900F01379 /* OptionSingleParser.h in Headers */,
+				3E289F4B217CEDCB002FFBDC /* Easing.h in Headers */,
 				3E259DDB20E33E5E00F01379 /* EventPublisher.h in Headers */,
 				3E259EBE20E34BE900F01379 /* EnumModelContainer.h in Headers */,
 				3E289F3C2176B19F002FFBDC /* Color.h in Headers */,

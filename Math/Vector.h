@@ -16,11 +16,14 @@ template <typename T>
 class Vector1
 {
 public:
-    Vector1 ()
+    static constexpr std::size_t dimensions = 1;
+    using type = T;
+    
+    constexpr Vector1 ()
     : x()
     { }
     
-    explicit Vector1 (T x)
+    explicit constexpr Vector1 (T x)
     : x(x)
     { }
 
@@ -77,11 +80,14 @@ template <typename T>
 class Vector2
 {
 public:
-    Vector2 ()
+    static constexpr std::size_t dimensions = 2;
+    using type = T;
+    
+    constexpr Vector2 ()
     : x(), y()
     { }
     
-    Vector2 (T x, T y)
+    constexpr Vector2 (T x, T y)
     : x(x), y(y)
     { }
 
@@ -140,11 +146,14 @@ template <typename T>
 class Vector3
 {
 public:
-    Vector3 ()
+    static constexpr std::size_t dimensions = 3;
+    using type = T;
+    
+    constexpr Vector3 ()
     : x(), y(), z()
     { }
     
-    Vector3 (T x, T y, T z)
+    constexpr Vector3 (T x, T y, T z)
     : x(x), y(y), z(z)
     { }
 
@@ -211,11 +220,14 @@ template <typename T>
 class Vector4
 {
 public:
-    Vector4 ()
+    static constexpr std::size_t dimensions = 4;
+    using type = T;
+    
+    constexpr Vector4 ()
     : x(), y(), z(), w()
     { }
     
-    Vector4 (T x, T y, T z, T w)
+    constexpr Vector4 (T x, T y, T z, T w)
     : x(x), y(y), z(z), w(w)
     { }
 

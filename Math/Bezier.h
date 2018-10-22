@@ -90,6 +90,9 @@ P calculateImpl (const std::vector<P> & points, T t)
 template <typename T>
 struct Bezier2
 {
+    static constexpr std::size_t dimensions = 2;
+    using type = T;
+    
     static Point2<T> calculate (const std::vector<Point2<T>> & points, T t)
     {
         return calculateImpl<T, Point2<T>, Vector2<T>>(points, t);
@@ -99,6 +102,9 @@ struct Bezier2
 template <typename T>
 struct Bezier3
 {
+    static constexpr std::size_t dimensions = 3;
+    using type = T;
+    
     static Point3<T> calculate (const std::vector<Point3<T>> & points, T t)
     {
         return calculateImpl<T, Point3<T>, Vector3<T>>(points, t);
@@ -108,6 +114,9 @@ struct Bezier3
 template <typename T>
 struct Bezier4
 {
+    static constexpr std::size_t dimensions = 4;
+    using type = T;
+    
     static Point4<T> calculate (const std::vector<Point4<T>> & points, T t)
     {
         return calculateImpl<T, Point4<T>, Vector4<T>>(points, t);
