@@ -61,6 +61,21 @@ SCENARIO( Vector, "Construction/Normal", "unit,math", "Vectors can be copy const
     VERIFY_EQUAL(vec1, vec2);
 }
 
+SCENARIO( Vector, "Construction/Normal", "unit,math", "Vectors can be unit constructed." )
+{
+    Math::Vector3i vec1 = Math::Vector3i::one();
+    Math::Vector4d vec2 = Math::Vector4d::one();
+    
+    VERIFY_EQUAL(1, vec1.x);
+    VERIFY_EQUAL(1, vec1.y);
+    VERIFY_EQUAL(1, vec1.z);
+    
+    VERIFY_EQUAL(1.0, vec2.x);
+    VERIFY_EQUAL(1.0, vec2.y);
+    VERIFY_EQUAL(1.0, vec2.z);
+    VERIFY_EQUAL(1.0, vec2.w);
+}
+
 SCENARIO( Vector, "Operation/Normal", "unit,math", "Vectors can be assigned." )
 {
     Math::Vector1i vec1(123);

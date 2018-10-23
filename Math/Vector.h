@@ -22,10 +22,15 @@ public:
     constexpr Vector1 ()
     : x()
     { }
-    
+
     explicit constexpr Vector1 (T x)
     : x(x)
     { }
+    
+    static constexpr Vector1 one ()
+    {
+        return Vector1(1);
+    }
 
     bool operator == (const Vector1 & rhs) const
     {
@@ -90,6 +95,11 @@ public:
     constexpr Vector2 (T x, T y)
     : x(x), y(y)
     { }
+    
+    static constexpr Vector2 one ()
+    {
+        return Vector2(1, 1);
+    }
 
     bool operator == (const Vector2 & rhs) const
     {
@@ -156,6 +166,11 @@ public:
     constexpr Vector3 (T x, T y, T z)
     : x(x), y(y), z(z)
     { }
+    
+    static constexpr Vector3 one ()
+    {
+        return Vector3(1, 1, 1);
+    }
 
     bool operator == (const Vector3 & rhs) const
     {
@@ -230,6 +245,11 @@ public:
     constexpr Vector4 (T x, T y, T z, T w)
     : x(x), y(y), z(z), w(w)
     { }
+    
+    static constexpr Vector4 one ()
+    {
+        return Vector4(1, 1, 1, 1);
+    }
 
     bool operator == (const Vector4 & rhs) const
     {
