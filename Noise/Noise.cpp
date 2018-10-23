@@ -12,6 +12,7 @@
 
 #include "NoiseUtil.h"
 #include "../Hash/Hash.h"
+#include "../Math/Easing.h"
 
 namespace TUCUT {
 namespace Noise {
@@ -121,7 +122,7 @@ double NoiseGenerator::generate (double x, Math::Point1d * offset, size_t layers
 
         // Define and calculate smooth blends starting with the letter s.
         // Only one blend is needed for each dimension.
-        double s = blend(x0 / (gx1 - gx0));
+        double s = Math::easeInOutPerlin(x0 / (gx1 - gx0));
         
         // Define and calculate nodes based on the grid points.
         double a, b;
@@ -148,7 +149,7 @@ double NoiseGenerator::generate (double x, Math::Point1d * offset, size_t layers
         {
             // Calculate smooth blend derivatives
             // starting with the letters ds.
-            double ds = derivativeBlend(x0);
+            double ds = Math::easeInOutPerlinDerivative(x0 / (gx1 - gx0));
             
             dx += amplitude * (ds * c0);
         }
@@ -275,8 +276,8 @@ double NoiseGenerator::generate (double x, double y, Math::Point2d * offset, siz
 
         // Define and calculate smooth blends starting with the letter s.
         // Only one blend is needed for each dimension.
-        double s = blend(x0 / (gx1 - gx0));
-        double t = blend(y0 / (gy1 - gy0));
+        double s = Math::easeInOutPerlin(x0 / (gx1 - gx0));
+        double t = Math::easeInOutPerlin(y0 / (gy1 - gy0));
 
         // Get hashes for each grid point using the grid coordinates.
         int hp00 = hx0 + hy0;
@@ -325,8 +326,8 @@ double NoiseGenerator::generate (double x, double y, Math::Point2d * offset, siz
         {
             // Calculate smooth blend derivatives
             // starting with the letters ds.
-            double ds = derivativeBlend(x0);
-            double dt = derivativeBlend(y0);
+            double ds = Math::easeInOutPerlinDerivative(x0 / (gx1 - gx0));
+            double dt = Math::easeInOutPerlinDerivative(y0 / (gy1 - gy0));
 
             dx += amplitude * (ds * (c0 + t * c2));
             dy += amplitude * (dt * (c1 + s * c2));

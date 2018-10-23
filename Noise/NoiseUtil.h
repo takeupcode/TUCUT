@@ -32,20 +32,6 @@ inline int dtoiflr (double d)
     return iflr;
 }
 
-// Classic improved Perlin continuous interpolant.
-inline double blend (double t)
-{
-    // f(t) = 6t^5 – 15t^4 + 10t^3
-    return t * t * t * (t * (t * 6 - 15) + 10);
-}
-
-// Classic improved Perlin derivative.
-inline double derivativeBlend (double t)
-{
-    // f'(t) = 30t^4 – 60t^3 + 30t^2
-    return 30 * t * t * (t * (t - 2) + 1);
-}
-
 // The dot methods try to use 0, 1, and -1 for unit
 // vectors when possible.
 inline double simpleMultiply (double vec, double d)

@@ -146,6 +146,22 @@ T easeOutBack (T t)
     return Bezier2<T>::calculate(points, t).y;
 };
 
+// Classic improved Perlin continuous interpolant.
+template <typename T>
+T easeInOutPerlin (T t)
+{
+    // f(t) = 6t^5 – 15t^4 + 10t^3
+    return t * t * t * (t * (t * 6 - 15) + 10);
+}
+
+// Classic improved Perlin derivative.
+template <typename T>
+T easeInOutPerlinDerivative (T t)
+{
+    // f'(t) = 30t^4 – 60t^3 + 30t^2
+    return 30 * t * t * (t * (t - 2) + 1);
+}
+
 } // namespace Math
 } // namespace TUCUT
 
