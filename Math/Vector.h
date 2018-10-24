@@ -67,9 +67,14 @@ public:
         return x * rhs.x;
     }
     
-    operator std::string () const
+    std::string to_string () const
     {
         return "(vector: " + std::to_string(x) + ")";
+    }
+    
+    operator std::string () const
+    {
+        return to_string();
     }
 
     T x;
@@ -137,9 +142,14 @@ public:
         return x * rhs.x + y * rhs.y;
     }
     
-    operator std::string () const
+    std::string to_string () const
     {
         return "(vector: " + std::to_string(x) + ", " + std::to_string(y) + ")";
+    }
+    
+    operator std::string () const
+    {
+        return to_string();
     }
 
     T x;
@@ -214,10 +224,15 @@ public:
         return Vector3(y * rhs.z - z * rhs.y, z * rhs.x - x * rhs.z, x * rhs.y - y * rhs.x);
     }
     
-    operator std::string () const
+    std::string to_string () const
     {
         return "(vector: " + std::to_string(x) + ", " + std::to_string(y) +
         ", " + std::to_string(z) + ")";
+    }
+    
+    operator std::string () const
+    {
+        return to_string();
     }
 
     T x;
@@ -289,10 +304,15 @@ public:
         return x * rhs.x + y * rhs.y + z * rhs.z + w * rhs.w;
     }
     
-    operator std::string () const
+    std::string to_string () const
     {
         return "(vector: " + std::to_string(x) + ", " + std::to_string(y) +
         ", " + std::to_string(z) + ", " + std::to_string(w) + ")";
+    }
+    
+    operator std::string () const
+    {
+        return to_string();
     }
 
     T x;

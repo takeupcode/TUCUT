@@ -61,9 +61,14 @@ public:
         return Vector1<T>(x);
     }
     
-    operator std::string () const
+    std::string to_string () const
     {
         return "(point: " + std::to_string(x) + ")";
+    }
+    
+    operator std::string () const
+    {
+        return to_string();
     }
 
     T x;
@@ -115,9 +120,14 @@ public:
         return Vector2<T>(x, y);
     }
     
-    operator std::string () const
+    std::string to_string () const
     {
         return "(point: " + std::to_string(x) + ", " + std::to_string(y) + ")";
+    }
+    
+    operator std::string () const
+    {
+        return to_string();
     }
 
     T x;
@@ -171,10 +181,15 @@ public:
         return Vector3<T>(x, y, z);
     }
     
-    operator std::string () const
+    std::string to_string () const
     {
         return "(point: " + std::to_string(x) + ", " + std::to_string(y) +
              ", " + std::to_string(z) + ")";
+    }
+    
+    operator std::string () const
+    {
+        return to_string();
     }
 
     T x;
@@ -230,10 +245,15 @@ public:
         return Vector4<T>(x, y, z, w);
     }
     
-    operator std::string () const
+    std::string to_string () const
     {
         return "(point: " + std::to_string(x) + ", " + std::to_string(y) +
             ", " + std::to_string(z) + ", " + std::to_string(w) + ")";
+    }
+    
+    operator std::string () const
+    {
+        return to_string();
     }
 
     T x;

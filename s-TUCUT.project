@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CodeLite_Project Name="s-TUCUT" Version="10.0.0" InternalType="Library">
+  <VirtualDirectory Name="Math">
+    <File Name="Math/Bounds.h"/>
+    <File Name="Math/Vector.h"/>
+    <File Name="Math/Lerp.h"/>
+    <File Name="Math/Bezier.h"/>
+    <File Name="Math/Easing.h"/>
+    <File Name="Math/Point.h"/>
+  </VirtualDirectory>
   <Plugins>
     <Plugin Name="qmake">
       <![CDATA[00010001N0005Debug000000000000]]>
