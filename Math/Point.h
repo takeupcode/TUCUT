@@ -13,6 +13,8 @@
 
 #include "Vector.h"
 
+#include "../Exception/InvalidArgumentException.h"
+
 namespace TUCUT {
 namespace Math {
 
@@ -30,6 +32,17 @@ public:
     explicit constexpr Point1 (T x)
     : x(x)
     { }
+    
+    T component (std::size_t axis) const
+    {
+        switch (axis)
+        {
+        case 0:
+            return x;
+        }
+        
+        throw Exception::InvalidArgumentException("axis", "axis must be 0");
+    }
 
     bool operator == (const Point1 & rhs) const
     {
@@ -88,6 +101,20 @@ public:
     constexpr Point2 (T x, T y)
     : x(x), y(y)
     { }
+    
+    T component (std::size_t axis) const
+    {
+        switch (axis)
+        {
+        case 0:
+            return x;
+            
+        case 1:
+            return y;
+        }
+        
+        throw Exception::InvalidArgumentException("axis", "axis must be between 0 and 1");
+    }
 
     bool operator == (const Point2 & rhs) const
     {
@@ -148,6 +175,23 @@ public:
     constexpr Point3 (T x, T y, T z)
     : x(x), y(y), z(z)
     { }
+    
+    T component (std::size_t axis) const
+    {
+        switch (axis)
+        {
+        case 0:
+            return x;
+            
+        case 1:
+            return y;
+            
+        case 2:
+            return z;
+        }
+        
+        throw Exception::InvalidArgumentException("axis", "axis must be between 0 and 2");
+    }
 
     bool operator == (const Point3 & rhs) const
     {
@@ -211,6 +255,26 @@ public:
     constexpr Point4 (T x, T y, T z, T w)
     : x(x), y(y), z(z), w(w)
     { }
+    
+    T component (std::size_t axis) const
+    {
+        switch (axis)
+        {
+        case 0:
+            return x;
+            
+        case 1:
+            return y;
+            
+        case 2:
+            return z;
+            
+        case 3:
+            return w;
+        }
+        
+        throw Exception::InvalidArgumentException("axis", "axis must be between 0 and 3");
+    }
 
     bool operator == (const Point4 & rhs) const
     {

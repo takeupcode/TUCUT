@@ -30,16 +30,16 @@ public:
     { }
     
     constexpr Bounds1 (const Point1<T> & location, T extent)
-    : mLocation(x), mExtent(extent)
+    : mLocation(location), mExtent(extent)
     { }
 
-    bool operator == (const Point1 & rhs) const
+    bool operator == (const Bounds1 & rhs) const
     {
         return mLocation == rhs.mLocation &&
             mExtent == rhs.mExtent;
     }
 
-    bool operator != (const Point1 & rhs) const
+    bool operator != (const Bounds1 & rhs) const
     {
         return !operator==(rhs);
     }
@@ -49,7 +49,7 @@ public:
         return mLocation;
     }
     
-    void setLocation (const Point<T> & location)
+    void setLocation (const Point1<T> & location)
     {
         mLocation = location;
     }
@@ -74,19 +74,57 @@ public:
         return Bounds1(mLocation.x - rhs.x, mExtent);
     }
     
-    Vector1<T> envelope (const Point1<T> point)
+    Vector1<T> envelopeVector (const Point1<T> & point)
     {
-        if (point.x > mLocation.x + mExtent)
+        T x = 0;
+        if (point.x > (mLocation.x + mExtent))
         {
-            return Vector1<T>(point.x - mLocation - mExtent);
+            x = (mLocation.x + mExtent) - point.x;
         }
-        else if (point.x < mLocation.x - mExtent)
+        else if (point.x < (mLocation.x - mExtent))
         {
-            return Vector1<T>(point.x - mLocation - mExtent);
+            x = (mLocation.x - mExtent) - point.x;
         }
-        return Vector<T>();
+        
+        return Vector1<T>(x);
     }
     
+    Vector1<T> envelopeVector (const Bounds1<T> & bounds)
+    {
+        T x = 0;
+        if (bounds.mLocation.x > (mLocation.x + mExtent))
+        {
+            x = (mLocation.x + mExtent) - bounds.mLocation.x;
+        }
+        else if (bounds.mLocation.x < (mLocation.x - mExtent))
+        {
+            x = (mLocation.x - mExtent) - bounds.mLocation.x;
+        }
+        
+        return Vector1<T>(x);
+    }
+
+    Vector1<T> overlapVector (const Bounds1<T> & bounds)
+    {
+        T x = 0;
+        if ((bounds.mLocation.x + bounds.mExtent) > (mLocation.x + mExtent))
+        {
+            if ((bounds.mLocation.x - bounds.mExtent) > (mLocation.x + mExtent))
+            {
+                x = (mLocation.x + mExtent) - (bounds.mLocation.x - bounds.mExtent);
+            }
+        }
+        else if ((bounds.mLocation.x - bounds.mExtent) < (mLocation.x - mExtent))
+        {
+            if ((bounds.mLocation.x + bounds.mExtent) < (mLocation.x - mExtent))
+            {
+                x = (mLocation.x - mExtent) - (bounds.mLocation.x + bounds.mExtent);
+            }
+        }
+        
+        return Vector1<T>(x);
+    }
+
     std::string to_string () const
     {
         return "(location: " + mLocation.to_string() + ", extent: " +
@@ -100,6 +138,169 @@ public:
 
 private:
     Point1<T> mLocation;
+    T mExtent;
+};
+    
+template <typename T>
+class Bounds2
+{
+public:
+    static constexpr std::size_t dimensions = 2;
+    using type = T;
+    
+    constexpr Bounds2 ()
+    : mExtent()
+    { }
+    
+    constexpr Bounds2 (T x, T y, T extent)
+    : mLocation(x, y), mExtent(extent)
+    { }
+    
+    constexpr Bounds2 (const Point1<T> & location, T extent)
+    : mLocation(location), mExtent(extent)
+    { }
+    
+    bool operator == (const Bounds2 & rhs) const
+    {
+        return mLocation == rhs.mLocation &&
+        mExtent == rhs.mExtent;
+    }
+    
+    bool operator != (const Bounds2 & rhs) const
+    {
+        return !operator==(rhs);
+    }
+    
+    Point2<T> location () const
+    {
+        return mLocation;
+    }
+    
+    void setLocation (const Point2<T> & location)
+    {
+        mLocation = location;
+    }
+    
+    T extent () const
+    {
+        return mExtent;
+    }
+    
+    void setExtent (T extent)
+    {
+        mExtent = extent;
+    }
+    
+    Bounds2 operator + (const Vector2<T> & rhs) const
+    {
+        return Bounds2(mLocation.x + rhs.x, mLocation.y + rhs.y, mExtent);
+    }
+    
+    Bounds2 operator - (const Vector2<T> & rhs) const
+    {
+        return Bounds2(mLocation.x - rhs.x, mLocation.y - rhs.y, mExtent);
+    }
+    
+    Vector2<T> envelopeVector (const Point2<T> & point)
+    {
+        T x = 0;
+        if (point.x > (mLocation.x + mExtent))
+        {
+            x = (mLocation.x + mExtent) - point.x;
+        }
+        else if (point.x < (mLocation.x - mExtent))
+        {
+            x = (mLocation.x - mExtent) - point.x;
+        }
+        
+        T y = 0;
+        if (point.y > (mLocation.y + mExtent))
+        {
+            y = (mLocation.y + mExtent) - point.y;
+        }
+        else if (point.y < (mLocation.y - mExtent))
+        {
+            y = (mLocation.y - mExtent) - point.y;
+        }
+
+        return Vector2<T>(x, y);
+    }
+    
+    Vector1<T> envelopeVector (const Bounds1<T> & bounds)
+    {
+        T x = 0;
+        if (bounds.mLocation.x > (mLocation.x + mExtent))
+        {
+            x = (mLocation.x + mExtent) - bounds.mLocation.x;
+        }
+        else if (bounds.mLocation.x < (mLocation.x - mExtent))
+        {
+            x = (mLocation.x - mExtent) - bounds.mLocation.x;
+        }
+        
+        T y = 0;
+        if (bounds.mLocation.y > (mLocation.y + mExtent))
+        {
+            y = (mLocation.y + mExtent) - bounds.mLocation.y;
+        }
+        else if (bounds.mLocation.y < (mLocation.y - mExtent))
+        {
+            y = (mLocation.y - mExtent) - bounds.mLocation.y;
+        }
+        
+        return Vector2<T>(x, y);
+    }
+    
+    Vector1<T> overlapVector (const Bounds1<T> & bounds)
+    {
+        T x = 0;
+        if ((bounds.mLocation.x + bounds.mExtent) > (mLocation.x + mExtent))
+        {
+            if ((bounds.mLocation.x - bounds.mExtent) > (mLocation.x + mExtent))
+            {
+                x = (mLocation.x + mExtent) - (bounds.mLocation.x - bounds.mExtent);
+            }
+        }
+        else if ((bounds.mLocation.x - bounds.mExtent) < (mLocation.x - mExtent))
+        {
+            if ((bounds.mLocation.x + bounds.mExtent) < (mLocation.x - mExtent))
+            {
+                x = (mLocation.x - mExtent) - (bounds.mLocation.x + bounds.mExtent);
+            }
+        }
+        
+        T y = 0;
+        if ((bounds.mLocation.y + bounds.mExtent) > (mLocation.y + mExtent))
+        {
+            if ((bounds.mLocation.y - bounds.mExtent) > (mLocation.y + mExtent))
+            {
+                y = (mLocation.y + mExtent) - (bounds.mLocation.y - bounds.mExtent);
+            }
+        }
+        else if ((bounds.mLocation.y - bounds.mExtent) < (mLocation.y - mExtent))
+        {
+            if ((bounds.mLocation.y + bounds.mExtent) < (mLocation.y - mExtent))
+            {
+                y = (mLocation.y - mExtent) - (bounds.mLocation.y + bounds.mExtent);
+            }
+        }
+        
+        return Vector2<T>(x, y);
+    }
+    
+    std::string to_string () const
+    {
+        return "(location: " + mLocation.to_string() + ", extent: " +
+        mExtent.to_string() + ")";
+    }
+    
+    operator std::string () const
+    {
+        return to_string();
+    }
+    
+private:
+    Point2<T> mLocation;
     T mExtent;
 };
 

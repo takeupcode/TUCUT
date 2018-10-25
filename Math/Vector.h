@@ -9,6 +9,8 @@
 #ifndef TUCUT_Math_Vector_h
 #define TUCUT_Math_Vector_h
 
+#include "../Exception/InvalidArgumentException.h"
+
 namespace TUCUT {
 namespace Math {
 
@@ -30,6 +32,17 @@ public:
     static constexpr Vector1 one ()
     {
         return Vector1(1);
+    }
+    
+    T component (std::size_t axis) const
+    {
+        switch (axis)
+        {
+        case 0:
+            return x;
+        }
+        
+        throw Exception::InvalidArgumentException("axis", "axis must be 0");
     }
 
     bool operator == (const Vector1 & rhs) const
@@ -104,6 +117,20 @@ public:
     static constexpr Vector2 one ()
     {
         return Vector2(1, 1);
+    }
+    
+    T component (std::size_t axis) const
+    {
+        switch (axis)
+        {
+        case 0:
+            return x;
+            
+        case 1:
+            return y;
+        }
+        
+        throw Exception::InvalidArgumentException("axis", "axis must be between 0 and 1");
     }
 
     bool operator == (const Vector2 & rhs) const
@@ -180,6 +207,23 @@ public:
     static constexpr Vector3 one ()
     {
         return Vector3(1, 1, 1);
+    }
+    
+    T component (std::size_t axis) const
+    {
+        switch (axis)
+        {
+            case 0:
+                return x;
+                
+            case 1:
+                return y;
+                
+            case 2:
+                return z;
+        }
+        
+        throw Exception::InvalidArgumentException("axis", "axis must be between 0 and 2");
     }
 
     bool operator == (const Vector3 & rhs) const
@@ -264,6 +308,26 @@ public:
     static constexpr Vector4 one ()
     {
         return Vector4(1, 1, 1, 1);
+    }
+    
+    T component (std::size_t axis) const
+    {
+        switch (axis)
+        {
+        case 0:
+            return x;
+            
+        case 1:
+            return y;
+            
+        case 2:
+            return z;
+            
+        case 3:
+            return w;
+        }
+        
+        throw Exception::InvalidArgumentException("axis", "axis must be between 0 and 3");
     }
 
     bool operator == (const Vector4 & rhs) const
