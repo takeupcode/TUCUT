@@ -51,4 +51,3 @@ SCENARIO( Bezier, "Construction/Normal", "unit,math", "Bezier can calculate quad
     VERIFY_EQUAL(4.0, result.x);
     VERIFY_EQUAL(0.0, result.y);
 }
-

@@ -9,6 +9,8 @@
 #ifndef TUCUT_Math_Vector_h
 #define TUCUT_Math_Vector_h
 
+#include <string>
+
 #include "../Exception/InvalidArgumentException.h"
 
 namespace TUCUT {

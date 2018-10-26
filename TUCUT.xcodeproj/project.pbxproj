@@ -232,6 +232,7 @@
 		3E3F83EB210A4B8600501126 /* ListBox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E3F83D2210A4B8600501126 /* ListBox.cpp */; };
 		3E3F842F2113F6BF00501126 /* DisplayBox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E3F842D2113F6BF00501126 /* DisplayBox.cpp */; };
 		3E3F84302113F6BF00501126 /* DisplayBox.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E3F842E2113F6BF00501126 /* DisplayBox.h */; };
+		3E80D6512182B5FD006DA12E /* BoundsScenarios.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E80D6502182B5FD006DA12E /* BoundsScenarios.cpp */; };
 		3ECB8C39216B152600EACD3F /* NoiseScenarios.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3ECB8C38216B152600EACD3F /* NoiseScenarios.cpp */; };
 		3ED4127B20FED1FB00BC7226 /* CodeGeneratorCPPScenarios.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E259E6420E34BA700F01379 /* CodeGeneratorCPPScenarios.cpp */; };
 		3ED4127C20FED1FB00BC7226 /* CodeGeneratorManagerScenarios.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E259E5D20E34BA600F01379 /* CodeGeneratorManagerScenarios.cpp */; };
@@ -652,6 +653,7 @@
 		3E3F842D2113F6BF00501126 /* DisplayBox.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = DisplayBox.cpp; sourceTree = "<group>"; };
 		3E3F842E2113F6BF00501126 /* DisplayBox.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DisplayBox.h; sourceTree = "<group>"; };
 		3E80D64D2181635E006DA12E /* Bounds.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Bounds.h; sourceTree = "<group>"; };
+		3E80D6502182B5FD006DA12E /* BoundsScenarios.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = BoundsScenarios.cpp; sourceTree = "<group>"; };
 		3ECB8C38216B152600EACD3F /* NoiseScenarios.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = NoiseScenarios.cpp; sourceTree = "<group>"; };
 		3ED4127420FED19500BC7226 /* TestTUCUT */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = TestTUCUT; sourceTree = BUILT_PRODUCTS_DIR; };
 		3ED4129120FED29400BC7226 /* TestProtocolCompiler */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = TestProtocolCompiler; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1159,6 +1161,7 @@
 				3E289F3D2176E5BD002FFBDC /* LerpScenarios.cpp */,
 				3E289F45217C2618002FFBDC /* VectorScenarios.cpp */,
 				3E289F48217CD947002FFBDC /* BezierScenarios.cpp */,
+				3E80D6502182B5FD006DA12E /* BoundsScenarios.cpp */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -1737,6 +1740,7 @@
 				3E3F831521051B4800501126 /* ExtensionScenarios.cpp in Sources */,
 				3ED4127B20FED1FB00BC7226 /* CodeGeneratorCPPScenarios.cpp in Sources */,
 				3ED4127C20FED1FB00BC7226 /* CodeGeneratorManagerScenarios.cpp in Sources */,
+				3E80D6512182B5FD006DA12E /* BoundsScenarios.cpp in Sources */,
 				3E06182C212A65FB000B634B /* PropertyContainerScenarios.cpp in Sources */,
 				3ED4127D20FED1FB00BC7226 /* EnumParserScenarios.cpp in Sources */,
 				3ED4127E20FED1FB00BC7226 /* EnumValueParserScenarios.cpp in Sources */,
