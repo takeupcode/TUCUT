@@ -8,6 +8,8 @@
 
 #include "Point.h"
 
+#include <array>
+
 #ifndef TUCUT_Math_Bounds_h
 #define TUCUT_Math_Bounds_h
 
@@ -77,13 +79,15 @@ public:
     Vector1<T> envelopeVector (const Point1<T> & point)
     {
         T x = 0;
-        if (point.x > (mLocation.x + mExtent))
+        T loc = mLocation.x;
+        T pointLoc = point.x;
+        if (pointLoc > (loc + mExtent))
         {
-            x = (mLocation.x + mExtent) - point.x;
+            x = (loc + mExtent) - pointLoc;
         }
-        else if (point.x < (mLocation.x - mExtent))
+        else if (pointLoc < (loc - mExtent))
         {
-            x = (mLocation.x - mExtent) - point.x;
+            x = (loc - mExtent) - pointLoc;
         }
         
         return Vector1<T>(x);
@@ -92,13 +96,15 @@ public:
     Vector1<T> envelopeVector (const Bounds1<T> & bounds)
     {
         T x = 0;
-        if (bounds.mLocation.x > (mLocation.x + mExtent))
+        T loc = mLocation.x;
+        T boundsLoc = bounds.mLocation.x;
+        if (boundsLoc > (loc + mExtent))
         {
-            x = (mLocation.x + mExtent) - bounds.mLocation.x;
+            x = (loc + mExtent) - boundsLoc;
         }
-        else if (bounds.mLocation.x < (mLocation.x - mExtent))
+        else if (boundsLoc < (loc - mExtent))
         {
-            x = (mLocation.x - mExtent) - bounds.mLocation.x;
+            x = (loc - mExtent) - boundsLoc;
         }
         
         return Vector1<T>(x);
@@ -107,18 +113,20 @@ public:
     Vector1<T> overlapVector (const Bounds1<T> & bounds)
     {
         T x = 0;
-        if ((bounds.mLocation.x + bounds.mExtent) > (mLocation.x + mExtent))
+        T loc = mLocation.x;
+        T boundsLoc = bounds.mLocation.x;
+        if ((boundsLoc + bounds.mExtent) > (loc + mExtent))
         {
-            if ((bounds.mLocation.x - bounds.mExtent) > (mLocation.x + mExtent))
+            if ((boundsLoc - bounds.mExtent) > (loc + mExtent))
             {
-                x = (mLocation.x + mExtent) - (bounds.mLocation.x - bounds.mExtent);
+                x = (loc + mExtent) - (boundsLoc - bounds.mExtent);
             }
         }
-        else if ((bounds.mLocation.x - bounds.mExtent) < (mLocation.x - mExtent))
+        else if ((boundsLoc - bounds.mExtent) < (loc - mExtent))
         {
-            if ((bounds.mLocation.x + bounds.mExtent) < (mLocation.x - mExtent))
+            if ((boundsLoc + bounds.mExtent) < (loc - mExtent))
             {
-                x = (mLocation.x - mExtent) - (bounds.mLocation.x + bounds.mExtent);
+                x = (loc - mExtent) - (boundsLoc + bounds.mExtent);
             }
         }
         
@@ -203,89 +211,68 @@ public:
     
     Vector2<T> envelopeVector (const Point2<T> & point)
     {
-        T x = 0;
-        if (point.x > (mLocation.x + mExtent))
+        std::array<T> values = {0, 0};
+        for (std::size_t axis = 0; axis < 2; ++axis)
         {
-            x = (mLocation.x + mExtent) - point.x;
-        }
-        else if (point.x < (mLocation.x - mExtent))
-        {
-            x = (mLocation.x - mExtent) - point.x;
-        }
-        
-        T y = 0;
-        if (point.y > (mLocation.y + mExtent))
-        {
-            y = (mLocation.y + mExtent) - point.y;
-        }
-        else if (point.y < (mLocation.y - mExtent))
-        {
-            y = (mLocation.y - mExtent) - point.y;
+            T loc = mLocation.component(axis);
+            T pointLoc = point.component(axis);
+            if (pointLoc > (loc + mExtent))
+            {
+                values[axis] = (loc + mExtent) - pointLoc;
+            }
+            else if (pointLoc < (loc - mExtent))
+            {
+                values[axis] = (loc - mExtent) - pointLoc;
+            }
         }
 
-        return Vector2<T>(x, y);
+        return Vector2<T>(values[0], values[1]);
     }
     
     Vector1<T> envelopeVector (const Bounds1<T> & bounds)
     {
-        T x = 0;
-        if (bounds.mLocation.x > (mLocation.x + mExtent))
+        std::array<T> values = {0, 0};
+        for (std::size_t axis = 0; axis < 2; ++axis)
         {
-            x = (mLocation.x + mExtent) - bounds.mLocation.x;
-        }
-        else if (bounds.mLocation.x < (mLocation.x - mExtent))
-        {
-            x = (mLocation.x - mExtent) - bounds.mLocation.x;
-        }
-        
-        T y = 0;
-        if (bounds.mLocation.y > (mLocation.y + mExtent))
-        {
-            y = (mLocation.y + mExtent) - bounds.mLocation.y;
-        }
-        else if (bounds.mLocation.y < (mLocation.y - mExtent))
-        {
-            y = (mLocation.y - mExtent) - bounds.mLocation.y;
+            T loc = mLocation.component(axis);
+            T boundsLoc = bounds.mLocation.component(axis);
+            if (boundsLoc > (loc + mExtent))
+            {
+                values[axis] = (loc + mExtent) - boundsLoc;
+            }
+            else if (boundsLoc < (loc - mExtent))
+            {
+                values[axis] = (loc - mExtent) - boundsLoc;
+            }
         }
         
-        return Vector2<T>(x, y);
+        return Vector2<T>(values[0], values[1]);
     }
     
     Vector1<T> overlapVector (const Bounds1<T> & bounds)
     {
-        T x = 0;
-        if ((bounds.mLocation.x + bounds.mExtent) > (mLocation.x + mExtent))
+        std::array<T> values = {0, 0};
+        for (std::size_t axis = 0; axis < 2; ++axis)
         {
-            if ((bounds.mLocation.x - bounds.mExtent) > (mLocation.x + mExtent))
+            T loc = mLocation.component(axis);
+            T boundsLoc = bounds.mLocation.component(axis);
+            if ((boundsLoc + bounds.mExtent) > (loc + mExtent))
             {
-                x = (mLocation.x + mExtent) - (bounds.mLocation.x - bounds.mExtent);
+                if ((boundsLoc - bounds.mExtent) > (loc + mExtent))
+                {
+                    values[axis] = (loc + mExtent) - (boundsLoc - bounds.mExtent);
+                }
             }
-        }
-        else if ((bounds.mLocation.x - bounds.mExtent) < (mLocation.x - mExtent))
-        {
-            if ((bounds.mLocation.x + bounds.mExtent) < (mLocation.x - mExtent))
+            else if ((boundsLoc - bounds.mExtent) < (loc - mExtent))
             {
-                x = (mLocation.x - mExtent) - (bounds.mLocation.x + bounds.mExtent);
-            }
-        }
-        
-        T y = 0;
-        if ((bounds.mLocation.y + bounds.mExtent) > (mLocation.y + mExtent))
-        {
-            if ((bounds.mLocation.y - bounds.mExtent) > (mLocation.y + mExtent))
-            {
-                y = (mLocation.y + mExtent) - (bounds.mLocation.y - bounds.mExtent);
-            }
-        }
-        else if ((bounds.mLocation.y - bounds.mExtent) < (mLocation.y - mExtent))
-        {
-            if ((bounds.mLocation.y + bounds.mExtent) < (mLocation.y - mExtent))
-            {
-                y = (mLocation.y - mExtent) - (bounds.mLocation.y + bounds.mExtent);
+                if ((boundsLoc + bounds.mExtent) < (loc - mExtent))
+                {
+                    values[axis] = (loc - mExtent) - (boundsLoc + bounds.mExtent);
+                }
             }
         }
         
-        return Vector2<T>(x, y);
+        return Vector2<T>(values[0], values[1]);
     }
     
     std::string to_string () const
