@@ -318,3 +318,73 @@ SCENARIO( Vector, "Operation/Normal", "unit,math", "Vector3s can be cross multip
     VERIFY_EQUAL(-5, prod3.y);
     VERIFY_EQUAL(18, prod3.z);
 }
+
+SCENARIO( Vector, "Operation/Normal", "unit,math", "Vectors can calculate length squared." )
+{
+    Math::Vector1i vec1a(2);
+    Math::Vector1i vec1b(-5);
+    
+    int length1 = vec1a.lengthSquared();
+    VERIFY_EQUAL(4, length1);
+    length1 = vec1b.lengthSquared();
+    VERIFY_EQUAL(25, length1);
+
+    Math::Vector2i vec2a(2, -3);
+    Math::Vector2i vec2b(-5, 7);
+    
+    int length2 = vec2a.lengthSquared();
+    VERIFY_EQUAL(13, length2);
+    length2 = vec2b.lengthSquared();
+    VERIFY_EQUAL(74, length2);
+
+    Math::Vector3i vec3a(2, -3, 4);
+    Math::Vector3i vec3b(-5, 7, -9);
+    
+    int length3 = vec3a.lengthSquared();
+    VERIFY_EQUAL(29, length3);
+    length3 = vec3b.lengthSquared();
+    VERIFY_EQUAL(155, length3);
+
+    Math::Vector4i vec4a(2, -3, 4, -5);
+    Math::Vector4i vec4b(-5, 7, -9, 11);
+    
+    int length4 = vec4a.lengthSquared();
+    VERIFY_EQUAL(54, length4);
+    length4 = vec4b.lengthSquared();
+    VERIFY_EQUAL(276, length4);
+}
+
+SCENARIO( Vector, "Operation/Normal", "unit,math", "Vectors can calculate length Manhattan." )
+{
+    Math::Vector1i vec1a(2);
+    Math::Vector1i vec1b(-5);
+    
+    int length1 = vec1a.lengthManhattan();
+    VERIFY_EQUAL(2, length1);
+    length1 = vec1b.lengthManhattan();
+    VERIFY_EQUAL(5, length1);
+    
+    Math::Vector2i vec2a(2, -3);
+    Math::Vector2i vec2b(-5, 7);
+    
+    int length2 = vec2a.lengthManhattan();
+    VERIFY_EQUAL(5, length2);
+    length2 = vec2b.lengthManhattan();
+    VERIFY_EQUAL(12, length2);
+    
+    Math::Vector3i vec3a(2, -3, 4);
+    Math::Vector3i vec3b(-5, 7, -9);
+    
+    int length3 = vec3a.lengthManhattan();
+    VERIFY_EQUAL(9, length3);
+    length3 = vec3b.lengthManhattan();
+    VERIFY_EQUAL(21, length3);
+    
+    Math::Vector4i vec4a(2, -3, 4, -5);
+    Math::Vector4i vec4b(-5, 7, -9, 11);
+    
+    int length4 = vec4a.lengthManhattan();
+    VERIFY_EQUAL(14, length4);
+    length4 = vec4b.lengthManhattan();
+    VERIFY_EQUAL(32, length4);
+}

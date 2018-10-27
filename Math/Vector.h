@@ -46,6 +46,16 @@ public:
         
         throw Exception::InvalidArgumentException("axis", "axis must be 0");
     }
+    
+    T lengthSquared () const
+    {
+        return x * x;
+    }
+    
+    T lengthManhattan () const
+    {
+        return x >= 0 ? x : -x;
+    }
 
     bool operator == (const Vector1 & rhs) const
     {
@@ -133,6 +143,19 @@ public:
         }
         
         throw Exception::InvalidArgumentException("axis", "axis must be between 0 and 1");
+    }
+    
+    T lengthSquared () const
+    {
+        return x * x + y * y;
+    }
+    
+    T lengthManhattan () const
+    {
+        T absoluteX = x >= 0 ? x : -x;
+        T absoluteY = y >= 0 ? y : -y;
+        
+        return absoluteX + absoluteY;
     }
 
     bool operator == (const Vector2 & rhs) const
@@ -226,6 +249,20 @@ public:
         }
         
         throw Exception::InvalidArgumentException("axis", "axis must be between 0 and 2");
+    }
+    
+    T lengthSquared () const
+    {
+        return x * x + y * y + z * z;
+    }
+    
+    T lengthManhattan () const
+    {
+        T absoluteX = x >= 0 ? x : -x;
+        T absoluteY = y >= 0 ? y : -y;
+        T absoluteZ = z >= 0 ? z : -z;
+
+        return absoluteX + absoluteY + absoluteZ;
     }
 
     bool operator == (const Vector3 & rhs) const
@@ -330,6 +367,21 @@ public:
         }
         
         throw Exception::InvalidArgumentException("axis", "axis must be between 0 and 3");
+    }
+    
+    T lengthSquared () const
+    {
+        return x * x + y * y + z * z + w * w;
+    }
+    
+    T lengthManhattan () const
+    {
+        T absoluteX = x >= 0 ? x : -x;
+        T absoluteY = y >= 0 ? y : -y;
+        T absoluteZ = z >= 0 ? z : -z;
+        T absoluteW = w >= 0 ? w : -w;
+
+        return absoluteX + absoluteY + absoluteZ + absoluteW;
     }
 
     bool operator == (const Vector4 & rhs) const
