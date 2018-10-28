@@ -9,9 +9,11 @@
 #ifndef TUCUT_Math_Vector_h
 #define TUCUT_Math_Vector_h
 
+#include <cmath>
 #include <string>
 
 #include "../Exception/InvalidArgumentException.h"
+#include "../Exception/InvalidOperationException.h"
 
 namespace TUCUT {
 namespace Math {
@@ -46,15 +48,37 @@ public:
         
         throw Exception::InvalidArgumentException("axis", "axis must be 0");
     }
-    
+
     T lengthSquared () const
     {
         return x * x;
     }
-    
+
     T lengthManhattan () const
     {
         return x >= 0 ? x : -x;
+    }
+
+    template<typename U = T>
+    std::enable_if_t<std::is_floating_point<U>::value, Vector1<U>> normal () const
+    {
+        if (x == 0)
+        {
+            throw Exception::InvalidOperationException("normal", "normal cannot be calculated for zero length vector.");
+        }
+        
+        return Vector1<U>(x > 0 ? 1 : -1);
+    }
+
+    template<typename U = T>
+    std::enable_if_t<std::is_integral<U>::value, Vector1<double>> normal () const
+    {
+        if (x == 0)
+        {
+            throw Exception::InvalidOperationException("normal", "normal cannot be calculated for zero length vector.");
+        }
+        
+        return Vector1<double>(x > 0 ? 1 : -1);
     }
 
     bool operator == (const Vector1 & rhs) const
@@ -156,6 +180,32 @@ public:
         T absoluteY = y >= 0 ? y : -y;
         
         return absoluteX + absoluteY;
+    }
+
+    template<typename U = T>
+    std::enable_if_t<std::is_floating_point<U>::value, Vector2<U>> normal () const
+    {
+        if (x == 0 && y == 0)
+        {
+            throw Exception::InvalidOperationException("normal", "normal cannot be calculated for zero length vector.");
+        }
+        
+        U length = std::sqrt(lengthSquared());
+        
+        return Vector2<U>(x / length, y / length);
+    }
+
+    template<typename U = T>
+    std::enable_if_t<std::is_integral<U>::value, Vector2<double>> normal () const
+    {
+        if (x == 0 && y == 0)
+        {
+            throw Exception::InvalidOperationException("normal", "normal cannot be calculated for zero length vector.");
+        }
+        
+        double length = std::sqrt(lengthSquared());
+        
+        return Vector2<double>(static_cast<double>(x) / length, static_cast<double>(y) / length);
     }
 
     bool operator == (const Vector2 & rhs) const
@@ -263,6 +313,33 @@ public:
         T absoluteZ = z >= 0 ? z : -z;
 
         return absoluteX + absoluteY + absoluteZ;
+    }
+
+    template<typename U = T>
+    std::enable_if_t<std::is_floating_point<U>::value, Vector3<U>> normal () const
+    {
+        if (x == 0 && y == 0 && z == 0)
+        {
+            throw Exception::InvalidOperationException("normal", "normal cannot be calculated for zero length vector.");
+        }
+        
+        U length = std::sqrt(lengthSquared());
+        
+        return Vector3<U>(x / length, y / length, z / length);
+    }
+
+    template<typename U = T>
+    std::enable_if_t<std::is_integral<U>::value, Vector3<double>> normal () const
+    {
+        if (x == 0 && y == 0 && z == 0)
+        {
+            throw Exception::InvalidOperationException("normal", "normal cannot be calculated for zero length vector.");
+        }
+        
+        double length = std::sqrt(lengthSquared());
+        
+        return Vector3<double>(static_cast<double>(x) / length, static_cast<double>(y) / length,
+                               static_cast<double>(z) / length);
     }
 
     bool operator == (const Vector3 & rhs) const
@@ -382,6 +459,33 @@ public:
         T absoluteW = w >= 0 ? w : -w;
 
         return absoluteX + absoluteY + absoluteZ + absoluteW;
+    }
+
+    template<typename U = T>
+    std::enable_if_t<std::is_floating_point<U>::value, Vector4<U>> normal () const
+    {
+        if (x == 0 && y == 0 && z == 0 && w == 0)
+        {
+            throw Exception::InvalidOperationException("normal", "normal cannot be calculated for zero length vector.");
+        }
+        
+        U length = std::sqrt(lengthSquared());
+        
+        return Vector4<U>(x / length, y / length, z / length, w / length);
+    }
+
+    template<typename U = T>
+    std::enable_if_t<std::is_integral<U>::value, Vector4<double>> normal () const
+    {
+        if (x == 0 && y == 0 && z == 0 && w == 0)
+        {
+            throw Exception::InvalidOperationException("normal", "normal cannot be calculated for zero length vector.");
+        }
+        
+        double length = std::sqrt(lengthSquared());
+        
+        return Vector4<double>(static_cast<double>(x) / length, static_cast<double>(y) / length,
+                               static_cast<double>(z) / length, static_cast<double>(w) / length);
     }
 
     bool operator == (const Vector4 & rhs) const

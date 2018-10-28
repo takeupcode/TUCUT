@@ -388,3 +388,58 @@ SCENARIO( Vector, "Operation/Normal", "unit,math", "Vectors can calculate length
     length4 = vec4b.lengthManhattan();
     VERIFY_EQUAL(32, length4);
 }
+
+SCENARIO( Vector, "Operation/Normal", "unit,math", "Vectors can calculate normal." )
+{
+    Math::Vector1i vec1a(2);
+    Math::Vector1d norm1 = vec1a.normal();
+    VERIFY_EQUAL(1.0, norm1.x);
+    
+    Math::Vector1i vec1b(-5);
+    norm1 = vec1b.normal();
+    VERIFY_EQUAL(-1.0, norm1.x);
+
+    Math::Vector1d vec1c(3.0);
+    norm1 = vec1c.normal();
+    VERIFY_EQUAL(1.0, norm1.x);
+    
+    Math::Vector1d vec1d(-4.0);
+    norm1 = vec1d.normal();
+    VERIFY_EQUAL(-1.0, norm1.x);
+
+    Math::Vector2i vec2a(2, -5);
+    Math::Vector2d norm2 = vec2a.normal();
+    VERIFY_EQUAL(2.0 / std::sqrt(vec2a.lengthSquared()), norm2.x);
+    VERIFY_EQUAL(-5.0 / std::sqrt(vec2a.lengthSquared()), norm2.y);
+
+    Math::Vector2d vec2b(3.0, -4.0);
+    norm2 = vec2b.normal();
+    VERIFY_EQUAL(3.0 / std::sqrt(vec2b.lengthSquared()), norm2.x);
+    VERIFY_EQUAL(-4.0 / std::sqrt(vec2b.lengthSquared()), norm2.y);
+
+    Math::Vector3i vec3a(2, -5, 8);
+    Math::Vector3d norm3 = vec3a.normal();
+    VERIFY_EQUAL(2.0 / std::sqrt(vec3a.lengthSquared()), norm3.x);
+    VERIFY_EQUAL(-5.0 / std::sqrt(vec3a.lengthSquared()), norm3.y);
+    VERIFY_EQUAL(8.0 / std::sqrt(vec3a.lengthSquared()), norm3.z);
+
+    Math::Vector3d vec3b(3.0, -4.0, 5.0);
+    norm3 = vec3b.normal();
+    VERIFY_EQUAL(3.0 / std::sqrt(vec3b.lengthSquared()), norm3.x);
+    VERIFY_EQUAL(-4.0 / std::sqrt(vec3b.lengthSquared()), norm3.y);
+    VERIFY_EQUAL(5.0 / std::sqrt(vec3b.lengthSquared()), norm3.z);
+
+    Math::Vector4i vec4a(2, -5, 8, 3);
+    Math::Vector4d norm4 = vec4a.normal();
+    VERIFY_EQUAL(2.0 / std::sqrt(vec4a.lengthSquared()), norm4.x);
+    VERIFY_EQUAL(-5.0 / std::sqrt(vec4a.lengthSquared()), norm4.y);
+    VERIFY_EQUAL(8.0 / std::sqrt(vec4a.lengthSquared()), norm4.z);
+    VERIFY_EQUAL(3.0 / std::sqrt(vec4a.lengthSquared()), norm4.w);
+
+    Math::Vector4d vec4b(3.0, -4.0, 5.0, 3.5);
+    norm4 = vec4b.normal();
+    VERIFY_EQUAL(3.0 / std::sqrt(vec4b.lengthSquared()), norm4.x);
+    VERIFY_EQUAL(-4.0 / std::sqrt(vec4b.lengthSquared()), norm4.y);
+    VERIFY_EQUAL(5.0 / std::sqrt(vec4b.lengthSquared()), norm4.z);
+    VERIFY_EQUAL(3.5 / std::sqrt(vec4b.lengthSquared()), norm4.w);
+}
