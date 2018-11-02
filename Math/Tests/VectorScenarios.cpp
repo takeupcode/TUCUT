@@ -115,6 +115,97 @@ SCENARIO( Vector, "Construction/Normal", "unit,math", "Vectors can be unit const
     VERIFY_EQUAL(1.0, vec4b.w);
 }
 
+SCENARIO( Vector, "Construction/Normal", "unit,math", "Vectors can be direction constructed." )
+{
+    Math::Vector1i vec1a = Math::Vector1i::right();
+    Math::Vector1i vec1b = Math::Vector1i::left();
+    
+    VERIFY_EQUAL( 1, vec1a.x);
+    VERIFY_EQUAL(-1, vec1b.x);
+    
+    Math::Vector2i vec2a = Math::Vector2i::right();
+    Math::Vector2i vec2b = Math::Vector2i::left();
+    Math::Vector2i vec2c = Math::Vector2i::forward();
+    Math::Vector2i vec2d = Math::Vector2i::backward();
+
+    VERIFY_EQUAL( 1, vec2a.x);
+    VERIFY_EQUAL( 0, vec2a.y);
+    VERIFY_EQUAL(-1, vec2b.x);
+    VERIFY_EQUAL( 0, vec2b.y);
+    VERIFY_EQUAL( 0, vec2c.x);
+    VERIFY_EQUAL( 1, vec2c.y);
+    VERIFY_EQUAL( 0, vec2d.x);
+    VERIFY_EQUAL(-1, vec2d.y);
+
+    Math::Vector3i vec3a = Math::Vector3i::right();
+    Math::Vector3i vec3b = Math::Vector3i::left();
+    Math::Vector3i vec3c = Math::Vector3i::forward();
+    Math::Vector3i vec3d = Math::Vector3i::backward();
+    Math::Vector3i vec3e = Math::Vector3i::up();
+    Math::Vector3i vec3f = Math::Vector3i::down();
+
+    VERIFY_EQUAL( 1, vec3a.x);
+    VERIFY_EQUAL( 0, vec3a.y);
+    VERIFY_EQUAL( 0, vec3a.z);
+    VERIFY_EQUAL(-1, vec3b.x);
+    VERIFY_EQUAL( 0, vec3b.y);
+    VERIFY_EQUAL( 0, vec3b.z);
+    VERIFY_EQUAL( 0, vec3c.x);
+    VERIFY_EQUAL( 1, vec3c.y);
+    VERIFY_EQUAL( 0, vec3c.z);
+    VERIFY_EQUAL( 0, vec3d.x);
+    VERIFY_EQUAL(-1, vec3d.y);
+    VERIFY_EQUAL( 0, vec3d.z);
+    VERIFY_EQUAL( 0, vec3e.x);
+    VERIFY_EQUAL( 0, vec3e.y);
+    VERIFY_EQUAL( 1, vec3e.z);
+    VERIFY_EQUAL( 0, vec3f.x);
+    VERIFY_EQUAL( 0, vec3f.y);
+    VERIFY_EQUAL(-1, vec3f.z);
+
+    Math::Vector4i vec4a = Math::Vector4i::right();
+    Math::Vector4i vec4b = Math::Vector4i::left();
+    Math::Vector4i vec4c = Math::Vector4i::forward();
+    Math::Vector4i vec4d = Math::Vector4i::backward();
+    Math::Vector4i vec4e = Math::Vector4i::up();
+    Math::Vector4i vec4f = Math::Vector4i::down();
+    Math::Vector4i vec4g = Math::Vector4i::ana();
+    Math::Vector4i vec4h = Math::Vector4i::kata();
+
+    VERIFY_EQUAL( 1, vec4a.x);
+    VERIFY_EQUAL( 0, vec4a.y);
+    VERIFY_EQUAL( 0, vec4a.z);
+    VERIFY_EQUAL( 0, vec4a.w);
+    VERIFY_EQUAL(-1, vec4b.x);
+    VERIFY_EQUAL( 0, vec4b.y);
+    VERIFY_EQUAL( 0, vec4b.z);
+    VERIFY_EQUAL( 0, vec4b.w);
+    VERIFY_EQUAL( 0, vec4c.x);
+    VERIFY_EQUAL( 1, vec4c.y);
+    VERIFY_EQUAL( 0, vec4c.z);
+    VERIFY_EQUAL( 0, vec4c.w);
+    VERIFY_EQUAL( 0, vec4d.x);
+    VERIFY_EQUAL(-1, vec4d.y);
+    VERIFY_EQUAL( 0, vec4d.z);
+    VERIFY_EQUAL( 0, vec4d.w);
+    VERIFY_EQUAL( 0, vec4e.x);
+    VERIFY_EQUAL( 0, vec4e.y);
+    VERIFY_EQUAL( 1, vec4e.z);
+    VERIFY_EQUAL( 0, vec4e.w);
+    VERIFY_EQUAL( 0, vec4f.x);
+    VERIFY_EQUAL( 0, vec4f.y);
+    VERIFY_EQUAL(-1, vec4f.z);
+    VERIFY_EQUAL( 0, vec4f.w);
+    VERIFY_EQUAL( 0, vec4g.x);
+    VERIFY_EQUAL( 0, vec4g.y);
+    VERIFY_EQUAL( 0, vec4g.z);
+    VERIFY_EQUAL( 1, vec4g.w);
+    VERIFY_EQUAL( 0, vec4h.x);
+    VERIFY_EQUAL( 0, vec4h.y);
+    VERIFY_EQUAL( 0, vec4h.z);
+    VERIFY_EQUAL(-1, vec4h.w);
+}
+
 SCENARIO( Vector, "Operation/Normal", "unit,math", "Vectors can be assigned." )
 {
     Math::Vector1i vec1a(123);
@@ -317,6 +408,16 @@ SCENARIO( Vector, "Operation/Normal", "unit,math", "Vector3s can be cross multip
     VERIFY_EQUAL(-20, prod3.x);
     VERIFY_EQUAL(-5, prod3.y);
     VERIFY_EQUAL(18, prod3.z);
+}
+
+SCENARIO( Vector, "Operation/Normal", "unit,math", "Vector3 cross product points in the right direction." )
+{
+    Math::Vector3i vec3right = Math::Vector3i::right();
+    Math::Vector3i vec3forward = Math::Vector3i::forward();
+    
+    Math::Vector3i prod3 = vec3right.cross(vec3forward);
+    
+    VERIFY_EQUAL(Math::Vector3i::up(), prod3);
 }
 
 SCENARIO( Vector, "Operation/Normal", "unit,math", "Vectors can calculate length squared." )

@@ -37,7 +37,17 @@ public:
     {
         return Vector1(1);
     }
+
+    static constexpr Vector1 right ()
+    {
+        return Vector1(1);
+    }
     
+    static constexpr Vector1 left ()
+    {
+        return Vector1(-1);
+    }
+
     T component (std::size_t axis) const
     {
         switch (axis)
@@ -155,6 +165,26 @@ public:
         return Vector2(1, 1);
     }
     
+    static constexpr Vector2 right ()
+    {
+        return Vector2(1, 0);
+    }
+    
+    static constexpr Vector2 left ()
+    {
+        return Vector2(-1, 0);
+    }
+
+    static constexpr Vector2 forward ()
+    {
+        return Vector2(0, 1);
+    }
+    
+    static constexpr Vector2 backward ()
+    {
+        return Vector2(0, -1);
+    }
+
     T component (std::size_t axis) const
     {
         switch (axis)
@@ -284,6 +314,36 @@ public:
         return Vector3(1, 1, 1);
     }
     
+    static constexpr Vector3 right ()
+    {
+        return Vector3(1, 0, 0);
+    }
+    
+    static constexpr Vector3 left ()
+    {
+        return Vector3(-1, 0, 0);
+    }
+    
+    static constexpr Vector3 forward ()
+    {
+        return Vector3(0, 1, 0);
+    }
+    
+    static constexpr Vector3 backward ()
+    {
+        return Vector3(0, -1, 0);
+    }
+
+    static constexpr Vector3 up ()
+    {
+        return Vector3(0, 0, 1);
+    }
+    
+    static constexpr Vector3 down ()
+    {
+        return Vector3(0, 0, -1);
+    }
+
     T component (std::size_t axis) const
     {
         switch (axis)
@@ -426,6 +486,46 @@ public:
         return Vector4(1, 1, 1, 1);
     }
     
+    static constexpr Vector4 right ()
+    {
+        return Vector4(1, 0, 0, 0);
+    }
+    
+    static constexpr Vector4 left ()
+    {
+        return Vector4(-1, 0, 0, 0);
+    }
+    
+    static constexpr Vector4 forward ()
+    {
+        return Vector4(0, 1, 0, 0);
+    }
+    
+    static constexpr Vector4 backward ()
+    {
+        return Vector4(0, -1, 0, 0);
+    }
+    
+    static constexpr Vector4 up ()
+    {
+        return Vector4(0, 0, 1, 0);
+    }
+    
+    static constexpr Vector4 down ()
+    {
+        return Vector4(0, 0, -1, 0);
+    }
+    
+    static constexpr Vector4 ana ()
+    {
+        return Vector4(0, 0, 0, 1);
+    }
+    
+    static constexpr Vector4 kata ()
+    {
+        return Vector4(0, 0, 0, -1);
+    }
+
     T component (std::size_t axis) const
     {
         switch (axis)
