@@ -259,6 +259,8 @@
 		3ED412A120FED37800BC7226 /* Message.protocol.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E259E0620E34B4A00F01379 /* Message.protocol.cpp */; };
 		3ED412A220FED37800BC7226 /* MessageAllFields.protocol.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E259DF620E34B4900F01379 /* MessageAllFields.protocol.cpp */; };
 		3ED412A320FED37800BC7226 /* MessageField.protocol.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E259E0120E34B4A00F01379 /* MessageField.protocol.cpp */; };
+		3EDBEDDB218FEA25006DFB23 /* MinMax.h in Headers */ = {isa = PBXBuildFile; fileRef = 3EDBEDDA218FEA24006DFB23 /* MinMax.h */; };
+		3EDBEDDE2190074F006DFB23 /* MinMaxScenarios.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3EDBEDDD2190074F006DFB23 /* MinMaxScenarios.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -657,6 +659,8 @@
 		3ECB8C38216B152600EACD3F /* NoiseScenarios.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = NoiseScenarios.cpp; sourceTree = "<group>"; };
 		3ED4127420FED19500BC7226 /* TestTUCUT */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = TestTUCUT; sourceTree = BUILT_PRODUCTS_DIR; };
 		3ED4129120FED29400BC7226 /* TestProtocolCompiler */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = TestProtocolCompiler; sourceTree = BUILT_PRODUCTS_DIR; };
+		3EDBEDDA218FEA24006DFB23 /* MinMax.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MinMax.h; sourceTree = "<group>"; };
+		3EDBEDDD2190074F006DFB23 /* MinMaxScenarios.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = MinMaxScenarios.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1150,6 +1154,7 @@
 				3E289F4121784092002FFBDC /* Bezier.h */,
 				3E289F43217987D6002FFBDC /* Vector.h */,
 				3E289F4A217CEDCB002FFBDC /* Easing.h */,
+				3EDBEDDA218FEA24006DFB23 /* MinMax.h */,
 			);
 			path = Math;
 			sourceTree = "<group>";
@@ -1162,6 +1167,7 @@
 				3E289F45217C2618002FFBDC /* VectorScenarios.cpp */,
 				3E289F48217CD947002FFBDC /* BezierScenarios.cpp */,
 				3E80D6502182B5FD006DA12E /* BoundsScenarios.cpp */,
+				3EDBEDDD2190074F006DFB23 /* MinMaxScenarios.cpp */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -1401,6 +1407,7 @@
 				3E259EDF20E34BE900F01379 /* ParserManager.h in Headers */,
 				3E061821212A31A2000B634B /* PropertyValue.h in Headers */,
 				3E06181A212A3057000B634B /* GameObjectManager.h in Headers */,
+				3EDBEDDB218FEA25006DFB23 /* MinMax.h in Headers */,
 				3E289F4221784092002FFBDC /* Bezier.h in Headers */,
 				3E259EF020E34BE900F01379 /* MessageModelContainer.h in Headers */,
 				3E259EC920E34BE900F01379 /* CodeIndenter.h in Headers */,
@@ -1770,6 +1777,7 @@
 				3E3F83A621067B5200501126 /* LogManagerScenarios.cpp in Sources */,
 				3ED4128820FED1FB00BC7226 /* main.cpp in Sources */,
 				3E3F82FA21043ED200501126 /* EventSubscriberScenarios.cpp in Sources */,
+				3EDBEDDE2190074F006DFB23 /* MinMaxScenarios.cpp in Sources */,
 				3E061828212A5D06000B634B /* PropertyValueScenarios.cpp in Sources */,
 				3ED4128920FED1FB00BC7226 /* ScenarioScenarios.cpp in Sources */,
 			);
