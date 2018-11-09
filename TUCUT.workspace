@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CodeLite_Workspace Name="TUCUT" Database="" Version="10.0.0">
-  <Project Name="s-TUCUT" Path="s-TUCUT.project" Active="Yes"/>
+  <Project Name="s-TUCUT" Path="s-TUCUT.project" Active="No"/>
+  <Project Name="t-TUCUT" Path="t-TUCUT.project" Active="Yes"/>
   <BuildMatrix>
     <WorkspaceConfiguration Name="Debug" Selected="yes">
       <Environment/>
       <Project Name="s-TUCUT" ConfigName="Debug"/>
+      <Project Name="t-TUCUT" ConfigName="Debug"/>
     </WorkspaceConfiguration>
     <WorkspaceConfiguration Name="Release" Selected="yes">
       <Environment/>
       <Project Name="s-TUCUT" ConfigName="Release"/>
+      <Project Name="t-TUCUT" ConfigName="Release"/>
     </WorkspaceConfiguration>
   </BuildMatrix>
 </CodeLite_Workspace>

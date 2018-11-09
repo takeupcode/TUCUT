@@ -14,8 +14,6 @@
 #include "../ConfigInfo.h"
 #include "../../File/FileManager.h"
 
-#include <boost/filesystem/operations.hpp>
-
 using namespace std;
 using namespace TUCUT;
 
@@ -28,11 +26,6 @@ void createTestConfig (const std::string & fileName)
     };
     
     File::FileManager::writeLines(fileName, content);
-}
-
-void deleteTestConfig (const std::string & fileName)
-{
-    boost::filesystem::remove(fileName);
 }
 
 SCENARIO( Config, "Operation/Normal", "unit,config", "Config info can read properties." )
@@ -55,8 +48,6 @@ SCENARIO( Config, "Operation/Normal", "unit,config", "Config info can read prope
     VERIFY_EQUAL("Bird nest", config.getProperty("nest", "birdnest", "name", 0));
     VERIFY_EQUAL("tree", config.getProperty("nest", "birdnest", "location", 0));
     VERIFY_EQUAL("grass", config.getProperty("nest", "birdnest", "location", 1));
-
-    deleteTestConfig(fileName);
 }
 
 SCENARIO( Config, "Operation/Normal", "unit,config", "Config info can browse properties." )
@@ -83,6 +74,4 @@ SCENARIO( Config, "Operation/Normal", "unit,config", "Config info can browse pro
     VERIFY_EQUAL(2, static_cast<int>(result.size()));
     VERIFY_TRUE(std::find(std::begin(result), std::end(result), "name") != std::end(result));
     VERIFY_TRUE(std::find(std::begin(result), std::end(result), "location") != std::end(result));
-
-    deleteTestConfig(fileName);
 }

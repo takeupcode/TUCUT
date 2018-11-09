@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CodeLite_Project Name="s-TUCUT" Version="10.0.0" InternalType="Library">
+  <Plugins>
+    <Plugin Name="qmake">
+      <![CDATA[00010001N0005Debug000000000000]]>
+    </Plugin>
+  </Plugins>
   <VirtualDirectory Name="Math">
     <File Name="Math/Bounds.h"/>
     <File Name="Math/Vector.h"/>
@@ -8,18 +13,12 @@
     <File Name="Math/Easing.h"/>
     <File Name="Math/Point.h"/>
   </VirtualDirectory>
-  <Plugins>
-    <Plugin Name="qmake">
-      <![CDATA[00010001N0005Debug000000000000]]>
-    </Plugin>
-  </Plugins>
   <VirtualDirectory Name="Noise">
+    <File Name="Noise/Noise.cpp"/>
     <VirtualDirectory Name="Tests">
       <File Name="Noise/Tests/NoiseScenarios.cpp"/>
     </VirtualDirectory>
     <File Name="Noise/Noise.h"/>
-    <File Name="Noise/SimpleNoise.cpp"/>
-    <File Name="Noise/ClassicNoise.cpp"/>
     <File Name="Noise/NoiseUtil.h"/>
     <File Name="Noise/NoiseUtil.cpp"/>
   </VirtualDirectory>
@@ -232,4 +231,6 @@
       </Completion>
     </Configuration>
   </Settings>
+  <Dependencies Name="Debug"/>
+  <Dependencies Name="Release"/>
 </CodeLite_Project>

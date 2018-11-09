@@ -14,8 +14,6 @@
 #include "../LogManager.h"
 #include "../../File/FileManager.h"
 
-#include <boost/filesystem/operations.hpp>
-
 using namespace std;
 using namespace TUCUT;
 
@@ -63,6 +61,4 @@ SCENARIO( Log, "Operation/Normal", "unit,log", "Log manager can log." )
         }
     }
     VERIFY_TRUE(lineFound);
-    
-    boost::filesystem::remove(pLogMgr->logFileName());
 }

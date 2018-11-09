@@ -27,7 +27,7 @@ public:
     virtual ~EnumValueModelContainer ()
     { }
 
-    virtual void addEnumValue (const EnumValueModelCollection::value_type & enumValue)
+    void addEnumValue (const EnumValueModelCollection::value_type & enumValue)
     {
         mValues->push_back(enumValue);
     }

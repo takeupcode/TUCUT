@@ -27,7 +27,7 @@ public:
     virtual ~OptionModelContainer ()
     { }
 
-    virtual void addOption (const OptionModelCollection::value_type & option)
+    void addOption (const OptionModelCollection::value_type & option)
     {
         mOptions->push_back(option);
     }

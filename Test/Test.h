@@ -441,8 +441,9 @@ public:
     }
     
     Category (const Category & src)
-    : mName(src.mName), mChildCategories(src.mChildCategories), mChildScenarios(src.mChildScenarios),
-      mPassCount(src.mPassCount), mFailCount(src.mFailCount), mSkipCount(src.mSkipCount)
+    : mName(src.mName), mFullName(src.mFullName),
+      mPassCount(src.mPassCount), mFailCount(src.mFailCount), mSkipCount(src.mSkipCount),
+      mChildCategories(src.mChildCategories), mChildScenarios(src.mChildScenarios)
     { }
     
     virtual ~Category ()

@@ -27,7 +27,7 @@ public:
     virtual ~MessageModelContainer ()
     { }
 
-    virtual void addMessage (const MessageModelCollection::value_type & message)
+    void addMessage (const MessageModelCollection::value_type & message)
     {
         mMessages->push_back(message);
     }

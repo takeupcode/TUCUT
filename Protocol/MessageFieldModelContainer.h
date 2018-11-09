@@ -27,7 +27,7 @@ public:
     virtual ~MessageFieldModelContainer ()
     { }
 
-    virtual void addField (const MessageFieldModelCollection::value_type & field)
+    void addField (const MessageFieldModelCollection::value_type & field)
     {
         mFields->push_back(field);
     }

@@ -27,7 +27,7 @@ public:
     virtual ~EnumModelContainer ()
     { }
 
-    virtual void addEnum (const EnumModelCollection::value_type & enumeration)
+    void addEnum (const EnumModelCollection::value_type & enumeration)
     {
         mEnums->push_back(enumeration);
     }

@@ -27,7 +27,7 @@ public:
     virtual ~OneofModelContainer ()
     { }
 
-    virtual void addOneof (const OneofModelCollection::value_type & oneof)
+    void addOneof (const OneofModelCollection::value_type & oneof)
     {
         mOneofs->push_back(oneof);
     }

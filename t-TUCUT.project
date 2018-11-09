@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeLite_Project Name="t-TUCUT" Version="10.0.0" InternalType="Console">
+  <Plugins>
+    <Plugin Name="qmake">
+      <![CDATA[00010001N0005Debug000000000000]]>
+    </Plugin>
+  </Plugins>
+  <VirtualDirectory Name="Log">
+    <VirtualDirectory Name="Tests">
+      <File Name="Log/Tests/LogManagerScenarios.cpp"/>
+    </VirtualDirectory>
+  </VirtualDirectory>
+  <VirtualDirectory Name="Text">
+    <VirtualDirectory Name="Tests">
+      <File Name="Text/Tests/TextUtilScenarios.cpp"/>
+      <File Name="Text/Tests/StringLiteralScenarios.cpp"/>
+    </VirtualDirectory>
+  </VirtualDirectory>
+  <VirtualDirectory Name="Color">
+    <VirtualDirectory Name="Tests">
+      <File Name="Color/Tests/ColorScenarios.cpp"/>
+    </VirtualDirectory>
+  </VirtualDirectory>
+  <VirtualDirectory Name="Math">
+    <VirtualDirectory Name="Tests">
+      <File Name="Math/Tests/BoundsScenarios.cpp"/>
+      <File Name="Math/Tests/MinMaxScenarios.cpp"/>
+      <File Name="Math/Tests/BezierScenarios.cpp"/>
+      <File Name="Math/Tests/LerpScenarios.cpp"/>
+      <File Name="Math/Tests/PointScenarios.cpp"/>
+      <File Name="Math/Tests/VectorScenarios.cpp"/>
+    </VirtualDirectory>
+  </VirtualDirectory>
+  <VirtualDirectory Name="Identity">
+    <VirtualDirectory Name="Tests">
+      <File Name="Identity/Tests/IdentifiableScenarios.cpp"/>
+    </VirtualDirectory>
+  </VirtualDirectory>
+  <VirtualDirectory Name="Hash">
+    <VirtualDirectory Name="Tests">
+      <File Name="Hash/Tests/HashScenarios.cpp"/>
+    </VirtualDirectory>
+  </VirtualDirectory>
+  <VirtualDirectory Name="Game">
+    <VirtualDirectory Name="Tests">
+      <File Name="Game/Tests/PropertyGroupScenarios.cpp"/>
+      <File Name="Game/Tests/PropertyValueScenarios.cpp"/>
+      <File Name="Game/Tests/PropertyContainerScenarios.cpp"/>
+      <File Name="Game/Tests/GameObjectScenarios.cpp"/>
+      <File Name="Game/Tests/GameObjectManagerScenarios.cpp"/>
+    </VirtualDirectory>
+  </VirtualDirectory>
+  <VirtualDirectory Name="Protocol">
+    <VirtualDirectory Name="Tests">
+      <File Name="Protocol/Tests/MessageParserScenarios.cpp"/>
+      <File Name="Protocol/Tests/MessageFieldParserScenarios.cpp"/>
+      <File Name="Protocol/Tests/CodeGeneratorCPPScenarios.cpp"/>
+      <File Name="Protocol/Tests/TokenReaderScenarios.cpp"/>
+      <File Name="Protocol/Tests/OneofParserScenarios.cpp"/>
+      <File Name="Protocol/Tests/ProtoModelScenarios.cpp"/>
+      <File Name="Protocol/Tests/ProtoParserScenarios.cpp"/>
+      <File Name="Protocol/Tests/ImportParserScenarios.cpp"/>
+      <File Name="Protocol/Tests/CodeGeneratorManagerScenarios.cpp"/>
+      <File Name="Protocol/Tests/EnumParserScenarios.cpp"/>
+      <File Name="Protocol/Tests/PackageParserScenarios.cpp"/>
+      <File Name="Protocol/Tests/EnumValueParserScenarios.cpp"/>
+      <File Name="Protocol/Tests/OptionParserScenarios.cpp"/>
+    </VirtualDirectory>
+  </VirtualDirectory>
+  <VirtualDirectory Name="Config">
+    <VirtualDirectory Name="Tests">
+      <File Name="Config/Tests/ConfigInfoScenarios.cpp"/>
+    </VirtualDirectory>
+  </VirtualDirectory>
+  <VirtualDirectory Name="Test">
+    <VirtualDirectory Name="Tests">
+      <File Name="Test/Tests/ScenarioScenarios.cpp"/>
+      <File Name="Test/Tests/main.cpp"/>
+    </VirtualDirectory>
+  </VirtualDirectory>
+  <VirtualDirectory Name="Exception">
+    <VirtualDirectory Name="Tests">
+      <File Name="Exception/Tests/ExceptionScenarios.cpp"/>
+    </VirtualDirectory>
+  </VirtualDirectory>
+  <VirtualDirectory Name="Event">
+    <VirtualDirectory Name="Tests">
+      <File Name="Event/Tests/SimplePublisher.h"/>
+      <File Name="Event/Tests/SimpleSubscriber.h"/>
+      <File Name="Event/Tests/EventSubscriberScenarios.cpp"/>
+      <File Name="Event/Tests/EventPublisherScenarios.cpp"/>
+      <File Name="Event/Tests/AdvancedSubscriber.h"/>
+      <File Name="Event/Tests/AdvancedPublisher.h"/>
+      <File Name="Event/Tests/AdvancedPublisher.cpp"/>
+    </VirtualDirectory>
+  </VirtualDirectory>
+  <VirtualDirectory Name="Noise">
+    <VirtualDirectory Name="Tests">
+      <File Name="Noise/Tests/NoiseScenarios.cpp"/>
+    </VirtualDirectory>
+  </VirtualDirectory>
+  <VirtualDirectory Name="File">
+    <VirtualDirectory Name="Tests">
+      <File Name="File/Tests/FileManagerScenarios.cpp"/>
+    </VirtualDirectory>
+  </VirtualDirectory>
+  <Description/>
+  <Dependencies/>
+  <Dependencies Name="Debug">
+    <Project Name="s-TUCUT"/>
+  </Dependencies>
+  <Dependencies Name="Release">
+    <Project Name="s-TUCUT"/>
+  </Dependencies>
+  <Settings Type="Executable">
+    <GlobalSettings>
+      <Compiler Options="" C_Options="" Assembler="">
+        <IncludePath Value="."/>
+      </Compiler>
+      <Linker Options="">
+        <LibraryPath Value="."/>
+      </Linker>
+      <ResourceCompiler Options=""/>
+    </GlobalSettings>
+    <Configuration Name="Debug" CompilerType="clang( branches/release_60 )" DebuggerType="LLDB Debugger" Type="Executable" BuildCmpWithGlobalSettings="append" BuildLnkWithGlobalSettings="append" BuildResWithGlobalSettings="append">
+      <Compiler Options="-g;-O0;-Wall;-std=c++14;-stdlib=libc++" C_Options="-g;-O0;-Wall" Assembler="" Required="yes" PreCompiledHeader="" PCHInCommandLine="no" PCHFlags="" PCHFlagsPolicy="0">
+        <IncludePath Value="."/>
+      </Compiler>
+      <Linker Options="" Required="yes">
+        <LibraryPath Value="$(IntermediateDirectory)"/>
+        <LibraryPath Value="/usr/local/lib"/>
+        <LibraryPath Value="/usr/lib/x86_64-linux-gnu"/>
+        <Library Value="libTUCUT.a"/>
+        <Library Value="c++"/>
+        <Library Value="boost_filesystem-mt"/>
+      </Linker>
+      <ResourceCompiler Options="" Required="no"/>
+      <General OutputFile="$(IntermediateDirectory)/$(ProjectName)" IntermediateDirectory="./Debug" Command="./$(ProjectName)" CommandArguments="" UseSeparateDebugArgs="no" DebugArguments="" WorkingDirectory="$(IntermediateDirectory)" PauseExecWhenProcTerminates="yes" IsGUIProgram="no" IsEnabled="yes"/>
+      <BuildSystem Name="Default"/>
+      <Environment EnvVarSetName="&lt;Use Defaults&gt;" DbgSetName="&lt;Use Defaults&gt;">
+        <![CDATA[]]>
+      </Environment>
+      <Debugger IsRemote="no" RemoteHostName="" RemoteHostPort="" DebuggerPath="" IsExtended="no">
+        <DebuggerSearchPaths/>
+        <PostConnectCommands/>
+        <StartupCommands/>
+      </Debugger>
+      <PreBuild/>
+      <PostBuild/>
+      <CustomBuild Enabled="no">
+        <RebuildCommand/>
+        <CleanCommand/>
+        <BuildCommand/>
+        <PreprocessFileCommand/>
+        <SingleFileCommand/>
+        <MakefileGenerationCommand/>
+        <ThirdPartyToolName>None</ThirdPartyToolName>
+        <WorkingDirectory/>
+      </CustomBuild>
+      <AdditionalRules>
+        <CustomPostBuild/>
+        <CustomPreBuild/>
+      </AdditionalRules>
+      <Completion EnableCpp11="no" EnableCpp14="no">
+        <ClangCmpFlagsC/>
+        <ClangCmpFlags/>
+        <ClangPP/>
+        <SearchPaths/>
+      </Completion>
+    </Configuration>
+    <Configuration Name="Release" CompilerType="clang( branches/release_60 )" DebuggerType="LLDB Debugger" Type="Executable" BuildCmpWithGlobalSettings="append" BuildLnkWithGlobalSettings="append" BuildResWithGlobalSettings="append">
+      <Compiler Options="-O2;-Wall" C_Options="-O2;-Wall" Assembler="" Required="yes" PreCompiledHeader="" PCHInCommandLine="no" PCHFlags="" PCHFlagsPolicy="0">
+        <IncludePath Value="."/>
+        <Preprocessor Value="NDEBUG"/>
+      </Compiler>
+      <Linker Options="" Required="yes"/>
+      <ResourceCompiler Options="" Required="no"/>
+      <General OutputFile="$(IntermediateDirectory)/$(ProjectName)" IntermediateDirectory="./Release" Command="./$(ProjectName)" CommandArguments="" UseSeparateDebugArgs="no" DebugArguments="" WorkingDirectory="$(IntermediateDirectory)" PauseExecWhenProcTerminates="yes" IsGUIProgram="no" IsEnabled="yes"/>
+      <BuildSystem Name="Default"/>
+      <Environment EnvVarSetName="&lt;Use Defaults&gt;" DbgSetName="&lt;Use Defaults&gt;">
+        <![CDATA[]]>
+      </Environment>
+      <Debugger IsRemote="no" RemoteHostName="" RemoteHostPort="" DebuggerPath="" IsExtended="no">
+        <DebuggerSearchPaths/>
+        <PostConnectCommands/>
+        <StartupCommands/>
+      </Debugger>
+      <PreBuild/>
+      <PostBuild/>
+      <CustomBuild Enabled="no">
+        <RebuildCommand/>
+        <CleanCommand/>
+        <BuildCommand/>
+        <PreprocessFileCommand/>
+        <SingleFileCommand/>
+        <MakefileGenerationCommand/>
+        <ThirdPartyToolName>None</ThirdPartyToolName>
+        <WorkingDirectory/>
+      </CustomBuild>
+      <AdditionalRules>
+        <CustomPostBuild/>
+        <CustomPreBuild/>
+      </AdditionalRules>
+      <Completion EnableCpp11="no" EnableCpp14="no">
+        <ClangCmpFlagsC/>
+        <ClangCmpFlags/>
+        <ClangPP/>
+        <SearchPaths/>
+      </Completion>
+    </Configuration>
+  </Settings>
+</CodeLite_Project>
