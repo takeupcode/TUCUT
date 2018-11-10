@@ -79,6 +79,83 @@ SCENARIO( TextUtil, "Operation/Edge", "unit,text", "TextUtil can split strings w
     VERIFY_EQUAL("", result[2]);
 }
 
+SCENARIO( TextUtil, "Operation/Corner", "unit,text", "TextUtil can replace empty strings." )
+{
+    std::string input = "";
+    std::string search = "abc";
+    std::string replace = "new";
+    std::string result = Text::TextUtil::replaceString(input, search, replace);
+    VERIFY_EQUAL(input, result);
+    
+    input = "abc";
+    search = "";
+    replace = "new";
+    result = Text::TextUtil::replaceString(input, search, replace);
+    VERIFY_EQUAL(input, result);
+    
+    input = "abc";
+    search = "def";
+    replace = "";
+    result = Text::TextUtil::replaceString(input, search, replace);
+    VERIFY_EQUAL(input, result);
+    
+    input = "abcd";
+    search = "bc";
+    replace = "";
+    result = Text::TextUtil::replaceString(input, search, replace);
+    VERIFY_EQUAL("ad", result);
+}
+
+SCENARIO( TextUtil, "Operation/Corner", "unit,text", "TextUtil can replace full strings." )
+{
+    std::string input = "abc";
+    std::string search = "abc";
+    std::string replace = "new";
+    std::string result = Text::TextUtil::replaceString(input, search, replace);
+    VERIFY_EQUAL(replace, result);
+}
+
+SCENARIO( TextUtil, "Operation/Corner", "unit,text", "TextUtil can replace strings at beginning and end." )
+{
+    std::string input = "abcd";
+    std::string search = "ab";
+    std::string replace = "new";
+    std::string result = Text::TextUtil::replaceString(input, search, replace);
+    VERIFY_EQUAL("newcd", result);
+    
+    input = "abcd";
+    search = "cd";
+    replace = "new";
+    result = Text::TextUtil::replaceString(input, search, replace);
+    VERIFY_EQUAL("abnew", result);
+}
+
+SCENARIO( TextUtil, "Operation/Normal", "unit,text", "TextUtil can replace strings." )
+{
+    std::string input = "abcdef";
+    std::string search = "cd";
+    std::string replace = "x";
+    std::string result = Text::TextUtil::replaceString(input, search, replace);
+    VERIFY_EQUAL("abxef", result);
+    
+    input = "abcdef";
+    search = "cd";
+    replace = "xyz";
+    result = Text::TextUtil::replaceString(input, search, replace);
+    VERIFY_EQUAL("abxyzef", result);
+    
+    input = "abcabd";
+    search = "ab";
+    replace = "gone";
+    result = Text::TextUtil::replaceString(input, search, replace);
+    VERIFY_EQUAL("gonecgoned", result);
+    
+    input = "abcd";
+    search = "xyz";
+    replace = "notfound";
+    result = Text::TextUtil::replaceString(input, search, replace);
+    VERIFY_EQUAL(input, result);}
+
 SCENARIO( TextUtil, "Operation/Normal", "unit,text", "TextUtil can narrow strings." )
 {
     std::wstring src = L"Wide";
