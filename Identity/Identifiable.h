@@ -26,27 +26,32 @@ public:
     class IdToken
     {
     public:
-        explicit IdToken (const std::string & token)
+        explicit IdToken (const std::string & token, int identity = 0)
         : mToken(token),
-        mId(boost::uuids::random_generator()())
-        { }
+        mIntId(identity)
+        {
+            if (identity == 0)
+            {
+                mUuid = boost::uuids::random_generator()();
+            }
+        }
         
         IdToken (const std::string & token, const std::string & identity)
         : mToken(token),
-        mId(boost::uuids::string_generator()(identity))
+        mIntId(0),
+        mUuid(boost::uuids::string_generator()(identity))
         { }
         
         IdToken (const IdToken & src)
         : mToken(src.mToken),
-        mId(src.mId)
+        mIntId(src.mIntId),
+        mUuid(src.mUuid)
         { }
         
         IdToken (IdToken && src)
         : mToken(std::move(src.mToken)),
-        mId(std::move(src.mId))
-        { }
-        
-        ~IdToken ()
+        mIntId(src.mIntId),
+        mUuid(std::move(src.mUuid))
         { }
         
         std::string token () const
@@ -56,17 +61,32 @@ public:
         
         std::string identity () const
         {
-            return to_string(mId);
+            return mIntId != 0 ? std::to_string(mIntId) : to_string(mUuid);
         }
         
         std::string toString () const
         {
-            return "(" + mToken + ": " + to_string(mId) + ")";
+            return "(" + token() + ":" + identity() + ")";
         }
         
         bool operator == (const IdToken & rhs) const
         {
-            return mToken == rhs.mToken && mId == rhs.mId;
+            if (mToken != rhs.mToken)
+            {
+                return false;
+            }
+            if (mIntId != 0)
+            {
+                if (mIntId != rhs.mIntId)
+                {
+                    return false;
+                }
+            }
+            else if (mUuid != rhs.mUuid)
+            {
+                return false;
+            }
+            return true;
         }
         
         bool operator != (const IdToken & rhs) const
@@ -109,7 +129,8 @@ public:
         IdToken & operator = (IdToken &&) = delete;
         
         std::string mToken;
-        boost::uuids::uuid mId;
+        int mIntId;
+        boost::uuids::uuid mUuid;
     };
 
     virtual ~Identifiable ()
@@ -121,8 +142,8 @@ public:
     }
     
 protected:
-    Identifiable (const std::string & token)
-    : mIdToken(new IdToken(token))
+    Identifiable (const std::string & token, int identity = 0)
+    : mIdToken(new IdToken(token, identity))
     { }
     
     Identifiable (const std::string & token, const std::string & identity)
