@@ -28,25 +28,15 @@ SCENARIO( GameObjectManager, "Operation/Normal", "unit,game", "GameObjectManager
 {
     Game::GameObjectManager * pGameObjectMgr = Game::GameObjectManager::instance();
     
-    auto gameObj = pGameObjectMgr->getGameObject("test");
-    VERIFY_TRUE(gameObj == nullptr);
+    auto gameObj1 = pGameObjectMgr->getGameObject(1);
+    VERIFY_TRUE(gameObj1 == nullptr);
     
-    bool result = pGameObjectMgr->addGameObject("test", Game::GameObject::createSharedGameObject());
-    VERIFY_TRUE(result);
+    auto gameObj2 = pGameObjectMgr->createGameObject("character");
+    VERIFY_TRUE(gameObj2 != nullptr);
     
-    gameObj = pGameObjectMgr->getGameObject("test");
-    VERIFY_TRUE(gameObj != nullptr);
+    auto gameObj3 = pGameObjectMgr->getGameObject(gameObj2->identity());
+    VERIFY_TRUE(gameObj3 != nullptr);
     
-    result = pGameObjectMgr->addGameObject("test", Game::GameObject::createSharedGameObject());
-    VERIFY_FALSE(result);
-    
-    pGameObjectMgr->removeGameObject("test");
-    result = pGameObjectMgr->addGameObject("test", Game::GameObject::createSharedGameObject());
-    VERIFY_TRUE(result);
-    
-    auto gameObj2 = pGameObjectMgr->getGameObject("test");
-    VERIFY_TRUE(gameObj != nullptr);
-    
-    VERIFY_EQUAL(1, static_cast<int>(gameObj.use_count()));
-    VERIFY_EQUAL(2, static_cast<int>(gameObj2.use_count()));
+    VERIFY_EQUAL(3, static_cast<int>(gameObj2.use_count()));
+    VERIFY_EQUAL(3, static_cast<int>(gameObj3.use_count()));
 }

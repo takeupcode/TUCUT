@@ -26,17 +26,20 @@ public:
     
     void deinitialize ();
     
-    bool addGameObject (const std::string & gameObjectName, const std::shared_ptr<GameObject> & gameObject);
+    std::shared_ptr<GameObject> createGameObject (const std::string & token);
     
-    void removeGameObject (const std::string & gameObjectName);
+    void removeGameObject (int identity);
     
-    std::shared_ptr<GameObject> getGameObject (const std::string & gameObjectName) const;
+    std::shared_ptr<GameObject> getGameObject (int identity) const;
     
 private:
-    using GameObjectMap = std::unordered_map<std::string, std::shared_ptr<GameObject>>;
+    using GameObjectMap = std::unordered_map<int, std::shared_ptr<GameObject>>;
     
-    GameObjectManager () = default;
+    GameObjectManager ()
+    : mNextId(1)
+    { }
     
+    int mNextId;
     GameObjectMap mGameObjects;
 };
 

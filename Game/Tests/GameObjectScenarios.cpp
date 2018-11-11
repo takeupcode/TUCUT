@@ -17,12 +17,12 @@ using namespace TUCUT;
 
 SCENARIO( GameObject, "Construction/Normal", "unit,game", "GameObject can be constructed." )
 {
-    auto gameObj = Game::GameObject::createSharedGameObject();
+    auto gameObj = Game::GameObject::createSharedGameObject("character", 1);
 }
 
 SCENARIO( GameObject, "Operation/Normal", "unit,game", "GameObject can get shared pointer." )
 {
-    auto gameObj = Game::GameObject::createSharedGameObject();
+    auto gameObj = Game::GameObject::createSharedGameObject("character", 1);
     
     auto sharedPtr = gameObj->getSharedGameObject();
     
@@ -32,7 +32,10 @@ SCENARIO( GameObject, "Operation/Normal", "unit,game", "GameObject can get share
 
 SCENARIO( GameObject, "Operation/Normal", "unit,game", "GameObject has properties." )
 {
-    auto gameObj = Game::GameObject::createSharedGameObject();
+    auto gameObj = Game::GameObject::createSharedGameObject("character", 1);
     
     auto & properties = gameObj->properties();
+    auto group = properties.getGroup("not found");
+    
+    VERIFY_TRUE(group == nullptr);
 }

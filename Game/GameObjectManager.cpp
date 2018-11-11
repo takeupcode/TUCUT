@@ -32,21 +32,23 @@ void GameObjectManager::deinitialize ()
 }
 
 
-bool GameObjectManager::addGameObject (const std::string & gameObjectName, const std::shared_ptr<GameObject> & gameObject)
+std::shared_ptr<GameObject> GameObjectManager::createGameObject (const std::string & token)
 {
-    auto result = mGameObjects.insert(std::make_pair(gameObjectName, gameObject));
+    auto result = GameObject::createSharedGameObject(token, mNextId);
+    mGameObjects.insert(std::make_pair(mNextId, result));
+    ++mNextId;
     
-    return result.second;
+    return result;
 }
 
-void GameObjectManager::removeGameObject (const std::string & gameObjectName)
+void GameObjectManager::removeGameObject (int identity)
 {
-    mGameObjects.erase(gameObjectName);
+    mGameObjects.erase(identity);
 }
 
-std::shared_ptr<GameObject> GameObjectManager::getGameObject (const std::string & gameObjectName) const
+std::shared_ptr<GameObject> GameObjectManager::getGameObject (int identity) const
 {
-    auto gameObjectMapResult = mGameObjects.find(gameObjectName);
+    auto gameObjectMapResult = mGameObjects.find(identity);
     if (gameObjectMapResult == mGameObjects.end())
     {
         return nullptr;
