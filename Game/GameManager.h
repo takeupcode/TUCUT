@@ -1,13 +1,13 @@
 //
-//  GameObjectManager.hpp
+//  GameManager.hpp
 //  TUCUT (Take Up Code Utility)
 //
 //  Created by Abdul Wahid Tanner on 8/19/18.
 //  Copyright © 2018 Take Up Code. All rights reserved.
 //
 
-#ifndef TUCUT_Game_GameObjectManager_h
-#define TUCUT_Game_GameObjectManager_h
+#ifndef TUCUT_Game_GameManager_h
+#define TUCUT_Game_GameManager_h
 
 #include <memory>
 #include <unordered_map>
@@ -17,10 +17,10 @@
 namespace TUCUT {
 namespace Game {
 
-class GameObjectManager
+class GameManager
 {
 public:
-    static GameObjectManager * instance ();
+    static GameManager * instance ();
     
     void initialize ();
     
@@ -35,7 +35,7 @@ public:
 private:
     using GameObjectMap = std::unordered_map<int, std::shared_ptr<GameObject>>;
     
-    GameObjectManager ()
+    GameManager ()
     : mNextId(1)
     { }
     
@@ -46,4 +46,4 @@ private:
 } // namespace Game
 } // namespace TUCUT
 
-#endif // TUCUT_Game_GameObjectManager_h
+#endif // TUCUT_Game_GameManager_h

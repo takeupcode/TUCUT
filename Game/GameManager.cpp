@@ -1,38 +1,38 @@
 //
-//  GameObjectManager.cpp
+//  GameManager.cpp
 //  TUCUT (Take Up Code Utility)
 //
 //  Created by Abdul Wahid Tanner on 8/19/18.
 //  Copyright © 2018 Take Up Code. All rights reserved.
 //
 
-#include "GameObjectManager.h"
+#include "GameManager.h"
 
 namespace TUCUT {
 namespace Game {
 
-GameObjectManager * GameObjectManager::instance ()
+GameManager * GameManager::instance ()
 {
-    static GameObjectManager * mInstance = nullptr;
+    static GameManager * mInstance = nullptr;
     
     if (!mInstance)
     {
-        mInstance = new GameObjectManager();
+        mInstance = new GameManager();
     }
     
     return mInstance;
 }
 
-void GameObjectManager::initialize ()
+void GameManager::initialize ()
 { }
 
-void GameObjectManager::deinitialize ()
+void GameManager::deinitialize ()
 {
     mGameObjects.clear();
 }
 
 
-std::shared_ptr<GameObject> GameObjectManager::createGameObject (const std::string & token)
+std::shared_ptr<GameObject> GameManager::createGameObject (const std::string & token)
 {
     auto result = GameObject::createSharedGameObject(token, mNextId);
     mGameObjects.insert(std::make_pair(mNextId, result));
@@ -41,12 +41,12 @@ std::shared_ptr<GameObject> GameObjectManager::createGameObject (const std::stri
     return result;
 }
 
-void GameObjectManager::removeGameObject (int identity)
+void GameManager::removeGameObject (int identity)
 {
     mGameObjects.erase(identity);
 }
 
-std::shared_ptr<GameObject> GameObjectManager::getGameObject (int identity) const
+std::shared_ptr<GameObject> GameManager::getGameObject (int identity) const
 {
     auto gameObjectMapResult = mGameObjects.find(identity);
     if (gameObjectMapResult == mGameObjects.end())
