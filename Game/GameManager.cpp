@@ -8,6 +8,8 @@
 
 #include "GameManager.h"
 
+#include <stdexcept>
+
 namespace TUCUT {
 namespace Game {
 
@@ -31,25 +33,76 @@ void GameManager::deinitialize ()
     mGameObjects.clear();
 }
 
+GameManager::GameObjectMap * GameManager::getGameObjectMap (const std::string & token)
+{
+    auto gameObjectMapResult = mGameObjects.find(token);
+    if (gameObjectMapResult == mGameObjects.end())
+    {
+        return nullptr;
+    }
+    
+    return gameObjectMapResult->second.get();
+}
 
+const GameManager::GameObjectMap * GameManager::getGameObjectMap (const std::string & token) const
+{
+    auto gameObjectMapResult = mGameObjects.find(token);
+    if (gameObjectMapResult == mGameObjects.end())
+    {
+        return nullptr;
+    }
+    
+    return gameObjectMapResult->second.get();
+}
+
+bool GameManager::registerGameObjectToken (const std::string & token)
+{
+    auto result = mGameObjects.try_emplace(token, std::make_unique<GameObjectMap>());
+    
+    return result.second;
+}
+    
 std::shared_ptr<GameObject> GameManager::createGameObject (const std::string & token)
 {
-    auto result = GameObject::createSharedGameObject(token, mNextId);
-    mGameObjects.insert(std::make_pair(mNextId, result));
+    auto gameObjectMap = getGameObjectMap(token);
+    if (!gameObjectMap)
+    {
+        return nullptr;
+    }
+
+    auto gameObj = GameObject::createSharedGameObject(token, mNextId);
+    auto result = gameObjectMap->try_emplace(mNextId, gameObj);
+    if (!result.second)
+    {
+        throw std::runtime_error("Unable to create game object");
+    }
+    
     ++mNextId;
     
-    return result;
+    return gameObj;
 }
 
-void GameManager::removeGameObject (int identity)
+void GameManager::removeGameObject (const std::string & token, int identity)
 {
-    mGameObjects.erase(identity);
+    auto gameObjectMap = getGameObjectMap(token);
+    if (!gameObjectMap)
+    {
+        return;
+    }
+    
+    gameObjectMap->erase(identity);
 }
 
-std::shared_ptr<GameObject> GameManager::getGameObject (int identity) const
+std::shared_ptr<GameObject> GameManager::getGameObject (const std::string & token, int identity) const
 {
-    auto gameObjectMapResult = mGameObjects.find(identity);
-    if (gameObjectMapResult == mGameObjects.end())
+    auto gameObjectMap = getGameObjectMap(token);
+    if (!gameObjectMap)
+    {
+        return nullptr;
+    }
+    
+    auto gameObjectMapResult = gameObjectMap->find(identity);
+    if (gameObjectMapResult == gameObjectMap->end())
     {
         return nullptr;
     }

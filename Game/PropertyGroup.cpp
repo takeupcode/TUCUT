@@ -13,35 +13,35 @@ namespace Game {
 
 bool PropertyGroup::addValue (const std::string & valueName, const std::string & value, bool readOnly)
 {
-    auto result = mValues.insert(std::make_pair(valueName, PropertyValue::createStringPropertyValue(value, readOnly)));
+    auto result = mValues.try_emplace(valueName, PropertyValue::createStringPropertyValue(value, readOnly));
     
     return result.second;
 }
 
 bool PropertyGroup::addValue (const std::string & valueName, const char * value, bool readOnly)
 {
-    auto result = mValues.insert(std::make_pair(valueName, PropertyValue::createStringPropertyValue(value, readOnly)));
+    auto result = mValues.try_emplace(valueName, PropertyValue::createStringPropertyValue(value, readOnly));
     
     return result.second;
 }
 
 bool PropertyGroup::addValue (const std::string & valueName, int value, bool readOnly)
 {
-    auto result = mValues.insert(std::make_pair(valueName, PropertyValue::createIntegerPropertyValue(value, readOnly)));
+    auto result = mValues.try_emplace(valueName, PropertyValue::createIntegerPropertyValue(value, readOnly));
     
     return result.second;
 }
 
 bool PropertyGroup::addValue (const std::string & valueName, double value, bool readOnly)
 {
-    auto result = mValues.insert(std::make_pair(valueName, PropertyValue::createFloatingPropertyValue(value, readOnly)));
+    auto result = mValues.try_emplace(valueName, PropertyValue::createFloatingPropertyValue(value, readOnly));
     
     return result.second;
 }
 
 bool PropertyGroup::addValue (const std::string & valueName, bool value, bool readOnly)
 {
-    auto result = mValues.insert(std::make_pair(valueName, PropertyValue::createBooleanPropertyValue(value, readOnly)));
+    auto result = mValues.try_emplace(valueName, PropertyValue::createBooleanPropertyValue(value, readOnly));
     
     return result.second;
 }

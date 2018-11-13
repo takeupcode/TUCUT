@@ -26,21 +26,27 @@ public:
     
     void deinitialize ();
     
+    bool registerGameObjectToken (const std::string & token);
+    
     std::shared_ptr<GameObject> createGameObject (const std::string & token);
     
-    void removeGameObject (int identity);
+    void removeGameObject (const std::string & token, int identity);
     
-    std::shared_ptr<GameObject> getGameObject (int identity) const;
+    std::shared_ptr<GameObject> getGameObject (const std::string & token, int identity) const;
     
 private:
     using GameObjectMap = std::unordered_map<int, std::shared_ptr<GameObject>>;
-    
+    using GameObjectTokenMap = std::unordered_map<std::string, std::unique_ptr<GameObjectMap>>;
+
     GameManager ()
     : mNextId(1)
     { }
-    
+
+    GameObjectMap * getGameObjectMap (const std::string & token);
+    const GameObjectMap * getGameObjectMap (const std::string & token) const;
+
     int mNextId;
-    GameObjectMap mGameObjects;
+    GameObjectTokenMap mGameObjects;
 };
 
 } // namespace Game
