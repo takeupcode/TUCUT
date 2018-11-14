@@ -35,6 +35,17 @@ PropertyGroup * PropertyContainer::getGroup (const std::string & groupName)
     return groupMapResult->second.get();
 }
 
+const PropertyGroup * PropertyContainer::getGroup (const std::string & groupName) const
+{
+    auto groupMapResult = mGroups.find(groupName);
+    if (groupMapResult == mGroups.end())
+    {
+        return nullptr;
+    }
+    
+    return groupMapResult->second.get();
+}
+
 PropertyValue * PropertyContainer::getValue (const std::string & groupName, const std::string & valueName)
 {
     auto group = getGroup(groupName);
@@ -45,6 +56,17 @@ PropertyValue * PropertyContainer::getValue (const std::string & groupName, cons
     
     return group->getValue(valueName);
 }
+
+const PropertyValue * PropertyContainer::getValue (const std::string & groupName, const std::string & valueName) const
+{
+    auto group = getGroup(groupName);
+    if (!group)
+    {
+        return nullptr;
+    }
     
+    return group->getValue(valueName);
+}
+
 } // namespace Game
 } // namespace TUCUT

@@ -37,7 +37,9 @@ public:
     void deleteValue (const std::string & valueName);
 
     PropertyValue * getValue (const std::string & valueName);
-    
+
+    const PropertyValue * getValue (const std::string & valueName) const;
+
 private:
     using ValueMap = std::unordered_map<std::string, std::unique_ptr<PropertyValue>>;
     

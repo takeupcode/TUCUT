@@ -28,10 +28,5 @@ std::shared_ptr<GameObject> GameObject::getSharedGameObject ()
     return shared_from_this();
 }
 
-PropertyContainer & GameObject::properties ()
-{
-    return mProperties;
-}
-
 } // namespace Game
 } // namespace TUCUT

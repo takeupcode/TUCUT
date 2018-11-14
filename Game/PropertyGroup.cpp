@@ -61,6 +61,17 @@ PropertyValue * PropertyGroup::getValue (const std::string & valueName)
     
     return valueMapResult->second.get();
 }
+
+const PropertyValue * PropertyGroup::getValue (const std::string & valueName) const
+{
+    auto valueMapResult = mValues.find(valueName);
+    if (valueMapResult == mValues.end())
+    {
+        return nullptr;
+    }
     
+    return valueMapResult->second.get();
+}
+
 } // namespace Game
 } // namespace TUCUT

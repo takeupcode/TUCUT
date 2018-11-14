@@ -27,8 +27,16 @@ public:
     
     virtual ~GameObject () = default;
     
-    PropertyContainer & properties ();
+    PropertyContainer & properties ()
+    {
+        return mProperties;
+    }
     
+    const PropertyContainer & properties () const
+    {
+        return mProperties;
+    }
+
 protected:
     GameObject (std::string token, int identity)
     : Identifiable(token, identity)
