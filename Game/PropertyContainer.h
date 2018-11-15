@@ -21,22 +21,25 @@ namespace Game {
 class PropertyContainer
 {
 public:
-    PropertyContainer () = default;
+    PropertyContainer ();
     
-    PropertyContainer (PropertyContainer && src)
-    : mGroups(std::move(src.mGroups))
-    { }
+    PropertyContainer (const PropertyContainer & src);
+
+    PropertyContainer (PropertyContainer && src);
     
     virtual ~PropertyContainer () = default;
     
+    PropertyContainer & operator = (const PropertyContainer & rhs);
+    PropertyContainer & operator = (PropertyContainer && rhs);
+
     PropertyGroup * addGroup (const std::string & groupName);
     
     void deleteGroup (const std::string & groupName);
 
     bool hasGroup (const std::string & groupName) const
     {
-        auto groupMapResult = mGroups.find(groupName);
-        if (groupMapResult == mGroups.end())
+        auto groupMapResult = mGroups->find(groupName);
+        if (groupMapResult == mGroups->end())
         {
             return false;
         }
@@ -48,8 +51,8 @@ public:
     {
         for (const auto & groupName: groupNames)
         {
-            auto groupMapResult = mGroups.find(groupName);
-            if (groupMapResult == mGroups.end())
+            auto groupMapResult = mGroups->find(groupName);
+            if (groupMapResult == mGroups->end())
             {
                 return false;
             }
@@ -69,7 +72,7 @@ public:
 private:
     using GroupMap = std::unordered_map<std::string, std::unique_ptr<PropertyGroup>>;
     
-    GroupMap mGroups;
+    std::unique_ptr<GroupMap> mGroups;
 };
     
 } // namespace Game

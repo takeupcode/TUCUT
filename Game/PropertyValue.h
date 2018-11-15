@@ -25,6 +25,13 @@ public:
 
     virtual ~PropertyValue () = default;
     
+    virtual std::unique_ptr<PropertyValue> clone () const = 0;
+
+    virtual bool isString () const;
+    virtual bool isInteger () const;
+    virtual bool isFloating () const;
+    virtual bool isBoolean () const;
+
     virtual std::string getString () const;
     virtual int getInteger () const;
     virtual double getFloating () const;
@@ -40,6 +47,11 @@ protected:
     : mReadOnly(readOnly)
     { }
     
+    PropertyValue (const PropertyValue & src) = delete;
+    PropertyValue (PropertyValue && src) = delete;
+    PropertyValue & operator = (const PropertyValue & rhs) = delete;
+    PropertyValue & operator = (PropertyValue && rhs) = delete;
+
     bool mReadOnly;
 };
 
@@ -48,11 +60,21 @@ class StringPropertyValue : public PropertyValue
 public:
     virtual ~StringPropertyValue () = default;
     
+    std::unique_ptr<PropertyValue> clone () const override
+    {
+        return std::unique_ptr<PropertyValue>(new StringPropertyValue(mValue, mReadOnly));
+    }
+
+    bool isString () const override
+    {
+        return true;
+    }
+    
     std::string getString () const override
     {
         return mValue;
     }
-    
+
     void setString (const std::string & value) override
     {
         if (mReadOnly)
@@ -79,11 +101,21 @@ class IntegerPropertyValue : public PropertyValue
 public:
     virtual ~IntegerPropertyValue () = default;
     
+    std::unique_ptr<PropertyValue> clone () const override
+    {
+        return std::unique_ptr<PropertyValue>(new IntegerPropertyValue(mValue, mReadOnly));
+    }
+
+    bool isInteger () const override
+    {
+        return true;
+    }
+    
     int getInteger () const override
     {
         return mValue;
     }
-    
+
     void setInteger (int value) override
     {
         if (mReadOnly)
@@ -110,11 +142,21 @@ class FloatingPropertyValue : public PropertyValue
 public:
     virtual ~FloatingPropertyValue () = default;
     
+    std::unique_ptr<PropertyValue> clone () const override
+    {
+        return std::unique_ptr<PropertyValue>(new FloatingPropertyValue(mValue, mReadOnly));
+    }
+
+    bool isFloating () const override
+    {
+        return true;
+    }
+    
     double getFloating () const override
     {
         return mValue;
     }
-    
+
     void setFloating (double value) override
     {
         if (mReadOnly)
@@ -141,11 +183,21 @@ class BooleanPropertyValue : public PropertyValue
 public:
     virtual ~BooleanPropertyValue () = default;
     
+    std::unique_ptr<PropertyValue> clone () const override
+    {
+        return std::unique_ptr<PropertyValue>(new BooleanPropertyValue(mValue, mReadOnly));
+    }
+
+    bool isBoolean () const override
+    {
+        return true;
+    }
+    
     bool getBoolean () const override
     {
         return mValue;
     }
-    
+
     void setBoolean (bool value) override
     {
         if (mReadOnly)

@@ -33,6 +33,26 @@ std::unique_ptr<PropertyValue> PropertyValue::createBooleanPropertyValue (bool v
     return std::unique_ptr<PropertyValue>(new BooleanPropertyValue(value, readOnly));
 }
 
+bool PropertyValue::isString () const
+{
+    return false;
+}
+
+bool PropertyValue::isInteger () const
+{
+    return false;
+}
+
+bool PropertyValue::isFloating () const
+{
+    return false;
+}
+
+bool PropertyValue::isBoolean () const
+{
+    return false;
+}
+
 std::string PropertyValue::getString () const
 {
     throw std::runtime_error("Wrong type of PropertyValue");
