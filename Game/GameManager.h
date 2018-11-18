@@ -13,6 +13,7 @@
 #include <unordered_map>
 
 #include "GameObject.h"
+#include "GameComponent.h"
 
 namespace TUCUT {
 namespace Game {
@@ -25,28 +26,91 @@ public:
     void initialize ();
     
     void deinitialize ();
+
+    template <typename T>
+    std::shared_ptr<GameObject> createGameObject (const std::string & token)
+    {
+        auto gameObjectMap = getGameObjectMap(token);
+        if (!gameObjectMap)
+        {
+            gameObjectMap = createGameObjectMap(token);
+        }
+        
+        // This will be an instance of T but a pointer to the base GameObject class.
+        auto gameObj = T::createSharedGameObject(token, mNextGameObjectId);
+        auto result = gameObjectMap->try_emplace(mNextGameObjectId, gameObj);
+        if (!result.second)
+        {
+            throw std::runtime_error("Unable to create game object");
+        }
+        
+        ++mNextGameObjectId;
+        
+        return gameObj;
+    }
     
-    bool registerGameObjectToken (const std::string & token);
-    
-    std::shared_ptr<GameObject> createGameObject (const std::string & token);
-    
+    template <typename T>
+    std::shared_ptr<GameObject> getGameObject (const std::string & token, int identity) const
+    {
+        auto gameObjectMap = getGameObjectMap(token);
+        if (!gameObjectMap)
+        {
+            return nullptr;
+        }
+        
+        auto gameObjectMapResult = gameObjectMap->find(identity);
+        if (gameObjectMapResult == gameObjectMap->end())
+        {
+            return nullptr;
+        }
+        
+        // Do some extra type checking in case a different T is requested than was originally provided.
+        return std::dynamic_pointer_cast<T>(gameObjectMapResult->second);
+    }
+
     void removeGameObject (const std::string & token, int identity);
-    
-    std::shared_ptr<GameObject> getGameObject (const std::string & token, int identity) const;
-    
+
+    template <typename T>
+    std::shared_ptr<T> getGameComponent (const std::string & token)
+    {
+        auto gameComponentId = getGameComponentId(token);
+        if (gameComponentId == 0)
+        {
+            gameComponentId = createGameComponentId(token);
+            // This will be an instance of T but a pointer to the base GameComponent class.
+            auto gameComponent = T::createSharedGameComponent(token, gameComponentId);
+            mLoadedGameComponents[gameComponentId] = gameComponent;
+            
+            // We can be sure this cast will work.
+            return std::static_pointer_cast<T>(gameComponent);
+        }
+        
+        // Do some extra type checking in case a different T is requested than was originally provided.
+        return std::dynamic_pointer_cast<T>(mLoadedGameComponents[gameComponentId]);
+    }
+
 private:
     using GameObjectMap = std::unordered_map<int, std::shared_ptr<GameObject>>;
     using GameObjectTokenMap = std::unordered_map<std::string, std::unique_ptr<GameObjectMap>>;
+    using GameComponentMap = std::unordered_map<std::string, int>;
+    using GameComponentVector = std::vector<std::shared_ptr<GameComponent>>;
 
     GameManager ()
-    : mNextId(1)
+    : mNextGameObjectId(1), mNextGameComponentId(1)
     { }
-
+    
+    GameObjectMap * createGameObjectMap (const std::string & token);
     GameObjectMap * getGameObjectMap (const std::string & token);
     const GameObjectMap * getGameObjectMap (const std::string & token) const;
+    
+    int createGameComponentId (const std::string & token);
+    int getGameComponentId (const std::string & token) const;
 
-    int mNextId;
+    int mNextGameObjectId;
+    int mNextGameComponentId;
     GameObjectTokenMap mGameObjects;
+    GameComponentMap mRegisteredGameComponents;
+    GameComponentVector mLoadedGameComponents;
 };
 
 } // namespace Game

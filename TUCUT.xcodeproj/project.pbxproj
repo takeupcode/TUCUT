@@ -261,6 +261,8 @@
 		3ED412A320FED37800BC7226 /* MessageField.protocol.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E259E0120E34B4A00F01379 /* MessageField.protocol.cpp */; };
 		3EDBEDDB218FEA25006DFB23 /* MinMax.h in Headers */ = {isa = PBXBuildFile; fileRef = 3EDBEDDA218FEA24006DFB23 /* MinMax.h */; };
 		3EDBEDDE2190074F006DFB23 /* MinMaxScenarios.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3EDBEDDD2190074F006DFB23 /* MinMaxScenarios.cpp */; };
+		3EDBEDE1219E8258006DFB23 /* GameComponent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3EDBEDDF219E8258006DFB23 /* GameComponent.cpp */; };
+		3EDBEDE2219E8258006DFB23 /* GameComponent.h in Headers */ = {isa = PBXBuildFile; fileRef = 3EDBEDE0219E8258006DFB23 /* GameComponent.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -661,6 +663,8 @@
 		3ED4129120FED29400BC7226 /* TestProtocolCompiler */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = TestProtocolCompiler; sourceTree = BUILT_PRODUCTS_DIR; };
 		3EDBEDDA218FEA24006DFB23 /* MinMax.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MinMax.h; sourceTree = "<group>"; };
 		3EDBEDDD2190074F006DFB23 /* MinMaxScenarios.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = MinMaxScenarios.cpp; sourceTree = "<group>"; };
+		3EDBEDDF219E8258006DFB23 /* GameComponent.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = GameComponent.cpp; sourceTree = "<group>"; };
+		3EDBEDE0219E8258006DFB23 /* GameComponent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GameComponent.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -723,6 +727,8 @@
 				3E061814212A2FAE000B634B /* GameObject.h */,
 				3E061817212A3057000B634B /* GameManager.cpp */,
 				3E061818212A3057000B634B /* GameManager.h */,
+				3EDBEDDF219E8258006DFB23 /* GameComponent.cpp */,
+				3EDBEDE0219E8258006DFB23 /* GameComponent.h */,
 			);
 			path = Game;
 			sourceTree = "<group>";
@@ -1373,6 +1379,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3EDBEDE2219E8258006DFB23 /* GameComponent.h in Headers */,
 				3E061836213E0F37000B634B /* Hash.h in Headers */,
 				3E3F835D2105766200501126 /* ExtensionInterface.h in Headers */,
 				3E3F835E2105766200501126 /* ExtensionManager.h in Headers */,
@@ -1675,6 +1682,7 @@
 				3E3F8358210575AA00501126 /* Extension.cpp in Sources */,
 				3E3F8359210575AA00501126 /* ExtensionLoader.cpp in Sources */,
 				3E3F83572105758E00501126 /* ExtensionManager.cpp in Sources */,
+				3EDBEDE1219E8258006DFB23 /* GameComponent.cpp in Sources */,
 				3E259DD620E33E5100F01379 /* TextUtil.cpp in Sources */,
 				3E259ED720E34BE900F01379 /* PackageParser.cpp in Sources */,
 				3E259ED920E34BE900F01379 /* EnumParser.cpp in Sources */,

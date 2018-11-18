@@ -6,10 +6,11 @@
 //  Copyright © 2018 Take Up Code. All rights reserved.
 //
 
-#ifndef TUCUT_Game_GameObject_hpp
-#define TUCUT_Game_GameObject_hpp
+#ifndef TUCUT_Game_GameObject_h
+#define TUCUT_Game_GameObject_h
 
 #include <memory>
+#include <string>
 
 #include "PropertyContainer.h"
 

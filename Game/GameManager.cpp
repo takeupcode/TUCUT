@@ -31,6 +31,19 @@ void GameManager::initialize ()
 void GameManager::deinitialize ()
 {
     mGameObjects.clear();
+    mRegisteredGameComponents.clear();
+    mLoadedGameComponents.clear();
+}
+
+GameManager::GameObjectMap * GameManager::createGameObjectMap (const std::string & token)
+{
+    auto result = mGameObjects.try_emplace(token, std::make_unique<GameObjectMap>());
+    if (!result.second)
+    {
+        throw std::runtime_error("Unable to create game object map");
+    }
+    
+    return result.first->second.get();
 }
 
 GameManager::GameObjectMap * GameManager::getGameObjectMap (const std::string & token)
@@ -54,32 +67,33 @@ const GameManager::GameObjectMap * GameManager::getGameObjectMap (const std::str
     
     return gameObjectMapResult->second.get();
 }
-
-bool GameManager::registerGameObjectToken (const std::string & token)
-{
-    auto result = mGameObjects.try_emplace(token, std::make_unique<GameObjectMap>());
     
-    return result.second;
-}
-    
-std::shared_ptr<GameObject> GameManager::createGameObject (const std::string & token)
+int GameManager::createGameComponentId (const std::string & token)
 {
-    auto gameObjectMap = getGameObjectMap(token);
-    if (!gameObjectMap)
-    {
-        return nullptr;
-    }
-
-    auto gameObj = GameObject::createSharedGameObject(token, mNextId);
-    auto result = gameObjectMap->try_emplace(mNextId, gameObj);
+    auto result = mRegisteredGameComponents.try_emplace(token, mNextGameComponentId);
     if (!result.second)
     {
-        throw std::runtime_error("Unable to create game object");
+        throw std::runtime_error("Unable to create game component id");
     }
     
-    ++mNextId;
+    // Makse sure there's always a matching entry in the loaded components vector.
+    while (mLoadedGameComponents.size() <= static_cast<std::size_t>(mNextGameComponentId))
+    {
+        mLoadedGameComponents.push_back(nullptr);
+    }
+
+    return mNextGameComponentId++;
+}
+
+int GameManager::getGameComponentId (const std::string & token) const
+{
+    auto gameComponentMapResult = mRegisteredGameComponents.find(token);
+    if (gameComponentMapResult == mRegisteredGameComponents.end())
+    {
+        return 0;
+    }
     
-    return gameObj;
+    return gameComponentMapResult->second;
 }
 
 void GameManager::removeGameObject (const std::string & token, int identity)
@@ -91,23 +105,6 @@ void GameManager::removeGameObject (const std::string & token, int identity)
     }
     
     gameObjectMap->erase(identity);
-}
-
-std::shared_ptr<GameObject> GameManager::getGameObject (const std::string & token, int identity) const
-{
-    auto gameObjectMap = getGameObjectMap(token);
-    if (!gameObjectMap)
-    {
-        return nullptr;
-    }
-    
-    auto gameObjectMapResult = gameObjectMap->find(identity);
-    if (gameObjectMapResult == gameObjectMap->end())
-    {
-        return nullptr;
-    }
-    
-    return gameObjectMapResult->second;
 }
 
 } // namespace Game
