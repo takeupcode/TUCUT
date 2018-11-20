@@ -72,7 +72,7 @@ PropertyGroup * PropertyContainer::addGroup (const std::string & groupName)
     return group.get();
 }
 
-void PropertyContainer::deleteGroup (const std::string & groupName)
+void PropertyContainer::removeGroup (const std::string & groupName)
 {
     mGroups->erase(groupName);
 }

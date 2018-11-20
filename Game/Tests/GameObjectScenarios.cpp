@@ -39,3 +39,31 @@ SCENARIO( GameObject, "Operation/Normal", "unit,game", "GameObject has propertie
     
     VERIFY_TRUE(group == nullptr);
 }
+
+SCENARIO( GameObject, "Operation/Normal", "unit,game", "GameObject can add and remove components." )
+{
+    auto gameObj = Game::GameObject::createSharedGameObject("character", 1);
+
+    auto gameComp1 = Game::GameComponent::createSharedGameComponent("moveable", 1);
+    auto gameComp2 = Game::GameComponent::createSharedGameComponent("drawable", 3);
+    auto gameComp3 = Game::GameComponent::createSharedGameComponent("controllable", 10);
+
+    auto result = gameObj->addGameComponent(1);
+    VERIFY_TRUE(result);
+
+    result = gameObj->addGameComponent(gameComp2);
+    VERIFY_TRUE(result);
+
+    result = gameObj->hasGameComponent(gameComp2);
+    VERIFY_TRUE(result);
+
+    result = gameObj->hasGameComponent(2);
+    VERIFY_FALSE(result);
+
+    result = gameObj->hasGameComponent(gameComp3);
+    VERIFY_FALSE(result);
+
+    gameObj->removeGameComponent(gameComp2);
+    result = gameObj->hasGameComponent(gameComp2);
+    VERIFY_FALSE(result);
+}

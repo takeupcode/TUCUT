@@ -46,3 +46,22 @@ SCENARIO( GameManager, "Operation/Normal", "unit,game", "GameManager can add and
     VERIFY_EQUAL(2, static_cast<int>(gameObj2.use_count()));
     VERIFY_EQUAL(2, static_cast<int>(gameObj3.use_count()));
 }
+
+SCENARIO( GameManager, "Operation/Normal", "unit,game", "GameManager can add GameComponents." )
+{
+    std::string token1 = "token1";
+    std::string token2 = "token2";
+    Game::GameManager * pGameMgr = Game::GameManager::instance();
+    
+    auto gameComp1 = pGameMgr->getGameComponent<Game::GameComponent>(token1);
+    VERIFY_TRUE(gameComp1 != nullptr);
+    
+    auto gameComp2 = pGameMgr->getGameComponent<Game::GameComponent>(token2);
+    VERIFY_TRUE(gameComp2 != nullptr);
+    
+    auto gameComp3 = pGameMgr->getGameComponent<Game::GameComponent>(token1);
+    VERIFY_TRUE(gameComp1 != nullptr);
+
+    VERIFY_EQUAL(3, static_cast<int>(gameComp1.use_count()));
+    VERIFY_EQUAL(2, static_cast<int>(gameComp2.use_count()));
+}

@@ -85,7 +85,7 @@ SCENARIO( PropertyContainer, "Operation/Normal", "unit,game", "PropertyContainer
     VERIFY_TRUE(value != nullptr);
     VERIFY_EQUAL("abc", value->getString());
     
-    container.deleteGroup("test1");
+    container.removeGroup("test1");
     group = container.getGroup("test1");
     VERIFY_TRUE(group == nullptr);
 }

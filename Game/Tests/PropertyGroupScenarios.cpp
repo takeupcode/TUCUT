@@ -55,7 +55,7 @@ SCENARIO( PropertyGroup, "Operation/Normal", "unit,game", "PropertyGroup can add
     VERIFY_EQUAL(1.5, value3->getFloating());
     VERIFY_EQUAL(true, value4->getBoolean());
     
-    group.deleteValue("test1");
+    group.removeValue("test1");
     value1 = group.getValue("test1");
     VERIFY_TRUE(value1 == nullptr);
 }

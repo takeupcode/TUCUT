@@ -39,7 +39,7 @@ public:
     bool addValue (const std::string & valueName, double value, bool readOnly = false);
     bool addValue (const std::string & valueName, bool value, bool readOnly = false);
 
-    void deleteValue (const std::string & valueName);
+    void removeValue (const std::string & valueName);
 
     PropertyValue * getValue (const std::string & valueName);
 

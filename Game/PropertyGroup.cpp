@@ -106,7 +106,7 @@ bool PropertyGroup::addValue (const std::string & valueName, bool value, bool re
     return result.second;
 }
 
-void PropertyGroup::deleteValue (const std::string & valueName)
+void PropertyGroup::removeValue (const std::string & valueName)
 {
     mValues->erase(valueName);
 }

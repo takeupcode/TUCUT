@@ -263,6 +263,7 @@
 		3EDBEDDE2190074F006DFB23 /* MinMaxScenarios.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3EDBEDDD2190074F006DFB23 /* MinMaxScenarios.cpp */; };
 		3EDBEDE1219E8258006DFB23 /* GameComponent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3EDBEDDF219E8258006DFB23 /* GameComponent.cpp */; };
 		3EDBEDE2219E8258006DFB23 /* GameComponent.h in Headers */ = {isa = PBXBuildFile; fileRef = 3EDBEDE0219E8258006DFB23 /* GameComponent.h */; };
+		3EDBEDE421A3C4C5006DFB23 /* GameComponentScenarios.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3EDBEDE321A3C4C5006DFB23 /* GameComponentScenarios.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -665,6 +666,7 @@
 		3EDBEDDD2190074F006DFB23 /* MinMaxScenarios.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = MinMaxScenarios.cpp; sourceTree = "<group>"; };
 		3EDBEDDF219E8258006DFB23 /* GameComponent.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = GameComponent.cpp; sourceTree = "<group>"; };
 		3EDBEDE0219E8258006DFB23 /* GameComponent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GameComponent.h; sourceTree = "<group>"; };
+		3EDBEDE321A3C4C5006DFB23 /* GameComponentScenarios.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = GameComponentScenarios.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -741,6 +743,7 @@
 				3E06182B212A65FB000B634B /* PropertyContainerScenarios.cpp */,
 				3E06182D212A6628000B634B /* GameObjectScenarios.cpp */,
 				3E06182F212A6646000B634B /* GameManagerScenarios.cpp */,
+				3EDBEDE321A3C4C5006DFB23 /* GameComponentScenarios.cpp */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -1783,6 +1786,7 @@
 				3E3F83002104F84500501126 /* IdentifiableScenarios.cpp in Sources */,
 				3ED4128720FED1FB00BC7226 /* TokenReaderScenarios.cpp in Sources */,
 				3E3F83A621067B5200501126 /* LogManagerScenarios.cpp in Sources */,
+				3EDBEDE421A3C4C5006DFB23 /* GameComponentScenarios.cpp in Sources */,
 				3ED4128820FED1FB00BC7226 /* main.cpp in Sources */,
 				3E3F82FA21043ED200501126 /* EventSubscriberScenarios.cpp in Sources */,
 				3EDBEDDE2190074F006DFB23 /* MinMaxScenarios.cpp in Sources */,

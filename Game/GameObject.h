@@ -12,6 +12,7 @@
 #include <memory>
 #include <string>
 
+#include "GameComponent.h"
 #include "PropertyContainer.h"
 
 #include "../Identity/Identifiable.h"
@@ -37,6 +38,15 @@ public:
     {
         return mProperties;
     }
+    
+    bool hasGameComponent (int componentId) const;
+    bool hasGameComponent (const std::shared_ptr<GameComponent> & component) const;
+
+    bool addGameComponent (int componentId);
+    bool addGameComponent (const std::shared_ptr<GameComponent> & component);
+    
+    void removeGameComponent (int componentId);
+    void removeGameComponent (const std::shared_ptr<GameComponent> & component);
 
 protected:
     GameObject (std::string token, int identity)
@@ -46,7 +56,10 @@ protected:
     virtual void initialize ();
     
 private:
+    using ComponentVector = std::vector<bool>;
+    
     PropertyContainer mProperties;
+    ComponentVector mComponents;
 };
 
 } // namespace Game

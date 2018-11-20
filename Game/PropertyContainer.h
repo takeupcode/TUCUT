@@ -34,7 +34,7 @@ public:
 
     PropertyGroup * addGroup (const std::string & groupName);
     
-    void deleteGroup (const std::string & groupName);
+    void removeGroup (const std::string & groupName);
 
     bool hasGroup (const std::string & groupName) const
     {
