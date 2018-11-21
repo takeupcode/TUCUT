@@ -66,4 +66,12 @@ SCENARIO( GameObject, "Operation/Normal", "unit,game", "GameObject can add and r
     gameObj->removeGameComponent(gameComp2);
     result = gameObj->hasGameComponent(gameComp2);
     VERIFY_FALSE(result);
+
+    gameObj->removeGameComponent(4);
+    result = gameObj->hasGameComponent(4);
+    VERIFY_FALSE(result);
+
+    gameObj->removeGameComponent(400);
+    result = gameObj->hasGameComponent(400);
+    VERIFY_FALSE(result);
 }

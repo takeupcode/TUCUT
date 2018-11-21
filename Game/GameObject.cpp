@@ -30,7 +30,12 @@ std::shared_ptr<GameObject> GameObject::getSharedGameObject ()
     
 bool GameObject::hasGameComponent (int componentId) const
 {
-    return mComponents[componentId];
+    if (mComponents.size() > static_cast<std::size_t>(componentId))
+    {
+        return mComponents[componentId];
+    }
+    
+    return false;
 }
 
 bool GameObject::hasGameComponent (const std::shared_ptr<GameComponent> & component) const
