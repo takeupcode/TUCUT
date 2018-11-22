@@ -7,6 +7,7 @@
 //
 
 #include "GameObject.h"
+#include "GameManager.h"
 
 namespace TUCUT {
 namespace Game {
@@ -64,8 +65,13 @@ bool GameObject::addGameComponent (int componentId)
     {
         return false;
     }
-    
-    mComponents[componentId] = true;
+    else
+    {
+        Game::GameManager * pGameMgr = Game::GameManager::instance();
+        
+        mComponents[componentId] = true;
+        pGameMgr->onGameObjectChanged(*this);
+    }
     
     return true;
 }
@@ -84,7 +90,13 @@ void GameObject::removeGameComponent (int componentId)
     
     if (mComponents.size() > static_cast<std::size_t>(componentId))
     {
-        mComponents[componentId] = false;
+        if (mComponents[componentId])
+        {
+            Game::GameManager * pGameMgr = Game::GameManager::instance();
+            
+            mComponents[componentId] = false;
+            pGameMgr->onGameObjectChanged(*this);
+        }
     }
 }
 

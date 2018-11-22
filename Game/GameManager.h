@@ -14,6 +14,7 @@
 
 #include "GameObject.h"
 #include "GameComponent.h"
+#include "../Event/EventPublisher.h"
 
 namespace TUCUT {
 namespace Game {
@@ -21,6 +22,10 @@ namespace Game {
 class GameManager
 {
 public:
+    const static int GameObjectChangedEventId = 1;
+    
+    using GameObjectChangedEvent = Event::EventPublisher<GameObject &>;
+
     static GameManager * instance ();
     
     void initialize ();
@@ -121,6 +126,19 @@ public:
     bool hasGameComponent (int identity) const;
 
     bool hasGameComponent (const std::string & token) const;
+    
+    void onGameObjectChanged (GameObject & gameObj) const
+    {
+        if (hasGameObject(gameObj.token(), gameObj.identity()))
+        {
+            mGameObjectChanged->signal(gameObj);
+        }
+    }
+
+    GameObjectChangedEvent * gameObjectChanged ()
+    {
+        return mGameObjectChanged.get();
+    }
 
 private:
     using GameObjectMap = std::unordered_map<int, std::shared_ptr<GameObject>>;
@@ -129,7 +147,8 @@ private:
     using GameComponentVector = std::vector<std::shared_ptr<GameComponent>>;
 
     GameManager ()
-    : mNextGameObjectId(1), mNextGameComponentId(1)
+    : mNextGameObjectId(1), mNextGameComponentId(1),
+    mGameObjectChanged(new GameObjectChangedEvent(GameObjectChangedEventId))
     { }
     
     GameObjectMap * createGameObjectMap (const std::string & token);
@@ -144,6 +163,7 @@ private:
     GameObjectTokenMap mGameObjects;
     GameComponentMap mRegisteredGameComponents;
     GameComponentVector mLoadedGameComponents;
+    std::unique_ptr<GameObjectChangedEvent> mGameObjectChanged;
 };
 
 } // namespace Game

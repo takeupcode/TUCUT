@@ -667,6 +667,7 @@
 		3EDBEDDF219E8258006DFB23 /* GameComponent.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = GameComponent.cpp; sourceTree = "<group>"; };
 		3EDBEDE0219E8258006DFB23 /* GameComponent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GameComponent.h; sourceTree = "<group>"; };
 		3EDBEDE321A3C4C5006DFB23 /* GameComponentScenarios.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = GameComponentScenarios.cpp; sourceTree = "<group>"; };
+		3EDBEDE521A72AAE006DFB23 /* GameManagerSubscriber.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GameManagerSubscriber.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -744,6 +745,7 @@
 				3E06182D212A6628000B634B /* GameObjectScenarios.cpp */,
 				3E06182F212A6646000B634B /* GameManagerScenarios.cpp */,
 				3EDBEDE321A3C4C5006DFB23 /* GameComponentScenarios.cpp */,
+				3EDBEDE521A72AAE006DFB23 /* GameManagerSubscriber.h */,
 			);
 			path = Tests;
 			sourceTree = "<group>";

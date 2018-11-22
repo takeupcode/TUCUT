@@ -10,6 +10,7 @@
 
 #include "../../Test/Test.h"
 
+#include "GameManagerSubscriber.h"
 #include "../GameObject.h"
 #include "../GameManager.h"
 
@@ -87,6 +88,43 @@ SCENARIO( GameObject, "Operation/Normal", "unit,game", "GameObject can add and r
     gameObj->removeGameComponent(400);
     result = gameObj->hasGameComponent(400);
     VERIFY_FALSE(result);
+}
+
+SCENARIO( GameObject, "Operation/Normal", "unit,game", "GameObject notifies component changes." )
+{
+    std::string token = "character";
+    Game::GameManager * pGameMgr = Game::GameManager::instance();
+    
+    std::shared_ptr<Test::GameManagerSubscriber> subscriber(new Test::GameManagerSubscriber());
+    pGameMgr->gameObjectChanged()->connect("test", subscriber);
+    
+    VERIFY_FALSE(subscriber->notified());
+    VERIFY_EQUAL(0, subscriber->id());
+
+    auto gameObj = pGameMgr->createGameObject<Game::GameObject>(token);
+    
+    auto gameComp1 = pGameMgr->getGameComponent<Game::GameComponent>("moveable");
+    auto gameComp2 = pGameMgr->getGameComponent<Game::GameComponent>("drawable");
+
+    auto result = gameObj->addGameComponent(gameComp1->identity());
+    VERIFY_TRUE(result);
+    VERIFY_TRUE(subscriber->notified());
+    VERIFY_EQUAL(Game::GameManager::GameObjectChangedEventId, subscriber->id());
+    subscriber->reset();
+
+    gameObj->removeGameComponent(gameComp1);
+    VERIFY_TRUE(subscriber->notified());
+    VERIFY_EQUAL(Game::GameManager::GameObjectChangedEventId, subscriber->id());
+    subscriber->reset();
+    
+    pGameMgr->removeGameObject(gameObj->token(), gameObj->identity());
+    
+    result = gameObj->addGameComponent(gameComp2->identity());
+    VERIFY_TRUE(result);
+    VERIFY_FALSE(subscriber->notified());
+    VERIFY_EQUAL(0, subscriber->id());
+    
+    pGameMgr->gameObjectChanged()->disconnect("test");
 }
 
 SCENARIO( GameObject, "Operation/Corner", "unit,game", "GameObject knows invalid component identities." )
