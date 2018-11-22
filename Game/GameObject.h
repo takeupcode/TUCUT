@@ -23,8 +23,6 @@ namespace Game {
 class GameObject : public std::enable_shared_from_this<GameObject>, public Identity::Identifiable<int>
 {
 public:
-    static std::shared_ptr<GameObject> createSharedGameObject (std::string token, int identity);
-    
     std::shared_ptr<GameObject> getSharedGameObject ();
     
     virtual ~GameObject () = default;
@@ -49,6 +47,10 @@ public:
     void removeGameComponent (const std::shared_ptr<GameComponent> & component);
 
 protected:
+    friend class GameManager;
+    
+    static std::shared_ptr<GameObject> createSharedGameObject (std::string token, int identity);
+    
     GameObject (std::string token, int identity)
     : Identifiable(token, identity)
     { }

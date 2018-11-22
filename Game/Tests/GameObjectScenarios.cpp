@@ -11,28 +11,38 @@
 #include "../../Test/Test.h"
 
 #include "../GameObject.h"
+#include "../GameManager.h"
 
 using namespace std;
 using namespace TUCUT;
 
 SCENARIO( GameObject, "Construction/Normal", "unit,game", "GameObject can be constructed." )
 {
-    auto gameObj = Game::GameObject::createSharedGameObject("character", 1);
+    std::string token = "character";
+    Game::GameManager * pGameMgr = Game::GameManager::instance();
+    
+    auto gameObj = pGameMgr->createGameObject<Game::GameObject>(token);
 }
 
 SCENARIO( GameObject, "Operation/Normal", "unit,game", "GameObject can get shared pointer." )
 {
-    auto gameObj = Game::GameObject::createSharedGameObject("character", 1);
+    std::string token = "character";
+    Game::GameManager * pGameMgr = Game::GameManager::instance();
+    
+    auto gameObj = pGameMgr->createGameObject<Game::GameObject>(token);
     
     auto sharedPtr = gameObj->getSharedGameObject();
     
-    VERIFY_EQUAL(2, static_cast<int>(sharedPtr.use_count()));
+    VERIFY_EQUAL(3, static_cast<int>(sharedPtr.use_count()));
     VERIFY_SAMEPTR(gameObj.get(), sharedPtr.get());
 }
 
 SCENARIO( GameObject, "Operation/Normal", "unit,game", "GameObject has properties." )
 {
-    auto gameObj = Game::GameObject::createSharedGameObject("character", 1);
+    std::string token = "character";
+    Game::GameManager * pGameMgr = Game::GameManager::instance();
+    
+    auto gameObj = pGameMgr->createGameObject<Game::GameObject>(token);
     
     auto & properties = gameObj->properties();
     auto group = properties.getGroup("not found");
@@ -42,11 +52,14 @@ SCENARIO( GameObject, "Operation/Normal", "unit,game", "GameObject has propertie
 
 SCENARIO( GameObject, "Operation/Normal", "unit,game", "GameObject can add and remove components." )
 {
-    auto gameObj = Game::GameObject::createSharedGameObject("character", 1);
+    std::string token = "character";
+    Game::GameManager * pGameMgr = Game::GameManager::instance();
+    
+    auto gameObj = pGameMgr->createGameObject<Game::GameObject>(token);
 
-    auto gameComp1 = Game::GameComponent::createSharedGameComponent("moveable", 1);
-    auto gameComp2 = Game::GameComponent::createSharedGameComponent("drawable", 3);
-    auto gameComp3 = Game::GameComponent::createSharedGameComponent("controllable", 10);
+    auto gameComp1 = pGameMgr->getGameComponent<Game::GameComponent>("moveable");
+    auto gameComp2 = pGameMgr->getGameComponent<Game::GameComponent>("drawable");
+    auto gameComp3 = pGameMgr->getGameComponent<Game::GameComponent>("controllable");
 
     auto result = gameObj->addGameComponent(1);
     VERIFY_TRUE(result);
@@ -57,7 +70,7 @@ SCENARIO( GameObject, "Operation/Normal", "unit,game", "GameObject can add and r
     result = gameObj->hasGameComponent(gameComp2);
     VERIFY_TRUE(result);
 
-    result = gameObj->hasGameComponent(2);
+    result = gameObj->hasGameComponent(0);
     VERIFY_FALSE(result);
 
     result = gameObj->hasGameComponent(gameComp3);

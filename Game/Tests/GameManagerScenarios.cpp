@@ -29,22 +29,43 @@ SCENARIO( GameManager, "Operation/Normal", "unit,game", "GameManager can add and
     std::string token = "token1";
     Game::GameManager * pGameMgr = Game::GameManager::instance();
 
-    auto gameObj2 = pGameMgr->createGameObject<Game::GameObject>(token);
+    auto gameObj1 = pGameMgr->createGameObject<Game::GameObject>(token);
+    VERIFY_TRUE(gameObj1 != nullptr);
+    
+    auto gameObj2 = pGameMgr->getGameObject<Game::GameObject>(token, gameObj1->identity());
     VERIFY_TRUE(gameObj2 != nullptr);
     
-    auto gameObj3 = pGameMgr->getGameObject<Game::GameObject>(token, gameObj2->identity());
-    VERIFY_TRUE(gameObj3 != nullptr);
-    
+    VERIFY_EQUAL(3, static_cast<int>(gameObj1.use_count()));
     VERIFY_EQUAL(3, static_cast<int>(gameObj2.use_count()));
-    VERIFY_EQUAL(3, static_cast<int>(gameObj3.use_count()));
     
-    pGameMgr->removeGameObject(token, gameObj2->identity());
+    pGameMgr->removeGameObject(token, gameObj1->identity());
     
-    auto gameObj4 = pGameMgr->getGameObject<Game::GameObject>(token, gameObj2->identity());
-    VERIFY_TRUE(gameObj4 == nullptr);
+    auto gameObj3 = pGameMgr->getGameObject<Game::GameObject>(token, gameObj1->identity());
+    VERIFY_TRUE(gameObj3 == nullptr);
     
+    VERIFY_EQUAL(2, static_cast<int>(gameObj1.use_count()));
     VERIFY_EQUAL(2, static_cast<int>(gameObj2.use_count()));
-    VERIFY_EQUAL(2, static_cast<int>(gameObj3.use_count()));
+}
+
+SCENARIO( GameManager, "Operation/Corner", "unit,game", "GameManager knows invalid GameObject identities." )
+{
+    std::string token = "token1";
+    Game::GameManager * pGameMgr = Game::GameManager::instance();
+    
+    auto gameObj1 = pGameMgr->createGameObject<Game::GameObject>(token);
+    VERIFY_TRUE(gameObj1 != nullptr);
+    
+    auto gameObj2 = pGameMgr->getGameObject<Game::GameObject>(token, 0);
+    VERIFY_TRUE(gameObj2 == nullptr);
+    
+    auto gameObj3 = pGameMgr->getGameObject<Game::GameObject>(token, -1);
+    VERIFY_TRUE(gameObj3 == nullptr);
+    
+    pGameMgr->removeGameObject(token, 0);
+    pGameMgr->removeGameObject(token, -1);
+
+    auto gameObj4 = pGameMgr->getGameObject<Game::GameObject>(token, gameObj1->identity());
+    VERIFY_TRUE(gameObj4 != nullptr);
 }
 
 SCENARIO( GameManager, "Operation/Normal", "unit,game", "GameManager can add GameComponents." )
@@ -70,4 +91,22 @@ SCENARIO( GameManager, "Operation/Normal", "unit,game", "GameManager can add Gam
     
     auto gameComp5 = pGameMgr->getGameComponent<Game::GameComponent>(gameComp1->identity());
     VERIFY_TRUE(gameComp5 != nullptr);
+}
+
+SCENARIO( GameManager, "Operation/Corner", "unit,game", "GameManager knows invalid GameComponent identities." )
+{
+    std::string token = "state";
+    Game::GameManager * pGameMgr = Game::GameManager::instance();
+    
+    auto gameComp1 = pGameMgr->getGameComponent<Game::GameComponent>(token);
+    VERIFY_TRUE(gameComp1 != nullptr);
+    
+    auto gameComp2 = pGameMgr->getGameComponent<Game::GameComponent>(0);
+    VERIFY_TRUE(gameComp2 == nullptr);
+    
+    auto gameComp3 = pGameMgr->getGameComponent<Game::GameComponent>(-1);
+    VERIFY_TRUE(gameComp3 == nullptr);
+    
+    auto gameComp4 = pGameMgr->getGameComponent<Game::GameComponent>(gameComp1->identity());
+    VERIFY_TRUE(gameComp4 != nullptr);
 }

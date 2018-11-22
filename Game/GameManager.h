@@ -52,6 +52,11 @@ public:
     template <typename T>
     std::shared_ptr<GameObject> getGameObject (const std::string & token, int identity) const
     {
+        if (identity < 1)
+        {
+            return nullptr;
+        }
+        
         auto gameObjectMap = getGameObjectMap(token);
         if (!gameObjectMap)
         {
@@ -75,6 +80,11 @@ public:
     template <typename T>
     std::shared_ptr<T> getGameComponent (int identity)
     {
+        if (identity < 1)
+        {
+            return nullptr;
+        }
+        
         if (mLoadedGameComponents.size() > static_cast<std::size_t>(identity))
         {
             // Do some extra type checking in case a different T is requested than was originally provided.

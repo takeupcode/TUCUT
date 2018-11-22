@@ -20,13 +20,15 @@ namespace Game {
 class GameComponent : public std::enable_shared_from_this<GameComponent>, public Identity::Identifiable<int>
 {
 public:
-    static std::shared_ptr<GameComponent> createSharedGameComponent (std::string token, int identity);
-    
     std::shared_ptr<GameComponent> getSharedGameComponent ();
     
     virtual ~GameComponent () = default;
 
 protected:
+    friend class GameManager;
+    
+    static std::shared_ptr<GameComponent> createSharedGameComponent (std::string token, int identity);
+    
     GameComponent (const std::string & token, int identity)
     : Identifiable(token, identity)
     { }

@@ -43,7 +43,7 @@ SCENARIO( TextUtil, "Operation/Normal", "unit,text", "TextUtil can split strings
     VERIFY_EQUAL("3", result[2]);
 }
 
-SCENARIO( TextUtil, "Operation/Edge", "unit,text", "TextUtil can split strings with empty spots." )
+SCENARIO( TextUtil, "Operation/Corner", "unit,text", "TextUtil can split strings with empty spots." )
 {
     std::string input = "";
     auto result = Text::TextUtil::splitString(input, ',');

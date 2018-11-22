@@ -98,6 +98,11 @@ int GameManager::getGameComponentId (const std::string & token) const
 
 void GameManager::removeGameObject (const std::string & token, int identity)
 {
+    if (identity < 1)
+    {
+        return;
+    }
+    
     auto gameObjectMap = getGameObjectMap(token);
     if (!gameObjectMap)
     {
