@@ -11,6 +11,7 @@
 #include "../../Test/Test.h"
 
 #include "../GameManager.h"
+#include "GameManagerSubscriber.h"
 
 using namespace std;
 using namespace TUCUT;
@@ -148,4 +149,38 @@ SCENARIO( GameManager, "Operation/Corner", "unit,game", "GameManager knows inval
 
     auto gameComp4 = pGameMgr->getGameComponent<Game::GameComponent>(gameComp1->identity());
     VERIFY_TRUE(gameComp4 != nullptr);
+}
+
+SCENARIO( GameManager, "Operation/Normal", "unit,game", "GameManager notifies new and removing component." )
+{
+    std::string token = "character";
+    Game::GameManager * pGameMgr = Game::GameManager::instance();
+    
+    std::shared_ptr<Test::GameManagerSubscriber> subscriber(new Test::GameManagerSubscriber());
+    pGameMgr->gameObjectCreated()->connect("test", subscriber);
+    pGameMgr->gameObjectRemoving()->connect("test", subscriber);
+
+    VERIFY_FALSE(subscriber->notified());
+    VERIFY_EQUAL(0, subscriber->id());
+    
+    auto gameObj = pGameMgr->createGameObject<Game::GameObject>(token);
+    VERIFY_TRUE(gameObj != nullptr);
+    VERIFY_TRUE(subscriber->notified());
+    VERIFY_EQUAL(Game::GameManager::GameObjectCreatedEventId, subscriber->id());
+    subscriber->reset();
+    
+    pGameMgr->removeGameObject(gameObj->token(), 100);
+    VERIFY_FALSE(subscriber->notified());
+    VERIFY_EQUAL(0, subscriber->id());
+    
+    pGameMgr->removeGameObject("unknown", gameObj->identity());
+    VERIFY_FALSE(subscriber->notified());
+    VERIFY_EQUAL(0, subscriber->id());
+
+    pGameMgr->removeGameObject(gameObj->token(), gameObj->identity());
+    VERIFY_TRUE(subscriber->notified());
+    VERIFY_EQUAL(Game::GameManager::GameObjectRemovingEventId, subscriber->id());
+
+    pGameMgr->gameObjectCreated()->disconnect("test");
+    pGameMgr->gameObjectRemoving()->disconnect("test");
 }

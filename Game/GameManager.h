@@ -22,8 +22,12 @@ namespace Game {
 class GameManager
 {
 public:
-    const static int GameObjectChangedEventId = 1;
-    
+    const static int GameObjectCreatedEventId = 1;
+    const static int GameObjectRemovingEventId = 2;
+    const static int GameObjectChangedEventId = 3;
+
+    using GameObjectCreatedEvent = Event::EventPublisher<GameObject &>;
+    using GameObjectRemovingEvent = Event::EventPublisher<GameObject &>;
     using GameObjectChangedEvent = Event::EventPublisher<GameObject &>;
 
     static GameManager * instance ();
@@ -50,6 +54,8 @@ public:
         }
         
         ++mNextGameObjectId;
+        
+        mGameObjectCreated->signal(*gameObj);
         
         return gameObj;
     }
@@ -135,6 +141,16 @@ public:
         }
     }
 
+    GameObjectCreatedEvent * gameObjectCreated ()
+    {
+        return mGameObjectCreated.get();
+    }
+
+    GameObjectRemovingEvent * gameObjectRemoving ()
+    {
+        return mGameObjectRemoving.get();
+    }
+
     GameObjectChangedEvent * gameObjectChanged ()
     {
         return mGameObjectChanged.get();
@@ -148,6 +164,8 @@ private:
 
     GameManager ()
     : mNextGameObjectId(1), mNextGameComponentId(1),
+    mGameObjectCreated(new GameObjectCreatedEvent(GameObjectCreatedEventId)),
+    mGameObjectRemoving(new GameObjectRemovingEvent(GameObjectRemovingEventId)),
     mGameObjectChanged(new GameObjectChangedEvent(GameObjectChangedEventId))
     { }
     
@@ -163,6 +181,8 @@ private:
     GameObjectTokenMap mGameObjects;
     GameComponentMap mRegisteredGameComponents;
     GameComponentVector mLoadedGameComponents;
+    std::unique_ptr<GameObjectCreatedEvent> mGameObjectCreated;
+    std::unique_ptr<GameObjectRemovingEvent> mGameObjectRemoving;
     std::unique_ptr<GameObjectChangedEvent> mGameObjectChanged;
 };
 

@@ -131,7 +131,13 @@ void GameManager::removeGameObject (const std::string & token, int identity)
         return;
     }
     
-    gameObjectMap->erase(identity);
+    auto gameObjectMapResult = gameObjectMap->find(identity);
+    if (gameObjectMapResult != gameObjectMap->end())
+    {
+        mGameObjectRemoving->signal(*gameObjectMapResult->second);
+        
+        gameObjectMap->erase(identity);
+    }
 }
 
 bool GameManager::hasGameComponent (int identity) const
