@@ -73,10 +73,13 @@ public:
         return std::dynamic_pointer_cast<T>(gameObjectMapResult->second);
     }
 
+    bool hasGameObject (const std::string & token, int identity) const;
+    
     void removeGameObject (const std::string & token, int identity);
 
     // This method will try to get a component by id and return nullptr if not found.
     // It will also return nullptr if the requested type T is not correct.
+    // Ideally, this method would be const but that can sometimes cause ambiguity.
     template <typename T>
     std::shared_ptr<T> getGameComponent (int identity)
     {
@@ -114,6 +117,10 @@ public:
         // Do some extra type checking in case a different T is requested than was originally provided.
         return std::dynamic_pointer_cast<T>(mLoadedGameComponents[gameComponentId]);
     }
+
+    bool hasGameComponent (int identity) const;
+
+    bool hasGameComponent (const std::string & token) const;
 
 private:
     using GameObjectMap = std::unordered_map<int, std::shared_ptr<GameObject>>;

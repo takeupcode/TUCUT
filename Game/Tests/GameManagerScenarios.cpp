@@ -32,6 +32,15 @@ SCENARIO( GameManager, "Operation/Normal", "unit,game", "GameManager can add and
     auto gameObj1 = pGameMgr->createGameObject<Game::GameObject>(token);
     VERIFY_TRUE(gameObj1 != nullptr);
     
+    auto result = pGameMgr->hasGameObject(token, gameObj1->identity());
+    VERIFY_TRUE(result);
+    
+    result = pGameMgr->hasGameObject("unknown", gameObj1->identity());
+    VERIFY_FALSE(result);
+    
+    result = pGameMgr->hasGameObject(token, 123456);
+    VERIFY_FALSE(result);
+
     auto gameObj2 = pGameMgr->getGameObject<Game::GameObject>(token, gameObj1->identity());
     VERIFY_TRUE(gameObj2 != nullptr);
     
@@ -40,6 +49,9 @@ SCENARIO( GameManager, "Operation/Normal", "unit,game", "GameManager can add and
     
     pGameMgr->removeGameObject(token, gameObj1->identity());
     
+    result = pGameMgr->hasGameObject(token, gameObj1->identity());
+    VERIFY_FALSE(result);
+
     auto gameObj3 = pGameMgr->getGameObject<Game::GameObject>(token, gameObj1->identity());
     VERIFY_TRUE(gameObj3 == nullptr);
     
@@ -63,9 +75,18 @@ SCENARIO( GameManager, "Operation/Corner", "unit,game", "GameManager knows inval
     
     pGameMgr->removeGameObject(token, 0);
     pGameMgr->removeGameObject(token, -1);
+    
+    auto result = pGameMgr->hasGameObject(token, 0);
+    VERIFY_FALSE(result);
+    
+    result = pGameMgr->hasGameObject(token, -1);
+    VERIFY_FALSE(result);
 
     auto gameObj4 = pGameMgr->getGameObject<Game::GameObject>(token, gameObj1->identity());
     VERIFY_TRUE(gameObj4 != nullptr);
+    
+    result = pGameMgr->hasGameObject(token, gameObj4->identity());
+    VERIFY_TRUE(result);
 }
 
 SCENARIO( GameManager, "Operation/Normal", "unit,game", "GameManager can add GameComponents." )
@@ -74,9 +95,18 @@ SCENARIO( GameManager, "Operation/Normal", "unit,game", "GameManager can add Gam
     std::string token2 = "token2";
     Game::GameManager * pGameMgr = Game::GameManager::instance();
     
+    auto result = pGameMgr->hasGameComponent(token1);
+    VERIFY_FALSE(result);
+
     auto gameComp1 = pGameMgr->getGameComponent<Game::GameComponent>(token1);
     VERIFY_TRUE(gameComp1 != nullptr);
     
+    result = pGameMgr->hasGameComponent(gameComp1->identity());
+    VERIFY_TRUE(result);
+    
+    result = pGameMgr->hasGameComponent(token1);
+    VERIFY_TRUE(result);
+
     auto gameComp2 = pGameMgr->getGameComponent<Game::GameComponent>(token2);
     VERIFY_TRUE(gameComp2 != nullptr);
     
@@ -89,6 +119,9 @@ SCENARIO( GameManager, "Operation/Normal", "unit,game", "GameManager can add Gam
     auto gameComp4 = pGameMgr->getGameComponent<Game::GameComponent>(10);
     VERIFY_TRUE(gameComp4 == nullptr);
     
+    result = pGameMgr->hasGameComponent(10);
+    VERIFY_FALSE(result);
+
     auto gameComp5 = pGameMgr->getGameComponent<Game::GameComponent>(gameComp1->identity());
     VERIFY_TRUE(gameComp5 != nullptr);
 }
@@ -107,6 +140,12 @@ SCENARIO( GameManager, "Operation/Corner", "unit,game", "GameManager knows inval
     auto gameComp3 = pGameMgr->getGameComponent<Game::GameComponent>(-1);
     VERIFY_TRUE(gameComp3 == nullptr);
     
+    auto result = pGameMgr->hasGameComponent(0);
+    VERIFY_FALSE(result);
+    
+    result = pGameMgr->hasGameComponent(-1);
+    VERIFY_FALSE(result);
+
     auto gameComp4 = pGameMgr->getGameComponent<Game::GameComponent>(gameComp1->identity());
     VERIFY_TRUE(gameComp4 != nullptr);
 }

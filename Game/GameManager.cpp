@@ -96,6 +96,28 @@ int GameManager::getGameComponentId (const std::string & token) const
     return gameComponentMapResult->second;
 }
 
+bool GameManager::hasGameObject (const std::string & token, int identity) const
+{
+    if (identity < 1)
+    {
+        return false;
+    }
+    
+    auto gameObjectMap = getGameObjectMap(token);
+    if (!gameObjectMap)
+    {
+        return false;
+    }
+    
+    auto gameObjectMapResult = gameObjectMap->find(identity);
+    if (gameObjectMapResult == gameObjectMap->end())
+    {
+        return false;
+    }
+    
+    return true;
+}
+
 void GameManager::removeGameObject (const std::string & token, int identity)
 {
     if (identity < 1)
@@ -110,6 +132,32 @@ void GameManager::removeGameObject (const std::string & token, int identity)
     }
     
     gameObjectMap->erase(identity);
+}
+
+bool GameManager::hasGameComponent (int identity) const
+{
+    if (identity < 1)
+    {
+        return false;
+    }
+    
+    if (mLoadedGameComponents.size() > static_cast<std::size_t>(identity))
+    {
+        return mLoadedGameComponents[identity] != nullptr;
+    }
+    
+    return false;
+}
+
+bool GameManager::hasGameComponent (const std::string & token) const
+{
+    auto gameComponentId = getGameComponentId(token);
+    if (gameComponentId == 0)
+    {
+        return false;
+    }
+    
+    return hasGameComponent(gameComponentId);
 }
 
 } // namespace Game
