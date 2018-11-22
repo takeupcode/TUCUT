@@ -70,6 +70,22 @@ public:
 
     void removeGameObject (const std::string & token, int identity);
 
+    // This method will try to get a component by id and return nullptr if not found.
+    // It will also return nullptr if the requested type T is not correct.
+    template <typename T>
+    std::shared_ptr<T> getGameComponent (int identity)
+    {
+        if (mLoadedGameComponents.size() > static_cast<std::size_t>(identity))
+        {
+            // Do some extra type checking in case a different T is requested than was originally provided.
+            return std::dynamic_pointer_cast<T>(mLoadedGameComponents[identity]);
+        }
+        
+        return nullptr;
+    }
+
+    // This method will try to get a component by token and will create a new component if not found.
+    // It will return nullptr if the requested type T is not correct.
     template <typename T>
     std::shared_ptr<T> getGameComponent (const std::string & token)
     {

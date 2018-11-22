@@ -60,8 +60,14 @@ SCENARIO( GameManager, "Operation/Normal", "unit,game", "GameManager can add Gam
     VERIFY_TRUE(gameComp2 != nullptr);
     
     auto gameComp3 = pGameMgr->getGameComponent<Game::GameComponent>(token1);
-    VERIFY_TRUE(gameComp1 != nullptr);
+    VERIFY_TRUE(gameComp3 != nullptr);
 
     VERIFY_EQUAL(3, static_cast<int>(gameComp1.use_count()));
     VERIFY_EQUAL(2, static_cast<int>(gameComp2.use_count()));
+    
+    auto gameComp4 = pGameMgr->getGameComponent<Game::GameComponent>(10);
+    VERIFY_TRUE(gameComp4 == nullptr);
+    
+    auto gameComp5 = pGameMgr->getGameComponent<Game::GameComponent>(gameComp1->identity());
+    VERIFY_TRUE(gameComp5 != nullptr);
 }
