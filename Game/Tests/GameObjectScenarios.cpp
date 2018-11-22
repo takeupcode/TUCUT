@@ -88,3 +88,35 @@ SCENARIO( GameObject, "Operation/Normal", "unit,game", "GameObject can add and r
     result = gameObj->hasGameComponent(400);
     VERIFY_FALSE(result);
 }
+
+SCENARIO( GameObject, "Operation/Corner", "unit,game", "GameObject knows invalid component identities." )
+{
+    std::string token = "character";
+    Game::GameManager * pGameMgr = Game::GameManager::instance();
+    
+    auto gameObj = pGameMgr->createGameObject<Game::GameObject>(token);
+    
+    auto gameComp1 = pGameMgr->getGameComponent<Game::GameComponent>("moveable");
+    
+    auto result = gameObj->addGameComponent(gameComp1);
+    VERIFY_TRUE(result);
+    
+    result = gameObj->addGameComponent(0);
+    VERIFY_FALSE(result);
+    
+    result = gameObj->addGameComponent(-1);
+    VERIFY_FALSE(result);
+
+    result = gameObj->hasGameComponent(0);
+    VERIFY_FALSE(result);
+    
+    result = gameObj->hasGameComponent(-1);
+    VERIFY_FALSE(result);
+    
+    gameObj->removeGameComponent(0);
+    
+    gameObj->removeGameComponent(-1);
+    
+    result = gameObj->hasGameComponent(gameComp1);
+    VERIFY_TRUE(result);
+}

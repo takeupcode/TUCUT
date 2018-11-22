@@ -30,6 +30,11 @@ std::shared_ptr<GameObject> GameObject::getSharedGameObject ()
     
 bool GameObject::hasGameComponent (int componentId) const
 {
+    if (componentId < 1)
+    {
+        return false;
+    }
+    
     if (mComponents.size() > static_cast<std::size_t>(componentId))
     {
         return mComponents[componentId];
@@ -45,6 +50,11 @@ bool GameObject::hasGameComponent (const std::shared_ptr<GameComponent> & compon
 
 bool GameObject::addGameComponent (int componentId)
 {
+    if (componentId < 1)
+    {
+        return false;
+    }
+    
     while (mComponents.size() <= static_cast<std::size_t>(componentId))
     {
         mComponents.push_back(false);
@@ -67,6 +77,11 @@ bool GameObject::addGameComponent (const std::shared_ptr<GameComponent> & compon
 
 void GameObject::removeGameComponent (int componentId)
 {
+    if (componentId < 1)
+    {
+        return;
+    }
+    
     if (mComponents.size() > static_cast<std::size_t>(componentId))
     {
         mComponents[componentId] = false;
