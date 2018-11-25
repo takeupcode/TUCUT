@@ -90,9 +90,8 @@ public:
 
     // This method will try to get a component by id and return nullptr if not found.
     // It will also return nullptr if the requested type T is not correct.
-    // Ideally, this method would be const but that can sometimes cause ambiguity.
     template <typename T>
-    std::shared_ptr<T> getGameComponent (int identity)
+    std::shared_ptr<T> getGameComponent (int identity) const
     {
         if (identity < 1)
         {
@@ -132,7 +131,40 @@ public:
     bool hasGameComponent (int identity) const;
 
     bool hasGameComponent (const std::string & token) const;
+
+    // This method will try to get an action by id and return an empty string if not found.
+    std::string getGameAction (int identity) const
+    {
+        if (identity < 1)
+        {
+            return "";
+        }
+        
+        if (mLoadedGameActions.size() > static_cast<std::size_t>(identity))
+        {
+            return mLoadedGameActions[identity];
+        }
+        
+        return "";
+    }
     
+    // This method will try to get an action by token and will create a new action if not found.
+    int getGameAction (const std::string & token)
+    {
+        auto gameActionId = getGameActionId(token);
+        if (gameActionId == 0)
+        {
+            gameActionId = createGameActionId(token);
+            mLoadedGameActions[gameActionId] = token;
+        }
+        
+        return gameActionId;
+    }
+    
+    bool hasGameAction (int identity) const;
+    
+    bool hasGameAction (const std::string & token) const;
+
     void onGameObjectChanged (GameObject & gameObj) const
     {
         if (hasGameObject(gameObj.token(), gameObj.identity()))
@@ -161,9 +193,11 @@ private:
     using GameObjectTokenMap = std::unordered_map<std::string, std::unique_ptr<GameObjectMap>>;
     using GameComponentMap = std::unordered_map<std::string, int>;
     using GameComponentVector = std::vector<std::shared_ptr<GameComponent>>;
+    using GameActionMap = std::unordered_map<std::string, int>;
+    using GameActionVector = std::vector<std::string>;
 
     GameManager ()
-    : mNextGameObjectId(1), mNextGameComponentId(1),
+    : mNextGameObjectId(1), mNextGameComponentId(1), mNextGameActionId(1),
     mGameObjectCreated(new GameObjectCreatedEvent(GameObjectCreatedEventId)),
     mGameObjectRemoving(new GameObjectRemovingEvent(GameObjectRemovingEventId)),
     mGameObjectChanged(new GameObjectChangedEvent(GameObjectChangedEventId))
@@ -175,12 +209,18 @@ private:
     
     int createGameComponentId (const std::string & token);
     int getGameComponentId (const std::string & token) const;
+    
+    int createGameActionId (const std::string & token);
+    int getGameActionId (const std::string & token) const;
 
     int mNextGameObjectId;
     int mNextGameComponentId;
+    int mNextGameActionId;
     GameObjectTokenMap mGameObjects;
     GameComponentMap mRegisteredGameComponents;
     GameComponentVector mLoadedGameComponents;
+    GameActionMap mRegisteredGameActions;
+    GameActionVector mLoadedGameActions;
     std::unique_ptr<GameObjectCreatedEvent> mGameObjectCreated;
     std::unique_ptr<GameObjectRemovingEvent> mGameObjectRemoving;
     std::unique_ptr<GameObjectChangedEvent> mGameObjectChanged;

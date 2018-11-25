@@ -135,7 +135,7 @@ SCENARIO( GameManager, "Operation/Corner", "unit,game", "GameManager knows inval
     auto gameComp1 = pGameMgr->getGameComponent<Game::GameComponent>(token);
     VERIFY_TRUE(gameComp1 != nullptr);
     
-    auto gameComp2 = pGameMgr->getGameComponent<Game::GameComponent>(0);
+    auto gameComp2 = pGameMgr->getGameComponent<Game::GameComponent>(static_cast<int>(0));
     VERIFY_TRUE(gameComp2 == nullptr);
     
     auto gameComp3 = pGameMgr->getGameComponent<Game::GameComponent>(-1);
@@ -183,4 +183,56 @@ SCENARIO( GameManager, "Operation/Normal", "unit,game", "GameManager notifies ne
 
     pGameMgr->gameObjectCreated()->disconnect("test");
     pGameMgr->gameObjectRemoving()->disconnect("test");
+}
+
+SCENARIO( GameManager, "Operation/Normal", "unit,game", "GameManager can add actions." )
+{
+    std::string token1 = "token1";
+    Game::GameManager * pGameMgr = Game::GameManager::instance();
+    
+    auto result = pGameMgr->hasGameAction(token1);
+    VERIFY_FALSE(result);
+    
+    auto gameActionId = pGameMgr->getGameAction(token1);
+    VERIFY_TRUE(gameActionId != 0);
+    
+    result = pGameMgr->hasGameAction(gameActionId);
+    VERIFY_TRUE(result);
+    
+    result = pGameMgr->hasGameAction(token1);
+    VERIFY_TRUE(result);
+    
+    auto gameActionToken = pGameMgr->getGameAction(10);
+    VERIFY_TRUE(gameActionToken.empty());
+    
+    result = pGameMgr->hasGameAction(10);
+    VERIFY_FALSE(result);
+}
+
+SCENARIO( GameManager, "Operation/Corner", "unit,game", "GameManager knows invalid action identities." )
+{
+    std::string token = "";
+    Game::GameManager * pGameMgr = Game::GameManager::instance();
+    
+    bool exceptionThrown = false;
+    try
+    {
+        pGameMgr->getGameAction(token);
+    } catch (const std::runtime_error &)
+    {
+        exceptionThrown = true;
+    }
+    VERIFY_TRUE(exceptionThrown);
+    
+    auto gameActionToken = pGameMgr->getGameAction(static_cast<int>(0));
+    VERIFY_TRUE(gameActionToken.empty());
+
+    gameActionToken = pGameMgr->getGameAction(-1);
+    VERIFY_TRUE(gameActionToken.empty());
+
+    auto result = pGameMgr->hasGameComponent(0);
+    VERIFY_FALSE(result);
+    
+    result = pGameMgr->hasGameComponent(-1);
+    VERIFY_FALSE(result);
 }
