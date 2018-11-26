@@ -117,7 +117,7 @@ SCENARIO( GameObject, "Operation/Normal", "unit,game", "GameObject notifies comp
     VERIFY_EQUAL(Game::GameManager::GameObjectChangedEventId, subscriber->id());
     subscriber->reset();
     
-    pGameMgr->removeGameObject(gameObj->token(), gameObj->identity());
+    pGameMgr->removeGameObject(gameObj->identity());
     
     result = gameObj->addGameComponent(gameComp2->identity());
     VERIFY_TRUE(result);

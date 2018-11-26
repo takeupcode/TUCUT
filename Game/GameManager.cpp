@@ -34,44 +34,6 @@ void GameManager::deinitialize ()
     mRegisteredGameComponents.clear();
     mLoadedGameComponents.clear();
 }
-
-GameManager::GameObjectMap * GameManager::createGameObjectMap (const std::string & token)
-{
-    if (token.empty())
-    {
-        throw std::runtime_error("Unable to create game object id");
-    }
-    
-    auto result = mGameObjects.try_emplace(token, std::make_unique<GameObjectMap>());
-    if (!result.second)
-    {
-        throw std::runtime_error("Unable to create game object map");
-    }
-    
-    return result.first->second.get();
-}
-
-GameManager::GameObjectMap * GameManager::getGameObjectMap (const std::string & token)
-{
-    auto gameObjectMapResult = mGameObjects.find(token);
-    if (gameObjectMapResult == mGameObjects.end())
-    {
-        return nullptr;
-    }
-    
-    return gameObjectMapResult->second.get();
-}
-
-const GameManager::GameObjectMap * GameManager::getGameObjectMap (const std::string & token) const
-{
-    auto gameObjectMapResult = mGameObjects.find(token);
-    if (gameObjectMapResult == mGameObjects.end())
-    {
-        return nullptr;
-    }
-    
-    return gameObjectMapResult->second.get();
-}
     
 int GameManager::createGameComponentId (const std::string & token)
 {
@@ -105,7 +67,7 @@ int GameManager::getGameComponentId (const std::string & token) const
     
     return gameComponentMapResult->second;
 }
-    
+
 int GameManager::createGameActionId (const std::string & token)
 {
     if (token.empty())
@@ -139,21 +101,15 @@ int GameManager::getGameActionId (const std::string & token) const
     return gameActionMapResult->second;
 }
 
-bool GameManager::hasGameObject (const std::string & token, int identity) const
+bool GameManager::hasGameObject (int identity) const
 {
     if (identity < 1)
     {
         return false;
     }
     
-    auto gameObjectMap = getGameObjectMap(token);
-    if (!gameObjectMap)
-    {
-        return false;
-    }
-    
-    auto gameObjectMapResult = gameObjectMap->find(identity);
-    if (gameObjectMapResult == gameObjectMap->end())
+    auto gameObjectMapResult = mGameObjects.find(identity);
+    if (gameObjectMapResult == mGameObjects.end())
     {
         return false;
     }
@@ -161,25 +117,19 @@ bool GameManager::hasGameObject (const std::string & token, int identity) const
     return true;
 }
 
-void GameManager::removeGameObject (const std::string & token, int identity)
+void GameManager::removeGameObject (int identity)
 {
     if (identity < 1)
     {
         return;
     }
     
-    auto gameObjectMap = getGameObjectMap(token);
-    if (!gameObjectMap)
-    {
-        return;
-    }
-    
-    auto gameObjectMapResult = gameObjectMap->find(identity);
-    if (gameObjectMapResult != gameObjectMap->end())
+    auto gameObjectMapResult = mGameObjects.find(identity);
+    if (gameObjectMapResult != mGameObjects.end())
     {
         mGameObjectRemoving->signal(*gameObjectMapResult->second);
         
-        gameObjectMap->erase(identity);
+        mGameObjects.erase(identity);
     }
 }
 
@@ -207,6 +157,33 @@ bool GameManager::hasGameComponent (const std::string & token) const
     }
     
     return hasGameComponent(gameComponentId);
+}
+
+std::string GameManager::getGameAction (int identity) const
+{
+    if (identity < 1)
+    {
+        return "";
+    }
+    
+    if (mLoadedGameActions.size() > static_cast<std::size_t>(identity))
+    {
+        return mLoadedGameActions[identity];
+    }
+    
+    return "";
+}
+
+int GameManager::getGameAction (const std::string & token)
+{
+    auto gameActionId = getGameActionId(token);
+    if (gameActionId == 0)
+    {
+        gameActionId = createGameActionId(token);
+        mLoadedGameActions[gameActionId] = token;
+    }
+    
+    return gameActionId;
 }
 
 bool GameManager::hasGameAction (int identity) const

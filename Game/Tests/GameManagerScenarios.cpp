@@ -33,27 +33,24 @@ SCENARIO( GameManager, "Operation/Normal", "unit,game", "GameManager can add and
     auto gameObj1 = pGameMgr->createGameObject<Game::GameObject>(token);
     VERIFY_TRUE(gameObj1 != nullptr);
     
-    auto result = pGameMgr->hasGameObject(token, gameObj1->identity());
+    auto result = pGameMgr->hasGameObject(gameObj1->identity());
     VERIFY_TRUE(result);
     
-    result = pGameMgr->hasGameObject("unknown", gameObj1->identity());
-    VERIFY_FALSE(result);
-    
-    result = pGameMgr->hasGameObject(token, 123456);
+    result = pGameMgr->hasGameObject(123456);
     VERIFY_FALSE(result);
 
-    auto gameObj2 = pGameMgr->getGameObject<Game::GameObject>(token, gameObj1->identity());
+    auto gameObj2 = pGameMgr->getGameObject<Game::GameObject>(gameObj1->identity());
     VERIFY_TRUE(gameObj2 != nullptr);
     
     VERIFY_EQUAL(3, static_cast<int>(gameObj1.use_count()));
     VERIFY_EQUAL(3, static_cast<int>(gameObj2.use_count()));
     
-    pGameMgr->removeGameObject(token, gameObj1->identity());
+    pGameMgr->removeGameObject(gameObj1->identity());
     
-    result = pGameMgr->hasGameObject(token, gameObj1->identity());
+    result = pGameMgr->hasGameObject(gameObj1->identity());
     VERIFY_FALSE(result);
 
-    auto gameObj3 = pGameMgr->getGameObject<Game::GameObject>(token, gameObj1->identity());
+    auto gameObj3 = pGameMgr->getGameObject<Game::GameObject>(gameObj1->identity());
     VERIFY_TRUE(gameObj3 == nullptr);
     
     VERIFY_EQUAL(2, static_cast<int>(gameObj1.use_count()));
@@ -68,25 +65,25 @@ SCENARIO( GameManager, "Operation/Corner", "unit,game", "GameManager knows inval
     auto gameObj1 = pGameMgr->createGameObject<Game::GameObject>(token);
     VERIFY_TRUE(gameObj1 != nullptr);
     
-    auto gameObj2 = pGameMgr->getGameObject<Game::GameObject>(token, 0);
+    auto gameObj2 = pGameMgr->getGameObject<Game::GameObject>(0);
     VERIFY_TRUE(gameObj2 == nullptr);
     
-    auto gameObj3 = pGameMgr->getGameObject<Game::GameObject>(token, -1);
+    auto gameObj3 = pGameMgr->getGameObject<Game::GameObject>(-1);
     VERIFY_TRUE(gameObj3 == nullptr);
     
-    pGameMgr->removeGameObject(token, 0);
-    pGameMgr->removeGameObject(token, -1);
+    pGameMgr->removeGameObject(0);
+    pGameMgr->removeGameObject(-1);
     
-    auto result = pGameMgr->hasGameObject(token, 0);
+    auto result = pGameMgr->hasGameObject(0);
     VERIFY_FALSE(result);
     
-    result = pGameMgr->hasGameObject(token, -1);
+    result = pGameMgr->hasGameObject(-1);
     VERIFY_FALSE(result);
 
-    auto gameObj4 = pGameMgr->getGameObject<Game::GameObject>(token, gameObj1->identity());
+    auto gameObj4 = pGameMgr->getGameObject<Game::GameObject>(gameObj1->identity());
     VERIFY_TRUE(gameObj4 != nullptr);
     
-    result = pGameMgr->hasGameObject(token, gameObj4->identity());
+    result = pGameMgr->hasGameObject(gameObj4->identity());
     VERIFY_TRUE(result);
 }
 
@@ -169,15 +166,11 @@ SCENARIO( GameManager, "Operation/Normal", "unit,game", "GameManager notifies ne
     VERIFY_EQUAL(Game::GameManager::GameObjectCreatedEventId, subscriber->id());
     subscriber->reset();
     
-    pGameMgr->removeGameObject(gameObj->token(), 100);
-    VERIFY_FALSE(subscriber->notified());
-    VERIFY_EQUAL(0, subscriber->id());
-    
-    pGameMgr->removeGameObject("unknown", gameObj->identity());
+    pGameMgr->removeGameObject(100);
     VERIFY_FALSE(subscriber->notified());
     VERIFY_EQUAL(0, subscriber->id());
 
-    pGameMgr->removeGameObject(gameObj->token(), gameObj->identity());
+    pGameMgr->removeGameObject(gameObj->identity());
     VERIFY_TRUE(subscriber->notified());
     VERIFY_EQUAL(Game::GameManager::GameObjectRemovingEventId, subscriber->id());
 
