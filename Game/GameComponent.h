@@ -1,5 +1,5 @@
 //
-//  GameComponent.hpp
+//  GameComponent.h
 //  TUCUT (Take Up Code Utility)
 //
 //  Created by Abdul Wahid Tanner on 11/15/18.

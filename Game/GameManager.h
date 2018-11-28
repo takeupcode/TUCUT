@@ -1,5 +1,5 @@
 //
-//  GameManager.hpp
+//  GameManager.h
 //  TUCUT (Take Up Code Utility)
 //
 //  Created by Abdul Wahid Tanner on 8/19/18.
@@ -15,6 +15,7 @@
 
 #include "GameObject.h"
 #include "GameComponent.h"
+#include "GameSystem.h"
 #include "../Event/EventPublisher.h"
 
 namespace TUCUT {
@@ -121,6 +122,50 @@ public:
 
     bool hasGameComponent (const std::string & token) const;
 
+    // This method will try to get a system by id and return nullptr if not found.
+    // It will also return nullptr if the requested type T is not correct.
+    template <typename T>
+    std::shared_ptr<T> getGameSystem (int identity) const
+    {
+        if (identity < 1)
+        {
+            return nullptr;
+        }
+        
+        if (mLoadedGameSystems.size() > static_cast<std::size_t>(identity))
+        {
+            // Do some extra type checking in case a different T is requested than was originally provided.
+            return std::dynamic_pointer_cast<T>(mLoadedGameSystems[identity]);
+        }
+        
+        return nullptr;
+    }
+    
+    // This method will try to get a system by token and will create a new system if not found.
+    // It will return nullptr if the requested type T is not correct.
+    template <typename T>
+    std::shared_ptr<T> getGameSystem (const std::string & token)
+    {
+        auto gameSystemId = getGameSystemId(token);
+        if (gameSystemId == 0)
+        {
+            gameSystemId = createGameSystemId(token);
+            // This will be an instance of T but a pointer to the base GameSystem class.
+            auto gameSystem = T::createSharedGameSystem(token, gameSystemId);
+            mLoadedGameSystems[gameSystemId] = gameSystem;
+            
+            // We can be sure this cast will work.
+            return std::static_pointer_cast<T>(gameSystem);
+        }
+        
+        // Do some extra type checking in case a different T is requested than was originally provided.
+        return std::dynamic_pointer_cast<T>(mLoadedGameSystems[gameSystemId]);
+    }
+    
+    bool hasGameSystem (int identity) const;
+    
+    bool hasGameSystem (const std::string & token) const;
+
     // This method will try to get an action by id and return an empty string if not found.
     std::string getGameAction (int identity) const;
     
@@ -130,6 +175,8 @@ public:
     bool hasGameAction (int identity) const;
     
     bool hasGameAction (const std::string & token) const;
+    
+    void queueGameAction (int objectId, int actionId);
 
     void onGameObjectChanged (GameObject & gameObj) const
     {
@@ -153,17 +200,22 @@ public:
     {
         return mGameObjectChanged.get();
     }
+    
+    void update ();
 
 private:
     using GameObjectMap = std::unordered_map<int, std::shared_ptr<GameObject>>;
     using GameComponentMap = std::unordered_map<std::string, int>;
     using GameComponentVector = std::vector<std::shared_ptr<GameComponent>>;
+    using GameSystemMap = std::unordered_map<std::string, int>;
+    using GameSystemVector = std::vector<std::shared_ptr<GameSystem>>;
     using GameActionMap = std::unordered_map<std::string, int>;
     using GameActionVector = std::vector<std::string>;
-    using GameObjectActionMap = std::unordered_map<int, std::queue<int>>;
+    using GameActionQueue = std::queue<int>;
+    using GameObjectActionMap = std::unordered_map<int, GameActionQueue>;
 
     GameManager ()
-    : mNextGameObjectId(1), mNextGameComponentId(1), mNextGameActionId(1),
+    : mNextGameObjectId(1), mNextGameComponentId(1), mNextGameActionId(1), mNextGameSystemId(1),
     mGameObjectCreated(new GameObjectCreatedEvent(GameObjectCreatedEventId)),
     mGameObjectRemoving(new GameObjectRemovingEvent(GameObjectRemovingEventId)),
     mGameObjectChanged(new GameObjectChangedEvent(GameObjectChangedEventId))
@@ -171,16 +223,22 @@ private:
     
     int createGameComponentId (const std::string & token);
     int getGameComponentId (const std::string & token) const;
+    
+    int createGameSystemId (const std::string & token);
+    int getGameSystemId (const std::string & token) const;
 
     int createGameActionId (const std::string & token);
     int getGameActionId (const std::string & token) const;
 
     int mNextGameObjectId;
     int mNextGameComponentId;
+    int mNextGameSystemId;
     int mNextGameActionId;
     GameObjectMap mGameObjects;
     GameComponentMap mRegisteredGameComponents;
     GameComponentVector mLoadedGameComponents;
+    GameSystemMap mRegisteredGameSystems;
+    GameSystemVector mLoadedGameSystems;
     GameActionMap mRegisteredGameActions;
     GameActionVector mLoadedGameActions;
     GameObjectActionMap mGameObjectActions;

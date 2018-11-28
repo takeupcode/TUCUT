@@ -42,13 +42,9 @@ int GameManager::createGameComponentId (const std::string & token)
         throw std::runtime_error("Unable to create game component id");
     }
     
-    auto result = mRegisteredGameComponents.try_emplace(token, mNextGameComponentId);
-    if (!result.second)
-    {
-        throw std::runtime_error("Unable to create game component id");
-    }
+    mRegisteredGameComponents[token] = mNextGameComponentId;
     
-    // Makse sure there's always a matching entry in the loaded components vector.
+    // Make sure there's always a matching entry in the loaded components vector.
     while (mLoadedGameComponents.size() <= static_cast<std::size_t>(mNextGameComponentId))
     {
         mLoadedGameComponents.push_back(nullptr);
@@ -67,6 +63,35 @@ int GameManager::getGameComponentId (const std::string & token) const
     
     return gameComponentMapResult->second;
 }
+    
+int GameManager::createGameSystemId (const std::string & token)
+{
+    if (token.empty())
+    {
+        throw std::runtime_error("Unable to create game system id");
+    }
+    
+    mRegisteredGameSystems[token] = mNextGameSystemId;
+    
+    // Make sure there's always a matching entry in the loaded systems vector.
+    while (mLoadedGameSystems.size() <= static_cast<std::size_t>(mNextGameSystemId))
+    {
+        mLoadedGameSystems.push_back(nullptr);
+    }
+    
+    return mNextGameSystemId++;
+}
+
+int GameManager::getGameSystemId (const std::string & token) const
+{
+    auto gameSystemMapResult = mRegisteredGameSystems.find(token);
+    if (gameSystemMapResult == mRegisteredGameSystems.end())
+    {
+        return 0;
+    }
+    
+    return gameSystemMapResult->second;
+}
 
 int GameManager::createGameActionId (const std::string & token)
 {
@@ -75,13 +100,9 @@ int GameManager::createGameActionId (const std::string & token)
         throw std::runtime_error("Unable to create game action id");
     }
     
-    auto result = mRegisteredGameActions.try_emplace(token, mNextGameActionId);
-    if (!result.second)
-    {
-        throw std::runtime_error("Unable to create game action id");
-    }
+    mRegisteredGameActions[token] = mNextGameActionId;
     
-    // Makse sure there's always a matching entry in the loaded actions vector.
+    // Make sure there's always a matching entry in the loaded actions vector.
     while (mLoadedGameActions.size() <= static_cast<std::size_t>(mNextGameActionId))
     {
         mLoadedGameActions.push_back("");
@@ -159,6 +180,32 @@ bool GameManager::hasGameComponent (const std::string & token) const
     return hasGameComponent(gameComponentId);
 }
 
+bool GameManager::hasGameSystem (int identity) const
+{
+    if (identity < 1)
+    {
+        return false;
+    }
+    
+    if (mLoadedGameSystems.size() > static_cast<std::size_t>(identity))
+    {
+        return mLoadedGameSystems[identity] != nullptr;
+    }
+    
+    return false;
+}
+
+bool GameManager::hasGameSystem (const std::string & token) const
+{
+    auto gameSystemId = getGameSystemId(token);
+    if (gameSystemId == 0)
+    {
+        return false;
+    }
+    
+    return hasGameSystem(gameSystemId);
+}
+
 std::string GameManager::getGameAction (int identity) const
 {
     if (identity < 1)
@@ -210,6 +257,38 @@ bool GameManager::hasGameAction (const std::string & token) const
     }
     
     return hasGameAction(gameActionId);
+}
+
+void GameManager::queueGameAction (int objectId, int actionId)
+{
+    if (objectId < 1 || actionId < 1)
+    {
+        return;
+    }
+
+    mGameObjectActions[objectId].push(actionId);
+}
+    
+void GameManager::update ()
+{
+    auto actionQueueIter = mGameObjectActions.begin();
+    while (actionQueueIter != mGameObjectActions.end())
+    {
+        while (!actionQueueIter->second.empty())
+        {
+            int actionId = actionQueueIter->second.front();
+            for (const auto & gameSystem: mLoadedGameSystems)
+            {
+                if (gameSystem)
+                {
+                    gameSystem->onAction(actionQueueIter->first, actionId);
+                }
+            }
+            actionQueueIter->second.pop();
+        }
+        mGameObjectActions.erase(actionQueueIter);
+        actionQueueIter = mGameObjectActions.begin();
+    }
 }
 
 } // namespace Game

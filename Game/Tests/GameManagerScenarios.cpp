@@ -229,3 +229,64 @@ SCENARIO( GameManager, "Operation/Corner", "unit,game", "GameManager knows inval
     result = pGameMgr->hasGameComponent(-1);
     VERIFY_FALSE(result);
 }
+
+SCENARIO( GameManager, "Operation/Normal", "unit,game", "GameManager can add GameSystems." )
+{
+    std::string token1 = "token1";
+    std::string token2 = "token2";
+    Game::GameManager * pGameMgr = Game::GameManager::instance();
+    
+    auto result = pGameMgr->hasGameSystem(token1);
+    VERIFY_FALSE(result);
+    
+    auto gameSys1 = pGameMgr->getGameSystem<Game::GameSystem>(token1);
+    VERIFY_TRUE(gameSys1 != nullptr);
+    
+    result = pGameMgr->hasGameSystem(gameSys1->identity());
+    VERIFY_TRUE(result);
+    
+    result = pGameMgr->hasGameSystem(token1);
+    VERIFY_TRUE(result);
+    
+    auto gameSys2 = pGameMgr->getGameSystem<Game::GameSystem>(token2);
+    VERIFY_TRUE(gameSys2 != nullptr);
+    
+    auto gameSys3 = pGameMgr->getGameSystem<Game::GameSystem>(token1);
+    VERIFY_TRUE(gameSys3 != nullptr);
+    
+    VERIFY_EQUAL(3, static_cast<int>(gameSys1.use_count()));
+    VERIFY_EQUAL(2, static_cast<int>(gameSys2.use_count()));
+    
+    auto gameSys4 = pGameMgr->getGameSystem<Game::GameSystem>(10);
+    VERIFY_TRUE(gameSys4 == nullptr);
+    
+    result = pGameMgr->hasGameSystem(10);
+    VERIFY_FALSE(result);
+    
+    auto gameSys5 = pGameMgr->getGameSystem<Game::GameSystem>(gameSys1->identity());
+    VERIFY_TRUE(gameSys5 != nullptr);
+}
+
+SCENARIO( GameManager, "Operation/Corner", "unit,game", "GameManager knows invalid GameSystem identities." )
+{
+    std::string token = "state";
+    Game::GameManager * pGameMgr = Game::GameManager::instance();
+    
+    auto gameSys1 = pGameMgr->getGameSystem<Game::GameSystem>(token);
+    VERIFY_TRUE(gameSys1 != nullptr);
+    
+    auto gameSys2 = pGameMgr->getGameSystem<Game::GameSystem>(static_cast<int>(0));
+    VERIFY_TRUE(gameSys2 == nullptr);
+    
+    auto gameSys3 = pGameMgr->getGameSystem<Game::GameSystem>(-1);
+    VERIFY_TRUE(gameSys3 == nullptr);
+    
+    auto result = pGameMgr->hasGameSystem(0);
+    VERIFY_FALSE(result);
+    
+    result = pGameMgr->hasGameSystem(-1);
+    VERIFY_FALSE(result);
+    
+    auto gameSys4 = pGameMgr->getGameSystem<Game::GameSystem>(gameSys1->identity());
+    VERIFY_TRUE(gameSys4 != nullptr);
+}

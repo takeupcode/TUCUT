@@ -264,6 +264,9 @@
 		3EDBEDE1219E8258006DFB23 /* GameComponent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3EDBEDDF219E8258006DFB23 /* GameComponent.cpp */; };
 		3EDBEDE2219E8258006DFB23 /* GameComponent.h in Headers */ = {isa = PBXBuildFile; fileRef = 3EDBEDE0219E8258006DFB23 /* GameComponent.h */; };
 		3EDBEDE421A3C4C5006DFB23 /* GameComponentScenarios.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3EDBEDE321A3C4C5006DFB23 /* GameComponentScenarios.cpp */; };
+		3EDBEDE821AE4C4B006DFB23 /* GameSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3EDBEDE621AE4C4B006DFB23 /* GameSystem.cpp */; };
+		3EDBEDE921AE4C4B006DFB23 /* GameSystem.h in Headers */ = {isa = PBXBuildFile; fileRef = 3EDBEDE721AE4C4B006DFB23 /* GameSystem.h */; };
+		3EDBEDEB21AE5D52006DFB23 /* GameSystemScenarios.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3EDBEDEA21AE5D52006DFB23 /* GameSystemScenarios.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -668,6 +671,9 @@
 		3EDBEDE0219E8258006DFB23 /* GameComponent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GameComponent.h; sourceTree = "<group>"; };
 		3EDBEDE321A3C4C5006DFB23 /* GameComponentScenarios.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = GameComponentScenarios.cpp; sourceTree = "<group>"; };
 		3EDBEDE521A72AAE006DFB23 /* GameManagerSubscriber.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GameManagerSubscriber.h; sourceTree = "<group>"; };
+		3EDBEDE621AE4C4B006DFB23 /* GameSystem.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = GameSystem.cpp; sourceTree = "<group>"; };
+		3EDBEDE721AE4C4B006DFB23 /* GameSystem.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GameSystem.h; sourceTree = "<group>"; };
+		3EDBEDEA21AE5D52006DFB23 /* GameSystemScenarios.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = GameSystemScenarios.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -732,6 +738,8 @@
 				3E061818212A3057000B634B /* GameManager.h */,
 				3EDBEDDF219E8258006DFB23 /* GameComponent.cpp */,
 				3EDBEDE0219E8258006DFB23 /* GameComponent.h */,
+				3EDBEDE621AE4C4B006DFB23 /* GameSystem.cpp */,
+				3EDBEDE721AE4C4B006DFB23 /* GameSystem.h */,
 			);
 			path = Game;
 			sourceTree = "<group>";
@@ -746,6 +754,7 @@
 				3E06182F212A6646000B634B /* GameManagerScenarios.cpp */,
 				3EDBEDE321A3C4C5006DFB23 /* GameComponentScenarios.cpp */,
 				3EDBEDE521A72AAE006DFB23 /* GameManagerSubscriber.h */,
+				3EDBEDEA21AE5D52006DFB23 /* GameSystemScenarios.cpp */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -1399,6 +1408,7 @@
 				3E061816212A2FAE000B634B /* GameObject.h in Headers */,
 				3E3F83662105766200501126 /* InvalidExtensionException.h in Headers */,
 				3E3F83672105766200501126 /* InvalidOperationException.h in Headers */,
+				3EDBEDE921AE4C4B006DFB23 /* GameSystem.h in Headers */,
 				3E3F83682105766200501126 /* NullArgumentException.h in Headers */,
 				3E3F83692105766200501126 /* StringLiteral.h in Headers */,
 				3E06183C215342DF000B634B /* Noise.h in Headers */,
@@ -1677,6 +1687,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3EDBEDE821AE4C4B006DFB23 /* GameSystem.cpp in Sources */,
 				3E061823212A31A2000B634B /* PropertyContainer.cpp in Sources */,
 				3E06183E21535396000B634B /* Noise.cpp in Sources */,
 				3E061822212A31A2000B634B /* PropertyGroup.cpp in Sources */,
@@ -1777,6 +1788,7 @@
 				3ED4128320FED1FB00BC7226 /* OptionParserScenarios.cpp in Sources */,
 				3ED4128420FED1FB00BC7226 /* PackageParserScenarios.cpp in Sources */,
 				3E06182A212A65CC000B634B /* PropertyGroupScenarios.cpp in Sources */,
+				3EDBEDEB21AE5D52006DFB23 /* GameSystemScenarios.cpp in Sources */,
 				3E289F402176ED50002FFBDC /* ColorScenarios.cpp in Sources */,
 				3ED4128520FED1FB00BC7226 /* ProtoModelScenarios.cpp in Sources */,
 				3E3F82E8210424CF00501126 /* StringLiteralScenarios.cpp in Sources */,
