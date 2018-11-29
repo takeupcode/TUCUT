@@ -83,4 +83,12 @@ SCENARIO( GameSystem, "Operation/Normal", "unit,game", "Derived GameSystem is no
     VERIFY_TRUE(gameSys->notified());
     VERIFY_EQUAL(gameComp->identity(), gameSys->objectId());
     VERIFY_EQUAL(gameActionId, gameSys->actionId());
+    
+    // Make sure actions only get handled once.
+    gameSys->reset();
+    pGameMgr->update();
+    
+    VERIFY_FALSE(gameSys->notified());
+    VERIFY_EQUAL(0, gameSys->objectId());
+    VERIFY_EQUAL(0, gameSys->actionId());
 }
