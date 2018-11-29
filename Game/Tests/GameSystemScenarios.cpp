@@ -12,6 +12,7 @@
 
 #include "../GameSystem.h"
 #include "../GameManager.h"
+#include "TestActionSystem.h"
 
 using namespace std;
 using namespace TUCUT;
@@ -35,4 +36,51 @@ SCENARIO( GameSystem, "Operation/Normal", "unit,game", "GameSystem can get share
     
     VERIFY_EQUAL(3, static_cast<int>(sharedPtr.use_count()));
     VERIFY_SAMEPTR(gameSys.get(), sharedPtr.get());
+}
+
+SCENARIO( GameSystem, "Construction/Normal", "unit,game", "Derived GameSystem can be constructed." )
+{
+    std::string token = "testAction";
+    Game::GameManager * pGameMgr = Game::GameManager::instance();
+    
+    auto gameSys = pGameMgr->getGameSystem<Test::TestActionSystem>(token);
+}
+
+SCENARIO( GameSystem, "Operation/Normal", "unit,game", "Derived GameSystem can get shared pointer." )
+{
+    std::string token = "testAction";
+    Game::GameManager * pGameMgr = Game::GameManager::instance();
+    
+    auto gameSys = pGameMgr->getGameSystem<Test::TestActionSystem>(token);
+
+    auto sharedPtr = gameSys->getSharedTestActionSystem();
+    
+    VERIFY_EQUAL(3, static_cast<int>(sharedPtr.use_count()));
+    VERIFY_SAMEPTR(gameSys.get(), sharedPtr.get());
+    
+    VERIFY_FALSE(gameSys->notified());
+    VERIFY_EQUAL(0, gameSys->objectId());
+    VERIFY_EQUAL(0, gameSys->actionId());
+    VERIFY_FALSE(sharedPtr->notified());
+    VERIFY_EQUAL(0, sharedPtr->objectId());
+    VERIFY_EQUAL(0, sharedPtr->actionId());
+}
+
+SCENARIO( GameSystem, "Operation/Normal", "unit,game", "Derived GameSystem is notified of action." )
+{
+    std::string tokenSystem = "actionSystem";
+    std::string tokenComp = "player";
+    std::string tokenAction = "moveAction";
+    Game::GameManager * pGameMgr = Game::GameManager::instance();
+    
+    auto gameSys = pGameMgr->getGameSystem<Test::TestActionSystem>(tokenSystem);
+    auto gameComp = pGameMgr->getGameComponent<Game::GameComponent>(tokenComp);
+    auto gameActionId = pGameMgr->getGameAction(tokenAction);
+    
+    pGameMgr->queueGameAction(gameComp->identity(), gameActionId);
+    pGameMgr->update();
+    
+    VERIFY_TRUE(gameSys->notified());
+    VERIFY_EQUAL(gameComp->identity(), gameSys->objectId());
+    VERIFY_EQUAL(gameActionId, gameSys->actionId());
 }
