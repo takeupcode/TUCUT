@@ -15,6 +15,7 @@
 #include "../GameManager.h"
 #include "TestSimpleComponent.h"
 #include "TestDependentComponent.h"
+#include "TestSuperDependentComponent.h"
 
 using namespace std;
 using namespace TUCUT;
@@ -69,15 +70,22 @@ SCENARIO( GameComponent, "Operation/Normal", "unit,game", "Game components know 
     
     auto gameCompSimple = pGameMgr->getOrCreateGameComponent<Test::TestSimpleComponent>(tokenCompSimple);
     
-    // Make sure requirements are not met when simple component has been created but not added.
+    // Make sure dependent requirements are not met when simple component has been created but not added.
     result = gameCompDependent->hasRequiredComponents(gameObj->identity());
     VERIFY_FALSE(result);
     
     result = gameCompDependent->hasRequiredComponents(gameObj);
     VERIFY_FALSE(result);
     
-    gameObj->addGameComponent(gameCompSimple->identity());
+    // Make sure simple requirements are not met when simple component has been created but not added.
+    result = gameCompSimple->hasRequiredComponents(gameObj->identity());
+    VERIFY_FALSE(result);
     
+    result = gameCompSimple->hasRequiredComponents(gameObj);
+    VERIFY_FALSE(result);
+
+    gameObj->addGameComponent(gameCompSimple->identity());
+
     // Make sure all requirements are now met.
     result = gameCompDependent->hasRequiredComponents(gameObj->identity());
     VERIFY_TRUE(result);
@@ -112,4 +120,39 @@ SCENARIO( GameComponent, "Operation/Normal", "unit,game", "Game components know 
     
     result = gameCompSimple->hasRequiredComponents(gameObj);
     VERIFY_FALSE(result);
+}
+
+SCENARIO( GameComponent, "Operation/Normal", "unit,game", "Game components know hierarchical dependencies." )
+{
+    std::string tokenCompSimple = "SimpleComponent";
+    std::string tokenCompAnotherSimple = "AnotherSimpleComponent";
+    std::string tokenCompDependent = "DependentComponent";
+    std::string tokenCompSuperDependent = "SuperDependentComponent";
+    std::string tokenObject = "object1";
+    Game::GameManager * pGameMgr = Game::GameManager::instance();
+    
+    auto gameCompSuperDependent = pGameMgr->getOrCreateGameComponent<Test::TestSuperDependentComponent>(tokenCompSuperDependent);
+    auto gameCompDependent = pGameMgr->getOrCreateGameComponent<Test::TestDependentComponent>(tokenCompDependent);
+    auto gameCompSimple = pGameMgr->getOrCreateGameComponent<Test::TestSimpleComponent>(tokenCompSimple);
+    auto gameCompAnotherSimple = pGameMgr->getOrCreateGameComponent<Test::TestSimpleComponent>(tokenCompAnotherSimple);
+    auto gameObj = pGameMgr->createGameObject<Game::GameObject>(tokenObject);
+    
+    gameObj->addGameComponent(gameCompSuperDependent);
+    gameObj->addGameComponent(gameCompDependent);
+
+    // Make sure requirements are not met when only directly dependant component has been added.
+    auto result = gameCompSuperDependent->hasRequiredComponents(gameObj);
+    VERIFY_FALSE(result);
+    
+    gameObj->addGameComponent(gameCompSimple);
+
+    // Make sure requirements are not still not met.
+    result = gameCompSuperDependent->hasRequiredComponents(gameObj);
+    VERIFY_FALSE(result);
+    
+    gameObj->addGameComponent(gameCompAnotherSimple);
+
+    // Make sure requirements are now met.
+    result = gameCompSuperDependent->hasRequiredComponents(gameObj);
+    VERIFY_TRUE(result);
 }

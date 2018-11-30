@@ -75,12 +75,9 @@ bool GameComponent::hasRequiredComponentsCallback (const std::shared_ptr<GameObj
         for (const auto & token: mDependentComponentTokens)
         {
             auto compId = pGameMgr->getGameComponentId(token);
-            if (!compId)
-            {
-                return false;
-            }
+            auto comp = pGameMgr->getGameComponent<GameComponent>(compId);
             
-            if (!object->hasGameComponent(compId))
+            if (!comp || !comp->hasRequiredComponentsCallback(object))
             {
                 return false;
             }

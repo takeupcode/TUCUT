@@ -677,6 +677,7 @@
 		3EDBEDEC21B07047006DFB23 /* TestActionSystem.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TestActionSystem.h; sourceTree = "<group>"; };
 		3EDBEDED21B08F28006DFB23 /* TestSimpleComponent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TestSimpleComponent.h; sourceTree = "<group>"; };
 		3EDBEDEE21B08F4E006DFB23 /* TestDependentComponent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TestDependentComponent.h; sourceTree = "<group>"; };
+		3EDBEDEF21B0F15D006DFB23 /* TestSuperDependentComponent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TestSuperDependentComponent.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -761,6 +762,7 @@
 				3EDBEDEC21B07047006DFB23 /* TestActionSystem.h */,
 				3EDBEDED21B08F28006DFB23 /* TestSimpleComponent.h */,
 				3EDBEDEE21B08F4E006DFB23 /* TestDependentComponent.h */,
+				3EDBEDEF21B0F15D006DFB23 /* TestSuperDependentComponent.h */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
