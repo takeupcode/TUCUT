@@ -12,7 +12,6 @@
 #include <memory>
 #include <string>
 
-#include "GameComponent.h"
 #include "PropertyContainer.h"
 
 #include "../Identity/Identifiable.h"
@@ -20,6 +19,8 @@
 namespace TUCUT {
 namespace Game {
 
+class GameComponent;
+    
 class GameObject : public std::enable_shared_from_this<GameObject>, public Identity::Identifiable<int>
 {
 public:

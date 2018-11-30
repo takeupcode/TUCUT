@@ -58,9 +58,9 @@ SCENARIO( GameObject, "Operation/Normal", "unit,game", "GameObject can add and r
     
     auto gameObj = pGameMgr->createGameObject<Game::GameObject>(token);
 
-    auto gameComp1 = pGameMgr->getGameComponent<Game::GameComponent>("moveable");
-    auto gameComp2 = pGameMgr->getGameComponent<Game::GameComponent>("drawable");
-    auto gameComp3 = pGameMgr->getGameComponent<Game::GameComponent>("controllable");
+    auto gameComp1 = pGameMgr->getOrCreateGameComponent<Game::GameComponent>("moveable");
+    auto gameComp2 = pGameMgr->getOrCreateGameComponent<Game::GameComponent>("drawable");
+    auto gameComp3 = pGameMgr->getOrCreateGameComponent<Game::GameComponent>("controllable");
 
     auto result = gameObj->addGameComponent(1);
     VERIFY_TRUE(result);
@@ -103,8 +103,8 @@ SCENARIO( GameObject, "Operation/Normal", "unit,game", "GameObject notifies comp
 
     auto gameObj = pGameMgr->createGameObject<Game::GameObject>(token);
     
-    auto gameComp1 = pGameMgr->getGameComponent<Game::GameComponent>("moveable");
-    auto gameComp2 = pGameMgr->getGameComponent<Game::GameComponent>("drawable");
+    auto gameComp1 = pGameMgr->getOrCreateGameComponent<Game::GameComponent>("moveable");
+    auto gameComp2 = pGameMgr->getOrCreateGameComponent<Game::GameComponent>("drawable");
 
     auto result = gameObj->addGameComponent(gameComp1->identity());
     VERIFY_TRUE(result);
@@ -134,7 +134,7 @@ SCENARIO( GameObject, "Operation/Corner", "unit,game", "GameObject knows invalid
     
     auto gameObj = pGameMgr->createGameObject<Game::GameObject>(token);
     
-    auto gameComp1 = pGameMgr->getGameComponent<Game::GameComponent>("moveable");
+    auto gameComp1 = pGameMgr->getOrCreateGameComponent<Game::GameComponent>("moveable");
     
     auto result = gameObj->addGameComponent(gameComp1);
     VERIFY_TRUE(result);

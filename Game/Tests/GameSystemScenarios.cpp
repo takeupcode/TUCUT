@@ -22,7 +22,7 @@ SCENARIO( GameSystem, "Construction/Normal", "unit,game", "GameSystem can be con
     std::string token = "render";
     Game::GameManager * pGameMgr = Game::GameManager::instance();
     
-    auto gameSys = pGameMgr->getGameSystem<Game::GameSystem>(token);
+    auto gameSys = pGameMgr->getOrCreateGameSystem<Game::GameSystem>(token);
 }
 
 SCENARIO( GameSystem, "Operation/Normal", "unit,game", "GameSystem can get shared pointer." )
@@ -30,7 +30,7 @@ SCENARIO( GameSystem, "Operation/Normal", "unit,game", "GameSystem can get share
     std::string token = "render";
     Game::GameManager * pGameMgr = Game::GameManager::instance();
     
-    auto gameSys = pGameMgr->getGameSystem<Game::GameSystem>(token);
+    auto gameSys = pGameMgr->getOrCreateGameSystem<Game::GameSystem>(token);
 
     auto sharedPtr = gameSys->getSharedGameSystem();
     
@@ -43,7 +43,7 @@ SCENARIO( GameSystem, "Construction/Normal", "unit,game", "Derived GameSystem ca
     std::string token = "testAction";
     Game::GameManager * pGameMgr = Game::GameManager::instance();
     
-    auto gameSys = pGameMgr->getGameSystem<Test::TestActionSystem>(token);
+    auto gameSys = pGameMgr->getOrCreateGameSystem<Test::TestActionSystem>(token);
 }
 
 SCENARIO( GameSystem, "Operation/Normal", "unit,game", "Derived GameSystem can get shared pointer." )
@@ -51,7 +51,7 @@ SCENARIO( GameSystem, "Operation/Normal", "unit,game", "Derived GameSystem can g
     std::string token = "testAction";
     Game::GameManager * pGameMgr = Game::GameManager::instance();
     
-    auto gameSys = pGameMgr->getGameSystem<Test::TestActionSystem>(token);
+    auto gameSys = pGameMgr->getOrCreateGameSystem<Test::TestActionSystem>(token);
 
     auto sharedPtr = gameSys->getSharedTestActionSystem();
     
@@ -73,9 +73,9 @@ SCENARIO( GameSystem, "Operation/Normal", "unit,game", "Derived GameSystem is no
     std::string tokenAction = "moveAction";
     Game::GameManager * pGameMgr = Game::GameManager::instance();
     
-    auto gameSys = pGameMgr->getGameSystem<Test::TestActionSystem>(tokenSystem);
-    auto gameComp = pGameMgr->getGameComponent<Game::GameComponent>(tokenComp);
-    auto gameActionId = pGameMgr->getGameAction(tokenAction);
+    auto gameSys = pGameMgr->getOrCreateGameSystem<Test::TestActionSystem>(tokenSystem);
+    auto gameComp = pGameMgr->getOrCreateGameComponent<Game::GameComponent>(tokenComp);
+    auto gameActionId = pGameMgr->getOrCreateGameAction(tokenAction);
     
     pGameMgr->queueGameAction(gameComp->identity(), gameActionId);
     pGameMgr->update();

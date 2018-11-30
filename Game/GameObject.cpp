@@ -7,6 +7,7 @@
 //
 
 #include "GameObject.h"
+#include "GameComponent.h"
 #include "GameManager.h"
 
 namespace TUCUT {

@@ -11,18 +11,24 @@
 
 #include <memory>
 #include <string>
+#include <vector>
 
 #include "../Identity/Identifiable.h"
 
 namespace TUCUT {
 namespace Game {
 
+class GameObject;
+    
 class GameComponent : public std::enable_shared_from_this<GameComponent>, public Identity::Identifiable<int>
 {
 public:
     std::shared_ptr<GameComponent> getSharedGameComponent ();
     
     virtual ~GameComponent () = default;
+    
+    bool hasRequiredComponents (int objectId) const;
+    bool hasRequiredComponents (const std::shared_ptr<GameObject> & object) const;
 
 protected:
     friend class GameManager;
@@ -34,6 +40,13 @@ protected:
     { }
     
     virtual void initialize ();
+    
+    virtual bool hasRequiredComponentsCallback (const std::shared_ptr<GameObject> & object) const;
+    
+    std::vector<std::string> mDependentComponentTokens;
+
+private:
+    bool hasRequiredComponentsImpl (const std::shared_ptr<GameObject> & object, bool checkObject) const;
 };
     
 } // namespace Game

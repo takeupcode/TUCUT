@@ -100,7 +100,7 @@ public:
     // This method will try to get a component by token and will create a new component if not found.
     // It will return nullptr if the requested type T is not correct.
     template <typename T>
-    std::shared_ptr<T> getGameComponent (const std::string & token)
+    std::shared_ptr<T> getOrCreateGameComponent (const std::string & token)
     {
         auto gameComponentId = getGameComponentId(token);
         if (gameComponentId == 0)
@@ -118,6 +118,8 @@ public:
         return std::dynamic_pointer_cast<T>(mLoadedGameComponents[gameComponentId]);
     }
 
+    int getGameComponentId (const std::string & token) const;
+    
     bool hasGameComponent (int identity) const;
 
     bool hasGameComponent (const std::string & token) const;
@@ -144,7 +146,7 @@ public:
     // This method will try to get a system by token and will create a new system if not found.
     // It will return nullptr if the requested type T is not correct.
     template <typename T>
-    std::shared_ptr<T> getGameSystem (const std::string & token)
+    std::shared_ptr<T> getOrCreateGameSystem (const std::string & token)
     {
         auto gameSystemId = getGameSystemId(token);
         if (gameSystemId == 0)
@@ -162,6 +164,8 @@ public:
         return std::dynamic_pointer_cast<T>(mLoadedGameSystems[gameSystemId]);
     }
     
+    int getGameSystemId (const std::string & token) const;
+
     bool hasGameSystem (int identity) const;
     
     bool hasGameSystem (const std::string & token) const;
@@ -170,7 +174,9 @@ public:
     std::string getGameAction (int identity) const;
     
     // This method will try to get an action by token and will create a new action if not found.
-    int getGameAction (const std::string & token);
+    int getOrCreateGameAction (const std::string & token);
+    
+    int getGameActionId (const std::string & token) const;
     
     bool hasGameAction (int identity) const;
     
@@ -222,13 +228,10 @@ private:
     { }
     
     int createGameComponentId (const std::string & token);
-    int getGameComponentId (const std::string & token) const;
     
     int createGameSystemId (const std::string & token);
-    int getGameSystemId (const std::string & token) const;
 
     int createGameActionId (const std::string & token);
-    int getGameActionId (const std::string & token) const;
 
     int mNextGameObjectId;
     int mNextGameComponentId;

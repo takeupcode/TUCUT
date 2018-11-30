@@ -221,7 +221,7 @@ std::string GameManager::getGameAction (int identity) const
     return "";
 }
 
-int GameManager::getGameAction (const std::string & token)
+int GameManager::getOrCreateGameAction (const std::string & token)
 {
     auto gameActionId = getGameActionId(token);
     if (gameActionId == 0)

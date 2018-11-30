@@ -92,23 +92,26 @@ SCENARIO( GameManager, "Operation/Normal", "unit,game", "GameManager can add Gam
     std::string token1 = "token1";
     std::string token2 = "token2";
     Game::GameManager * pGameMgr = Game::GameManager::instance();
-    
+
     auto result = pGameMgr->hasGameComponent(token1);
     VERIFY_FALSE(result);
 
-    auto gameComp1 = pGameMgr->getGameComponent<Game::GameComponent>(token1);
+    auto gameComp1 = pGameMgr->getOrCreateGameComponent<Game::GameComponent>(token1);
     VERIFY_TRUE(gameComp1 != nullptr);
     
+    auto gameCompId = pGameMgr->getGameComponentId(token1);
+    VERIFY_EQUAL(gameComp1->identity(), gameCompId);
+
     result = pGameMgr->hasGameComponent(gameComp1->identity());
     VERIFY_TRUE(result);
     
     result = pGameMgr->hasGameComponent(token1);
     VERIFY_TRUE(result);
 
-    auto gameComp2 = pGameMgr->getGameComponent<Game::GameComponent>(token2);
+    auto gameComp2 = pGameMgr->getOrCreateGameComponent<Game::GameComponent>(token2);
     VERIFY_TRUE(gameComp2 != nullptr);
     
-    auto gameComp3 = pGameMgr->getGameComponent<Game::GameComponent>(token1);
+    auto gameComp3 = pGameMgr->getOrCreateGameComponent<Game::GameComponent>(token1);
     VERIFY_TRUE(gameComp3 != nullptr);
 
     VERIFY_EQUAL(3, static_cast<int>(gameComp1.use_count()));
@@ -129,7 +132,7 @@ SCENARIO( GameManager, "Operation/Corner", "unit,game", "GameManager knows inval
     std::string token = "state";
     Game::GameManager * pGameMgr = Game::GameManager::instance();
     
-    auto gameComp1 = pGameMgr->getGameComponent<Game::GameComponent>(token);
+    auto gameComp1 = pGameMgr->getOrCreateGameComponent<Game::GameComponent>(token);
     VERIFY_TRUE(gameComp1 != nullptr);
     
     auto gameComp2 = pGameMgr->getGameComponent<Game::GameComponent>(static_cast<int>(0));
@@ -138,6 +141,9 @@ SCENARIO( GameManager, "Operation/Corner", "unit,game", "GameManager knows inval
     auto gameComp3 = pGameMgr->getGameComponent<Game::GameComponent>(-1);
     VERIFY_TRUE(gameComp3 == nullptr);
     
+    auto gameCompId = pGameMgr->getGameComponentId("unknown");
+    VERIFY_EQUAL(0, gameCompId);
+
     auto result = pGameMgr->hasGameComponent(0);
     VERIFY_FALSE(result);
     
@@ -186,9 +192,12 @@ SCENARIO( GameManager, "Operation/Normal", "unit,game", "GameManager can add act
     auto result = pGameMgr->hasGameAction(token1);
     VERIFY_FALSE(result);
     
-    auto gameActionId = pGameMgr->getGameAction(token1);
+    auto gameActionId = pGameMgr->getOrCreateGameAction(token1);
     VERIFY_TRUE(gameActionId != 0);
     
+    auto gameActionId2 = pGameMgr->getGameActionId(token1);
+    VERIFY_EQUAL(gameActionId, gameActionId2);
+
     result = pGameMgr->hasGameAction(gameActionId);
     VERIFY_TRUE(result);
     
@@ -210,7 +219,7 @@ SCENARIO( GameManager, "Operation/Corner", "unit,game", "GameManager knows inval
     bool exceptionThrown = false;
     try
     {
-        pGameMgr->getGameAction(token);
+        pGameMgr->getOrCreateGameAction(token);
     } catch (const std::runtime_error &)
     {
         exceptionThrown = true;
@@ -222,11 +231,14 @@ SCENARIO( GameManager, "Operation/Corner", "unit,game", "GameManager knows inval
 
     gameActionToken = pGameMgr->getGameAction(-1);
     VERIFY_TRUE(gameActionToken.empty());
+    
+    auto gameActionId = pGameMgr->getGameActionId("unknown");
+    VERIFY_EQUAL(0, gameActionId);
 
-    auto result = pGameMgr->hasGameComponent(0);
+    auto result = pGameMgr->hasGameAction(0);
     VERIFY_FALSE(result);
     
-    result = pGameMgr->hasGameComponent(-1);
+    result = pGameMgr->hasGameAction(-1);
     VERIFY_FALSE(result);
 }
 
@@ -239,19 +251,22 @@ SCENARIO( GameManager, "Operation/Normal", "unit,game", "GameManager can add Gam
     auto result = pGameMgr->hasGameSystem(token1);
     VERIFY_FALSE(result);
     
-    auto gameSys1 = pGameMgr->getGameSystem<Game::GameSystem>(token1);
+    auto gameSys1 = pGameMgr->getOrCreateGameSystem<Game::GameSystem>(token1);
     VERIFY_TRUE(gameSys1 != nullptr);
     
+    auto gameSysId = pGameMgr->getGameSystemId(token1);
+    VERIFY_EQUAL(gameSys1->identity(), gameSysId);
+
     result = pGameMgr->hasGameSystem(gameSys1->identity());
     VERIFY_TRUE(result);
     
     result = pGameMgr->hasGameSystem(token1);
     VERIFY_TRUE(result);
     
-    auto gameSys2 = pGameMgr->getGameSystem<Game::GameSystem>(token2);
+    auto gameSys2 = pGameMgr->getOrCreateGameSystem<Game::GameSystem>(token2);
     VERIFY_TRUE(gameSys2 != nullptr);
     
-    auto gameSys3 = pGameMgr->getGameSystem<Game::GameSystem>(token1);
+    auto gameSys3 = pGameMgr->getOrCreateGameSystem<Game::GameSystem>(token1);
     VERIFY_TRUE(gameSys3 != nullptr);
     
     VERIFY_EQUAL(3, static_cast<int>(gameSys1.use_count()));
@@ -272,7 +287,7 @@ SCENARIO( GameManager, "Operation/Corner", "unit,game", "GameManager knows inval
     std::string token = "state";
     Game::GameManager * pGameMgr = Game::GameManager::instance();
     
-    auto gameSys1 = pGameMgr->getGameSystem<Game::GameSystem>(token);
+    auto gameSys1 = pGameMgr->getOrCreateGameSystem<Game::GameSystem>(token);
     VERIFY_TRUE(gameSys1 != nullptr);
     
     auto gameSys2 = pGameMgr->getGameSystem<Game::GameSystem>(static_cast<int>(0));
@@ -281,6 +296,9 @@ SCENARIO( GameManager, "Operation/Corner", "unit,game", "GameManager knows inval
     auto gameSys3 = pGameMgr->getGameSystem<Game::GameSystem>(-1);
     VERIFY_TRUE(gameSys3 == nullptr);
     
+    auto gameSysId = pGameMgr->getGameSystemId("unknown");
+    VERIFY_EQUAL(0, gameSysId);
+
     auto result = pGameMgr->hasGameSystem(0);
     VERIFY_FALSE(result);
     
