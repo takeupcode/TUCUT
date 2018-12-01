@@ -33,8 +33,6 @@ public:
 protected:
     friend class GameManager;
     
-    static std::shared_ptr<GameSystem> createSharedGameSystem (std::string token, int identity);
-    
     GameSystem (const std::string & token, int identity)
     : Identifiable(token, identity)
     { }

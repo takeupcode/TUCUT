@@ -42,7 +42,10 @@ public:
     std::shared_ptr<GameObject> createGameObject (const std::string & token)
     {
         // This will be an instance of T but a pointer to the base GameObject class.
-        auto gameObj = T::createSharedGameObject(token, mNextGameObjectId);
+        auto gameObj = std::shared_ptr<GameObject>(new T(token, mNextGameObjectId));
+        
+        gameObj->initialize();
+
         auto result = mGameObjects.try_emplace(mNextGameObjectId, gameObj);
         if (!result.second)
         {
@@ -107,7 +110,10 @@ public:
         {
             gameComponentId = createGameComponentId(token);
             // This will be an instance of T but a pointer to the base GameComponent class.
-            auto gameComponent = T::createSharedGameComponent(token, gameComponentId);
+            auto gameComponent = std::shared_ptr<GameComponent>(new T(token, gameComponentId));
+            
+            gameComponent->initialize();
+
             mLoadedGameComponents[gameComponentId] = gameComponent;
             
             // We can be sure this cast will work.
@@ -153,7 +159,10 @@ public:
         {
             gameSystemId = createGameSystemId(token);
             // This will be an instance of T but a pointer to the base GameSystem class.
-            auto gameSystem = T::createSharedGameSystem(token, gameSystemId);
+            auto gameSystem = std::shared_ptr<GameSystem>(new T(token, gameSystemId));
+            
+            gameSystem->initialize();
+            
             mLoadedGameSystems[gameSystemId] = gameSystem;
             
             // We can be sure this cast will work.

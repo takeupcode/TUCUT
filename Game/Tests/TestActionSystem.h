@@ -54,15 +54,6 @@ public:
 protected:
     friend class Game::GameManager;
     
-    static std::shared_ptr<GameSystem> createSharedGameSystem (std::string token, int identity)
-    {
-        auto result = std::shared_ptr<GameSystem>(new TestActionSystem(token, identity));
-        
-        std::static_pointer_cast<TestActionSystem>(result)->initialize();
-        
-        return result;
-    }
-    
     TestActionSystem (const std::string & token, int identity)
     : GameSystem(token, identity), mNotified(false), mObjectId(0), mActionId(0)
     { }

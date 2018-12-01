@@ -14,15 +14,6 @@ namespace Game {
 void GameSystem::initialize ()
 { }
 
-std::shared_ptr<GameSystem> GameSystem::createSharedGameSystem (std::string token, int identity)
-{
-    auto result = std::shared_ptr<GameSystem>(new GameSystem(token, identity));
-    
-    result->initialize();
-    
-    return result;
-}
-
 std::shared_ptr<GameSystem> GameSystem::getSharedGameSystem ()
 {
     return shared_from_this();

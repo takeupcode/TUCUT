@@ -25,15 +25,6 @@ public:
 protected:
     friend class Game::GameManager;
     
-    static std::shared_ptr<GameComponent> createSharedGameComponent (std::string token, int identity)
-    {
-        auto result = std::shared_ptr<GameComponent>(new TestSuperDependentComponent(token, identity));
-        
-        std::static_pointer_cast<TestSuperDependentComponent>(result)->initialize();
-        
-        return result;
-    }
-    
     TestSuperDependentComponent (const std::string & token, int identity)
     : GameComponent(token, identity)
     {
