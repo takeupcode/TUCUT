@@ -14,19 +14,12 @@
 namespace TUCUT {
 namespace Test {
         
-    class TestActionSystem : public Game::GameSystem
+class TestActionSystem : public Game::GameSystem
 {
 public:
     std::shared_ptr<TestActionSystem> getSharedTestActionSystem ()
     {
         return std::static_pointer_cast<TestActionSystem>(shared_from_this());
-    }
-    
-    void onAction (int objectId, int actionId) override
-    {
-        mNotified = true;
-        mObjectId = objectId;
-        mActionId = actionId;
     }
     
     bool notified () const
@@ -58,6 +51,13 @@ protected:
     : GameSystem(token, identity), mNotified(false), mObjectId(0), mActionId(0)
     { }
     
+    void onAction (int objectId, int actionId) override
+    {
+        mNotified = true;
+        mObjectId = objectId;
+        mActionId = actionId;
+    }
+
 private:
     bool mNotified;
     int mObjectId;

@@ -11,24 +11,24 @@
 
 #include <memory>
 #include <string>
+#include <vector>
 
+#include "GameObject.h"
 #include "../Identity/Identifiable.h"
+#include "../Event/EventSubscriber.h"
 
 namespace TUCUT {
 namespace Game {
     
-class GameSystem : public std::enable_shared_from_this<GameSystem>, public Identity::Identifiable<int>
+class GameSystem : public std::enable_shared_from_this<GameSystem>, public Identity::Identifiable<int>,
+    public Event::EventSubscriber<Game::GameObject &>
 {
 public:
     std::shared_ptr<GameSystem> getSharedGameSystem ();
     
     virtual ~GameSystem () = default;
-    
-    virtual void update ()
-    { }
-    
-    virtual void onAction (int objectId, int actionId)
-    { }
+
+    bool hasGameObject (int identity) const;
 
 protected:
     friend class GameManager;
@@ -38,6 +38,21 @@ protected:
     { }
     
     virtual void initialize ();
+
+    virtual void update ()
+    { }
+    
+    virtual void onAction (int objectId, int actionId)
+    { }
+
+    void notify (int id, Game::GameObject & gameObject) override;
+    
+    std::vector<std::string> mRequiredComponentTokens;
+
+private:
+    using GameObjectMap = std::unordered_map<int, std::shared_ptr<GameObject>>;
+    
+    GameObjectMap mGameObjects;
 };
     
 } // namespace Game

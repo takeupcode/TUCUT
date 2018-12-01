@@ -60,10 +60,10 @@ bool GameComponent::hasRequiredComponentsCallback (const std::shared_ptr<GameObj
         return false;
     }
     
-    if (!mDependentComponentTokens.empty())
+    if (!mRequiredComponentTokens.empty())
     {
         Game::GameManager * pGameMgr = Game::GameManager::instance();
-        for (const auto & token: mDependentComponentTokens)
+        for (const auto & token: mRequiredComponentTokens)
         {
             auto compId = pGameMgr->getGameComponentId(token);
             auto comp = pGameMgr->getGameComponent<GameComponent>(compId);

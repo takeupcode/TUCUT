@@ -22,7 +22,7 @@ public:
     : mNotified(false), mId(0)
     { }
     
-    virtual void notify (int id, Game::GameObject &)
+    void notify (int id, Game::GameObject &) override
     {
         mNotified = true;
         mId = id;

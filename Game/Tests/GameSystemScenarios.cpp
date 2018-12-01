@@ -92,3 +92,27 @@ SCENARIO( GameSystem, "Operation/Normal", "unit,game", "Derived GameSystem is no
     VERIFY_EQUAL(0, gameSys->objectId());
     VERIFY_EQUAL(0, gameSys->actionId());
 }
+
+SCENARIO( GameSystem, "Operation/Normal", "unit,game", "GameSystem adds objects." )
+{
+    std::string tokenSystem = "actionSystem";
+    std::string tokenComp = "player";
+    std::string tokenObject = "object";
+    Game::GameManager * pGameMgr = Game::GameManager::instance();
+    
+    auto gameSys = pGameMgr->getOrCreateGameSystem<Test::TestActionSystem>(tokenSystem);
+    auto gameComp = pGameMgr->getOrCreateGameComponent<Game::GameComponent>(tokenComp);
+    auto gameObj = pGameMgr->createGameObject<Game::GameObject>(tokenObject);
+    
+    VERIFY_FALSE(gameSys->hasGameObject(gameObj->identity()));
+    
+    // The object needs to be modified in order to trigger the addition to the system.
+    gameObj->addGameComponent(gameComp);
+    
+    VERIFY_TRUE(gameSys->hasGameObject(gameObj->identity()));
+    
+    // Since the base GameSystem class has no required components, the object should stay in the system.
+    gameObj->removeGameComponent(gameComp);
+    
+    VERIFY_TRUE(gameSys->hasGameObject(gameObj->identity()));
+}

@@ -28,7 +28,7 @@ protected:
     TestDependentComponent (const std::string & token, int identity)
     : GameComponent(token, identity)
     {
-        mDependentComponentTokens.push_back("SimpleComponent");
+        mRequiredComponentTokens.push_back("SimpleComponent");
     }
 };
         

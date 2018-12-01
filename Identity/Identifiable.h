@@ -170,11 +170,16 @@ public:
     virtual ~Identifiable ()
     { }
     
-    IdToken<T> idToken () const
+    IdToken<T> idToken ()
     {
         return *mIdToken;
     }
     
+    IdToken<T> & idToken () const
+    {
+        return *mIdToken;
+    }
+
     std::string token () const
     {
         return mIdToken->token();
@@ -246,11 +251,16 @@ public:
     virtual ~Identifiable ()
     { }
     
-    IdToken<std::string> idToken () const
+    IdToken<std::string> idToken ()
     {
         return *mIdToken;
     }
     
+    IdToken<std::string> & idToken () const
+    {
+        return *mIdToken;
+    }
+
     std::string token () const
     {
         return mIdToken->token();

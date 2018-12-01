@@ -128,31 +128,53 @@ SCENARIO( GameComponent, "Operation/Normal", "unit,game", "Game components know 
     std::string tokenCompAnotherSimple = "AnotherSimpleComponent";
     std::string tokenCompDependent = "DependentComponent";
     std::string tokenCompSuperDependent = "SuperDependentComponent";
-    std::string tokenObject = "object1";
+    std::string tokenObject1 = "object1";
+    std::string tokenObject2 = "object2";
     Game::GameManager * pGameMgr = Game::GameManager::instance();
     
     auto gameCompSuperDependent = pGameMgr->getOrCreateGameComponent<Test::TestSuperDependentComponent>(tokenCompSuperDependent);
     auto gameCompDependent = pGameMgr->getOrCreateGameComponent<Test::TestDependentComponent>(tokenCompDependent);
     auto gameCompSimple = pGameMgr->getOrCreateGameComponent<Test::TestSimpleComponent>(tokenCompSimple);
     auto gameCompAnotherSimple = pGameMgr->getOrCreateGameComponent<Test::TestSimpleComponent>(tokenCompAnotherSimple);
-    auto gameObj = pGameMgr->createGameObject<Game::GameObject>(tokenObject);
-    
-    gameObj->addGameComponent(gameCompSuperDependent);
-    gameObj->addGameComponent(gameCompDependent);
+    auto gameObj1 = pGameMgr->createGameObject<Game::GameObject>(tokenObject1);
+    auto gameObj2 = pGameMgr->createGameObject<Game::GameObject>(tokenObject2);
 
-    // Make sure requirements are not met when only directly dependant component has been added.
-    auto result = gameCompSuperDependent->hasRequiredComponents(gameObj);
+    gameObj1->addGameComponent(gameCompSuperDependent);
+    gameObj1->addGameComponent(gameCompDependent);
+
+    // Make sure requirements are not met when only directly required component has been added.
+    auto result = gameCompSuperDependent->hasRequiredComponents(gameObj1);
     VERIFY_FALSE(result);
     
-    gameObj->addGameComponent(gameCompSimple);
+    gameObj1->addGameComponent(gameCompSimple);
 
     // Make sure requirements are not still not met.
-    result = gameCompSuperDependent->hasRequiredComponents(gameObj);
+    result = gameCompSuperDependent->hasRequiredComponents(gameObj1);
     VERIFY_FALSE(result);
     
-    gameObj->addGameComponent(gameCompAnotherSimple);
+    gameObj1->addGameComponent(gameCompAnotherSimple);
 
     // Make sure requirements are now met.
-    result = gameCompSuperDependent->hasRequiredComponents(gameObj);
+    result = gameCompSuperDependent->hasRequiredComponents(gameObj1);
+    VERIFY_TRUE(result);
+
+    // Do the same test but add simple components in different order for object2
+    gameObj2->addGameComponent(gameCompSuperDependent);
+    gameObj2->addGameComponent(gameCompDependent);
+    
+    // Make sure requirements are not met when only directly required component has been added.
+    result = gameCompSuperDependent->hasRequiredComponents(gameObj2);
+    VERIFY_FALSE(result);
+    
+    gameObj2->addGameComponent(gameCompAnotherSimple);
+    
+    // Make sure requirements are not still not met.
+    result = gameCompSuperDependent->hasRequiredComponents(gameObj2);
+    VERIFY_FALSE(result);
+    
+    gameObj2->addGameComponent(gameCompSimple);
+    
+    // Make sure requirements are now met.
+    result = gameCompSuperDependent->hasRequiredComponents(gameObj2);
     VERIFY_TRUE(result);
 }

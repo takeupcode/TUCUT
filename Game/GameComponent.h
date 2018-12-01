@@ -41,7 +41,7 @@ protected:
     
     virtual bool hasRequiredComponentsCallback (const std::shared_ptr<GameObject> & object) const;
     
-    std::vector<std::string> mDependentComponentTokens;
+    std::vector<std::string> mRequiredComponentTokens;
 
 private:
     bool hasRequiredComponentsImpl (const std::shared_ptr<GameObject> & object, bool checkObject) const;
