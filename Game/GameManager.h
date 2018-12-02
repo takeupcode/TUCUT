@@ -193,6 +193,18 @@ public:
     
     void queueGameAction (int objectId, int actionId);
 
+    // This method will try to get an ability by id and return an empty string if not found.
+    std::string getGameAbility (int identity) const;
+    
+    // This method will try to get an ability by token and will create a new ability if not found.
+    int getOrCreateGameAbility (const std::string & token);
+    
+    int getGameAbilityId (const std::string & token) const;
+    
+    bool hasGameAbility (int identity) const;
+    
+    bool hasGameAbility (const std::string & token) const;
+
     void onGameObjectComponentChanged (const std::shared_ptr<GameObject> & gameObj) const
     {
         if (hasGameObject(gameObj->identity()))
@@ -228,9 +240,12 @@ private:
     using GameActionVector = std::vector<std::string>;
     using GameActionQueue = std::queue<int>;
     using GameObjectActionMap = std::unordered_map<int, GameActionQueue>;
+    using GameAbilityMap = std::unordered_map<std::string, int>;
+    using GameAbilityVector = std::vector<std::string>;
 
     GameManager ()
-    : mNextGameObjectId(1), mNextGameComponentId(1), mNextGameActionId(1), mNextGameSystemId(1),
+    : mNextGameObjectId(1), mNextGameComponentId(1), mNextGameSystemId(1),
+    mNextGameActionId(1), mNextGameAbilityId(1),
     mGameObjectCreated(new GameObjectCreatedEvent(GameObjectCreatedEventId)),
     mGameObjectRemoving(new GameObjectRemovingEvent(GameObjectRemovingEventId)),
     mGameObjectComponent(new GameObjectComponentEvent(GameObjectComponentEventId))
@@ -242,10 +257,13 @@ private:
 
     int createGameActionId (const std::string & token);
 
+    int createGameAbilityId (const std::string & token);
+
     int mNextGameObjectId;
     int mNextGameComponentId;
     int mNextGameSystemId;
     int mNextGameActionId;
+    int mNextGameAbilityId;
     GameObjectMap mGameObjects;
     GameComponentMap mRegisteredGameComponents;
     GameComponentVector mLoadedGameComponents;
@@ -254,6 +272,8 @@ private:
     GameActionMap mRegisteredGameActions;
     GameActionVector mLoadedGameActions;
     GameObjectActionMap mGameObjectActions;
+    GameAbilityMap mRegisteredGameAbilities;
+    GameAbilityVector mLoadedGameAbilities;
     std::unique_ptr<GameObjectCreatedEvent> mGameObjectCreated;
     std::unique_ptr<GameObjectRemovingEvent> mGameObjectRemoving;
     std::unique_ptr<GameObjectComponentEvent> mGameObjectComponent;

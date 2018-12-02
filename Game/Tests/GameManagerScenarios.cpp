@@ -302,3 +302,61 @@ SCENARIO( GameManager, "Operation/Corner", "unit,game", "GameManager knows inval
     auto gameSys4 = pGameMgr->getGameSystem<Game::GameSystem>(gameSys1->identity());
     VERIFY_TRUE(gameSys4 != nullptr);
 }
+
+SCENARIO( GameManager, "Operation/Normal", "unit,game", "GameManager can add abilities." )
+{
+    std::string token1 = "token1";
+    Game::GameManager * pGameMgr = Game::GameManager::instance();
+    
+    auto result = pGameMgr->hasGameAbility(token1);
+    VERIFY_FALSE(result);
+    
+    auto gameAbilityId = pGameMgr->getOrCreateGameAbility(token1);
+    VERIFY_TRUE(gameAbilityId != 0);
+    
+    auto gameAbilityId2 = pGameMgr->getGameAbilityId(token1);
+    VERIFY_EQUAL(gameAbilityId, gameAbilityId2);
+    
+    result = pGameMgr->hasGameAbility(gameAbilityId);
+    VERIFY_TRUE(result);
+    
+    result = pGameMgr->hasGameAbility(token1);
+    VERIFY_TRUE(result);
+    
+    auto gameAbilityToken = pGameMgr->getGameAbility(10);
+    VERIFY_TRUE(gameAbilityToken.empty());
+    
+    result = pGameMgr->hasGameAbility(10);
+    VERIFY_FALSE(result);
+}
+
+SCENARIO( GameManager, "Operation/Corner", "unit,game", "GameManager knows invalid ability identities." )
+{
+    std::string token = "";
+    Game::GameManager * pGameMgr = Game::GameManager::instance();
+    
+    bool exceptionThrown = false;
+    try
+    {
+        pGameMgr->getOrCreateGameAbility(token);
+    } catch (const std::runtime_error &)
+    {
+        exceptionThrown = true;
+    }
+    VERIFY_TRUE(exceptionThrown);
+    
+    auto gameAbilityToken = pGameMgr->getGameAbility(static_cast<int>(0));
+    VERIFY_TRUE(gameAbilityToken.empty());
+    
+    gameAbilityToken = pGameMgr->getGameAbility(-1);
+    VERIFY_TRUE(gameAbilityToken.empty());
+    
+    auto gameAbilityId = pGameMgr->getGameAbilityId("unknown");
+    VERIFY_EQUAL(0, gameAbilityId);
+    
+    auto result = pGameMgr->hasGameAbility(0);
+    VERIFY_FALSE(result);
+    
+    result = pGameMgr->hasGameAbility(-1);
+    VERIFY_FALSE(result);
+}

@@ -33,6 +33,13 @@ void GameManager::deinitialize ()
     mGameObjects.clear();
     mRegisteredGameComponents.clear();
     mLoadedGameComponents.clear();
+    mRegisteredGameSystems.clear();
+    mLoadedGameSystems.clear();
+    mRegisteredGameActions.clear();
+    mLoadedGameActions.clear();
+    mGameObjectActions.clear();
+    mRegisteredGameAbilities.clear();
+    mLoadedGameAbilities.clear();
 }
     
 int GameManager::createGameComponentId (const std::string & token)
@@ -120,6 +127,35 @@ int GameManager::getGameActionId (const std::string & token) const
     }
     
     return gameActionMapResult->second;
+}
+
+int GameManager::createGameAbilityId (const std::string & token)
+{
+    if (token.empty())
+    {
+        throw std::runtime_error("Unable to create game ability id");
+    }
+    
+    mRegisteredGameAbilities[token] = mNextGameAbilityId;
+    
+    // Make sure there's always a matching entry in the loaded abilities vector.
+    while (mLoadedGameAbilities.size() <= static_cast<std::size_t>(mNextGameAbilityId))
+    {
+        mLoadedGameAbilities.push_back("");
+    }
+    
+    return mNextGameAbilityId++;
+}
+
+int GameManager::getGameAbilityId (const std::string & token) const
+{
+    auto gameAbilityMapResult = mRegisteredGameAbilities.find(token);
+    if (gameAbilityMapResult == mRegisteredGameAbilities.end())
+    {
+        return 0;
+    }
+    
+    return gameAbilityMapResult->second;
 }
 
 bool GameManager::hasGameObject (int identity) const
@@ -268,7 +304,60 @@ void GameManager::queueGameAction (int objectId, int actionId)
 
     mGameObjectActions[objectId].push(actionId);
 }
+
+std::string GameManager::getGameAbility (int identity) const
+{
+    if (identity < 1)
+    {
+        return "";
+    }
     
+    if (mLoadedGameAbilities.size() > static_cast<std::size_t>(identity))
+    {
+        return mLoadedGameAbilities[identity];
+    }
+    
+    return "";
+}
+
+int GameManager::getOrCreateGameAbility (const std::string & token)
+{
+    auto gameAbilityId = getGameAbilityId(token);
+    if (gameAbilityId == 0)
+    {
+        gameAbilityId = createGameAbilityId(token);
+        mLoadedGameAbilities[gameAbilityId] = token;
+    }
+    
+    return gameAbilityId;
+}
+
+bool GameManager::hasGameAbility (int identity) const
+{
+    if (identity < 1)
+    {
+        return false;
+    }
+    
+    if (mLoadedGameAbilities.size() > static_cast<std::size_t>(identity))
+    {
+        return !mLoadedGameAbilities[identity].empty();
+    }
+    
+    return false;
+}
+
+bool GameManager::hasGameAbility (const std::string & token) const
+{
+    auto gameAbilityId = getGameAbilityId(token);
+    if (gameAbilityId == 0)
+    {
+        return false;
+    }
+    
+    return hasGameAbility(gameAbilityId);
+}
+
 void GameManager::update ()
 {
     auto actionQueueIter = mGameObjectActions.begin();
