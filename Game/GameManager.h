@@ -26,11 +26,11 @@ class GameManager
 public:
     const static int GameObjectCreatedEventId = 1;
     const static int GameObjectRemovingEventId = 2;
-    const static int GameObjectChangedEventId = 3;
+    const static int GameObjectComponentEventId = 3;
 
     using GameObjectCreatedEvent = Event::EventPublisher<GameObject &>;
     using GameObjectRemovingEvent = Event::EventPublisher<GameObject &>;
-    using GameObjectChangedEvent = Event::EventPublisher<GameObject &>;
+    using GameObjectComponentEvent = Event::EventPublisher<GameObject &>;
 
     static GameManager * instance ();
     
@@ -193,11 +193,11 @@ public:
     
     void queueGameAction (int objectId, int actionId);
 
-    void onGameObjectChanged (GameObject & gameObj) const
+    void onGameObjectComponentChanged (GameObject & gameObj) const
     {
         if (hasGameObject(gameObj.identity()))
         {
-            mGameObjectChanged->signal(gameObj);
+            mGameObjectComponent->signal(gameObj);
         }
     }
 
@@ -211,9 +211,9 @@ public:
         return mGameObjectRemoving.get();
     }
 
-    GameObjectChangedEvent * gameObjectChanged ()
+    GameObjectComponentEvent * gameObjectComponentChanged ()
     {
-        return mGameObjectChanged.get();
+        return mGameObjectComponent.get();
     }
     
     void update ();
@@ -233,7 +233,7 @@ private:
     : mNextGameObjectId(1), mNextGameComponentId(1), mNextGameActionId(1), mNextGameSystemId(1),
     mGameObjectCreated(new GameObjectCreatedEvent(GameObjectCreatedEventId)),
     mGameObjectRemoving(new GameObjectRemovingEvent(GameObjectRemovingEventId)),
-    mGameObjectChanged(new GameObjectChangedEvent(GameObjectChangedEventId))
+    mGameObjectComponent(new GameObjectComponentEvent(GameObjectComponentEventId))
     { }
     
     int createGameComponentId (const std::string & token);
@@ -256,7 +256,7 @@ private:
     GameObjectActionMap mGameObjectActions;
     std::unique_ptr<GameObjectCreatedEvent> mGameObjectCreated;
     std::unique_ptr<GameObjectRemovingEvent> mGameObjectRemoving;
-    std::unique_ptr<GameObjectChangedEvent> mGameObjectChanged;
+    std::unique_ptr<GameObjectComponentEvent> mGameObjectComponent;
 };
 
 } // namespace Game

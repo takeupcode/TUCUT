@@ -42,9 +42,6 @@ SCENARIO( GameManager, "Operation/Normal", "unit,game", "GameManager can add and
     auto gameObj2 = pGameMgr->getGameObject<Game::GameObject>(gameObj1->identity());
     VERIFY_TRUE(gameObj2 != nullptr);
     
-    VERIFY_EQUAL(3, static_cast<int>(gameObj1.use_count()));
-    VERIFY_EQUAL(3, static_cast<int>(gameObj2.use_count()));
-    
     pGameMgr->removeGameObject(gameObj1->identity());
     
     result = pGameMgr->hasGameObject(gameObj1->identity());
@@ -52,9 +49,6 @@ SCENARIO( GameManager, "Operation/Normal", "unit,game", "GameManager can add and
 
     auto gameObj3 = pGameMgr->getGameObject<Game::GameObject>(gameObj1->identity());
     VERIFY_TRUE(gameObj3 == nullptr);
-    
-    VERIFY_EQUAL(2, static_cast<int>(gameObj1.use_count()));
-    VERIFY_EQUAL(2, static_cast<int>(gameObj2.use_count()));
 }
 
 SCENARIO( GameManager, "Operation/Corner", "unit,game", "GameManager knows invalid GameObject identities." )

@@ -62,7 +62,7 @@ bool GameObject::addGameComponent (int componentId)
         Game::GameManager * pGameMgr = Game::GameManager::instance();
         
         mComponents[componentId] = true;
-        pGameMgr->onGameObjectChanged(*this);
+        pGameMgr->onGameObjectComponentChanged(*this);
     }
     
     return true;
@@ -87,7 +87,7 @@ void GameObject::removeGameComponent (int componentId)
             Game::GameManager * pGameMgr = Game::GameManager::instance();
             
             mComponents[componentId] = false;
-            pGameMgr->onGameObjectChanged(*this);
+            pGameMgr->onGameObjectComponentChanged(*this);
         }
     }
 }

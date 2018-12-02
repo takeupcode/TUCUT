@@ -16,7 +16,9 @@ void GameSystem::initialize ()
 {
     GameManager * pGameMgr = GameManager::instance();
 
-    pGameMgr->gameObjectChanged()->connect(idToken().toString(), getSharedGameSystem());
+    pGameMgr->gameObjectCreated()->connect(idToken().toString(), getSharedGameSystem());
+    pGameMgr->gameObjectRemoving()->connect(idToken().toString(), getSharedGameSystem());
+    pGameMgr->gameObjectComponentChanged()->connect(idToken().toString(), getSharedGameSystem());
 }
 
 std::shared_ptr<GameSystem> GameSystem::getSharedGameSystem ()
@@ -42,27 +44,34 @@ bool GameSystem::hasGameObject (int identity) const
 
 void GameSystem::notify (int id, Game::GameObject & gameObject)
 {
-    if (id != GameManager::GameObjectChangedEventId)
+    bool gameObjectBelongs = true;
+    if (id == GameManager::GameObjectCreatedEventId ||
+        id == GameManager::GameObjectComponentEventId)
+    {
+        if (!mRequiredComponentTokens.empty())
+        {
+            Game::GameManager * pGameMgr = Game::GameManager::instance();
+            for (const auto & token: mRequiredComponentTokens)
+            {
+                auto compId = pGameMgr->getGameComponentId(token);
+                if (!gameObject.hasGameComponent(compId))
+                {
+                    gameObjectBelongs = false;
+                    break;
+                }
+            }
+        }
+    }
+    else if (id == GameManager::GameObjectRemovingEventId)
+    {
+        gameObjectBelongs = false;
+    }
+    else
     {
         return;
     }
     
-    bool gameObjectMeetsRequirements = true;
-    if (!mRequiredComponentTokens.empty())
-    {
-        Game::GameManager * pGameMgr = Game::GameManager::instance();
-        for (const auto & token: mRequiredComponentTokens)
-        {
-            auto compId = pGameMgr->getGameComponentId(token);
-            if (!gameObject.hasGameComponent(compId))
-            {
-                gameObjectMeetsRequirements = false;
-                break;
-            }
-        }
-    }
-    
-    if (gameObjectMeetsRequirements)
+    if (gameObjectBelongs)
     {
         if (!hasGameObject(gameObject.identity()))
         {

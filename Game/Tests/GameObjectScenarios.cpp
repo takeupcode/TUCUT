@@ -34,7 +34,6 @@ SCENARIO( GameObject, "Operation/Normal", "unit,game", "GameObject can get share
     
     auto sharedPtr = gameObj->getSharedGameObject();
     
-    VERIFY_EQUAL(3, static_cast<int>(sharedPtr.use_count()));
     VERIFY_SAMEPTR(gameObj.get(), sharedPtr.get());
 }
 
@@ -96,7 +95,7 @@ SCENARIO( GameObject, "Operation/Normal", "unit,game", "GameObject notifies comp
     Game::GameManager * pGameMgr = Game::GameManager::instance();
     
     std::shared_ptr<Test::GameManagerSubscriber> subscriber(new Test::GameManagerSubscriber());
-    pGameMgr->gameObjectChanged()->connect("test", subscriber);
+    pGameMgr->gameObjectComponentChanged()->connect("test", subscriber);
     
     VERIFY_FALSE(subscriber->notified());
     VERIFY_EQUAL(0, subscriber->id());
@@ -109,12 +108,12 @@ SCENARIO( GameObject, "Operation/Normal", "unit,game", "GameObject notifies comp
     auto result = gameObj->addGameComponent(gameComp1->identity());
     VERIFY_TRUE(result);
     VERIFY_TRUE(subscriber->notified());
-    VERIFY_EQUAL(Game::GameManager::GameObjectChangedEventId, subscriber->id());
+    VERIFY_EQUAL(Game::GameManager::GameObjectComponentEventId, subscriber->id());
     subscriber->reset();
 
     gameObj->removeGameComponent(gameComp1);
     VERIFY_TRUE(subscriber->notified());
-    VERIFY_EQUAL(Game::GameManager::GameObjectChangedEventId, subscriber->id());
+    VERIFY_EQUAL(Game::GameManager::GameObjectComponentEventId, subscriber->id());
     subscriber->reset();
     
     pGameMgr->removeGameObject(gameObj->identity());
@@ -124,7 +123,7 @@ SCENARIO( GameObject, "Operation/Normal", "unit,game", "GameObject notifies comp
     VERIFY_FALSE(subscriber->notified());
     VERIFY_EQUAL(0, subscriber->id());
     
-    pGameMgr->gameObjectChanged()->disconnect("test");
+    pGameMgr->gameObjectComponentChanged()->disconnect("test");
 }
 
 SCENARIO( GameObject, "Operation/Corner", "unit,game", "GameObject knows invalid component identities." )

@@ -104,15 +104,20 @@ SCENARIO( GameSystem, "Operation/Normal", "unit,game", "GameSystem adds objects.
     auto gameComp = pGameMgr->getOrCreateGameComponent<Game::GameComponent>(tokenComp);
     auto gameObj = pGameMgr->createGameObject<Game::GameObject>(tokenObject);
     
-    VERIFY_FALSE(gameSys->hasGameObject(gameObj->identity()));
+    // Since the base GameSystem class has no required components, it should be added right away.
+    VERIFY_TRUE(gameSys->hasGameObject(gameObj->identity()));
     
-    // The object needs to be modified in order to trigger the addition to the system.
     gameObj->addGameComponent(gameComp);
     
+    // Since the base GameSystem class has no required components, the object should stay in the system.
     VERIFY_TRUE(gameSys->hasGameObject(gameObj->identity()));
     
-    // Since the base GameSystem class has no required components, the object should stay in the system.
     gameObj->removeGameComponent(gameComp);
     
+    // Since the base GameSystem class has no required components, the object should stay in the system.
     VERIFY_TRUE(gameSys->hasGameObject(gameObj->identity()));
+
+    pGameMgr->removeGameObject(gameObj->identity());
+    
+    VERIFY_FALSE(gameSys->hasGameObject(gameObj->identity()));
 }
