@@ -1,25 +1,25 @@
 //
-//  TestActionSystem.h
+//  TestSimpleSystem.h
 //  TestTUCUT
 //
 //  Created by Abdul Wahid Tanner on 11/29/18.
 //  Copyright © 2018 Take Up Code. All rights reserved.
 //
 
-#ifndef TUCUT_Game_TestActionSystem_h
-#define TUCUT_Game_TestActionSystem_h
+#ifndef TUCUT_Game_TestSimpleSystem_h
+#define TUCUT_Game_TestSimpleSystem_h
 
 #include "../GameSystem.h"
 
 namespace TUCUT {
 namespace Test {
         
-class TestActionSystem : public Game::GameSystem
+class TestSimpleSystem : public Game::GameSystem
 {
 public:
-    std::shared_ptr<TestActionSystem> getSharedTestActionSystem ()
+    std::shared_ptr<TestSimpleSystem> getSharedTestSimpleSystem ()
     {
-        return std::static_pointer_cast<TestActionSystem>(shared_from_this());
+        return std::static_pointer_cast<TestSimpleSystem>(shared_from_this());
     }
     
     bool notified () const
@@ -47,7 +47,7 @@ public:
 protected:
     friend class Game::GameManager;
     
-    TestActionSystem (const std::string & token, int identity)
+    TestSimpleSystem (const std::string & token, int identity)
     : GameSystem(token, identity), mNotified(false), mObjectId(0), mActionId(0)
     { }
     
@@ -67,4 +67,4 @@ private:
 } // namespace Test
 } // namespace TUCUT
 
-#endif // TUCUT_Game_TestActionSystem_h
+#endif // TUCUT_Game_TestSimpleSystem_h

@@ -42,7 +42,7 @@ bool GameSystem::hasGameObject (int identity) const
     return true;
 }
 
-void GameSystem::notify (int id, Game::GameObject & gameObject)
+void GameSystem::notify (int id, const std::shared_ptr<GameObject> & gameObject)
 {
     bool gameObjectBelongs = true;
     if (id == GameManager::GameObjectCreatedEventId ||
@@ -54,7 +54,9 @@ void GameSystem::notify (int id, Game::GameObject & gameObject)
             for (const auto & token: mRequiredComponentTokens)
             {
                 auto compId = pGameMgr->getGameComponentId(token);
-                if (!gameObject.hasGameComponent(compId))
+                auto comp = pGameMgr->getGameComponent<GameComponent>(compId);
+                
+                if (!comp->hasRequiredComponents(gameObject))
                 {
                     gameObjectBelongs = false;
                     break;
@@ -73,9 +75,9 @@ void GameSystem::notify (int id, Game::GameObject & gameObject)
     
     if (gameObjectBelongs)
     {
-        if (!hasGameObject(gameObject.identity()))
+        if (!hasGameObject(gameObject->identity()))
         {
-            auto result = mGameObjects.try_emplace(gameObject.identity(), gameObject.getSharedGameObject());
+            auto result = mGameObjects.try_emplace(gameObject->identity(), gameObject);
             if (!result.second)
             {
                 throw std::runtime_error("Unable to add game object to system");
@@ -84,10 +86,10 @@ void GameSystem::notify (int id, Game::GameObject & gameObject)
     }
     else
     {
-        auto gameObjectMapResult = mGameObjects.find(gameObject.identity());
+        auto gameObjectMapResult = mGameObjects.find(gameObject->identity());
         if (gameObjectMapResult != mGameObjects.end())
         {
-            mGameObjects.erase(gameObject.identity());
+            mGameObjects.erase(gameObject->identity());
         }
     }
 }

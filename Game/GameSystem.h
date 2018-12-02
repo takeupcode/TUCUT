@@ -21,7 +21,7 @@ namespace TUCUT {
 namespace Game {
     
 class GameSystem : public std::enable_shared_from_this<GameSystem>, public Identity::Identifiable<int>,
-    public Event::EventSubscriber<Game::GameObject &>
+    public Event::EventSubscriber<const std::shared_ptr<GameObject> &>
 {
 public:
     std::shared_ptr<GameSystem> getSharedGameSystem ();
@@ -45,7 +45,7 @@ protected:
     virtual void onAction (int objectId, int actionId)
     { }
 
-    void notify (int id, Game::GameObject & gameObject) override;
+    void notify (int id, const std::shared_ptr<GameObject> & gameObject) override;
     
     std::vector<std::string> mRequiredComponentTokens;
 

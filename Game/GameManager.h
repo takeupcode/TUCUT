@@ -28,9 +28,9 @@ public:
     const static int GameObjectRemovingEventId = 2;
     const static int GameObjectComponentEventId = 3;
 
-    using GameObjectCreatedEvent = Event::EventPublisher<GameObject &>;
-    using GameObjectRemovingEvent = Event::EventPublisher<GameObject &>;
-    using GameObjectComponentEvent = Event::EventPublisher<GameObject &>;
+    using GameObjectCreatedEvent = Event::EventPublisher<const std::shared_ptr<GameObject> &>;
+    using GameObjectRemovingEvent = Event::EventPublisher<const std::shared_ptr<GameObject> &>;
+    using GameObjectComponentEvent = Event::EventPublisher<const std::shared_ptr<GameObject> &>;
 
     static GameManager * instance ();
     
@@ -54,7 +54,7 @@ public:
         
         ++mNextGameObjectId;
         
-        mGameObjectCreated->signal(*gameObj);
+        mGameObjectCreated->signal(gameObj);
         
         return gameObj;
     }
@@ -193,9 +193,9 @@ public:
     
     void queueGameAction (int objectId, int actionId);
 
-    void onGameObjectComponentChanged (GameObject & gameObj) const
+    void onGameObjectComponentChanged (const std::shared_ptr<GameObject> & gameObj) const
     {
-        if (hasGameObject(gameObj.identity()))
+        if (hasGameObject(gameObj->identity()))
         {
             mGameObjectComponent->signal(gameObj);
         }

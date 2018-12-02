@@ -674,10 +674,11 @@
 		3EDBEDE621AE4C4B006DFB23 /* GameSystem.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = GameSystem.cpp; sourceTree = "<group>"; };
 		3EDBEDE721AE4C4B006DFB23 /* GameSystem.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GameSystem.h; sourceTree = "<group>"; };
 		3EDBEDEA21AE5D52006DFB23 /* GameSystemScenarios.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = GameSystemScenarios.cpp; sourceTree = "<group>"; };
-		3EDBEDEC21B07047006DFB23 /* TestActionSystem.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TestActionSystem.h; sourceTree = "<group>"; };
+		3EDBEDEC21B07047006DFB23 /* TestSimpleSystem.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TestSimpleSystem.h; sourceTree = "<group>"; };
 		3EDBEDED21B08F28006DFB23 /* TestSimpleComponent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TestSimpleComponent.h; sourceTree = "<group>"; };
 		3EDBEDEE21B08F4E006DFB23 /* TestDependentComponent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TestDependentComponent.h; sourceTree = "<group>"; };
 		3EDBEDEF21B0F15D006DFB23 /* TestSuperDependentComponent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TestSuperDependentComponent.h; sourceTree = "<group>"; };
+		3EDBEDF021B380C4006DFB23 /* TestDependentSystem.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TestDependentSystem.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -759,10 +760,11 @@
 				3EDBEDE321A3C4C5006DFB23 /* GameComponentScenarios.cpp */,
 				3EDBEDE521A72AAE006DFB23 /* GameManagerSubscriber.h */,
 				3EDBEDEA21AE5D52006DFB23 /* GameSystemScenarios.cpp */,
-				3EDBEDEC21B07047006DFB23 /* TestActionSystem.h */,
+				3EDBEDEC21B07047006DFB23 /* TestSimpleSystem.h */,
 				3EDBEDED21B08F28006DFB23 /* TestSimpleComponent.h */,
 				3EDBEDEE21B08F4E006DFB23 /* TestDependentComponent.h */,
 				3EDBEDEF21B0F15D006DFB23 /* TestSuperDependentComponent.h */,
+				3EDBEDF021B380C4006DFB23 /* TestDependentSystem.h */,
 			);
 			path = Tests;
 			sourceTree = "<group>";

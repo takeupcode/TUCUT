@@ -12,7 +12,10 @@
 
 #include "../GameSystem.h"
 #include "../GameManager.h"
-#include "TestActionSystem.h"
+#include "TestSimpleComponent.h"
+#include "TestDependentComponent.h"
+#include "TestSimpleSystem.h"
+#include "TestDependentSystem.h"
 
 using namespace std;
 using namespace TUCUT;
@@ -43,7 +46,7 @@ SCENARIO( GameSystem, "Construction/Normal", "unit,game", "Derived GameSystem ca
     std::string token = "testAction";
     Game::GameManager * pGameMgr = Game::GameManager::instance();
     
-    auto gameSys = pGameMgr->getOrCreateGameSystem<Test::TestActionSystem>(token);
+    auto gameSys = pGameMgr->getOrCreateGameSystem<Test::TestSimpleSystem>(token);
 }
 
 SCENARIO( GameSystem, "Operation/Normal", "unit,game", "Derived GameSystem can get shared pointer." )
@@ -51,9 +54,9 @@ SCENARIO( GameSystem, "Operation/Normal", "unit,game", "Derived GameSystem can g
     std::string token = "testAction";
     Game::GameManager * pGameMgr = Game::GameManager::instance();
     
-    auto gameSys = pGameMgr->getOrCreateGameSystem<Test::TestActionSystem>(token);
+    auto gameSys = pGameMgr->getOrCreateGameSystem<Test::TestSimpleSystem>(token);
 
-    auto sharedPtr = gameSys->getSharedTestActionSystem();
+    auto sharedPtr = gameSys->getSharedTestSimpleSystem();
     
     VERIFY_EQUAL(3, static_cast<int>(sharedPtr.use_count()));
     VERIFY_SAMEPTR(gameSys.get(), sharedPtr.get());
@@ -73,7 +76,7 @@ SCENARIO( GameSystem, "Operation/Normal", "unit,game", "Derived GameSystem is no
     std::string tokenAction = "moveAction";
     Game::GameManager * pGameMgr = Game::GameManager::instance();
     
-    auto gameSys = pGameMgr->getOrCreateGameSystem<Test::TestActionSystem>(tokenSystem);
+    auto gameSys = pGameMgr->getOrCreateGameSystem<Test::TestSimpleSystem>(tokenSystem);
     auto gameComp = pGameMgr->getOrCreateGameComponent<Game::GameComponent>(tokenComp);
     auto gameActionId = pGameMgr->getOrCreateGameAction(tokenAction);
     
@@ -100,7 +103,7 @@ SCENARIO( GameSystem, "Operation/Normal", "unit,game", "GameSystem adds objects.
     std::string tokenObject = "object";
     Game::GameManager * pGameMgr = Game::GameManager::instance();
     
-    auto gameSys = pGameMgr->getOrCreateGameSystem<Test::TestActionSystem>(tokenSystem);
+    auto gameSys = pGameMgr->getOrCreateGameSystem<Test::TestSimpleSystem>(tokenSystem);
     auto gameComp = pGameMgr->getOrCreateGameComponent<Game::GameComponent>(tokenComp);
     auto gameObj = pGameMgr->createGameObject<Game::GameObject>(tokenObject);
     
@@ -117,6 +120,35 @@ SCENARIO( GameSystem, "Operation/Normal", "unit,game", "GameSystem adds objects.
     // Since the base GameSystem class has no required components, the object should stay in the system.
     VERIFY_TRUE(gameSys->hasGameObject(gameObj->identity()));
 
+    pGameMgr->removeGameObject(gameObj->identity());
+    
+    VERIFY_FALSE(gameSys->hasGameObject(gameObj->identity()));
+}
+
+SCENARIO( GameSystem, "Operation/Normal", "unit,game", "Derived GameSystem adds objects." )
+{
+    std::string tokenSystem = "DependentSystem";
+    std::string tokenCompSimple = "SimpleComponent";
+    std::string tokenCompDependent = "DependentComponent";
+    std::string tokenObject = "object";
+    Game::GameManager * pGameMgr = Game::GameManager::instance();
+    
+    auto gameSys = pGameMgr->getOrCreateGameSystem<Test::TestDependentSystem>(tokenSystem);
+    auto gameCompSimple = pGameMgr->getOrCreateGameComponent<Test::TestSimpleComponent>(tokenCompSimple);
+    auto gameCompDependent = pGameMgr->getOrCreateGameComponent<Test::TestDependentComponent>(tokenCompDependent);
+    auto gameObj = pGameMgr->createGameObject<Game::GameObject>(tokenObject);
+    
+    VERIFY_FALSE(gameSys->hasGameObject(gameObj->identity()));
+    
+    gameObj->addGameComponent(gameCompDependent);
+    
+    // The system depends on the dependent component which also needs the simple component.
+    VERIFY_FALSE(gameSys->hasGameObject(gameObj->identity()));
+    
+    gameObj->addGameComponent(gameCompSimple);
+    
+    VERIFY_TRUE(gameSys->hasGameObject(gameObj->identity()));
+    
     pGameMgr->removeGameObject(gameObj->identity());
     
     VERIFY_FALSE(gameSys->hasGameObject(gameObj->identity()));

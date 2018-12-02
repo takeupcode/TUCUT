@@ -148,7 +148,7 @@ void GameManager::removeGameObject (int identity)
     auto gameObjectMapResult = mGameObjects.find(identity);
     if (gameObjectMapResult != mGameObjects.end())
     {
-        mGameObjectRemoving->signal(*gameObjectMapResult->second);
+        mGameObjectRemoving->signal(gameObjectMapResult->second);
         
         mGameObjects.erase(identity);
     }

@@ -15,14 +15,14 @@
 namespace TUCUT {
 namespace Test {
         
-class GameManagerSubscriber : public Event::EventSubscriber<Game::GameObject &>
+    class GameManagerSubscriber : public Event::EventSubscriber<const std::shared_ptr<Game::GameObject> &>
 {
 public:
     GameManagerSubscriber ()
     : mNotified(false), mId(0)
     { }
     
-    void notify (int id, Game::GameObject &) override
+    void notify (int id, const std::shared_ptr<Game::GameObject> &) override
     {
         mNotified = true;
         mId = id;
