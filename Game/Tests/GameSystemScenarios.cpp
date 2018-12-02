@@ -149,7 +149,7 @@ SCENARIO( GameSystem, "Operation/Normal", "unit,game", "Derived GameSystem adds 
     
     VERIFY_TRUE(gameSys->hasGameObject(gameObj->identity()));
     
-    pGameMgr->removeGameObject(gameObj->identity());
-    
+    gameObj->removeGameComponent(gameCompSimple);
+
     VERIFY_FALSE(gameSys->hasGameObject(gameObj->identity()));
 }
