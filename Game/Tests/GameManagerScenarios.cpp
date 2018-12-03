@@ -111,10 +111,10 @@ SCENARIO( GameManager, "Operation/Normal", "unit,game", "GameManager can add Gam
     VERIFY_EQUAL(3, static_cast<int>(gameComp1.use_count()));
     VERIFY_EQUAL(2, static_cast<int>(gameComp2.use_count()));
     
-    auto gameComp4 = pGameMgr->getGameComponent<Game::GameComponent>(10);
+    auto gameComp4 = pGameMgr->getGameComponent<Game::GameComponent>(100);
     VERIFY_TRUE(gameComp4 == nullptr);
     
-    result = pGameMgr->hasGameComponent(10);
+    result = pGameMgr->hasGameComponent(100);
     VERIFY_FALSE(result);
 
     auto gameComp5 = pGameMgr->getGameComponent<Game::GameComponent>(gameComp1->identity());
@@ -198,10 +198,10 @@ SCENARIO( GameManager, "Operation/Normal", "unit,game", "GameManager can add act
     result = pGameMgr->hasGameAction(token1);
     VERIFY_TRUE(result);
     
-    auto gameActionToken = pGameMgr->getGameAction(10);
+    auto gameActionToken = pGameMgr->getGameAction(100);
     VERIFY_TRUE(gameActionToken.empty());
     
-    result = pGameMgr->hasGameAction(10);
+    result = pGameMgr->hasGameAction(100);
     VERIFY_FALSE(result);
 }
 
@@ -266,10 +266,10 @@ SCENARIO( GameManager, "Operation/Normal", "unit,game", "GameManager can add Gam
     VERIFY_EQUAL(3, static_cast<int>(gameSys1.use_count()));
     VERIFY_EQUAL(2, static_cast<int>(gameSys2.use_count()));
     
-    auto gameSys4 = pGameMgr->getGameSystem<Game::GameSystem>(10);
+    auto gameSys4 = pGameMgr->getGameSystem<Game::GameSystem>(100);
     VERIFY_TRUE(gameSys4 == nullptr);
     
-    result = pGameMgr->hasGameSystem(10);
+    result = pGameMgr->hasGameSystem(100);
     VERIFY_FALSE(result);
     
     auto gameSys5 = pGameMgr->getGameSystem<Game::GameSystem>(gameSys1->identity());
@@ -323,10 +323,10 @@ SCENARIO( GameManager, "Operation/Normal", "unit,game", "GameManager can add abi
     result = pGameMgr->hasGameAbility(token1);
     VERIFY_TRUE(result);
     
-    auto gameAbilityToken = pGameMgr->getGameAbility(10);
+    auto gameAbilityToken = pGameMgr->getGameAbility(100);
     VERIFY_TRUE(gameAbilityToken.empty());
     
-    result = pGameMgr->hasGameAbility(10);
+    result = pGameMgr->hasGameAbility(100);
     VERIFY_FALSE(result);
 }
 

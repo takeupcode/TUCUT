@@ -49,6 +49,9 @@ public:
     
     bool hasGameAbility (int abilityId) const;
     bool hasGameAbility (const std::string & token) const;
+    
+    std::shared_ptr<GameComponent> getGameComponentFromAbility (int abilityId) const;
+    std::shared_ptr<GameComponent> getGameComponentFromAbility (const std::string & token) const;
 
 protected:
     friend class GameManager;

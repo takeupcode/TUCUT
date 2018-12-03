@@ -10,6 +10,7 @@
 
 #include "../../Test/Test.h"
 
+#include "../GameComponent.h"
 #include "../GameObject.h"
 #include "../GameManager.h"
 #include "GameManagerSubscriber.h"
@@ -186,4 +187,44 @@ SCENARIO( GameObject, "Operation/Normal", "unit,game", "GameObject knows abiliti
     
     result = gameObj->hasGameAbility(compAbility);
     VERIFY_FALSE(result);
+}
+
+SCENARIO( GameObject, "Operation/Normal", "unit,game", "GameObject knows which components provide abilities." )
+{
+    std::string compAbility = "Ability1";
+    std::string token = "character";
+    Game::GameManager * pGameMgr = Game::GameManager::instance();
+    
+    auto gameObj = pGameMgr->createGameObject<Game::GameObject>(token);
+    
+    auto gameComp1 = pGameMgr->getOrCreateGameComponent<Test::TestSimpleComponent>("simplecomponent1");
+    auto gameComp2 = pGameMgr->getOrCreateGameComponent<Test::TestSimpleComponent>("simplecomponent2");
+    auto compAbilityId = pGameMgr->getGameAbilityId(compAbility);
+
+    auto result = gameObj->addGameComponent(gameComp1);
+    VERIFY_TRUE(result);
+    
+    auto sharedPtr = gameObj->getGameComponentFromAbility(compAbilityId);
+    VERIFY_TRUE(sharedPtr != nullptr);
+    VERIFY_EQUAL(gameComp1->identity(), sharedPtr->identity());
+
+    result = gameObj->addGameComponent(gameComp2);
+    VERIFY_TRUE(result);
+    
+    sharedPtr = gameObj->getGameComponentFromAbility(compAbility);
+    VERIFY_TRUE(sharedPtr != nullptr);
+    VERIFY_EQUAL(gameComp2->identity(), sharedPtr->identity());
+    
+    gameObj->removeGameComponent(gameComp2);
+    
+    sharedPtr = gameObj->getGameComponentFromAbility(compAbility);
+    VERIFY_TRUE(sharedPtr != nullptr);
+    VERIFY_EQUAL(gameComp1->identity(), sharedPtr->identity());
+
+    result = gameObj->addGameComponent(gameComp2);
+    gameObj->removeGameComponent(gameComp1);
+    
+    sharedPtr = gameObj->getGameComponentFromAbility(compAbility);
+    VERIFY_TRUE(sharedPtr != nullptr);
+    VERIFY_EQUAL(gameComp2->identity(), sharedPtr->identity());
 }

@@ -170,6 +170,33 @@ bool GameObject::hasGameAbility (const std::string & token) const
     
     return hasGameAbility(abilityId);
 }
+    
+std::shared_ptr<GameComponent> GameObject::getGameComponentFromAbility (int abilityId) const
+{
+    if (abilityId < 1)
+    {
+        return nullptr;
+    }
+    
+    if (mAbilities.size() > static_cast<std::size_t>(abilityId))
+    {
+        if (!mAbilities[abilityId].empty())
+        {
+            return mAbilities[abilityId].back();
+        }
+    }
+    
+    return nullptr;
+}
+
+std::shared_ptr<GameComponent> GameObject::getGameComponentFromAbility (const std::string & token) const
+{
+    Game::GameManager * pGameMgr = Game::GameManager::instance();
+    
+    auto abilityId = pGameMgr->getGameAbilityId(token);
+    
+    return getGameComponentFromAbility(abilityId);
+}
 
 } // namespace Game
 } // namespace TUCUT
