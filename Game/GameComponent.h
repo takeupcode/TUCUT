@@ -17,8 +17,6 @@
 
 namespace TUCUT {
 namespace Game {
-
-class GameObject;
     
 class GameComponent : public std::enable_shared_from_this<GameComponent>, public Identity::Identifiable<int>
 {
@@ -27,8 +25,10 @@ public:
     
     virtual ~GameComponent () = default;
     
-    bool hasRequiredComponents (int objectId) const;
-    bool hasRequiredComponents (const std::shared_ptr<GameObject> & object) const;
+    virtual std::vector<std::string> getAbilities () const
+    {
+        return mAbilityTokens;
+    }
 
 protected:
     friend class GameManager;
@@ -39,12 +39,7 @@ protected:
     
     virtual void initialize ();
     
-    virtual bool hasRequiredComponentsCallback (const std::shared_ptr<GameObject> & object) const;
-    
-    std::vector<std::string> mRequiredComponentTokens;
-
-private:
-    bool hasRequiredComponentsImpl (const std::shared_ptr<GameObject> & object, bool checkObject) const;
+    std::vector<std::string> mAbilityTokens;
 };
     
 } // namespace Game

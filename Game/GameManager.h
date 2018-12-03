@@ -12,6 +12,7 @@
 #include <memory>
 #include <queue>
 #include <unordered_map>
+#include <stdexcept>
 
 #include "GameObject.h"
 #include "GameComponent.h"

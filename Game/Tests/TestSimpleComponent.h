@@ -27,7 +27,9 @@ protected:
 
     TestSimpleComponent (const std::string & token, int identity)
     : GameComponent(token, identity)
-    { }
+    {
+        mAbilityTokens.push_back("Ability1");
+    }
 };
         
 } // namespace Test

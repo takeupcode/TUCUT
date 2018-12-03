@@ -10,6 +10,9 @@
 #include "GameComponent.h"
 #include "GameManager.h"
 
+#include <algorithm>
+#include <stdexcept>
+
 namespace TUCUT {
 namespace Game {
 
@@ -48,6 +51,22 @@ bool GameObject::addGameComponent (int componentId)
         return false;
     }
     
+    Game::GameManager * pGameMgr = Game::GameManager::instance();
+    auto component = pGameMgr->getGameComponent<GameComponent>(componentId);
+    
+    return addGameComponent(component);
+    
+    return false;
+}
+
+bool GameObject::addGameComponent (const std::shared_ptr<GameComponent> & component)
+{
+    if (!component)
+    {
+        return false;
+    }
+    
+    auto componentId = component->identity();
     while (mComponents.size() <= static_cast<std::size_t>(componentId))
     {
         mComponents.push_back(false);
@@ -61,16 +80,27 @@ bool GameObject::addGameComponent (int componentId)
     {
         Game::GameManager * pGameMgr = Game::GameManager::instance();
         
+        for (const auto & ability: component->getAbilities())
+        {
+            auto abilityId = pGameMgr->getGameAbilityId(ability);
+            if (abilityId < 1)
+            {
+                throw std::runtime_error("Unable to find registered game ability");
+            }
+            
+            while (mAbilities.size() <= static_cast<std::size_t>(abilityId))
+            {
+                mAbilities.push_back({});
+            }
+            mAbilities[abilityId].push_back(component);
+        }
+        
         mComponents[componentId] = true;
+        
         pGameMgr->onGameObjectComponentChanged(getSharedGameObject());
     }
     
     return true;
-}
-
-bool GameObject::addGameComponent (const std::shared_ptr<GameComponent> & component)
-{
-    return addGameComponent(component->identity());
 }
 
 void GameObject::removeGameComponent (int componentId)
@@ -80,6 +110,20 @@ void GameObject::removeGameComponent (int componentId)
         return;
     }
     
+    Game::GameManager * pGameMgr = Game::GameManager::instance();
+    auto component = pGameMgr->getGameComponent<GameComponent>(componentId);
+
+    removeGameComponent(component);
+}
+
+void GameObject::removeGameComponent (const std::shared_ptr<GameComponent> & component)
+{
+    if (!component)
+    {
+        return;
+    }
+    
+    auto componentId = component->identity();
     if (mComponents.size() > static_cast<std::size_t>(componentId))
     {
         if (mComponents[componentId])
@@ -87,14 +131,44 @@ void GameObject::removeGameComponent (int componentId)
             Game::GameManager * pGameMgr = Game::GameManager::instance();
             
             mComponents[componentId] = false;
+            
+            for (const auto & ability: component->getAbilities())
+            {
+                auto abilityId = pGameMgr->getGameAbilityId(ability);
+                if (abilityId > 0 && mAbilities.size() > static_cast<std::size_t>(abilityId))
+                {
+                    mAbilities[abilityId].erase(std::find(mAbilities[abilityId].begin(), mAbilities[abilityId].end(),
+                                                          component));
+                }
+            }
+
             pGameMgr->onGameObjectComponentChanged(getSharedGameObject());
         }
     }
 }
-
-void GameObject::removeGameComponent (const std::shared_ptr<GameComponent> & component)
+    
+bool GameObject::hasGameAbility (int abilityId) const
 {
-    removeGameComponent(component->identity());
+    if (abilityId < 1)
+    {
+        return false;
+    }
+    
+    if (mAbilities.size() > static_cast<std::size_t>(abilityId))
+    {
+        return !mAbilities[abilityId].empty();
+    }
+    
+    return false;
+}
+
+bool GameObject::hasGameAbility (const std::string & token) const
+{
+    Game::GameManager * pGameMgr = Game::GameManager::instance();
+    
+    auto abilityId = pGameMgr->getGameAbilityId(token);
+    
+    return hasGameAbility(abilityId);
 }
 
 } // namespace Game

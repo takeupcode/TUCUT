@@ -107,17 +107,17 @@ SCENARIO( GameSystem, "Operation/Normal", "unit,game", "GameSystem adds objects.
     auto gameComp = pGameMgr->getOrCreateGameComponent<Game::GameComponent>(tokenComp);
     auto gameObj = pGameMgr->createGameObject<Game::GameObject>(tokenObject);
     
-    // Since the base GameSystem class has no required components, it should be added right away.
+    // Since the simple system class has no required abilities, it should be added right away.
     VERIFY_TRUE(gameSys->hasGameObject(gameObj->identity()));
     
     gameObj->addGameComponent(gameComp);
     
-    // Since the base GameSystem class has no required components, the object should stay in the system.
+    // Since the simple system class has no required abilities, the object should stay in the system.
     VERIFY_TRUE(gameSys->hasGameObject(gameObj->identity()));
     
     gameObj->removeGameComponent(gameComp);
     
-    // Since the base GameSystem class has no required components, the object should stay in the system.
+    // Since the simple system class has no required abilities, the object should stay in the system.
     VERIFY_TRUE(gameSys->hasGameObject(gameObj->identity()));
 
     pGameMgr->removeGameObject(gameObj->identity());
@@ -142,13 +142,13 @@ SCENARIO( GameSystem, "Operation/Normal", "unit,game", "Derived GameSystem adds 
     
     gameObj->addGameComponent(gameCompDependent);
     
-    // The system depends on the dependent component which also needs the simple component.
+    // The system depends on the Ability1 and Ability2 abilities.
     VERIFY_FALSE(gameSys->hasGameObject(gameObj->identity()));
     
     gameObj->addGameComponent(gameCompSimple);
     
     VERIFY_TRUE(gameSys->hasGameObject(gameObj->identity()));
-    
+
     gameObj->removeGameComponent(gameCompSimple);
 
     VERIFY_FALSE(gameSys->hasGameObject(gameObj->identity()));

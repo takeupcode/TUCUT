@@ -46,21 +46,27 @@ public:
     
     void removeGameComponent (int componentId);
     void removeGameComponent (const std::shared_ptr<GameComponent> & component);
+    
+    bool hasGameAbility (int abilityId) const;
+    bool hasGameAbility (const std::string & token) const;
 
 protected:
     friend class GameManager;
     
-    GameObject (std::string token, int identity)
+    GameObject (const std::string & token, int identity)
     : Identifiable(token, identity)
     { }
     
     virtual void initialize ();
     
 private:
-    using ComponentVector = std::vector<bool>;
-    
+    using ComponentBoolVector = std::vector<bool>;
+    using ComponentPtrVector = std::vector<std::shared_ptr<GameComponent>>;
+    using AbilityVector = std::vector<ComponentPtrVector>;
+
     PropertyContainer mProperties;
-    ComponentVector mComponents;
+    ComponentBoolVector mComponents;
+    AbilityVector mAbilities;
 };
 
 } // namespace Game

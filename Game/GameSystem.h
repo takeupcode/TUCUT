@@ -47,7 +47,7 @@ protected:
 
     void notify (int id, const std::shared_ptr<GameObject> & gameObject) override;
     
-    std::vector<std::string> mRequiredComponentTokens;
+    std::vector<std::string> mRequiredAbilityTokens;
 
 private:
     using GameObjectMap = std::unordered_map<int, std::shared_ptr<GameObject>>;

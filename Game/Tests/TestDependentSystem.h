@@ -28,7 +28,8 @@ protected:
     TestDependentSystem (const std::string & token, int identity)
     : GameSystem(token, identity)
     {
-        mRequiredComponentTokens.push_back("DependentComponent");
+        mRequiredAbilityTokens.push_back("Ability1");
+        mRequiredAbilityTokens.push_back("Ability2");
     }
 
 private:

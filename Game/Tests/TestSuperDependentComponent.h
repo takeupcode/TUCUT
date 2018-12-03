@@ -28,8 +28,7 @@ protected:
     TestSuperDependentComponent (const std::string & token, int identity)
     : GameComponent(token, identity)
     {
-        mRequiredComponentTokens.push_back("DependentComponent");
-        mRequiredComponentTokens.push_back("AnotherSimpleComponent");
+        mAbilityTokens.push_back("Ability3");
     }
 };
         

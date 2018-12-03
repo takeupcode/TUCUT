@@ -10,9 +10,10 @@
 
 #include "../../Test/Test.h"
 
-#include "GameManagerSubscriber.h"
 #include "../GameObject.h"
 #include "../GameManager.h"
+#include "GameManagerSubscriber.h"
+#include "TestSimpleComponent.h"
 
 using namespace std;
 using namespace TUCUT;
@@ -156,4 +157,33 @@ SCENARIO( GameObject, "Operation/Corner", "unit,game", "GameObject knows invalid
     
     result = gameObj->hasGameComponent(gameComp1);
     VERIFY_TRUE(result);
+}
+
+SCENARIO( GameObject, "Operation/Normal", "unit,game", "GameObject knows abilities." )
+{
+    std::string compAbility = "Ability1";
+    std::string token = "character";
+    Game::GameManager * pGameMgr = Game::GameManager::instance();
+    
+    auto gameObj = pGameMgr->createGameObject<Game::GameObject>(token);
+    
+    auto gameComp1 = pGameMgr->getOrCreateGameComponent<Game::GameComponent>("moveable");
+    auto gameComp2 = pGameMgr->getOrCreateGameComponent<Test::TestSimpleComponent>("simplecomponent");
+    
+    auto result = gameObj->addGameComponent(gameComp1);
+    VERIFY_TRUE(result);
+    
+    result = gameObj->hasGameAbility(compAbility);
+    VERIFY_FALSE(result);
+    
+    result = gameObj->addGameComponent(gameComp2);
+    VERIFY_TRUE(result);
+    
+    result = gameObj->hasGameAbility(compAbility);
+    VERIFY_TRUE(result);
+    
+    gameObj->removeGameComponent(gameComp2);
+    
+    result = gameObj->hasGameAbility(compAbility);
+    VERIFY_FALSE(result);
 }

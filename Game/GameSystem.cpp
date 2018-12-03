@@ -9,6 +9,8 @@
 #include "GameSystem.h"
 #include "GameManager.h"
 
+#include <stdexcept>
+
 namespace TUCUT {
 namespace Game {
     
@@ -48,15 +50,11 @@ void GameSystem::notify (int id, const std::shared_ptr<GameObject> & gameObject)
     if (id == GameManager::GameObjectCreatedEventId ||
         id == GameManager::GameObjectComponentEventId)
     {
-        if (!mRequiredComponentTokens.empty())
+        if (!mRequiredAbilityTokens.empty())
         {
-            Game::GameManager * pGameMgr = Game::GameManager::instance();
-            for (const auto & token: mRequiredComponentTokens)
+            for (const auto & token: mRequiredAbilityTokens)
             {
-                auto compId = pGameMgr->getGameComponentId(token);
-                auto comp = pGameMgr->getGameComponent<GameComponent>(compId);
-                
-                if (!comp->hasRequiredComponents(gameObject))
+                if (!gameObject->hasGameAbility(token))
                 {
                     gameObjectBelongs = false;
                     break;
