@@ -213,12 +213,12 @@
 		3E3F83D8210A4B8600501126 /* Button.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E3F83BF210A4B8400501126 /* Button.h */; };
 		3E3F83D9210A4B8600501126 /* TextBox.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E3F83C0210A4B8400501126 /* TextBox.h */; };
 		3E3F83DA210A4B8600501126 /* Window.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E3F83C1210A4B8400501126 /* Window.h */; };
-		3E3F83DB210A4B8600501126 /* GameManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E3F83C2210A4B8400501126 /* GameManager.cpp */; };
+		3E3F83DB210A4B8600501126 /* WindowSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E3F83C2210A4B8400501126 /* WindowSystem.cpp */; };
 		3E3F83DC210A4B8600501126 /* ConsoleManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E3F83C3210A4B8400501126 /* ConsoleManager.cpp */; };
 		3E3F83DD210A4B8600501126 /* Control.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E3F83C4210A4B8500501126 /* Control.cpp */; };
 		3E3F83DE210A4B8600501126 /* NumberBox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E3F83C5210A4B8500501126 /* NumberBox.cpp */; };
 		3E3F83DF210A4B8600501126 /* ConsoleManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E3F83C6210A4B8500501126 /* ConsoleManager.h */; };
-		3E3F83E0210A4B8600501126 /* GameManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E3F83C7210A4B8500501126 /* GameManager.h */; };
+		3E3F83E0210A4B8600501126 /* WindowSystem.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E3F83C7210A4B8500501126 /* WindowSystem.h */; };
 		3E3F83E1210A4B8600501126 /* CheckBox.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E3F83C8210A4B8500501126 /* CheckBox.h */; };
 		3E3F83E2210A4B8600501126 /* Justification.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E3F83C9210A4B8500501126 /* Justification.h */; };
 		3E3F83E3210A4B8600501126 /* Button.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E3F83CA210A4B8500501126 /* Button.cpp */; };
@@ -641,12 +641,12 @@
 		3E3F83BF210A4B8400501126 /* Button.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Button.h; sourceTree = "<group>"; };
 		3E3F83C0210A4B8400501126 /* TextBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextBox.h; sourceTree = "<group>"; };
 		3E3F83C1210A4B8400501126 /* Window.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Window.h; sourceTree = "<group>"; };
-		3E3F83C2210A4B8400501126 /* GameManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameManager.cpp; sourceTree = "<group>"; };
+		3E3F83C2210A4B8400501126 /* WindowSystem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = WindowSystem.cpp; sourceTree = "<group>"; };
 		3E3F83C3210A4B8400501126 /* ConsoleManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ConsoleManager.cpp; sourceTree = "<group>"; };
 		3E3F83C4210A4B8500501126 /* Control.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Control.cpp; sourceTree = "<group>"; };
 		3E3F83C5210A4B8500501126 /* NumberBox.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NumberBox.cpp; sourceTree = "<group>"; };
 		3E3F83C6210A4B8500501126 /* ConsoleManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConsoleManager.h; sourceTree = "<group>"; };
-		3E3F83C7210A4B8500501126 /* GameManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameManager.h; sourceTree = "<group>"; };
+		3E3F83C7210A4B8500501126 /* WindowSystem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WindowSystem.h; sourceTree = "<group>"; };
 		3E3F83C8210A4B8500501126 /* CheckBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CheckBox.h; sourceTree = "<group>"; };
 		3E3F83C9210A4B8500501126 /* Justification.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Justification.h; sourceTree = "<group>"; };
 		3E3F83CA210A4B8500501126 /* Button.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Button.cpp; sourceTree = "<group>"; };
@@ -1377,8 +1377,8 @@
 				3E3F83D0210A4B8600501126 /* Control.h */,
 				3E3F83BC210A4B8400501126 /* CursesUtil.cpp */,
 				3E3F83CE210A4B8600501126 /* CursesUtil.h */,
-				3E3F83C2210A4B8400501126 /* GameManager.cpp */,
-				3E3F83C7210A4B8500501126 /* GameManager.h */,
+				3E3F83C2210A4B8400501126 /* WindowSystem.cpp */,
+				3E3F83C7210A4B8500501126 /* WindowSystem.h */,
 				3E3F83C9210A4B8500501126 /* Justification.h */,
 				3E3F83BD210A4B8400501126 /* Label.cpp */,
 				3E3F83BA210A4B8400501126 /* Label.h */,
@@ -1494,7 +1494,7 @@
 				3E3F83E9210A4B8600501126 /* Control.h in Headers */,
 				3E3F83DF210A4B8600501126 /* ConsoleManager.h in Headers */,
 				3E3F83D3210A4B8600501126 /* Label.h in Headers */,
-				3E3F83E0210A4B8600501126 /* GameManager.h in Headers */,
+				3E3F83E0210A4B8600501126 /* WindowSystem.h in Headers */,
 				3E3F83D8210A4B8600501126 /* Button.h in Headers */,
 				3E3F83DA210A4B8600501126 /* Window.h in Headers */,
 				3E3F83EA210A4B8600501126 /* NumberBox.h in Headers */,
@@ -1756,7 +1756,7 @@
 			files = (
 				3E3F83E8210A4B8600501126 /* Window.cpp in Sources */,
 				3E3F83D6210A4B8600501126 /* Label.cpp in Sources */,
-				3E3F83DB210A4B8600501126 /* GameManager.cpp in Sources */,
+				3E3F83DB210A4B8600501126 /* WindowSystem.cpp in Sources */,
 				3E3F842F2113F6BF00501126 /* DisplayBox.cpp in Sources */,
 				3E3F83E5210A4B8600501126 /* TextBox.cpp in Sources */,
 				3E3F83D5210A4B8600501126 /* CursesUtil.cpp in Sources */,

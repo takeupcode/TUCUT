@@ -9,9 +9,13 @@
 #include "GameManager.h"
 
 #include <stdexcept>
+#include <thread>
 
 namespace TUCUT {
 namespace Game {
+
+const GameManager::TimeResolution GameManager::FixedFrameTime =
+    GameManager::TimeResolution(GameManager::TimeResolution::period::den / GameManager::FramesPerSecond);
 
 GameManager * GameManager::instance ()
 {
@@ -41,7 +45,88 @@ void GameManager::deinitialize ()
     mRegisteredGameAbilities.clear();
     mLoadedGameAbilities.clear();
 }
+
+void GameManager::play ()
+{
+    loop();
+}
+
+void GameManager::exit ()
+{
+    mExit = true;
+}
+
+GameManager::TimeResolution GameManager::elapsed () const
+{
+    return mElapsed;
+}
+
+void GameManager::restartClock ()
+{
+    auto currentTime = TimeClock::now();
+    mElapsed = std::chrono::duration_cast<TimeResolution>(currentTime - mLastTime);
+    mFixedFrameTotal += mElapsed;
+    mLastTime = currentTime;
+}
+
+bool GameManager::isFixedFrameReady () const
+{
+    return mFixedFrameTotal > FixedFrameTime;
+}
+
+void GameManager::completeFixedFrame ()
+{
+    mFixedFrameTotal -= FixedFrameTime;
+}
+
+void GameManager::waitForNextFixedFrame ()
+{
+    auto waitDuration = FixedFrameTime - mFixedFrameTotal;
+    if (waitDuration > waitDuration.zero())
+    {
+        std::this_thread::sleep_for(std::chrono::duration_cast<std::chrono::milliseconds>(waitDuration));
+    }
+}
+
+void GameManager::loop ()
+{
+    mLastTime = TimeClock::now();
     
+    while (!mExit)
+    {
+        if (isFixedFrameReady())
+        {
+            if (mNextWindow)
+            {
+                // Switch current window at the beginning of the loop.
+                mCurrentWindow = mNextWindow;
+                mNextWindow = nullptr;
+            }
+            if (!mCurrentWindow)
+            {
+                break;
+            }
+            
+            CursesUtil::getScreenMaxYX(mScreenMaxY, mScreenMaxX);
+            
+            mCurrentWindow->resize(checkHeightBounds(screenHeight()), checkWidthBounds(screenWidth()));
+            
+            mCurrentWindow->processInput(this);
+            
+            mCurrentWindow->draw();
+            
+            doupdate();
+            
+            completeFixedFrame();
+        }
+        else
+        {
+            waitForNextFixedFrame();
+        }
+        restartClock();
+    }
+}
+
 int GameManager::createGameComponentId (const std::string & token)
 {
     if (token.empty())

@@ -9,6 +9,7 @@
 #ifndef TUCUT_Game_GameManager_h
 #define TUCUT_Game_GameManager_h
 
+#include <chrono>
 #include <memory>
 #include <queue>
 #include <unordered_map>
@@ -38,6 +39,10 @@ public:
     void initialize ();
     
     void deinitialize ();
+    
+    void play ();
+    
+    void exit ();
 
     template <typename T>
     std::shared_ptr<GameObject> createGameObject (const std::string & token)
@@ -232,6 +237,13 @@ public:
     void update ();
 
 private:
+    using TimeClock = std::chrono::steady_clock;
+    using TimePoint = TimeClock::time_point;
+    using TimeResolution = std::chrono::duration<double, std::micro>;
+    
+    static constexpr int FramesPerSecond = 20; // This is a text game and doesn't need a high frame rate.
+    static const TimeResolution FixedFrameTime;
+    
     using GameObjectMap = std::unordered_map<int, std::shared_ptr<GameObject>>;
     using GameComponentMap = std::unordered_map<std::string, int>;
     using GameComponentVector = std::vector<std::shared_ptr<GameComponent>>;
@@ -245,13 +257,22 @@ private:
     using GameAbilityVector = std::vector<std::string>;
 
     GameManager ()
-    : mNextGameObjectId(1), mNextGameComponentId(1), mNextGameSystemId(1),
+    : mElapsed(0), mFixedFrameTotal(0), mExit(false),
+    mNextGameObjectId(1), mNextGameComponentId(1), mNextGameSystemId(1),
     mNextGameActionId(1), mNextGameAbilityId(1),
     mGameObjectCreated(new GameObjectCreatedEvent(GameObjectCreatedEventId)),
     mGameObjectRemoving(new GameObjectRemovingEvent(GameObjectRemovingEventId)),
     mGameObjectComponent(new GameObjectComponentEvent(GameObjectComponentEventId))
     { }
     
+    void loop ();
+    
+    TimeResolution elapsed () const;
+    void restartClock ();
+    bool isFixedFrameReady () const;
+    void completeFixedFrame ();
+    void waitForNextFixedFrame ();
+
     int createGameComponentId (const std::string & token);
     
     int createGameSystemId (const std::string & token);
@@ -259,6 +280,11 @@ private:
     int createGameActionId (const std::string & token);
 
     int createGameAbilityId (const std::string & token);
+    
+    TimePoint mLastTime;
+    TimeResolution mElapsed;
+    TimeResolution mFixedFrameTotal;
+    bool mExit;
 
     int mNextGameObjectId;
     int mNextGameComponentId;
