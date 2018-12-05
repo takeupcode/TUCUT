@@ -21,20 +21,20 @@ namespace Curses {
 
 class Button;
 
-class TextBox : public Control, public Event::EventSubscriber<GameManager *, Button *>
+class TextBox : public Control, public Event::EventSubscriber<WindowSystem *, Button *>
 {
 public:
     const static int TextChangedEventId = 1;
     
-    using TextChangedEvent = Event::EventPublisher<GameManager *, TextBox *>;
+    using TextChangedEvent = Event::EventPublisher<WindowSystem *, TextBox *>;
     
     static std::shared_ptr<TextBox> createSharedTextBox (const std::string & name, const std::string & text, int y, int x, int height, int width, int foreColor, int backColor, bool multiline = false);
     
     std::shared_ptr<TextBox> getSharedTextBox ();
     
-    bool onKeyPress (GameManager * gm, int key) override;
+    bool onKeyPress (WindowSystem * ws, int key) override;
     
-    void onMouseEvent (GameManager * gm, short id, int y, int x, mmask_t buttonState) override;
+    void onMouseEvent (WindowSystem * ws, short id, int y, int x, mmask_t buttonState) override;
     
     void onDrawClient () const override;
     
@@ -64,9 +64,9 @@ protected:
     void initialize () override;
 
 private:
-    void notify (int id, GameManager * gm, Button * button) override;
+    void notify (int id, WindowSystem * ws, Button * button) override;
     
-    void handleTextChange (GameManager * gm);
+    void handleTextChange (WindowSystem * ws);
     
     void moveCursorUp ();
     void moveCursorDown ();

@@ -19,7 +19,7 @@
 namespace TUCUT {
 namespace Curses {
 
-class GameManager;
+class WindowSystem;
 
 class Window : public std::enable_shared_from_this<Window>
 {
@@ -46,13 +46,13 @@ public:
 
     WINDOW * cursesWindow () const;
     
-    virtual void processInput (GameManager * gm);
+    virtual void processInput (WindowSystem * ws);
 
     void draw () const;
 
-    virtual bool onKeyPress (GameManager * gm, int key);
+    virtual bool onKeyPress (WindowSystem * ws, int key);
     
-    virtual void onMouseEvent (GameManager * gm, short id, int y, int x, mmask_t buttonState);
+    virtual void onMouseEvent (WindowSystem * ws, short id, int y, int x, mmask_t buttonState);
     
     virtual void onDrawClient () const;
     

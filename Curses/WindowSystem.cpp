@@ -100,6 +100,8 @@ void WindowSystem::setMaxScreenDimensions (int height, int width)
 
 void WindowSystem::initialize ()
 {
+    GameSystem::initialize();
+
     initscr();
     start_color();
     raw();
@@ -117,7 +119,31 @@ void WindowSystem::deinitialize ()
 {
     endwin();
 }
-
+    
+void WindowSystem::update (Game::TimeResolution elapsedTime)
+{
+    if (mNextWindow)
+    {
+        // Switch current window at the beginning of the loop.
+        mCurrentWindow = mNextWindow;
+        mNextWindow = nullptr;
+    }
+    if (!mCurrentWindow)
+    {
+        return;
+    }
+    
+    CursesUtil::getScreenMaxYX(mScreenMaxY, mScreenMaxX);
+    
+    mCurrentWindow->resize(checkHeightBounds(screenHeight()), checkWidthBounds(screenWidth()));
+    
+    mCurrentWindow->processInput(this);
+    
+    mCurrentWindow->draw();
+    
+    doupdate();
+}
+    
 int WindowSystem::checkHeightBounds (int height) const
 {
     if (height < mMinScreenHeight)

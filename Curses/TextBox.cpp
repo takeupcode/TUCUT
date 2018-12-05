@@ -127,7 +127,7 @@ std::shared_ptr<TextBox> TextBox::getSharedTextBox ()
     return std::static_pointer_cast<TextBox>(shared_from_this());
 }
 
-bool TextBox::onKeyPress (GameManager * gm, int key)
+bool TextBox::onKeyPress (WindowSystem * ws, int key)
 {
     if (enableState() != Window::EnableState::enabled)
     {
@@ -139,13 +139,13 @@ bool TextBox::onKeyPress (GameManager * gm, int key)
     case 10: // Enter
     case KEY_ENTER:
         breakLineAtCursor();
-        handleTextChange(gm);
+        handleTextChange(ws);
         break;
     
     case 127: // Delete
         if (removeCharAtCursor())
         {
-            handleTextChange(gm);
+            handleTextChange(ws);
         }
         break;
         
@@ -158,7 +158,7 @@ bool TextBox::onKeyPress (GameManager * gm, int key)
             
             if (removeCharAtCursor())
             {
-                handleTextChange(gm);
+                handleTextChange(ws);
             }
             
             ensureCursorIsVisible();
@@ -170,7 +170,7 @@ bool TextBox::onKeyPress (GameManager * gm, int key)
             
             if (removeCharAtCursor())
             {
-                handleTextChange(gm);
+                handleTextChange(ws);
             }
             
             ensureCursorIsVisible();
@@ -196,11 +196,11 @@ bool TextBox::onKeyPress (GameManager * gm, int key)
     default:
         if (addCharAtCursor(key))
         {
-            handleTextChange(gm);
+            handleTextChange(ws);
         }
         else if (parent())
         {
-            return parent()->onKeyPress(gm, key);
+            return parent()->onKeyPress(ws, key);
         }
         break;
     }
@@ -208,7 +208,7 @@ bool TextBox::onKeyPress (GameManager * gm, int key)
     return true;
 }
 
-void TextBox::onMouseEvent (GameManager * gm, short id, int y, int x, mmask_t buttonState)
+void TextBox::onMouseEvent (WindowSystem * ws, short id, int y, int x, mmask_t buttonState)
 {
     if (enableState() != Window::EnableState::enabled)
     {
@@ -427,7 +427,7 @@ TextBox::TextChangedEvent * TextBox::textChanged ()
     return mTextChanged.get();
 }
 
-void TextBox::notify (int id, GameManager * gm, Button * button)
+void TextBox::notify (int id, WindowSystem * ws, Button * button)
 {
     if (id != Button::ClickedEventId)
     {
@@ -452,9 +452,9 @@ void TextBox::notify (int id, GameManager * gm, Button * button)
     }
 }
 
-void TextBox::handleTextChange (GameManager * gm)
+void TextBox::handleTextChange (WindowSystem * ws)
 {
-    mTextChanged->signal(gm, this);
+    mTextChanged->signal(ws, this);
 }
 
 void TextBox::moveCursorUp ()

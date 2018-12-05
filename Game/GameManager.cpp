@@ -14,8 +14,8 @@
 namespace TUCUT {
 namespace Game {
 
-const GameManager::TimeResolution GameManager::FixedFrameTime =
-    GameManager::TimeResolution(GameManager::TimeResolution::period::den / GameManager::FramesPerSecond);
+const TimeResolution GameManager::FixedFrameTime =
+    TimeResolution(TimeResolution::period::den / GameManager::FramesPerSecond);
 
 GameManager * GameManager::instance ()
 {
@@ -56,7 +56,7 @@ void GameManager::exit ()
     mExit = true;
 }
 
-GameManager::TimeResolution GameManager::elapsed () const
+TimeResolution GameManager::elapsed () const
 {
     return mElapsed;
 }
@@ -96,26 +96,7 @@ void GameManager::loop ()
     {
         if (isFixedFrameReady())
         {
-            if (mNextWindow)
-            {
-                // Switch current window at the beginning of the loop.
-                mCurrentWindow = mNextWindow;
-                mNextWindow = nullptr;
-            }
-            if (!mCurrentWindow)
-            {
-                break;
-            }
-            
-            CursesUtil::getScreenMaxYX(mScreenMaxY, mScreenMaxX);
-            
-            mCurrentWindow->resize(checkHeightBounds(screenHeight()), checkWidthBounds(screenWidth()));
-            
-            mCurrentWindow->processInput(this);
-            
-            mCurrentWindow->draw();
-            
-            doupdate();
+            update(elapsed());
             
             completeFixedFrame();
         }
@@ -443,8 +424,16 @@ bool GameManager::hasGameAbility (const std::string & token) const
     return hasGameAbility(gameAbilityId);
 }
 
-void GameManager::update ()
+void GameManager::update (TimeResolution elapsedTime)
 {
+    for (const auto & gameSystem: mLoadedGameSystems)
+    {
+        if (gameSystem)
+        {
+            gameSystem->update(elapsedTime);
+        }
+    }
+    
     auto actionQueueIter = mGameObjectActions.begin();
     while (actionQueueIter != mGameObjectActions.end())
     {

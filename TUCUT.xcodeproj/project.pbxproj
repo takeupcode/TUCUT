@@ -267,6 +267,7 @@
 		3EDBEDE821AE4C4B006DFB23 /* GameSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3EDBEDE621AE4C4B006DFB23 /* GameSystem.cpp */; };
 		3EDBEDE921AE4C4B006DFB23 /* GameSystem.h in Headers */ = {isa = PBXBuildFile; fileRef = 3EDBEDE721AE4C4B006DFB23 /* GameSystem.h */; };
 		3EDBEDEB21AE5D52006DFB23 /* GameSystemScenarios.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3EDBEDEA21AE5D52006DFB23 /* GameSystemScenarios.cpp */; };
+		3EDBEDF521B7834E006DFB23 /* GameTime.h in Headers */ = {isa = PBXBuildFile; fileRef = 3EDBEDF421B7834E006DFB23 /* GameTime.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -679,6 +680,7 @@
 		3EDBEDEE21B08F4E006DFB23 /* TestDependentComponent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TestDependentComponent.h; sourceTree = "<group>"; };
 		3EDBEDEF21B0F15D006DFB23 /* TestSuperDependentComponent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TestSuperDependentComponent.h; sourceTree = "<group>"; };
 		3EDBEDF021B380C4006DFB23 /* TestDependentSystem.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TestDependentSystem.h; sourceTree = "<group>"; };
+		3EDBEDF421B7834E006DFB23 /* GameTime.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GameTime.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -745,6 +747,7 @@
 				3EDBEDE0219E8258006DFB23 /* GameComponent.h */,
 				3EDBEDE621AE4C4B006DFB23 /* GameSystem.cpp */,
 				3EDBEDE721AE4C4B006DFB23 /* GameSystem.h */,
+				3EDBEDF421B7834E006DFB23 /* GameTime.h */,
 			);
 			path = Game;
 			sourceTree = "<group>";
@@ -1437,6 +1440,7 @@
 				3E259DCE20E33E3800F01379 /* FileManager.h in Headers */,
 				3E259EC020E34BE900F01379 /* CodeGeneratorCPP.h in Headers */,
 				3E259EDF20E34BE900F01379 /* ParserManager.h in Headers */,
+				3EDBEDF521B7834E006DFB23 /* GameTime.h in Headers */,
 				3E061821212A31A2000B634B /* PropertyValue.h in Headers */,
 				3E06181A212A3057000B634B /* GameManager.h in Headers */,
 				3EDBEDDB218FEA25006DFB23 /* MinMax.h in Headers */,

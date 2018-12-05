@@ -13,7 +13,7 @@
 #include <string>
 #include <vector>
 
-#include "../Game/GameSystem.h"
+#include "../Game/GameManager.h"
 
 namespace TUCUT {
 namespace Curses {
@@ -27,7 +27,7 @@ public:
     
     ~WindowSystem ();
     
-    void initialize ();
+    void initialize () override;
     
     void addWindow(const std::shared_ptr<Window> & window);
 
@@ -57,7 +57,9 @@ private:
     WindowSystem (const std::string & token, int identity);
     
     void deinitialize ();
-    
+
+    void update (Game::TimeResolution elapsedTime) override;
+
     int checkHeightBounds (int height) const;
 
     int checkWidthBounds (int width) const;

@@ -139,7 +139,7 @@ std::shared_ptr<DisplayBox> DisplayBox::getSharedDisplayBox ()
     return std::static_pointer_cast<DisplayBox>(shared_from_this());
 }
 
-bool DisplayBox::onKeyPress (GameManager * gm, int key)
+bool DisplayBox::onKeyPress (WindowSystem * ws, int key)
 {
     if (enableState() != Window::EnableState::enabled)
     {
@@ -150,7 +150,7 @@ bool DisplayBox::onKeyPress (GameManager * gm, int key)
     {
         if (parent())
         {
-            return parent()->onKeyPress(gm, key);
+            return parent()->onKeyPress(ws, key);
         }
     }
     else
@@ -158,25 +158,25 @@ bool DisplayBox::onKeyPress (GameManager * gm, int key)
         switch (key)
         {
             case KEY_UP:
-                handleMoveCenterUp(gm);
+                handleMoveCenterUp(ws);
                 break;
                 
             case KEY_DOWN:
-                handleMoveCenterDown(gm);
+                handleMoveCenterDown(ws);
                 break;
                 
             case KEY_LEFT:
-                handleMoveCenterLeft(gm);
+                handleMoveCenterLeft(ws);
                 break;
                 
             case KEY_RIGHT:
-                handleMoveCenterRight(gm);
+                handleMoveCenterRight(ws);
                 break;
                 
             default:
                 if (parent())
                 {
-                    return parent()->onKeyPress(gm, key);
+                    return parent()->onKeyPress(ws, key);
                 }
                 break;
         }
@@ -185,7 +185,7 @@ bool DisplayBox::onKeyPress (GameManager * gm, int key)
     return true;
 }
 
-void DisplayBox::onMouseEvent (GameManager * gm, short id, int y, int x, mmask_t buttonState)
+void DisplayBox::onMouseEvent (WindowSystem * ws, short id, int y, int x, mmask_t buttonState)
 {
     if (enableState() != Window::EnableState::enabled)
     {
@@ -222,7 +222,7 @@ void DisplayBox::onMouseEvent (GameManager * gm, short id, int y, int x, mmask_t
             mClickedColumn = column;
         }
 
-        handleClicked(gm, mClickedLine, mClickedColumn);
+        handleClicked(ws, mClickedLine, mClickedColumn);
     }
 }
 
@@ -356,7 +356,7 @@ DisplayBox::AfterCenterChangedEvent * DisplayBox::afterCenterChanged ()
     return mAfterCenterChanged.get();
 }
 
-void DisplayBox::notify (int id, GameManager * gm, Button * button)
+void DisplayBox::notify (int id, WindowSystem * ws, Button * button)
 {
     if (id != Button::ClickedEventId)
     {
@@ -365,49 +365,49 @@ void DisplayBox::notify (int id, GameManager * gm, Button * button)
     
     if (button->name() == moveCenterUpButtonName)
     {
-        handleMoveCenterUp(gm);
+        handleMoveCenterUp(ws);
     }
     else if (button->name() == moveCenterDownButtonName)
     {
-        handleMoveCenterDown(gm);
+        handleMoveCenterDown(ws);
     }
     else if (button->name() == moveCenterLeftButtonName)
     {
-        handleMoveCenterLeft(gm);
+        handleMoveCenterLeft(ws);
     }
     else if (button->name() == moveCenterRightButtonName)
     {
-        handleMoveCenterRight(gm);
+        handleMoveCenterRight(ws);
     }
 }
 
-void DisplayBox::handleClicked (GameManager * gm, int y, int x)
+void DisplayBox::handleClicked (WindowSystem * ws, int y, int x)
 {
-    mClicked->signal(gm, this, y, x);
+    mClicked->signal(ws, this, y, x);
 }
 
-void DisplayBox::handleScrollChanged (GameManager * gm, int y, int x)
+void DisplayBox::handleScrollChanged (WindowSystem * ws, int y, int x)
 {
-    mScrollChanged->signal(gm, this, y, x);
+    mScrollChanged->signal(ws, this, y, x);
 }
 
-void DisplayBox::handleBeforeCenterChanged (GameManager * gm, int y, int x, bool & cancel)
+void DisplayBox::handleBeforeCenterChanged (WindowSystem * ws, int y, int x, bool & cancel)
 {
-    mBeforeCenterChanged->signal(gm, this, y, x, cancel);
+    mBeforeCenterChanged->signal(ws, this, y, x, cancel);
 }
 
-void DisplayBox::handleAfterCenterChanged (GameManager * gm, int y, int x)
+void DisplayBox::handleAfterCenterChanged (WindowSystem * ws, int y, int x)
 {
-    mAfterCenterChanged->signal(gm, this, y, x);
+    mAfterCenterChanged->signal(ws, this, y, x);
 }
 
-void DisplayBox::handleMoveCenterUp (GameManager * gm)
+void DisplayBox::handleMoveCenterUp (WindowSystem * ws)
 {
     if (canMoveCenterUp())
     {
         bool cancel = false;
         
-        handleBeforeCenterChanged(gm, getCenterY() - 1, getCenterX(), cancel);
+        handleBeforeCenterChanged(ws, getCenterY() - 1, getCenterX(), cancel);
         if (cancel)
         {
             return;
@@ -432,21 +432,21 @@ void DisplayBox::handleMoveCenterUp (GameManager * gm)
     
     if (centerMoved)
     {
-        handleAfterCenterChanged(gm, mCenterLine, mCenterColumn);
+        handleAfterCenterChanged(ws, mCenterLine, mCenterColumn);
     }
     if (scrollMoved)
     {
-        handleScrollChanged(gm, mScrollLine, mScrollColumn);
+        handleScrollChanged(ws, mScrollLine, mScrollColumn);
     }
 }
 
-void DisplayBox::handleMoveCenterDown (GameManager * gm)
+void DisplayBox::handleMoveCenterDown (WindowSystem * ws)
 {
     if (canMoveCenterDown())
     {
         bool cancel = false;
         
-        handleBeforeCenterChanged(gm, getCenterY() + 1, getCenterX(), cancel);
+        handleBeforeCenterChanged(ws, getCenterY() + 1, getCenterX(), cancel);
         if (cancel)
         {
             return;
@@ -471,21 +471,21 @@ void DisplayBox::handleMoveCenterDown (GameManager * gm)
     
     if (centerMoved)
     {
-        handleAfterCenterChanged(gm, mCenterLine, mCenterColumn);
+        handleAfterCenterChanged(ws, mCenterLine, mCenterColumn);
     }
     if (scrollMoved)
     {
-        handleScrollChanged(gm, mScrollLine, mScrollColumn);
+        handleScrollChanged(ws, mScrollLine, mScrollColumn);
     }
 }
 
-void DisplayBox::handleMoveCenterLeft (GameManager * gm)
+void DisplayBox::handleMoveCenterLeft (WindowSystem * ws)
 {
     if (canMoveCenterLeft())
     {
         bool cancel = false;
         
-        handleBeforeCenterChanged(gm, getCenterY(), getCenterX() - 1, cancel);
+        handleBeforeCenterChanged(ws, getCenterY(), getCenterX() - 1, cancel);
         if (cancel)
         {
             return;
@@ -510,21 +510,21 @@ void DisplayBox::handleMoveCenterLeft (GameManager * gm)
     
     if (centerMoved)
     {
-        handleAfterCenterChanged(gm, mCenterLine, mCenterColumn);
+        handleAfterCenterChanged(ws, mCenterLine, mCenterColumn);
     }
     if (scrollMoved)
     {
-        handleScrollChanged(gm, mScrollLine, mScrollColumn);
+        handleScrollChanged(ws, mScrollLine, mScrollColumn);
     }
 }
 
-void DisplayBox::handleMoveCenterRight (GameManager * gm)
+void DisplayBox::handleMoveCenterRight (WindowSystem * ws)
 {
     if (canMoveCenterRight())
     {
         bool cancel = false;
         
-        handleBeforeCenterChanged(gm, getCenterY(), getCenterX() + 1, cancel);
+        handleBeforeCenterChanged(ws, getCenterY(), getCenterX() + 1, cancel);
         if (cancel)
         {
             return;
@@ -549,11 +549,11 @@ void DisplayBox::handleMoveCenterRight (GameManager * gm)
     
     if (centerMoved)
     {
-        handleAfterCenterChanged(gm, mCenterLine, mCenterColumn);
+        handleAfterCenterChanged(ws, mCenterLine, mCenterColumn);
     }
     if (scrollMoved)
     {
-        handleScrollChanged(gm, mScrollLine, mScrollColumn);
+        handleScrollChanged(ws, mScrollLine, mScrollColumn);
     }
 }
 

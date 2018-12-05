@@ -14,6 +14,7 @@
 #include <vector>
 
 #include "GameObject.h"
+#include "GameTime.h"
 #include "../Identity/Identifiable.h"
 #include "../Event/EventSubscriber.h"
 
@@ -39,7 +40,7 @@ protected:
     
     virtual void initialize ();
 
-    virtual void update ()
+    virtual void update (TimeResolution elapsedTime)
     { }
     
     virtual void onAction (int objectId, int actionId)

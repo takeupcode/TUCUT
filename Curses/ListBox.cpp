@@ -81,7 +81,7 @@ std::shared_ptr<ListBox> ListBox::getSharedListBox ()
     return std::static_pointer_cast<ListBox>(shared_from_this());
 }
 
-bool ListBox::onKeyPress (GameManager * gm, int key)
+bool ListBox::onKeyPress (WindowSystem * ws, int key)
 {
     if (enableState() != Window::EnableState::enabled)
     {
@@ -103,7 +103,7 @@ bool ListBox::onKeyPress (GameManager * gm, int key)
         default:
             if (parent())
             {
-                return parent()->onKeyPress(gm, key);
+                return parent()->onKeyPress(ws, key);
             }
             break;
     }
@@ -111,7 +111,7 @@ bool ListBox::onKeyPress (GameManager * gm, int key)
     return true;
 }
 
-void ListBox::onMouseEvent (GameManager * gm, short id, int y, int x, mmask_t buttonState)
+void ListBox::onMouseEvent (WindowSystem * ws, short id, int y, int x, mmask_t buttonState)
 {
     if (enableState() != Window::EnableState::enabled)
     {
@@ -275,7 +275,7 @@ ListBox::SelectionChangedEvent * ListBox::selectionChanged ()
     return mSelectionChanged.get();
 }
 
-void ListBox::notify (int id, GameManager * gm, Button * button)
+void ListBox::notify (int id, WindowSystem * ws, Button * button)
 {
     if (id != Button::ClickedEventId)
     {
@@ -292,9 +292,9 @@ void ListBox::notify (int id, GameManager * gm, Button * button)
     }
 }
 
-void ListBox::handleSelectionChange (GameManager * gm)
+void ListBox::handleSelectionChange (WindowSystem * ws)
 {
-    mSelectionChanged->signal(gm, this);
+    mSelectionChanged->signal(ws, this);
 }
 
 void ListBox::moveSelectionUp ()

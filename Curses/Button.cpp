@@ -9,7 +9,7 @@
 #include "Button.h"
 
 #include "ConsoleManager.h"
-#include "GameManager.h"
+#include "WindowSystem.h"
 #include "Justification.h"
 
 namespace TUCUT {
@@ -41,7 +41,7 @@ std::shared_ptr<Button> Button::getSharedButton ()
     return std::static_pointer_cast<Button>(shared_from_this());
 }
     
-bool Button::onKeyPress (GameManager * gm, int key)
+bool Button::onKeyPress (WindowSystem * ws, int key)
 {
     if (enableState() != Window::EnableState::enabled)
     {
@@ -52,13 +52,13 @@ bool Button::onKeyPress (GameManager * gm, int key)
     {
     case 32: // Space
     case 10: // Enter
-        handleClick(gm);
+        handleClick(ws);
         break;
             
     default:
         if (parent())
         {
-            return parent()->onKeyPress(gm, key);
+            return parent()->onKeyPress(ws, key);
         }
         return false;
     }
@@ -66,7 +66,7 @@ bool Button::onKeyPress (GameManager * gm, int key)
     return true;
 }
 
-void Button::onMouseEvent (GameManager * gm, short id, int y, int x, mmask_t buttonState)
+void Button::onMouseEvent (WindowSystem * ws, short id, int y, int x, mmask_t buttonState)
 {
     if (enableState() != Window::EnableState::enabled)
     {
@@ -75,7 +75,7 @@ void Button::onMouseEvent (GameManager * gm, short id, int y, int x, mmask_t but
     
     if (buttonState & BUTTON1_CLICKED)
     {
-        handleClick(gm);
+        handleClick(ws);
     }
 }
 
@@ -98,9 +98,9 @@ void Button::onDrawClient () const
     }
 }
 
-void Button::handleClick (GameManager * gm)
+void Button::handleClick (WindowSystem * ws)
 {
-    mClicked->signal(gm, this);
+    mClicked->signal(ws, this);
 }
 
 Button::ClickedEvent * Button::clicked ()

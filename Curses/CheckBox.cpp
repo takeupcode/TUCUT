@@ -11,7 +11,7 @@
 #include <stdexcept>
 
 #include "ConsoleManager.h"
-#include "GameManager.h"
+#include "WindowSystem.h"
 #include "Justification.h"
 
 namespace TUCUT {
@@ -48,7 +48,7 @@ std::shared_ptr<CheckBox> CheckBox::getSharedCheckBox ()
     return std::static_pointer_cast<CheckBox>(shared_from_this());
 }
 
-bool CheckBox::onKeyPress (GameManager * gm, int key)
+bool CheckBox::onKeyPress (WindowSystem * ws, int key)
 {
     if (enableState() != Window::EnableState::enabled)
     {
@@ -59,13 +59,13 @@ bool CheckBox::onKeyPress (GameManager * gm, int key)
     {
         case 32: // Space
         case 10: // Enter
-            handleClick(gm);
+            handleClick(ws);
             break;
             
         default:
             if (parent())
             {
-                return parent()->onKeyPress(gm, key);
+                return parent()->onKeyPress(ws, key);
             }
             return false;
     }
@@ -73,7 +73,7 @@ bool CheckBox::onKeyPress (GameManager * gm, int key)
     return true;
 }
 
-void CheckBox::onMouseEvent (GameManager * gm, short id, int y, int x, mmask_t buttonState)
+void CheckBox::onMouseEvent (WindowSystem * ws, short id, int y, int x, mmask_t buttonState)
 {
     if (enableState() != Window::EnableState::enabled)
     {
@@ -82,7 +82,7 @@ void CheckBox::onMouseEvent (GameManager * gm, short id, int y, int x, mmask_t b
     
     if (buttonState & BUTTON1_CLICKED)
     {
-        handleClick(gm);
+        handleClick(ws);
     }
 }
 
@@ -122,11 +122,11 @@ void CheckBox::setIsChecked (bool value)
     mIsChecked = value;
 }
 
-void CheckBox::handleClick (GameManager * gm)
+void CheckBox::handleClick (WindowSystem * ws)
 {
     mIsChecked = !mIsChecked;
     
-    mClicked->signal(gm, this);
+    mClicked->signal(ws, this);
 }
 
 CheckBox::ClickedEvent * CheckBox::clicked ()

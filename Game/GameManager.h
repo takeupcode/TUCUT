@@ -9,7 +9,6 @@
 #ifndef TUCUT_Game_GameManager_h
 #define TUCUT_Game_GameManager_h
 
-#include <chrono>
 #include <memory>
 #include <queue>
 #include <unordered_map>
@@ -18,6 +17,7 @@
 #include "GameObject.h"
 #include "GameComponent.h"
 #include "GameSystem.h"
+#include "GameTime.h"
 #include "../Event/EventPublisher.h"
 
 namespace TUCUT {
@@ -233,14 +233,8 @@ public:
     {
         return mGameObjectComponent.get();
     }
-    
-    void update ();
 
 private:
-    using TimeClock = std::chrono::steady_clock;
-    using TimePoint = TimeClock::time_point;
-    using TimeResolution = std::chrono::duration<double, std::micro>;
-    
     static constexpr int FramesPerSecond = 20; // This is a text game and doesn't need a high frame rate.
     static const TimeResolution FixedFrameTime;
     
@@ -267,6 +261,8 @@ private:
     
     void loop ();
     
+    void update (TimeResolution elapsedTime);
+
     TimeResolution elapsed () const;
     void restartClock ();
     bool isFixedFrameReady () const;

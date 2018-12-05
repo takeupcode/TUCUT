@@ -20,18 +20,18 @@ namespace Curses {
 
 class Button;
 
-class NumberBox : public Control, public Event::EventSubscriber<GameManager *, Button *>
+class NumberBox : public Control, public Event::EventSubscriber<WindowSystem *, Button *>
 {
 public:
     const static int NumberChangedEventId = 1;
     
-    using NumberChangedEvent = Event::EventPublisher<GameManager *, NumberBox *>;
+    using NumberChangedEvent = Event::EventPublisher<WindowSystem *, NumberBox *>;
     
     static std::shared_ptr<NumberBox> createSharedNumberBox (const std::string & name, int number, int y, int x, int width, int foreColor, int backColor);
     
     std::shared_ptr<NumberBox> getSharedNumberBox ();
     
-    bool onKeyPress (GameManager * gm, int key) override;
+    bool onKeyPress (WindowSystem * ws, int key) override;
     
     void onDrawClient () const override;
     
@@ -55,9 +55,9 @@ protected:
     void initialize () override;
 
 private:
-    void notify (int id, GameManager * gm, Button * button) override;
+    void notify (int id, WindowSystem * ws, Button * button) override;
     
-    void handleNumberChange (GameManager * gm);
+    void handleNumberChange (WindowSystem * ws);
     
     bool removeChar ();
     bool addChar (int key);
