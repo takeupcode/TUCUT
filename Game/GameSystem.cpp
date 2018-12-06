@@ -1,6 +1,6 @@
 //
 //  GameSystem.cpp
-//  TUCUT
+//  TUCUT (Take Up Code Utility)
 //
 //  Created by Abdul Wahid Tanner on 11/27/18.
 //  Copyright © 2018 Take Up Code. All rights reserved.
@@ -17,6 +17,10 @@ namespace Game {
 void GameSystem::initialize ()
 {
     GameManager * pGameMgr = GameManager::instance();
+    for (const auto & token: mRequiredAbilityTokens)
+    {
+        pGameMgr->getOrCreateGameAbility(token);
+    }
 
     pGameMgr->gameObjectCreated()->connect(idToken().toString(), getSharedGameSystem());
     pGameMgr->gameObjectRemoving()->connect(idToken().toString(), getSharedGameSystem());

@@ -97,7 +97,10 @@ bool GameObject::addGameComponent (const std::shared_ptr<GameComponent> & compon
         
         mComponents[componentId] = true;
         
-        pGameMgr->onGameObjectComponentChanged(getSharedGameObject());
+        auto object = getSharedGameObject();
+        component->addDefaultProperties(object);
+        
+        pGameMgr->onGameObjectComponentChanged(object);
     }
     
     return true;
@@ -142,7 +145,10 @@ void GameObject::removeGameComponent (const std::shared_ptr<GameComponent> & com
                 }
             }
 
-            pGameMgr->onGameObjectComponentChanged(getSharedGameObject());
+            auto object = getSharedGameObject();
+            component->removeProperties(object);
+            
+            pGameMgr->onGameObjectComponentChanged(object);
         }
     }
 }

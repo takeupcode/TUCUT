@@ -268,6 +268,8 @@
 		3EDBEDE921AE4C4B006DFB23 /* GameSystem.h in Headers */ = {isa = PBXBuildFile; fileRef = 3EDBEDE721AE4C4B006DFB23 /* GameSystem.h */; };
 		3EDBEDEB21AE5D52006DFB23 /* GameSystemScenarios.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3EDBEDEA21AE5D52006DFB23 /* GameSystemScenarios.cpp */; };
 		3EDBEDF521B7834E006DFB23 /* GameTime.h in Headers */ = {isa = PBXBuildFile; fileRef = 3EDBEDF421B7834E006DFB23 /* GameTime.h */; };
+		3EDBEDFD21B8D63F006DFB23 /* PositionComponent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3EDBEDFB21B8D63F006DFB23 /* PositionComponent.cpp */; };
+		3EDBEDFE21B8D63F006DFB23 /* PositionComponent.h in Headers */ = {isa = PBXBuildFile; fileRef = 3EDBEDFC21B8D63F006DFB23 /* PositionComponent.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -681,6 +683,8 @@
 		3EDBEDEF21B0F15D006DFB23 /* TestSuperDependentComponent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TestSuperDependentComponent.h; sourceTree = "<group>"; };
 		3EDBEDF021B380C4006DFB23 /* TestDependentSystem.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TestDependentSystem.h; sourceTree = "<group>"; };
 		3EDBEDF421B7834E006DFB23 /* GameTime.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GameTime.h; sourceTree = "<group>"; };
+		3EDBEDFB21B8D63F006DFB23 /* PositionComponent.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PositionComponent.cpp; sourceTree = "<group>"; };
+		3EDBEDFC21B8D63F006DFB23 /* PositionComponent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PositionComponent.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -748,6 +752,8 @@
 				3EDBEDE621AE4C4B006DFB23 /* GameSystem.cpp */,
 				3EDBEDE721AE4C4B006DFB23 /* GameSystem.h */,
 				3EDBEDF421B7834E006DFB23 /* GameTime.h */,
+				3EDBEDFB21B8D63F006DFB23 /* PositionComponent.cpp */,
+				3EDBEDFC21B8D63F006DFB23 /* PositionComponent.h */,
 			);
 			path = Game;
 			sourceTree = "<group>";
@@ -1419,6 +1425,7 @@
 				3E3F83642105766200501126 /* Identifiable.h in Headers */,
 				3E3F83652105766200501126 /* InvalidArgumentException.h in Headers */,
 				3E061816212A2FAE000B634B /* GameObject.h in Headers */,
+				3EDBEDFE21B8D63F006DFB23 /* PositionComponent.h in Headers */,
 				3E3F83662105766200501126 /* InvalidExtensionException.h in Headers */,
 				3E3F83672105766200501126 /* InvalidOperationException.h in Headers */,
 				3EDBEDE921AE4C4B006DFB23 /* GameSystem.h in Headers */,
@@ -1704,6 +1711,7 @@
 				3EDBEDE821AE4C4B006DFB23 /* GameSystem.cpp in Sources */,
 				3E061823212A31A2000B634B /* PropertyContainer.cpp in Sources */,
 				3E06183E21535396000B634B /* Noise.cpp in Sources */,
+				3EDBEDFD21B8D63F006DFB23 /* PositionComponent.cpp in Sources */,
 				3E061822212A31A2000B634B /* PropertyGroup.cpp in Sources */,
 				3E3F835A210575BE00501126 /* BasicRequest.protocol.cpp in Sources */,
 				3E3F835B210575BE00501126 /* BasicResponse.protocol.cpp in Sources */,

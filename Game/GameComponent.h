@@ -13,10 +13,13 @@
 #include <string>
 #include <vector>
 
+#include "PropertyValue.h"
 #include "../Identity/Identifiable.h"
 
 namespace TUCUT {
 namespace Game {
+
+class GameObject;
     
 class GameComponent : public std::enable_shared_from_this<GameComponent>, public Identity::Identifiable<int>
 {
@@ -29,7 +32,16 @@ public:
     {
         return mAbilityTokens;
     }
+    
+    virtual void addDefaultProperties (int objectId) const;
+    virtual void addDefaultProperties (const std::shared_ptr<GameObject> & object) const;
+    
+    virtual void removeProperties (int objectId) const;
+    virtual void removeProperties (const std::shared_ptr<GameObject> & object) const;
 
+    virtual PropertyValue * getPropertyValue (int objectId, int propertyId) const;
+    virtual PropertyValue * getPropertyValue (const std::shared_ptr<GameObject> & object, int propertyId) const;
+    
 protected:
     friend class GameManager;
     
