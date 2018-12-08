@@ -16,6 +16,8 @@
 namespace TUCUT {
 namespace Game {
 
+const std::string GameObject::defaultToken = "GameObject";
+    
 void GameObject::initialize ()
 { }
 

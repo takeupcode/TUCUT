@@ -24,6 +24,8 @@ class GameComponent;
 class GameObject : public std::enable_shared_from_this<GameObject>, public Identity::Identifiable<int>
 {
 public:
+    static const std::string defaultToken;
+    
     std::shared_ptr<GameObject> getSharedGameObject ();
     
     virtual ~GameObject () = default;

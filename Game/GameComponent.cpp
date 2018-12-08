@@ -11,7 +11,9 @@
 
 namespace TUCUT {
 namespace Game {
-    
+
+const std::string GameComponent::defaultToken = "GameComponent";
+
 void GameComponent::initialize ()
 {
     Game::GameManager * pGameMgr = Game::GameManager::instance();

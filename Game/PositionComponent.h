@@ -21,6 +21,7 @@ namespace Game {
 class PositionComponent : public Game::GameComponent
 {
 public:
+    static const std::string defaultToken;
     static constexpr int x = 1;
     static constexpr int y = 2;
     static constexpr int z = 3;

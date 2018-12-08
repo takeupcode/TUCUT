@@ -45,10 +45,12 @@ public:
     void exit ();
 
     template <typename T>
-    std::shared_ptr<GameObject> createGameObject (const std::string & token)
+    std::shared_ptr<GameObject> createGameObject (const std::string & token = "")
     {
+        std::string actualToken = token.empty() ? T::defaultToken : token;
+        
         // This will be an instance of T but a pointer to the base GameObject class.
-        auto gameObj = std::shared_ptr<GameObject>(new T(token, mNextGameObjectId));
+        auto gameObj = std::shared_ptr<GameObject>(new T(actualToken, mNextGameObjectId));
         
         gameObj->initialize();
 
@@ -109,14 +111,16 @@ public:
     // This method will try to get a component by token and will create a new component if not found.
     // It will return nullptr if the requested type T is not correct.
     template <typename T>
-    std::shared_ptr<T> getOrCreateGameComponent (const std::string & token)
+    std::shared_ptr<T> getOrCreateGameComponent (const std::string & token = "")
     {
-        auto gameComponentId = getGameComponentId(token);
+        std::string actualToken = token.empty() ? T::defaultToken : token;
+        
+        auto gameComponentId = getGameComponentId(actualToken);
         if (gameComponentId == 0)
         {
-            gameComponentId = createGameComponentId(token);
+            gameComponentId = createGameComponentId(actualToken);
             // This will be an instance of T but a pointer to the base GameComponent class.
-            auto gameComponent = std::shared_ptr<GameComponent>(new T(token, gameComponentId));
+            auto gameComponent = std::shared_ptr<GameComponent>(new T(actualToken, gameComponentId));
             
             gameComponent->initialize();
 
@@ -158,14 +162,16 @@ public:
     // This method will try to get a system by token and will create a new system if not found.
     // It will return nullptr if the requested type T is not correct.
     template <typename T>
-    std::shared_ptr<T> getOrCreateGameSystem (const std::string & token)
+    std::shared_ptr<T> getOrCreateGameSystem (const std::string & token = "")
     {
-        auto gameSystemId = getGameSystemId(token);
+        std::string actualToken = token.empty() ? T::defaultToken : token;
+        
+        auto gameSystemId = getGameSystemId(actualToken);
         if (gameSystemId == 0)
         {
-            gameSystemId = createGameSystemId(token);
+            gameSystemId = createGameSystemId(actualToken);
             // This will be an instance of T but a pointer to the base GameSystem class.
-            auto gameSystem = std::shared_ptr<GameSystem>(new T(token, gameSystemId));
+            auto gameSystem = std::shared_ptr<GameSystem>(new T(actualToken, gameSystemId));
             
             gameSystem->initialize();
             

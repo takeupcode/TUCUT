@@ -17,7 +17,9 @@
 
 namespace TUCUT {
 namespace Curses {
-    
+
+const std::string WindowSystem::defaultToken = "WindowSystem";
+
 std::shared_ptr<WindowSystem> WindowSystem::getSharedWindowSystem ()
 {
     return std::static_pointer_cast<WindowSystem>(shared_from_this());

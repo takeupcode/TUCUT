@@ -12,6 +12,7 @@
 namespace TUCUT {
 namespace Game {
 
+const std::string PositionComponent::defaultToken = "PositionComponent";
 const std::string PositionComponent::groupName = "GamePosition";
 const std::string PositionComponent::xName = "x";
 const std::string PositionComponent::yName = "y";

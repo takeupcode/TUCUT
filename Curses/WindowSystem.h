@@ -23,6 +23,8 @@ class Window;
 class WindowSystem : public Game::GameSystem
 {
 public:
+    static const std::string defaultToken;
+    
     std::shared_ptr<WindowSystem> getSharedWindowSystem ();
     
     ~WindowSystem ();

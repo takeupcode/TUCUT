@@ -25,6 +25,8 @@ class GameSystem : public std::enable_shared_from_this<GameSystem>, public Ident
     public Event::EventSubscriber<const std::shared_ptr<GameObject> &>
 {
 public:
+    static const std::string defaultToken;
+    
     std::shared_ptr<GameSystem> getSharedGameSystem ();
     
     virtual ~GameSystem () = default;
