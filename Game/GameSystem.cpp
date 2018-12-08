@@ -50,12 +50,13 @@ bool GameSystem::hasGameObject (int identity) const
 
 void GameSystem::notify (int id, const std::shared_ptr<GameObject> & gameObject)
 {
-    bool gameObjectBelongs = true;
+    bool gameObjectBelongs = false;
     if (id == GameManager::GameObjectCreatedEventId ||
         id == GameManager::GameObjectComponentEventId)
     {
         if (!mRequiredAbilityTokens.empty())
         {
+            gameObjectBelongs = true;
             for (const auto & token: mRequiredAbilityTokens)
             {
                 if (!gameObject->hasGameAbility(token))
