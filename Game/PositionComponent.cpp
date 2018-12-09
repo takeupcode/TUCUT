@@ -17,6 +17,9 @@ const std::string PositionComponent::groupName = "GamePosition";
 const std::string PositionComponent::xName = "x";
 const std::string PositionComponent::yName = "y";
 const std::string PositionComponent::zName = "z";
+const std::string PositionComponent::xOldName = "xOld";
+const std::string PositionComponent::yOldName = "yOld";
+const std::string PositionComponent::zOldName = "zOld";
 
 std::shared_ptr<PositionComponent> PositionComponent::getSharedPositionComponent ()
 {
@@ -36,6 +39,9 @@ void PositionComponent::addDefaultProperties (const std::shared_ptr<GameObject> 
     group->addValue(xName, defaultPosition);
     group->addValue(yName, defaultPosition);
     group->addValue(zName, defaultPosition);
+    group->addValue(xOldName, defaultPosition);
+    group->addValue(yOldName, defaultPosition);
+    group->addValue(zOldName, defaultPosition);
 }
 
 void PositionComponent::removeProperties (const std::shared_ptr<GameObject> & object) const
@@ -65,6 +71,15 @@ double PositionComponent::getFloating (const std::shared_ptr<GameObject> & objec
             
         case z:
             return object->properties().getValue(groupName, zName)->getFloating();
+            
+        case xOld:
+            return object->properties().getValue(groupName, xOldName)->getFloating();
+            
+        case yOld:
+            return object->properties().getValue(groupName, yOldName)->getFloating();
+            
+        case zOld:
+            return object->properties().getValue(groupName, zOldName)->getFloating();
     }
     
     return 0;
@@ -77,18 +92,37 @@ void PositionComponent::setFloating (const std::shared_ptr<GameObject> & object,
         return;
     }
     
+    double old;
     switch (propertyId)
     {
         case x:
+            old = object->properties().getValue(groupName, xName)->getFloating();
+            object->properties().getValue(groupName, xOldName)->setFloating(old);
             object->properties().getValue(groupName, xName)->setFloating(value);
             break;
             
         case y:
+            old = object->properties().getValue(groupName, yName)->getFloating();
+            object->properties().getValue(groupName, yOldName)->setFloating(old);
             object->properties().getValue(groupName, yName)->setFloating(value);
             break;
             
         case z:
+            old = object->properties().getValue(groupName, zName)->getFloating();
+            object->properties().getValue(groupName, zOldName)->setFloating(old);
             object->properties().getValue(groupName, zName)->setFloating(value);
+            break;
+            
+        case xOld:
+            object->properties().getValue(groupName, xOldName)->setFloating(value);
+            break;
+            
+        case yOld:
+            object->properties().getValue(groupName, yOldName)->setFloating(value);
+            break;
+            
+        case zOld:
+            object->properties().getValue(groupName, zOldName)->setFloating(value);
             break;
     }
 }

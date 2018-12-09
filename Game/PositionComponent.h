@@ -25,7 +25,10 @@ public:
     static constexpr int x = 1;
     static constexpr int y = 2;
     static constexpr int z = 3;
-    
+    static constexpr int xOld = 4;
+    static constexpr int yOld = 5;
+    static constexpr int zOld = 6;
+
     std::shared_ptr<PositionComponent> getSharedPositionComponent ();
     
     void addDefaultProperties (const std::shared_ptr<GameObject> & object) const override;
@@ -43,6 +46,9 @@ protected:
     static const std::string xName;
     static const std::string yName;
     static const std::string zName;
+    static const std::string xOldName;
+    static const std::string yOldName;
+    static const std::string zOldName;
 
     PositionComponent (const std::string & token, int identity)
     : GameComponent(token, identity)
