@@ -41,8 +41,23 @@ public:
     virtual void removeProperties (int objectId) const;
     virtual void removeProperties (const std::shared_ptr<GameObject> & object) const;
 
-    virtual PropertyValue * getPropertyValue (int objectId, int propertyId) const;
-    virtual PropertyValue * getPropertyValue (const std::shared_ptr<GameObject> & object, int propertyId) const;
+    virtual std::string getString (int objectId, int propertyId) const;
+    virtual std::string getString (const std::shared_ptr<GameObject> & object, int propertyId) const;
+    virtual int getInteger (int objectId, int propertyId) const;
+    virtual int getInteger (const std::shared_ptr<GameObject> & object, int propertyId) const;
+    virtual double getFloating (int objectId, int propertyId) const;
+    virtual double getFloating (const std::shared_ptr<GameObject> & object, int propertyId) const;
+    virtual bool getBoolean (int objectId, int propertyId) const;
+    virtual bool getBoolean (const std::shared_ptr<GameObject> & object, int propertyId) const;
+
+    virtual void setString (int objectId, int propertyId, const std::string & value) const;
+    virtual void setString (const std::shared_ptr<GameObject> & object, int propertyId, const std::string & value) const;
+    virtual void setInteger (int objectId, int propertyId, int value) const;
+    virtual void setInteger (const std::shared_ptr<GameObject> & object, int propertyId, int value) const;
+    virtual void setFloating (int objectId, int propertyId, double value) const;
+    virtual void setFloating (const std::shared_ptr<GameObject> & object, int propertyId, double value) const;
+    virtual void setBoolean (int objectId, int propertyId, bool value) const;
+    virtual void setBoolean (const std::shared_ptr<GameObject> & object, int propertyId, bool value) const;
     
 protected:
     friend class GameManager;

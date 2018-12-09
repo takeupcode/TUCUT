@@ -50,18 +50,101 @@ void GameComponent::removeProperties (int objectId) const
 void GameComponent::removeProperties (const std::shared_ptr<GameObject> & object) const
 { }
 
-PropertyValue * GameComponent::getPropertyValue (int objectId, int propertyId) const
+std::string GameComponent::getString (int objectId, int propertyId) const
 {
     GameManager * pGameMgr = GameManager::instance();
     auto gameObj = pGameMgr->getGameObject<GameObject>(objectId);
     
-    return getPropertyValue(gameObj, propertyId);
+    return getString(gameObj, propertyId);
 }
-
-PropertyValue * GameComponent::getPropertyValue (const std::shared_ptr<GameObject> & object, int propertyId) const
+    
+std::string GameComponent::getString (const std::shared_ptr<GameObject> & object, int propertyId) const
 {
-    return nullptr;
+    return "";
 }
+    
+int GameComponent::getInteger (int objectId, int propertyId) const
+{
+    GameManager * pGameMgr = GameManager::instance();
+    auto gameObj = pGameMgr->getGameObject<GameObject>(objectId);
+    
+    return getInteger(gameObj, propertyId);
+}
+    
+int GameComponent::getInteger (const std::shared_ptr<GameObject> & object, int propertyId) const
+{
+    return 0;
+}
+    
+double GameComponent::getFloating (int objectId, int propertyId) const
+{
+    GameManager * pGameMgr = GameManager::instance();
+    auto gameObj = pGameMgr->getGameObject<GameObject>(objectId);
+    
+    return getFloating(gameObj, propertyId);
+}
+    
+double GameComponent::getFloating (const std::shared_ptr<GameObject> & object, int propertyId) const
+{
+    return 0;
+}
+    
+bool GameComponent::getBoolean (int objectId, int propertyId) const
+{
+    GameManager * pGameMgr = GameManager::instance();
+    auto gameObj = pGameMgr->getGameObject<GameObject>(objectId);
+    
+    return getBoolean(gameObj, propertyId);
+}
+    
+bool GameComponent::getBoolean (const std::shared_ptr<GameObject> & object, int propertyId) const
+{
+    return false;
+}
+    
+void GameComponent::setString (int objectId, int propertyId, const std::string & value) const
+{
+    GameManager * pGameMgr = GameManager::instance();
+    auto gameObj = pGameMgr->getGameObject<GameObject>(objectId);
+    
+    setString(gameObj, propertyId, value);
+}
+    
+void GameComponent::setString (const std::shared_ptr<GameObject> & object, int propertyId, const std::string & value) const
+{ }
+    
+void GameComponent::setInteger (int objectId, int propertyId, int value) const
+{
+    GameManager * pGameMgr = GameManager::instance();
+    auto gameObj = pGameMgr->getGameObject<GameObject>(objectId);
+    
+    setInteger(gameObj, propertyId, value);
+}
+    
+void GameComponent::setInteger (const std::shared_ptr<GameObject> & object, int propertyId, int value) const
+{ }
+    
+void GameComponent::setFloating (int objectId, int propertyId, double value) const
+{
+    GameManager * pGameMgr = GameManager::instance();
+    auto gameObj = pGameMgr->getGameObject<GameObject>(objectId);
+    
+    setFloating(gameObj, propertyId, value);
+}
+    
+void GameComponent::setFloating (const std::shared_ptr<GameObject> & object, int propertyId, double value) const
+{ }
+    
+void GameComponent::setBoolean (int objectId, int propertyId, bool value) const
+{
+    GameManager * pGameMgr = GameManager::instance();
+    auto gameObj = pGameMgr->getGameObject<GameObject>(objectId);
+    
+    setBoolean(gameObj, propertyId, value);
+}
+    
+void GameComponent::setBoolean (const std::shared_ptr<GameObject> & object, int propertyId, bool value) const
+{ }
 
 } // namespace Game
 } // namespace TUCUT

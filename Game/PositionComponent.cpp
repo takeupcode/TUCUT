@@ -32,7 +32,7 @@ void PositionComponent::addDefaultProperties (const std::shared_ptr<GameObject> 
     
     auto group = object->properties().addGroup(groupName);
     
-    int defaultPosition = 0;
+    double defaultPosition = 0.0;
     group->addValue(xName, defaultPosition);
     group->addValue(yName, defaultPosition);
     group->addValue(zName, defaultPosition);
@@ -48,26 +48,49 @@ void PositionComponent::removeProperties (const std::shared_ptr<GameObject> & ob
     object->properties().removeGroup(groupName);
 }
 
-PropertyValue * PositionComponent::getPropertyValue (const std::shared_ptr<GameObject> & object, int propertyId) const
+double PositionComponent::getFloating (const std::shared_ptr<GameObject> & object, int propertyId) const
 {
     if (!object)
     {
-        return nullptr;
+        return 0;
     }
     
     switch (propertyId)
     {
-    case x:
-        return object->properties().getValue(groupName, xName);
-        
-    case y:
-        return object->properties().getValue(groupName, yName);
-        
-    case z:
-        return object->properties().getValue(groupName, zName);
+        case x:
+            return object->properties().getValue(groupName, xName)->getFloating();
+            
+        case y:
+            return object->properties().getValue(groupName, yName)->getFloating();
+            
+        case z:
+            return object->properties().getValue(groupName, zName)->getFloating();
     }
     
-    return nullptr;
+    return 0;
+}
+
+void PositionComponent::setFloating (const std::shared_ptr<GameObject> & object, int propertyId, double value) const
+{
+    if (!object)
+    {
+        return;
+    }
+    
+    switch (propertyId)
+    {
+        case x:
+            object->properties().getValue(groupName, xName)->setFloating(value);
+            break;
+            
+        case y:
+            object->properties().getValue(groupName, yName)->setFloating(value);
+            break;
+            
+        case z:
+            object->properties().getValue(groupName, zName)->setFloating(value);
+            break;
+    }
 }
 
 } // namespace Game

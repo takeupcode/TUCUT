@@ -32,7 +32,9 @@ public:
     
     void removeProperties (const std::shared_ptr<GameObject> & object) const override;
 
-    PropertyValue * getPropertyValue (const std::shared_ptr<GameObject> & object, int propertyId) const override;
+    double getFloating (const std::shared_ptr<GameObject> & object, int propertyId) const override;
+    
+    void setFloating (const std::shared_ptr<GameObject> & object, int propertyId, double value) const override;
 
 protected:
     friend class GameManager;
