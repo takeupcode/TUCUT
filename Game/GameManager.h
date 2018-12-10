@@ -29,10 +29,12 @@ public:
     const static int GameObjectCreatedEventId = 1;
     const static int GameObjectRemovingEventId = 2;
     const static int GameObjectComponentEventId = 3;
+    const static int GameCommandSentEventId = 4;
 
     using GameObjectCreatedEvent = Event::EventPublisher<const std::shared_ptr<GameObject> &>;
     using GameObjectRemovingEvent = Event::EventPublisher<const std::shared_ptr<GameObject> &>;
     using GameObjectComponentEvent = Event::EventPublisher<const std::shared_ptr<GameObject> &>;
+    using GameCommandSentEvent = Event::EventPublisher<int, const PropertyGroup &>;
 
     static GameManager * instance ();
     
@@ -217,6 +219,18 @@ public:
     
     bool hasGameAbility (const std::string & token) const;
 
+    // This method will try to get a command by id and return an empty string if not found.
+    std::string getGameCommand (int identity) const;
+    
+    // This method will try to get a command by token and will create a new command if not found.
+    int getOrCreateGameCommand (const std::string & token);
+    
+    int getGameCommandId (const std::string & token) const;
+    
+    bool hasGameCommand (int identity) const;
+    
+    bool hasGameCommand (const std::string & token) const;
+
     void onGameObjectComponentChanged (const std::shared_ptr<GameObject> & gameObj) const
     {
         if (hasGameObject(gameObj->identity()))
@@ -240,6 +254,27 @@ public:
         return mGameObjectComponent.get();
     }
 
+    GameCommandSentEvent * gameCommandSent (int commandId)
+    {
+        if (!hasGameCommand(commandId))
+        {
+            return nullptr;
+        }
+        
+        auto gameCommandEventMapResult = mGameCommandEvents.find(commandId);
+        if (gameCommandEventMapResult == mGameCommandEvents.end())
+        {
+            auto result = mGameCommandEvents.try_emplace(commandId,
+                std::unique_ptr<GameCommandSentEvent>(new GameCommandSentEvent(GameCommandSentEventId)));
+            if (!result.second)
+            {
+                throw std::runtime_error("Unable to create command sent event");
+            }
+        }
+        
+        return gameCommandEventMapResult->second.get();
+    }
+
 private:
     static constexpr int FramesPerSecond = 20; // This is a text game and doesn't need a high frame rate.
     static const TimeResolution FixedFrameTime;
@@ -255,11 +290,14 @@ private:
     using GameObjectActionMap = std::unordered_map<int, GameActionQueue>;
     using GameAbilityMap = std::unordered_map<std::string, int>;
     using GameAbilityVector = std::vector<std::string>;
+    using GameCommandMap = std::unordered_map<std::string, int>;
+    using GameCommandVector = std::vector<std::string>;
+    using GameCommandEventMap = std::unordered_map<int, std::unique_ptr<GameCommandSentEvent>>;
 
     GameManager ()
     : mElapsed(0), mFixedFrameTotal(0), mExit(false),
     mNextGameObjectId(1), mNextGameComponentId(1), mNextGameSystemId(1),
-    mNextGameActionId(1), mNextGameAbilityId(1),
+    mNextGameActionId(1), mNextGameAbilityId(1), mNextGameCommandId(1),
     mGameObjectCreated(new GameObjectCreatedEvent(GameObjectCreatedEventId)),
     mGameObjectRemoving(new GameObjectRemovingEvent(GameObjectRemovingEventId)),
     mGameObjectComponent(new GameObjectComponentEvent(GameObjectComponentEventId))
@@ -282,7 +320,9 @@ private:
     int createGameActionId (const std::string & token);
 
     int createGameAbilityId (const std::string & token);
-    
+
+    int createGameCommandId (const std::string & token);
+
     TimePoint mLastTime;
     TimeResolution mElapsed;
     TimeResolution mFixedFrameTotal;
@@ -293,6 +333,7 @@ private:
     int mNextGameSystemId;
     int mNextGameActionId;
     int mNextGameAbilityId;
+    int mNextGameCommandId;
     GameObjectMap mGameObjects;
     GameComponentMap mRegisteredGameComponents;
     GameComponentVector mLoadedGameComponents;
@@ -303,6 +344,9 @@ private:
     GameObjectActionMap mGameObjectActions;
     GameAbilityMap mRegisteredGameAbilities;
     GameAbilityVector mLoadedGameAbilities;
+    GameCommandMap mRegisteredGameCommands;
+    GameCommandVector mLoadedGameCommands;
+    GameCommandEventMap mGameCommandEvents;
     std::unique_ptr<GameObjectCreatedEvent> mGameObjectCreated;
     std::unique_ptr<GameObjectRemovingEvent> mGameObjectRemoving;
     std::unique_ptr<GameObjectComponentEvent> mGameObjectComponent;

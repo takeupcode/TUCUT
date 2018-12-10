@@ -44,6 +44,9 @@ void GameManager::deinitialize ()
     mGameObjectActions.clear();
     mRegisteredGameAbilities.clear();
     mLoadedGameAbilities.clear();
+    mRegisteredGameCommands.clear();
+    mLoadedGameCommands.clear();
+    mGameCommandEvents.clear();
 }
 
 void GameManager::play ()
@@ -222,6 +225,35 @@ int GameManager::getGameAbilityId (const std::string & token) const
     }
     
     return gameAbilityMapResult->second;
+}
+
+int GameManager::createGameCommandId (const std::string & token)
+{
+    if (token.empty())
+    {
+        throw std::runtime_error("Unable to create game command id");
+    }
+    
+    mRegisteredGameCommands[token] = mNextGameCommandId;
+    
+    // Make sure there's always a matching entry in the loaded commands vector.
+    while (mLoadedGameCommands.size() <= static_cast<std::size_t>(mNextGameCommandId))
+    {
+        mLoadedGameCommands.push_back("");
+    }
+    
+    return mNextGameCommandId++;
+}
+
+int GameManager::getGameCommandId (const std::string & token) const
+{
+    auto gameCommandMapResult = mRegisteredGameCommands.find(token);
+    if (gameCommandMapResult == mRegisteredGameCommands.end())
+    {
+        return 0;
+    }
+    
+    return gameCommandMapResult->second;
 }
 
 bool GameManager::hasGameObject (int identity) const
@@ -422,6 +454,59 @@ bool GameManager::hasGameAbility (const std::string & token) const
     }
     
     return hasGameAbility(gameAbilityId);
+}
+
+std::string GameManager::getGameCommand (int identity) const
+{
+    if (identity < 1)
+    {
+        return "";
+    }
+    
+    if (mLoadedGameCommands.size() > static_cast<std::size_t>(identity))
+    {
+        return mLoadedGameCommands[identity];
+    }
+    
+    return "";
+}
+
+int GameManager::getOrCreateGameCommand (const std::string & token)
+{
+    auto gameCommandId = getGameCommandId(token);
+    if (gameCommandId == 0)
+    {
+        gameCommandId = createGameCommandId(token);
+        mLoadedGameCommands[gameCommandId] = token;
+    }
+    
+    return gameCommandId;
+}
+
+bool GameManager::hasGameCommand (int identity) const
+{
+    if (identity < 1)
+    {
+        return false;
+    }
+    
+    if (mLoadedGameCommands.size() > static_cast<std::size_t>(identity))
+    {
+        return !mLoadedGameCommands[identity].empty();
+    }
+    
+    return false;
+}
+
+bool GameManager::hasGameCommand (const std::string & token) const
+{
+    auto gameCommandId = getGameCommandId(token);
+    if (gameCommandId == 0)
+    {
+        return false;
+    }
+    
+    return hasGameCommand(gameCommandId);
 }
 
 void GameManager::update (TimeResolution elapsedTime)

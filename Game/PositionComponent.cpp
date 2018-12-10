@@ -35,13 +35,13 @@ void PositionComponent::addDefaultProperties (const std::shared_ptr<GameObject> 
     
     auto group = object->properties().addGroup(groupName);
     
-    double defaultPosition = 0.0;
-    group->addValue(xName, defaultPosition);
-    group->addValue(yName, defaultPosition);
-    group->addValue(zName, defaultPosition);
-    group->addValue(xOldName, defaultPosition);
-    group->addValue(yOldName, defaultPosition);
-    group->addValue(zOldName, defaultPosition);
+    double defaultFloatValue = 0.0;
+    group->addValue(xName, defaultFloatValue);
+    group->addValue(yName, defaultFloatValue);
+    group->addValue(zName, defaultFloatValue);
+    group->addValue(xOldName, defaultFloatValue);
+    group->addValue(yOldName, defaultFloatValue);
+    group->addValue(zOldName, defaultFloatValue);
 }
 
 void PositionComponent::removeProperties (const std::shared_ptr<GameObject> & object) const

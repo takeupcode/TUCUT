@@ -270,6 +270,8 @@
 		3EDBEDF521B7834E006DFB23 /* GameTime.h in Headers */ = {isa = PBXBuildFile; fileRef = 3EDBEDF421B7834E006DFB23 /* GameTime.h */; };
 		3EDBEDFD21B8D63F006DFB23 /* PositionComponent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3EDBEDFB21B8D63F006DFB23 /* PositionComponent.cpp */; };
 		3EDBEDFE21B8D63F006DFB23 /* PositionComponent.h in Headers */ = {isa = PBXBuildFile; fileRef = 3EDBEDFC21B8D63F006DFB23 /* PositionComponent.h */; };
+		3EDBEE0121BDF9D7006DFB23 /* MovementComponent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3EDBEDFF21BDF9D7006DFB23 /* MovementComponent.cpp */; };
+		3EDBEE0221BDF9D7006DFB23 /* MovementComponent.h in Headers */ = {isa = PBXBuildFile; fileRef = 3EDBEE0021BDF9D7006DFB23 /* MovementComponent.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -685,6 +687,8 @@
 		3EDBEDF421B7834E006DFB23 /* GameTime.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GameTime.h; sourceTree = "<group>"; };
 		3EDBEDFB21B8D63F006DFB23 /* PositionComponent.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PositionComponent.cpp; sourceTree = "<group>"; };
 		3EDBEDFC21B8D63F006DFB23 /* PositionComponent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PositionComponent.h; sourceTree = "<group>"; };
+		3EDBEDFF21BDF9D7006DFB23 /* MovementComponent.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = MovementComponent.cpp; sourceTree = "<group>"; };
+		3EDBEE0021BDF9D7006DFB23 /* MovementComponent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MovementComponent.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -754,6 +758,8 @@
 				3EDBEDF421B7834E006DFB23 /* GameTime.h */,
 				3EDBEDFB21B8D63F006DFB23 /* PositionComponent.cpp */,
 				3EDBEDFC21B8D63F006DFB23 /* PositionComponent.h */,
+				3EDBEDFF21BDF9D7006DFB23 /* MovementComponent.cpp */,
+				3EDBEE0021BDF9D7006DFB23 /* MovementComponent.h */,
 			);
 			path = Game;
 			sourceTree = "<group>";
@@ -1425,6 +1431,7 @@
 				3E3F83642105766200501126 /* Identifiable.h in Headers */,
 				3E3F83652105766200501126 /* InvalidArgumentException.h in Headers */,
 				3E061816212A2FAE000B634B /* GameObject.h in Headers */,
+				3EDBEE0221BDF9D7006DFB23 /* MovementComponent.h in Headers */,
 				3EDBEDFE21B8D63F006DFB23 /* PositionComponent.h in Headers */,
 				3E3F83662105766200501126 /* InvalidExtensionException.h in Headers */,
 				3E3F83672105766200501126 /* InvalidOperationException.h in Headers */,
@@ -1732,6 +1739,7 @@
 				3E259EC320E34BE900F01379 /* ParserManager.cpp in Sources */,
 				3E259EE120E34BE900F01379 /* MessageModel.cpp in Sources */,
 				3E259DCA20E33E2B00F01379 /* LogManager.cpp in Sources */,
+				3EDBEE0121BDF9D7006DFB23 /* MovementComponent.cpp in Sources */,
 				3E259EBD20E34BE900F01379 /* ImportParser.cpp in Sources */,
 				3E259EEC20E34BE900F01379 /* ProtoModel.cpp in Sources */,
 				3E061819212A3057000B634B /* GameManager.cpp in Sources */,

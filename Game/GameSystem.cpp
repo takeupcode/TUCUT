@@ -23,6 +23,11 @@ void GameSystem::initialize ()
     {
         pGameMgr->getOrCreateGameAbility(token);
     }
+    for (const auto & token: mRequiredCommandTokens)
+    {
+        auto commandId = pGameMgr->getOrCreateGameCommand(token);
+        pGameMgr->gameCommandSent(commandId)->connect(idToken().toString(), getSharedGameSystem());
+    }
 
     pGameMgr->gameObjectCreated()->connect(idToken().toString(), getSharedGameSystem());
     pGameMgr->gameObjectRemoving()->connect(idToken().toString(), getSharedGameSystem());
@@ -98,6 +103,9 @@ void GameSystem::notify (int id, const std::shared_ptr<GameObject> & gameObject)
         }
     }
 }
+
+void GameSystem::notify (int id, int commandId, const PropertyGroup & commandProperties)
+{ }
 
 } // namespace Game
 } // namespace TUCUT

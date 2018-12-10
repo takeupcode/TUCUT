@@ -22,7 +22,8 @@ namespace TUCUT {
 namespace Game {
     
 class GameSystem : public std::enable_shared_from_this<GameSystem>, public Identity::Identifiable<int>,
-    public Event::EventSubscriber<const std::shared_ptr<GameObject> &>
+    public Event::EventSubscriber<const std::shared_ptr<GameObject> &>,
+    public Event::EventSubscriber<int, const PropertyGroup &>
 {
 public:
     static const std::string defaultToken;
@@ -49,8 +50,11 @@ protected:
     { }
 
     void notify (int id, const std::shared_ptr<GameObject> & gameObject) override;
-    
+
+    void notify (int id, int commandId, const PropertyGroup & commandProperties) override;
+
     std::vector<std::string> mRequiredAbilityTokens;
+    std::vector<std::string> mRequiredCommandTokens;
 
 private:
     using GameObjectMap = std::unordered_map<int, std::shared_ptr<GameObject>>;
