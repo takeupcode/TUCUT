@@ -7,7 +7,6 @@
 //
 
 #include "PositionComponent.h"
-#include "GameManager.h"
 
 namespace TUCUT {
 namespace Game {

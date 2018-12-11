@@ -9,6 +9,7 @@
 #ifndef TUCUT_Game_MovementComponent_h
 #define TUCUT_Game_MovementComponent_h
 
+#include "GameManager.h"
 #include "GameComponent.h"
 
 namespace TUCUT {
@@ -18,10 +19,9 @@ class MovementComponent : public Game::GameComponent
 {
 public:
     static const std::string defaultToken;
-    static constexpr int velocity = 1;
-    static constexpr int xDir = 2;
-    static constexpr int yDir = 3;
-    static constexpr int zDir = 4;
+    static constexpr int xVelocity = 1;
+    static constexpr int yVelocity = 2;
+    static constexpr int zVelocity = 3;
     
     std::shared_ptr<MovementComponent> getSharedMovementComponent ();
     
@@ -37,10 +37,9 @@ protected:
     friend class GameManager;
     
     static const std::string groupName;
-    static const std::string velocityName;
-    static const std::string xDirName;
-    static const std::string yDirName;
-    static const std::string zDirName;
+    static const std::string xVelocityName;
+    static const std::string yVelocityName;
+    static const std::string zVelocityName;
     
     MovementComponent (const std::string & token, int identity)
     : GameComponent(token, identity)

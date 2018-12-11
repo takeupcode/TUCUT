@@ -270,6 +270,8 @@ public:
             {
                 throw std::runtime_error("Unable to create command sent event");
             }
+            
+            return result.first->second.get();
         }
         
         return gameCommandEventMapResult->second.get();

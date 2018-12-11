@@ -17,7 +17,8 @@ namespace Game {
 using TimeClock = std::chrono::steady_clock;
 using TimePoint = TimeClock::time_point;
 using TimeResolution = std::chrono::duration<double, std::micro>;
-
+using TimeInSeconds = std::chrono::duration<double>;
+    
 } // namespace Game
 } // namespace TUCUT
 

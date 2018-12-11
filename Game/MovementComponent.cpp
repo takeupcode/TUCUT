@@ -7,17 +7,15 @@
 //
 
 #include "MovementComponent.h"
-#include "GameManager.h"
 
 namespace TUCUT {
 namespace Game {
 
 const std::string MovementComponent::defaultToken = "MovementComponent";
 const std::string MovementComponent::groupName = "GameMoveable";
-const std::string MovementComponent::velocityName = "velocity";
-const std::string MovementComponent::xDirName = "xDir";
-const std::string MovementComponent::yDirName = "yDir";
-const std::string MovementComponent::zDirName = "zDir";
+const std::string MovementComponent::xVelocityName = "xVelocity";
+const std::string MovementComponent::yVelocityName = "yVelocity";
+const std::string MovementComponent::zVelocityName = "zVelocity";
 
 std::shared_ptr<MovementComponent> MovementComponent::getSharedMovementComponent ()
 {
@@ -34,10 +32,9 @@ void MovementComponent::addDefaultProperties (const std::shared_ptr<GameObject> 
     auto group = object->properties().addGroup(groupName);
     
     double defaultFloatValue = 0.0;
-    group->addValue(velocityName, defaultFloatValue);
-    group->addValue(xDirName, defaultFloatValue);
-    group->addValue(yDirName, defaultFloatValue);
-    group->addValue(zDirName, defaultFloatValue);
+    group->addValue(xVelocityName, defaultFloatValue);
+    group->addValue(yVelocityName, defaultFloatValue);
+    group->addValue(zVelocityName, defaultFloatValue);
 }
 
 void MovementComponent::removeProperties (const std::shared_ptr<GameObject> & object) const
@@ -59,17 +56,14 @@ double MovementComponent::getFloating (const std::shared_ptr<GameObject> & objec
     
     switch (propertyId)
     {
-    case velocity:
-        return object->properties().getValue(groupName, velocityName)->getFloating();
+    case xVelocity:
+        return object->properties().getValue(groupName, xVelocityName)->getFloating();
         
-    case xDir:
-        return object->properties().getValue(groupName, xDirName)->getFloating();
+    case yVelocity:
+        return object->properties().getValue(groupName, yVelocityName)->getFloating();
         
-    case yDir:
-        return object->properties().getValue(groupName, yDirName)->getFloating();
-        
-    case zDir:
-        return object->properties().getValue(groupName, zDirName)->getFloating();
+    case zVelocity:
+        return object->properties().getValue(groupName, zVelocityName)->getFloating();
     }
     
     return 0;
@@ -84,20 +78,16 @@ void MovementComponent::setFloating (const std::shared_ptr<GameObject> & object,
     
     switch (propertyId)
     {
-    case velocity:
-        object->properties().getValue(groupName, velocityName)->setFloating(value);
+    case xVelocity:
+        object->properties().getValue(groupName, xVelocityName)->setFloating(value);
         break;
         
-    case xDir:
-        object->properties().getValue(groupName, xDirName)->setFloating(value);
+    case yVelocity:
+        object->properties().getValue(groupName, yVelocityName)->setFloating(value);
         break;
         
-    case yDir:
-        object->properties().getValue(groupName, yDirName)->setFloating(value);
-        break;
-        
-    case zDir:
-        object->properties().getValue(groupName, zDirName)->setFloating(value);
+    case zVelocity:
+        object->properties().getValue(groupName, zVelocityName)->setFloating(value);
         break;
     }
 }

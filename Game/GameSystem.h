@@ -37,6 +37,8 @@ public:
 protected:
     friend class GameManager;
     
+    using GameObjectMap = std::unordered_map<int, std::shared_ptr<GameObject>>;
+    
     GameSystem (const std::string & token, int identity)
     : Identifiable(token, identity)
     { }
@@ -53,13 +55,9 @@ protected:
 
     void notify (int id, int commandId, const PropertyGroup & commandProperties) override;
 
+    GameObjectMap mGameObjects;
     std::vector<std::string> mRequiredAbilityTokens;
     std::vector<std::string> mRequiredCommandTokens;
-
-private:
-    using GameObjectMap = std::unordered_map<int, std::shared_ptr<GameObject>>;
-    
-    GameObjectMap mGameObjects;
 };
     
 } // namespace Game

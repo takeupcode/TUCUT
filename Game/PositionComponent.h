@@ -13,6 +13,7 @@
 #include <string>
 #include <vector>
     
+#include "GameManager.h"
 #include "GameComponent.h"
 
 namespace TUCUT {

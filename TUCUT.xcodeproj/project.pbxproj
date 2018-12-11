@@ -272,6 +272,8 @@
 		3EDBEDFE21B8D63F006DFB23 /* PositionComponent.h in Headers */ = {isa = PBXBuildFile; fileRef = 3EDBEDFC21B8D63F006DFB23 /* PositionComponent.h */; };
 		3EDBEE0121BDF9D7006DFB23 /* MovementComponent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3EDBEDFF21BDF9D7006DFB23 /* MovementComponent.cpp */; };
 		3EDBEE0221BDF9D7006DFB23 /* MovementComponent.h in Headers */ = {isa = PBXBuildFile; fileRef = 3EDBEE0021BDF9D7006DFB23 /* MovementComponent.h */; };
+		3EDBEE0521BF57B6006DFB23 /* MovementSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3EDBEE0321BF57B5006DFB23 /* MovementSystem.cpp */; };
+		3EDBEE0621BF57B6006DFB23 /* MovementSystem.h in Headers */ = {isa = PBXBuildFile; fileRef = 3EDBEE0421BF57B6006DFB23 /* MovementSystem.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -689,6 +691,8 @@
 		3EDBEDFC21B8D63F006DFB23 /* PositionComponent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PositionComponent.h; sourceTree = "<group>"; };
 		3EDBEDFF21BDF9D7006DFB23 /* MovementComponent.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = MovementComponent.cpp; sourceTree = "<group>"; };
 		3EDBEE0021BDF9D7006DFB23 /* MovementComponent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MovementComponent.h; sourceTree = "<group>"; };
+		3EDBEE0321BF57B5006DFB23 /* MovementSystem.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = MovementSystem.cpp; sourceTree = "<group>"; };
+		3EDBEE0421BF57B6006DFB23 /* MovementSystem.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MovementSystem.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -760,6 +764,8 @@
 				3EDBEDFC21B8D63F006DFB23 /* PositionComponent.h */,
 				3EDBEDFF21BDF9D7006DFB23 /* MovementComponent.cpp */,
 				3EDBEE0021BDF9D7006DFB23 /* MovementComponent.h */,
+				3EDBEE0321BF57B5006DFB23 /* MovementSystem.cpp */,
+				3EDBEE0421BF57B6006DFB23 /* MovementSystem.h */,
 			);
 			path = Game;
 			sourceTree = "<group>";
@@ -1474,6 +1480,7 @@
 				3E259ED020E34BE900F01379 /* OptionGroupParser.h in Headers */,
 				3E259EF320E34BE900F01379 /* OneofParser.h in Headers */,
 				3E259EFC20E34C1200F01379 /* Test.h in Headers */,
+				3EDBEE0621BF57B6006DFB23 /* MovementSystem.h in Headers */,
 				3E289F44217987D6002FFBDC /* Vector.h in Headers */,
 				3E259EF420E34BE900F01379 /* EnumModel.h in Headers */,
 				3E259EEA20E34BE900F01379 /* Nameable.h in Headers */,
@@ -1716,6 +1723,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3EDBEDE821AE4C4B006DFB23 /* GameSystem.cpp in Sources */,
+				3EDBEE0521BF57B6006DFB23 /* MovementSystem.cpp in Sources */,
 				3E061823212A31A2000B634B /* PropertyContainer.cpp in Sources */,
 				3E06183E21535396000B634B /* Noise.cpp in Sources */,
 				3EDBEDFD21B8D63F006DFB23 /* PositionComponent.cpp in Sources */,
