@@ -107,6 +107,9 @@ void Window::processInput (WindowSystem * ws)
     }
 }
 
+void Window::update ()
+{ }
+
 void Window::draw () const
 {
     if (mBorder)

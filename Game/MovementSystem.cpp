@@ -90,17 +90,17 @@ void MovementSystem::update (TimeResolution elapsedTime)
         
         if (xVelocity)
         {
-            auto x = positionComp->getFloating(gameObj.second, PositionComponent::x) + xVelocity;
+            auto x = positionComp->getFloating(gameObj.second, PositionComponent::x) + xVelocity * seconds.count();
             positionComp->setFloating(gameObj.second, PositionComponent::x, x);
         }
         
         if (yVelocity)
         {
-            auto y = positionComp->getFloating(gameObj.second, PositionComponent::y) + yVelocity;
+            auto y = positionComp->getFloating(gameObj.second, PositionComponent::y) + yVelocity * seconds.count();
             positionComp->setFloating(gameObj.second, PositionComponent::y, y);
         }
         
-        auto z = positionComp->getFloating(gameObj.second, PositionComponent::z) + zVelocity;
+        auto z = positionComp->getFloating(gameObj.second, PositionComponent::z) + zVelocity * seconds.count();
         positionComp->setFloating(gameObj.second, PositionComponent::z, z);
     }
 }

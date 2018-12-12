@@ -639,7 +639,7 @@ void DisplayBox::ensurePointIsVisible (int y, int x)
 {
     verifyYX(y, x);
 
-    if (y < mScrollLine)
+    if (y < mScrollLine + mScrollMarginTop)
     {
         mScrollLine = y - mScrollMarginTop;
         if (mScrollLine < 0)
@@ -647,7 +647,7 @@ void DisplayBox::ensurePointIsVisible (int y, int x)
             mScrollLine = 0;
         }
     }
-    else if (y >= mScrollLine + clientHeight())
+    else if (y >= mScrollLine + clientHeight() - mScrollMarginBottom)
     {
         mScrollLine = y - clientHeight() + 1 + mScrollMarginBottom;
         if ((mScrollLine + clientHeight()) > mContentHeight)
@@ -656,7 +656,7 @@ void DisplayBox::ensurePointIsVisible (int y, int x)
         }
     }
     
-    if (x < mScrollColumn)
+    if (x < mScrollColumn + mScrollMarginLeft)
     {
         mScrollColumn = x - mScrollMarginLeft;
         if (mScrollColumn < 0)
@@ -664,7 +664,7 @@ void DisplayBox::ensurePointIsVisible (int y, int x)
             mScrollColumn = 0;
         }
     }
-    else if (x >= mScrollColumn + textClientWidth())
+    else if (x >= mScrollColumn + textClientWidth() - mScrollMarginRight)
     {
         mScrollColumn = x - textClientWidth() + 1 + mScrollMarginRight;
         if ((mScrollColumn + textClientWidth()) > mContentWidth)

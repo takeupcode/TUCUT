@@ -141,6 +141,8 @@ void WindowSystem::update (Game::TimeResolution elapsedTime)
     
     mCurrentWindow->processInput(this);
     
+    mCurrentWindow->update();
+    
     mCurrentWindow->draw();
     
     doupdate();

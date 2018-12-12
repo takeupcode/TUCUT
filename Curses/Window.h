@@ -47,6 +47,8 @@ public:
     WINDOW * cursesWindow () const;
     
     virtual void processInput (WindowSystem * ws);
+    
+    virtual void update ();
 
     void draw () const;
 
