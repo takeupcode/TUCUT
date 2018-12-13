@@ -15,6 +15,7 @@
     
 #include "GameManager.h"
 #include "GameComponent.h"
+#include "../Math/Vector.h"
 
 namespace TUCUT {
 namespace Game {
@@ -39,6 +40,10 @@ public:
     double getFloating (const std::shared_ptr<GameObject> & object, int propertyId) const override;
     
     void setFloating (const std::shared_ptr<GameObject> & object, int propertyId, double value) const override;
+    
+    void setMinPosition (const Math::Vector3d & position);
+    
+    void setMaxPosition (const Math::Vector3d & position);
 
 protected:
     friend class GameManager;
@@ -56,6 +61,10 @@ protected:
     {
         mAbilityTokens.push_back("GamePosition");
     }
+    
+private:
+    Math::Vector3d mMinPosition;
+    Math::Vector3d mMaxPosition;
 };
 
 } // namespace Game

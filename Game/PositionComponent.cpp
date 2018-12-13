@@ -95,35 +95,93 @@ void PositionComponent::setFloating (const std::shared_ptr<GameObject> & object,
     switch (propertyId)
     {
         case x:
+            if (value < mMinPosition.x)
+            {
+                value = mMinPosition.x;
+            }
+            else if (value > mMaxPosition.x)
+            {
+                value = mMaxPosition.x;
+            }
             old = object->properties().getValue(groupName, xName)->getFloating();
             object->properties().getValue(groupName, xOldName)->setFloating(old);
             object->properties().getValue(groupName, xName)->setFloating(value);
             break;
             
         case y:
+            if (value < mMinPosition.y)
+            {
+                value = mMinPosition.y;
+            }
+            else if (value > mMaxPosition.y)
+            {
+                value = mMaxPosition.y;
+            }
             old = object->properties().getValue(groupName, yName)->getFloating();
             object->properties().getValue(groupName, yOldName)->setFloating(old);
             object->properties().getValue(groupName, yName)->setFloating(value);
             break;
             
         case z:
+            if (value < mMinPosition.z)
+            {
+                value = mMinPosition.z;
+            }
+            else if (value > mMaxPosition.z)
+            {
+                value = mMaxPosition.z;
+            }
             old = object->properties().getValue(groupName, zName)->getFloating();
             object->properties().getValue(groupName, zOldName)->setFloating(old);
             object->properties().getValue(groupName, zName)->setFloating(value);
             break;
             
         case xOld:
+            if (value < mMinPosition.x)
+            {
+                value = mMinPosition.x;
+            }
+            else if (value > mMaxPosition.x)
+            {
+                value = mMaxPosition.x;
+            }
             object->properties().getValue(groupName, xOldName)->setFloating(value);
             break;
             
         case yOld:
+            if (value < mMinPosition.y)
+            {
+                value = mMinPosition.y;
+            }
+            else if (value > mMaxPosition.y)
+            {
+                value = mMaxPosition.y;
+            }
             object->properties().getValue(groupName, yOldName)->setFloating(value);
             break;
             
         case zOld:
+            if (value < mMinPosition.z)
+            {
+                value = mMinPosition.z;
+            }
+            else if (value > mMaxPosition.z)
+            {
+                value = mMaxPosition.z;
+            }
             object->properties().getValue(groupName, zOldName)->setFloating(value);
             break;
     }
+}
+
+void PositionComponent::setMinPosition (const Math::Vector3d & position)
+{
+    mMinPosition = position;
+}
+
+void PositionComponent::setMaxPosition (const Math::Vector3d & position)
+{
+    mMaxPosition = position;
 }
 
 } // namespace Game
