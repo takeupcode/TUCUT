@@ -123,22 +123,16 @@ void MovementSystem::update (TimeResolution elapsedTime)
             continue;
         }
         
-        if (xVelocity)
+        if (xVelocity || yVelocity || zVelocity)
         {
             auto x = positionComp->getFloating(gameObj.second, PositionComponent::x);
             x += isInstantMode() ? xVelocity : xVelocity * seconds.count();
             positionComp->setFloating(gameObj.second, PositionComponent::x, x);
-        }
-        
-        if (yVelocity)
-        {
+
             auto y = positionComp->getFloating(gameObj.second, PositionComponent::y);
             y += isInstantMode() ? yVelocity : yVelocity * seconds.count();
             positionComp->setFloating(gameObj.second, PositionComponent::y, y);
-        }
-        
-        if (zVelocity)
-        {
+
             auto z = positionComp->getFloating(gameObj.second, PositionComponent::z);
             z += isInstantMode() ? zVelocity : zVelocity * seconds.count();
             positionComp->setFloating(gameObj.second, PositionComponent::z, z);
