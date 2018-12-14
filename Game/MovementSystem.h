@@ -26,6 +26,10 @@ public:
         return std::static_pointer_cast<MovementSystem>(shared_from_this());
     }
     
+    bool isInstantMode () const;
+    
+    void setInstantMode (bool instant);
+    
 protected:
     friend class Game::GameManager;
     
@@ -35,7 +39,7 @@ protected:
     static const std::string zVelocityName;
 
     MovementSystem (const std::string & token, int identity)
-    : GameSystem(token, identity)
+    : GameSystem(token, identity), mInstantMode(false)
     {
         mRequiredAbilityTokens.push_back("GameMoveable");
         mRequiredAbilityTokens.push_back("GamePosition");
@@ -46,6 +50,9 @@ protected:
     void update (TimeResolution elapsedTime) override;
 
     void notify (int id, int commandId, const PropertyGroup & commandProperties) override;
+    
+private:
+    bool mInstantMode;
 };
 
 } // namespace Game

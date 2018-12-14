@@ -18,6 +18,16 @@ const std::string MovementSystem::targetIdName = "targetId";
 const std::string MovementSystem::xVelocityName = "xVelocity";
 const std::string MovementSystem::yVelocityName = "yVelocity";
 const std::string MovementSystem::zVelocityName = "zVelocity";
+    
+bool MovementSystem::isInstantMode () const
+{
+    return mInstantMode;
+}
+
+void MovementSystem::setInstantMode (bool instant)
+{
+    mInstantMode = instant;
+}
 
 void MovementSystem::update (TimeResolution elapsedTime)
 {
@@ -35,51 +45,76 @@ void MovementSystem::update (TimeResolution elapsedTime)
         auto xVelocity = movementComp->getFloating(gameObj.second, MovementComponent::xVelocity);
         if (xVelocity)
         {
-            if (xVelocity > 0)
+            if (isInstantMode())
             {
-                xVelocity -= adjustment;
-                if (xVelocity < 0)
-                {
-                    xVelocity = 0;
-                }
+                movementComp->setFloating(gameObj.second, MovementComponent::xVelocity, 0);
             }
             else
             {
-                xVelocity += adjustment;
                 if (xVelocity > 0)
                 {
-                    xVelocity = 0;
+                    xVelocity -= adjustment;
+                    if (xVelocity < 0)
+                    {
+                        xVelocity = 0;
+                    }
                 }
+                else
+                {
+                    xVelocity += adjustment;
+                    if (xVelocity > 0)
+                    {
+                        xVelocity = 0;
+                    }
+                }
+                movementComp->setFloating(gameObj.second, MovementComponent::xVelocity, xVelocity);
             }
-            movementComp->setFloating(gameObj.second, MovementComponent::xVelocity, xVelocity);
         }
         
         auto yVelocity = movementComp->getFloating(gameObj.second, MovementComponent::yVelocity);
         if (yVelocity)
         {
-            if (yVelocity > 0)
+            if (isInstantMode())
             {
-                yVelocity -= adjustment;
-                if (yVelocity < 0)
-                {
-                    yVelocity = 0;
-                }
+                movementComp->setFloating(gameObj.second, MovementComponent::yVelocity, 0);
             }
             else
             {
-                yVelocity += adjustment;
                 if (yVelocity > 0)
                 {
-                    yVelocity = 0;
+                    yVelocity -= adjustment;
+                    if (yVelocity < 0)
+                    {
+                        yVelocity = 0;
+                    }
                 }
+                else
+                {
+                    yVelocity += adjustment;
+                    if (yVelocity > 0)
+                    {
+                        yVelocity = 0;
+                    }
+                }
+                movementComp->setFloating(gameObj.second, MovementComponent::yVelocity, yVelocity);
             }
-            movementComp->setFloating(gameObj.second, MovementComponent::yVelocity, yVelocity);
         }
 
-        auto zVelocity = movementComp->getFloating(gameObj.second, MovementComponent::zVelocity) - adjustment;
-        if (zVelocity > -100.0)
+        auto zVelocity = movementComp->getFloating(gameObj.second, MovementComponent::zVelocity);
+        if (zVelocity)
         {
-            movementComp->setFloating(gameObj.second, MovementComponent::zVelocity, zVelocity);
+            if (isInstantMode())
+            {
+                movementComp->setFloating(gameObj.second, MovementComponent::zVelocity, 0);
+            }
+            else
+            {
+                if (zVelocity > -100.0)
+                {
+                    zVelocity -= adjustment;
+                    movementComp->setFloating(gameObj.second, MovementComponent::zVelocity, zVelocity);
+                }
+            }
         }
 
         auto positionComp = gameObj.second->getGameComponentFromAbility("GamePosition");
@@ -90,18 +125,24 @@ void MovementSystem::update (TimeResolution elapsedTime)
         
         if (xVelocity)
         {
-            auto x = positionComp->getFloating(gameObj.second, PositionComponent::x) + xVelocity * seconds.count();
+            auto x = positionComp->getFloating(gameObj.second, PositionComponent::x);
+            x += isInstantMode() ? xVelocity : xVelocity * seconds.count();
             positionComp->setFloating(gameObj.second, PositionComponent::x, x);
         }
         
         if (yVelocity)
         {
-            auto y = positionComp->getFloating(gameObj.second, PositionComponent::y) + yVelocity * seconds.count();
+            auto y = positionComp->getFloating(gameObj.second, PositionComponent::y);
+            y += isInstantMode() ? yVelocity : yVelocity * seconds.count();
             positionComp->setFloating(gameObj.second, PositionComponent::y, y);
         }
         
-        auto z = positionComp->getFloating(gameObj.second, PositionComponent::z) + zVelocity * seconds.count();
-        positionComp->setFloating(gameObj.second, PositionComponent::z, z);
+        if (zVelocity)
+        {
+            auto z = positionComp->getFloating(gameObj.second, PositionComponent::z);
+            z += isInstantMode() ? zVelocity : zVelocity * seconds.count();
+            positionComp->setFloating(gameObj.second, PositionComponent::z, z);
+        }
     }
 }
 
