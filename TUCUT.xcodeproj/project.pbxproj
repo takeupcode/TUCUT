@@ -274,6 +274,7 @@
 		3EDBEE0221BDF9D7006DFB23 /* MovementComponent.h in Headers */ = {isa = PBXBuildFile; fileRef = 3EDBEE0021BDF9D7006DFB23 /* MovementComponent.h */; };
 		3EDBEE0521BF57B6006DFB23 /* MovementSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3EDBEE0321BF57B5006DFB23 /* MovementSystem.cpp */; };
 		3EDBEE0621BF57B6006DFB23 /* MovementSystem.h in Headers */ = {isa = PBXBuildFile; fileRef = 3EDBEE0421BF57B6006DFB23 /* MovementSystem.h */; };
+		3EDBEE0821C4B0B1006DFB23 /* Clamp.h in Headers */ = {isa = PBXBuildFile; fileRef = 3EDBEE0721C4B0B1006DFB23 /* Clamp.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -693,6 +694,7 @@
 		3EDBEE0021BDF9D7006DFB23 /* MovementComponent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MovementComponent.h; sourceTree = "<group>"; };
 		3EDBEE0321BF57B5006DFB23 /* MovementSystem.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = MovementSystem.cpp; sourceTree = "<group>"; };
 		3EDBEE0421BF57B6006DFB23 /* MovementSystem.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MovementSystem.h; sourceTree = "<group>"; };
+		3EDBEE0721C4B0B1006DFB23 /* Clamp.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Clamp.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1206,6 +1208,7 @@
 				3E289F43217987D6002FFBDC /* Vector.h */,
 				3E289F4A217CEDCB002FFBDC /* Easing.h */,
 				3EDBEDDA218FEA24006DFB23 /* MinMax.h */,
+				3EDBEE0721C4B0B1006DFB23 /* Clamp.h */,
 			);
 			path = Math;
 			sourceTree = "<group>";
@@ -1496,6 +1499,7 @@
 				3E259DCB20E33E2B00F01379 /* LogManager.h in Headers */,
 				3E259EF220E34BE900F01379 /* ProtoBaseTemplateCPP.h in Headers */,
 				3E259EE720E34BE900F01379 /* OneofModelContainer.h in Headers */,
+				3EDBEE0821C4B0B1006DFB23 /* Clamp.h in Headers */,
 				3E061824212A31A2000B634B /* PropertyContainer.h in Headers */,
 				3E259ECF20E34BE900F01379 /* EnumValueModelContainer.h in Headers */,
 				3E259EF520E34BE900F01379 /* EnumValueParser.h in Headers */,
