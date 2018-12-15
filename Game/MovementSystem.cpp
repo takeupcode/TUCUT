@@ -14,10 +14,6 @@ namespace TUCUT {
 namespace Game {
 
 const std::string MovementSystem::defaultToken = "MovementSystem";
-const std::string MovementSystem::targetIdName = "targetId";
-const std::string MovementSystem::xVelocityName = "xVelocity";
-const std::string MovementSystem::yVelocityName = "yVelocity";
-const std::string MovementSystem::zVelocityName = "zVelocity";
     
 bool MovementSystem::isInstantMode () const
 {

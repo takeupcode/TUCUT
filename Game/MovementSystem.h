@@ -10,16 +10,15 @@
 #define TUCUT_Game_MovementSystem_h
 
 #include "GameManager.h"
-#include "GameSystem.h"
+#include "IMovementSystem.h"
 
 namespace TUCUT {
 namespace Game {
 
-class MovementSystem : public Game::GameSystem
+class MovementSystem : public IMovementSystem
 {
 public:
     static const std::string defaultToken;
-    static constexpr int moveCmd = 1;
     
     std::shared_ptr<MovementSystem> getSharedMovementSystem ()
     {
@@ -32,14 +31,9 @@ public:
     
 protected:
     friend class Game::GameManager;
-    
-    static const std::string targetIdName;
-    static const std::string xVelocityName;
-    static const std::string yVelocityName;
-    static const std::string zVelocityName;
 
     MovementSystem (const std::string & token, int identity)
-    : GameSystem(token, identity), mInstantMode(false)
+    : IMovementSystem(token, identity), mInstantMode(false)
     {
         mRequiredAbilityTokens.push_back("GameMoveable");
         mRequiredAbilityTokens.push_back("GamePosition");

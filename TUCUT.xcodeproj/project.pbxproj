@@ -275,6 +275,12 @@
 		3EDBEE0521BF57B6006DFB23 /* MovementSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3EDBEE0321BF57B5006DFB23 /* MovementSystem.cpp */; };
 		3EDBEE0621BF57B6006DFB23 /* MovementSystem.h in Headers */ = {isa = PBXBuildFile; fileRef = 3EDBEE0421BF57B6006DFB23 /* MovementSystem.h */; };
 		3EDBEE0821C4B0B1006DFB23 /* Clamp.h in Headers */ = {isa = PBXBuildFile; fileRef = 3EDBEE0721C4B0B1006DFB23 /* Clamp.h */; };
+		3EDBEE0B21C4D13E006DFB23 /* IMovementSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3EDBEE0921C4D13E006DFB23 /* IMovementSystem.cpp */; };
+		3EDBEE0C21C4D13E006DFB23 /* IMovementSystem.h in Headers */ = {isa = PBXBuildFile; fileRef = 3EDBEE0A21C4D13E006DFB23 /* IMovementSystem.h */; };
+		3EDBEE0F21C4D1A4006DFB23 /* IMovementComponent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3EDBEE0D21C4D1A4006DFB23 /* IMovementComponent.cpp */; };
+		3EDBEE1021C4D1A4006DFB23 /* IMovementComponent.h in Headers */ = {isa = PBXBuildFile; fileRef = 3EDBEE0E21C4D1A4006DFB23 /* IMovementComponent.h */; };
+		3EDBEE1321C4D219006DFB23 /* IPositionComponent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3EDBEE1121C4D219006DFB23 /* IPositionComponent.cpp */; };
+		3EDBEE1421C4D219006DFB23 /* IPositionComponent.h in Headers */ = {isa = PBXBuildFile; fileRef = 3EDBEE1221C4D219006DFB23 /* IPositionComponent.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -695,6 +701,12 @@
 		3EDBEE0321BF57B5006DFB23 /* MovementSystem.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = MovementSystem.cpp; sourceTree = "<group>"; };
 		3EDBEE0421BF57B6006DFB23 /* MovementSystem.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MovementSystem.h; sourceTree = "<group>"; };
 		3EDBEE0721C4B0B1006DFB23 /* Clamp.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Clamp.h; sourceTree = "<group>"; };
+		3EDBEE0921C4D13E006DFB23 /* IMovementSystem.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = IMovementSystem.cpp; sourceTree = "<group>"; };
+		3EDBEE0A21C4D13E006DFB23 /* IMovementSystem.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IMovementSystem.h; sourceTree = "<group>"; };
+		3EDBEE0D21C4D1A4006DFB23 /* IMovementComponent.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = IMovementComponent.cpp; sourceTree = "<group>"; };
+		3EDBEE0E21C4D1A4006DFB23 /* IMovementComponent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IMovementComponent.h; sourceTree = "<group>"; };
+		3EDBEE1121C4D219006DFB23 /* IPositionComponent.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = IPositionComponent.cpp; sourceTree = "<group>"; };
+		3EDBEE1221C4D219006DFB23 /* IPositionComponent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IPositionComponent.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -768,6 +780,12 @@
 				3EDBEE0021BDF9D7006DFB23 /* MovementComponent.h */,
 				3EDBEE0321BF57B5006DFB23 /* MovementSystem.cpp */,
 				3EDBEE0421BF57B6006DFB23 /* MovementSystem.h */,
+				3EDBEE0921C4D13E006DFB23 /* IMovementSystem.cpp */,
+				3EDBEE0A21C4D13E006DFB23 /* IMovementSystem.h */,
+				3EDBEE0D21C4D1A4006DFB23 /* IMovementComponent.cpp */,
+				3EDBEE0E21C4D1A4006DFB23 /* IMovementComponent.h */,
+				3EDBEE1121C4D219006DFB23 /* IPositionComponent.cpp */,
+				3EDBEE1221C4D219006DFB23 /* IPositionComponent.h */,
 			);
 			path = Game;
 			sourceTree = "<group>";
@@ -1472,6 +1490,7 @@
 				3E259EC920E34BE900F01379 /* CodeIndenter.h in Headers */,
 				3E259EBF20E34BE900F01379 /* EnumValueModel.h in Headers */,
 				3E259DD220E33E4300F01379 /* ConfigInfo.h in Headers */,
+				3EDBEE1421C4D219006DFB23 /* IPositionComponent.h in Headers */,
 				3E259ED320E34BE900F01379 /* ProtoModel.h in Headers */,
 				3E259ED120E34BE900F01379 /* OptionSingleParser.h in Headers */,
 				3E289F4B217CEDCB002FFBDC /* Easing.h in Headers */,
@@ -1495,6 +1514,7 @@
 				3E289F382176A670002FFBDC /* Lerp.h in Headers */,
 				3E259EDB20E34BE900F01379 /* MessageModel.h in Headers */,
 				3E259EDC20E34BE900F01379 /* TokenReader.h in Headers */,
+				3EDBEE0C21C4D13E006DFB23 /* IMovementSystem.h in Headers */,
 				3E259EEB20E34BE900F01379 /* CodeWriterCPP.h in Headers */,
 				3E259DCB20E33E2B00F01379 /* LogManager.h in Headers */,
 				3E259EF220E34BE900F01379 /* ProtoBaseTemplateCPP.h in Headers */,
@@ -1508,6 +1528,7 @@
 				3E259ECC20E34BE900F01379 /* Packageable.h in Headers */,
 				3E259EDE20E34BE900F01379 /* PackageParser.h in Headers */,
 				3E259EE020E34BE900F01379 /* OneofModel.h in Headers */,
+				3EDBEE1021C4D1A4006DFB23 /* IMovementComponent.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1733,7 +1754,10 @@
 				3EDBEDFD21B8D63F006DFB23 /* PositionComponent.cpp in Sources */,
 				3E061822212A31A2000B634B /* PropertyGroup.cpp in Sources */,
 				3E3F835A210575BE00501126 /* BasicRequest.protocol.cpp in Sources */,
+				3EDBEE0B21C4D13E006DFB23 /* IMovementSystem.cpp in Sources */,
+				3EDBEE1321C4D219006DFB23 /* IPositionComponent.cpp in Sources */,
 				3E3F835B210575BE00501126 /* BasicResponse.protocol.cpp in Sources */,
+				3EDBEE0F21C4D1A4006DFB23 /* IMovementComponent.cpp in Sources */,
 				3E061815212A2FAE000B634B /* GameObject.cpp in Sources */,
 				3E3F835C210575BE00501126 /* ExtensionManager.protocol.cpp in Sources */,
 				3E3F8358210575AA00501126 /* Extension.cpp in Sources */,

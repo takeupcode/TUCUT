@@ -12,10 +12,6 @@ namespace TUCUT {
 namespace Game {
 
 const std::string MovementComponent::defaultToken = "MovementComponent";
-const std::string MovementComponent::groupName = "GameMoveable";
-const std::string MovementComponent::xVelocityName = "xVelocity";
-const std::string MovementComponent::yVelocityName = "yVelocity";
-const std::string MovementComponent::zVelocityName = "zVelocity";
 
 std::shared_ptr<MovementComponent> MovementComponent::getSharedMovementComponent ()
 {

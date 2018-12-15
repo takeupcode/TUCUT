@@ -14,22 +14,16 @@
 #include <vector>
     
 #include "GameManager.h"
-#include "GameComponent.h"
+#include "IPositionComponent.h"
 #include "../Math/Vector.h"
 
 namespace TUCUT {
 namespace Game {
 
-class PositionComponent : public Game::GameComponent
+class PositionComponent : public IPositionComponent
 {
 public:
     static const std::string defaultToken;
-    static constexpr int x = 1;
-    static constexpr int y = 2;
-    static constexpr int z = 3;
-    static constexpr int xOld = 4;
-    static constexpr int yOld = 5;
-    static constexpr int zOld = 6;
 
     std::shared_ptr<PositionComponent> getSharedPositionComponent ();
     
@@ -48,16 +42,8 @@ public:
 protected:
     friend class GameManager;
 
-    static const std::string groupName;
-    static const std::string xName;
-    static const std::string yName;
-    static const std::string zName;
-    static const std::string xOldName;
-    static const std::string yOldName;
-    static const std::string zOldName;
-
     PositionComponent (const std::string & token, int identity)
-    : GameComponent(token, identity)
+    : IPositionComponent(token, identity)
     {
         mAbilityTokens.push_back("GamePosition");
     }

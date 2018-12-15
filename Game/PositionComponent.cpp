@@ -13,13 +13,6 @@ namespace TUCUT {
 namespace Game {
 
 const std::string PositionComponent::defaultToken = "PositionComponent";
-const std::string PositionComponent::groupName = "GamePosition";
-const std::string PositionComponent::xName = "x";
-const std::string PositionComponent::yName = "y";
-const std::string PositionComponent::zName = "z";
-const std::string PositionComponent::xOldName = "xOld";
-const std::string PositionComponent::yOldName = "yOld";
-const std::string PositionComponent::zOldName = "zOld";
 
 std::shared_ptr<PositionComponent> PositionComponent::getSharedPositionComponent ()
 {
