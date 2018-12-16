@@ -21,9 +21,9 @@ class IMovementSystem : public Game::GameSystem
 public:
     static constexpr int moveCmd = 1;
     static const std::string targetIdName;
-    static const std::string xVelocityName;
-    static const std::string yVelocityName;
-    static const std::string zVelocityName;
+    static const std::string xAccelerationName;
+    static const std::string yAccelerationName;
+    static const std::string zAccelerationName;
     
 protected:
     IMovementSystem (const std::string & token, int identity)

@@ -12,9 +12,9 @@ namespace TUCUT {
 namespace Game {
 
 const std::string IMovementSystem::targetIdName = "targetId";
-const std::string IMovementSystem::xVelocityName = "xVelocity";
-const std::string IMovementSystem::yVelocityName = "yVelocity";
-const std::string IMovementSystem::zVelocityName = "zVelocity";
+const std::string IMovementSystem::xAccelerationName = "xAcceleration";
+const std::string IMovementSystem::yAccelerationName = "yAcceleration";
+const std::string IMovementSystem::zAccelerationName = "zAcceleration";
 
 } // namespace Game
 } // namespace TUCUT

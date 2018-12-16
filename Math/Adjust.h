@@ -50,6 +50,28 @@ T toZero (T delta, T value)
     return value;
 }
 
+template <typename T>
+T makePositive (T value)
+{
+    if (value < 0)
+    {
+        return -value;
+    }
+    
+    return value;
+}
+
+template <typename T>
+T makeNegative (T value)
+{
+    if (value > 0)
+    {
+        return -value;
+    }
+    
+    return value;
+}
+
 } // namespace Math
 } // namespace TUCUT
 

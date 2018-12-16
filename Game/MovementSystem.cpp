@@ -29,7 +29,7 @@ void MovementSystem::setInstantMode (bool instant)
 void MovementSystem::update (TimeResolution elapsedTime)
 {
     TimeInSeconds seconds = elapsedTime;
-    double adjustment = 10.0 * seconds.count();
+    double friction = 10.0 * seconds.count();
     
     for (const auto & gameObj: mGameObjects)
     {
@@ -39,49 +39,68 @@ void MovementSystem::update (TimeResolution elapsedTime)
             continue;
         }
 
+        auto xAcceleration = movementComp->getFloating(gameObj.second, MovementComponent::xAcceleration);
         auto xVelocity = movementComp->getFloating(gameObj.second, MovementComponent::xVelocity);
-        if (xVelocity)
+        if (xAcceleration || xVelocity)
         {
+            auto xVelocityMax = movementComp->getFloating(gameObj.second, MovementComponent::xVelocityMax);
+            
             if (isInstantMode())
             {
+                xVelocity += xAcceleration;
+                xVelocity = Math::clamp(-xVelocityMax, xVelocityMax, xVelocity);
+                
+                movementComp->setFloating(gameObj.second, MovementComponent::xAcceleration, 0);
                 movementComp->setFloating(gameObj.second, MovementComponent::xVelocity, 0);
             }
             else
             {
-                xVelocity = Math::toZero(adjustment, xVelocity);
+                xVelocity += xAcceleration * seconds.count();
+                xVelocity = Math::toZero(friction, xVelocity);
+                xVelocity = Math::clamp(-xVelocityMax, xVelocityMax, xVelocity);
+                
                 movementComp->setFloating(gameObj.second, MovementComponent::xVelocity, xVelocity);
             }
         }
         
+        auto yAcceleration = movementComp->getFloating(gameObj.second, MovementComponent::yAcceleration);
         auto yVelocity = movementComp->getFloating(gameObj.second, MovementComponent::yVelocity);
-        if (yVelocity)
+        if (yAcceleration || yVelocity)
         {
+            auto yVelocityMax = movementComp->getFloating(gameObj.second, MovementComponent::yVelocityMax);
+            
             if (isInstantMode())
             {
+                yVelocity += yAcceleration;
+                yVelocity = Math::clamp(-yVelocityMax, yVelocityMax, yVelocity);
+                
+                movementComp->setFloating(gameObj.second, MovementComponent::yAcceleration, 0);
                 movementComp->setFloating(gameObj.second, MovementComponent::yVelocity, 0);
             }
             else
             {
-                yVelocity = Math::toZero(adjustment, yVelocity);
+                yVelocity += yAcceleration * seconds.count();
+                yVelocity = Math::toZero(friction, yVelocity);
+                yVelocity = Math::clamp(-yVelocityMax, yVelocityMax, yVelocity);
+                
                 movementComp->setFloating(gameObj.second, MovementComponent::yVelocity, yVelocity);
             }
         }
 
+        auto zAcceleration = movementComp->getFloating(gameObj.second, MovementComponent::zAcceleration);
         auto zVelocity = movementComp->getFloating(gameObj.second, MovementComponent::zVelocity);
-        if (zVelocity)
+        if (zAcceleration || zVelocity)
         {
-            if (isInstantMode())
-            {
-                movementComp->setFloating(gameObj.second, MovementComponent::zVelocity, 0);
-            }
-            else
-            {
-                if (zVelocity > -100.0)
-                {
-                    zVelocity -= adjustment;
-                    movementComp->setFloating(gameObj.second, MovementComponent::zVelocity, zVelocity);
-                }
-            }
+            auto zVelocityMax = movementComp->getFloating(gameObj.second, MovementComponent::zVelocityMax);
+            
+            // Unlike x or y acceleration, the z acceleration gets applied all at once.
+            zVelocity += zAcceleration;
+            // z velocity is unaffected by friction but is always decremented by gravity.
+            zVelocity -= 10.0 * seconds.count();;
+            zVelocity = Math::clamp(-zVelocityMax, zVelocityMax, zVelocity);
+
+            movementComp->setFloating(gameObj.second, MovementComponent::zAcceleration, 0);
+            movementComp->setFloating(gameObj.second, MovementComponent::zVelocity, zVelocity);
         }
 
         auto positionComp = gameObj.second->getGameComponentFromAbility("GamePosition");
@@ -101,7 +120,7 @@ void MovementSystem::update (TimeResolution elapsedTime)
             positionComp->setFloating(gameObj.second, PositionComponent::y, y);
 
             auto z = positionComp->getFloating(gameObj.second, PositionComponent::z);
-            z += isInstantMode() ? zVelocity : zVelocity * seconds.count();
+            z += zVelocity * seconds.count();
             positionComp->setFloating(gameObj.second, PositionComponent::z, z);
         }
     }
@@ -120,12 +139,12 @@ void MovementSystem::notify (int id, int commandId, const PropertyGroup & comman
     }
     
     auto targetId = commandProperties.getValue(targetIdName)->getInteger();
-    auto propValue = commandProperties.getValue(xVelocityName);
-    auto x = propValue ? propValue->getFloating() : 0;
-    propValue = commandProperties.getValue(yVelocityName);
-    auto y = propValue ? propValue->getFloating() : 0;
-    propValue = commandProperties.getValue(zVelocityName);
-    auto z = propValue ? propValue->getFloating() : 0;
+    auto propValue = commandProperties.getValue(xAccelerationName);
+    auto xAcceleration = propValue ? propValue->getFloating() : 0;
+    propValue = commandProperties.getValue(yAccelerationName);
+    auto yAcceleration = propValue ? propValue->getFloating() : 0;
+    propValue = commandProperties.getValue(zAccelerationName);
+    auto zAcceleration = propValue ? propValue->getFloating() : 0;
     
     auto gameObjectMapResult = mGameObjects.find(targetId);
     if (gameObjectMapResult != mGameObjects.end())
@@ -136,22 +155,19 @@ void MovementSystem::notify (int id, int commandId, const PropertyGroup & comman
             return;
         }
         
-        if (x)
+        if (xAcceleration)
         {
-            auto xVelocityNew = movementComp->getFloating(gameObjectMapResult->second, MovementComponent::xVelocity) + x;
-            movementComp->setFloating(gameObjectMapResult->second, MovementComponent::xVelocity, xVelocityNew);
+            movementComp->setFloating(gameObjectMapResult->second, MovementComponent::xAcceleration, xAcceleration);
         }
         
-        if (y)
+        if (yAcceleration)
         {
-            auto yVelocityNew = movementComp->getFloating(gameObjectMapResult->second, MovementComponent::yVelocity) + y;
-            movementComp->setFloating(gameObjectMapResult->second, MovementComponent::yVelocity, yVelocityNew);
+            movementComp->setFloating(gameObjectMapResult->second, MovementComponent::yAcceleration, yAcceleration);
         }
         
-        if (z)
+        if (zAcceleration)
         {
-            auto zVelocityNew = movementComp->getFloating(gameObjectMapResult->second, MovementComponent::zVelocity) + z;
-            movementComp->setFloating(gameObjectMapResult->second, MovementComponent::zVelocity, zVelocityNew);
+            movementComp->setFloating(gameObjectMapResult->second, MovementComponent::zAcceleration, zAcceleration);
         }
     }
 }
