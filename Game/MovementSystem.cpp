@@ -9,6 +9,7 @@
 #include "MovementSystem.h"
 #include "MovementComponent.h"
 #include "PositionComponent.h"
+#include "../Math/Adjust.h"
 
 namespace TUCUT {
 namespace Game {
@@ -47,22 +48,7 @@ void MovementSystem::update (TimeResolution elapsedTime)
             }
             else
             {
-                if (xVelocity > 0)
-                {
-                    xVelocity -= adjustment;
-                    if (xVelocity < 0)
-                    {
-                        xVelocity = 0;
-                    }
-                }
-                else
-                {
-                    xVelocity += adjustment;
-                    if (xVelocity > 0)
-                    {
-                        xVelocity = 0;
-                    }
-                }
+                xVelocity = Math::toZero(adjustment, xVelocity);
                 movementComp->setFloating(gameObj.second, MovementComponent::xVelocity, xVelocity);
             }
         }
@@ -76,22 +62,7 @@ void MovementSystem::update (TimeResolution elapsedTime)
             }
             else
             {
-                if (yVelocity > 0)
-                {
-                    yVelocity -= adjustment;
-                    if (yVelocity < 0)
-                    {
-                        yVelocity = 0;
-                    }
-                }
-                else
-                {
-                    yVelocity += adjustment;
-                    if (yVelocity > 0)
-                    {
-                        yVelocity = 0;
-                    }
-                }
+                yVelocity = Math::toZero(adjustment, yVelocity);
                 movementComp->setFloating(gameObj.second, MovementComponent::yVelocity, yVelocity);
             }
         }

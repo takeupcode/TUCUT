@@ -7,7 +7,7 @@
 //
 
 #include "PositionComponent.h"
-#include "../Math/Clamp.h"
+#include "../Math/Adjust.h"
 
 namespace TUCUT {
 namespace Game {
