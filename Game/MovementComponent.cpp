@@ -102,6 +102,45 @@ double MovementComponent::getFloating (const std::shared_ptr<GameObject> & objec
     return 0;
 }
 
+std::vector<double> MovementComponent::getFloatings (const std::shared_ptr<GameObject> & object, int propertyId) const
+{
+    std::vector<double> result;
+    
+    if (!object)
+    {
+        return result;
+    }
+    
+    switch (propertyId)
+    {
+    case xyzVelocity:
+        result.push_back(object->properties().getValue(groupName, xVelocityName)->getFloating());
+        result.push_back(object->properties().getValue(groupName, yVelocityName)->getFloating());
+        result.push_back(object->properties().getValue(groupName, zVelocityName)->getFloating());
+        break;
+        
+    case xyzVelocityMax:
+        result.push_back(object->properties().getValue(groupName, xVelocityMaxName)->getFloating());
+        result.push_back(object->properties().getValue(groupName, yVelocityMaxName)->getFloating());
+        result.push_back(object->properties().getValue(groupName, zVelocityMaxName)->getFloating());
+        break;
+
+    case xyzAcceleration:
+        result.push_back(object->properties().getValue(groupName, xAccelerationName)->getFloating());
+        result.push_back(object->properties().getValue(groupName, yAccelerationName)->getFloating());
+        result.push_back(object->properties().getValue(groupName, zAccelerationName)->getFloating());
+        break;
+
+    case xyzAccelerationDefault:
+        result.push_back(object->properties().getValue(groupName, xAccelerationDefaultName)->getFloating());
+        result.push_back(object->properties().getValue(groupName, yAccelerationDefaultName)->getFloating());
+        result.push_back(object->properties().getValue(groupName, zAccelerationDefaultName)->getFloating());
+        break;
+    }
+    
+    return result;
+}
+
 void MovementComponent::setFloating (const std::shared_ptr<GameObject> & object, int propertyId, double value) const
 {
     if (!object)
@@ -170,6 +209,63 @@ void MovementComponent::setFloating (const std::shared_ptr<GameObject> & object,
     case zAccelerationDefault:
         value = Math::makePositive(value);
         object->properties().getValue(groupName, zAccelerationDefaultName)->setFloating(value);
+        break;
+    }
+}
+
+void MovementComponent::setFloatings (const std::shared_ptr<GameObject> & object, int propertyId, const std::vector<double> & value) const
+{
+    if (!object)
+    {
+        return;
+    }
+    
+    double max;
+    double singleValue;
+    switch (propertyId)
+    {
+    case xyzVelocity:
+        max = object->properties().getValue(groupName, xVelocityMaxName)->getFloating();
+        singleValue = Math::clamp(-max, max, value[0]);
+        object->properties().getValue(groupName, xVelocityName)->setFloating(singleValue);
+
+        max = object->properties().getValue(groupName, yVelocityMaxName)->getFloating();
+        singleValue = Math::clamp(-max, max, value[1]);
+        object->properties().getValue(groupName, yVelocityName)->setFloating(singleValue);
+
+        max = object->properties().getValue(groupName, zVelocityMaxName)->getFloating();
+        singleValue = Math::clamp(-max, max, value[2]);
+        object->properties().getValue(groupName, zVelocityName)->setFloating(singleValue);
+        break;
+        
+    case xyzVelocityMax:
+        singleValue = Math::makePositive(value[0]);
+        object->properties().getValue(groupName, xVelocityMaxName)->setFloating(singleValue);
+
+        singleValue = Math::makePositive(value[1]);
+        object->properties().getValue(groupName, yVelocityMaxName)->setFloating(singleValue);
+
+        singleValue = Math::makePositive(value[2]);
+        object->properties().getValue(groupName, zVelocityMaxName)->setFloating(singleValue);
+        break;
+        
+    case xyzAcceleration:
+        object->properties().getValue(groupName, xAccelerationName)->setFloating(value[0]);
+
+        object->properties().getValue(groupName, yAccelerationName)->setFloating(value[1]);
+        
+        object->properties().getValue(groupName, zAccelerationName)->setFloating(value[2]);
+        break;
+        
+    case xyzAccelerationDefault:
+        singleValue = Math::makePositive(value[0]);
+        object->properties().getValue(groupName, xAccelerationDefaultName)->setFloating(singleValue);
+
+        singleValue = Math::makePositive(value[1]);
+        object->properties().getValue(groupName, yAccelerationDefaultName)->setFloating(singleValue);
+
+        singleValue = Math::makePositive(value[2]);
+        object->properties().getValue(groupName, zAccelerationDefaultName)->setFloating(singleValue);
         break;
     }
 }

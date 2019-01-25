@@ -45,9 +45,15 @@ protected:
     
     virtual void initialize ();
 
+    virtual void handleInput ()
+    { }
+
     virtual void update (TimeResolution elapsedTime)
     { }
-    
+
+    virtual void render ()
+    { }
+
     virtual void onAction (int objectId, int actionId)
     { }
 
@@ -58,6 +64,7 @@ protected:
     GameObjectMap mGameObjects;
     std::vector<std::string> mRequiredAbilityTokens;
     std::vector<std::string> mRequiredCommandTokens;
+    std::vector<std::string> mActionTokens;
 };
     
 } // namespace Game

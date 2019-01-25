@@ -93,35 +93,37 @@ void MovementSystem::update (TimeResolution elapsedTime)
         {
             auto zVelocityMax = movementComp->getFloating(gameObj.second, MovementComponent::zVelocityMax);
             
-            // Unlike x or y acceleration, the z acceleration gets applied all at once.
-            zVelocity += zAcceleration;
-            // z velocity is unaffected by friction but is always decremented by gravity.
-            zVelocity -= 10.0 * seconds.count();;
+            zVelocity += zAcceleration * seconds.count();
             zVelocity = Math::clamp(-zVelocityMax, zVelocityMax, zVelocity);
 
-            movementComp->setFloating(gameObj.second, MovementComponent::zAcceleration, 0);
             movementComp->setFloating(gameObj.second, MovementComponent::zVelocity, zVelocity);
         }
 
-        auto positionComp = gameObj.second->getGameComponentFromAbility("GamePosition");
-        if (!positionComp)
-        {
-            continue;
-        }
-        
         if (xVelocity || yVelocity || zVelocity)
         {
+            auto positionComp = gameObj.second->getGameComponentFromAbility("GamePosition");
+            if (!positionComp)
+            {
+                continue;
+            }
+            
+            std::vector<double> positions;
+            
             auto x = positionComp->getFloating(gameObj.second, PositionComponent::x);
             x += isInstantMode() ? xVelocity : xVelocity * seconds.count();
-            positionComp->setFloating(gameObj.second, PositionComponent::x, x);
+            positions.push_back(x);
 
             auto y = positionComp->getFloating(gameObj.second, PositionComponent::y);
             y += isInstantMode() ? yVelocity : yVelocity * seconds.count();
-            positionComp->setFloating(gameObj.second, PositionComponent::y, y);
+            positions.push_back(y);
 
             auto z = positionComp->getFloating(gameObj.second, PositionComponent::z);
             z += zVelocity * seconds.count();
-            positionComp->setFloating(gameObj.second, PositionComponent::z, z);
+            positions.push_back(z);
+
+            // Set all three position coordinates at once so the position component can
+            // queue a single moved action.
+            positionComp->setFloatings(gameObj.second, PositionComponent::xyz, positions);
         }
     }
 }

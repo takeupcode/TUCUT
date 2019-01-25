@@ -21,6 +21,10 @@ void GameComponent::initialize ()
     {
         pGameMgr->getOrCreateGameAbility(token);
     }
+    for (const auto & token: mActionTokens)
+    {
+        pGameMgr->getOrCreateGameAction(token);
+    }
 }
 
 std::shared_ptr<GameComponent> GameComponent::getSharedGameComponent ()
@@ -101,7 +105,59 @@ bool GameComponent::getBoolean (const std::shared_ptr<GameObject> & object, int 
 {
     return false;
 }
+
+std::vector<std::string> GameComponent::getStrings (int objectId, int propertyId) const
+{
+    GameManager * pGameMgr = GameManager::instance();
+    auto gameObj = pGameMgr->getGameObject<GameObject>(objectId);
     
+    return getStrings(gameObj, propertyId);
+}
+
+std::vector<std::string> GameComponent::getStrings (const std::shared_ptr<GameObject> & object, int propertyId) const
+{
+    return std::vector<std::string>();
+}
+
+std::vector<int> GameComponent::getIntegers (int objectId, int propertyId) const
+{
+    GameManager * pGameMgr = GameManager::instance();
+    auto gameObj = pGameMgr->getGameObject<GameObject>(objectId);
+    
+    return getIntegers(gameObj, propertyId);
+}
+
+std::vector<int> GameComponent::getIntegers (const std::shared_ptr<GameObject> & object, int propertyId) const
+{
+    return std::vector<int>();
+}
+
+std::vector<double> GameComponent::getFloatings (int objectId, int propertyId) const
+{
+    GameManager * pGameMgr = GameManager::instance();
+    auto gameObj = pGameMgr->getGameObject<GameObject>(objectId);
+    
+    return getFloatings(gameObj, propertyId);
+}
+
+std::vector<double> GameComponent::getFloatings (const std::shared_ptr<GameObject> & object, int propertyId) const
+{
+    return std::vector<double>();
+}
+
+std::vector<bool> GameComponent::getBooleans (int objectId, int propertyId) const
+{
+    GameManager * pGameMgr = GameManager::instance();
+    auto gameObj = pGameMgr->getGameObject<GameObject>(objectId);
+    
+    return getBooleans(gameObj, propertyId);
+}
+
+std::vector<bool> GameComponent::getBooleans (const std::shared_ptr<GameObject> & object, int propertyId) const
+{
+    return std::vector<bool>();
+}
+
 void GameComponent::setString (int objectId, int propertyId, const std::string & value) const
 {
     GameManager * pGameMgr = GameManager::instance();
@@ -144,6 +200,50 @@ void GameComponent::setBoolean (int objectId, int propertyId, bool value) const
 }
     
 void GameComponent::setBoolean (const std::shared_ptr<GameObject> & object, int propertyId, bool value) const
+{ }
+
+void GameComponent::setStrings (int objectId, int propertyId, const std::vector<std::string> & value) const
+{
+    GameManager * pGameMgr = GameManager::instance();
+    auto gameObj = pGameMgr->getGameObject<GameObject>(objectId);
+    
+    setStrings(gameObj, propertyId, value);
+}
+
+void GameComponent::setStrings (const std::shared_ptr<GameObject> & object, int propertyId, const std::vector<std::string> & value) const
+{ }
+
+void GameComponent::setIntegers (int objectId, int propertyId, const std::vector<int> & value) const
+{
+    GameManager * pGameMgr = GameManager::instance();
+    auto gameObj = pGameMgr->getGameObject<GameObject>(objectId);
+    
+    setIntegers(gameObj, propertyId, value);
+}
+
+void GameComponent::setIntegers (const std::shared_ptr<GameObject> & object, int propertyId, const std::vector<int> & value) const
+{ }
+
+void GameComponent::setFloatings (int objectId, int propertyId, const std::vector<double> & value) const
+{
+    GameManager * pGameMgr = GameManager::instance();
+    auto gameObj = pGameMgr->getGameObject<GameObject>(objectId);
+    
+    setFloatings(gameObj, propertyId, value);
+}
+
+void GameComponent::setFloatings (const std::shared_ptr<GameObject> & object, int propertyId, const std::vector<double> & value) const
+{ }
+
+void GameComponent::setBooleans (int objectId, int propertyId, const std::vector<bool> & value) const
+{
+    GameManager * pGameMgr = GameManager::instance();
+    auto gameObj = pGameMgr->getGameObject<GameObject>(objectId);
+    
+    setBooleans(gameObj, propertyId, value);
+}
+
+void GameComponent::setBooleans (const std::shared_ptr<GameObject> & object, int propertyId, const std::vector<bool> & value) const
 { }
 
 } // namespace Game

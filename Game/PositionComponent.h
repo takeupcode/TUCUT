@@ -32,9 +32,13 @@ public:
     void removeProperties (const std::shared_ptr<GameObject> & object) const override;
 
     double getFloating (const std::shared_ptr<GameObject> & object, int propertyId) const override;
-    
+
+    std::vector<double> getFloatings (const std::shared_ptr<GameObject> & object, int propertyId) const override;
+
     void setFloating (const std::shared_ptr<GameObject> & object, int propertyId, double value) const override;
-    
+
+    void setFloatings (const std::shared_ptr<GameObject> & object, int propertyId, const std::vector<double> & value) const override;
+
     void setMinPosition (const Math::Vector3d & position);
     
     void setMaxPosition (const Math::Vector3d & position);
@@ -46,11 +50,16 @@ protected:
     : IPositionComponent(token, identity)
     {
         mAbilityTokens.push_back("GamePosition");
+        
+        mActionTokens.push_back(positionChangedToken);
     }
     
+    void initialize () override;
+
 private:
     Math::Vector3d mMinPosition;
     Math::Vector3d mMaxPosition;
+    int mPositionChangedActionId = 0;
 };
 
 } // namespace Game

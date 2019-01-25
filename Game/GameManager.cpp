@@ -99,7 +99,9 @@ void GameManager::loop ()
     {
         if (isFixedFrameReady())
         {
+            handleInput();
             update(elapsed());
+            render();
             
             completeFixedFrame();
         }
@@ -509,6 +511,17 @@ bool GameManager::hasGameCommand (const std::string & token) const
     return hasGameCommand(gameCommandId);
 }
 
+void GameManager::handleInput ()
+{
+    for (const auto & gameSystem: mLoadedGameSystems)
+    {
+        if (gameSystem)
+        {
+            gameSystem->handleInput();
+        }
+    }
+}
+    
 void GameManager::update (TimeResolution elapsedTime)
 {
     for (const auto & gameSystem: mLoadedGameSystems)
@@ -536,6 +549,17 @@ void GameManager::update (TimeResolution elapsedTime)
         }
         mGameObjectActions.erase(actionQueueIter);
         actionQueueIter = mGameObjectActions.begin();
+    }
+}
+
+void GameManager::render ()
+{
+    for (const auto & gameSystem: mLoadedGameSystems)
+    {
+        if (gameSystem)
+        {
+            gameSystem->render();
+        }
     }
 }
 

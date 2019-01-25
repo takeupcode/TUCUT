@@ -28,6 +28,10 @@ void GameSystem::initialize ()
         auto commandId = pGameMgr->getOrCreateGameCommand(token);
         pGameMgr->gameCommandSent(commandId)->connect(idToken().toString(), getSharedGameSystem());
     }
+    for (const auto & token: mActionTokens)
+    {
+        pGameMgr->getOrCreateGameAction(token);
+    }
 
     pGameMgr->gameObjectCreated()->connect(idToken().toString(), getSharedGameSystem());
     pGameMgr->gameObjectRemoving()->connect(idToken().toString(), getSharedGameSystem());

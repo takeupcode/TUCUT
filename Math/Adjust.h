@@ -71,6 +71,18 @@ T makeNegative (T value)
     
     return value;
 }
+    
+template <typename T, typename U>
+T rowMajorIndex (T x, T y, U columns)
+{
+    return x + y * columns;
+}
+
+template <typename T, typename U>
+T columnMajorIndex (T x, T y, U rows)
+{
+    return y + x * rows;
+}
 
 } // namespace Math
 } // namespace TUCUT

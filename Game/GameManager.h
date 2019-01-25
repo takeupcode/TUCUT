@@ -307,7 +307,11 @@ private:
     
     void loop ();
     
+    void handleInput ();
+
     void update (TimeResolution elapsedTime);
+    
+    void render ();
 
     TimeResolution elapsed () const;
     void restartClock ();

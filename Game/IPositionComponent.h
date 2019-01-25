@@ -19,20 +19,25 @@ namespace Game {
 class IPositionComponent : public Game::GameComponent
 {
 public:
-    static constexpr int x = 1;
-    static constexpr int y = 2;
-    static constexpr int z = 3;
-    static constexpr int xOld = 4;
-    static constexpr int yOld = 5;
-    static constexpr int zOld = 6;
+    static constexpr int xyz = 1;
+    static constexpr int x = 2;
+    static constexpr int y = 3;
+    static constexpr int z = 4;
+    static constexpr int xyzOld = 5;
+    static constexpr int xOld = 6;
+    static constexpr int yOld = 7;
+    static constexpr int zOld = 8;
     static const std::string groupName;
+    static const std::string xyzName;
     static const std::string xName;
     static const std::string yName;
     static const std::string zName;
+    static const std::string xyzOldName;
     static const std::string xOldName;
     static const std::string yOldName;
     static const std::string zOldName;
-    
+    static const std::string positionChangedToken;
+
 protected:
     IPositionComponent (const std::string & token, int identity)
     : GameComponent(token, identity)

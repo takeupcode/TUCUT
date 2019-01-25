@@ -34,7 +34,7 @@ public:
     {
         return mAbilityTokens;
     }
-    
+
     virtual void addDefaultProperties (int objectId) const;
     virtual void addDefaultProperties (const std::shared_ptr<GameObject> & object) const;
     
@@ -50,6 +50,15 @@ public:
     virtual bool getBoolean (int objectId, int propertyId) const;
     virtual bool getBoolean (const std::shared_ptr<GameObject> & object, int propertyId) const;
 
+    virtual std::vector<std::string> getStrings (int objectId, int propertyId) const;
+    virtual std::vector<std::string> getStrings (const std::shared_ptr<GameObject> & object, int propertyId) const;
+    virtual std::vector<int> getIntegers (int objectId, int propertyId) const;
+    virtual std::vector<int> getIntegers (const std::shared_ptr<GameObject> & object, int propertyId) const;
+    virtual std::vector<double> getFloatings (int objectId, int propertyId) const;
+    virtual std::vector<double> getFloatings (const std::shared_ptr<GameObject> & object, int propertyId) const;
+    virtual std::vector<bool> getBooleans (int objectId, int propertyId) const;
+    virtual std::vector<bool> getBooleans (const std::shared_ptr<GameObject> & object, int propertyId) const;
+
     virtual void setString (int objectId, int propertyId, const std::string & value) const;
     virtual void setString (const std::shared_ptr<GameObject> & object, int propertyId, const std::string & value) const;
     virtual void setInteger (int objectId, int propertyId, int value) const;
@@ -58,7 +67,16 @@ public:
     virtual void setFloating (const std::shared_ptr<GameObject> & object, int propertyId, double value) const;
     virtual void setBoolean (int objectId, int propertyId, bool value) const;
     virtual void setBoolean (const std::shared_ptr<GameObject> & object, int propertyId, bool value) const;
-    
+
+    virtual void setStrings (int objectId, int propertyId, const std::vector<std::string> & value) const;
+    virtual void setStrings (const std::shared_ptr<GameObject> & object, int propertyId, const std::vector<std::string> & value) const;
+    virtual void setIntegers (int objectId, int propertyId, const std::vector<int> & value) const;
+    virtual void setIntegers (const std::shared_ptr<GameObject> & object, int propertyId, const std::vector<int> & value) const;
+    virtual void setFloatings (int objectId, int propertyId, const std::vector<double> & value) const;
+    virtual void setFloatings (const std::shared_ptr<GameObject> & object, int propertyId, const std::vector<double> & value) const;
+    virtual void setBooleans (int objectId, int propertyId, const std::vector<bool> & value) const;
+    virtual void setBooleans (const std::shared_ptr<GameObject> & object, int propertyId, const std::vector<bool> & value) const;
+
 protected:
     friend class GameManager;
     
@@ -69,6 +87,7 @@ protected:
     virtual void initialize ();
     
     std::vector<std::string> mAbilityTokens;
+    std::vector<std::string> mActionTokens;
 };
     
 } // namespace Game

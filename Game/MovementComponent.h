@@ -28,8 +28,12 @@ public:
     
     double getFloating (const std::shared_ptr<GameObject> & object, int propertyId) const override;
     
+    std::vector<double> getFloatings (const std::shared_ptr<GameObject> & object, int propertyId) const override;
+
     void setFloating (const std::shared_ptr<GameObject> & object, int propertyId, double value) const override;
-    
+
+    void setFloatings (const std::shared_ptr<GameObject> & object, int propertyId, const std::vector<double> & value) const override;
+
 protected:
     friend class GameManager;
     
