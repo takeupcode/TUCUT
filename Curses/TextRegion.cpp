@@ -1,19 +1,24 @@
 //
-//  GameRegion.cpp
+//  TextRegion.cpp
 //  TUCUT (Take Up Code Utility)
 //
 //  Created by Abdul Wahid Tanner on 12/16/18.
 //  Copyright © 2018 Take Up Code. All rights reserved.
 //
 
-#include "GameRegion.h"
+#include "TextRegion.h"
 
 #include "../Math/Adjust.h"
 
 namespace TUCUT {
 namespace Curses {
-    
-bool GameRegion::addTileType (const std::string & typeName, char symbol)
+
+std::shared_ptr<TextRegion> TextRegion::getSharedTextRegion ()
+{
+    return std::static_pointer_cast<TextRegion>(shared_from_this());
+}
+
+bool TextRegion::addTileType (const std::string & typeName, char symbol)
 {
     if (getTileTypeId(typeName))
     {
@@ -25,7 +30,7 @@ bool GameRegion::addTileType (const std::string & typeName, char symbol)
     return true;
 }
 
-void GameRegion::setTile (unsigned int x, unsigned int y, const std::string & typeName)
+void TextRegion::setTile (unsigned int x, unsigned int y, const std::string & typeName)
 {
     int tileTypeId = getTileTypeId(typeName);
     if (tileTypeId == 0)
@@ -37,18 +42,23 @@ void GameRegion::setTile (unsigned int x, unsigned int y, const std::string & ty
     mTiles[tileIndex] = tileTypeId;
 }
 
-void GameRegion::removeTile (unsigned int x, unsigned int y)
+void TextRegion::removeTile (unsigned int x, unsigned int y)
 {
     int tileIndex = Math::rowMajorIndex(x, y, mColumns);
     mTiles[tileIndex] = 0;
 }
 
-void GameRegion::resolveCollisions (std::shared_ptr<Game::GameObject> & object)
+double TextRegion::getFriction (const Math::Point3d & location) const
 {
-    
+    return 10.0;
 }
 
-int GameRegion::getTileTypeId (const std::string & typeName) const
+Math::Point3d TextRegion::resolveCollisions (const Math::Point3d & oldLocation, const Math::Point3d & newLocation) const
+{
+    return newLocation;
+}
+
+int TextRegion::getTileTypeId (const std::string & typeName) const
 {
     auto tileTypeMapResult = mTileTypes.find(typeName);
     if (tileTypeMapResult == mTileTypes.end())
@@ -59,7 +69,7 @@ int GameRegion::getTileTypeId (const std::string & typeName) const
     return tileTypeMapResult->second;
 }
 
-int GameRegion::createTileType (const std::string & typeName, char symbol)
+int TextRegion::createTileType (const std::string & typeName, char symbol)
 {
     if (typeName.empty())
     {

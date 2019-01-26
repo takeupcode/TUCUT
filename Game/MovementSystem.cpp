@@ -9,6 +9,7 @@
 #include "MovementSystem.h"
 #include "MovementComponent.h"
 #include "PositionComponent.h"
+#include "GameRegion.h"
 #include "../Math/Adjust.h"
 
 namespace TUCUT {
@@ -26,10 +27,24 @@ void MovementSystem::setInstantMode (bool instant)
     mInstantMode = instant;
 }
 
+std::shared_ptr<GameRegion> MovementSystem::region ()
+{
+    return mRegion;
+}
+
+void MovementSystem::setRegion (std::shared_ptr<GameRegion> region)
+{
+    mRegion = std::move(region);
+}
+
 void MovementSystem::update (TimeResolution elapsedTime)
 {
+    if (!mRegion)
+    {
+        return;
+    }
+    
     TimeInSeconds seconds = elapsedTime;
-    double friction = 10.0 * seconds.count();
     
     for (const auto & gameObj: mGameObjects)
     {
@@ -38,6 +53,18 @@ void MovementSystem::update (TimeResolution elapsedTime)
         {
             continue;
         }
+        
+        auto positionComp = gameObj.second->getGameComponentFromAbility("GamePosition");
+        if (!positionComp)
+        {
+            continue;
+        }
+        
+        auto x = positionComp->getFloating(gameObj.second, PositionComponent::x);
+        auto y = positionComp->getFloating(gameObj.second, PositionComponent::y);
+        auto z = positionComp->getFloating(gameObj.second, PositionComponent::z);
+
+        double friction = mRegion->getFriction(Math::Point3d(x, y, z)) * seconds.count();
 
         auto xAcceleration = movementComp->getFloating(gameObj.second, MovementComponent::xAcceleration);
         auto xVelocity = movementComp->getFloating(gameObj.second, MovementComponent::xVelocity);
@@ -101,25 +128,21 @@ void MovementSystem::update (TimeResolution elapsedTime)
 
         if (xVelocity || yVelocity || zVelocity)
         {
-            auto positionComp = gameObj.second->getGameComponentFromAbility("GamePosition");
-            if (!positionComp)
-            {
-                continue;
-            }
-            
             std::vector<double> positions;
             
-            auto x = positionComp->getFloating(gameObj.second, PositionComponent::x);
             x += isInstantMode() ? xVelocity : xVelocity * seconds.count();
-            positions.push_back(x);
-
-            auto y = positionComp->getFloating(gameObj.second, PositionComponent::y);
             y += isInstantMode() ? yVelocity : yVelocity * seconds.count();
-            positions.push_back(y);
-
-            auto z = positionComp->getFloating(gameObj.second, PositionComponent::z);
             z += zVelocity * seconds.count();
-            positions.push_back(z);
+            
+            auto xOld = positionComp->getFloating(gameObj.second, PositionComponent::xOld);
+            auto yOld = positionComp->getFloating(gameObj.second, PositionComponent::yOld);
+            auto zOld = positionComp->getFloating(gameObj.second, PositionComponent::zOld);
+            
+            auto resolvedPosition = mRegion->resolveCollisions(Math::Point3d(xOld, yOld, zOld), Math::Point3d(x, y, z));
+            
+            positions.push_back(resolvedPosition.x);
+            positions.push_back(resolvedPosition.y);
+            positions.push_back(resolvedPosition.z);
 
             // Set all three position coordinates at once so the position component can
             // queue a single moved action.

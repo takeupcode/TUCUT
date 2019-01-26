@@ -281,8 +281,10 @@
 		3EDBEE1021C4D1A4006DFB23 /* IMovementComponent.h in Headers */ = {isa = PBXBuildFile; fileRef = 3EDBEE0E21C4D1A4006DFB23 /* IMovementComponent.h */; };
 		3EDBEE1321C4D219006DFB23 /* IPositionComponent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3EDBEE1121C4D219006DFB23 /* IPositionComponent.cpp */; };
 		3EDBEE1421C4D219006DFB23 /* IPositionComponent.h in Headers */ = {isa = PBXBuildFile; fileRef = 3EDBEE1221C4D219006DFB23 /* IPositionComponent.h */; };
-		3EDBEE1B21CC6AED006DFB23 /* GameRegion.h in Headers */ = {isa = PBXBuildFile; fileRef = 3EDBEE1921CC6AED006DFB23 /* GameRegion.h */; };
-		3EDBEE1C21CC6AED006DFB23 /* GameRegion.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3EDBEE1A21CC6AED006DFB23 /* GameRegion.cpp */; };
+		3EDBEE1B21CC6AED006DFB23 /* TextRegion.h in Headers */ = {isa = PBXBuildFile; fileRef = 3EDBEE1921CC6AED006DFB23 /* TextRegion.h */; };
+		3EDBEE1C21CC6AED006DFB23 /* TextRegion.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3EDBEE1A21CC6AED006DFB23 /* TextRegion.cpp */; };
+		3EDBEE1F21FAD2D1006DFB23 /* GameRegion.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3EDBEE1D21FAD2D1006DFB23 /* GameRegion.cpp */; };
+		3EDBEE2021FAD2D1006DFB23 /* GameRegion.h in Headers */ = {isa = PBXBuildFile; fileRef = 3EDBEE1E21FAD2D1006DFB23 /* GameRegion.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -709,8 +711,10 @@
 		3EDBEE0E21C4D1A4006DFB23 /* IMovementComponent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IMovementComponent.h; sourceTree = "<group>"; };
 		3EDBEE1121C4D219006DFB23 /* IPositionComponent.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = IPositionComponent.cpp; sourceTree = "<group>"; };
 		3EDBEE1221C4D219006DFB23 /* IPositionComponent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IPositionComponent.h; sourceTree = "<group>"; };
-		3EDBEE1921CC6AED006DFB23 /* GameRegion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameRegion.h; sourceTree = "<group>"; };
-		3EDBEE1A21CC6AED006DFB23 /* GameRegion.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameRegion.cpp; sourceTree = "<group>"; };
+		3EDBEE1921CC6AED006DFB23 /* TextRegion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextRegion.h; sourceTree = "<group>"; };
+		3EDBEE1A21CC6AED006DFB23 /* TextRegion.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TextRegion.cpp; sourceTree = "<group>"; };
+		3EDBEE1D21FAD2D1006DFB23 /* GameRegion.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = GameRegion.cpp; sourceTree = "<group>"; };
+		3EDBEE1E21FAD2D1006DFB23 /* GameRegion.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GameRegion.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -790,6 +794,8 @@
 				3EDBEE0E21C4D1A4006DFB23 /* IMovementComponent.h */,
 				3EDBEE1121C4D219006DFB23 /* IPositionComponent.cpp */,
 				3EDBEE1221C4D219006DFB23 /* IPositionComponent.h */,
+				3EDBEE1D21FAD2D1006DFB23 /* GameRegion.cpp */,
+				3EDBEE1E21FAD2D1006DFB23 /* GameRegion.h */,
 			);
 			path = Game;
 			sourceTree = "<group>";
@@ -1411,8 +1417,8 @@
 		3E3F83B0210A36CD00501126 /* Curses */ = {
 			isa = PBXGroup;
 			children = (
-				3EDBEE1A21CC6AED006DFB23 /* GameRegion.cpp */,
-				3EDBEE1921CC6AED006DFB23 /* GameRegion.h */,
+				3EDBEE1A21CC6AED006DFB23 /* TextRegion.cpp */,
+				3EDBEE1921CC6AED006DFB23 /* TextRegion.h */,
 				3E3F83CA210A4B8500501126 /* Button.cpp */,
 				3E3F83BF210A4B8400501126 /* Button.h */,
 				3E3F83CB210A4B8500501126 /* CheckBox.cpp */,
@@ -1465,6 +1471,7 @@
 				3E3F83652105766200501126 /* InvalidArgumentException.h in Headers */,
 				3E061816212A2FAE000B634B /* GameObject.h in Headers */,
 				3EDBEE0221BDF9D7006DFB23 /* MovementComponent.h in Headers */,
+				3EDBEE2021FAD2D1006DFB23 /* GameRegion.h in Headers */,
 				3EDBEDFE21B8D63F006DFB23 /* PositionComponent.h in Headers */,
 				3E3F83662105766200501126 /* InvalidExtensionException.h in Headers */,
 				3E3F83672105766200501126 /* InvalidOperationException.h in Headers */,
@@ -1550,7 +1557,7 @@
 				3E3F83E9210A4B8600501126 /* Control.h in Headers */,
 				3E3F83DF210A4B8600501126 /* ConsoleManager.h in Headers */,
 				3E3F83D3210A4B8600501126 /* Label.h in Headers */,
-				3EDBEE1B21CC6AED006DFB23 /* GameRegion.h in Headers */,
+				3EDBEE1B21CC6AED006DFB23 /* TextRegion.h in Headers */,
 				3E3F83E0210A4B8600501126 /* WindowSystem.h in Headers */,
 				3E3F83D8210A4B8600501126 /* Button.h in Headers */,
 				3E3F83DA210A4B8600501126 /* Window.h in Headers */,
@@ -1758,6 +1765,7 @@
 				3EDBEE0521BF57B6006DFB23 /* MovementSystem.cpp in Sources */,
 				3E061823212A31A2000B634B /* PropertyContainer.cpp in Sources */,
 				3E06183E21535396000B634B /* Noise.cpp in Sources */,
+				3EDBEE1F21FAD2D1006DFB23 /* GameRegion.cpp in Sources */,
 				3EDBEDFD21B8D63F006DFB23 /* PositionComponent.cpp in Sources */,
 				3E061822212A31A2000B634B /* PropertyGroup.cpp in Sources */,
 				3E3F835A210575BE00501126 /* BasicRequest.protocol.cpp in Sources */,
@@ -1828,7 +1836,7 @@
 				3E3F83E4210A4B8600501126 /* CheckBox.cpp in Sources */,
 				3E3F83DE210A4B8600501126 /* NumberBox.cpp in Sources */,
 				3E3F83EB210A4B8600501126 /* ListBox.cpp in Sources */,
-				3EDBEE1C21CC6AED006DFB23 /* GameRegion.cpp in Sources */,
+				3EDBEE1C21CC6AED006DFB23 /* TextRegion.cpp in Sources */,
 				3E3F83DD210A4B8600501126 /* Control.cpp in Sources */,
 				3E3F83E3210A4B8600501126 /* Button.cpp in Sources */,
 			);

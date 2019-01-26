@@ -1,37 +1,27 @@
 //
-//  GameRegion.h
+//  TextRegion.h
 //  TUCUT (Take Up Code Utility)
 //
 //  Created by Abdul Wahid Tanner on 12/16/18.
 //  Copyright © 2018 Take Up Code. All rights reserved.
 //
 
-#ifndef TUCUT_Curses_GameRegion_h
-#define TUCUT_Curses_GameRegion_h
+#ifndef TUCUT_Curses_TextRegion_h
+#define TUCUT_Curses_TextRegion_h
 
 #include <string>
 #include <unordered_map>
 #include <vector>
 
-#include "../Game/GameObject.h"
+#include "../Game/GameRegion.h"
 
 namespace TUCUT {
 namespace Curses {
     
-class GameRegion
+class TextRegion : public Game::GameRegion
 {
 public:
-    GameRegion (unsigned int columns, unsigned int rows)
-    : mColumns(columns), mRows(rows), mNextTileTypeId(1)
-    {
-        mTiles.resize(columns * rows);
-    }
-    
-    GameRegion (const GameRegion &) = default;
-    GameRegion (GameRegion &&) = default;
-    
-    GameRegion & operator = (const GameRegion &) = default;
-    GameRegion & operator = (GameRegion &&) = default;
+    std::shared_ptr<TextRegion> getSharedTextRegion ();
     
     unsigned int columns () const
     {
@@ -49,9 +39,25 @@ public:
     
     void removeTile (unsigned int x, unsigned int y);
     
-    void resolveCollisions (std::shared_ptr<Game::GameObject> & object);
+    double getFriction (const Math::Point3d & location) const override;
     
+    Math::Point3d resolveCollisions (const Math::Point3d & oldLocation, const Math::Point3d & newLocation) const override;
+
 private:
+    friend class Game::GameRegion;
+    
+    TextRegion (unsigned int columns, unsigned int rows)
+    : mColumns(columns), mRows(rows), mNextTileTypeId(1)
+    {
+        mTiles.resize(columns * rows);
+    }
+    
+    TextRegion (const TextRegion &) = delete;
+    TextRegion (TextRegion &&) = delete;
+    
+    TextRegion & operator = (const TextRegion &) = delete;
+    TextRegion & operator = (TextRegion &&) = delete;
+    
     int getTileTypeId (const std::string & typeName) const;
     
     int createTileType (const std::string & typeName, char symbol);
@@ -64,7 +70,7 @@ private:
     std::vector<int> mTiles;
 };
 
-} // namespace Game
+} // namespace Curses
 } // namespace TUCUT
 
-#endif // TUCUT_Curses_GameRegion_h
+#endif // TUCUT_Curses_TextRegion_h

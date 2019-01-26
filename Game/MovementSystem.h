@@ -15,6 +15,8 @@
 namespace TUCUT {
 namespace Game {
 
+class GameRegion;
+    
 class MovementSystem : public IMovementSystem
 {
 public:
@@ -28,6 +30,10 @@ public:
     bool isInstantMode () const;
     
     void setInstantMode (bool instant);
+    
+    std::shared_ptr<GameRegion> region ();
+    
+    void setRegion (std::shared_ptr<GameRegion> region);
     
 protected:
     friend class Game::GameManager;
@@ -47,6 +53,7 @@ protected:
     
 private:
     bool mInstantMode;
+    std::shared_ptr<GameRegion> mRegion;
 };
 
 } // namespace Game
