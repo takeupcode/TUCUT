@@ -48,14 +48,23 @@ void TextRegion::removeTile (unsigned int x, unsigned int y)
     mTiles[tileIndex] = 0;
 }
 
-double TextRegion::getFriction (const Math::Point3d & location) const
+double TextRegion::getFriction (const Math::Point3d & position) const
 {
     return 10.0;
 }
 
-Math::Point3d TextRegion::resolveCollisions (const Math::Point3d & oldLocation, const Math::Point3d & newLocation) const
+Math::Point3d TextRegion::resolveCollisions (const Math::Point3d & currentPosition, const Math::Point3d & newPosition) const
 {
-    return newLocation;
+    int x = static_cast<int>(newPosition.x);
+    int y = static_cast<int>(newPosition.y);
+    int tileIndex = Math::rowMajorIndex(x, y, mColumns);
+    
+    if (mTiles.size() > tileIndex && mTiles[tileIndex] != 0)
+    {
+        return currentPosition;
+    }
+
+    return newPosition;
 }
 
 int TextRegion::getTileTypeId (const std::string & typeName) const

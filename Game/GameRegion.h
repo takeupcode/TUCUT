@@ -35,9 +35,9 @@ public:
     
     virtual ~GameRegion () = default;
     
-    virtual double getFriction (const Math::Point3d & location) const = 0;
+    virtual double getFriction (const Math::Point3d & position) const = 0;
     
-    virtual Math::Point3d resolveCollisions (const Math::Point3d & oldLocation, const Math::Point3d & newLocation) const = 0;
+    virtual Math::Point3d resolveCollisions (const Math::Point3d & currentPosition, const Math::Point3d & newPosition) const = 0;
 
 protected:
     GameRegion ()

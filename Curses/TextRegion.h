@@ -39,9 +39,9 @@ public:
     
     void removeTile (unsigned int x, unsigned int y);
     
-    double getFriction (const Math::Point3d & location) const override;
+    double getFriction (const Math::Point3d & position) const override;
     
-    Math::Point3d resolveCollisions (const Math::Point3d & oldLocation, const Math::Point3d & newLocation) const override;
+    Math::Point3d resolveCollisions (const Math::Point3d & currentPosition, const Math::Point3d & newPosition) const override;
 
 private:
     friend class Game::GameRegion;

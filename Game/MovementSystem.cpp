@@ -128,18 +128,14 @@ void MovementSystem::update (TimeResolution elapsedTime)
 
         if (xVelocity || yVelocity || zVelocity)
         {
-            std::vector<double> positions;
-            
+            Math::Point3d currentPosition(x, y, z);
             x += isInstantMode() ? xVelocity : xVelocity * seconds.count();
             y += isInstantMode() ? yVelocity : yVelocity * seconds.count();
             z += zVelocity * seconds.count();
             
-            auto xOld = positionComp->getFloating(gameObj.second, PositionComponent::xOld);
-            auto yOld = positionComp->getFloating(gameObj.second, PositionComponent::yOld);
-            auto zOld = positionComp->getFloating(gameObj.second, PositionComponent::zOld);
+            auto resolvedPosition = mRegion->resolveCollisions(currentPosition, Math::Point3d(x, y, z));
             
-            auto resolvedPosition = mRegion->resolveCollisions(Math::Point3d(xOld, yOld, zOld), Math::Point3d(x, y, z));
-            
+            std::vector<double> positions;
             positions.push_back(resolvedPosition.x);
             positions.push_back(resolvedPosition.y);
             positions.push_back(resolvedPosition.z);
