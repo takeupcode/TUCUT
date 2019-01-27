@@ -60,7 +60,11 @@ private:
     
     void deinitialize ();
 
+    void handleInput () override;
+
     void update (Game::TimeResolution elapsedTime) override;
+
+    void render () override;
 
     int checkHeightBounds (int height) const;
 

@@ -121,8 +121,8 @@ void WindowSystem::deinitialize ()
 {
     endwin();
 }
-    
-void WindowSystem::update (Game::TimeResolution elapsedTime)
+
+void WindowSystem::handleInput ()
 {
     if (mNextWindow)
     {
@@ -130,6 +130,17 @@ void WindowSystem::update (Game::TimeResolution elapsedTime)
         mCurrentWindow = mNextWindow;
         mNextWindow = nullptr;
     }
+    
+    if (!mCurrentWindow)
+    {
+        return;
+    }
+    
+    mCurrentWindow->processInput(this);
+}
+    
+void WindowSystem::update (Game::TimeResolution elapsedTime)
+{
     if (!mCurrentWindow)
     {
         return;
@@ -139,9 +150,15 @@ void WindowSystem::update (Game::TimeResolution elapsedTime)
     
     mCurrentWindow->resize(checkHeightBounds(screenHeight()), checkWidthBounds(screenWidth()));
     
-    mCurrentWindow->processInput(this);
-    
     mCurrentWindow->update();
+}
+
+void WindowSystem::render ()
+{
+    if (!mCurrentWindow)
+    {
+        return;
+    }
     
     mCurrentWindow->draw();
     
