@@ -29,6 +29,18 @@ bool TextRegion::addTileType (const std::string & typeName, char symbol)
     
     return true;
 }
+    
+char TextRegion::tile (unsigned int x, unsigned int y)
+{
+    int tileIndex = Math::rowMajorIndex(x, y, mColumns);
+    
+    if (mTiles.size() > static_cast<std::size_t>(tileIndex) && mTiles[tileIndex] != 0)
+    {
+        return mTileSymbols[mTiles[tileIndex]];
+    }
+    
+    return ' ';
+}
 
 void TextRegion::setTile (unsigned int x, unsigned int y, const std::string & typeName)
 {
@@ -59,7 +71,7 @@ Math::Point3d TextRegion::resolveCollisions (const Math::Point3d & currentPositi
     int y = static_cast<int>(newPosition.y);
     int tileIndex = Math::rowMajorIndex(x, y, mColumns);
     
-    if (mTiles.size() > tileIndex && mTiles[tileIndex] != 0)
+    if (mTiles.size() > static_cast<std::size_t>(tileIndex) && mTiles[tileIndex] != 0)
     {
         return currentPosition;
     }

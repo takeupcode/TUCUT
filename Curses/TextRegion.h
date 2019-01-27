@@ -35,6 +35,8 @@ public:
     
     bool addTileType (const std::string & typeName, char symbol);
     
+    char tile (unsigned int x, unsigned int y);
+
     void setTile (unsigned int x, unsigned int y, const std::string & typeName);
     
     void removeTile (unsigned int x, unsigned int y);
