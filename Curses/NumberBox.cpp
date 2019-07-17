@@ -76,7 +76,7 @@ std::shared_ptr<NumberBox> NumberBox::getSharedNumberBox ()
     return std::static_pointer_cast<NumberBox>(shared_from_this());
 }
 
-bool NumberBox::onKeyPress (GameManager * gm, int key)
+bool NumberBox::onKeyPress (WindowSystem * ws, int key)
 {
     if (enableState() != Window::EnableState::enabled)
     {
@@ -91,7 +91,7 @@ bool NumberBox::onKeyPress (GameManager * gm, int key)
     case KEY_BACKSPACE:
         if (removeChar())
         {
-            handleNumberChange(gm);
+            handleNumberChange(ws);
         }
         break;
         
@@ -106,7 +106,7 @@ bool NumberBox::onKeyPress (GameManager * gm, int key)
         
         if (newValue != oldValue)
         {
-            handleNumberChange(gm);
+            handleNumberChange(ws);
         }
         break;
     }
@@ -122,7 +122,7 @@ bool NumberBox::onKeyPress (GameManager * gm, int key)
         
         if (newValue != oldValue)
         {
-            handleNumberChange(gm);
+            handleNumberChange(ws);
         }
         break;
     }
@@ -130,11 +130,11 @@ bool NumberBox::onKeyPress (GameManager * gm, int key)
     default:
         if (addChar(key))
         {
-            handleNumberChange(gm);
+            handleNumberChange(ws);
         }
         else if (parent())
         {
-            return parent()->onKeyPress(gm, key);
+            return parent()->onKeyPress(ws, key);
         }
         break;
     }
@@ -211,7 +211,7 @@ NumberBox::NumberChangedEvent * NumberBox::numberChanged ()
     return mNumberChanged.get();
 }
 
-void NumberBox::notify (int id, GameManager * gm, Button * button)
+void NumberBox::notify (int id, WindowSystem * ws, Button * button)
 {
     if (id != Button::ClickedEventId)
     {
@@ -233,13 +233,13 @@ void NumberBox::notify (int id, GameManager * gm, Button * button)
     
     if (newValue != oldValue)
     {
-        handleNumberChange(gm);
+        handleNumberChange(ws);
     }
 }
 
-void NumberBox::handleNumberChange (GameManager * gm)
+void NumberBox::handleNumberChange (WindowSystem * ws)
 {
-    mNumberChanged->signal(gm, this);
+    mNumberChanged->signal(ws, this);
 }
 
 bool NumberBox::removeChar ()

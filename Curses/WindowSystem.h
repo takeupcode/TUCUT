@@ -1,36 +1,35 @@
 //
-//  GameManager.h
+//  WindowSystem.h
 //  TUCUT (Take Up Code Utility)
 //
 //  Created by Abdul Wahid Tanner on 10/26/17.
 //  Copyright © 2017 Take Up Code. All rights reserved.
 //
 
-#ifndef TUCUT_Curses_GameManager_h
-#define TUCUT_Curses_GameManager_h
+#ifndef TUCUT_Curses_WindowSystem_h
+#define TUCUT_Curses_WindowSystem_h
 
-#include <chrono>
 #include <memory>
 #include <string>
 #include <vector>
+
+#include "../Game/GameManager.h"
 
 namespace TUCUT {
 namespace Curses {
 
 class Window;
 
-class GameManager
+class WindowSystem : public Game::GameSystem
 {
 public:
-    GameManager ();
+    static const std::string defaultToken;
     
-    ~GameManager ();
+    std::shared_ptr<WindowSystem> getSharedWindowSystem ();
     
-    void initialize ();
+    ~WindowSystem ();
     
-    void play ();
-    
-    void exit ();
+    void initialize () override;
     
     void addWindow(const std::shared_ptr<Window> & window);
 
@@ -55,26 +54,21 @@ public:
     void setMaxScreenDimensions (int height, int width);
     
 private:
-    using TimeClock = std::chrono::steady_clock;
-    using TimePoint = TimeClock::time_point;
-    using TimeResolution = std::chrono::duration<double, std::micro>;
+    friend class Game::GameManager;
     
-    static constexpr int FramesPerSecond = 20; // This is a text game and doesn't need a high frame rate.
-    static const TimeResolution FixedFrameTime;
+    WindowSystem (const std::string & token, int identity);
     
     void deinitialize ();
-    
-    void loop ();
-    
+
+    void handleInput () override;
+
+    void update (Game::TimeResolution elapsedTime) override;
+
+    void render () override;
+
     int checkHeightBounds (int height) const;
 
     int checkWidthBounds (int width) const;
-    
-    TimeResolution elapsed () const;
-    void restartClock ();
-    bool isFixedFrameReady () const;
-    void completeFixedFrame ();
-    void waitForNextFixedFrame ();
 
     int mScreenMaxX;
     int mScreenMaxY;
@@ -85,13 +79,9 @@ private:
     Window * mNextWindow;
     Window * mCurrentWindow;
     std::vector<std::shared_ptr<Window>> mWindows;
-    TimePoint mLastTime;
-    TimeResolution mElapsed;
-    TimeResolution mFixedFrameTotal;
-    bool mExit;
 };
     
 } // namespace Curses
 } // namespace TUCUT
 
-#endif // TUCUT_Curses_GameManager_h
+#endif // TUCUT_Curses_WindowSystem_h

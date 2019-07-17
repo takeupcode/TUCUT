@@ -19,122 +19,188 @@
 
 namespace TUCUT {
 namespace Identity {
-        
+    
+class Token
+{
+public:
+    explicit Token (const std::string & token)
+    : mToken(token)
+    { }
+    
+    explicit Token (std::string && token)
+    : mToken(std::move(token))
+    { }
+    
+    Token (const Token & src)
+    : mToken(src.mToken)
+    { }
+    
+    Token (Token && src)
+    : mToken(std::move(src.mToken))
+    { }
+    
+    std::string token () const
+    {
+        return mToken;
+    }
+    
+    std::string toString () const
+    {
+        return "(" + token() + ")";
+    }
+    
+    bool operator == (const Token & rhs) const
+    {
+        return mToken == rhs.mToken;
+    }
+    
+    bool operator != (const Token & rhs) const
+    {
+        return !operator==(rhs);
+    }
+    
+private:
+    Token & operator = (const Token &) = delete;
+    Token & operator = (Token &&) = delete;
+    
+    std::string mToken;
+};
+    
+template <typename T>
+class IdToken : public Token
+{
+public:
+    explicit IdToken (const std::string & token, T identity = 0)
+    : Token(token),
+    mId(identity)
+    { }
+    
+    IdToken (const IdToken & src)
+    : Token(src),
+    mId(src.mId)
+    { }
+    
+    IdToken (IdToken && src)
+    : Token(std::move(src)),
+    mId(src.mId)
+    { }
+    
+    T identity () const
+    {
+        return mId;
+    }
+    
+    std::string toString () const
+    {
+        return "(" + token() + ":" + std::to_string(mId) + ")";
+    }
+    
+    bool operator == (const IdToken & rhs) const
+    {
+        return Token::operator==(rhs) && mId == rhs.mId;
+    }
+    
+    bool operator != (const IdToken & rhs) const
+    {
+        return !operator==(rhs);
+    }
+    
+private:
+    IdToken & operator = (const IdToken &) = delete;
+    IdToken & operator = (IdToken &&) = delete;
+    
+    T mId;
+};
+
+template <>
+class IdToken<std::string> : public Token
+{
+public:
+    explicit IdToken (const std::string & token)
+    : Token(token),
+    mId(boost::uuids::random_generator()())
+    { }
+    
+    IdToken (const std::string & token, const std::string & identity)
+    : Token(token),
+    mId(boost::uuids::string_generator()(identity))
+    { }
+    
+    IdToken (const IdToken & src)
+    : Token(src),
+    mId(src.mId)
+    { }
+    
+    IdToken (IdToken && src)
+    : Token(std::move(src)),
+    mId(std::move(src.mId))
+    { }
+    
+    std::string identity () const
+    {
+        return to_string(mId);
+    }
+    
+    std::string toString () const
+    {
+        return "(" + token() + ":" + identity() + ")";
+    }
+    
+    bool operator == (const IdToken & rhs) const
+    {
+        return Token::operator==(rhs) && mId == rhs.mId;
+    }
+    
+    bool operator != (const IdToken & rhs) const
+    {
+        return !operator==(rhs);
+    }
+    
+private:
+    IdToken & operator = (const IdToken &) = delete;
+    IdToken & operator = (IdToken &&) = delete;
+    
+    boost::uuids::uuid mId;
+};
+
+template <typename T>
 class Identifiable
 {
 public:
-    class IdToken
-    {
-    public:
-        explicit IdToken (const std::string & token)
-        : mToken(token),
-        mId(boost::uuids::random_generator()())
-        { }
-        
-        IdToken (const std::string & token, const std::string & identity)
-        : mToken(token),
-        mId(boost::uuids::string_generator()(identity))
-        { }
-        
-        IdToken (const IdToken & src)
-        : mToken(src.mToken),
-        mId(src.mId)
-        { }
-        
-        IdToken (IdToken && src)
-        : mToken(std::move(src.mToken)),
-        mId(std::move(src.mId))
-        { }
-        
-        ~IdToken ()
-        { }
-        
-        std::string token () const
-        {
-            return mToken;
-        }
-        
-        std::string identity () const
-        {
-            return to_string(mId);
-        }
-        
-        std::string toString () const
-        {
-            return "(" + mToken + ": " + to_string(mId) + ")";
-        }
-        
-        bool operator == (const IdToken & rhs) const
-        {
-            return mToken == rhs.mToken && mId == rhs.mId;
-        }
-        
-        bool operator != (const IdToken & rhs) const
-        {
-            return !operator==(rhs);
-        }
-        
-        bool tokenEqual (const IdToken & other) const
-        {
-            return mToken == other.mToken;
-        }
-        
-        bool tokenNotEqual (const IdToken & other) const
-        {
-            return mToken != other.mToken;
-        }
-        
-        bool tokenLess (const IdToken & other) const
-        {
-            return mToken < other.mToken;
-        }
-        
-        bool tokenGreater (const IdToken & other) const
-        {
-            return mToken > other.mToken;
-        }
-        
-        bool tokenLessEqual (const IdToken & other) const
-        {
-            return mToken <= other.mToken;
-        }
-        
-        bool tokenGreaterEqual (const IdToken & other) const
-        {
-            return mToken >= other.mToken;
-        }
-        
-    private:
-        IdToken & operator = (const IdToken &) = delete;
-        IdToken & operator = (IdToken &&) = delete;
-        
-        std::string mToken;
-        boost::uuids::uuid mId;
-    };
-
     virtual ~Identifiable ()
     { }
     
-    IdToken idToken () const
+    IdToken<T> idToken ()
     {
         return *mIdToken;
     }
     
+    IdToken<T> & idToken () const
+    {
+        return *mIdToken;
+    }
+
+    std::string token () const
+    {
+        return mIdToken->token();
+    }
+    
+    T identity () const
+    {
+        return mIdToken->identity();
+    }
+
 protected:
-    Identifiable (const std::string & token)
-    : mIdToken(new IdToken(token))
+    Identifiable (const std::string & token, T identity = 0)
+    : mIdToken(new IdToken<T>(token, identity))
     { }
     
-    Identifiable (const std::string & token, const std::string & identity)
-    : mIdToken(new IdToken(token, identity))
-    { }
-    
-    Identifiable (const IdToken & idToken)
-    : mIdToken(new IdToken(idToken))
+    Identifiable (const IdToken<T> & idToken)
+    : mIdToken(new IdToken<T>(idToken))
     { }
     
     Identifiable (const Identifiable & src)
-    : mIdToken(new IdToken(*src.mIdToken))
+    : mIdToken(new IdToken<T>(*src.mIdToken))
     { }
     
     Identifiable (Identifiable && src)
@@ -167,17 +233,98 @@ protected:
     
     void swap (Identifiable & other)
     {
-        std::unique_ptr<IdToken> thisIdToken(mIdToken.release());
-        std::unique_ptr<IdToken> otherIdToken(other.mIdToken.release());
+        std::unique_ptr<IdToken<T>> thisIdToken(mIdToken.release());
+        std::unique_ptr<IdToken<T>> otherIdToken(other.mIdToken.release());
         
         mIdToken.reset(otherIdToken.release());
         other.mIdToken.reset(thisIdToken.release());
     }
     
 private:
-    std::unique_ptr<IdToken> mIdToken;
+    std::unique_ptr<IdToken<T>> mIdToken;
 };
+
+template <>
+class Identifiable<std::string>
+{
+public:
+    virtual ~Identifiable ()
+    { }
     
+    IdToken<std::string> idToken ()
+    {
+        return *mIdToken;
+    }
+    
+    IdToken<std::string> & idToken () const
+    {
+        return *mIdToken;
+    }
+
+    std::string token () const
+    {
+        return mIdToken->token();
+    }
+    
+    std::string identity () const
+    {
+        return mIdToken->identity();
+    }
+    
+protected:
+    Identifiable (const std::string & token, const std::string & identity)
+    : mIdToken(new IdToken<std::string>(token, identity))
+    { }
+    
+    Identifiable (const IdToken<std::string> & idToken)
+    : mIdToken(new IdToken<std::string>(idToken))
+    { }
+    
+    Identifiable (const Identifiable & src)
+    : mIdToken(new IdToken<std::string>(*src.mIdToken))
+    { }
+    
+    Identifiable (Identifiable && src)
+    : mIdToken(src.mIdToken.release())
+    { }
+    
+    Identifiable & operator = (const Identifiable & rhs)
+    {
+        if (this == &rhs)
+        {
+            return *this;
+        }
+        
+        mIdToken.reset(new IdToken(*rhs.mIdToken));
+        
+        return *this;
+    }
+    
+    Identifiable & operator = (Identifiable && rhs)
+    {
+        if (this == &rhs)
+        {
+            return *this;
+        }
+        
+        mIdToken.reset(rhs.mIdToken.release());
+        
+        return *this;
+    }
+    
+    void swap (Identifiable & other)
+    {
+        std::unique_ptr<IdToken<std::string>> thisIdToken(mIdToken.release());
+        std::unique_ptr<IdToken<std::string>> otherIdToken(other.mIdToken.release());
+        
+        mIdToken.reset(otherIdToken.release());
+        other.mIdToken.reset(thisIdToken.release());
+    }
+    
+private:
+    std::unique_ptr<IdToken<std::string>> mIdToken;
+};
+
 } // namespace Identity
 } // namespace TUCUT
 

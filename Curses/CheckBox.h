@@ -22,15 +22,15 @@ class CheckBox : public Control
 public:
     const static int ClickedEventId = 1;
     
-    using ClickedEvent = Event::EventPublisher<GameManager *, CheckBox *>;
+    using ClickedEvent = Event::EventPublisher<WindowSystem *, CheckBox *>;
     
     static std::shared_ptr<CheckBox> createSharedCheckBox (const std::string & name, const std::string & text, int y, int x, int height, int width, int foreColor, int backColor, int focusForeColor, int focusBackColor);
     
     std::shared_ptr<CheckBox> getSharedCheckBox ();
     
-    bool onKeyPress (GameManager * gm, int key) override;
+    bool onKeyPress (WindowSystem * ws, int key) override;
     
-    void onMouseEvent (GameManager * gm, short id, int y, int x, mmask_t buttonState) override;
+    void onMouseEvent (WindowSystem * ws, short id, int y, int x, mmask_t buttonState) override;
     
     void onDrawClient () const override;
     
@@ -46,7 +46,7 @@ protected:
     void initialize () override;
 
 private:
-    void handleClick (GameManager * gm);
+    void handleClick (WindowSystem * ws);
     
     std::string mText;
     std::unique_ptr<ClickedEvent> mClicked;

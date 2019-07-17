@@ -64,7 +64,7 @@ WINDOW * Window::cursesWindow () const
     return mClientCursesWindow;
 }
 
-void Window::processInput (GameManager * gm)
+void Window::processInput (WindowSystem * ws)
 {
     MEVENT mouseEvent;
     int c = wgetch(cursesWindow());
@@ -92,7 +92,7 @@ void Window::processInput (GameManager * gm)
             Window * control = findWindow(mouseEvent.y, mouseEvent.x);
             if (control)
             {
-                control->onMouseEvent(gm, mouseEvent.id, mouseEvent.y, mouseEvent.x, mouseEvent.bstate);
+                control->onMouseEvent(ws, mouseEvent.id, mouseEvent.y, mouseEvent.x, mouseEvent.bstate);
             }
         }
         break;
@@ -101,11 +101,14 @@ void Window::processInput (GameManager * gm)
             Window * control = findFocus();
             if (control)
             {
-                control->onKeyPress(gm, c);
+                control->onKeyPress(ws, c);
             }
         }
     }
 }
+
+void Window::update ()
+{ }
 
 void Window::draw () const
 {
@@ -132,12 +135,12 @@ void Window::draw () const
     }
 }
 
-bool Window::onKeyPress (GameManager * gm, int key)
+bool Window::onKeyPress (WindowSystem * ws, int key)
 {
     return false;
 }
 
-void Window::onMouseEvent (GameManager * gm, short id, int y, int x, mmask_t buttonState)
+void Window::onMouseEvent (WindowSystem * ws, short id, int y, int x, mmask_t buttonState)
 {
 }
 

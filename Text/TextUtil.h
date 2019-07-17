@@ -21,6 +21,8 @@ struct TextUtil
 
     static std::vector<std::string> splitString (const std::string & src, char delimiter);
     
+    static std::string replaceString (const std::string & src, std::string searchValue, std::string replacementValue);
+
     static std::string narrowString (const std::wstring & src);
 };
     

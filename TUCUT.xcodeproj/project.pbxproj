@@ -9,8 +9,8 @@
 /* Begin PBXBuildFile section */
 		3E061815212A2FAE000B634B /* GameObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E061813212A2FAE000B634B /* GameObject.cpp */; };
 		3E061816212A2FAE000B634B /* GameObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E061814212A2FAE000B634B /* GameObject.h */; };
-		3E061819212A3057000B634B /* GameObjectManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E061817212A3057000B634B /* GameObjectManager.cpp */; };
-		3E06181A212A3057000B634B /* GameObjectManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E061818212A3057000B634B /* GameObjectManager.h */; };
+		3E061819212A3057000B634B /* GameManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E061817212A3057000B634B /* GameManager.cpp */; };
+		3E06181A212A3057000B634B /* GameManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E061818212A3057000B634B /* GameManager.h */; };
 		3E061821212A31A2000B634B /* PropertyValue.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E06181B212A31A0000B634B /* PropertyValue.h */; };
 		3E061822212A31A2000B634B /* PropertyGroup.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E06181C212A31A1000B634B /* PropertyGroup.cpp */; };
 		3E061823212A31A2000B634B /* PropertyContainer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E06181D212A31A1000B634B /* PropertyContainer.cpp */; };
@@ -21,7 +21,7 @@
 		3E06182A212A65CC000B634B /* PropertyGroupScenarios.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E061829212A65CC000B634B /* PropertyGroupScenarios.cpp */; };
 		3E06182C212A65FB000B634B /* PropertyContainerScenarios.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E06182B212A65FB000B634B /* PropertyContainerScenarios.cpp */; };
 		3E06182E212A6628000B634B /* GameObjectScenarios.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E06182D212A6628000B634B /* GameObjectScenarios.cpp */; };
-		3E061830212A6646000B634B /* GameObjectManagerScenarios.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E06182F212A6646000B634B /* GameObjectManagerScenarios.cpp */; };
+		3E061830212A6646000B634B /* GameManagerScenarios.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E06182F212A6646000B634B /* GameManagerScenarios.cpp */; };
 		3E061836213E0F37000B634B /* Hash.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E061835213E0F37000B634B /* Hash.h */; };
 		3E061838214F6417000B634B /* HashScenarios.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E061837214F6417000B634B /* HashScenarios.cpp */; };
 		3E06183C215342DF000B634B /* Noise.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E06183B215342DF000B634B /* Noise.h */; };
@@ -213,12 +213,12 @@
 		3E3F83D8210A4B8600501126 /* Button.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E3F83BF210A4B8400501126 /* Button.h */; };
 		3E3F83D9210A4B8600501126 /* TextBox.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E3F83C0210A4B8400501126 /* TextBox.h */; };
 		3E3F83DA210A4B8600501126 /* Window.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E3F83C1210A4B8400501126 /* Window.h */; };
-		3E3F83DB210A4B8600501126 /* GameManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E3F83C2210A4B8400501126 /* GameManager.cpp */; };
+		3E3F83DB210A4B8600501126 /* WindowSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E3F83C2210A4B8400501126 /* WindowSystem.cpp */; };
 		3E3F83DC210A4B8600501126 /* ConsoleManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E3F83C3210A4B8400501126 /* ConsoleManager.cpp */; };
 		3E3F83DD210A4B8600501126 /* Control.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E3F83C4210A4B8500501126 /* Control.cpp */; };
 		3E3F83DE210A4B8600501126 /* NumberBox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E3F83C5210A4B8500501126 /* NumberBox.cpp */; };
 		3E3F83DF210A4B8600501126 /* ConsoleManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E3F83C6210A4B8500501126 /* ConsoleManager.h */; };
-		3E3F83E0210A4B8600501126 /* GameManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E3F83C7210A4B8500501126 /* GameManager.h */; };
+		3E3F83E0210A4B8600501126 /* WindowSystem.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E3F83C7210A4B8500501126 /* WindowSystem.h */; };
 		3E3F83E1210A4B8600501126 /* CheckBox.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E3F83C8210A4B8500501126 /* CheckBox.h */; };
 		3E3F83E2210A4B8600501126 /* Justification.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E3F83C9210A4B8500501126 /* Justification.h */; };
 		3E3F83E3210A4B8600501126 /* Button.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E3F83CA210A4B8500501126 /* Button.cpp */; };
@@ -261,6 +261,30 @@
 		3ED412A320FED37800BC7226 /* MessageField.protocol.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E259E0120E34B4A00F01379 /* MessageField.protocol.cpp */; };
 		3EDBEDDB218FEA25006DFB23 /* MinMax.h in Headers */ = {isa = PBXBuildFile; fileRef = 3EDBEDDA218FEA24006DFB23 /* MinMax.h */; };
 		3EDBEDDE2190074F006DFB23 /* MinMaxScenarios.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3EDBEDDD2190074F006DFB23 /* MinMaxScenarios.cpp */; };
+		3EDBEDE1219E8258006DFB23 /* GameComponent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3EDBEDDF219E8258006DFB23 /* GameComponent.cpp */; };
+		3EDBEDE2219E8258006DFB23 /* GameComponent.h in Headers */ = {isa = PBXBuildFile; fileRef = 3EDBEDE0219E8258006DFB23 /* GameComponent.h */; };
+		3EDBEDE421A3C4C5006DFB23 /* GameComponentScenarios.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3EDBEDE321A3C4C5006DFB23 /* GameComponentScenarios.cpp */; };
+		3EDBEDE821AE4C4B006DFB23 /* GameSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3EDBEDE621AE4C4B006DFB23 /* GameSystem.cpp */; };
+		3EDBEDE921AE4C4B006DFB23 /* GameSystem.h in Headers */ = {isa = PBXBuildFile; fileRef = 3EDBEDE721AE4C4B006DFB23 /* GameSystem.h */; };
+		3EDBEDEB21AE5D52006DFB23 /* GameSystemScenarios.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3EDBEDEA21AE5D52006DFB23 /* GameSystemScenarios.cpp */; };
+		3EDBEDF521B7834E006DFB23 /* GameTime.h in Headers */ = {isa = PBXBuildFile; fileRef = 3EDBEDF421B7834E006DFB23 /* GameTime.h */; };
+		3EDBEDFD21B8D63F006DFB23 /* PositionComponent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3EDBEDFB21B8D63F006DFB23 /* PositionComponent.cpp */; };
+		3EDBEDFE21B8D63F006DFB23 /* PositionComponent.h in Headers */ = {isa = PBXBuildFile; fileRef = 3EDBEDFC21B8D63F006DFB23 /* PositionComponent.h */; };
+		3EDBEE0121BDF9D7006DFB23 /* MovementComponent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3EDBEDFF21BDF9D7006DFB23 /* MovementComponent.cpp */; };
+		3EDBEE0221BDF9D7006DFB23 /* MovementComponent.h in Headers */ = {isa = PBXBuildFile; fileRef = 3EDBEE0021BDF9D7006DFB23 /* MovementComponent.h */; };
+		3EDBEE0521BF57B6006DFB23 /* MovementSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3EDBEE0321BF57B5006DFB23 /* MovementSystem.cpp */; };
+		3EDBEE0621BF57B6006DFB23 /* MovementSystem.h in Headers */ = {isa = PBXBuildFile; fileRef = 3EDBEE0421BF57B6006DFB23 /* MovementSystem.h */; };
+		3EDBEE0821C4B0B1006DFB23 /* Adjust.h in Headers */ = {isa = PBXBuildFile; fileRef = 3EDBEE0721C4B0B1006DFB23 /* Adjust.h */; };
+		3EDBEE0B21C4D13E006DFB23 /* IMovementSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3EDBEE0921C4D13E006DFB23 /* IMovementSystem.cpp */; };
+		3EDBEE0C21C4D13E006DFB23 /* IMovementSystem.h in Headers */ = {isa = PBXBuildFile; fileRef = 3EDBEE0A21C4D13E006DFB23 /* IMovementSystem.h */; };
+		3EDBEE0F21C4D1A4006DFB23 /* IMovementComponent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3EDBEE0D21C4D1A4006DFB23 /* IMovementComponent.cpp */; };
+		3EDBEE1021C4D1A4006DFB23 /* IMovementComponent.h in Headers */ = {isa = PBXBuildFile; fileRef = 3EDBEE0E21C4D1A4006DFB23 /* IMovementComponent.h */; };
+		3EDBEE1321C4D219006DFB23 /* IPositionComponent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3EDBEE1121C4D219006DFB23 /* IPositionComponent.cpp */; };
+		3EDBEE1421C4D219006DFB23 /* IPositionComponent.h in Headers */ = {isa = PBXBuildFile; fileRef = 3EDBEE1221C4D219006DFB23 /* IPositionComponent.h */; };
+		3EDBEE1B21CC6AED006DFB23 /* TextRegion.h in Headers */ = {isa = PBXBuildFile; fileRef = 3EDBEE1921CC6AED006DFB23 /* TextRegion.h */; };
+		3EDBEE1C21CC6AED006DFB23 /* TextRegion.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3EDBEE1A21CC6AED006DFB23 /* TextRegion.cpp */; };
+		3EDBEE1F21FAD2D1006DFB23 /* GameRegion.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3EDBEE1D21FAD2D1006DFB23 /* GameRegion.cpp */; };
+		3EDBEE2021FAD2D1006DFB23 /* GameRegion.h in Headers */ = {isa = PBXBuildFile; fileRef = 3EDBEE1E21FAD2D1006DFB23 /* GameRegion.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -372,8 +396,8 @@
 /* Begin PBXFileReference section */
 		3E061813212A2FAE000B634B /* GameObject.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = GameObject.cpp; sourceTree = "<group>"; };
 		3E061814212A2FAE000B634B /* GameObject.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GameObject.h; sourceTree = "<group>"; };
-		3E061817212A3057000B634B /* GameObjectManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = GameObjectManager.cpp; sourceTree = "<group>"; };
-		3E061818212A3057000B634B /* GameObjectManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GameObjectManager.h; sourceTree = "<group>"; };
+		3E061817212A3057000B634B /* GameManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = GameManager.cpp; sourceTree = "<group>"; };
+		3E061818212A3057000B634B /* GameManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GameManager.h; sourceTree = "<group>"; };
 		3E06181B212A31A0000B634B /* PropertyValue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PropertyValue.h; sourceTree = "<group>"; };
 		3E06181C212A31A1000B634B /* PropertyGroup.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PropertyGroup.cpp; sourceTree = "<group>"; };
 		3E06181D212A31A1000B634B /* PropertyContainer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PropertyContainer.cpp; sourceTree = "<group>"; };
@@ -384,7 +408,7 @@
 		3E061829212A65CC000B634B /* PropertyGroupScenarios.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PropertyGroupScenarios.cpp; sourceTree = "<group>"; };
 		3E06182B212A65FB000B634B /* PropertyContainerScenarios.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PropertyContainerScenarios.cpp; sourceTree = "<group>"; };
 		3E06182D212A6628000B634B /* GameObjectScenarios.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = GameObjectScenarios.cpp; sourceTree = "<group>"; };
-		3E06182F212A6646000B634B /* GameObjectManagerScenarios.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = GameObjectManagerScenarios.cpp; sourceTree = "<group>"; };
+		3E06182F212A6646000B634B /* GameManagerScenarios.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = GameManagerScenarios.cpp; sourceTree = "<group>"; };
 		3E061835213E0F37000B634B /* Hash.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Hash.h; sourceTree = "<group>"; };
 		3E061837214F6417000B634B /* HashScenarios.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = HashScenarios.cpp; sourceTree = "<group>"; };
 		3E06183B215342DF000B634B /* Noise.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Noise.h; sourceTree = "<group>"; };
@@ -635,12 +659,12 @@
 		3E3F83BF210A4B8400501126 /* Button.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Button.h; sourceTree = "<group>"; };
 		3E3F83C0210A4B8400501126 /* TextBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextBox.h; sourceTree = "<group>"; };
 		3E3F83C1210A4B8400501126 /* Window.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Window.h; sourceTree = "<group>"; };
-		3E3F83C2210A4B8400501126 /* GameManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameManager.cpp; sourceTree = "<group>"; };
+		3E3F83C2210A4B8400501126 /* WindowSystem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = WindowSystem.cpp; sourceTree = "<group>"; };
 		3E3F83C3210A4B8400501126 /* ConsoleManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ConsoleManager.cpp; sourceTree = "<group>"; };
 		3E3F83C4210A4B8500501126 /* Control.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Control.cpp; sourceTree = "<group>"; };
 		3E3F83C5210A4B8500501126 /* NumberBox.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NumberBox.cpp; sourceTree = "<group>"; };
 		3E3F83C6210A4B8500501126 /* ConsoleManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConsoleManager.h; sourceTree = "<group>"; };
-		3E3F83C7210A4B8500501126 /* GameManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameManager.h; sourceTree = "<group>"; };
+		3E3F83C7210A4B8500501126 /* WindowSystem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WindowSystem.h; sourceTree = "<group>"; };
 		3E3F83C8210A4B8500501126 /* CheckBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CheckBox.h; sourceTree = "<group>"; };
 		3E3F83C9210A4B8500501126 /* Justification.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Justification.h; sourceTree = "<group>"; };
 		3E3F83CA210A4B8500501126 /* Button.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Button.cpp; sourceTree = "<group>"; };
@@ -661,6 +685,36 @@
 		3ED4129120FED29400BC7226 /* TestProtocolCompiler */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = TestProtocolCompiler; sourceTree = BUILT_PRODUCTS_DIR; };
 		3EDBEDDA218FEA24006DFB23 /* MinMax.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MinMax.h; sourceTree = "<group>"; };
 		3EDBEDDD2190074F006DFB23 /* MinMaxScenarios.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = MinMaxScenarios.cpp; sourceTree = "<group>"; };
+		3EDBEDDF219E8258006DFB23 /* GameComponent.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = GameComponent.cpp; sourceTree = "<group>"; };
+		3EDBEDE0219E8258006DFB23 /* GameComponent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GameComponent.h; sourceTree = "<group>"; };
+		3EDBEDE321A3C4C5006DFB23 /* GameComponentScenarios.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = GameComponentScenarios.cpp; sourceTree = "<group>"; };
+		3EDBEDE521A72AAE006DFB23 /* GameManagerSubscriber.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GameManagerSubscriber.h; sourceTree = "<group>"; };
+		3EDBEDE621AE4C4B006DFB23 /* GameSystem.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = GameSystem.cpp; sourceTree = "<group>"; };
+		3EDBEDE721AE4C4B006DFB23 /* GameSystem.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GameSystem.h; sourceTree = "<group>"; };
+		3EDBEDEA21AE5D52006DFB23 /* GameSystemScenarios.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = GameSystemScenarios.cpp; sourceTree = "<group>"; };
+		3EDBEDEC21B07047006DFB23 /* TestSimpleSystem.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TestSimpleSystem.h; sourceTree = "<group>"; };
+		3EDBEDED21B08F28006DFB23 /* TestSimpleComponent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TestSimpleComponent.h; sourceTree = "<group>"; };
+		3EDBEDEE21B08F4E006DFB23 /* TestDependentComponent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TestDependentComponent.h; sourceTree = "<group>"; };
+		3EDBEDEF21B0F15D006DFB23 /* TestSuperDependentComponent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TestSuperDependentComponent.h; sourceTree = "<group>"; };
+		3EDBEDF021B380C4006DFB23 /* TestDependentSystem.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TestDependentSystem.h; sourceTree = "<group>"; };
+		3EDBEDF421B7834E006DFB23 /* GameTime.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GameTime.h; sourceTree = "<group>"; };
+		3EDBEDFB21B8D63F006DFB23 /* PositionComponent.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PositionComponent.cpp; sourceTree = "<group>"; };
+		3EDBEDFC21B8D63F006DFB23 /* PositionComponent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PositionComponent.h; sourceTree = "<group>"; };
+		3EDBEDFF21BDF9D7006DFB23 /* MovementComponent.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = MovementComponent.cpp; sourceTree = "<group>"; };
+		3EDBEE0021BDF9D7006DFB23 /* MovementComponent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MovementComponent.h; sourceTree = "<group>"; };
+		3EDBEE0321BF57B5006DFB23 /* MovementSystem.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = MovementSystem.cpp; sourceTree = "<group>"; };
+		3EDBEE0421BF57B6006DFB23 /* MovementSystem.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MovementSystem.h; sourceTree = "<group>"; };
+		3EDBEE0721C4B0B1006DFB23 /* Adjust.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Adjust.h; sourceTree = "<group>"; };
+		3EDBEE0921C4D13E006DFB23 /* IMovementSystem.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = IMovementSystem.cpp; sourceTree = "<group>"; };
+		3EDBEE0A21C4D13E006DFB23 /* IMovementSystem.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IMovementSystem.h; sourceTree = "<group>"; };
+		3EDBEE0D21C4D1A4006DFB23 /* IMovementComponent.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = IMovementComponent.cpp; sourceTree = "<group>"; };
+		3EDBEE0E21C4D1A4006DFB23 /* IMovementComponent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IMovementComponent.h; sourceTree = "<group>"; };
+		3EDBEE1121C4D219006DFB23 /* IPositionComponent.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = IPositionComponent.cpp; sourceTree = "<group>"; };
+		3EDBEE1221C4D219006DFB23 /* IPositionComponent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IPositionComponent.h; sourceTree = "<group>"; };
+		3EDBEE1921CC6AED006DFB23 /* TextRegion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextRegion.h; sourceTree = "<group>"; };
+		3EDBEE1A21CC6AED006DFB23 /* TextRegion.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TextRegion.cpp; sourceTree = "<group>"; };
+		3EDBEE1D21FAD2D1006DFB23 /* GameRegion.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = GameRegion.cpp; sourceTree = "<group>"; };
+		3EDBEE1E21FAD2D1006DFB23 /* GameRegion.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GameRegion.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -721,8 +775,27 @@
 				3E061812212A2EF3000B634B /* Tests */,
 				3E061813212A2FAE000B634B /* GameObject.cpp */,
 				3E061814212A2FAE000B634B /* GameObject.h */,
-				3E061817212A3057000B634B /* GameObjectManager.cpp */,
-				3E061818212A3057000B634B /* GameObjectManager.h */,
+				3E061817212A3057000B634B /* GameManager.cpp */,
+				3E061818212A3057000B634B /* GameManager.h */,
+				3EDBEDDF219E8258006DFB23 /* GameComponent.cpp */,
+				3EDBEDE0219E8258006DFB23 /* GameComponent.h */,
+				3EDBEDE621AE4C4B006DFB23 /* GameSystem.cpp */,
+				3EDBEDE721AE4C4B006DFB23 /* GameSystem.h */,
+				3EDBEDF421B7834E006DFB23 /* GameTime.h */,
+				3EDBEDFB21B8D63F006DFB23 /* PositionComponent.cpp */,
+				3EDBEDFC21B8D63F006DFB23 /* PositionComponent.h */,
+				3EDBEDFF21BDF9D7006DFB23 /* MovementComponent.cpp */,
+				3EDBEE0021BDF9D7006DFB23 /* MovementComponent.h */,
+				3EDBEE0321BF57B5006DFB23 /* MovementSystem.cpp */,
+				3EDBEE0421BF57B6006DFB23 /* MovementSystem.h */,
+				3EDBEE0921C4D13E006DFB23 /* IMovementSystem.cpp */,
+				3EDBEE0A21C4D13E006DFB23 /* IMovementSystem.h */,
+				3EDBEE0D21C4D1A4006DFB23 /* IMovementComponent.cpp */,
+				3EDBEE0E21C4D1A4006DFB23 /* IMovementComponent.h */,
+				3EDBEE1121C4D219006DFB23 /* IPositionComponent.cpp */,
+				3EDBEE1221C4D219006DFB23 /* IPositionComponent.h */,
+				3EDBEE1D21FAD2D1006DFB23 /* GameRegion.cpp */,
+				3EDBEE1E21FAD2D1006DFB23 /* GameRegion.h */,
 			);
 			path = Game;
 			sourceTree = "<group>";
@@ -734,7 +807,15 @@
 				3E061829212A65CC000B634B /* PropertyGroupScenarios.cpp */,
 				3E06182B212A65FB000B634B /* PropertyContainerScenarios.cpp */,
 				3E06182D212A6628000B634B /* GameObjectScenarios.cpp */,
-				3E06182F212A6646000B634B /* GameObjectManagerScenarios.cpp */,
+				3E06182F212A6646000B634B /* GameManagerScenarios.cpp */,
+				3EDBEDE321A3C4C5006DFB23 /* GameComponentScenarios.cpp */,
+				3EDBEDE521A72AAE006DFB23 /* GameManagerSubscriber.h */,
+				3EDBEDEA21AE5D52006DFB23 /* GameSystemScenarios.cpp */,
+				3EDBEDEC21B07047006DFB23 /* TestSimpleSystem.h */,
+				3EDBEDED21B08F28006DFB23 /* TestSimpleComponent.h */,
+				3EDBEDEE21B08F4E006DFB23 /* TestDependentComponent.h */,
+				3EDBEDEF21B0F15D006DFB23 /* TestSuperDependentComponent.h */,
+				3EDBEDF021B380C4006DFB23 /* TestDependentSystem.h */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -1155,6 +1236,7 @@
 				3E289F43217987D6002FFBDC /* Vector.h */,
 				3E289F4A217CEDCB002FFBDC /* Easing.h */,
 				3EDBEDDA218FEA24006DFB23 /* MinMax.h */,
+				3EDBEE0721C4B0B1006DFB23 /* Adjust.h */,
 			);
 			path = Math;
 			sourceTree = "<group>";
@@ -1335,6 +1417,8 @@
 		3E3F83B0210A36CD00501126 /* Curses */ = {
 			isa = PBXGroup;
 			children = (
+				3EDBEE1A21CC6AED006DFB23 /* TextRegion.cpp */,
+				3EDBEE1921CC6AED006DFB23 /* TextRegion.h */,
 				3E3F83CA210A4B8500501126 /* Button.cpp */,
 				3E3F83BF210A4B8400501126 /* Button.h */,
 				3E3F83CB210A4B8500501126 /* CheckBox.cpp */,
@@ -1347,8 +1431,8 @@
 				3E3F83D0210A4B8600501126 /* Control.h */,
 				3E3F83BC210A4B8400501126 /* CursesUtil.cpp */,
 				3E3F83CE210A4B8600501126 /* CursesUtil.h */,
-				3E3F83C2210A4B8400501126 /* GameManager.cpp */,
-				3E3F83C7210A4B8500501126 /* GameManager.h */,
+				3E3F83C2210A4B8400501126 /* WindowSystem.cpp */,
+				3E3F83C7210A4B8500501126 /* WindowSystem.h */,
 				3E3F83C9210A4B8500501126 /* Justification.h */,
 				3E3F83BD210A4B8400501126 /* Label.cpp */,
 				3E3F83BA210A4B8400501126 /* Label.h */,
@@ -1373,6 +1457,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3EDBEDE2219E8258006DFB23 /* GameComponent.h in Headers */,
 				3E061836213E0F37000B634B /* Hash.h in Headers */,
 				3E3F835D2105766200501126 /* ExtensionInterface.h in Headers */,
 				3E3F835E2105766200501126 /* ExtensionManager.h in Headers */,
@@ -1385,8 +1470,12 @@
 				3E3F83642105766200501126 /* Identifiable.h in Headers */,
 				3E3F83652105766200501126 /* InvalidArgumentException.h in Headers */,
 				3E061816212A2FAE000B634B /* GameObject.h in Headers */,
+				3EDBEE0221BDF9D7006DFB23 /* MovementComponent.h in Headers */,
+				3EDBEE2021FAD2D1006DFB23 /* GameRegion.h in Headers */,
+				3EDBEDFE21B8D63F006DFB23 /* PositionComponent.h in Headers */,
 				3E3F83662105766200501126 /* InvalidExtensionException.h in Headers */,
 				3E3F83672105766200501126 /* InvalidOperationException.h in Headers */,
+				3EDBEDE921AE4C4B006DFB23 /* GameSystem.h in Headers */,
 				3E3F83682105766200501126 /* NullArgumentException.h in Headers */,
 				3E3F83692105766200501126 /* StringLiteral.h in Headers */,
 				3E06183C215342DF000B634B /* Noise.h in Headers */,
@@ -1405,14 +1494,16 @@
 				3E259DCE20E33E3800F01379 /* FileManager.h in Headers */,
 				3E259EC020E34BE900F01379 /* CodeGeneratorCPP.h in Headers */,
 				3E259EDF20E34BE900F01379 /* ParserManager.h in Headers */,
+				3EDBEDF521B7834E006DFB23 /* GameTime.h in Headers */,
 				3E061821212A31A2000B634B /* PropertyValue.h in Headers */,
-				3E06181A212A3057000B634B /* GameObjectManager.h in Headers */,
+				3E06181A212A3057000B634B /* GameManager.h in Headers */,
 				3EDBEDDB218FEA25006DFB23 /* MinMax.h in Headers */,
 				3E289F4221784092002FFBDC /* Bezier.h in Headers */,
 				3E259EF020E34BE900F01379 /* MessageModelContainer.h in Headers */,
 				3E259EC920E34BE900F01379 /* CodeIndenter.h in Headers */,
 				3E259EBF20E34BE900F01379 /* EnumValueModel.h in Headers */,
 				3E259DD220E33E4300F01379 /* ConfigInfo.h in Headers */,
+				3EDBEE1421C4D219006DFB23 /* IPositionComponent.h in Headers */,
 				3E259ED320E34BE900F01379 /* ProtoModel.h in Headers */,
 				3E259ED120E34BE900F01379 /* OptionSingleParser.h in Headers */,
 				3E289F4B217CEDCB002FFBDC /* Easing.h in Headers */,
@@ -1424,6 +1515,7 @@
 				3E259ED020E34BE900F01379 /* OptionGroupParser.h in Headers */,
 				3E259EF320E34BE900F01379 /* OneofParser.h in Headers */,
 				3E259EFC20E34C1200F01379 /* Test.h in Headers */,
+				3EDBEE0621BF57B6006DFB23 /* MovementSystem.h in Headers */,
 				3E289F44217987D6002FFBDC /* Vector.h in Headers */,
 				3E259EF420E34BE900F01379 /* EnumModel.h in Headers */,
 				3E259EEA20E34BE900F01379 /* Nameable.h in Headers */,
@@ -1435,10 +1527,12 @@
 				3E289F382176A670002FFBDC /* Lerp.h in Headers */,
 				3E259EDB20E34BE900F01379 /* MessageModel.h in Headers */,
 				3E259EDC20E34BE900F01379 /* TokenReader.h in Headers */,
+				3EDBEE0C21C4D13E006DFB23 /* IMovementSystem.h in Headers */,
 				3E259EEB20E34BE900F01379 /* CodeWriterCPP.h in Headers */,
 				3E259DCB20E33E2B00F01379 /* LogManager.h in Headers */,
 				3E259EF220E34BE900F01379 /* ProtoBaseTemplateCPP.h in Headers */,
 				3E259EE720E34BE900F01379 /* OneofModelContainer.h in Headers */,
+				3EDBEE0821C4B0B1006DFB23 /* Adjust.h in Headers */,
 				3E061824212A31A2000B634B /* PropertyContainer.h in Headers */,
 				3E259ECF20E34BE900F01379 /* EnumValueModelContainer.h in Headers */,
 				3E259EF520E34BE900F01379 /* EnumValueParser.h in Headers */,
@@ -1447,6 +1541,7 @@
 				3E259ECC20E34BE900F01379 /* Packageable.h in Headers */,
 				3E259EDE20E34BE900F01379 /* PackageParser.h in Headers */,
 				3E259EE020E34BE900F01379 /* OneofModel.h in Headers */,
+				3EDBEE1021C4D1A4006DFB23 /* IMovementComponent.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1462,7 +1557,8 @@
 				3E3F83E9210A4B8600501126 /* Control.h in Headers */,
 				3E3F83DF210A4B8600501126 /* ConsoleManager.h in Headers */,
 				3E3F83D3210A4B8600501126 /* Label.h in Headers */,
-				3E3F83E0210A4B8600501126 /* GameManager.h in Headers */,
+				3EDBEE1B21CC6AED006DFB23 /* TextRegion.h in Headers */,
+				3E3F83E0210A4B8600501126 /* WindowSystem.h in Headers */,
 				3E3F83D8210A4B8600501126 /* Button.h in Headers */,
 				3E3F83DA210A4B8600501126 /* Window.h in Headers */,
 				3E3F83EA210A4B8600501126 /* NumberBox.h in Headers */,
@@ -1665,16 +1761,24 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3EDBEDE821AE4C4B006DFB23 /* GameSystem.cpp in Sources */,
+				3EDBEE0521BF57B6006DFB23 /* MovementSystem.cpp in Sources */,
 				3E061823212A31A2000B634B /* PropertyContainer.cpp in Sources */,
 				3E06183E21535396000B634B /* Noise.cpp in Sources */,
+				3EDBEE1F21FAD2D1006DFB23 /* GameRegion.cpp in Sources */,
+				3EDBEDFD21B8D63F006DFB23 /* PositionComponent.cpp in Sources */,
 				3E061822212A31A2000B634B /* PropertyGroup.cpp in Sources */,
 				3E3F835A210575BE00501126 /* BasicRequest.protocol.cpp in Sources */,
+				3EDBEE0B21C4D13E006DFB23 /* IMovementSystem.cpp in Sources */,
+				3EDBEE1321C4D219006DFB23 /* IPositionComponent.cpp in Sources */,
 				3E3F835B210575BE00501126 /* BasicResponse.protocol.cpp in Sources */,
+				3EDBEE0F21C4D1A4006DFB23 /* IMovementComponent.cpp in Sources */,
 				3E061815212A2FAE000B634B /* GameObject.cpp in Sources */,
 				3E3F835C210575BE00501126 /* ExtensionManager.protocol.cpp in Sources */,
 				3E3F8358210575AA00501126 /* Extension.cpp in Sources */,
 				3E3F8359210575AA00501126 /* ExtensionLoader.cpp in Sources */,
 				3E3F83572105758E00501126 /* ExtensionManager.cpp in Sources */,
+				3EDBEDE1219E8258006DFB23 /* GameComponent.cpp in Sources */,
 				3E259DD620E33E5100F01379 /* TextUtil.cpp in Sources */,
 				3E259ED720E34BE900F01379 /* PackageParser.cpp in Sources */,
 				3E259ED920E34BE900F01379 /* EnumParser.cpp in Sources */,
@@ -1686,9 +1790,10 @@
 				3E259EC320E34BE900F01379 /* ParserManager.cpp in Sources */,
 				3E259EE120E34BE900F01379 /* MessageModel.cpp in Sources */,
 				3E259DCA20E33E2B00F01379 /* LogManager.cpp in Sources */,
+				3EDBEE0121BDF9D7006DFB23 /* MovementComponent.cpp in Sources */,
 				3E259EBD20E34BE900F01379 /* ImportParser.cpp in Sources */,
 				3E259EEC20E34BE900F01379 /* ProtoModel.cpp in Sources */,
-				3E061819212A3057000B634B /* GameObjectManager.cpp in Sources */,
+				3E061819212A3057000B634B /* GameManager.cpp in Sources */,
 				3E259DD320E33E4300F01379 /* ConfigInfo.cpp in Sources */,
 				3E259EE220E34BE900F01379 /* MessageParser.cpp in Sources */,
 				3E259EF620E34BE900F01379 /* OneofParser.cpp in Sources */,
@@ -1722,7 +1827,7 @@
 			files = (
 				3E3F83E8210A4B8600501126 /* Window.cpp in Sources */,
 				3E3F83D6210A4B8600501126 /* Label.cpp in Sources */,
-				3E3F83DB210A4B8600501126 /* GameManager.cpp in Sources */,
+				3E3F83DB210A4B8600501126 /* WindowSystem.cpp in Sources */,
 				3E3F842F2113F6BF00501126 /* DisplayBox.cpp in Sources */,
 				3E3F83E5210A4B8600501126 /* TextBox.cpp in Sources */,
 				3E3F83D5210A4B8600501126 /* CursesUtil.cpp in Sources */,
@@ -1731,6 +1836,7 @@
 				3E3F83E4210A4B8600501126 /* CheckBox.cpp in Sources */,
 				3E3F83DE210A4B8600501126 /* NumberBox.cpp in Sources */,
 				3E3F83EB210A4B8600501126 /* ListBox.cpp in Sources */,
+				3EDBEE1C21CC6AED006DFB23 /* TextRegion.cpp in Sources */,
 				3E3F83DD210A4B8600501126 /* Control.cpp in Sources */,
 				3E3F83E3210A4B8600501126 /* Button.cpp in Sources */,
 			);
@@ -1764,17 +1870,19 @@
 				3ED4128320FED1FB00BC7226 /* OptionParserScenarios.cpp in Sources */,
 				3ED4128420FED1FB00BC7226 /* PackageParserScenarios.cpp in Sources */,
 				3E06182A212A65CC000B634B /* PropertyGroupScenarios.cpp in Sources */,
+				3EDBEDEB21AE5D52006DFB23 /* GameSystemScenarios.cpp in Sources */,
 				3E289F402176ED50002FFBDC /* ColorScenarios.cpp in Sources */,
 				3ED4128520FED1FB00BC7226 /* ProtoModelScenarios.cpp in Sources */,
 				3E3F82E8210424CF00501126 /* StringLiteralScenarios.cpp in Sources */,
 				3E06182E212A6628000B634B /* GameObjectScenarios.cpp in Sources */,
 				3ECB8C39216B152600EACD3F /* NoiseScenarios.cpp in Sources */,
 				3E3F82F921043ED200501126 /* EventPublisherScenarios.cpp in Sources */,
-				3E061830212A6646000B634B /* GameObjectManagerScenarios.cpp in Sources */,
+				3E061830212A6646000B634B /* GameManagerScenarios.cpp in Sources */,
 				3ED4128620FED1FB00BC7226 /* ProtoParserScenarios.cpp in Sources */,
 				3E3F83002104F84500501126 /* IdentifiableScenarios.cpp in Sources */,
 				3ED4128720FED1FB00BC7226 /* TokenReaderScenarios.cpp in Sources */,
 				3E3F83A621067B5200501126 /* LogManagerScenarios.cpp in Sources */,
+				3EDBEDE421A3C4C5006DFB23 /* GameComponentScenarios.cpp in Sources */,
 				3ED4128820FED1FB00BC7226 /* main.cpp in Sources */,
 				3E3F82FA21043ED200501126 /* EventSubscriberScenarios.cpp in Sources */,
 				3EDBEDDE2190074F006DFB23 /* MinMaxScenarios.cpp in Sources */,
@@ -1913,7 +2021,7 @@
 		3E259DB820E3398E00F01379 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_CXX_LANGUAGE_STANDARD = "c++14";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++17";
 				CODE_SIGN_STYLE = Automatic;
 				EXECUTABLE_PREFIX = lib;
 				GCC_ENABLE_CPP_EXCEPTIONS = YES;
@@ -1928,7 +2036,7 @@
 		3E259DB920E3398E00F01379 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_CXX_LANGUAGE_STANDARD = "c++14";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++17";
 				CODE_SIGN_STYLE = Automatic;
 				EXECUTABLE_PREFIX = lib;
 				GCC_ENABLE_CPP_EXCEPTIONS = YES;

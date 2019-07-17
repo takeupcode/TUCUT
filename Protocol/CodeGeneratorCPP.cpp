@@ -9,8 +9,6 @@
 #include <string>
 #include <vector>
 
-#include <boost/algorithm/string.hpp>
-#include <boost/algorithm/string/replace.hpp>
 #include <boost/filesystem/path.hpp>
 #include <boost/filesystem/operations.hpp>
 #include <boost/filesystem/convenience.hpp>
@@ -18,6 +16,8 @@
 
 #include "CodeGeneratorCPP.h"
 #include "CodeGeneratorUtilityCPP.h"
+
+#include "../Text/TextUtil.h"
 
 using namespace std;
 using namespace boost;
@@ -197,7 +197,7 @@ void Protocol::CodeGeneratorCPP::writeProtoEnumsToHeader (CodeWriter & headerFil
                 headerFileWriter.writeNamespaceClosing();
             }
             currentPackage = enumPackage;
-            boost::split(enumNamespaces, enumPackage, boost::is_any_of("."));
+            enumNamespaces = Text::TextUtil::splitString(enumPackage, '.');
             for (auto & str: enumNamespaces)
             {
                 headerFileWriter.writeNamespaceOpening(str);
@@ -258,7 +258,7 @@ void Protocol::CodeGeneratorCPP::writeProtoMessagesToHeader (CodeWriter & header
                 headerFileWriter.writeNamespaceClosing();
             }
             currentPackage = messagePackage;
-            boost::split(messageNamespaces, messagePackage, boost::is_any_of("."));
+            messageNamespaces = Text::TextUtil::splitString(messagePackage, '.');
             for (auto & str: messageNamespaces)
             {
                 headerFileWriter.writeNamespaceOpening(str);
@@ -284,7 +284,7 @@ void Protocol::CodeGeneratorCPP::writeProtoMessagesToHeader (CodeWriter & header
                 headerFileWriter.writeNamespaceClosing();
             }
             currentPackage = messagePackage;
-            boost::split(messageNamespaces, messagePackage, boost::is_any_of("."));
+            messageNamespaces = Text::TextUtil::splitString(messagePackage, '.');
             for (auto & str: messageNamespaces)
             {
                 headerFileWriter.writeNamespaceOpening(str);
@@ -309,7 +309,7 @@ void Protocol::CodeGeneratorCPP::writeProtoMessagesToHeader (CodeWriter & header
                 headerFileWriter.writeNamespaceClosing();
             }
             currentPackage = messagePackage;
-            boost::split(messageNamespaces, messagePackage, boost::is_any_of("."));
+            messageNamespaces = Text::TextUtil::splitString(messagePackage, '.');
             for (auto & str: messageNamespaces)
             {
                 headerFileWriter.writeNamespaceOpening(str);
@@ -1333,8 +1333,7 @@ void Protocol::CodeGeneratorCPP::writeMessageToSource (CodeWriter & sourceFileWr
         ++messageMessageBegin;
     }
 
-    string fullScope = messageModel.package();
-    boost::replace_all(fullScope, ".", "::");
+    string fullScope = Text::TextUtil::replaceString(messageModel.package(), ".", "::");
     if (!fullScope.empty())
     {
         fullScope += "::";
@@ -2010,9 +2009,8 @@ string Protocol::CodeGeneratorCPP::fullTypeName (const MessageFieldModel & messa
         return "std::string";
     }
 
-    boost::replace_all(fieldType, ".", "_");
-    string fieldTypePackage = messageFieldModel.fieldTypePackage();
-    boost::replace_all(fieldTypePackage, ".", "::");
+    fieldType = Text::TextUtil::replaceString(fieldType, ".", "_");
+    string fieldTypePackage = Text::TextUtil::replaceString(messageFieldModel.fieldTypePackage(), ".", "::");
     if (!fieldTypePackage.empty())
     {
         fieldTypePackage += "::";
@@ -2160,9 +2158,8 @@ string Protocol::CodeGeneratorCPP::fullTypeNameInternal (const MessageFieldModel
         return fieldType;
     }
 
-    boost::replace_all(fieldType, ".", "_");
-    string fieldTypePackage = messageFieldModel.fieldTypePackage();
-    boost::replace_all(fieldTypePackage, ".", "::");
+    fieldType = Text::TextUtil::replaceString(fieldType, ".", "_");
+    string fieldTypePackage = Text::TextUtil::replaceString(messageFieldModel.fieldTypePackage(), ".", "::");
     if (!fieldTypePackage.empty())
     {
         fieldTypePackage += "::";

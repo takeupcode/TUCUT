@@ -21,20 +21,20 @@ namespace Curses {
 
 class Button;
 
-class ListBox : public Control, public Event::EventSubscriber<GameManager *, Button *>
+class ListBox : public Control, public Event::EventSubscriber<WindowSystem *, Button *>
 {
 public:
     const static int SelectionChangedEventId = 1;
     
-    using SelectionChangedEvent = Event::EventPublisher<GameManager *, ListBox *>;
+    using SelectionChangedEvent = Event::EventPublisher<WindowSystem *, ListBox *>;
     
     static std::shared_ptr<ListBox> createSharedListBox (const std::string & name, const std::vector<std::string> & items, int y, int x, int height, int width, int foreColor, int backColor, int selectionForeColor, int selectionBackColor);
     
     std::shared_ptr<ListBox> getSharedListBox ();
     
-    bool onKeyPress (GameManager * gm, int key) override;
+    bool onKeyPress (WindowSystem * ws, int key) override;
     
-    void onMouseEvent (GameManager * gm, short id, int y, int x, mmask_t buttonState) override;
+    void onMouseEvent (WindowSystem * ws, short id, int y, int x, mmask_t buttonState) override;
     
     void onDrawClient () const override;
     
@@ -74,9 +74,9 @@ protected:
     void initialize () override;
 
 private:
-    void notify (int id, GameManager * gm, Button * button) override;
+    void notify (int id, WindowSystem * ws, Button * button) override;
     
-    void handleSelectionChange (GameManager * gm);
+    void handleSelectionChange (WindowSystem * ws);
     
     void moveSelectionUp ();
     void moveSelectionDown ();

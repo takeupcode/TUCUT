@@ -11,6 +11,7 @@
 
 #include <string>
 #include <unordered_map>
+#include <vector>
 
 #include "PropertyGroup.h"
 
@@ -20,26 +21,58 @@ namespace Game {
 class PropertyContainer
 {
 public:
-    PropertyContainer () = default;
+    PropertyContainer ();
     
-    PropertyContainer (PropertyContainer && src)
-    : mGroups(std::move(src.mGroups))
-    { }
+    PropertyContainer (const PropertyContainer & src);
+
+    PropertyContainer (PropertyContainer && src);
     
     virtual ~PropertyContainer () = default;
     
+    PropertyContainer & operator = (const PropertyContainer & rhs);
+    PropertyContainer & operator = (PropertyContainer && rhs);
+
     PropertyGroup * addGroup (const std::string & groupName);
     
-    void deleteGroup (const std::string & groupName);
+    void removeGroup (const std::string & groupName);
+
+    bool hasGroup (const std::string & groupName) const
+    {
+        auto groupMapResult = mGroups->find(groupName);
+        if (groupMapResult == mGroups->end())
+        {
+            return false;
+        }
+        
+        return true;
+    }
+
+    bool hasAllGroups (const std::vector<std::string> & groupNames) const
+    {
+        for (const auto & groupName: groupNames)
+        {
+            auto groupMapResult = mGroups->find(groupName);
+            if (groupMapResult == mGroups->end())
+            {
+                return false;
+            }
+        }
+        
+        return true;
+    }
 
     PropertyGroup * getGroup (const std::string & groupName);
 
+    const PropertyGroup * getGroup (const std::string & groupName) const;
+
     PropertyValue * getValue (const std::string & groupName, const std::string & valueName);
-    
+
+    const PropertyValue * getValue (const std::string & groupName, const std::string & valueName) const;
+
 private:
     using GroupMap = std::unordered_map<std::string, std::unique_ptr<PropertyGroup>>;
     
-    GroupMap mGroups;
+    std::unique_ptr<GroupMap> mGroups;
 };
     
 } // namespace Game

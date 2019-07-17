@@ -20,28 +20,35 @@ namespace Game {
 class PropertyGroup
 {
 public:
-    PropertyGroup () = default;
+    PropertyGroup ();
     
-    PropertyGroup (PropertyGroup && src)
-    : mValues(std::move(src.mValues))
-    { }
+    PropertyGroup (const PropertyGroup & src);
+    
+    PropertyGroup (PropertyGroup && src);
 
     virtual ~PropertyGroup () = default;
     
+    std::unique_ptr<PropertyGroup> clone () const;
+    
+    PropertyGroup & operator = (const PropertyGroup & rhs);
+    PropertyGroup & operator = (PropertyGroup && rhs);
+
     bool addValue (const std::string & valueName, const std::string & value, bool readOnly = false);
     bool addValue (const std::string & valueName, const char * value, bool readOnly = false);
     bool addValue (const std::string & valueName, int value, bool readOnly = false);
     bool addValue (const std::string & valueName, double value, bool readOnly = false);
     bool addValue (const std::string & valueName, bool value, bool readOnly = false);
 
-    void deleteValue (const std::string & valueName);
+    void removeValue (const std::string & valueName);
 
     PropertyValue * getValue (const std::string & valueName);
-    
+
+    const PropertyValue * getValue (const std::string & valueName) const;
+
 private:
     using ValueMap = std::unordered_map<std::string, std::unique_ptr<PropertyValue>>;
     
-    ValueMap mValues;
+    std::unique_ptr<ValueMap> mValues;
 };
     
 } // namespace Game
