@@ -43,11 +43,19 @@
   </VirtualDirectory>
   <VirtualDirectory Name="Game">
     <VirtualDirectory Name="Tests">
+      <File Name="Game/Tests/TestSuperDependentComponent.h"/>
+      <File Name="Game/Tests/TestSimpleSystem.h"/>
+      <File Name="Game/Tests/TestSimpleComponent.h"/>
+      <File Name="Game/Tests/TestDependentSystem.h"/>
+      <File Name="Game/Tests/TestDependentComponent.h"/>
+      <File Name="Game/Tests/GameSystemScenarios.cpp"/>
+      <File Name="Game/Tests/GameManagerSubscriber.h"/>
+      <File Name="Game/Tests/GameManagerScenarios.cpp"/>
+      <File Name="Game/Tests/GameComponentScenarios.cpp"/>
       <File Name="Game/Tests/PropertyGroupScenarios.cpp"/>
       <File Name="Game/Tests/PropertyValueScenarios.cpp"/>
       <File Name="Game/Tests/PropertyContainerScenarios.cpp"/>
       <File Name="Game/Tests/GameObjectScenarios.cpp"/>
-      <File Name="Game/Tests/GameObjectManagerScenarios.cpp"/>
     </VirtualDirectory>
   </VirtualDirectory>
   <VirtualDirectory Name="Protocol">
@@ -116,13 +124,18 @@
     <GlobalSettings>
       <Compiler Options="-g;-O0;-std=c++17;-Wall;-Wextra" C_Options="-g;-O0;-Wall" Assembler="">
         <IncludePath Value="."/>
+        <IncludePath Value="/usr/local/include"/>
+        <IncludePath Value="/opt/ncurses/include/ncursesw"/>
+        <IncludePath Value="/opt/ncurses/include"/>
       </Compiler>
       <Linker Options="-static">
         <LibraryPath Value="."/>
         <LibraryPath Value="$(IntermediateDirectory)"/>
         <LibraryPath Value="/usr/local/lib"/>
+        <LibraryPath Value="/opt/ncurses/lib"/>
         <Library Value="TUCUT"/>
         <Library Value="boost_filesystem"/>
+        <Library Value="cursesw"/>
       </Linker>
       <ResourceCompiler Options=""/>
     </GlobalSettings>

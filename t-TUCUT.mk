@@ -13,7 +13,7 @@ CurrentFileName        :=
 CurrentFilePath        :=
 CurrentFileFullPath    :=
 User                   :=Wahid
-Date                   :=16/07/19
+Date                   :=17/07/19
 CodeLitePath           :=/home/wahid/.codelite
 LinkerName             :=/usr/bin/g++
 SharedObjectLinkerName :=/usr/bin/g++ -shared -fPIC
@@ -36,12 +36,12 @@ ObjectsFileList        :="t-TUCUT.txt"
 PCHCompileFlags        :=
 MakeDirCommand         :=mkdir -p
 LinkOptions            := -static 
-IncludePath            :=  $(IncludeSwitch). $(IncludeSwitch). 
+IncludePath            :=  $(IncludeSwitch). $(IncludeSwitch)/usr/local/include $(IncludeSwitch)/opt/ncurses/include/ncursesw $(IncludeSwitch)/opt/ncurses/include $(IncludeSwitch). 
 IncludePCH             := 
 RcIncludePath          := 
-Libs                   := $(LibrarySwitch)TUCUT $(LibrarySwitch)boost_filesystem 
-ArLibs                 :=  "TUCUT" "boost_filesystem" 
-LibPath                := $(LibraryPathSwitch). $(LibraryPathSwitch)$(IntermediateDirectory) $(LibraryPathSwitch)/usr/local/lib 
+Libs                   := $(LibrarySwitch)TUCUT $(LibrarySwitch)boost_filesystem $(LibrarySwitch)cursesw 
+ArLibs                 :=  "TUCUT" "boost_filesystem" "cursesw" 
+LibPath                := $(LibraryPathSwitch). $(LibraryPathSwitch)$(IntermediateDirectory) $(LibraryPathSwitch)/usr/local/lib $(LibraryPathSwitch)/opt/ncurses/lib 
 
 ##
 ## Common variables
@@ -60,10 +60,11 @@ AS       := /usr/bin/as
 ## User defined environment variables
 ##
 CodeLiteDir:=/usr/share/codelite
-Objects0=$(IntermediateDirectory)/Noise_Tests_NoiseScenarios.cpp$(ObjectSuffix) $(IntermediateDirectory)/File_Tests_FileManagerScenarios.cpp$(ObjectSuffix) $(IntermediateDirectory)/Event_Tests_AdvancedPublisher.cpp$(ObjectSuffix) $(IntermediateDirectory)/Event_Tests_EventPublisherScenarios.cpp$(ObjectSuffix) $(IntermediateDirectory)/Protocol_Tests_CodeGeneratorManagerScenarios.cpp$(ObjectSuffix) $(IntermediateDirectory)/Math_Tests_LerpScenarios.cpp$(ObjectSuffix) $(IntermediateDirectory)/Math_Tests_PointScenarios.cpp$(ObjectSuffix) $(IntermediateDirectory)/Math_Tests_BezierScenarios.cpp$(ObjectSuffix) $(IntermediateDirectory)/Game_Tests_PropertyValueScenarios.cpp$(ObjectSuffix) $(IntermediateDirectory)/Math_Tests_VectorScenarios.cpp$(ObjectSuffix) \
-	$(IntermediateDirectory)/Text_Tests_TextUtilScenarios.cpp$(ObjectSuffix) $(IntermediateDirectory)/Log_Tests_LogManagerScenarios.cpp$(ObjectSuffix) $(IntermediateDirectory)/Game_Tests_GameObjectScenarios.cpp$(ObjectSuffix) $(IntermediateDirectory)/Protocol_Tests_OneofParserScenarios.cpp$(ObjectSuffix) $(IntermediateDirectory)/Game_Tests_PropertyContainerScenarios.cpp$(ObjectSuffix) $(IntermediateDirectory)/Hash_Tests_HashScenarios.cpp$(ObjectSuffix) $(IntermediateDirectory)/Protocol_Tests_EnumParserScenarios.cpp$(ObjectSuffix) $(IntermediateDirectory)/Game_Tests_PropertyGroupScenarios.cpp$(ObjectSuffix) $(IntermediateDirectory)/Identity_Tests_IdentifiableScenarios.cpp$(ObjectSuffix) $(IntermediateDirectory)/Color_Tests_ColorScenarios.cpp$(ObjectSuffix) \
-	$(IntermediateDirectory)/Protocol_Tests_CodeGeneratorCPPScenarios.cpp$(ObjectSuffix) $(IntermediateDirectory)/Text_Tests_StringLiteralScenarios.cpp$(ObjectSuffix) $(IntermediateDirectory)/Math_Tests_MinMaxScenarios.cpp$(ObjectSuffix) $(IntermediateDirectory)/Protocol_Tests_ProtoModelScenarios.cpp$(ObjectSuffix) $(IntermediateDirectory)/Math_Tests_BoundsScenarios.cpp$(ObjectSuffix) $(IntermediateDirectory)/Protocol_Tests_EnumValueParserScenarios.cpp$(ObjectSuffix) $(IntermediateDirectory)/Game_Tests_GameObjectManagerScenarios.cpp$(ObjectSuffix) $(IntermediateDirectory)/Protocol_Tests_MessageFieldParserScenarios.cpp$(ObjectSuffix) $(IntermediateDirectory)/Protocol_Tests_MessageParserScenarios.cpp$(ObjectSuffix) $(IntermediateDirectory)/Event_Tests_EventSubscriberScenarios.cpp$(ObjectSuffix) \
-	$(IntermediateDirectory)/Protocol_Tests_TokenReaderScenarios.cpp$(ObjectSuffix) $(IntermediateDirectory)/Protocol_Tests_ProtoParserScenarios.cpp$(ObjectSuffix) $(IntermediateDirectory)/Protocol_Tests_ImportParserScenarios.cpp$(ObjectSuffix) $(IntermediateDirectory)/Protocol_Tests_PackageParserScenarios.cpp$(ObjectSuffix) $(IntermediateDirectory)/Test_Tests_main.cpp$(ObjectSuffix) $(IntermediateDirectory)/Protocol_Tests_OptionParserScenarios.cpp$(ObjectSuffix) $(IntermediateDirectory)/Config_Tests_ConfigInfoScenarios.cpp$(ObjectSuffix) $(IntermediateDirectory)/Test_Tests_ScenarioScenarios.cpp$(ObjectSuffix) $(IntermediateDirectory)/Exception_Tests_ExceptionScenarios.cpp$(ObjectSuffix) 
+Objects0=$(IntermediateDirectory)/Noise_Tests_NoiseScenarios.cpp$(ObjectSuffix) $(IntermediateDirectory)/File_Tests_FileManagerScenarios.cpp$(ObjectSuffix) $(IntermediateDirectory)/Event_Tests_AdvancedPublisher.cpp$(ObjectSuffix) $(IntermediateDirectory)/Event_Tests_EventPublisherScenarios.cpp$(ObjectSuffix) $(IntermediateDirectory)/Protocol_Tests_CodeGeneratorManagerScenarios.cpp$(ObjectSuffix) $(IntermediateDirectory)/Math_Tests_LerpScenarios.cpp$(ObjectSuffix) $(IntermediateDirectory)/Math_Tests_PointScenarios.cpp$(ObjectSuffix) $(IntermediateDirectory)/Math_Tests_BezierScenarios.cpp$(ObjectSuffix) $(IntermediateDirectory)/Game_Tests_GameComponentScenarios.cpp$(ObjectSuffix) $(IntermediateDirectory)/Game_Tests_PropertyValueScenarios.cpp$(ObjectSuffix) \
+	$(IntermediateDirectory)/Math_Tests_VectorScenarios.cpp$(ObjectSuffix) $(IntermediateDirectory)/Text_Tests_TextUtilScenarios.cpp$(ObjectSuffix) $(IntermediateDirectory)/Log_Tests_LogManagerScenarios.cpp$(ObjectSuffix) $(IntermediateDirectory)/Game_Tests_GameObjectScenarios.cpp$(ObjectSuffix) $(IntermediateDirectory)/Protocol_Tests_OneofParserScenarios.cpp$(ObjectSuffix) $(IntermediateDirectory)/Game_Tests_PropertyContainerScenarios.cpp$(ObjectSuffix) $(IntermediateDirectory)/Hash_Tests_HashScenarios.cpp$(ObjectSuffix) $(IntermediateDirectory)/Protocol_Tests_EnumParserScenarios.cpp$(ObjectSuffix) $(IntermediateDirectory)/Game_Tests_PropertyGroupScenarios.cpp$(ObjectSuffix) $(IntermediateDirectory)/Identity_Tests_IdentifiableScenarios.cpp$(ObjectSuffix) \
+	$(IntermediateDirectory)/Color_Tests_ColorScenarios.cpp$(ObjectSuffix) $(IntermediateDirectory)/Protocol_Tests_CodeGeneratorCPPScenarios.cpp$(ObjectSuffix) $(IntermediateDirectory)/Text_Tests_StringLiteralScenarios.cpp$(ObjectSuffix) $(IntermediateDirectory)/Game_Tests_GameSystemScenarios.cpp$(ObjectSuffix) $(IntermediateDirectory)/Math_Tests_MinMaxScenarios.cpp$(ObjectSuffix) $(IntermediateDirectory)/Protocol_Tests_ProtoModelScenarios.cpp$(ObjectSuffix) $(IntermediateDirectory)/Math_Tests_BoundsScenarios.cpp$(ObjectSuffix) $(IntermediateDirectory)/Protocol_Tests_EnumValueParserScenarios.cpp$(ObjectSuffix) $(IntermediateDirectory)/Protocol_Tests_MessageFieldParserScenarios.cpp$(ObjectSuffix) $(IntermediateDirectory)/Protocol_Tests_MessageParserScenarios.cpp$(ObjectSuffix) \
+	$(IntermediateDirectory)/Event_Tests_EventSubscriberScenarios.cpp$(ObjectSuffix) $(IntermediateDirectory)/Protocol_Tests_TokenReaderScenarios.cpp$(ObjectSuffix) $(IntermediateDirectory)/Protocol_Tests_ProtoParserScenarios.cpp$(ObjectSuffix) $(IntermediateDirectory)/Protocol_Tests_ImportParserScenarios.cpp$(ObjectSuffix) $(IntermediateDirectory)/Game_Tests_GameManagerScenarios.cpp$(ObjectSuffix) $(IntermediateDirectory)/Protocol_Tests_PackageParserScenarios.cpp$(ObjectSuffix) $(IntermediateDirectory)/Test_Tests_main.cpp$(ObjectSuffix) $(IntermediateDirectory)/Protocol_Tests_OptionParserScenarios.cpp$(ObjectSuffix) $(IntermediateDirectory)/Config_Tests_ConfigInfoScenarios.cpp$(ObjectSuffix) $(IntermediateDirectory)/Test_Tests_ScenarioScenarios.cpp$(ObjectSuffix) \
+	$(IntermediateDirectory)/Exception_Tests_ExceptionScenarios.cpp$(ObjectSuffix) 
 
 
 
@@ -164,6 +165,14 @@ $(IntermediateDirectory)/Math_Tests_BezierScenarios.cpp$(DependSuffix): Math/Tes
 
 $(IntermediateDirectory)/Math_Tests_BezierScenarios.cpp$(PreprocessSuffix): Math/Tests/BezierScenarios.cpp
 	$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/Math_Tests_BezierScenarios.cpp$(PreprocessSuffix) Math/Tests/BezierScenarios.cpp
+
+$(IntermediateDirectory)/Game_Tests_GameComponentScenarios.cpp$(ObjectSuffix): Game/Tests/GameComponentScenarios.cpp $(IntermediateDirectory)/Game_Tests_GameComponentScenarios.cpp$(DependSuffix)
+	$(CXX) $(IncludePCH) $(SourceSwitch) "/home/wahid/Storage/GitHub/TUCUT/Game/Tests/GameComponentScenarios.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/Game_Tests_GameComponentScenarios.cpp$(ObjectSuffix) $(IncludePath)
+$(IntermediateDirectory)/Game_Tests_GameComponentScenarios.cpp$(DependSuffix): Game/Tests/GameComponentScenarios.cpp
+	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) -MG -MP -MT$(IntermediateDirectory)/Game_Tests_GameComponentScenarios.cpp$(ObjectSuffix) -MF$(IntermediateDirectory)/Game_Tests_GameComponentScenarios.cpp$(DependSuffix) -MM Game/Tests/GameComponentScenarios.cpp
+
+$(IntermediateDirectory)/Game_Tests_GameComponentScenarios.cpp$(PreprocessSuffix): Game/Tests/GameComponentScenarios.cpp
+	$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/Game_Tests_GameComponentScenarios.cpp$(PreprocessSuffix) Game/Tests/GameComponentScenarios.cpp
 
 $(IntermediateDirectory)/Game_Tests_PropertyValueScenarios.cpp$(ObjectSuffix): Game/Tests/PropertyValueScenarios.cpp $(IntermediateDirectory)/Game_Tests_PropertyValueScenarios.cpp$(DependSuffix)
 	$(CXX) $(IncludePCH) $(SourceSwitch) "/home/wahid/Storage/GitHub/TUCUT/Game/Tests/PropertyValueScenarios.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/Game_Tests_PropertyValueScenarios.cpp$(ObjectSuffix) $(IncludePath)
@@ -277,6 +286,14 @@ $(IntermediateDirectory)/Text_Tests_StringLiteralScenarios.cpp$(DependSuffix): T
 $(IntermediateDirectory)/Text_Tests_StringLiteralScenarios.cpp$(PreprocessSuffix): Text/Tests/StringLiteralScenarios.cpp
 	$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/Text_Tests_StringLiteralScenarios.cpp$(PreprocessSuffix) Text/Tests/StringLiteralScenarios.cpp
 
+$(IntermediateDirectory)/Game_Tests_GameSystemScenarios.cpp$(ObjectSuffix): Game/Tests/GameSystemScenarios.cpp $(IntermediateDirectory)/Game_Tests_GameSystemScenarios.cpp$(DependSuffix)
+	$(CXX) $(IncludePCH) $(SourceSwitch) "/home/wahid/Storage/GitHub/TUCUT/Game/Tests/GameSystemScenarios.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/Game_Tests_GameSystemScenarios.cpp$(ObjectSuffix) $(IncludePath)
+$(IntermediateDirectory)/Game_Tests_GameSystemScenarios.cpp$(DependSuffix): Game/Tests/GameSystemScenarios.cpp
+	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) -MG -MP -MT$(IntermediateDirectory)/Game_Tests_GameSystemScenarios.cpp$(ObjectSuffix) -MF$(IntermediateDirectory)/Game_Tests_GameSystemScenarios.cpp$(DependSuffix) -MM Game/Tests/GameSystemScenarios.cpp
+
+$(IntermediateDirectory)/Game_Tests_GameSystemScenarios.cpp$(PreprocessSuffix): Game/Tests/GameSystemScenarios.cpp
+	$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/Game_Tests_GameSystemScenarios.cpp$(PreprocessSuffix) Game/Tests/GameSystemScenarios.cpp
+
 $(IntermediateDirectory)/Math_Tests_MinMaxScenarios.cpp$(ObjectSuffix): Math/Tests/MinMaxScenarios.cpp $(IntermediateDirectory)/Math_Tests_MinMaxScenarios.cpp$(DependSuffix)
 	$(CXX) $(IncludePCH) $(SourceSwitch) "/home/wahid/Storage/GitHub/TUCUT/Math/Tests/MinMaxScenarios.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/Math_Tests_MinMaxScenarios.cpp$(ObjectSuffix) $(IncludePath)
 $(IntermediateDirectory)/Math_Tests_MinMaxScenarios.cpp$(DependSuffix): Math/Tests/MinMaxScenarios.cpp
@@ -308,14 +325,6 @@ $(IntermediateDirectory)/Protocol_Tests_EnumValueParserScenarios.cpp$(DependSuff
 
 $(IntermediateDirectory)/Protocol_Tests_EnumValueParserScenarios.cpp$(PreprocessSuffix): Protocol/Tests/EnumValueParserScenarios.cpp
 	$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/Protocol_Tests_EnumValueParserScenarios.cpp$(PreprocessSuffix) Protocol/Tests/EnumValueParserScenarios.cpp
-
-$(IntermediateDirectory)/Game_Tests_GameObjectManagerScenarios.cpp$(ObjectSuffix): Game/Tests/GameObjectManagerScenarios.cpp $(IntermediateDirectory)/Game_Tests_GameObjectManagerScenarios.cpp$(DependSuffix)
-	$(CXX) $(IncludePCH) $(SourceSwitch) "/home/wahid/Storage/GitHub/TUCUT/Game/Tests/GameObjectManagerScenarios.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/Game_Tests_GameObjectManagerScenarios.cpp$(ObjectSuffix) $(IncludePath)
-$(IntermediateDirectory)/Game_Tests_GameObjectManagerScenarios.cpp$(DependSuffix): Game/Tests/GameObjectManagerScenarios.cpp
-	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) -MG -MP -MT$(IntermediateDirectory)/Game_Tests_GameObjectManagerScenarios.cpp$(ObjectSuffix) -MF$(IntermediateDirectory)/Game_Tests_GameObjectManagerScenarios.cpp$(DependSuffix) -MM Game/Tests/GameObjectManagerScenarios.cpp
-
-$(IntermediateDirectory)/Game_Tests_GameObjectManagerScenarios.cpp$(PreprocessSuffix): Game/Tests/GameObjectManagerScenarios.cpp
-	$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/Game_Tests_GameObjectManagerScenarios.cpp$(PreprocessSuffix) Game/Tests/GameObjectManagerScenarios.cpp
 
 $(IntermediateDirectory)/Protocol_Tests_MessageFieldParserScenarios.cpp$(ObjectSuffix): Protocol/Tests/MessageFieldParserScenarios.cpp $(IntermediateDirectory)/Protocol_Tests_MessageFieldParserScenarios.cpp$(DependSuffix)
 	$(CXX) $(IncludePCH) $(SourceSwitch) "/home/wahid/Storage/GitHub/TUCUT/Protocol/Tests/MessageFieldParserScenarios.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/Protocol_Tests_MessageFieldParserScenarios.cpp$(ObjectSuffix) $(IncludePath)
@@ -364,6 +373,14 @@ $(IntermediateDirectory)/Protocol_Tests_ImportParserScenarios.cpp$(DependSuffix)
 
 $(IntermediateDirectory)/Protocol_Tests_ImportParserScenarios.cpp$(PreprocessSuffix): Protocol/Tests/ImportParserScenarios.cpp
 	$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/Protocol_Tests_ImportParserScenarios.cpp$(PreprocessSuffix) Protocol/Tests/ImportParserScenarios.cpp
+
+$(IntermediateDirectory)/Game_Tests_GameManagerScenarios.cpp$(ObjectSuffix): Game/Tests/GameManagerScenarios.cpp $(IntermediateDirectory)/Game_Tests_GameManagerScenarios.cpp$(DependSuffix)
+	$(CXX) $(IncludePCH) $(SourceSwitch) "/home/wahid/Storage/GitHub/TUCUT/Game/Tests/GameManagerScenarios.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/Game_Tests_GameManagerScenarios.cpp$(ObjectSuffix) $(IncludePath)
+$(IntermediateDirectory)/Game_Tests_GameManagerScenarios.cpp$(DependSuffix): Game/Tests/GameManagerScenarios.cpp
+	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) -MG -MP -MT$(IntermediateDirectory)/Game_Tests_GameManagerScenarios.cpp$(ObjectSuffix) -MF$(IntermediateDirectory)/Game_Tests_GameManagerScenarios.cpp$(DependSuffix) -MM Game/Tests/GameManagerScenarios.cpp
+
+$(IntermediateDirectory)/Game_Tests_GameManagerScenarios.cpp$(PreprocessSuffix): Game/Tests/GameManagerScenarios.cpp
+	$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/Game_Tests_GameManagerScenarios.cpp$(PreprocessSuffix) Game/Tests/GameManagerScenarios.cpp
 
 $(IntermediateDirectory)/Protocol_Tests_PackageParserScenarios.cpp$(ObjectSuffix): Protocol/Tests/PackageParserScenarios.cpp $(IntermediateDirectory)/Protocol_Tests_PackageParserScenarios.cpp$(DependSuffix)
 	$(CXX) $(IncludePCH) $(SourceSwitch) "/home/wahid/Storage/GitHub/TUCUT/Protocol/Tests/PackageParserScenarios.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/Protocol_Tests_PackageParserScenarios.cpp$(ObjectSuffix) $(IncludePath)

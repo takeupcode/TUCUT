@@ -81,7 +81,7 @@ SCENARIO( GameSystem, "Operation/Normal", "unit,game", "Derived GameSystem is no
     auto gameActionId = pGameMgr->getOrCreateGameAction(tokenAction);
     
     pGameMgr->queueGameAction(gameComp->identity(), gameActionId);
-    pGameMgr->update();
+    pGameMgr->update(Game::TimeResolution(5));
     
     VERIFY_TRUE(gameSys->notified());
     VERIFY_EQUAL(gameComp->identity(), gameSys->objectId());
@@ -89,7 +89,7 @@ SCENARIO( GameSystem, "Operation/Normal", "unit,game", "Derived GameSystem is no
     
     // Make sure actions only get handled once.
     gameSys->reset();
-    pGameMgr->update();
+    pGameMgr->update(Game::TimeResolution(5));
     
     VERIFY_FALSE(gameSys->notified());
     VERIFY_EQUAL(0, gameSys->objectId());

@@ -13,7 +13,7 @@ CurrentFileName        :=
 CurrentFilePath        :=
 CurrentFileFullPath    :=
 User                   :=Wahid
-Date                   :=16/07/19
+Date                   :=17/07/19
 CodeLitePath           :=/home/wahid/.codelite
 LinkerName             :=/usr/bin/g++
 SharedObjectLinkerName :=/usr/bin/g++ -shared -fPIC
@@ -36,12 +36,12 @@ ObjectsFileList        :="s-TUCUT.txt"
 PCHCompileFlags        :=
 MakeDirCommand         :=mkdir -p
 LinkOptions            :=  
-IncludePath            :=  $(IncludeSwitch). $(IncludeSwitch)/usr/local/include 
+IncludePath            :=  $(IncludeSwitch). $(IncludeSwitch)/usr/local/include $(IncludeSwitch)/opt/ncurses/include/ncursesw $(IncludeSwitch)/opt/ncurses/include 
 IncludePCH             := 
 RcIncludePath          := 
 Libs                   := 
 ArLibs                 :=  
-LibPath                := $(LibraryPathSwitch). $(LibraryPathSwitch)/usr/local/lib 
+LibPath                := $(LibraryPathSwitch). $(LibraryPathSwitch)/usr/local/lib $(LibraryPathSwitch)/opt/ncurses/lib 
 
 ##
 ## Common variables
@@ -60,12 +60,14 @@ AS       := /usr/bin/as
 ## User defined environment variables
 ##
 CodeLiteDir:=/usr/share/codelite
-Objects0=$(IntermediateDirectory)/Hash_Tests_HashScenarios.cpp$(ObjectSuffix) $(IntermediateDirectory)/Noise_Tests_NoiseScenarios.cpp$(ObjectSuffix) $(IntermediateDirectory)/Game_PropertyValue.cpp$(ObjectSuffix) $(IntermediateDirectory)/Game_PropertyGroup.cpp$(ObjectSuffix) $(IntermediateDirectory)/Game_PropertyContainer.cpp$(ObjectSuffix) $(IntermediateDirectory)/Protocol_ProtoModel.cpp$(ObjectSuffix) $(IntermediateDirectory)/Protocol_OneofParser.cpp$(ObjectSuffix) $(IntermediateDirectory)/Protocol_OptionValueParser.cpp$(ObjectSuffix) $(IntermediateDirectory)/Protocol_PackageParser.cpp$(ObjectSuffix) $(IntermediateDirectory)/Protocol_MessageFieldModel.cpp$(ObjectSuffix) \
-	$(IntermediateDirectory)/Protocol_CodeGeneratorManager.cpp$(ObjectSuffix) $(IntermediateDirectory)/Text_TextUtil.cpp$(ObjectSuffix) $(IntermediateDirectory)/Protocol_TokenReader.cpp$(ObjectSuffix) $(IntermediateDirectory)/Config_ConfigInfo.cpp$(ObjectSuffix) $(IntermediateDirectory)/Log_LogManager.cpp$(ObjectSuffix) $(IntermediateDirectory)/Protocol_OneofModel.cpp$(ObjectSuffix) $(IntermediateDirectory)/Noise_NoiseUtil.cpp$(ObjectSuffix) $(IntermediateDirectory)/Noise_Noise.cpp$(ObjectSuffix) $(IntermediateDirectory)/File_FileManager.cpp$(ObjectSuffix) $(IntermediateDirectory)/Protocol_ParserManager.cpp$(ObjectSuffix) \
-	$(IntermediateDirectory)/Protocol_CodeGeneratorCPP.cpp$(ObjectSuffix) $(IntermediateDirectory)/Protocol_MessageFieldParser.cpp$(ObjectSuffix) $(IntermediateDirectory)/Protocol_OptionModel.cpp$(ObjectSuffix) $(IntermediateDirectory)/Protocol_ProtoParser.cpp$(ObjectSuffix) $(IntermediateDirectory)/Protocol_EnumValueParser.cpp$(ObjectSuffix) $(IntermediateDirectory)/Protocol_MessageParser.cpp$(ObjectSuffix) $(IntermediateDirectory)/Game_GameObjectManager.cpp$(ObjectSuffix) $(IntermediateDirectory)/Protocol_EnumValueModel.cpp$(ObjectSuffix) $(IntermediateDirectory)/Protocol_ImportParser.cpp$(ObjectSuffix) $(IntermediateDirectory)/Protocol_OptionGroupParser.cpp$(ObjectSuffix) \
-	$(IntermediateDirectory)/Protocol_EnumModel.cpp$(ObjectSuffix) $(IntermediateDirectory)/Protocol_EnumParser.cpp$(ObjectSuffix) $(IntermediateDirectory)/Game_GameObject.cpp$(ObjectSuffix) 
+Objects0=$(IntermediateDirectory)/Curses_Colors.cpp$(ObjectSuffix) $(IntermediateDirectory)/Curses_NumberBox.cpp$(ObjectSuffix) $(IntermediateDirectory)/Curses_Button.cpp$(ObjectSuffix) $(IntermediateDirectory)/Game_PositionComponent.cpp$(ObjectSuffix) $(IntermediateDirectory)/Game_MovementComponent.cpp$(ObjectSuffix) $(IntermediateDirectory)/Game_IPositionComponent.cpp$(ObjectSuffix) $(IntermediateDirectory)/Game_IMovementComponent.cpp$(ObjectSuffix) $(IntermediateDirectory)/Curses_CursesUtil.cpp$(ObjectSuffix) $(IntermediateDirectory)/Curses_DisplayBox.cpp$(ObjectSuffix) $(IntermediateDirectory)/Game_GameRegion.cpp$(ObjectSuffix) \
+	$(IntermediateDirectory)/Game_GameManager.cpp$(ObjectSuffix) $(IntermediateDirectory)/Game_GameComponent.cpp$(ObjectSuffix) $(IntermediateDirectory)/Game_PropertyValue.cpp$(ObjectSuffix) $(IntermediateDirectory)/Game_PropertyGroup.cpp$(ObjectSuffix) $(IntermediateDirectory)/Game_PropertyContainer.cpp$(ObjectSuffix) $(IntermediateDirectory)/Protocol_ProtoModel.cpp$(ObjectSuffix) $(IntermediateDirectory)/Protocol_OneofParser.cpp$(ObjectSuffix) $(IntermediateDirectory)/Protocol_OptionValueParser.cpp$(ObjectSuffix) $(IntermediateDirectory)/Protocol_PackageParser.cpp$(ObjectSuffix) $(IntermediateDirectory)/Curses_CheckBox.cpp$(ObjectSuffix) \
+	$(IntermediateDirectory)/Protocol_MessageFieldModel.cpp$(ObjectSuffix) $(IntermediateDirectory)/Protocol_CodeGeneratorManager.cpp$(ObjectSuffix) $(IntermediateDirectory)/Text_TextUtil.cpp$(ObjectSuffix) $(IntermediateDirectory)/Curses_TextBox.cpp$(ObjectSuffix) $(IntermediateDirectory)/Curses_Label.cpp$(ObjectSuffix) $(IntermediateDirectory)/Curses_WindowSystem.cpp$(ObjectSuffix) $(IntermediateDirectory)/Game_GameSystem.cpp$(ObjectSuffix) $(IntermediateDirectory)/Protocol_TokenReader.cpp$(ObjectSuffix) $(IntermediateDirectory)/Game_IMovementSystem.cpp$(ObjectSuffix) $(IntermediateDirectory)/Config_ConfigInfo.cpp$(ObjectSuffix) \
+	$(IntermediateDirectory)/Curses_ListBox.cpp$(ObjectSuffix) $(IntermediateDirectory)/Log_LogManager.cpp$(ObjectSuffix) $(IntermediateDirectory)/Protocol_OneofModel.cpp$(ObjectSuffix) $(IntermediateDirectory)/Noise_NoiseUtil.cpp$(ObjectSuffix) $(IntermediateDirectory)/Noise_Noise.cpp$(ObjectSuffix) $(IntermediateDirectory)/File_FileManager.cpp$(ObjectSuffix) $(IntermediateDirectory)/Protocol_ParserManager.cpp$(ObjectSuffix) $(IntermediateDirectory)/Protocol_CodeGeneratorCPP.cpp$(ObjectSuffix) $(IntermediateDirectory)/Protocol_MessageFieldParser.cpp$(ObjectSuffix) 
 
-Objects1=$(IntermediateDirectory)/Protocol_OneofFieldParser.cpp$(ObjectSuffix) $(IntermediateDirectory)/Protocol_MessageModel.cpp$(ObjectSuffix) $(IntermediateDirectory)/Protocol_OptionSingleParser.cpp$(ObjectSuffix) 
+Objects1=$(IntermediateDirectory)/Protocol_OptionModel.cpp$(ObjectSuffix) \
+	$(IntermediateDirectory)/Protocol_ProtoParser.cpp$(ObjectSuffix) $(IntermediateDirectory)/Curses_TextRegion.cpp$(ObjectSuffix) $(IntermediateDirectory)/Curses_Control.cpp$(ObjectSuffix) $(IntermediateDirectory)/Protocol_EnumValueParser.cpp$(ObjectSuffix) $(IntermediateDirectory)/Game_MovementSystem.cpp$(ObjectSuffix) $(IntermediateDirectory)/Curses_Window.cpp$(ObjectSuffix) $(IntermediateDirectory)/Protocol_MessageParser.cpp$(ObjectSuffix) $(IntermediateDirectory)/Protocol_EnumValueModel.cpp$(ObjectSuffix) $(IntermediateDirectory)/Curses_ConsoleManager.cpp$(ObjectSuffix) $(IntermediateDirectory)/Protocol_ImportParser.cpp$(ObjectSuffix) \
+	$(IntermediateDirectory)/Protocol_OptionGroupParser.cpp$(ObjectSuffix) $(IntermediateDirectory)/Protocol_EnumModel.cpp$(ObjectSuffix) $(IntermediateDirectory)/Protocol_EnumParser.cpp$(ObjectSuffix) $(IntermediateDirectory)/Game_GameObject.cpp$(ObjectSuffix) $(IntermediateDirectory)/Protocol_OneofFieldParser.cpp$(ObjectSuffix) $(IntermediateDirectory)/Protocol_MessageModel.cpp$(ObjectSuffix) $(IntermediateDirectory)/Protocol_OptionSingleParser.cpp$(ObjectSuffix) 
 
 
 
@@ -99,21 +101,101 @@ PreBuild:
 ##
 ## Objects
 ##
-$(IntermediateDirectory)/Hash_Tests_HashScenarios.cpp$(ObjectSuffix): Hash/Tests/HashScenarios.cpp $(IntermediateDirectory)/Hash_Tests_HashScenarios.cpp$(DependSuffix)
-	$(CXX) $(IncludePCH) $(SourceSwitch) "/home/wahid/Storage/GitHub/TUCUT/Hash/Tests/HashScenarios.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/Hash_Tests_HashScenarios.cpp$(ObjectSuffix) $(IncludePath)
-$(IntermediateDirectory)/Hash_Tests_HashScenarios.cpp$(DependSuffix): Hash/Tests/HashScenarios.cpp
-	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) -MG -MP -MT$(IntermediateDirectory)/Hash_Tests_HashScenarios.cpp$(ObjectSuffix) -MF$(IntermediateDirectory)/Hash_Tests_HashScenarios.cpp$(DependSuffix) -MM Hash/Tests/HashScenarios.cpp
+$(IntermediateDirectory)/Curses_Colors.cpp$(ObjectSuffix): Curses/Colors.cpp $(IntermediateDirectory)/Curses_Colors.cpp$(DependSuffix)
+	$(CXX) $(IncludePCH) $(SourceSwitch) "/home/wahid/Storage/GitHub/TUCUT/Curses/Colors.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/Curses_Colors.cpp$(ObjectSuffix) $(IncludePath)
+$(IntermediateDirectory)/Curses_Colors.cpp$(DependSuffix): Curses/Colors.cpp
+	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) -MG -MP -MT$(IntermediateDirectory)/Curses_Colors.cpp$(ObjectSuffix) -MF$(IntermediateDirectory)/Curses_Colors.cpp$(DependSuffix) -MM Curses/Colors.cpp
 
-$(IntermediateDirectory)/Hash_Tests_HashScenarios.cpp$(PreprocessSuffix): Hash/Tests/HashScenarios.cpp
-	$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/Hash_Tests_HashScenarios.cpp$(PreprocessSuffix) Hash/Tests/HashScenarios.cpp
+$(IntermediateDirectory)/Curses_Colors.cpp$(PreprocessSuffix): Curses/Colors.cpp
+	$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/Curses_Colors.cpp$(PreprocessSuffix) Curses/Colors.cpp
 
-$(IntermediateDirectory)/Noise_Tests_NoiseScenarios.cpp$(ObjectSuffix): Noise/Tests/NoiseScenarios.cpp $(IntermediateDirectory)/Noise_Tests_NoiseScenarios.cpp$(DependSuffix)
-	$(CXX) $(IncludePCH) $(SourceSwitch) "/home/wahid/Storage/GitHub/TUCUT/Noise/Tests/NoiseScenarios.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/Noise_Tests_NoiseScenarios.cpp$(ObjectSuffix) $(IncludePath)
-$(IntermediateDirectory)/Noise_Tests_NoiseScenarios.cpp$(DependSuffix): Noise/Tests/NoiseScenarios.cpp
-	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) -MG -MP -MT$(IntermediateDirectory)/Noise_Tests_NoiseScenarios.cpp$(ObjectSuffix) -MF$(IntermediateDirectory)/Noise_Tests_NoiseScenarios.cpp$(DependSuffix) -MM Noise/Tests/NoiseScenarios.cpp
+$(IntermediateDirectory)/Curses_NumberBox.cpp$(ObjectSuffix): Curses/NumberBox.cpp $(IntermediateDirectory)/Curses_NumberBox.cpp$(DependSuffix)
+	$(CXX) $(IncludePCH) $(SourceSwitch) "/home/wahid/Storage/GitHub/TUCUT/Curses/NumberBox.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/Curses_NumberBox.cpp$(ObjectSuffix) $(IncludePath)
+$(IntermediateDirectory)/Curses_NumberBox.cpp$(DependSuffix): Curses/NumberBox.cpp
+	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) -MG -MP -MT$(IntermediateDirectory)/Curses_NumberBox.cpp$(ObjectSuffix) -MF$(IntermediateDirectory)/Curses_NumberBox.cpp$(DependSuffix) -MM Curses/NumberBox.cpp
 
-$(IntermediateDirectory)/Noise_Tests_NoiseScenarios.cpp$(PreprocessSuffix): Noise/Tests/NoiseScenarios.cpp
-	$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/Noise_Tests_NoiseScenarios.cpp$(PreprocessSuffix) Noise/Tests/NoiseScenarios.cpp
+$(IntermediateDirectory)/Curses_NumberBox.cpp$(PreprocessSuffix): Curses/NumberBox.cpp
+	$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/Curses_NumberBox.cpp$(PreprocessSuffix) Curses/NumberBox.cpp
+
+$(IntermediateDirectory)/Curses_Button.cpp$(ObjectSuffix): Curses/Button.cpp $(IntermediateDirectory)/Curses_Button.cpp$(DependSuffix)
+	$(CXX) $(IncludePCH) $(SourceSwitch) "/home/wahid/Storage/GitHub/TUCUT/Curses/Button.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/Curses_Button.cpp$(ObjectSuffix) $(IncludePath)
+$(IntermediateDirectory)/Curses_Button.cpp$(DependSuffix): Curses/Button.cpp
+	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) -MG -MP -MT$(IntermediateDirectory)/Curses_Button.cpp$(ObjectSuffix) -MF$(IntermediateDirectory)/Curses_Button.cpp$(DependSuffix) -MM Curses/Button.cpp
+
+$(IntermediateDirectory)/Curses_Button.cpp$(PreprocessSuffix): Curses/Button.cpp
+	$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/Curses_Button.cpp$(PreprocessSuffix) Curses/Button.cpp
+
+$(IntermediateDirectory)/Game_PositionComponent.cpp$(ObjectSuffix): Game/PositionComponent.cpp $(IntermediateDirectory)/Game_PositionComponent.cpp$(DependSuffix)
+	$(CXX) $(IncludePCH) $(SourceSwitch) "/home/wahid/Storage/GitHub/TUCUT/Game/PositionComponent.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/Game_PositionComponent.cpp$(ObjectSuffix) $(IncludePath)
+$(IntermediateDirectory)/Game_PositionComponent.cpp$(DependSuffix): Game/PositionComponent.cpp
+	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) -MG -MP -MT$(IntermediateDirectory)/Game_PositionComponent.cpp$(ObjectSuffix) -MF$(IntermediateDirectory)/Game_PositionComponent.cpp$(DependSuffix) -MM Game/PositionComponent.cpp
+
+$(IntermediateDirectory)/Game_PositionComponent.cpp$(PreprocessSuffix): Game/PositionComponent.cpp
+	$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/Game_PositionComponent.cpp$(PreprocessSuffix) Game/PositionComponent.cpp
+
+$(IntermediateDirectory)/Game_MovementComponent.cpp$(ObjectSuffix): Game/MovementComponent.cpp $(IntermediateDirectory)/Game_MovementComponent.cpp$(DependSuffix)
+	$(CXX) $(IncludePCH) $(SourceSwitch) "/home/wahid/Storage/GitHub/TUCUT/Game/MovementComponent.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/Game_MovementComponent.cpp$(ObjectSuffix) $(IncludePath)
+$(IntermediateDirectory)/Game_MovementComponent.cpp$(DependSuffix): Game/MovementComponent.cpp
+	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) -MG -MP -MT$(IntermediateDirectory)/Game_MovementComponent.cpp$(ObjectSuffix) -MF$(IntermediateDirectory)/Game_MovementComponent.cpp$(DependSuffix) -MM Game/MovementComponent.cpp
+
+$(IntermediateDirectory)/Game_MovementComponent.cpp$(PreprocessSuffix): Game/MovementComponent.cpp
+	$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/Game_MovementComponent.cpp$(PreprocessSuffix) Game/MovementComponent.cpp
+
+$(IntermediateDirectory)/Game_IPositionComponent.cpp$(ObjectSuffix): Game/IPositionComponent.cpp $(IntermediateDirectory)/Game_IPositionComponent.cpp$(DependSuffix)
+	$(CXX) $(IncludePCH) $(SourceSwitch) "/home/wahid/Storage/GitHub/TUCUT/Game/IPositionComponent.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/Game_IPositionComponent.cpp$(ObjectSuffix) $(IncludePath)
+$(IntermediateDirectory)/Game_IPositionComponent.cpp$(DependSuffix): Game/IPositionComponent.cpp
+	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) -MG -MP -MT$(IntermediateDirectory)/Game_IPositionComponent.cpp$(ObjectSuffix) -MF$(IntermediateDirectory)/Game_IPositionComponent.cpp$(DependSuffix) -MM Game/IPositionComponent.cpp
+
+$(IntermediateDirectory)/Game_IPositionComponent.cpp$(PreprocessSuffix): Game/IPositionComponent.cpp
+	$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/Game_IPositionComponent.cpp$(PreprocessSuffix) Game/IPositionComponent.cpp
+
+$(IntermediateDirectory)/Game_IMovementComponent.cpp$(ObjectSuffix): Game/IMovementComponent.cpp $(IntermediateDirectory)/Game_IMovementComponent.cpp$(DependSuffix)
+	$(CXX) $(IncludePCH) $(SourceSwitch) "/home/wahid/Storage/GitHub/TUCUT/Game/IMovementComponent.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/Game_IMovementComponent.cpp$(ObjectSuffix) $(IncludePath)
+$(IntermediateDirectory)/Game_IMovementComponent.cpp$(DependSuffix): Game/IMovementComponent.cpp
+	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) -MG -MP -MT$(IntermediateDirectory)/Game_IMovementComponent.cpp$(ObjectSuffix) -MF$(IntermediateDirectory)/Game_IMovementComponent.cpp$(DependSuffix) -MM Game/IMovementComponent.cpp
+
+$(IntermediateDirectory)/Game_IMovementComponent.cpp$(PreprocessSuffix): Game/IMovementComponent.cpp
+	$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/Game_IMovementComponent.cpp$(PreprocessSuffix) Game/IMovementComponent.cpp
+
+$(IntermediateDirectory)/Curses_CursesUtil.cpp$(ObjectSuffix): Curses/CursesUtil.cpp $(IntermediateDirectory)/Curses_CursesUtil.cpp$(DependSuffix)
+	$(CXX) $(IncludePCH) $(SourceSwitch) "/home/wahid/Storage/GitHub/TUCUT/Curses/CursesUtil.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/Curses_CursesUtil.cpp$(ObjectSuffix) $(IncludePath)
+$(IntermediateDirectory)/Curses_CursesUtil.cpp$(DependSuffix): Curses/CursesUtil.cpp
+	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) -MG -MP -MT$(IntermediateDirectory)/Curses_CursesUtil.cpp$(ObjectSuffix) -MF$(IntermediateDirectory)/Curses_CursesUtil.cpp$(DependSuffix) -MM Curses/CursesUtil.cpp
+
+$(IntermediateDirectory)/Curses_CursesUtil.cpp$(PreprocessSuffix): Curses/CursesUtil.cpp
+	$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/Curses_CursesUtil.cpp$(PreprocessSuffix) Curses/CursesUtil.cpp
+
+$(IntermediateDirectory)/Curses_DisplayBox.cpp$(ObjectSuffix): Curses/DisplayBox.cpp $(IntermediateDirectory)/Curses_DisplayBox.cpp$(DependSuffix)
+	$(CXX) $(IncludePCH) $(SourceSwitch) "/home/wahid/Storage/GitHub/TUCUT/Curses/DisplayBox.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/Curses_DisplayBox.cpp$(ObjectSuffix) $(IncludePath)
+$(IntermediateDirectory)/Curses_DisplayBox.cpp$(DependSuffix): Curses/DisplayBox.cpp
+	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) -MG -MP -MT$(IntermediateDirectory)/Curses_DisplayBox.cpp$(ObjectSuffix) -MF$(IntermediateDirectory)/Curses_DisplayBox.cpp$(DependSuffix) -MM Curses/DisplayBox.cpp
+
+$(IntermediateDirectory)/Curses_DisplayBox.cpp$(PreprocessSuffix): Curses/DisplayBox.cpp
+	$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/Curses_DisplayBox.cpp$(PreprocessSuffix) Curses/DisplayBox.cpp
+
+$(IntermediateDirectory)/Game_GameRegion.cpp$(ObjectSuffix): Game/GameRegion.cpp $(IntermediateDirectory)/Game_GameRegion.cpp$(DependSuffix)
+	$(CXX) $(IncludePCH) $(SourceSwitch) "/home/wahid/Storage/GitHub/TUCUT/Game/GameRegion.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/Game_GameRegion.cpp$(ObjectSuffix) $(IncludePath)
+$(IntermediateDirectory)/Game_GameRegion.cpp$(DependSuffix): Game/GameRegion.cpp
+	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) -MG -MP -MT$(IntermediateDirectory)/Game_GameRegion.cpp$(ObjectSuffix) -MF$(IntermediateDirectory)/Game_GameRegion.cpp$(DependSuffix) -MM Game/GameRegion.cpp
+
+$(IntermediateDirectory)/Game_GameRegion.cpp$(PreprocessSuffix): Game/GameRegion.cpp
+	$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/Game_GameRegion.cpp$(PreprocessSuffix) Game/GameRegion.cpp
+
+$(IntermediateDirectory)/Game_GameManager.cpp$(ObjectSuffix): Game/GameManager.cpp $(IntermediateDirectory)/Game_GameManager.cpp$(DependSuffix)
+	$(CXX) $(IncludePCH) $(SourceSwitch) "/home/wahid/Storage/GitHub/TUCUT/Game/GameManager.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/Game_GameManager.cpp$(ObjectSuffix) $(IncludePath)
+$(IntermediateDirectory)/Game_GameManager.cpp$(DependSuffix): Game/GameManager.cpp
+	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) -MG -MP -MT$(IntermediateDirectory)/Game_GameManager.cpp$(ObjectSuffix) -MF$(IntermediateDirectory)/Game_GameManager.cpp$(DependSuffix) -MM Game/GameManager.cpp
+
+$(IntermediateDirectory)/Game_GameManager.cpp$(PreprocessSuffix): Game/GameManager.cpp
+	$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/Game_GameManager.cpp$(PreprocessSuffix) Game/GameManager.cpp
+
+$(IntermediateDirectory)/Game_GameComponent.cpp$(ObjectSuffix): Game/GameComponent.cpp $(IntermediateDirectory)/Game_GameComponent.cpp$(DependSuffix)
+	$(CXX) $(IncludePCH) $(SourceSwitch) "/home/wahid/Storage/GitHub/TUCUT/Game/GameComponent.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/Game_GameComponent.cpp$(ObjectSuffix) $(IncludePath)
+$(IntermediateDirectory)/Game_GameComponent.cpp$(DependSuffix): Game/GameComponent.cpp
+	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) -MG -MP -MT$(IntermediateDirectory)/Game_GameComponent.cpp$(ObjectSuffix) -MF$(IntermediateDirectory)/Game_GameComponent.cpp$(DependSuffix) -MM Game/GameComponent.cpp
+
+$(IntermediateDirectory)/Game_GameComponent.cpp$(PreprocessSuffix): Game/GameComponent.cpp
+	$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/Game_GameComponent.cpp$(PreprocessSuffix) Game/GameComponent.cpp
 
 $(IntermediateDirectory)/Game_PropertyValue.cpp$(ObjectSuffix): Game/PropertyValue.cpp $(IntermediateDirectory)/Game_PropertyValue.cpp$(DependSuffix)
 	$(CXX) $(IncludePCH) $(SourceSwitch) "/home/wahid/Storage/GitHub/TUCUT/Game/PropertyValue.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/Game_PropertyValue.cpp$(ObjectSuffix) $(IncludePath)
@@ -171,6 +253,14 @@ $(IntermediateDirectory)/Protocol_PackageParser.cpp$(DependSuffix): Protocol/Pac
 $(IntermediateDirectory)/Protocol_PackageParser.cpp$(PreprocessSuffix): Protocol/PackageParser.cpp
 	$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/Protocol_PackageParser.cpp$(PreprocessSuffix) Protocol/PackageParser.cpp
 
+$(IntermediateDirectory)/Curses_CheckBox.cpp$(ObjectSuffix): Curses/CheckBox.cpp $(IntermediateDirectory)/Curses_CheckBox.cpp$(DependSuffix)
+	$(CXX) $(IncludePCH) $(SourceSwitch) "/home/wahid/Storage/GitHub/TUCUT/Curses/CheckBox.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/Curses_CheckBox.cpp$(ObjectSuffix) $(IncludePath)
+$(IntermediateDirectory)/Curses_CheckBox.cpp$(DependSuffix): Curses/CheckBox.cpp
+	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) -MG -MP -MT$(IntermediateDirectory)/Curses_CheckBox.cpp$(ObjectSuffix) -MF$(IntermediateDirectory)/Curses_CheckBox.cpp$(DependSuffix) -MM Curses/CheckBox.cpp
+
+$(IntermediateDirectory)/Curses_CheckBox.cpp$(PreprocessSuffix): Curses/CheckBox.cpp
+	$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/Curses_CheckBox.cpp$(PreprocessSuffix) Curses/CheckBox.cpp
+
 $(IntermediateDirectory)/Protocol_MessageFieldModel.cpp$(ObjectSuffix): Protocol/MessageFieldModel.cpp $(IntermediateDirectory)/Protocol_MessageFieldModel.cpp$(DependSuffix)
 	$(CXX) $(IncludePCH) $(SourceSwitch) "/home/wahid/Storage/GitHub/TUCUT/Protocol/MessageFieldModel.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/Protocol_MessageFieldModel.cpp$(ObjectSuffix) $(IncludePath)
 $(IntermediateDirectory)/Protocol_MessageFieldModel.cpp$(DependSuffix): Protocol/MessageFieldModel.cpp
@@ -195,6 +285,38 @@ $(IntermediateDirectory)/Text_TextUtil.cpp$(DependSuffix): Text/TextUtil.cpp
 $(IntermediateDirectory)/Text_TextUtil.cpp$(PreprocessSuffix): Text/TextUtil.cpp
 	$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/Text_TextUtil.cpp$(PreprocessSuffix) Text/TextUtil.cpp
 
+$(IntermediateDirectory)/Curses_TextBox.cpp$(ObjectSuffix): Curses/TextBox.cpp $(IntermediateDirectory)/Curses_TextBox.cpp$(DependSuffix)
+	$(CXX) $(IncludePCH) $(SourceSwitch) "/home/wahid/Storage/GitHub/TUCUT/Curses/TextBox.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/Curses_TextBox.cpp$(ObjectSuffix) $(IncludePath)
+$(IntermediateDirectory)/Curses_TextBox.cpp$(DependSuffix): Curses/TextBox.cpp
+	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) -MG -MP -MT$(IntermediateDirectory)/Curses_TextBox.cpp$(ObjectSuffix) -MF$(IntermediateDirectory)/Curses_TextBox.cpp$(DependSuffix) -MM Curses/TextBox.cpp
+
+$(IntermediateDirectory)/Curses_TextBox.cpp$(PreprocessSuffix): Curses/TextBox.cpp
+	$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/Curses_TextBox.cpp$(PreprocessSuffix) Curses/TextBox.cpp
+
+$(IntermediateDirectory)/Curses_Label.cpp$(ObjectSuffix): Curses/Label.cpp $(IntermediateDirectory)/Curses_Label.cpp$(DependSuffix)
+	$(CXX) $(IncludePCH) $(SourceSwitch) "/home/wahid/Storage/GitHub/TUCUT/Curses/Label.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/Curses_Label.cpp$(ObjectSuffix) $(IncludePath)
+$(IntermediateDirectory)/Curses_Label.cpp$(DependSuffix): Curses/Label.cpp
+	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) -MG -MP -MT$(IntermediateDirectory)/Curses_Label.cpp$(ObjectSuffix) -MF$(IntermediateDirectory)/Curses_Label.cpp$(DependSuffix) -MM Curses/Label.cpp
+
+$(IntermediateDirectory)/Curses_Label.cpp$(PreprocessSuffix): Curses/Label.cpp
+	$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/Curses_Label.cpp$(PreprocessSuffix) Curses/Label.cpp
+
+$(IntermediateDirectory)/Curses_WindowSystem.cpp$(ObjectSuffix): Curses/WindowSystem.cpp $(IntermediateDirectory)/Curses_WindowSystem.cpp$(DependSuffix)
+	$(CXX) $(IncludePCH) $(SourceSwitch) "/home/wahid/Storage/GitHub/TUCUT/Curses/WindowSystem.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/Curses_WindowSystem.cpp$(ObjectSuffix) $(IncludePath)
+$(IntermediateDirectory)/Curses_WindowSystem.cpp$(DependSuffix): Curses/WindowSystem.cpp
+	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) -MG -MP -MT$(IntermediateDirectory)/Curses_WindowSystem.cpp$(ObjectSuffix) -MF$(IntermediateDirectory)/Curses_WindowSystem.cpp$(DependSuffix) -MM Curses/WindowSystem.cpp
+
+$(IntermediateDirectory)/Curses_WindowSystem.cpp$(PreprocessSuffix): Curses/WindowSystem.cpp
+	$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/Curses_WindowSystem.cpp$(PreprocessSuffix) Curses/WindowSystem.cpp
+
+$(IntermediateDirectory)/Game_GameSystem.cpp$(ObjectSuffix): Game/GameSystem.cpp $(IntermediateDirectory)/Game_GameSystem.cpp$(DependSuffix)
+	$(CXX) $(IncludePCH) $(SourceSwitch) "/home/wahid/Storage/GitHub/TUCUT/Game/GameSystem.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/Game_GameSystem.cpp$(ObjectSuffix) $(IncludePath)
+$(IntermediateDirectory)/Game_GameSystem.cpp$(DependSuffix): Game/GameSystem.cpp
+	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) -MG -MP -MT$(IntermediateDirectory)/Game_GameSystem.cpp$(ObjectSuffix) -MF$(IntermediateDirectory)/Game_GameSystem.cpp$(DependSuffix) -MM Game/GameSystem.cpp
+
+$(IntermediateDirectory)/Game_GameSystem.cpp$(PreprocessSuffix): Game/GameSystem.cpp
+	$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/Game_GameSystem.cpp$(PreprocessSuffix) Game/GameSystem.cpp
+
 $(IntermediateDirectory)/Protocol_TokenReader.cpp$(ObjectSuffix): Protocol/TokenReader.cpp $(IntermediateDirectory)/Protocol_TokenReader.cpp$(DependSuffix)
 	$(CXX) $(IncludePCH) $(SourceSwitch) "/home/wahid/Storage/GitHub/TUCUT/Protocol/TokenReader.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/Protocol_TokenReader.cpp$(ObjectSuffix) $(IncludePath)
 $(IntermediateDirectory)/Protocol_TokenReader.cpp$(DependSuffix): Protocol/TokenReader.cpp
@@ -203,6 +325,14 @@ $(IntermediateDirectory)/Protocol_TokenReader.cpp$(DependSuffix): Protocol/Token
 $(IntermediateDirectory)/Protocol_TokenReader.cpp$(PreprocessSuffix): Protocol/TokenReader.cpp
 	$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/Protocol_TokenReader.cpp$(PreprocessSuffix) Protocol/TokenReader.cpp
 
+$(IntermediateDirectory)/Game_IMovementSystem.cpp$(ObjectSuffix): Game/IMovementSystem.cpp $(IntermediateDirectory)/Game_IMovementSystem.cpp$(DependSuffix)
+	$(CXX) $(IncludePCH) $(SourceSwitch) "/home/wahid/Storage/GitHub/TUCUT/Game/IMovementSystem.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/Game_IMovementSystem.cpp$(ObjectSuffix) $(IncludePath)
+$(IntermediateDirectory)/Game_IMovementSystem.cpp$(DependSuffix): Game/IMovementSystem.cpp
+	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) -MG -MP -MT$(IntermediateDirectory)/Game_IMovementSystem.cpp$(ObjectSuffix) -MF$(IntermediateDirectory)/Game_IMovementSystem.cpp$(DependSuffix) -MM Game/IMovementSystem.cpp
+
+$(IntermediateDirectory)/Game_IMovementSystem.cpp$(PreprocessSuffix): Game/IMovementSystem.cpp
+	$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/Game_IMovementSystem.cpp$(PreprocessSuffix) Game/IMovementSystem.cpp
+
 $(IntermediateDirectory)/Config_ConfigInfo.cpp$(ObjectSuffix): Config/ConfigInfo.cpp $(IntermediateDirectory)/Config_ConfigInfo.cpp$(DependSuffix)
 	$(CXX) $(IncludePCH) $(SourceSwitch) "/home/wahid/Storage/GitHub/TUCUT/Config/ConfigInfo.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/Config_ConfigInfo.cpp$(ObjectSuffix) $(IncludePath)
 $(IntermediateDirectory)/Config_ConfigInfo.cpp$(DependSuffix): Config/ConfigInfo.cpp
@@ -210,6 +340,14 @@ $(IntermediateDirectory)/Config_ConfigInfo.cpp$(DependSuffix): Config/ConfigInfo
 
 $(IntermediateDirectory)/Config_ConfigInfo.cpp$(PreprocessSuffix): Config/ConfigInfo.cpp
 	$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/Config_ConfigInfo.cpp$(PreprocessSuffix) Config/ConfigInfo.cpp
+
+$(IntermediateDirectory)/Curses_ListBox.cpp$(ObjectSuffix): Curses/ListBox.cpp $(IntermediateDirectory)/Curses_ListBox.cpp$(DependSuffix)
+	$(CXX) $(IncludePCH) $(SourceSwitch) "/home/wahid/Storage/GitHub/TUCUT/Curses/ListBox.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/Curses_ListBox.cpp$(ObjectSuffix) $(IncludePath)
+$(IntermediateDirectory)/Curses_ListBox.cpp$(DependSuffix): Curses/ListBox.cpp
+	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) -MG -MP -MT$(IntermediateDirectory)/Curses_ListBox.cpp$(ObjectSuffix) -MF$(IntermediateDirectory)/Curses_ListBox.cpp$(DependSuffix) -MM Curses/ListBox.cpp
+
+$(IntermediateDirectory)/Curses_ListBox.cpp$(PreprocessSuffix): Curses/ListBox.cpp
+	$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/Curses_ListBox.cpp$(PreprocessSuffix) Curses/ListBox.cpp
 
 $(IntermediateDirectory)/Log_LogManager.cpp$(ObjectSuffix): Log/LogManager.cpp $(IntermediateDirectory)/Log_LogManager.cpp$(DependSuffix)
 	$(CXX) $(IncludePCH) $(SourceSwitch) "/home/wahid/Storage/GitHub/TUCUT/Log/LogManager.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/Log_LogManager.cpp$(ObjectSuffix) $(IncludePath)
@@ -291,6 +429,22 @@ $(IntermediateDirectory)/Protocol_ProtoParser.cpp$(DependSuffix): Protocol/Proto
 $(IntermediateDirectory)/Protocol_ProtoParser.cpp$(PreprocessSuffix): Protocol/ProtoParser.cpp
 	$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/Protocol_ProtoParser.cpp$(PreprocessSuffix) Protocol/ProtoParser.cpp
 
+$(IntermediateDirectory)/Curses_TextRegion.cpp$(ObjectSuffix): Curses/TextRegion.cpp $(IntermediateDirectory)/Curses_TextRegion.cpp$(DependSuffix)
+	$(CXX) $(IncludePCH) $(SourceSwitch) "/home/wahid/Storage/GitHub/TUCUT/Curses/TextRegion.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/Curses_TextRegion.cpp$(ObjectSuffix) $(IncludePath)
+$(IntermediateDirectory)/Curses_TextRegion.cpp$(DependSuffix): Curses/TextRegion.cpp
+	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) -MG -MP -MT$(IntermediateDirectory)/Curses_TextRegion.cpp$(ObjectSuffix) -MF$(IntermediateDirectory)/Curses_TextRegion.cpp$(DependSuffix) -MM Curses/TextRegion.cpp
+
+$(IntermediateDirectory)/Curses_TextRegion.cpp$(PreprocessSuffix): Curses/TextRegion.cpp
+	$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/Curses_TextRegion.cpp$(PreprocessSuffix) Curses/TextRegion.cpp
+
+$(IntermediateDirectory)/Curses_Control.cpp$(ObjectSuffix): Curses/Control.cpp $(IntermediateDirectory)/Curses_Control.cpp$(DependSuffix)
+	$(CXX) $(IncludePCH) $(SourceSwitch) "/home/wahid/Storage/GitHub/TUCUT/Curses/Control.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/Curses_Control.cpp$(ObjectSuffix) $(IncludePath)
+$(IntermediateDirectory)/Curses_Control.cpp$(DependSuffix): Curses/Control.cpp
+	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) -MG -MP -MT$(IntermediateDirectory)/Curses_Control.cpp$(ObjectSuffix) -MF$(IntermediateDirectory)/Curses_Control.cpp$(DependSuffix) -MM Curses/Control.cpp
+
+$(IntermediateDirectory)/Curses_Control.cpp$(PreprocessSuffix): Curses/Control.cpp
+	$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/Curses_Control.cpp$(PreprocessSuffix) Curses/Control.cpp
+
 $(IntermediateDirectory)/Protocol_EnumValueParser.cpp$(ObjectSuffix): Protocol/EnumValueParser.cpp $(IntermediateDirectory)/Protocol_EnumValueParser.cpp$(DependSuffix)
 	$(CXX) $(IncludePCH) $(SourceSwitch) "/home/wahid/Storage/GitHub/TUCUT/Protocol/EnumValueParser.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/Protocol_EnumValueParser.cpp$(ObjectSuffix) $(IncludePath)
 $(IntermediateDirectory)/Protocol_EnumValueParser.cpp$(DependSuffix): Protocol/EnumValueParser.cpp
@@ -298,6 +452,22 @@ $(IntermediateDirectory)/Protocol_EnumValueParser.cpp$(DependSuffix): Protocol/E
 
 $(IntermediateDirectory)/Protocol_EnumValueParser.cpp$(PreprocessSuffix): Protocol/EnumValueParser.cpp
 	$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/Protocol_EnumValueParser.cpp$(PreprocessSuffix) Protocol/EnumValueParser.cpp
+
+$(IntermediateDirectory)/Game_MovementSystem.cpp$(ObjectSuffix): Game/MovementSystem.cpp $(IntermediateDirectory)/Game_MovementSystem.cpp$(DependSuffix)
+	$(CXX) $(IncludePCH) $(SourceSwitch) "/home/wahid/Storage/GitHub/TUCUT/Game/MovementSystem.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/Game_MovementSystem.cpp$(ObjectSuffix) $(IncludePath)
+$(IntermediateDirectory)/Game_MovementSystem.cpp$(DependSuffix): Game/MovementSystem.cpp
+	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) -MG -MP -MT$(IntermediateDirectory)/Game_MovementSystem.cpp$(ObjectSuffix) -MF$(IntermediateDirectory)/Game_MovementSystem.cpp$(DependSuffix) -MM Game/MovementSystem.cpp
+
+$(IntermediateDirectory)/Game_MovementSystem.cpp$(PreprocessSuffix): Game/MovementSystem.cpp
+	$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/Game_MovementSystem.cpp$(PreprocessSuffix) Game/MovementSystem.cpp
+
+$(IntermediateDirectory)/Curses_Window.cpp$(ObjectSuffix): Curses/Window.cpp $(IntermediateDirectory)/Curses_Window.cpp$(DependSuffix)
+	$(CXX) $(IncludePCH) $(SourceSwitch) "/home/wahid/Storage/GitHub/TUCUT/Curses/Window.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/Curses_Window.cpp$(ObjectSuffix) $(IncludePath)
+$(IntermediateDirectory)/Curses_Window.cpp$(DependSuffix): Curses/Window.cpp
+	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) -MG -MP -MT$(IntermediateDirectory)/Curses_Window.cpp$(ObjectSuffix) -MF$(IntermediateDirectory)/Curses_Window.cpp$(DependSuffix) -MM Curses/Window.cpp
+
+$(IntermediateDirectory)/Curses_Window.cpp$(PreprocessSuffix): Curses/Window.cpp
+	$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/Curses_Window.cpp$(PreprocessSuffix) Curses/Window.cpp
 
 $(IntermediateDirectory)/Protocol_MessageParser.cpp$(ObjectSuffix): Protocol/MessageParser.cpp $(IntermediateDirectory)/Protocol_MessageParser.cpp$(DependSuffix)
 	$(CXX) $(IncludePCH) $(SourceSwitch) "/home/wahid/Storage/GitHub/TUCUT/Protocol/MessageParser.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/Protocol_MessageParser.cpp$(ObjectSuffix) $(IncludePath)
@@ -307,14 +477,6 @@ $(IntermediateDirectory)/Protocol_MessageParser.cpp$(DependSuffix): Protocol/Mes
 $(IntermediateDirectory)/Protocol_MessageParser.cpp$(PreprocessSuffix): Protocol/MessageParser.cpp
 	$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/Protocol_MessageParser.cpp$(PreprocessSuffix) Protocol/MessageParser.cpp
 
-$(IntermediateDirectory)/Game_GameObjectManager.cpp$(ObjectSuffix): Game/GameObjectManager.cpp $(IntermediateDirectory)/Game_GameObjectManager.cpp$(DependSuffix)
-	$(CXX) $(IncludePCH) $(SourceSwitch) "/home/wahid/Storage/GitHub/TUCUT/Game/GameObjectManager.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/Game_GameObjectManager.cpp$(ObjectSuffix) $(IncludePath)
-$(IntermediateDirectory)/Game_GameObjectManager.cpp$(DependSuffix): Game/GameObjectManager.cpp
-	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) -MG -MP -MT$(IntermediateDirectory)/Game_GameObjectManager.cpp$(ObjectSuffix) -MF$(IntermediateDirectory)/Game_GameObjectManager.cpp$(DependSuffix) -MM Game/GameObjectManager.cpp
-
-$(IntermediateDirectory)/Game_GameObjectManager.cpp$(PreprocessSuffix): Game/GameObjectManager.cpp
-	$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/Game_GameObjectManager.cpp$(PreprocessSuffix) Game/GameObjectManager.cpp
-
 $(IntermediateDirectory)/Protocol_EnumValueModel.cpp$(ObjectSuffix): Protocol/EnumValueModel.cpp $(IntermediateDirectory)/Protocol_EnumValueModel.cpp$(DependSuffix)
 	$(CXX) $(IncludePCH) $(SourceSwitch) "/home/wahid/Storage/GitHub/TUCUT/Protocol/EnumValueModel.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/Protocol_EnumValueModel.cpp$(ObjectSuffix) $(IncludePath)
 $(IntermediateDirectory)/Protocol_EnumValueModel.cpp$(DependSuffix): Protocol/EnumValueModel.cpp
@@ -322,6 +484,14 @@ $(IntermediateDirectory)/Protocol_EnumValueModel.cpp$(DependSuffix): Protocol/En
 
 $(IntermediateDirectory)/Protocol_EnumValueModel.cpp$(PreprocessSuffix): Protocol/EnumValueModel.cpp
 	$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/Protocol_EnumValueModel.cpp$(PreprocessSuffix) Protocol/EnumValueModel.cpp
+
+$(IntermediateDirectory)/Curses_ConsoleManager.cpp$(ObjectSuffix): Curses/ConsoleManager.cpp $(IntermediateDirectory)/Curses_ConsoleManager.cpp$(DependSuffix)
+	$(CXX) $(IncludePCH) $(SourceSwitch) "/home/wahid/Storage/GitHub/TUCUT/Curses/ConsoleManager.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/Curses_ConsoleManager.cpp$(ObjectSuffix) $(IncludePath)
+$(IntermediateDirectory)/Curses_ConsoleManager.cpp$(DependSuffix): Curses/ConsoleManager.cpp
+	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) -MG -MP -MT$(IntermediateDirectory)/Curses_ConsoleManager.cpp$(ObjectSuffix) -MF$(IntermediateDirectory)/Curses_ConsoleManager.cpp$(DependSuffix) -MM Curses/ConsoleManager.cpp
+
+$(IntermediateDirectory)/Curses_ConsoleManager.cpp$(PreprocessSuffix): Curses/ConsoleManager.cpp
+	$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/Curses_ConsoleManager.cpp$(PreprocessSuffix) Curses/ConsoleManager.cpp
 
 $(IntermediateDirectory)/Protocol_ImportParser.cpp$(ObjectSuffix): Protocol/ImportParser.cpp $(IntermediateDirectory)/Protocol_ImportParser.cpp$(DependSuffix)
 	$(CXX) $(IncludePCH) $(SourceSwitch) "/home/wahid/Storage/GitHub/TUCUT/Protocol/ImportParser.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/Protocol_ImportParser.cpp$(ObjectSuffix) $(IncludePath)

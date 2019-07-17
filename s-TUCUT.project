@@ -1,5 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CodeLite_Project Name="s-TUCUT" Version="10.0.0" InternalType="Library">
+  <VirtualDirectory Name="Curses">
+    <File Name="Curses/DisplayBox.cpp"/>
+    <File Name="Curses/ListBox.h"/>
+    <File Name="Curses/Colors.cpp"/>
+    <File Name="Curses/ListBox.cpp"/>
+    <File Name="Curses/Label.h"/>
+    <File Name="Curses/NumberBox.h"/>
+    <File Name="Curses/TextBox.cpp"/>
+    <File Name="Curses/Button.h"/>
+    <File Name="Curses/WindowSystem.h"/>
+    <File Name="Curses/DisplayBox.h"/>
+    <File Name="Curses/CursesUtil.cpp"/>
+    <File Name="Curses/ConsoleManager.h"/>
+    <File Name="Curses/Label.cpp"/>
+    <File Name="Curses/Justification.h"/>
+    <File Name="Curses/NumberBox.cpp"/>
+    <File Name="Curses/Button.cpp"/>
+    <File Name="Curses/TextBox.h"/>
+    <File Name="Curses/TextRegion.cpp"/>
+    <File Name="Curses/CursesUtil.h"/>
+    <File Name="Curses/Control.h"/>
+    <File Name="Curses/Window.h"/>
+    <File Name="Curses/Window.cpp"/>
+    <File Name="Curses/ConsoleManager.cpp"/>
+    <File Name="Curses/TextRegion.h"/>
+    <File Name="Curses/CheckBox.h"/>
+    <File Name="Curses/WindowSystem.cpp"/>
+    <File Name="Curses/Colors.h"/>
+    <File Name="Curses/Control.cpp"/>
+    <File Name="Curses/CheckBox.cpp"/>
+  </VirtualDirectory>
   <VirtualDirectory Name="Color">
     <File Name="Color/Color.h"/>
   </VirtualDirectory>
@@ -9,6 +40,8 @@
     </Plugin>
   </Plugins>
   <VirtualDirectory Name="Math">
+    <File Name="Math/MinMax.h"/>
+    <File Name="Math/Adjust.h"/>
     <File Name="Math/Bounds.h"/>
     <File Name="Math/Vector.h"/>
     <File Name="Math/Lerp.h"/>
@@ -18,9 +51,6 @@
   </VirtualDirectory>
   <VirtualDirectory Name="Noise">
     <File Name="Noise/Noise.cpp"/>
-    <VirtualDirectory Name="Tests">
-      <File Name="Noise/Tests/NoiseScenarios.cpp"/>
-    </VirtualDirectory>
     <File Name="Noise/Noise.h"/>
     <File Name="Noise/NoiseUtil.h"/>
     <File Name="Noise/NoiseUtil.cpp"/>
@@ -121,16 +151,32 @@
     <File Name="Protocol/ProtoModel.cpp"/>
   </VirtualDirectory>
   <VirtualDirectory Name="Hash">
-    <VirtualDirectory Name="Tests">
-      <File Name="Hash/Tests/HashScenarios.cpp"/>
-    </VirtualDirectory>
     <File Name="Hash/Hash.h"/>
   </VirtualDirectory>
   <VirtualDirectory Name="Game">
-    <File Name="Game/GameObjectManager.h"/>
+    <File Name="Game/PositionComponent.h"/>
+    <File Name="Game/PositionComponent.cpp"/>
+    <File Name="Game/MovementSystem.h"/>
+    <File Name="Game/MovementSystem.cpp"/>
+    <File Name="Game/MovementComponent.h"/>
+    <File Name="Game/MovementComponent.cpp"/>
+    <File Name="Game/IPositionComponent.h"/>
+    <File Name="Game/IPositionComponent.cpp"/>
+    <File Name="Game/IMovementSystem.h"/>
+    <File Name="Game/IMovementSystem.cpp"/>
+    <File Name="Game/IMovementComponent.h"/>
+    <File Name="Game/IMovementComponent.cpp"/>
+    <File Name="Game/GameTime.h"/>
+    <File Name="Game/GameSystem.h"/>
+    <File Name="Game/GameSystem.cpp"/>
+    <File Name="Game/GameRegion.h"/>
+    <File Name="Game/GameRegion.cpp"/>
+    <File Name="Game/GameManager.h"/>
+    <File Name="Game/GameManager.cpp"/>
+    <File Name="Game/GameComponent.h"/>
+    <File Name="Game/GameComponent.cpp"/>
     <File Name="Game/PropertyGroup.h"/>
     <File Name="Game/PropertyContainer.cpp"/>
-    <File Name="Game/GameObjectManager.cpp"/>
     <File Name="Game/GameObject.h"/>
     <File Name="Game/GameObject.cpp"/>
     <File Name="Game/PropertyContainer.h"/>
@@ -152,10 +198,13 @@
       <Compiler Options="-g;-std=c++17;-Wall;-Wextra" C_Options="-g" Assembler="">
         <IncludePath Value="."/>
         <IncludePath Value="/usr/local/include"/>
+        <IncludePath Value="/opt/ncurses/include/ncursesw"/>
+        <IncludePath Value="/opt/ncurses/include"/>
       </Compiler>
       <Linker Options="">
         <LibraryPath Value="."/>
         <LibraryPath Value="/usr/local/lib"/>
+        <LibraryPath Value="/opt/ncurses/lib"/>
       </Linker>
       <ResourceCompiler Options=""/>
     </GlobalSettings>
