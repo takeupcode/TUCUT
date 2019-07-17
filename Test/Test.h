@@ -538,7 +538,7 @@ public:
                         scenario->description() << std::endl;
                 }
             }
-            catch (VerificationException ex)
+            catch (const VerificationException & ex)
             {
                 localFailCount++;
                 stream << "Scenario failed: " <<

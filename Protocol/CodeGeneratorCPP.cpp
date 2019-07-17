@@ -92,7 +92,7 @@ void Protocol::CodeGeneratorCPP::generateHeaderFileCommon (const std::string & o
 }
 
 void Protocol::CodeGeneratorCPP::generateSourceFile (const std::string & outputFolder, const ProtoModel & protoModel,
-                                                     const std::string & projectName) const
+                                                     const std::string &) const
 {
     filesystem::path outputPath(outputFolder);
     filesystem::path modelPath(protoModel.namePascal());
@@ -192,7 +192,7 @@ void Protocol::CodeGeneratorCPP::writeProtoEnumsToHeader (CodeWriter & headerFil
         string enumPackage = enumModel->package();
         if (enumPackage != currentPackage)
         {
-            for (int i = 0; i < enumNamespaces.size(); i++)
+            for (size_t i = 0; i < enumNamespaces.size(); i++)
             {
                 headerFileWriter.writeNamespaceClosing();
             }
@@ -208,13 +208,13 @@ void Protocol::CodeGeneratorCPP::writeProtoEnumsToHeader (CodeWriter & headerFil
 
         ++protoEnumBegin;
     }
-    for (int i = 0; i < enumNamespaces.size(); i++)
+    for (size_t i = 0; i < enumNamespaces.size(); i++)
     {
         headerFileWriter.writeNamespaceClosing();
     }
 }
 
-void Protocol::CodeGeneratorCPP::writeEnumToHeader (CodeWriter & headerFileWriter, const ProtoModel & protoModel,
+void Protocol::CodeGeneratorCPP::writeEnumToHeader (CodeWriter & headerFileWriter, const ProtoModel &,
                                                     const EnumModel & enumModel, const std::string & enumName) const
 {
     headerFileWriter.writeEnumOpening(enumName);
@@ -253,7 +253,7 @@ void Protocol::CodeGeneratorCPP::writeProtoMessagesToHeader (CodeWriter & header
         string messagePackage = messageModel->package();
         if (messagePackage != currentPackage)
         {
-            for (int i = 0; i < messageNamespaces.size(); i++)
+            for (size_t i = 0; i < messageNamespaces.size(); i++)
             {
                 headerFileWriter.writeNamespaceClosing();
             }
@@ -279,7 +279,7 @@ void Protocol::CodeGeneratorCPP::writeProtoMessagesToHeader (CodeWriter & header
         string messagePackage = messageModel->package();
         if (messagePackage != currentPackage)
         {
-            for (int i = 0; i < messageNamespaces.size(); i++)
+            for (size_t i = 0; i < messageNamespaces.size(); i++)
             {
                 headerFileWriter.writeNamespaceClosing();
             }
@@ -304,7 +304,7 @@ void Protocol::CodeGeneratorCPP::writeProtoMessagesToHeader (CodeWriter & header
         string messagePackage = messageModel->package();
         if (messagePackage != currentPackage)
         {
-            for (int i = 0; i < messageNamespaces.size(); i++)
+            for (size_t i = 0; i < messageNamespaces.size(); i++)
             {
                 headerFileWriter.writeNamespaceClosing();
             }
@@ -319,7 +319,7 @@ void Protocol::CodeGeneratorCPP::writeProtoMessagesToHeader (CodeWriter & header
 
         ++protoMessageBegin;
     }
-    for (int i = 0; i < messageNamespaces.size(); i++)
+    for (size_t i = 0; i < messageNamespaces.size(); i++)
     {
         headerFileWriter.writeNamespaceClosing();
     }
@@ -573,8 +573,8 @@ void Protocol::CodeGeneratorCPP::writeMessageToHeader (CodeWriter & headerFileWr
     headerFileWriter.writeClassClosing();
 }
 
-void Protocol::CodeGeneratorCPP::writeMessageConstructorToHeader (CodeWriter & headerFileWriter, const ProtoModel & protoModel,
-                                                                  const MessageModel & messageModel, const std::string & className) const
+void Protocol::CodeGeneratorCPP::writeMessageConstructorToHeader (CodeWriter & headerFileWriter, const ProtoModel &,
+                                                                  const MessageModel &, const std::string & className) const
 {
     string methodName = className;
     string methodParameters = "";
@@ -584,8 +584,8 @@ void Protocol::CodeGeneratorCPP::writeMessageConstructorToHeader (CodeWriter & h
     headerFileWriter.writeClassMethodInlineClosing();
 }
 
-void Protocol::CodeGeneratorCPP::writeMessageCopyConstructorToHeader (CodeWriter & headerFileWriter, const ProtoModel & protoModel,
-                                                                      const MessageModel & messageModel, const std::string & className) const
+void Protocol::CodeGeneratorCPP::writeMessageCopyConstructorToHeader (CodeWriter & headerFileWriter, const ProtoModel &,
+                                                                      const MessageModel &, const std::string & className) const
 {
     string methodName = className;
     string methodParameters = "const ";
@@ -595,8 +595,8 @@ void Protocol::CodeGeneratorCPP::writeMessageCopyConstructorToHeader (CodeWriter
     headerFileWriter.writeClassMethodInlineClosing();
 }
 
-void Protocol::CodeGeneratorCPP::writeMessageDestructorToHeader (CodeWriter & headerFileWriter, const ProtoModel & protoModel,
-                                                                 const MessageModel & messageModel, const std::string & className) const
+void Protocol::CodeGeneratorCPP::writeMessageDestructorToHeader (CodeWriter & headerFileWriter, const ProtoModel &,
+                                                                 const MessageModel &, const std::string & className) const
 {
     string methodName = "~";
     methodName += className;
@@ -605,8 +605,8 @@ void Protocol::CodeGeneratorCPP::writeMessageDestructorToHeader (CodeWriter & he
     headerFileWriter.writeClassMethodInlineClosing();
 }
 
-void Protocol::CodeGeneratorCPP::writeMessageAssignmentOperatorToHeader (CodeWriter & headerFileWriter, const ProtoModel & protoModel,
-                                                                         const MessageModel & messageModel,
+void Protocol::CodeGeneratorCPP::writeMessageAssignmentOperatorToHeader (CodeWriter & headerFileWriter, const ProtoModel &,
+                                                                         const MessageModel &,
                                                                          const std::string & className) const
 {
     string methodName = "operator =";
@@ -639,8 +639,8 @@ void Protocol::CodeGeneratorCPP::writeMessageAssignmentOperatorToHeader (CodeWri
     headerFileWriter.writeClassMethodInlineClosing();
 }
 
-void Protocol::CodeGeneratorCPP::writeMessageSwapToHeader (CodeWriter & headerFileWriter, const ProtoModel & protoModel,
-                                                           const MessageModel & messageModel, const std::string & className) const
+void Protocol::CodeGeneratorCPP::writeMessageSwapToHeader (CodeWriter & headerFileWriter, const ProtoModel &,
+                                                           const MessageModel &, const std::string & className) const
 {
     string methodName = "swap";
     string methodReturn = "void";
@@ -664,8 +664,8 @@ void Protocol::CodeGeneratorCPP::writeMessageSwapToHeader (CodeWriter & headerFi
     headerFileWriter.writeClassMethodInlineClosing();
 }
 
-void Protocol::CodeGeneratorCPP::writeMessageClearToHeader (CodeWriter & headerFileWriter, const ProtoModel & protoModel,
-                                                            const MessageModel & messageModel, const std::string & className) const
+void Protocol::CodeGeneratorCPP::writeMessageClearToHeader (CodeWriter & headerFileWriter, const ProtoModel &,
+                                                            const MessageModel &, const std::string & className) const
 {
     string methodName = "clear";
     string methodReturn = "void";
@@ -724,7 +724,7 @@ void Protocol::CodeGeneratorCPP::writeMessageOneofFieldToHeader (CodeWriter & he
     writeMessageFieldClearToHeader(headerFileWriter, protoModel, messageFieldModel, &oneofModel);
 }
 
-void Protocol::CodeGeneratorCPP::writeMessageFieldSizeRepeatedToHeader (CodeWriter & headerFileWriter, const ProtoModel & protoModel,
+void Protocol::CodeGeneratorCPP::writeMessageFieldSizeRepeatedToHeader (CodeWriter & headerFileWriter, const ProtoModel &,
                                                                         const MessageFieldModel & messageFieldModel) const
 {
     string methodName = "size";
@@ -742,7 +742,7 @@ void Protocol::CodeGeneratorCPP::writeMessageFieldSizeRepeatedToHeader (CodeWrit
     headerFileWriter.writeClassMethodInlineClosing();
 }
 
-void Protocol::CodeGeneratorCPP::writeMessageFieldGetRepeatedToHeader (CodeWriter & headerFileWriter, const ProtoModel & protoModel,
+void Protocol::CodeGeneratorCPP::writeMessageFieldGetRepeatedToHeader (CodeWriter & headerFileWriter, const ProtoModel &,
                                                                        const MessageFieldModel & messageFieldModel) const
 {
     string fieldType = fullTypeName(messageFieldModel);
@@ -787,7 +787,7 @@ void Protocol::CodeGeneratorCPP::writeMessageFieldGetRepeatedToHeader (CodeWrite
     headerFileWriter.writeClassMethodInlineClosing();
 }
 
-void Protocol::CodeGeneratorCPP::writeMessageFieldSetRepeatedToHeader (CodeWriter & headerFileWriter, const ProtoModel & protoModel,
+void Protocol::CodeGeneratorCPP::writeMessageFieldSetRepeatedToHeader (CodeWriter & headerFileWriter, const ProtoModel &,
                                                                        const MessageFieldModel & messageFieldModel) const
 {
     string fieldType = fullTypeName(messageFieldModel);
@@ -832,7 +832,7 @@ void Protocol::CodeGeneratorCPP::writeMessageFieldSetRepeatedToHeader (CodeWrite
     headerFileWriter.writeClassMethodInlineClosing();
 }
 
-void Protocol::CodeGeneratorCPP::writeMessageFieldAddRepeatedToHeader (CodeWriter & headerFileWriter, const ProtoModel & protoModel,
+void Protocol::CodeGeneratorCPP::writeMessageFieldAddRepeatedToHeader (CodeWriter & headerFileWriter, const ProtoModel &,
                                                                        const MessageFieldModel & messageFieldModel) const
 {
     string fieldType = fullTypeName(messageFieldModel);
@@ -877,7 +877,7 @@ void Protocol::CodeGeneratorCPP::writeMessageFieldAddRepeatedToHeader (CodeWrite
     headerFileWriter.writeClassMethodInlineClosing();
 }
 
-void Protocol::CodeGeneratorCPP::writeMessageFieldAddNewRepeatedToHeader (CodeWriter & headerFileWriter, const ProtoModel & protoModel,
+void Protocol::CodeGeneratorCPP::writeMessageFieldAddNewRepeatedToHeader (CodeWriter & headerFileWriter, const ProtoModel &,
                                                                           const MessageFieldModel & messageFieldModel) const
 {
     string fieldType = fullTypeName(messageFieldModel);
@@ -907,7 +907,7 @@ void Protocol::CodeGeneratorCPP::writeMessageFieldAddNewRepeatedToHeader (CodeWr
     }
 }
 
-void Protocol::CodeGeneratorCPP::writeMessageFieldClearRepeatedToHeader (CodeWriter & headerFileWriter, const ProtoModel & protoModel,
+void Protocol::CodeGeneratorCPP::writeMessageFieldClearRepeatedToHeader (CodeWriter & headerFileWriter, const ProtoModel &,
                                                                          const MessageFieldModel & messageFieldModel) const
 {
     string methodName = "clear";
@@ -926,7 +926,7 @@ void Protocol::CodeGeneratorCPP::writeMessageFieldClearRepeatedToHeader (CodeWri
     headerFileWriter.writeClassMethodInlineClosing();
 }
 
-void Protocol::CodeGeneratorCPP::writeMessageFieldHasToHeader (CodeWriter & headerFileWriter, const ProtoModel & protoModel,
+void Protocol::CodeGeneratorCPP::writeMessageFieldHasToHeader (CodeWriter & headerFileWriter, const ProtoModel &,
                                                                const MessageFieldModel & messageFieldModel,
                                                                const OneofModel * oneofModel) const
 {
@@ -964,9 +964,9 @@ void Protocol::CodeGeneratorCPP::writeMessageFieldHasToHeader (CodeWriter & head
     headerFileWriter.writeClassMethodInlineClosing();
 }
 
-void Protocol::CodeGeneratorCPP::writeMessageFieldGetToHeader (CodeWriter & headerFileWriter, const ProtoModel & protoModel,
+void Protocol::CodeGeneratorCPP::writeMessageFieldGetToHeader (CodeWriter & headerFileWriter, const ProtoModel &,
                                                                const MessageFieldModel & messageFieldModel,
-                                                               const OneofModel * oneofModel) const
+                                                               const OneofModel *) const
 {
     string fieldType = fullTypeName(messageFieldModel);
     string methodName = messageFieldModel.name();
@@ -1010,7 +1010,7 @@ void Protocol::CodeGeneratorCPP::writeMessageFieldGetToHeader (CodeWriter & head
     headerFileWriter.writeClassMethodInlineClosing();
 }
 
-void Protocol::CodeGeneratorCPP::writeMessageFieldSetToHeader (CodeWriter & headerFileWriter, const ProtoModel & protoModel,
+void Protocol::CodeGeneratorCPP::writeMessageFieldSetToHeader (CodeWriter & headerFileWriter, const ProtoModel &,
                                                                const MessageFieldModel & messageFieldModel,
                                                                const OneofModel * oneofModel) const
 {
@@ -1068,7 +1068,7 @@ void Protocol::CodeGeneratorCPP::writeMessageFieldSetToHeader (CodeWriter & head
     headerFileWriter.writeClassMethodInlineClosing();
 }
 
-void Protocol::CodeGeneratorCPP::writeMessageFieldCreateNewToHeader (CodeWriter & headerFileWriter, const ProtoModel & protoModel,
+void Protocol::CodeGeneratorCPP::writeMessageFieldCreateNewToHeader (CodeWriter & headerFileWriter, const ProtoModel &,
                                                                      const MessageFieldModel & messageFieldModel,
                                                                      const OneofModel * oneofModel) const
 {
@@ -1111,7 +1111,7 @@ void Protocol::CodeGeneratorCPP::writeMessageFieldCreateNewToHeader (CodeWriter 
     }
 }
 
-void Protocol::CodeGeneratorCPP::writeMessageFieldClearToHeader (CodeWriter & headerFileWriter, const ProtoModel & protoModel,
+void Protocol::CodeGeneratorCPP::writeMessageFieldClearToHeader (CodeWriter & headerFileWriter, const ProtoModel &,
                                                                  const MessageFieldModel & messageFieldModel,
                                                                  const OneofModel * oneofModel) const
 {
@@ -1158,7 +1158,7 @@ void Protocol::CodeGeneratorCPP::writeMessageFieldClearToHeader (CodeWriter & he
     headerFileWriter.writeClassMethodInlineClosing();
 }
 
-void Protocol::CodeGeneratorCPP::writeMessageFieldBackingFieldsToHeader (CodeWriter & headerFileWriter, const ProtoModel & protoModel,
+void Protocol::CodeGeneratorCPP::writeMessageFieldBackingFieldsToHeader (CodeWriter & headerFileWriter, const ProtoModel &,
                                                                          const MessageFieldModel & messageFieldModel) const
 {
     string backingFieldName;
@@ -1265,7 +1265,7 @@ void Protocol::CodeGeneratorCPP::writeMessageFieldIndexesToHeader (CodeWriter & 
     }
 }
 
-void Protocol::CodeGeneratorCPP::writeMessageOneofCurrentToHeader (CodeWriter & headerFileWriter, const ProtoModel & protoModel,
+void Protocol::CodeGeneratorCPP::writeMessageOneofCurrentToHeader (CodeWriter & headerFileWriter, const ProtoModel &,
                                                                    const OneofModel & oneofModel) const
 {
     string oneofEnumClassName = oneofModel.namePascal() + "Choices";
@@ -1285,7 +1285,7 @@ void Protocol::CodeGeneratorCPP::writeMessageOneofCurrentToHeader (CodeWriter & 
     headerFileWriter.writeClassMethodInlineClosing();
 }
 
-void Protocol::CodeGeneratorCPP::writeMessageOneofClearToHeader (CodeWriter & headerFileWriter, const ProtoModel & protoModel,
+void Protocol::CodeGeneratorCPP::writeMessageOneofClearToHeader (CodeWriter & headerFileWriter, const ProtoModel &,
                                                                  const OneofModel & oneofModel) const
 {
     string methodName = "clear";
@@ -1459,9 +1459,9 @@ void Protocol::CodeGeneratorCPP::writeMessageDataConstructorToSource (CodeWriter
     sourceFileWriter.writeMethodImplementationClosing();
 }
 
-void Protocol::CodeGeneratorCPP::writeMessageDataFieldInitializationToSource (CodeWriter & sourceFileWriter, const ProtoModel & protoModel,
-                                                                              const MessageFieldModel & messageFieldModel, const std::string & className,
-                                                                              const std::string & fullScope) const
+void Protocol::CodeGeneratorCPP::writeMessageDataFieldInitializationToSource (CodeWriter & sourceFileWriter, const ProtoModel &,
+                                                                              const MessageFieldModel & messageFieldModel, const std::string &,
+                                                                              const std::string &) const
 {
     string fieldValueName = "m";
     fieldValueName += messageFieldModel.namePascal();
@@ -1541,7 +1541,7 @@ std::string Protocol::CodeGeneratorCPP::messageFieldInitialization (const Messag
     return fieldInitialization;
 }
 
-void Protocol::CodeGeneratorCPP::writeMessageParseToSource (CodeWriter & sourceFileWriter, const ProtoModel & protoModel,
+void Protocol::CodeGeneratorCPP::writeMessageParseToSource (CodeWriter & sourceFileWriter, const ProtoModel &,
                                                             const MessageModel & messageModel, const std::string & className,
                                                             const std::string & fullScope) const
 {
@@ -1727,8 +1727,8 @@ void Protocol::CodeGeneratorCPP::writeMessageParseToSource (CodeWriter & sourceF
     sourceFileWriter.writeMethodImplementationClosing();
 }
 
-void Protocol::CodeGeneratorCPP::writeMessageSerializeToSource (CodeWriter & sourceFileWriter, const ProtoModel & protoModel,
-                                                                const MessageModel & messageModel, const std::string & className,
+void Protocol::CodeGeneratorCPP::writeMessageSerializeToSource (CodeWriter & sourceFileWriter, const ProtoModel &,
+                                                                const MessageModel & messageModel, const std::string &,
                                                                 const std::string & fullScope) const
 {
     string methodName = fullScope + "::serialize";
@@ -1854,8 +1854,8 @@ void Protocol::CodeGeneratorCPP::writeMessageSerializeToSource (CodeWriter & sou
     sourceFileWriter.writeMethodImplementationClosing();
 }
 
-void Protocol::CodeGeneratorCPP::writeMessageByteSizeToSource (CodeWriter & sourceFileWriter, const ProtoModel & protoModel,
-                                                               const MessageModel & messageModel, const std::string & className,
+void Protocol::CodeGeneratorCPP::writeMessageByteSizeToSource (CodeWriter & sourceFileWriter, const ProtoModel &,
+                                                               const MessageModel & messageModel, const std::string &,
                                                                const std::string & fullScope) const
 {
     string methodName = fullScope + "::byteSize";
@@ -1906,8 +1906,8 @@ void Protocol::CodeGeneratorCPP::writeMessageByteSizeToSource (CodeWriter & sour
     sourceFileWriter.writeMethodImplementationClosing();
 }
 
-void Protocol::CodeGeneratorCPP::writeMessageValidToSource (CodeWriter & sourceFileWriter, const ProtoModel & protoModel,
-                                                              const MessageModel & messageModel, const std::string & className,
+void Protocol::CodeGeneratorCPP::writeMessageValidToSource (CodeWriter & sourceFileWriter, const ProtoModel &,
+                                                              const MessageModel & messageModel, const std::string &,
                                                               const std::string & fullScope) const
 {
     string methodName = fullScope + "::valid";

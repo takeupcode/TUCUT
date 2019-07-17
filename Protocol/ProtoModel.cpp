@@ -79,7 +79,6 @@ void Protocol::ProtoModel::updateMessageFields (MessageModel * pMessageModel, co
                 currentScope += ".";
             }
             currentScope += messageScope;
-            bool typeFound = false;
             while (true)
             {
                 string currentPath = currentScope;
@@ -92,14 +91,12 @@ void Protocol::ProtoModel::updateMessageFields (MessageModel * pMessageModel, co
                 if (pReferencedEnumModel != nullptr)
                 {
                     messageFieldModel->updateFieldCategoryToEnum(pReferencedEnumModel);
-                    typeFound = true;
                     break;
                 }
                 MessageModel * pReferencedMessageModel = typeAsMessage(currentPath);
                 if (pReferencedMessageModel != nullptr)
                 {
                     messageFieldModel->updateFieldCategoryToMessage(pReferencedMessageModel);
-                    typeFound = true;
                     break;
                 }
 
@@ -234,7 +231,7 @@ void Protocol::ProtoModel::completeOneof ()
     mCurrentOneof = nullptr;
 }
 
-void Protocol::ProtoModel::addOption (TokenReader::iterator current, const OptionModelCollection::value_type & option)
+void Protocol::ProtoModel::addOption (TokenReader::iterator, const OptionModelCollection::value_type & option)
 {
     if (mCurrentField != nullptr)
     {
@@ -305,7 +302,7 @@ Protocol::MessageModel * Protocol::ProtoModel::typeAsMessage (const string & ful
     return nullptr;
 }
 
-void Protocol::ProtoModel::addImportedProtoName (TokenReader::iterator current, const string & protoName)
+void Protocol::ProtoModel::addImportedProtoName (TokenReader::iterator, const string & protoName)
 {
     mImportedProtoNames.push_back(protoName);
 }

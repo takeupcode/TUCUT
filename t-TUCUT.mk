@@ -12,11 +12,11 @@ OutDir                 := $(IntermediateDirectory)
 CurrentFileName        :=
 CurrentFilePath        :=
 CurrentFileFullPath    :=
-User                   :=Wahid Tanner
-Date                   :=08/11/18
+User                   :=Wahid
+Date                   :=16/07/19
 CodeLitePath           :=/home/wahid/.codelite
-LinkerName             :=/usr/bin/clang++
-SharedObjectLinkerName :=/usr/bin/clang++ -shared -fPIC
+LinkerName             :=/usr/bin/g++
+SharedObjectLinkerName :=/usr/bin/g++ -shared -fPIC
 ObjectSuffix           :=.o
 DependSuffix           :=.o.d
 PreprocessSuffix       :=.i
@@ -35,25 +35,25 @@ PreprocessOnlySwitch   :=-E
 ObjectsFileList        :="t-TUCUT.txt"
 PCHCompileFlags        :=
 MakeDirCommand         :=mkdir -p
-LinkOptions            :=  
+LinkOptions            := -static 
 IncludePath            :=  $(IncludeSwitch). $(IncludeSwitch). 
 IncludePCH             := 
 RcIncludePath          := 
-Libs                   := $(LibrarySwitch)TUCUT $(LibrarySwitch)c++ $(LibrarySwitch)boost_filesystem-mt 
-ArLibs                 :=  "libTUCUT.a" "c++" "boost_filesystem-mt" 
-LibPath                := $(LibraryPathSwitch). $(LibraryPathSwitch)$(IntermediateDirectory) $(LibraryPathSwitch)/usr/local/lib $(LibraryPathSwitch)/usr/lib/x86_64-linux-gnu 
+Libs                   := $(LibrarySwitch)TUCUT $(LibrarySwitch)boost_filesystem 
+ArLibs                 :=  "TUCUT" "boost_filesystem" 
+LibPath                := $(LibraryPathSwitch). $(LibraryPathSwitch)$(IntermediateDirectory) $(LibraryPathSwitch)/usr/local/lib 
 
 ##
 ## Common variables
 ## AR, CXX, CC, AS, CXXFLAGS and CFLAGS can be overriden using an environment variables
 ##
-AR       := /usr/bin/llvm-ar rcu
-CXX      := /usr/bin/clang++
-CC       := /usr/bin/clang
-CXXFLAGS :=  -g -O0 -Wall -std=c++14 -stdlib=libc++ $(Preprocessors)
-CFLAGS   :=  -g -O0 -Wall $(Preprocessors)
+AR       := /usr/bin/ar rcu
+CXX      := /usr/bin/g++
+CC       := /usr/bin/gcc
+CXXFLAGS := -g -O0 -std=c++17 -Wall -Wextra  $(Preprocessors)
+CFLAGS   := -g -O0 -Wall  $(Preprocessors)
 ASFLAGS  := 
-AS       := /usr/bin/llvm-as
+AS       := /usr/bin/as
 
 
 ##

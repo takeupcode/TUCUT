@@ -19,7 +19,7 @@ using namespace TUCUT;
 Protocol::OptionSingleParser::OptionSingleParser ()
 { }
 
-bool Protocol::OptionSingleParser::parse (TokenReader::iterator current, TokenReader::iterator end, bool firstChance, std::shared_ptr<ProtoModel> model)
+bool Protocol::OptionSingleParser::parse (TokenReader::iterator current, TokenReader::iterator end, bool, std::shared_ptr<ProtoModel> model)
 {
     if (current != end && *current == "option")
     {

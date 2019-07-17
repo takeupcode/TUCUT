@@ -9,6 +9,7 @@
 #include "FileManager.h"
 
 #include <fstream>
+#include <iterator>
 #include <stdexcept>
 
 namespace TUCUT {

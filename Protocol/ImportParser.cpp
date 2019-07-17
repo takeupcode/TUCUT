@@ -21,7 +21,7 @@ Protocol::ImportParser::ImportParser ()
 {
 }
 
-bool Protocol::ImportParser::parse (TokenReader::iterator current, TokenReader::iterator end, bool firstChance, shared_ptr<ProtoModel> model)
+bool Protocol::ImportParser::parse (TokenReader::iterator current, TokenReader::iterator end, bool, shared_ptr<ProtoModel> model)
 {
     if (current != end && *current == "import")
     {

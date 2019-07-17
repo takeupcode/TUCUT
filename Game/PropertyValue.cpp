@@ -53,22 +53,22 @@ bool PropertyValue::getBoolean () const
     throw std::runtime_error("Wrong type of PropertyValue");
 }
 
-void PropertyValue::setString (const std::string & value)
+void PropertyValue::setString (const std::string &)
 {
     throw std::runtime_error("Wrong type of PropertyValue");
 }
 
-void PropertyValue::setInteger (int value)
+void PropertyValue::setInteger (int)
 {
     throw std::runtime_error("Wrong type of PropertyValue");
 }
 
-void PropertyValue::setFloating (double value)
+void PropertyValue::setFloating (double)
 {
     throw std::runtime_error("Wrong type of PropertyValue");
 }
 
-void PropertyValue::setBoolean (bool value)
+void PropertyValue::setBoolean (bool)
 {
     throw std::runtime_error("Wrong type of PropertyValue");
 }

@@ -343,6 +343,9 @@ protected:
             case HashAdapterStrategies::XorFold64:
                 hash = (hash >> BitCount) ^ (hash & mask);
                 break;
+                
+            default:
+                break;
         }
     }
     

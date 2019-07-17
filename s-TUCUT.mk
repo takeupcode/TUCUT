@@ -12,11 +12,11 @@ OutDir                 := $(IntermediateDirectory)
 CurrentFileName        :=
 CurrentFilePath        :=
 CurrentFileFullPath    :=
-User                   :=Wahid Tanner
-Date                   :=08/11/18
+User                   :=Wahid
+Date                   :=16/07/19
 CodeLitePath           :=/home/wahid/.codelite
-LinkerName             :=/usr/bin/clang++
-SharedObjectLinkerName :=/usr/bin/clang++ -shared -fPIC
+LinkerName             :=/usr/bin/g++
+SharedObjectLinkerName :=/usr/bin/g++ -shared -fPIC
 ObjectSuffix           :=.o
 DependSuffix           :=.o.d
 PreprocessSuffix       :=.i
@@ -36,24 +36,24 @@ ObjectsFileList        :="s-TUCUT.txt"
 PCHCompileFlags        :=
 MakeDirCommand         :=mkdir -p
 LinkOptions            :=  
-IncludePath            :=  $(IncludeSwitch). $(IncludeSwitch). 
+IncludePath            :=  $(IncludeSwitch). $(IncludeSwitch)/usr/local/include 
 IncludePCH             := 
 RcIncludePath          := 
 Libs                   := 
 ArLibs                 :=  
-LibPath                := $(LibraryPathSwitch). 
+LibPath                := $(LibraryPathSwitch). $(LibraryPathSwitch)/usr/local/lib 
 
 ##
 ## Common variables
 ## AR, CXX, CC, AS, CXXFLAGS and CFLAGS can be overriden using an environment variables
 ##
-AR       := /usr/bin/llvm-ar rcu
-CXX      := /usr/bin/clang++
-CC       := /usr/bin/clang
-CXXFLAGS :=  -g -std=c++14 -stdlib=libc++ $(Preprocessors)
-CFLAGS   :=  -g $(Preprocessors)
+AR       := /usr/bin/ar rcu
+CXX      := /usr/bin/g++
+CC       := /usr/bin/gcc
+CXXFLAGS := -g -std=c++17 -Wall -Wextra  $(Preprocessors)
+CFLAGS   := -g  $(Preprocessors)
 ASFLAGS  := 
-AS       := /usr/bin/llvm-as
+AS       := /usr/bin/as
 
 
 ##
@@ -63,9 +63,9 @@ CodeLiteDir:=/usr/share/codelite
 Objects0=$(IntermediateDirectory)/Hash_Tests_HashScenarios.cpp$(ObjectSuffix) $(IntermediateDirectory)/Noise_Tests_NoiseScenarios.cpp$(ObjectSuffix) $(IntermediateDirectory)/Game_PropertyValue.cpp$(ObjectSuffix) $(IntermediateDirectory)/Game_PropertyGroup.cpp$(ObjectSuffix) $(IntermediateDirectory)/Game_PropertyContainer.cpp$(ObjectSuffix) $(IntermediateDirectory)/Protocol_ProtoModel.cpp$(ObjectSuffix) $(IntermediateDirectory)/Protocol_OneofParser.cpp$(ObjectSuffix) $(IntermediateDirectory)/Protocol_OptionValueParser.cpp$(ObjectSuffix) $(IntermediateDirectory)/Protocol_PackageParser.cpp$(ObjectSuffix) $(IntermediateDirectory)/Protocol_MessageFieldModel.cpp$(ObjectSuffix) \
 	$(IntermediateDirectory)/Protocol_CodeGeneratorManager.cpp$(ObjectSuffix) $(IntermediateDirectory)/Text_TextUtil.cpp$(ObjectSuffix) $(IntermediateDirectory)/Protocol_TokenReader.cpp$(ObjectSuffix) $(IntermediateDirectory)/Config_ConfigInfo.cpp$(ObjectSuffix) $(IntermediateDirectory)/Log_LogManager.cpp$(ObjectSuffix) $(IntermediateDirectory)/Protocol_OneofModel.cpp$(ObjectSuffix) $(IntermediateDirectory)/Noise_NoiseUtil.cpp$(ObjectSuffix) $(IntermediateDirectory)/Noise_Noise.cpp$(ObjectSuffix) $(IntermediateDirectory)/File_FileManager.cpp$(ObjectSuffix) $(IntermediateDirectory)/Protocol_ParserManager.cpp$(ObjectSuffix) \
 	$(IntermediateDirectory)/Protocol_CodeGeneratorCPP.cpp$(ObjectSuffix) $(IntermediateDirectory)/Protocol_MessageFieldParser.cpp$(ObjectSuffix) $(IntermediateDirectory)/Protocol_OptionModel.cpp$(ObjectSuffix) $(IntermediateDirectory)/Protocol_ProtoParser.cpp$(ObjectSuffix) $(IntermediateDirectory)/Protocol_EnumValueParser.cpp$(ObjectSuffix) $(IntermediateDirectory)/Protocol_MessageParser.cpp$(ObjectSuffix) $(IntermediateDirectory)/Game_GameObjectManager.cpp$(ObjectSuffix) $(IntermediateDirectory)/Protocol_EnumValueModel.cpp$(ObjectSuffix) $(IntermediateDirectory)/Protocol_ImportParser.cpp$(ObjectSuffix) $(IntermediateDirectory)/Protocol_OptionGroupParser.cpp$(ObjectSuffix) \
-	$(IntermediateDirectory)/Protocol_EnumModel.cpp$(ObjectSuffix) $(IntermediateDirectory)/Protocol_EnumParser.cpp$(ObjectSuffix) $(IntermediateDirectory)/Game_GameObject.cpp$(ObjectSuffix) $(IntermediateDirectory)/Protocol_OneofFieldParser.cpp$(ObjectSuffix) 
+	$(IntermediateDirectory)/Protocol_EnumModel.cpp$(ObjectSuffix) $(IntermediateDirectory)/Protocol_EnumParser.cpp$(ObjectSuffix) $(IntermediateDirectory)/Game_GameObject.cpp$(ObjectSuffix) 
 
-Objects1=$(IntermediateDirectory)/Protocol_MessageModel.cpp$(ObjectSuffix) $(IntermediateDirectory)/Protocol_OptionSingleParser.cpp$(ObjectSuffix) 
+Objects1=$(IntermediateDirectory)/Protocol_OneofFieldParser.cpp$(ObjectSuffix) $(IntermediateDirectory)/Protocol_MessageModel.cpp$(ObjectSuffix) $(IntermediateDirectory)/Protocol_OptionSingleParser.cpp$(ObjectSuffix) 
 
 
 

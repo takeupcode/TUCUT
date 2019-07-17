@@ -20,38 +20,38 @@ public:
     ColorRGB (int red, int green, int blue, int alpha = 255)
     : mRed(red), mGreen(green), mBlue(blue), mAlpha(alpha)
     {
-        if (mRed < 0)
+        if (red < 0)
         {
             mRed = 0;
         }
-        else if (mRed > 255)
+        else if (red > 255)
         {
             mRed = 255;
         }
         
-        if (mGreen < 0)
+        if (green < 0)
         {
             mGreen = 0;
         }
-        else if (mGreen > 255)
+        else if (green > 255)
         {
             mGreen = 255;
         }
         
-        if (mBlue < 0)
+        if (blue < 0)
         {
             mBlue = 0;
         }
-        else if (mBlue > 255)
+        else if (blue > 255)
         {
             mBlue = 255;
         }
         
-        if (mAlpha < 0)
+        if (alpha < 0)
         {
             mAlpha = 0;
         }
-        else if (mAlpha > 255)
+        else if (alpha > 255)
         {
             mAlpha = 255;
         }

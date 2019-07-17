@@ -20,7 +20,7 @@ public:
     explicit CodeIndenter (const std::string & indentBy = "    ", unsigned int minimumLevel = 0)
     : mCurrentLevel(minimumLevel), mMinimumLevel(minimumLevel), mIndentBy(indentBy), mPrefix("")
     {
-        for (int level = 0; level < mCurrentLevel; level++)
+        for (unsigned int level = 0; level < mCurrentLevel; level++)
         {
             mPrefix += mIndentBy;
         }

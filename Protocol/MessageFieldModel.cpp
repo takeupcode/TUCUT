@@ -22,8 +22,11 @@ Protocol::MessageFieldModel::MessageFieldModel (Requiredness requiredness, const
 }
 
 Protocol::MessageFieldModel::MessageFieldModel (const MessageFieldModel & src)
-: Nameable(src), Packageable(src), OptionModelContainer(src), mRequiredness(src.mRequiredness), mFieldType(src.mFieldType),
-  mFieldTypePackage(src.mFieldTypePackage), mFieldCategory(src.mFieldCategory), mIndex(src.mIndex), mDefaultValue(src.mDefaultValue)
+: Nameable(src), Packageable(src), OptionModelContainer(src),
+  mRequiredness(src.mRequiredness), mFieldCategory(src.mFieldCategory),
+  mDefaultValue(src.mDefaultValue), mFieldType(src.mFieldType),
+  mFieldTypePackage(src.mFieldTypePackage),
+  mIndex(src.mIndex)
 {
 }
 
