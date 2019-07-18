@@ -65,16 +65,16 @@ void GameSystem::notify (int id, const std::shared_ptr<GameObject> & gameObject)
     if (id == GameManager::GameObjectCreatedEventId ||
         id == GameManager::GameObjectComponentEventId)
     {
-        if (!mRequiredAbilityTokens.empty())
+        // A game object will belong by default unless it's
+        // missing a required component.
+        gameObjectBelongs = true;
+        
+        for (const auto & token: mRequiredAbilityTokens)
         {
-            gameObjectBelongs = true;
-            for (const auto & token: mRequiredAbilityTokens)
+            if (!gameObject->hasGameAbility(token))
             {
-                if (!gameObject->hasGameAbility(token))
-                {
-                    gameObjectBelongs = false;
-                    break;
-                }
+                gameObjectBelongs = false;
+                break;
             }
         }
     }

@@ -45,6 +45,12 @@ public:
     void play ();
     
     void exit ();
+    
+    void pause ();
+    
+    void resume ();
+    
+    void step ();
 
     template <typename T>
     std::shared_ptr<GameObject> createGameObject (const std::string & token = "")
@@ -297,7 +303,7 @@ private:
     using GameCommandEventMap = std::unordered_map<int, std::unique_ptr<GameCommandSentEvent>>;
 
     GameManager ()
-    : mElapsed(0), mFixedFrameTotal(0), mExit(false),
+    : mElapsed(0), mFixedFrameTotal(0), mExit(false), mPaused(false),
     mNextGameObjectId(1), mNextGameComponentId(1), mNextGameSystemId(1),
     mNextGameActionId(1), mNextGameAbilityId(1), mNextGameCommandId(1),
     mGameObjectCreated(new GameObjectCreatedEvent(GameObjectCreatedEventId)),
@@ -306,6 +312,8 @@ private:
     { }
     
     void loop ();
+
+    void processFrame (TimeResolution elapsedTime);
     
     void handleInput ();
 
@@ -333,6 +341,7 @@ private:
     TimeResolution mElapsed;
     TimeResolution mFixedFrameTotal;
     bool mExit;
+    bool mPaused;
 
     int mNextGameObjectId;
     int mNextGameComponentId;

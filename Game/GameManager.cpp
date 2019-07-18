@@ -58,6 +58,22 @@ void GameManager::exit ()
 {
     mExit = true;
 }
+    
+void GameManager::pause ()
+{
+    mPaused = true;
+}
+
+void GameManager::resume ()
+{
+    mPaused = false;
+    loop();
+}
+
+void GameManager::step ()
+{
+    processFrame(FixedFrameTime);
+}
 
 TimeResolution GameManager::elapsed () const
 {
@@ -95,13 +111,11 @@ void GameManager::loop ()
 {
     mLastTime = TimeClock::now();
     
-    while (!mExit)
+    while (!mExit && !mPaused)
     {
         if (isFixedFrameReady())
         {
-            handleInput();
-            update(elapsed());
-            render();
+            processFrame(elapsed());
             
             completeFixedFrame();
         }
@@ -111,6 +125,13 @@ void GameManager::loop ()
         }
         restartClock();
     }
+}
+
+void GameManager::processFrame (TimeResolution elapsedTime)
+{
+    handleInput();
+    update(elapsedTime);
+    render();
 }
 
 int GameManager::createGameComponentId (const std::string & token)
