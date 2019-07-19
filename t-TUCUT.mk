@@ -13,7 +13,7 @@ CurrentFileName        :=
 CurrentFilePath        :=
 CurrentFileFullPath    :=
 User                   :=Wahid
-Date                   :=17/07/19
+Date                   :=18/07/19
 CodeLitePath           :=/home/wahid/.codelite
 LinkerName             :=/usr/bin/g++
 SharedObjectLinkerName :=/usr/bin/g++ -shared -fPIC
@@ -88,6 +88,12 @@ $(OutputFile): $(IntermediateDirectory)/.d ".build-debug/s-TUCUT" $(Objects)
 
 
 
+
+PostBuild:
+	@echo Executing Post Build commands ...
+	mkdir -p ./Debug/Messages
+	cp Protocol/Tests/Messages/*.proto ./Debug/Messages/
+	@echo Done
 
 MakeIntermediateDirs:
 	@test -d ./Debug || $(MakeDirCommand) ./Debug

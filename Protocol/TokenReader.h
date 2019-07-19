@@ -21,7 +21,7 @@ class TokenReader
 private:
     struct TokenReaderData
     {
-        TokenReaderData (std::ifstream * protoStream);
+        TokenReaderData (const std::string & protoFileName);
 
         void reset ();
         

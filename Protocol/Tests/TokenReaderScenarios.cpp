@@ -23,9 +23,17 @@ SCENARIO( TokenReader, "Construction/Normal", "unit,protocol", "TokenReader can 
 
 SCENARIO( TokenReader, "Construction/NotFound", "unit,protocol", "TokenReader cannot open nonexisting proto file." )
 {
-    Protocol::TokenReader reader("Messages/NotFound.proto");
+    bool expectedExceptionThrown = false;
+    try
+    {
+        Protocol::TokenReader reader("Messages/NotFound.proto");
+    }
+    catch (const std::runtime_error &)
+    {
+        expectedExceptionThrown = true;
+    }
 
-    VERIFY_TRUE(false); // Fail this until it is implemented.
+    VERIFY_TRUE(expectedExceptionThrown);
 }
 
 SCENARIO( TokenReader, "Iteration/Normal", "unit,protocol", "TokenReader can iterate empty proto." )

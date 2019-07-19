@@ -556,7 +556,10 @@ public:
         }
         if (!mChildScenarios.empty())
         {
-            stream << "----- Passed: " << localPassCount << " Failed: " << localFailCount << " Skipped: " << localSkipCount << " -----" << std::endl;
+            stream << "----- Passed: " << localPassCount
+                << " ----- Failed: " << localFailCount
+                << " ----- Skipped: " << localSkipCount
+                << " -----" << std::endl;
             stream << std::endl;
         }
 

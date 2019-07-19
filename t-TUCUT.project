@@ -156,7 +156,10 @@
         <StartupCommands/>
       </Debugger>
       <PreBuild/>
-      <PostBuild/>
+      <PostBuild>
+        <Command Enabled="yes">mkdir -p $(IntermediateDirectory)/Messages</Command>
+        <Command Enabled="yes">cp Protocol/Tests/Messages/*.proto $(IntermediateDirectory)/Messages/</Command>
+      </PostBuild>
       <CustomBuild Enabled="no">
         <RebuildCommand/>
         <CleanCommand/>

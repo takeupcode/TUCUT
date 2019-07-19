@@ -8,6 +8,8 @@
 
 #include "TokenReader.h"
 
+#include <stdexcept>
+
 using namespace std;
 using namespace TUCUT;
 
@@ -369,10 +371,18 @@ int Protocol::TokenReader::TokenIterator::column () const
     return mpData->mCurrentTokenColumn;
 }
 
-Protocol::TokenReader::TokenReaderData::TokenReaderData (ifstream * protoStream)
+Protocol::TokenReader::TokenReaderData::TokenReaderData (const std::string & protoFileName)
 : mEnd(false), mStringMode(false), mDelimiter('\0'), mLine(1), mCurrentTokenLine(1),
-  mColumn(0), mCurrentTokenColumn(0), mCurrentToken(""), mProtoStream(protoStream)
+  mColumn(0), mCurrentTokenColumn(0), mCurrentToken(""),
+  mProtoStream(new ifstream(protoFileName))
 {
+    if (!mProtoStream->is_open())
+    {
+        std::string message = "Could not open ";
+        message += protoFileName;
+        throw std::runtime_error(message);
+    }
+
     // The line starts at 1 always even for a completely empty file.
 
     // The column is set to 0 initially and will be incremented to
@@ -394,7 +404,7 @@ void Protocol::TokenReader::TokenReaderData::reset ()
 }
 
 Protocol::TokenReader::TokenReader (const std::string & protoFileName)
-: mData(new Protocol::TokenReader::TokenReaderData(new ifstream(protoFileName)))
+: mData(new Protocol::TokenReader::TokenReaderData(protoFileName))
 {
 }
 
