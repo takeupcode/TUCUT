@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CodeLite_Project Name="s-TUCUT" Version="10.0.0" InternalType="Library">
+  <Plugins>
+    <Plugin Name="qmake">
+      <![CDATA[00020001N0005Debug0000000000000001N0007Release000000000000]]>
+    </Plugin>
+  </Plugins>
   <VirtualDirectory Name="Curses">
+    <File Name="Curses/Visibility.cpp"/>
+    <File Name="Curses/Visibility.h"/>
     <File Name="Curses/DisplayBox.cpp"/>
     <File Name="Curses/ListBox.h"/>
     <File Name="Curses/Colors.cpp"/>
@@ -34,11 +41,6 @@
   <VirtualDirectory Name="Color">
     <File Name="Color/Color.h"/>
   </VirtualDirectory>
-  <Plugins>
-    <Plugin Name="qmake">
-      <![CDATA[00020001N0005Debug0000000000000001N0007Release000000000000]]>
-    </Plugin>
-  </Plugins>
   <VirtualDirectory Name="Math">
     <File Name="Math/MinMax.h"/>
     <File Name="Math/Adjust.h"/>
