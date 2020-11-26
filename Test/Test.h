@@ -22,7 +22,7 @@
 namespace TUCUT {
 namespace Test {
     
-inline std::vector<std::string> internalSplitString(const std::string & src, char delimiter)
+inline std::vector<std::string> internalSplitString(std::string const & src, char delimiter)
 {
     std::stringstream ss(src);
     std::string element;
@@ -43,13 +43,13 @@ public:
     : mLine(line)
     { }
     
-    virtual const char * what () const noexcept
+    virtual char const * what () const noexcept
     {
         return mMessage.c_str();
     }
     
 protected:
-    static std::string narrow (const std::wstring & wideString)
+    static std::string narrow (std::wstring const & wideString)
     {
         std::locale loc;
         std::vector<char> narrowCharBuf(wideString.size());
@@ -159,13 +159,13 @@ public:
         initialize();
     }
 
-    EqualVerificationException (const std::string & expectedValue, const std::string & actualValue, int line)
+    EqualVerificationException (std::string const & expectedValue, std::string const & actualValue, int line)
     : VerificationException(line), mExpectedValue(expectedValue), mActualValue(actualValue)
     {
         initialize();
     }
 
-    EqualVerificationException (const std::wstring & expectedValue, const std::wstring & actualValue, int line)
+    EqualVerificationException (std::wstring const & expectedValue, std::wstring const & actualValue, int line)
     : VerificationException(line), mExpectedValue(narrow(expectedValue)), mActualValue(narrow(actualValue))
     {
         initialize();
@@ -225,7 +225,7 @@ public:
         return mRunPassed;
     }
     
-    virtual bool run (const std::vector<std::string> & tags)
+    virtual bool run (std::vector<std::string> const & tags)
     {
         // Run scenario if either mTag or tags is empty. Otherwise
         // all tags specified at run time must be present in the scenario.
@@ -343,7 +343,7 @@ public:
         }
     }
 
-    virtual void verifyEqual (const std::string & expectedValue, const std::string & actualValue, int line)
+    virtual void verifyEqual (std::string const & expectedValue, std::string const & actualValue, int line)
     {
         if (actualValue != expectedValue)
         {
@@ -352,7 +352,7 @@ public:
         }
     }
 
-    virtual void verifyEqual (const std::wstring & expectedValue, const std::wstring & actualValue, int line)
+    virtual void verifyEqual (std::wstring const & expectedValue, std::wstring const & actualValue, int line)
     {
         if (actualValue != expectedValue)
         {
@@ -362,7 +362,7 @@ public:
     }
     
     template <typename T>
-    void verifyEqual (const T & expectedValue, const T & actualValue, int line)
+    void verifyEqual (T const & expectedValue, T const & actualValue, int line)
     {
         if (actualValue != expectedValue)
         {
@@ -392,16 +392,16 @@ public:
     }
 
 protected:
-    ScenarioBase (const std::string & categoryFullName, const std::string & scenarioDescription, bool exceptionExpected, const std::string & scenarioTag)
+    ScenarioBase (std::string const & categoryFullName, std::string const & scenarioDescription, bool exceptionExpected, std::string const & scenarioTag)
     : mCategoryFullName(categoryFullName), mDescription(scenarioDescription), mTag(scenarioTag), mExceptionExpected(exceptionExpected)
     { }
     
-    ScenarioBase (const ScenarioBase & src)
+    ScenarioBase (ScenarioBase const & src)
     : mCategoryFullName(src.mCategoryFullName), mDescription(src.mDescription), mTag(src.mTag), mExceptionExpected(src.mExceptionExpected)
     { }
     
 private:
-    ScenarioBase & operator = (const ScenarioBase & rhs) = delete;
+    ScenarioBase & operator = (ScenarioBase const & rhs) = delete;
     
     std::string mCategoryFullName;
     std::string mDescription;
@@ -414,7 +414,7 @@ template <typename ExceptionT = std::exception>
 class Scenario : public ScenarioBase
 {
 public:
-    Scenario (const std::string & categoryFullName, const std::string & scenarioDescription, bool exceptionExpected, const std::string & scenarioTag = "")
+    Scenario (std::string const & categoryFullName, std::string const & scenarioDescription, bool exceptionExpected, std::string const & scenarioTag = "")
     : ScenarioBase(categoryFullName, scenarioDescription, exceptionExpected, scenarioTag)
     { }
     
@@ -422,12 +422,12 @@ public:
     { }
     
 protected:
-    Scenario (const Scenario & src)
+    Scenario (Scenario const & src)
     : ScenarioBase(src)
     { }
     
 private:
-    Scenario & operator = (const Scenario & rhs) = delete;
+    Scenario & operator = (Scenario const & rhs) = delete;
 };
 
 class Category
@@ -435,12 +435,12 @@ class Category
     friend class ScenarioManager;
     
 public:
-    Category (const std::string & name, const std::string & fullName)
+    Category (std::string const & name, std::string const & fullName)
     : mName(name), mFullName(fullName), mPassCount(0), mFailCount(0), mSkipCount(0)
     {
     }
     
-    Category (const Category & src)
+    Category (Category const & src)
     : mName(src.mName), mFullName(src.mFullName),
       mPassCount(src.mPassCount), mFailCount(src.mFailCount), mSkipCount(src.mSkipCount),
       mChildCategories(src.mChildCategories), mChildScenarios(src.mChildScenarios)
@@ -484,7 +484,7 @@ public:
         return mChildScenarios;
     }
     
-    virtual std::shared_ptr<ScenarioBase> registerScenario (const ScenarioBase * scenario)
+    virtual std::shared_ptr<ScenarioBase> registerScenario (ScenarioBase const * scenario)
     {
         std::shared_ptr<ScenarioBase> sharedScenario(scenario->clone());
         
@@ -493,7 +493,7 @@ public:
         return sharedScenario;
     }
     
-    virtual void run (std::ostream & stream, const std::vector<std::string> & tags)
+    virtual void run (std::ostream & stream, std::vector<std::string> const & tags)
     {
         mPassCount = 0;
         mFailCount = 0;
@@ -538,7 +538,7 @@ public:
                         scenario->description() << std::endl;
                 }
             }
-            catch (const VerificationException & ex)
+            catch (VerificationException const & ex)
             {
                 localFailCount++;
                 stream << "Scenario failed: " <<
@@ -569,7 +569,7 @@ public:
     }
     
 private:
-    Category & operator = (const Category & rhs) = delete;
+    Category & operator = (Category const & rhs) = delete;
     
     std::string mName;
     std::string mFullName;
@@ -581,7 +581,7 @@ private:
     std::vector<std::shared_ptr<ScenarioBase>> mChildScenarios;
 };
 
-std::ostream & operator << (std::ostream & strm, const Category & category);
+std::ostream & operator << (std::ostream & strm, Category const & category);
 
 class ScenarioManager
 {
@@ -601,7 +601,7 @@ public:
         return mTopLevelCategories;
     }
     
-    virtual std::shared_ptr<Category> registerCategory (const std::string & categoryFullName)
+    virtual std::shared_ptr<Category> registerCategory (std::string const & categoryFullName)
     {
         // Skip over initial forward slash characters.
         auto beginPosition = std::find_if_not(std::begin(categoryFullName), std::end(categoryFullName),
@@ -650,7 +650,7 @@ public:
         return previousCategory;
     }
     
-    virtual void run (std::ostream & stream, const std::vector<std::string> & tags)
+    virtual void run (std::ostream & stream, std::vector<std::string> const & tags)
     {
         int passCount = 0;
         int failCount = 0;
@@ -695,7 +695,7 @@ private:
 : public TUCUT::Test::Scenario<> \
 { \
 public: \
-    INTERNAL_TUCUT_TEST_SCENARIO_CLASS_NAME( preprocGroupName ) (const std::string & categoryFullName, const std::string & scenarioDescription, bool exceptionExpected, const std::string & scenarioTag) \
+    INTERNAL_TUCUT_TEST_SCENARIO_CLASS_NAME( preprocGroupName ) (std::string const & categoryFullName, std::string const & scenarioDescription, bool exceptionExpected, std::string const & scenarioTag) \
     : TUCUT::Test::Scenario<>(categoryFullName, scenarioDescription, exceptionExpected, scenarioTag) \
     { \
         auto scenarioManager = TUCUT::Test::ScenarioManager::instance(); \
@@ -708,7 +708,7 @@ public: \
     } \
     virtual void runSteps (); \
 protected: \
-    INTERNAL_TUCUT_TEST_SCENARIO_CLASS_NAME( preprocGroupName ) (const INTERNAL_TUCUT_TEST_SCENARIO_CLASS_NAME( preprocGroupName ) & src) \
+    INTERNAL_TUCUT_TEST_SCENARIO_CLASS_NAME( preprocGroupName ) (INTERNAL_TUCUT_TEST_SCENARIO_CLASS_NAME( preprocGroupName ) const & src) \
     : TUCUT::Test::Scenario<>(src) \
     { } \
 }; \
@@ -725,7 +725,7 @@ void INTERNAL_TUCUT_TEST_SCENARIO_CLASS_NAME( preprocGroupName )::runSteps ()
 namespace TUCUT {
 namespace Test {
     
-int main (int argc, const char * argv[])
+int main (int argc, char const * argv[])
 {
     std::vector<std::string> tags;
     for (int i = 1; i < argc; i++)
@@ -743,7 +743,7 @@ int main (int argc, const char * argv[])
 } // namespace Test
 } // namespace TUCUT
 
-int main (int argc, const char * argv[])
+int main (int argc, char const * argv[])
 {
     int result = TUCUT::Test::main(argc, argv);
     
@@ -757,7 +757,7 @@ int main (int argc, const char * argv[])
 namespace TUCUT {
 namespace Test {
         
-std::ostream & operator << (std::ostream & strm, const Category & category)
+std::ostream & operator << (std::ostream & strm, Category const & category)
 {
     return strm;
 }
