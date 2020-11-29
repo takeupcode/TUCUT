@@ -28,6 +28,8 @@
 		3E06183E21535396000B634B /* Noise.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E06183D21535396000B634B /* Noise.cpp */; };
 		3E0618422153567D000B634B /* NoiseUtil.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E0618412153567D000B634B /* NoiseUtil.h */; };
 		3E0618442154977F000B634B /* NoiseUtil.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E0618432154977F000B634B /* NoiseUtil.cpp */; };
+		3E19C5982570783600CA5BCB /* Compare.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E19C5962570783600CA5BCB /* Compare.h */; };
+		3E19C59A257365B400CA5BCB /* CompareScenarios.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E19C599257365B400CA5BCB /* CompareScenarios.cpp */; };
 		3E1F75C920FEFF8E00028734 /* MessageOneof.protocol.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E259E0520E34B4A00F01379 /* MessageOneof.protocol.cpp */; };
 		3E259DCA20E33E2B00F01379 /* LogManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E259DC820E33E2A00F01379 /* LogManager.cpp */; };
 		3E259DCB20E33E2B00F01379 /* LogManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E259DC920E33E2A00F01379 /* LogManager.h */; };
@@ -415,6 +417,8 @@
 		3E06183D21535396000B634B /* Noise.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Noise.cpp; sourceTree = "<group>"; };
 		3E0618412153567D000B634B /* NoiseUtil.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NoiseUtil.h; sourceTree = "<group>"; };
 		3E0618432154977F000B634B /* NoiseUtil.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = NoiseUtil.cpp; sourceTree = "<group>"; };
+		3E19C5962570783600CA5BCB /* Compare.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Compare.h; sourceTree = "<group>"; };
+		3E19C599257365B400CA5BCB /* CompareScenarios.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CompareScenarios.cpp; sourceTree = "<group>"; };
 		3E1F75C420FEFBE400028734 /* EnumMultipleMessage.protocol.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EnumMultipleMessage.protocol.cpp; sourceTree = "<group>"; };
 		3E1F75C520FEFBE400028734 /* EnumMultipleMessage.protocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EnumMultipleMessage.protocol.h; sourceTree = "<group>"; };
 		3E259DAC20E3398E00F01379 /* libTUCUT.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libTUCUT.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1230,6 +1234,7 @@
 			children = (
 				3E289F322173B23F002FFBDC /* Tests */,
 				3E80D64D2181635E006DA12E /* Bounds.h */,
+				3E19C5962570783600CA5BCB /* Compare.h */,
 				3E289F352173B47C002FFBDC /* Point.h */,
 				3E289F372176A670002FFBDC /* Lerp.h */,
 				3E289F4121784092002FFBDC /* Bezier.h */,
@@ -1244,6 +1249,7 @@
 		3E289F322173B23F002FFBDC /* Tests */ = {
 			isa = PBXGroup;
 			children = (
+				3E19C599257365B400CA5BCB /* CompareScenarios.cpp */,
 				3E289F332173B2B8002FFBDC /* PointScenarios.cpp */,
 				3E289F3D2176E5BD002FFBDC /* LerpScenarios.cpp */,
 				3E289F45217C2618002FFBDC /* VectorScenarios.cpp */,
@@ -1521,6 +1527,7 @@
 				3E259EEA20E34BE900F01379 /* Nameable.h in Headers */,
 				3E259EBC20E34BE900F01379 /* Nestable.h in Headers */,
 				3E259EE920E34BE900F01379 /* OptionModel.h in Headers */,
+				3E19C5982570783600CA5BCB /* Compare.h in Headers */,
 				3E259EC820E34BE900F01379 /* CodeGeneratorManager.h in Headers */,
 				3E259ED420E34BE900F01379 /* ProtoParser.h in Headers */,
 				3E259DDA20E33E5E00F01379 /* EventSubscriber.h in Headers */,
@@ -1856,6 +1863,7 @@
 				3E80D6512182B5FD006DA12E /* BoundsScenarios.cpp in Sources */,
 				3E06182C212A65FB000B634B /* PropertyContainerScenarios.cpp in Sources */,
 				3ED4127D20FED1FB00BC7226 /* EnumParserScenarios.cpp in Sources */,
+				3E19C59A257365B400CA5BCB /* CompareScenarios.cpp in Sources */,
 				3ED4127E20FED1FB00BC7226 /* EnumValueParserScenarios.cpp in Sources */,
 				3E3F82F821043ED200501126 /* AdvancedPublisher.cpp in Sources */,
 				3ED4127F20FED1FB00BC7226 /* ImportParserScenarios.cpp in Sources */,
