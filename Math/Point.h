@@ -331,6 +331,11 @@ using Point2i = Point2<int>;
 using Point3i = Point3<int>;
 using Point4i = Point4<int>;
 
+using Point1f = Point1<float>;
+using Point2f = Point2<float>;
+using Point3f = Point3<float>;
+using Point4f = Point4<float>;
+
 using Point1d = Point1<double>;
 using Point2d = Point2<double>;
 using Point3d = Point3<double>;
