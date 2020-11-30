@@ -12,6 +12,7 @@
 #include <cmath>
 #include <string>
 
+#include "Compare.h"
 #include "../Exception/InvalidArgumentException.h"
 #include "../Exception/InvalidOperationException.h"
 
@@ -70,7 +71,7 @@ public:
     }
 
     template<typename U = T>
-    std::enable_if_t<std::is_floating_point<U>::value, Vector1<U>> normal () const
+    Vector1<U> normal () const
     {
         if (x == 0)
         {
@@ -80,20 +81,9 @@ public:
         return Vector1<U>(x > 0 ? 1 : -1);
     }
 
-    template<typename U = T>
-    std::enable_if_t<std::is_integral<U>::value, Vector1<double>> normal () const
-    {
-        if (x == 0)
-        {
-            throw Exception::InvalidOperationException("normal", "normal cannot be calculated for zero length vector.");
-        }
-        
-        return Vector1<double>(x > 0 ? 1 : -1);
-    }
-
     bool operator == (const Vector1 & rhs) const
     {
-        return x == rhs.x;
+        return compareEq(x, rhs.x);
     }
     
     bool operator != (const Vector1 & rhs) const
@@ -213,35 +203,22 @@ public:
     }
 
     template<typename U = T>
-    std::enable_if_t<std::is_floating_point<U>::value, Vector2<U>> normal () const
+    Vector2<U> normal () const
     {
         if (x == 0 && y == 0)
         {
             throw Exception::InvalidOperationException("normal", "normal cannot be calculated for zero length vector.");
         }
         
-        U length = std::sqrt(lengthSquared());
+        U length = std::sqrt(static_cast<U>(lengthSquared()));
         
-        return Vector2<U>(x / length, y / length);
-    }
-
-    template<typename U = T>
-    std::enable_if_t<std::is_integral<U>::value, Vector2<double>> normal () const
-    {
-        if (x == 0 && y == 0)
-        {
-            throw Exception::InvalidOperationException("normal", "normal cannot be calculated for zero length vector.");
-        }
-        
-        double length = std::sqrt(lengthSquared());
-        
-        return Vector2<double>(static_cast<double>(x) / length, static_cast<double>(y) / length);
+        return Vector2<U>(static_cast<U>(x) / length, static_cast<U>(y) / length);
     }
 
     bool operator == (const Vector2 & rhs) const
     {
-        return x == rhs.x &&
-            y == rhs.y;
+        return compareEq(x, rhs.x) &&
+            compareEq(y, rhs.y);
     }
     
     bool operator != (const Vector2 & rhs) const
@@ -376,37 +353,24 @@ public:
     }
 
     template<typename U = T>
-    std::enable_if_t<std::is_floating_point<U>::value, Vector3<U>> normal () const
+    Vector3<U> normal () const
     {
         if (x == 0 && y == 0 && z == 0)
         {
             throw Exception::InvalidOperationException("normal", "normal cannot be calculated for zero length vector.");
         }
         
-        U length = std::sqrt(lengthSquared());
-        
-        return Vector3<U>(x / length, y / length, z / length);
-    }
+        U length = std::sqrt(static_cast<U>(lengthSquared()));
 
-    template<typename U = T>
-    std::enable_if_t<std::is_integral<U>::value, Vector3<double>> normal () const
-    {
-        if (x == 0 && y == 0 && z == 0)
-        {
-            throw Exception::InvalidOperationException("normal", "normal cannot be calculated for zero length vector.");
-        }
-        
-        double length = std::sqrt(lengthSquared());
-        
-        return Vector3<double>(static_cast<double>(x) / length, static_cast<double>(y) / length,
-                               static_cast<double>(z) / length);
+        return Vector3<U>(static_cast<U>(x) / length, static_cast<U>(y) / length,
+            static_cast<U>(z) / length);
     }
 
     bool operator == (const Vector3 & rhs) const
     {
-        return x == rhs.x &&
-            y == rhs.y &&
-            z == rhs.z;
+        return compareEq(x, rhs.x) &&
+            compareEq(y, rhs.y) &&
+            compareEq(z, rhs.z);
     }
     
     bool operator != (const Vector3 & rhs) const
@@ -562,38 +526,25 @@ public:
     }
 
     template<typename U = T>
-    std::enable_if_t<std::is_floating_point<U>::value, Vector4<U>> normal () const
+    Vector4<U> normal () const
     {
         if (x == 0 && y == 0 && z == 0 && w == 0)
         {
             throw Exception::InvalidOperationException("normal", "normal cannot be calculated for zero length vector.");
         }
         
-        U length = std::sqrt(lengthSquared());
-        
-        return Vector4<U>(x / length, y / length, z / length, w / length);
-    }
+        U length = std::sqrt(static_cast<U>(lengthSquared()));
 
-    template<typename U = T>
-    std::enable_if_t<std::is_integral<U>::value, Vector4<double>> normal () const
-    {
-        if (x == 0 && y == 0 && z == 0 && w == 0)
-        {
-            throw Exception::InvalidOperationException("normal", "normal cannot be calculated for zero length vector.");
-        }
-        
-        double length = std::sqrt(lengthSquared());
-        
-        return Vector4<double>(static_cast<double>(x) / length, static_cast<double>(y) / length,
-                               static_cast<double>(z) / length, static_cast<double>(w) / length);
+        return Vector4<U>(static_cast<U>(x) / length, static_cast<U>(y) / length,
+            static_cast<U>(z) / length, static_cast<U>(w) / length);
     }
 
     bool operator == (const Vector4 & rhs) const
     {
-        return x == rhs.x &&
-        y == rhs.y &&
-        z == rhs.z &&
-        w == rhs.w;
+        return compareEq(x, rhs.x) &&
+        compareEq(y, rhs.y) &&
+        compareEq(z, rhs.z) &&
+        compareEq(w, rhs.w);
     }
     
     bool operator != (const Vector4 & rhs) const
@@ -654,10 +605,20 @@ using Vector2i = Vector2<int>;
 using Vector3i = Vector3<int>;
 using Vector4i = Vector4<int>;
 
+using Vector1f = Vector1<float>;
+using Vector2f = Vector2<float>;
+using Vector3f = Vector3<float>;
+using Vector4f = Vector4<float>;
+
 using Vector1d = Vector1<double>;
 using Vector2d = Vector2<double>;
 using Vector3d = Vector3<double>;
 using Vector4d = Vector4<double>;
+
+using Vector1l = Vector1<long double>;
+using Vector2l = Vector2<long double>;
+using Vector3l = Vector3<long double>;
+using Vector4l = Vector4<long double>;
 
 } // namespace Math
 } // namespace TUCUT
