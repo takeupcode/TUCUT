@@ -9,11 +9,11 @@
 #ifndef TUCUT_Math_Point_h
 #define TUCUT_Math_Point_h
 
-#include <string>
-
+#include "Compare.h"
+#include "../Exception/InvalidArgumentException.h"
 #include "Vector.h"
 
-#include "../Exception/InvalidArgumentException.h"
+#include <string>
 
 namespace TUCUT {
 namespace Math {
@@ -46,7 +46,7 @@ public:
 
     bool operator == (const Point1 & rhs) const
     {
-        return x == rhs.x;
+        return compareEq(x, rhs.x);
     }
 
     bool operator != (const Point1 & rhs) const
@@ -118,8 +118,8 @@ public:
 
     bool operator == (const Point2 & rhs) const
     {
-        return x == rhs.x &&
-            y == rhs.y;
+        return compareEq(x, rhs.x) &&
+            compareEq(y, rhs.y);
     }
     
     bool operator != (const Point2 & rhs) const
@@ -195,9 +195,9 @@ public:
 
     bool operator == (const Point3 & rhs) const
     {
-        return x == rhs.x &&
-            y == rhs.y &&
-            z == rhs.z;
+        return compareEq(x, rhs.x) &&
+            compareEq(y, rhs.y) &&
+            compareEq(z, rhs.z);
     }
     
     bool operator != (const Point3 & rhs) const
@@ -278,10 +278,10 @@ public:
 
     bool operator == (const Point4 & rhs) const
     {
-        return x == rhs.x &&
-            y == rhs.y &&
-            z == rhs.z &&
-            w == rhs.w;
+        return compareEq(x, rhs.x) &&
+            compareEq(y, rhs.y) &&
+            compareEq(z, rhs.z) &&
+            compareEq(w, rhs.w);
     }
     
     bool operator != (const Point4 & rhs) const

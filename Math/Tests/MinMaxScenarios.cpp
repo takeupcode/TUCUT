@@ -6,9 +6,9 @@
 //  Copyright © 2018 Take Up Code. All rights reserved.
 //
 
-#include "../../Test/Test.h"
-
 #include "../MinMax.h"
+
+#include "../../Test/Test.h"
 
 using namespace std;
 using namespace TUCUT;

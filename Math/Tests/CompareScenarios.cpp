@@ -6,9 +6,9 @@
 //  Copyright © 2020 Take Up Code. All rights reserved.
 //
 
-#include "../../Test/Test.h"
-
 #include "../Compare.h"
+
+#include "../../Test/Test.h"
 
 #include <limits>
 

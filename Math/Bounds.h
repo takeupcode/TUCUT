@@ -6,13 +6,13 @@
 //  Copyright © 2018 Take Up Code. All rights reserved.
 //
 
+#ifndef TUCUT_Math_Bounds_h
+#define TUCUT_Math_Bounds_h
+
 #include "Point.h"
 
 #include <array>
 #include <string>
-
-#ifndef TUCUT_Math_Bounds_h
-#define TUCUT_Math_Bounds_h
 
 namespace TUCUT {
 namespace Math {

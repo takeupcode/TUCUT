@@ -9,12 +9,12 @@
 #ifndef TUCUT_Math_Vector_h
 #define TUCUT_Math_Vector_h
 
-#include <cmath>
-#include <string>
-
 #include "Compare.h"
 #include "../Exception/InvalidArgumentException.h"
 #include "../Exception/InvalidOperationException.h"
+
+#include <cmath>
+#include <string>
 
 namespace TUCUT {
 namespace Math {
