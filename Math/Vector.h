@@ -33,7 +33,11 @@ public:
     explicit constexpr Vector1 (T x)
     : x(x)
     { }
-    
+
+    constexpr Vector1 (Vector1 const & src)
+    : x(src.x)
+    { }
+
     static constexpr Vector1 one ()
     {
         return Vector1(1);
@@ -149,7 +153,11 @@ public:
     constexpr Vector2 (T x, T y)
     : x(x), y(y)
     { }
-    
+
+    constexpr Vector2 (Vector2 const & src)
+    : x(src.x), y(src.y)
+    { }
+
     static constexpr Vector2 one ()
     {
         return Vector2(1, 1);
@@ -285,7 +293,11 @@ public:
     constexpr Vector3 (T x, T y, T z)
     : x(x), y(y), z(z)
     { }
-    
+
+    constexpr Vector3 (Vector3 const & src)
+    : x(src.x), y(src.y), z(src.z)
+    { }
+
     static constexpr Vector3 one ()
     {
         return Vector3(1, 1, 1);
@@ -444,7 +456,11 @@ public:
     constexpr Vector4 (T x, T y, T z, T w)
     : x(x), y(y), z(z), w(w)
     { }
-    
+
+    constexpr Vector4 (Vector4 const & src)
+    : x(src.x), y(src.y), z(src.z), w(src.w)
+    { }
+
     static constexpr Vector4 one ()
     {
         return Vector4(1, 1, 1, 1);

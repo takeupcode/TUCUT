@@ -32,7 +32,11 @@ public:
     explicit constexpr Point1 (T x)
     : x(x)
     { }
-    
+
+    constexpr Point1 (Point1 const & src)
+    : x(src.x)
+    { }
+
     T component (std::size_t axis) const
     {
         switch (axis)
@@ -101,7 +105,11 @@ public:
     constexpr Point2 (T x, T y)
     : x(x), y(y)
     { }
-    
+
+    constexpr Point2 (Point2 const & src)
+    : x(src.x), y(src.y)
+    { }
+
     T component (std::size_t axis) const
     {
         switch (axis)
@@ -175,7 +183,11 @@ public:
     constexpr Point3 (T x, T y, T z)
     : x(x), y(y), z(z)
     { }
-    
+
+    constexpr Point3 (Point3 const & src)
+    : x(src.x), y(src.y), z(src.z)
+    { }
+
     T component (std::size_t axis) const
     {
         switch (axis)
@@ -255,7 +267,11 @@ public:
     constexpr Point4 (T x, T y, T z, T w)
     : x(x), y(y), z(z), w(w)
     { }
-    
+
+    constexpr Point4 (Point4 const & src)
+    : x(src.x), y(src.y), z(src.z), w(src.w)
+    { }
+
     T component (std::size_t axis) const
     {
         switch (axis)
