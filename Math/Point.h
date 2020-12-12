@@ -44,27 +44,27 @@ public:
         throw Exception::InvalidArgumentException("axis", "axis must be 0");
     }
 
-    bool operator == (const Point1 & rhs) const
+    bool operator == (Point1 const & rhs) const
     {
         return compareEq(x, rhs.x);
     }
 
-    bool operator != (const Point1 & rhs) const
+    bool operator != (Point1 const & rhs) const
     {
         return !operator==(rhs);
     }
 
-    Vector1<T> operator - (const Point1 & rhs) const
+    Vector1<T> operator - (Point1 const & rhs) const
     {
         return Vector1<T>(x - rhs.x);
     }
     
-    Point1 operator + (const Vector1<T> & rhs) const
+    Point1 operator + (Vector1<T> const & rhs) const
     {
         return Point1(x + rhs.x);
     }
     
-    Point1 operator - (const Vector1<T> & rhs) const
+    Point1 operator - (Vector1<T> const & rhs) const
     {
         return Point1(x - rhs.x);
     }
@@ -116,28 +116,28 @@ public:
         throw Exception::InvalidArgumentException("axis", "axis must be between 0 and 1");
     }
 
-    bool operator == (const Point2 & rhs) const
+    bool operator == (Point2 const & rhs) const
     {
         return compareEq(x, rhs.x) &&
             compareEq(y, rhs.y);
     }
     
-    bool operator != (const Point2 & rhs) const
+    bool operator != (Point2 const & rhs) const
     {
         return !operator==(rhs);
     }
 
-    Vector2<T> operator - (const Point2 & rhs) const
+    Vector2<T> operator - (Point2 const & rhs) const
     {
         return Vector2<T>(x - rhs.x, y - rhs.y);
     }
     
-    Point2 operator + (const Vector2<T> & rhs) const
+    Point2 operator + (Vector2<T> const & rhs) const
     {
         return Point2(x + rhs.x, y + rhs.y);
     }
     
-    Point2 operator - (const Vector2<T> & rhs) const
+    Point2 operator - (Vector2<T> const & rhs) const
     {
         return Point2(x - rhs.x, y - rhs.y);
     }
@@ -193,29 +193,29 @@ public:
         throw Exception::InvalidArgumentException("axis", "axis must be between 0 and 2");
     }
 
-    bool operator == (const Point3 & rhs) const
+    bool operator == (Point3 const & rhs) const
     {
         return compareEq(x, rhs.x) &&
             compareEq(y, rhs.y) &&
             compareEq(z, rhs.z);
     }
     
-    bool operator != (const Point3 & rhs) const
+    bool operator != (Point3 const & rhs) const
     {
         return !operator==(rhs);
     }
 
-    Vector3<T> operator - (const Point3 & rhs) const
+    Vector3<T> operator - (Point3 const & rhs) const
     {
         return Vector3<T>(x - rhs.x, y - rhs.y, z - rhs.z);
     }
     
-    Point3 operator + (const Vector3<T> & rhs) const
+    Point3 operator + (Vector3<T> const & rhs) const
     {
         return Point3(x + rhs.x, y + rhs.y, z + rhs.z);
     }
     
-    Point3 operator - (const Vector3<T> & rhs) const
+    Point3 operator - (Vector3<T> const & rhs) const
     {
         return Point3(x - rhs.x, y - rhs.y, z - rhs.z);
     }
@@ -276,7 +276,7 @@ public:
         throw Exception::InvalidArgumentException("axis", "axis must be between 0 and 3");
     }
 
-    bool operator == (const Point4 & rhs) const
+    bool operator == (Point4 const & rhs) const
     {
         return compareEq(x, rhs.x) &&
             compareEq(y, rhs.y) &&
@@ -284,22 +284,22 @@ public:
             compareEq(w, rhs.w);
     }
     
-    bool operator != (const Point4 & rhs) const
+    bool operator != (Point4 const & rhs) const
     {
         return !operator==(rhs);
     }
 
-    Vector4<T> operator - (const Point4 & rhs) const
+    Vector4<T> operator - (Point4 const & rhs) const
     {
         return Vector4<T>(x - rhs.x, y - rhs.y, z - rhs.z, w - rhs.w);
     }
     
-    Point4 operator + (const Vector4<T> & rhs) const
+    Point4 operator + (Vector4<T> const & rhs) const
     {
         return Point4(x + rhs.x, y + rhs.y, z + rhs.z, w + rhs.w);
     }
     
-    Point4 operator - (const Vector4<T> & rhs) const
+    Point4 operator - (Vector4<T> const & rhs) const
     {
         return Point4(x - rhs.x, y - rhs.y, z - rhs.z, w - rhs.w);
     }
@@ -340,6 +340,11 @@ using Point1d = Point1<double>;
 using Point2d = Point2<double>;
 using Point3d = Point3<double>;
 using Point4d = Point4<double>;
+
+using Point1l = Point1<long double>;
+using Point2l = Point2<long double>;
+using Point3l = Point3<long double>;
+using Point4l = Point4<long double>;
 
 } // namespace Math
 } // namespace TUCUT

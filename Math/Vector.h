@@ -81,22 +81,22 @@ public:
         return Vector1<U>(x > 0 ? 1 : -1);
     }
 
-    bool operator == (const Vector1 & rhs) const
+    bool operator == (Vector1 const & rhs) const
     {
         return compareEq(x, rhs.x);
     }
     
-    bool operator != (const Vector1 & rhs) const
+    bool operator != (Vector1 const & rhs) const
     {
         return !operator==(rhs);
     }
 
-    Vector1 operator + (const Vector1 & rhs) const
+    Vector1 operator + (Vector1 const & rhs) const
     {
         return Vector1(x + rhs.x);
     }
     
-    Vector1 operator - (const Vector1 & rhs) const
+    Vector1 operator - (Vector1 const & rhs) const
     {
         return Vector1(x - rhs.x);
     }
@@ -111,7 +111,7 @@ public:
         return Vector1(x / rhs);
     }
     
-    T dot (const Vector1 & rhs) const
+    T dot (Vector1 const & rhs) const
     {
         return x * rhs.x;
     }
@@ -130,7 +130,7 @@ public:
 };
 
 template <typename T>
-Vector1<T> operator * (T lhs, const Vector1<T> & rhs)
+Vector1<T> operator * (T lhs, Vector1<T> const & rhs)
 {
     return Vector1<T>(lhs * rhs.x);
 }
@@ -215,23 +215,23 @@ public:
         return Vector2<U>(static_cast<U>(x) / length, static_cast<U>(y) / length);
     }
 
-    bool operator == (const Vector2 & rhs) const
+    bool operator == (Vector2 const & rhs) const
     {
         return compareEq(x, rhs.x) &&
             compareEq(y, rhs.y);
     }
     
-    bool operator != (const Vector2 & rhs) const
+    bool operator != (Vector2 const & rhs) const
     {
         return !operator==(rhs);
     }
 
-    Vector2 operator + (const Vector2 & rhs) const
+    Vector2 operator + (Vector2 const & rhs) const
     {
         return Vector2(x + rhs.x, y + rhs.y);
     }
     
-    Vector2 operator - (const Vector2 & rhs) const
+    Vector2 operator - (Vector2 const & rhs) const
     {
         return Vector2(x - rhs.x, y - rhs.y);
     }
@@ -246,7 +246,7 @@ public:
         return Vector2(x / rhs, y / rhs);
     }
     
-    T dot (const Vector2 & rhs) const
+    T dot (Vector2 const & rhs) const
     {
         return x * rhs.x + y * rhs.y;
     }
@@ -266,7 +266,7 @@ public:
 };
 
 template <typename T>
-Vector2<T> operator * (T lhs, const Vector2<T> & rhs)
+Vector2<T> operator * (T lhs, Vector2<T> const & rhs)
 {
     return Vector2<T>(lhs * rhs.x, lhs * rhs.y);
 }
@@ -366,24 +366,24 @@ public:
             static_cast<U>(z) / length);
     }
 
-    bool operator == (const Vector3 & rhs) const
+    bool operator == (Vector3 const & rhs) const
     {
         return compareEq(x, rhs.x) &&
             compareEq(y, rhs.y) &&
             compareEq(z, rhs.z);
     }
     
-    bool operator != (const Vector3 & rhs) const
+    bool operator != (Vector3 const & rhs) const
     {
         return !operator==(rhs);
     }
 
-    Vector3 operator + (const Vector3 & rhs) const
+    Vector3 operator + (Vector3 const & rhs) const
     {
         return Vector3(x + rhs.x, y + rhs.y, z + rhs.z);
     }
     
-    Vector3 operator - (const Vector3 & rhs) const
+    Vector3 operator - (Vector3 const & rhs) const
     {
         return Vector3(x - rhs.x, y - rhs.y, z - rhs.z);
     }
@@ -398,12 +398,12 @@ public:
         return Vector3(x / rhs, y / rhs, z / rhs);
     }
     
-    T dot (const Vector3 & rhs) const
+    T dot (Vector3 const & rhs) const
     {
         return x * rhs.x + y * rhs.y + z * rhs.z;
     }
     
-    Vector3 cross (const Vector3 & rhs) const
+    Vector3 cross (Vector3 const & rhs) const
     {
         return Vector3(y * rhs.z - z * rhs.y, z * rhs.x - x * rhs.z, x * rhs.y - y * rhs.x);
     }
@@ -425,7 +425,7 @@ public:
 };
 
 template <typename T>
-Vector3<T> operator * (T lhs, const Vector3<T> & rhs)
+Vector3<T> operator * (T lhs, Vector3<T> const & rhs)
 {
     return Vector3<T>(lhs * rhs.x, lhs * rhs.y, lhs * rhs.z);
 }
@@ -539,7 +539,7 @@ public:
             static_cast<U>(z) / length, static_cast<U>(w) / length);
     }
 
-    bool operator == (const Vector4 & rhs) const
+    bool operator == (Vector4 const & rhs) const
     {
         return compareEq(x, rhs.x) &&
         compareEq(y, rhs.y) &&
@@ -547,17 +547,17 @@ public:
         compareEq(w, rhs.w);
     }
     
-    bool operator != (const Vector4 & rhs) const
+    bool operator != (Vector4 const & rhs) const
     {
         return !operator==(rhs);
     }
 
-    Vector4 operator + (const Vector4 & rhs) const
+    Vector4 operator + (Vector4 const & rhs) const
     {
         return Vector4(x + rhs.x, y + rhs.y, z + rhs.z, w + rhs.w);
     }
     
-    Vector4 operator - (const Vector4 & rhs) const
+    Vector4 operator - (Vector4 const & rhs) const
     {
         return Vector4(x - rhs.x, y - rhs.y, z - rhs.z, w - rhs.w);
     }
@@ -572,7 +572,7 @@ public:
         return Vector4(x / rhs, y / rhs, z / rhs, w / rhs);
     }
     
-    T dot (const Vector4 & rhs) const
+    T dot (Vector4 const & rhs) const
     {
         return x * rhs.x + y * rhs.y + z * rhs.z + w * rhs.w;
     }
@@ -595,7 +595,7 @@ public:
 };
 
 template <typename T>
-Vector4<T> operator * (T lhs, const Vector4<T> & rhs)
+Vector4<T> operator * (T lhs, Vector4<T> const & rhs)
 {
     return Vector4<T>(lhs * rhs.x, lhs * rhs.y, lhs * rhs.z, lhs * rhs.w);
 }

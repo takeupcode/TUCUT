@@ -32,17 +32,17 @@ public:
     : mLocation(x), mExtent(extent)
     { }
     
-    constexpr Bounds1 (const Point1<T> & location, T extent)
+    constexpr Bounds1 (Point1<T> const & location, T extent)
     : mLocation(location), mExtent(extent)
     { }
 
-    bool operator == (const Bounds1 & rhs) const
+    bool operator == (Bounds1 const & rhs) const
     {
         return mLocation == rhs.mLocation &&
             mExtent == rhs.mExtent;
     }
 
-    bool operator != (const Bounds1 & rhs) const
+    bool operator != (Bounds1 const & rhs) const
     {
         return !operator==(rhs);
     }
@@ -52,7 +52,7 @@ public:
         return mLocation;
     }
     
-    void setLocation (const Point1<T> & location)
+    void setLocation (Point1<T> const & location)
     {
         mLocation = location;
     }
@@ -67,17 +67,17 @@ public:
         mExtent = extent;
     }
     
-    Bounds1 operator + (const Vector1<T> & rhs) const
+    Bounds1 operator + (Vector1<T> const & rhs) const
     {
         return Bounds1(mLocation.x + rhs.x, mExtent);
     }
     
-    Bounds1 operator - (const Vector1<T> & rhs) const
+    Bounds1 operator - (Vector1<T> const & rhs) const
     {
         return Bounds1(mLocation.x - rhs.x, mExtent);
     }
     
-    Vector1<T> envelopeVector (const Point1<T> & point)
+    Vector1<T> envelopeVector (Point1<T> const & point)
     {
         T x = 0;
         T loc = mLocation.x;
@@ -94,7 +94,7 @@ public:
         return Vector1<T>(x);
     }
     
-    Vector1<T> envelopeVector (const Bounds1<T> & bounds)
+    Vector1<T> envelopeVector (Bounds1<T> const & bounds)
     {
         T x = 0;
         T loc = mLocation.x;
@@ -111,7 +111,7 @@ public:
         return Vector1<T>(x);
     }
 
-    Vector1<T> overlapVector (const Bounds1<T> & bounds)
+    Vector1<T> overlapVector (Bounds1<T> const & bounds)
     {
         T x = 0;
         T loc = mLocation.x;
@@ -165,17 +165,17 @@ public:
     : mLocation(x, y), mExtent(extent)
     { }
     
-    constexpr Bounds2 (const Point2<T> & location, T extent)
+    constexpr Bounds2 (Point2<T> const & location, T extent)
     : mLocation(location), mExtent(extent)
     { }
     
-    bool operator == (const Bounds2 & rhs) const
+    bool operator == (Bounds2 const & rhs) const
     {
         return mLocation == rhs.mLocation &&
         mExtent == rhs.mExtent;
     }
     
-    bool operator != (const Bounds2 & rhs) const
+    bool operator != (Bounds2 const & rhs) const
     {
         return !operator==(rhs);
     }
@@ -185,7 +185,7 @@ public:
         return mLocation;
     }
     
-    void setLocation (const Point2<T> & location)
+    void setLocation (Point2<T> const & location)
     {
         mLocation = location;
     }
@@ -200,17 +200,17 @@ public:
         mExtent = extent;
     }
     
-    Bounds2 operator + (const Vector2<T> & rhs) const
+    Bounds2 operator + (Vector2<T> const & rhs) const
     {
         return Bounds2(mLocation.x + rhs.x, mLocation.y + rhs.y, mExtent);
     }
     
-    Bounds2 operator - (const Vector2<T> & rhs) const
+    Bounds2 operator - (Vector2<T> const & rhs) const
     {
         return Bounds2(mLocation.x - rhs.x, mLocation.y - rhs.y, mExtent);
     }
     
-    Vector2<T> envelopeVector (const Point2<T> & point)
+    Vector2<T> envelopeVector (Point2<T> const & point)
     {
         std::array<T, 2> values = {0, 0};
         for (std::size_t axis = 0; axis < 2; ++axis)
@@ -230,7 +230,7 @@ public:
         return Vector2<T>(values[0], values[1]);
     }
     
-    Vector2<T> envelopeVector (const Bounds2<T> & bounds)
+    Vector2<T> envelopeVector (Bounds2<T> const & bounds)
     {
         std::array<T, 2> values = {0, 0};
         for (std::size_t axis = 0; axis < 2; ++axis)
@@ -250,7 +250,7 @@ public:
         return Vector2<T>(values[0], values[1]);
     }
     
-    Vector2<T> overlapVector (const Bounds2<T> & bounds)
+    Vector2<T> overlapVector (Bounds2<T> const & bounds)
     {
         std::array<T, 2> values = {0, 0};
         for (std::size_t axis = 0; axis < 2; ++axis)
@@ -307,17 +307,17 @@ public:
     : mLocation(x, y, z), mExtent(extent)
     { }
     
-    constexpr Bounds3 (const Point3<T> & location, T extent)
+    constexpr Bounds3 (Point3<T> const & location, T extent)
     : mLocation(location), mExtent(extent)
     { }
     
-    bool operator == (const Bounds3 & rhs) const
+    bool operator == (Bounds3 const & rhs) const
     {
         return mLocation == rhs.mLocation &&
         mExtent == rhs.mExtent;
     }
     
-    bool operator != (const Bounds3 & rhs) const
+    bool operator != (Bounds3 const & rhs) const
     {
         return !operator==(rhs);
     }
@@ -327,7 +327,7 @@ public:
         return mLocation;
     }
     
-    void setLocation (const Point3<T> & location)
+    void setLocation (Point3<T> const & location)
     {
         mLocation = location;
     }
@@ -342,19 +342,19 @@ public:
         mExtent = extent;
     }
     
-    Bounds3 operator + (const Vector3<T> & rhs) const
+    Bounds3 operator + (Vector3<T> const & rhs) const
     {
         return Bounds3(mLocation.x + rhs.x, mLocation.y + rhs.y,
                        mLocation.z + rhs.z, mExtent);
     }
     
-    Bounds3 operator - (const Vector3<T> & rhs) const
+    Bounds3 operator - (Vector3<T> const & rhs) const
     {
         return Bounds3(mLocation.x - rhs.x, mLocation.y - rhs.y,
                        mLocation.z - rhs.z, mExtent);
     }
     
-    Vector3<T> envelopeVector (const Point3<T> & point)
+    Vector3<T> envelopeVector (Point3<T> const & point)
     {
         std::array<T, 3> values = {0, 0, 0};
         for (std::size_t axis = 0; axis < 3; ++axis)
@@ -374,7 +374,7 @@ public:
         return Vector3<T>(values[0], values[1], values[2]);
     }
     
-    Vector3<T> envelopeVector (const Bounds3<T> & bounds)
+    Vector3<T> envelopeVector (Bounds3<T> const & bounds)
     {
         std::array<T, 3> values = {0, 0, 0};
         for (std::size_t axis = 0; axis < 3; ++axis)
@@ -394,7 +394,7 @@ public:
         return Vector3<T>(values[0], values[1], values[2]);
     }
     
-    Vector3<T> overlapVector (const Bounds3<T> & bounds)
+    Vector3<T> overlapVector (Bounds3<T> const & bounds)
     {
         std::array<T, 3> values = {0, 0, 0};
         for (std::size_t axis = 0; axis < 3; ++axis)
@@ -451,17 +451,17 @@ public:
     : mLocation(x, y, z, w), mExtent(extent)
     { }
     
-    constexpr Bounds4 (const Point4<T> & location, T extent)
+    constexpr Bounds4 (Point4<T> const & location, T extent)
     : mLocation(location), mExtent(extent)
     { }
     
-    bool operator == (const Bounds4 & rhs) const
+    bool operator == (Bounds4 const & rhs) const
     {
         return mLocation == rhs.mLocation &&
         mExtent == rhs.mExtent;
     }
     
-    bool operator != (const Bounds4 & rhs) const
+    bool operator != (Bounds4 const & rhs) const
     {
         return !operator==(rhs);
     }
@@ -471,7 +471,7 @@ public:
         return mLocation;
     }
     
-    void setLocation (const Point4<T> & location)
+    void setLocation (Point4<T> const & location)
     {
         mLocation = location;
     }
@@ -486,19 +486,19 @@ public:
         mExtent = extent;
     }
     
-    Bounds4 operator + (const Vector4<T> & rhs) const
+    Bounds4 operator + (Vector4<T> const & rhs) const
     {
         return Bounds4(mLocation.x + rhs.x, mLocation.y + rhs.y,
                        mLocation.z + rhs.z, mLocation.w + rhs.w, mExtent);
     }
     
-    Bounds4 operator - (const Vector4<T> & rhs) const
+    Bounds4 operator - (Vector4<T> const & rhs) const
     {
         return Bounds4(mLocation.x - rhs.x, mLocation.y - rhs.y,
                        mLocation.z - rhs.z, mLocation.w - rhs.w, mExtent);
     }
     
-    Vector4<T> envelopeVector (const Point4<T> & point)
+    Vector4<T> envelopeVector (Point4<T> const & point)
     {
         std::array<T, 4> values = {0, 0, 0, 0};
         for (std::size_t axis = 0; axis < 4; ++axis)
@@ -518,7 +518,7 @@ public:
         return Vector4<T>(values[0], values[1], values[2], values[3]);
     }
     
-    Vector4<T> envelopeVector (const Bounds4<T> & bounds)
+    Vector4<T> envelopeVector (Bounds4<T> const & bounds)
     {
         std::array<T, 4> values = {0, 0, 0, 0};
         for (std::size_t axis = 0; axis < 4; ++axis)
@@ -538,7 +538,7 @@ public:
         return Vector4<T>(values[0], values[1], values[2], values[3]);
     }
     
-    Vector4<T> overlapVector (const Bounds4<T> & bounds)
+    Vector4<T> overlapVector (Bounds4<T> const & bounds)
     {
         std::array<T, 4> values = {0, 0, 0, 0};
         for (std::size_t axis = 0; axis < 4; ++axis)
@@ -585,10 +585,20 @@ using Bounds2i = Bounds2<int>;
 using Bounds3i = Bounds3<int>;
 using Bounds4i = Bounds4<int>;
 
+using Bounds1f = Bounds1<float>;
+using Bounds2f = Bounds2<float>;
+using Bounds3f = Bounds3<float>;
+using Bounds4f = Bounds4<float>;
+
 using Bounds1d = Bounds1<double>;
 using Bounds2d = Bounds2<double>;
 using Bounds3d = Bounds3<double>;
 using Bounds4d = Bounds4<double>;
+
+using Bounds1l = Bounds1<long double>;
+using Bounds2l = Bounds2<long double>;
+using Bounds3l = Bounds3<long double>;
+using Bounds4l = Bounds4<long double>;
 
 } // namespace Math
 } // namespace TUCUT

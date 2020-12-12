@@ -32,7 +32,7 @@ namespace Math {
 // Higher orders are possible with more points. Note that
 // each point can itself be 2D, 3D, or 4D.
 template <typename T, typename P, typename V>
-P calculateImpl (const std::vector<P> & points, T t)
+P calculateImpl (std::vector<P> const & points, T t)
 {
     if (points.size() == 2)
     {
@@ -93,7 +93,7 @@ struct Bezier2
     static constexpr std::size_t dimensions = 2;
     using type = T;
     
-    static Point2<T> calculate (const std::vector<Point2<T>> & points, T t)
+    static Point2<T> calculate (std::vector<Point2<T>> const & points, T t)
     {
         return calculateImpl<T, Point2<T>, Vector2<T>>(points, t);
     }
@@ -105,7 +105,7 @@ struct Bezier3
     static constexpr std::size_t dimensions = 3;
     using type = T;
     
-    static Point3<T> calculate (const std::vector<Point3<T>> & points, T t)
+    static Point3<T> calculate (std::vector<Point3<T>> const & points, T t)
     {
         return calculateImpl<T, Point3<T>, Vector3<T>>(points, t);
     }
@@ -117,15 +117,23 @@ struct Bezier4
     static constexpr std::size_t dimensions = 4;
     using type = T;
     
-    static Point4<T> calculate (const std::vector<Point4<T>> & points, T t)
+    static Point4<T> calculate (std::vector<Point4<T>> const & points, T t)
     {
         return calculateImpl<T, Point4<T>, Vector4<T>>(points, t);
     }
 };
 
+using Bezier2f = Bezier2<float>;
+using Bezier3f = Bezier3<float>;
+using Bezier4f = Bezier4<float>;
+
 using Bezier2d = Bezier2<double>;
 using Bezier3d = Bezier3<double>;
 using Bezier4d = Bezier4<double>;
+
+using Bezier2l = Bezier2<long double>;
+using Bezier3l = Bezier3<long double>;
+using Bezier4l = Bezier4<long double>;
 
 } // namespace Math
 } // namespace TUCUT
