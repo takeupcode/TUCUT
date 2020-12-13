@@ -36,10 +36,14 @@ public:
     : mLocation(location), mExtent(extent)
     { }
 
+    constexpr Bounds1 (Bounds1 const & src)
+    : mLocation(src.mLocation), mExtent(src.mExtent)
+    { }
+
     bool operator == (Bounds1 const & rhs) const
     {
         return mLocation == rhs.mLocation &&
-            mExtent == rhs.mExtent;
+            compareEq(mExtent, rhs.mExtent);
     }
 
     bool operator != (Bounds1 const & rhs) const
@@ -168,11 +172,15 @@ public:
     constexpr Bounds2 (Point2<T> const & location, T extent)
     : mLocation(location), mExtent(extent)
     { }
-    
+
+    constexpr Bounds2 (Bounds2 const & src)
+    : mLocation(src.mLocation), mExtent(src.mExtent)
+    { }
+
     bool operator == (Bounds2 const & rhs) const
     {
         return mLocation == rhs.mLocation &&
-        mExtent == rhs.mExtent;
+            compareEq(mExtent, rhs.mExtent);
     }
     
     bool operator != (Bounds2 const & rhs) const
@@ -202,12 +210,14 @@ public:
     
     Bounds2 operator + (Vector2<T> const & rhs) const
     {
-        return Bounds2(mLocation.x + rhs.x, mLocation.y + rhs.y, mExtent);
+        return Bounds2(mLocation.x + rhs.x,
+            mLocation.y + rhs.y, mExtent);
     }
     
     Bounds2 operator - (Vector2<T> const & rhs) const
     {
-        return Bounds2(mLocation.x - rhs.x, mLocation.y - rhs.y, mExtent);
+        return Bounds2(mLocation.x - rhs.x,
+            mLocation.y - rhs.y, mExtent);
     }
     
     Vector2<T> envelopeVector (Point2<T> const & point)
@@ -310,11 +320,15 @@ public:
     constexpr Bounds3 (Point3<T> const & location, T extent)
     : mLocation(location), mExtent(extent)
     { }
-    
+
+    constexpr Bounds3 (Bounds3 const & src)
+    : mLocation(src.mLocation), mExtent(src.mExtent)
+    { }
+
     bool operator == (Bounds3 const & rhs) const
     {
         return mLocation == rhs.mLocation &&
-        mExtent == rhs.mExtent;
+            compareEq(mExtent, rhs.mExtent);
     }
     
     bool operator != (Bounds3 const & rhs) const
@@ -344,14 +358,16 @@ public:
     
     Bounds3 operator + (Vector3<T> const & rhs) const
     {
-        return Bounds3(mLocation.x + rhs.x, mLocation.y + rhs.y,
-                       mLocation.z + rhs.z, mExtent);
+        return Bounds3(mLocation.x + rhs.x,
+            mLocation.y + rhs.y,
+            mLocation.z + rhs.z, mExtent);
     }
     
     Bounds3 operator - (Vector3<T> const & rhs) const
     {
-        return Bounds3(mLocation.x - rhs.x, mLocation.y - rhs.y,
-                       mLocation.z - rhs.z, mExtent);
+        return Bounds3(mLocation.x - rhs.x,
+            mLocation.y - rhs.y,
+            mLocation.z - rhs.z, mExtent);
     }
     
     Vector3<T> envelopeVector (Point3<T> const & point)
@@ -454,12 +470,15 @@ public:
     constexpr Bounds4 (Point4<T> const & location, T extent)
     : mLocation(location), mExtent(extent)
     { }
-    
+
+    constexpr Bounds4 (Bounds4 const & src)
+    : mLocation(src.mLocation), mExtent(src.mExtent)
+    { }
+
     bool operator == (Bounds4 const & rhs) const
     {
         return mLocation == rhs.mLocation &&
-        mExtent == rhs.mExtent;
-    }
+            compareEq(mExtent, rhs.mExtent);    }
     
     bool operator != (Bounds4 const & rhs) const
     {
@@ -488,14 +507,18 @@ public:
     
     Bounds4 operator + (Vector4<T> const & rhs) const
     {
-        return Bounds4(mLocation.x + rhs.x, mLocation.y + rhs.y,
-                       mLocation.z + rhs.z, mLocation.w + rhs.w, mExtent);
+        return Bounds4(mLocation.x + rhs.x,
+            mLocation.y + rhs.y,
+            mLocation.z + rhs.z,
+            mLocation.w + rhs.w, mExtent);
     }
     
     Bounds4 operator - (Vector4<T> const & rhs) const
     {
-        return Bounds4(mLocation.x - rhs.x, mLocation.y - rhs.y,
-                       mLocation.z - rhs.z, mLocation.w - rhs.w, mExtent);
+        return Bounds4(mLocation.x - rhs.x,
+            mLocation.y - rhs.y,
+            mLocation.z - rhs.z,
+            mLocation.w - rhs.w, mExtent);
     }
     
     Vector4<T> envelopeVector (Point4<T> const & point)
