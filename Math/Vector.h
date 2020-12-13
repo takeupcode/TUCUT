@@ -85,6 +85,11 @@ public:
         return Vector1<U>(x > 0 ? 1 : -1);
     }
 
+    Vector1 operator - () const
+    {
+        return Vector1(-x);
+    }
+
     bool operator == (Vector1 const & rhs) const
     {
         return compareEq(x, rhs.x);
@@ -221,6 +226,11 @@ public:
         U length = std::sqrt(static_cast<U>(lengthSquared()));
         
         return Vector2<U>(static_cast<U>(x) / length, static_cast<U>(y) / length);
+    }
+
+    Vector2 operator - () const
+    {
+        return Vector2(-x, -y);
     }
 
     bool operator == (Vector2 const & rhs) const
@@ -376,6 +386,11 @@ public:
 
         return Vector3<U>(static_cast<U>(x) / length, static_cast<U>(y) / length,
             static_cast<U>(z) / length);
+    }
+
+    Vector3 operator - () const
+    {
+        return Vector3(-x, -y, -z);
     }
 
     bool operator == (Vector3 const & rhs) const
@@ -553,6 +568,11 @@ public:
 
         return Vector4<U>(static_cast<U>(x) / length, static_cast<U>(y) / length,
             static_cast<U>(z) / length, static_cast<U>(w) / length);
+    }
+
+    Vector4 operator - () const
+    {
+        return Vector4(-x, -y, -z, -w);
     }
 
     bool operator == (Vector4 const & rhs) const

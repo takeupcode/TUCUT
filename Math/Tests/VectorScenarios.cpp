@@ -237,24 +237,75 @@ SCENARIO( Vector, "Operation/Normal", "unit,math", "Vectors can be assigned." )
     VERIFY_EQUAL(vec4a, vec4b);
 }
 
+SCENARIO( Vector, "Operation/Normal", "unit,math", "Vectors can be negated." )
+{
+    Math::Vector1i vec1a(1);
+    Math::Vector1i vec1b(-4);
+    
+    Math::Vector1i neg1a = -vec1a;
+    VERIFY_EQUAL(-1, neg1a.x);
+
+    Math::Vector1i neg1b = -vec1b;
+    VERIFY_EQUAL(4, neg1b.x);
+
+    Math::Vector2i vec2a(1, 2);
+    Math::Vector2i vec2b(-4, -5);
+    
+    Math::Vector2i neg2a = -vec2a;
+    VERIFY_EQUAL(-1, neg2a.x);
+    VERIFY_EQUAL(-2, neg2a.y);
+
+    Math::Vector2i neg2b = -vec2b;
+    VERIFY_EQUAL(4, neg2b.x);
+    VERIFY_EQUAL(5, neg2b.y);
+
+    Math::Vector3i vec3a(1, 2, 3);
+    Math::Vector3i vec3b(-4, -5, -6);
+    
+    Math::Vector3i neg3a = -vec3a;
+    VERIFY_EQUAL(-1, neg3a.x);
+    VERIFY_EQUAL(-2, neg3a.y);
+    VERIFY_EQUAL(-3, neg3a.z);
+
+    Math::Vector3i neg3b = -vec3b;
+    VERIFY_EQUAL(4, neg3b.x);
+    VERIFY_EQUAL(5, neg3b.y);
+    VERIFY_EQUAL(6, neg3b.z);
+
+    Math::Vector4i vec4a(1, 2, 3, 4);
+    Math::Vector4i vec4b(-4, -5, -6, -7);
+    
+    Math::Vector4i neg4a = -vec4a;
+    VERIFY_EQUAL(-1, neg4a.x);
+    VERIFY_EQUAL(-2, neg4a.y);
+    VERIFY_EQUAL(-3, neg4a.z);
+    VERIFY_EQUAL(-4, neg4a.w);
+
+    Math::Vector4i neg4b = -vec4b;
+    VERIFY_EQUAL(4, neg4b.x);
+    VERIFY_EQUAL(5, neg4b.y);
+    VERIFY_EQUAL(6, neg4b.z);
+    VERIFY_EQUAL(7, neg4b.w);
+}
+
 SCENARIO( Vector, "Operation/Normal", "unit,math", "Vectors can be added." )
 {
     Math::Vector1i vec1a(1);
     Math::Vector1i vec1b(4);
-    
+
     Math::Vector1i sum1 = vec1a + vec1b;
     VERIFY_EQUAL(5, sum1.x);
 
     Math::Vector2i vec2a(1, 2);
     Math::Vector2i vec2b(4, 5);
-    
+
     Math::Vector2i sum2 = vec2a + vec2b;
     VERIFY_EQUAL(5, sum2.x);
     VERIFY_EQUAL(7, sum2.y);
 
     Math::Vector3i vec3a(1, 2, 3);
     Math::Vector3i vec3b(4, 5, 6);
-    
+
     Math::Vector3i sum3 = vec3a + vec3b;
     VERIFY_EQUAL(5, sum3.x);
     VERIFY_EQUAL(7, sum3.y);
@@ -262,7 +313,7 @@ SCENARIO( Vector, "Operation/Normal", "unit,math", "Vectors can be added." )
 
     Math::Vector4i vec4a(1, 2, 3, 4);
     Math::Vector4i vec4b(4, 5, 6, 7);
-    
+
     Math::Vector4i sum4 = vec4a + vec4b;
     VERIFY_EQUAL(5, sum4.x);
     VERIFY_EQUAL(7, sum4.y);
