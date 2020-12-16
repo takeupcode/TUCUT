@@ -21,7 +21,7 @@ bool compareEq (T a, T b)
     return a == b;
 }
         
-inline bool compareEq (float a, float b, float margin = FLT_EPSILON, float smallFactor = 10.0f)
+inline bool compareEq (float a, float b, float margin = FLT_EPSILON, float smallFactor = 0.00001f)
 {
     if (a == b)
     {
@@ -58,17 +58,18 @@ inline bool compareEq (float a, float b, float margin = FLT_EPSILON, float small
     auto diff = std::abs(a - b);
     if (diff <= FLT_MIN)
     {
-        return diff <= FLT_MIN * smallFactor * margin;
+        return diff <= FLT_MIN * smallFactor;
     }
 
     // Use a margin that grows as a and b increase.
     a = std::abs(a);
     b = std::abs(b);
     auto smallest = (a < b) ? a : b;
+    smallest = (smallest < 1.0f) ? 1.0f : smallest;
     return diff <= smallest * margin;
 }
         
-inline bool compareEq (double a, double b, double margin = DBL_EPSILON, double smallFactor = 10)
+inline bool compareEq (double a, double b, double margin = DBL_EPSILON, double smallFactor = 0.000000000001)
 {
     if (a == b)
     {
@@ -105,18 +106,19 @@ inline bool compareEq (double a, double b, double margin = DBL_EPSILON, double s
     auto diff = std::abs(a - b);
     if (diff <= DBL_MIN)
     {
-        return diff <= DBL_MIN * smallFactor * margin;
+        return diff <= DBL_MIN * smallFactor;
     }
 
     // Use a margin that grows as a and b increase.
     a = std::abs(a);
     b = std::abs(b);
     auto smallest = (a < b) ? a : b;
+    smallest = (smallest < 1.0) ? 1.0 : smallest;
     return diff <= smallest * margin;
 }
 
 // This seems to work best with a double margin instead of a long double.
-inline bool compareEq (long double a, long double b, double margin = DBL_EPSILON, double smallFactor = 10)
+inline bool compareEq (long double a, long double b, double margin = DBL_EPSILON, double smallFactor = 0.000000000001)
 {
     if (a == b)
     {
@@ -153,13 +155,14 @@ inline bool compareEq (long double a, long double b, double margin = DBL_EPSILON
     auto diff = std::abs(a - b);
     if (diff <= LDBL_MIN)
     {
-        return diff <= LDBL_MIN * smallFactor * margin;
+        return diff <= LDBL_MIN * smallFactor;
     }
 
     // Use a margin that grows as a and b increase.
     a = std::abs(a);
     b = std::abs(b);
     auto smallest = (a < b) ? a : b;
+    smallest = (smallest < 1.0L) ? 1.0L : smallest;
     return diff <= smallest * margin;
 }
 

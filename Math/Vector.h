@@ -9,6 +9,8 @@
 #ifndef TUCUT_Math_Vector_h
 #define TUCUT_Math_Vector_h
 
+#include "Adjust.h"
+#include "Angle.h"
 #include "Compare.h"
 #include "../Exception/InvalidArgumentException.h"
 #include "../Exception/InvalidOperationException.h"
@@ -24,6 +26,7 @@ class Vector1
 {
 public:
     static constexpr std::size_t dimensions = 1;
+    static constexpr std::size_t axisX = 0;
     using type = T;
     
     constexpr Vector1 ()
@@ -149,6 +152,8 @@ class Vector2
 {
 public:
     static constexpr std::size_t dimensions = 2;
+    static constexpr std::size_t axisX = 0;
+    static constexpr std::size_t axisY = 1;
     using type = T;
     
     constexpr Vector2 ()
@@ -192,10 +197,10 @@ public:
     {
         switch (axis)
         {
-        case 0:
+        case axisX:
             return x;
             
-        case 1:
+        case axisY:
             return y;
         }
         
@@ -226,6 +231,27 @@ public:
         U length = std::sqrt(static_cast<U>(lengthSquared()));
         
         return Vector2<U>(static_cast<U>(x) / length, static_cast<U>(y) / length);
+    }
+
+    Vector2 rotate (Degrees<T> const & deg) const
+    {
+        return rotate(Radians<T>(deg));
+    }
+
+    Vector2 rotate (Radians<T> const & rad) const
+    {
+        auto sine = sin(rad.angle);
+        auto cosine = cos(rad.angle);
+
+        return Vector2(
+            x * cosine - y * sine,
+            x * sine + y * cosine
+            );
+    }
+
+    Vector2 rotateQuarter () const
+    {
+        return Vector2(-y, x);
     }
 
     Vector2 operator - () const
@@ -294,6 +320,9 @@ class Vector3
 {
 public:
     static constexpr std::size_t dimensions = 3;
+    static constexpr std::size_t axisX = 0;
+    static constexpr std::size_t axisY = 1;
+    static constexpr std::size_t axisZ = 2;
     using type = T;
     
     constexpr Vector3 ()
@@ -347,14 +376,14 @@ public:
     {
         switch (axis)
         {
-            case 0:
-                return x;
-                
-            case 1:
-                return y;
-                
-            case 2:
-                return z;
+        case axisX:
+            return x;
+
+        case axisY:
+            return y;
+
+        case axisZ:
+            return z;
         }
         
         throw Exception::InvalidArgumentException("axis", "axis must be between 0 and 2");
@@ -386,6 +415,60 @@ public:
 
         return Vector3<U>(static_cast<U>(x) / length, static_cast<U>(y) / length,
             static_cast<U>(z) / length);
+    }
+
+    Vector3 rotate (std::size_t axis, Degrees<T> const & deg) const
+    {
+        return rotate(axis, Radians<T>(deg));
+    }
+
+    Vector3 rotate (std::size_t axis, Radians<T> const & rad) const
+    {
+        auto sine = sin(rad.angle);
+        auto cosine = cos(rad.angle);
+
+        switch (axis)
+        {
+        case axisX:
+            return Vector3(
+                x,
+                y * cosine - z * sine,
+                y * sine + z * cosine
+                );
+
+        case axisY:
+            return Vector3(
+                x * cosine - z * sine,
+                y,
+                x * sine + z * cosine
+                );
+
+        case axisZ:
+            return Vector3(
+                x * cosine - y * sine,
+                x * sine + y * cosine,
+                z
+                );
+        }
+
+        throw Exception::InvalidArgumentException("axis", "axis must be between 0 and 2");
+    }
+
+    Vector3 rotateQuarter (std::size_t axis) const
+    {
+        switch (axis)
+        {
+        case axisX:
+            return Vector3(x, -z, y);
+
+        case axisY:
+            return Vector3(-z, y, x);
+
+        case axisZ:
+            return Vector3(-y, x, z);
+        }
+
+        throw Exception::InvalidArgumentException("axis", "axis must be between 0 and 2");
     }
 
     Vector3 operator - () const
@@ -462,6 +545,10 @@ class Vector4
 {
 public:
     static constexpr std::size_t dimensions = 4;
+    static constexpr std::size_t axisX = 0;
+    static constexpr std::size_t axisY = 1;
+    static constexpr std::size_t axisZ = 2;
+    static constexpr std::size_t axisW = 3;
     using type = T;
     
     constexpr Vector4 ()
@@ -525,16 +612,16 @@ public:
     {
         switch (axis)
         {
-        case 0:
+        case axisX:
             return x;
             
-        case 1:
+        case axisY:
             return y;
             
-        case 2:
+        case axisZ:
             return z;
             
-        case 3:
+        case axisW:
             return w;
         }
         

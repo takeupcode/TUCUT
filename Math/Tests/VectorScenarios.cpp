@@ -13,7 +13,7 @@
 using namespace std;
 using namespace TUCUT;
 
-SCENARIO( Vector, "Construction/Normal", "unit,math", "Vectors can be constructed." )
+SCENARIO( Vector, "Construction/Normal", "unit,math", "Vector can be constructed." )
 {
     Math::Vector1i vec1a;
     Math::Vector2i vec2a;
@@ -53,7 +53,7 @@ SCENARIO( Vector, "Construction/Normal", "unit,math", "Vectors can be constructe
     VERIFY_EQUAL(126, vec4b.w);
 }
 
-SCENARIO( Vector, "Construction/Normal", "unit,math", "Vectors can be copy constructed." )
+SCENARIO( Vector, "Construction/Normal", "unit,math", "Vector can be copy constructed." )
 {
     Math::Vector1i vec1a(123);
     Math::Vector1i vec1b(vec1a);
@@ -76,7 +76,7 @@ SCENARIO( Vector, "Construction/Normal", "unit,math", "Vectors can be copy const
     VERIFY_EQUAL(vec4a, vec4b);
 }
 
-SCENARIO( Vector, "Construction/Normal", "unit,math", "Vectors can be unit constructed." )
+SCENARIO( Vector, "Construction/Normal", "unit,math", "Vector can be unit constructed." )
 {
     Math::Vector1i vec1a = Math::Vector1i::one();
     Math::Vector1d vec1b = Math::Vector1d::one();
@@ -115,7 +115,7 @@ SCENARIO( Vector, "Construction/Normal", "unit,math", "Vectors can be unit const
     VERIFY_EQUAL(1.0, vec4b.w);
 }
 
-SCENARIO( Vector, "Construction/Normal", "unit,math", "Vectors can be direction constructed." )
+SCENARIO( Vector, "Construction/Normal", "unit,math", "Vector can be direction constructed." )
 {
     Math::Vector1i vec1a = Math::Vector1i::right();
     Math::Vector1i vec1b = Math::Vector1i::left();
@@ -206,7 +206,7 @@ SCENARIO( Vector, "Construction/Normal", "unit,math", "Vectors can be direction 
     VERIFY_EQUAL(-1, vec4h.w);
 }
 
-SCENARIO( Vector, "Operation/Normal", "unit,math", "Vectors can be assigned." )
+SCENARIO( Vector, "Operation/Normal", "unit,math", "Vector can be assigned." )
 {
     Math::Vector1i vec1a(123);
     Math::Vector1i vec1b(124);
@@ -237,7 +237,7 @@ SCENARIO( Vector, "Operation/Normal", "unit,math", "Vectors can be assigned." )
     VERIFY_EQUAL(vec4a, vec4b);
 }
 
-SCENARIO( Vector, "Operation/Normal", "unit,math", "Vectors can be negated." )
+SCENARIO( Vector, "Operation/Normal", "unit,math", "Vector can be negated." )
 {
     Math::Vector1i vec1a(1);
     Math::Vector1i vec1b(-4);
@@ -288,7 +288,7 @@ SCENARIO( Vector, "Operation/Normal", "unit,math", "Vectors can be negated." )
     VERIFY_EQUAL(7, neg4b.w);
 }
 
-SCENARIO( Vector, "Operation/Normal", "unit,math", "Vectors can be added." )
+SCENARIO( Vector, "Operation/Normal", "unit,math", "Vector can be added." )
 {
     Math::Vector1i vec1a(1);
     Math::Vector1i vec1b(4);
@@ -321,7 +321,7 @@ SCENARIO( Vector, "Operation/Normal", "unit,math", "Vectors can be added." )
     VERIFY_EQUAL(11, sum4.w);
 }
 
-SCENARIO( Vector, "Operation/Normal", "unit,math", "Vectors can be subtracted." )
+SCENARIO( Vector, "Operation/Normal", "unit,math", "Vector can be subtracted." )
 {
     Math::Vector1i vec1a(1);
     Math::Vector1i vec1b(4);
@@ -354,7 +354,7 @@ SCENARIO( Vector, "Operation/Normal", "unit,math", "Vectors can be subtracted." 
     VERIFY_EQUAL(3, diff4.w);
 }
 
-SCENARIO( Vector, "Operation/Normal", "unit,math", "Vectors can be multiplied." )
+SCENARIO( Vector, "Operation/Normal", "unit,math", "Vector can be multiplied." )
 {
     Math::Vector1i vec1(2);
     
@@ -383,7 +383,7 @@ SCENARIO( Vector, "Operation/Normal", "unit,math", "Vectors can be multiplied." 
     VERIFY_EQUAL(15, prod4.w);
 }
 
-SCENARIO( Vector, "Operation/Normal", "unit,math", "Vectors can be divided." )
+SCENARIO( Vector, "Operation/Normal", "unit,math", "Vector can be divided." )
 {
     Math::Vector1i vec1(2);
     
@@ -412,7 +412,7 @@ SCENARIO( Vector, "Operation/Normal", "unit,math", "Vectors can be divided." )
     VERIFY_EQUAL(9, quot4.w);
 }
 
-SCENARIO( Vector, "Operation/Normal", "unit,math", "Vectors can be dot multiplied." )
+SCENARIO( Vector, "Operation/Normal", "unit,math", "Vector can be dot multiplied." )
 {
     Math::Vector1i vec1a(2);
     Math::Vector1i vec1b(5);
@@ -439,7 +439,7 @@ SCENARIO( Vector, "Operation/Normal", "unit,math", "Vectors can be dot multiplie
     VERIFY_EQUAL(122, dot4);
 }
 
-SCENARIO( Vector, "Operation/Normal", "unit,math", "Vector3s can be cross multiplied." )
+SCENARIO( Vector, "Operation/Normal", "unit,math", "Vector3 can be cross multiplied." )
 {
     Math::Vector3i vec3a(2, 10, 5);
     Math::Vector3i vec3b(-1, 4, 0);
@@ -471,7 +471,7 @@ SCENARIO( Vector, "Operation/Normal", "unit,math", "Vector3 cross product points
     VERIFY_EQUAL(Math::Vector3i::up(), prod3);
 }
 
-SCENARIO( Vector, "Operation/Normal", "unit,math", "Vectors can calculate length squared." )
+SCENARIO( Vector, "Operation/Normal", "unit,math", "Vector can calculate length squared." )
 {
     Math::Vector1i vec1a(2);
     Math::Vector1i vec1b(-5);
@@ -506,7 +506,7 @@ SCENARIO( Vector, "Operation/Normal", "unit,math", "Vectors can calculate length
     VERIFY_EQUAL(276, length4);
 }
 
-SCENARIO( Vector, "Operation/Normal", "unit,math", "Vectors can calculate length Manhattan." )
+SCENARIO( Vector, "Operation/Normal", "unit,math", "Vector can calculate length Manhattan." )
 {
     Math::Vector1i vec1a(2);
     Math::Vector1i vec1b(-5);
@@ -541,7 +541,7 @@ SCENARIO( Vector, "Operation/Normal", "unit,math", "Vectors can calculate length
     VERIFY_EQUAL(32, length4);
 }
 
-SCENARIO( Vector, "Operation/Normal", "unit,math", "Vectors can calculate normal." )
+SCENARIO( Vector, "Operation/Normal", "unit,math", "Vector can calculate normal." )
 {
     Math::Vector1i vec1a(2);
     Math::Vector1i normi = vec1a.normal();
@@ -602,4 +602,70 @@ SCENARIO( Vector, "Operation/Normal", "unit,math", "Vectors can calculate normal
     VERIFY_EQUAL(-4.0 / std::sqrt(vec4b.lengthSquared()), norm4.y);
     VERIFY_EQUAL(5.0 / std::sqrt(vec4b.lengthSquared()), norm4.z);
     VERIFY_EQUAL(3.5 / std::sqrt(vec4b.lengthSquared()), norm4.w);
+}
+
+SCENARIO( Vector, "Operation/Normal", "unit,math", "Vector2f can be rotated." )
+{
+    Math::Vector2f vec2a = Math::Vector2f::right();
+    Math::Vector2f vec2b = Math::Vector2f::forward();
+
+    vec2a = vec2a.rotate(Math::Degreesf(45));
+    vec2a = vec2a.rotateQuarter();
+
+    vec2b = vec2b.rotate(Math::Radiansf(Math::PI_f / 4));
+
+    VERIFY_EQUAL(vec2a, vec2b);
+}
+
+SCENARIO( Vector, "Operation/Normal", "unit,math", "Vector2d can be rotated." )
+{
+    Math::Vector2d vec2a = Math::Vector2d::right();
+    Math::Vector2d vec2b = Math::Vector2d::forward();
+
+    vec2a = vec2a.rotate(Math::Degreesd(45));
+    vec2a = vec2a.rotateQuarter();
+
+    vec2b = vec2b.rotate(Math::Radiansd(Math::PI_d / 4));
+
+    VERIFY_EQUAL(vec2a, vec2b);
+}
+
+SCENARIO( Vector, "Operation/Normal", "unit,math", "Vector3f can be rotated." )
+{
+    Math::Vector3f vec3a = Math::Vector3f::right();
+    Math::Vector3f vec3b = Math::Vector3f::forward();
+    Math::Vector3f vec3c = Math::Vector3f::up();
+
+    vec3a = vec3a.rotate(Math::Vector3f::axisY, Math::Radiansf(Math::PI_f / 18));
+    vec3a = vec3a.rotate(Math::Vector3f::axisZ, Math::Degreesf(45));
+    vec3a = vec3a.rotateQuarter(Math::Vector3f::axisZ);
+
+    vec3b = vec3b.rotate(Math::Vector3f::axisX, Math::Degreesf(10));
+    vec3b = vec3b.rotate(Math::Vector3f::axisZ, Math::Radiansf(Math::PI_f / 4));
+
+    vec3c = vec3c.rotate(Math::Vector3f::axisX, Math::Degreesf(-80));
+    vec3c = vec3c.rotate(Math::Vector3f::axisZ, Math::Radiansf(Math::PI_f / 4));
+
+    VERIFY_EQUAL(vec3a, vec3b);
+    VERIFY_EQUAL(vec3a, vec3c);
+}
+
+SCENARIO( Vector, "Operation/Normal", "unit,math", "Vector3d can be rotated." )
+{
+    Math::Vector3d vec3a = Math::Vector3d::right();
+    Math::Vector3d vec3b = Math::Vector3d::forward();
+    Math::Vector3d vec3c = Math::Vector3d::up();
+
+    vec3a = vec3a.rotate(Math::Vector3d::axisY, Math::Radiansd(Math::PI_d / 18));
+    vec3a = vec3a.rotate(Math::Vector3d::axisZ, Math::Degreesd(45));
+    vec3a = vec3a.rotateQuarter(Math::Vector3d::axisZ);
+
+    vec3b = vec3b.rotate(Math::Vector3d::axisX, Math::Degreesd(10));
+    vec3b = vec3b.rotate(Math::Vector3d::axisZ, Math::Radiansd(Math::PI_d / 4));
+
+    vec3c = vec3c.rotate(Math::Vector3d::axisX, Math::Degreesd(-80));
+    vec3c = vec3c.rotate(Math::Vector3d::axisZ, Math::Radiansd(Math::PI_d / 4));
+
+    VERIFY_EQUAL(vec3a, vec3b);
+    VERIFY_EQUAL(vec3a, vec3c);
 }

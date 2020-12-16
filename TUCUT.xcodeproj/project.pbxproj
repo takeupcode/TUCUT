@@ -30,6 +30,7 @@
 		3E0618442154977F000B634B /* NoiseUtil.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E0618432154977F000B634B /* NoiseUtil.cpp */; };
 		3E19C5982570783600CA5BCB /* Compare.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E19C5962570783600CA5BCB /* Compare.h */; };
 		3E19C59A257365B400CA5BCB /* CompareScenarios.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E19C599257365B400CA5BCB /* CompareScenarios.cpp */; };
+		3E19C59C2585C1E300CA5BCB /* Constants.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E19C59B2585C1E300CA5BCB /* Constants.h */; };
 		3E1F75C920FEFF8E00028734 /* MessageOneof.protocol.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E259E0520E34B4A00F01379 /* MessageOneof.protocol.cpp */; };
 		3E259DCA20E33E2B00F01379 /* LogManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E259DC820E33E2A00F01379 /* LogManager.cpp */; };
 		3E259DCB20E33E2B00F01379 /* LogManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E259DC920E33E2A00F01379 /* LogManager.h */; };
@@ -419,6 +420,8 @@
 		3E0618432154977F000B634B /* NoiseUtil.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = NoiseUtil.cpp; sourceTree = "<group>"; };
 		3E19C5962570783600CA5BCB /* Compare.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Compare.h; sourceTree = "<group>"; };
 		3E19C599257365B400CA5BCB /* CompareScenarios.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CompareScenarios.cpp; sourceTree = "<group>"; };
+		3E19C59B2585C1E300CA5BCB /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
+		3E19C59D25861DD200CA5BCB /* Angle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Angle.h; sourceTree = "<group>"; };
 		3E1F75C420FEFBE400028734 /* EnumMultipleMessage.protocol.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EnumMultipleMessage.protocol.cpp; sourceTree = "<group>"; };
 		3E1F75C520FEFBE400028734 /* EnumMultipleMessage.protocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EnumMultipleMessage.protocol.h; sourceTree = "<group>"; };
 		3E259DAC20E3398E00F01379 /* libTUCUT.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libTUCUT.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1233,6 +1236,7 @@
 			isa = PBXGroup;
 			children = (
 				3E289F322173B23F002FFBDC /* Tests */,
+				3E19C59D25861DD200CA5BCB /* Angle.h */,
 				3E80D64D2181635E006DA12E /* Bounds.h */,
 				3E19C5962570783600CA5BCB /* Compare.h */,
 				3E289F352173B47C002FFBDC /* Point.h */,
@@ -1242,6 +1246,7 @@
 				3E289F4A217CEDCB002FFBDC /* Easing.h */,
 				3EDBEDDA218FEA24006DFB23 /* MinMax.h */,
 				3EDBEE0721C4B0B1006DFB23 /* Adjust.h */,
+				3E19C59B2585C1E300CA5BCB /* Constants.h */,
 			);
 			path = Math;
 			sourceTree = "<group>";
@@ -1486,6 +1491,7 @@
 				3E3F83692105766200501126 /* StringLiteral.h in Headers */,
 				3E06183C215342DF000B634B /* Noise.h in Headers */,
 				3E259EE320E34BE900F01379 /* OneofFieldParser.h in Headers */,
+				3E19C59C2585C1E300CA5BCB /* Constants.h in Headers */,
 				3E259ECB20E34BE900F01379 /* MessageFieldParser.h in Headers */,
 				3E259ECA20E34BE900F01379 /* EnumParser.h in Headers */,
 				3E259ED820E34BE900F01379 /* OptionModelContainer.h in Headers */,
