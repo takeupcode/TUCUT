@@ -725,3 +725,37 @@ SCENARIO( Vector, "Operation/Normal", "unit,math", "Vector3d can determine angle
     VERIFY_EQUAL(69.29518894536457, vec2c.angleInDegrees(vec2b).angle);
     VERIFY_EQUAL(69.29518894536457, vec2b.angleInDegrees(vec2c).angle);
 }
+
+SCENARIO( Vector, "Operation/Normal", "unit,math", "Vector2f can determine parallel with another." )
+{
+    Math::Vector2f vec2a(5.0f, 2.5f);
+    Math::Vector2f vec2b(5.0f, 3.0f);
+    Math::Vector2f vec2c(7.5f, 4.5f);
+    Math::Vector2f vec2d(-7.5f, -4.5f);
+
+    VERIFY_TRUE(vec2a.isParallel(vec2a));
+    VERIFY_FALSE(vec2a.isParallel(vec2b));
+    VERIFY_FALSE(vec2c.isParallel(vec2a));
+    VERIFY_FALSE(vec2a.isParallel(vec2d));
+    VERIFY_TRUE(vec2b.isParallel(vec2c));
+    VERIFY_TRUE(vec2c.isParallel(vec2b));
+    VERIFY_TRUE(vec2b.isParallel(vec2d));
+    VERIFY_TRUE(vec2d.isParallel(vec2b));
+}
+
+SCENARIO( Vector, "Operation/Normal", "unit,math", "Vector2d can determine parallel with another." )
+{
+    Math::Vector2d vec2a(5.0, 2.5);
+    Math::Vector2d vec2b(5.0, 3.0);
+    Math::Vector2d vec2c(7.5, 4.5);
+    Math::Vector2d vec2d(-7.5, -4.5);
+
+    VERIFY_TRUE(vec2a.isParallel(vec2a));
+    VERIFY_FALSE(vec2a.isParallel(vec2b));
+    VERIFY_FALSE(vec2c.isParallel(vec2a));
+    VERIFY_FALSE(vec2a.isParallel(vec2d));
+    VERIFY_TRUE(vec2b.isParallel(vec2c));
+    VERIFY_TRUE(vec2c.isParallel(vec2b));
+    VERIFY_TRUE(vec2b.isParallel(vec2d));
+    VERIFY_TRUE(vec2d.isParallel(vec2b));
+}

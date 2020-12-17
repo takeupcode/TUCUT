@@ -307,6 +307,11 @@ public:
         return Degrees<T>(angleInRadians(rhs));
     }
 
+    bool isParallel (Vector2 const & rhs) const
+    {
+        return compareEq(T(0), dot(rhs.rotateQuarter()));
+    }
+
     std::string to_string () const
     {
         return "(vector: " + std::to_string(x) + ", " + std::to_string(y) + ")";
@@ -540,6 +545,11 @@ public:
     Degrees<T> angleInDegrees (Vector3 const & rhs) const
     {
         return Degrees<T>(angleInRadians(rhs));
+    }
+
+    bool isParallel (Vector3 const & rhs) const
+    {
+        return compareEq(T(0), dot(rhs.rotateQuarter()));
     }
 
     std::string to_string () const
