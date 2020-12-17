@@ -669,3 +669,59 @@ SCENARIO( Vector, "Operation/Normal", "unit,math", "Vector3d can be rotated." )
     VERIFY_EQUAL(vec3a, vec3b);
     VERIFY_EQUAL(vec3a, vec3c);
 }
+
+SCENARIO( Vector, "Operation/Normal", "unit,math", "Vector2f can determine angle between another." )
+{
+    Math::Vector2f vec2a = Math::Vector2f::right();
+    Math::Vector2f vec2b = Math::Vector2f::forward();
+    Math::Vector2f vec2c(5.0f, 2.886751f);
+
+    VERIFY_EQUAL(90.0f, vec2a.angleInDegrees(vec2b).angle);
+    VERIFY_EQUAL(90.0f, vec2b.angleInDegrees(vec2a).angle);
+    VERIFY_EQUAL(30.0f, vec2a.angleInDegrees(vec2c).angle);
+    VERIFY_EQUAL(30.0f, vec2c.angleInDegrees(vec2a).angle);
+    VERIFY_EQUAL(60.0f, vec2c.angleInDegrees(vec2b).angle);
+    VERIFY_EQUAL(60.0f, vec2b.angleInDegrees(vec2c).angle);
+}
+
+SCENARIO( Vector, "Operation/Normal", "unit,math", "Vector2d can determine angle between another." )
+{
+    Math::Vector2d vec2a = Math::Vector2d::right();
+    Math::Vector2d vec2b = Math::Vector2d::forward();
+    Math::Vector2d vec2c(5.0, 2.886751345948129);
+
+    VERIFY_EQUAL(90.0, vec2a.angleInDegrees(vec2b).angle);
+    VERIFY_EQUAL(90.0, vec2b.angleInDegrees(vec2a).angle);
+    VERIFY_EQUAL(30.0, vec2a.angleInDegrees(vec2c).angle);
+    VERIFY_EQUAL(30.0, vec2c.angleInDegrees(vec2a).angle);
+    VERIFY_EQUAL(60.0, vec2c.angleInDegrees(vec2b).angle);
+    VERIFY_EQUAL(60.0, vec2b.angleInDegrees(vec2c).angle);
+}
+
+SCENARIO( Vector, "Operation/Normal", "unit,math", "Vector3f can determine angle between another." )
+{
+    Math::Vector3f vec2a = Math::Vector3f::right();
+    Math::Vector3f vec2b = Math::Vector3f::forward();
+    Math::Vector3f vec2c(5.0f, 2.041241f, 2.041241f);
+
+    VERIFY_EQUAL(90.0f, vec2a.angleInDegrees(vec2b).angle);
+    VERIFY_EQUAL(90.0f, vec2b.angleInDegrees(vec2a).angle);
+    VERIFY_EQUAL(30.0f, vec2a.angleInDegrees(vec2c).angle);
+    VERIFY_EQUAL(30.0f, vec2c.angleInDegrees(vec2a).angle);
+    VERIFY_EQUAL(69.295189f, vec2c.angleInDegrees(vec2b).angle);
+    VERIFY_EQUAL(69.295189f, vec2b.angleInDegrees(vec2c).angle);
+}
+
+SCENARIO( Vector, "Operation/Normal", "unit,math", "Vector3d can determine angle between another." )
+{
+    Math::Vector3d vec2a = Math::Vector3d::right();
+    Math::Vector3d vec2b = Math::Vector3d::forward();
+    Math::Vector3d vec2c(5.0, 2.041241452319315, 2.041241452319315);
+
+    VERIFY_EQUAL(90.0, vec2a.angleInDegrees(vec2b).angle);
+    VERIFY_EQUAL(90.0, vec2b.angleInDegrees(vec2a).angle);
+    VERIFY_EQUAL(30.0, vec2a.angleInDegrees(vec2c).angle);
+    VERIFY_EQUAL(30.0, vec2c.angleInDegrees(vec2a).angle);
+    VERIFY_EQUAL(69.29518894536457, vec2c.angleInDegrees(vec2b).angle);
+    VERIFY_EQUAL(69.29518894536457, vec2b.angleInDegrees(vec2c).angle);
+}

@@ -294,7 +294,19 @@ public:
     {
         return x * rhs.x + y * rhs.y;
     }
-    
+
+    Radians<T> angleInRadians (Vector2 const & rhs) const
+    {
+        auto norm = normal();
+        auto product = norm.dot(rhs.normal());
+        return Radians<T>(acos(product));
+    }
+
+    Degrees<T> angleInDegrees (Vector2 const & rhs) const
+    {
+        return Degrees<T>(angleInRadians(rhs));
+    }
+
     std::string to_string () const
     {
         return "(vector: " + std::to_string(x) + ", " + std::to_string(y) + ")";
@@ -517,7 +529,19 @@ public:
     {
         return Vector3(y * rhs.z - z * rhs.y, z * rhs.x - x * rhs.z, x * rhs.y - y * rhs.x);
     }
-    
+
+    Radians<T> angleInRadians (Vector3 const & rhs) const
+    {
+        auto norm = normal();
+        auto product = norm.dot(rhs.normal());
+        return Radians<T>(acos(product));
+    }
+
+    Degrees<T> angleInDegrees (Vector3 const & rhs) const
+    {
+        return Degrees<T>(angleInRadians(rhs));
+    }
+
     std::string to_string () const
     {
         return "(vector: " + std::to_string(x) + ", " + std::to_string(y) +
