@@ -541,67 +541,67 @@ SCENARIO( Vector, "Operation/Normal", "unit,math", "Vector can calculate length 
     VERIFY_EQUAL(32, length4);
 }
 
-SCENARIO( Vector, "Operation/Normal", "unit,math", "Vector can calculate normal." )
+SCENARIO( Vector, "Operation/Normal", "unit,math", "Vector can calculate unit." )
 {
     Math::Vector1i vec1a(2);
-    Math::Vector1i normi = vec1a.normal();
-    VERIFY_EQUAL(1, normi.x);
-    Math::Vector1d normd = vec1a.normal<double>();
-    VERIFY_EQUAL(1.0, normd.x);
+    Math::Vector1i uniti = vec1a.unit();
+    VERIFY_EQUAL(1, uniti.x);
+    Math::Vector1d unitd = vec1a.unit<double>();
+    VERIFY_EQUAL(1.0, unitd.x);
     
     Math::Vector1i vec1b(-5);
-    normi = vec1b.normal();
-    VERIFY_EQUAL(-1, normi.x);
-    normd = vec1b.normal<double>();
-    VERIFY_EQUAL(-1.0, normd.x);
+    uniti = vec1b.unit();
+    VERIFY_EQUAL(-1, uniti.x);
+    unitd = vec1b.unit<double>();
+    VERIFY_EQUAL(-1.0, unitd.x);
 
     Math::Vector1d vec1c(3.0);
-    normi = vec1c.normal<int>();
-    VERIFY_EQUAL(1, normi.x);
-    normd = vec1c.normal();
-    VERIFY_EQUAL(1.0, normd.x);
+    uniti = vec1c.unit<int>();
+    VERIFY_EQUAL(1, uniti.x);
+    unitd = vec1c.unit();
+    VERIFY_EQUAL(1.0, unitd.x);
 
     Math::Vector1d vec1d(-4.0);
-    normi = vec1d.normal<int>();
-    VERIFY_EQUAL(-1, normi.x);
-    normd = vec1d.normal();
-    VERIFY_EQUAL(-1.0, normd.x);
+    uniti = vec1d.unit<int>();
+    VERIFY_EQUAL(-1, uniti.x);
+    unitd = vec1d.unit();
+    VERIFY_EQUAL(-1.0, unitd.x);
 
     Math::Vector2i vec2a(2, -5);
-    Math::Vector2d norm2 = vec2a.normal<double>();
-    VERIFY_EQUAL(2.0 / std::sqrt(vec2a.lengthSquared()), norm2.x);
-    VERIFY_EQUAL(-5.0 / std::sqrt(vec2a.lengthSquared()), norm2.y);
+    Math::Vector2d unit2 = vec2a.unit<double>();
+    VERIFY_EQUAL(2.0 / std::sqrt(vec2a.lengthSquared()), unit2.x);
+    VERIFY_EQUAL(-5.0 / std::sqrt(vec2a.lengthSquared()), unit2.y);
 
     Math::Vector2d vec2b(3.0, -4.0);
-    norm2 = vec2b.normal();
-    VERIFY_EQUAL(3.0 / std::sqrt(vec2b.lengthSquared()), norm2.x);
-    VERIFY_EQUAL(-4.0 / std::sqrt(vec2b.lengthSquared()), norm2.y);
+    unit2 = vec2b.unit();
+    VERIFY_EQUAL(3.0 / std::sqrt(vec2b.lengthSquared()), unit2.x);
+    VERIFY_EQUAL(-4.0 / std::sqrt(vec2b.lengthSquared()), unit2.y);
 
     Math::Vector3i vec3a(2, -5, 8);
-    Math::Vector3d norm3 = vec3a.normal<double>();
-    VERIFY_EQUAL(2.0 / std::sqrt(vec3a.lengthSquared()), norm3.x);
-    VERIFY_EQUAL(-5.0 / std::sqrt(vec3a.lengthSquared()), norm3.y);
-    VERIFY_EQUAL(8.0 / std::sqrt(vec3a.lengthSquared()), norm3.z);
+    Math::Vector3d unit3 = vec3a.unit<double>();
+    VERIFY_EQUAL(2.0 / std::sqrt(vec3a.lengthSquared()), unit3.x);
+    VERIFY_EQUAL(-5.0 / std::sqrt(vec3a.lengthSquared()), unit3.y);
+    VERIFY_EQUAL(8.0 / std::sqrt(vec3a.lengthSquared()), unit3.z);
 
     Math::Vector3d vec3b(3.0, -4.0, 5.0);
-    norm3 = vec3b.normal();
-    VERIFY_EQUAL(3.0 / std::sqrt(vec3b.lengthSquared()), norm3.x);
-    VERIFY_EQUAL(-4.0 / std::sqrt(vec3b.lengthSquared()), norm3.y);
-    VERIFY_EQUAL(5.0 / std::sqrt(vec3b.lengthSquared()), norm3.z);
+    unit3 = vec3b.unit();
+    VERIFY_EQUAL(3.0 / std::sqrt(vec3b.lengthSquared()), unit3.x);
+    VERIFY_EQUAL(-4.0 / std::sqrt(vec3b.lengthSquared()), unit3.y);
+    VERIFY_EQUAL(5.0 / std::sqrt(vec3b.lengthSquared()), unit3.z);
 
     Math::Vector4i vec4a(2, -5, 8, 3);
-    Math::Vector4d norm4 = vec4a.normal<double>();
-    VERIFY_EQUAL(2.0 / std::sqrt(vec4a.lengthSquared()), norm4.x);
-    VERIFY_EQUAL(-5.0 / std::sqrt(vec4a.lengthSquared()), norm4.y);
-    VERIFY_EQUAL(8.0 / std::sqrt(vec4a.lengthSquared()), norm4.z);
-    VERIFY_EQUAL(3.0 / std::sqrt(vec4a.lengthSquared()), norm4.w);
+    Math::Vector4d unit4 = vec4a.unit<double>();
+    VERIFY_EQUAL(2.0 / std::sqrt(vec4a.lengthSquared()), unit4.x);
+    VERIFY_EQUAL(-5.0 / std::sqrt(vec4a.lengthSquared()), unit4.y);
+    VERIFY_EQUAL(8.0 / std::sqrt(vec4a.lengthSquared()), unit4.z);
+    VERIFY_EQUAL(3.0 / std::sqrt(vec4a.lengthSquared()), unit4.w);
 
     Math::Vector4d vec4b(3.0, -4.0, 5.0, 3.5);
-    norm4 = vec4b.normal();
-    VERIFY_EQUAL(3.0 / std::sqrt(vec4b.lengthSquared()), norm4.x);
-    VERIFY_EQUAL(-4.0 / std::sqrt(vec4b.lengthSquared()), norm4.y);
-    VERIFY_EQUAL(5.0 / std::sqrt(vec4b.lengthSquared()), norm4.z);
-    VERIFY_EQUAL(3.5 / std::sqrt(vec4b.lengthSquared()), norm4.w);
+    unit4 = vec4b.unit();
+    VERIFY_EQUAL(3.0 / std::sqrt(vec4b.lengthSquared()), unit4.x);
+    VERIFY_EQUAL(-4.0 / std::sqrt(vec4b.lengthSquared()), unit4.y);
+    VERIFY_EQUAL(5.0 / std::sqrt(vec4b.lengthSquared()), unit4.z);
+    VERIFY_EQUAL(3.5 / std::sqrt(vec4b.lengthSquared()), unit4.w);
 }
 
 SCENARIO( Vector, "Operation/Normal", "unit,math", "Vector2f can be rotated." )
@@ -609,10 +609,10 @@ SCENARIO( Vector, "Operation/Normal", "unit,math", "Vector2f can be rotated." )
     Math::Vector2f vec2a = Math::Vector2f::right();
     Math::Vector2f vec2b = Math::Vector2f::forward();
 
-    vec2a = vec2a.rotate(Math::Degreesf(45));
+    vec2a = vec2a.rotate(Math::Degreesd(45));
     vec2a = vec2a.rotateQuarter();
 
-    vec2b = vec2b.rotate(Math::Radiansf(Math::PI_f / 4));
+    vec2b = vec2b.rotate(Math::Radiansd(Math::PI_d / 4));
 
     VERIFY_EQUAL(vec2a, vec2b);
 }
@@ -636,15 +636,15 @@ SCENARIO( Vector, "Operation/Normal", "unit,math", "Vector3f can be rotated." )
     Math::Vector3f vec3b = Math::Vector3f::forward();
     Math::Vector3f vec3c = Math::Vector3f::up();
 
-    vec3a = vec3a.rotate(Math::Vector3f::axisY, Math::Radiansf(Math::PI_f / 18));
-    vec3a = vec3a.rotate(Math::Vector3f::axisZ, Math::Degreesf(45));
+    vec3a = vec3a.rotate(Math::Vector3f::axisY, Math::Radiansd(Math::PI_d / 18));
+    vec3a = vec3a.rotate(Math::Vector3f::axisZ, Math::Degreesd(45));
     vec3a = vec3a.rotateQuarter(Math::Vector3f::axisZ);
 
-    vec3b = vec3b.rotate(Math::Vector3f::axisX, Math::Degreesf(10));
-    vec3b = vec3b.rotate(Math::Vector3f::axisZ, Math::Radiansf(Math::PI_f / 4));
+    vec3b = vec3b.rotate(Math::Vector3f::axisX, Math::Degreesd(10));
+    vec3b = vec3b.rotate(Math::Vector3f::axisZ, Math::Radiansd(Math::PI_d / 4));
 
-    vec3c = vec3c.rotate(Math::Vector3f::axisX, Math::Degreesf(-80));
-    vec3c = vec3c.rotate(Math::Vector3f::axisZ, Math::Radiansf(Math::PI_f / 4));
+    vec3c = vec3c.rotate(Math::Vector3f::axisX, Math::Degreesd(-80));
+    vec3c = vec3c.rotate(Math::Vector3f::axisZ, Math::Radiansd(Math::PI_d / 4));
 
     VERIFY_EQUAL(vec3a, vec3b);
     VERIFY_EQUAL(vec3a, vec3c);
@@ -672,9 +672,9 @@ SCENARIO( Vector, "Operation/Normal", "unit,math", "Vector3d can be rotated." )
 
 SCENARIO( Vector, "Operation/Normal", "unit,math", "Vector2f can determine angle between another." )
 {
-    Math::Vector2f vec2a = Math::Vector2f::right();
-    Math::Vector2f vec2b = Math::Vector2f::forward();
-    Math::Vector2f vec2c(5.0f, 2.886751f);
+    auto vec2a = Math::Vector2<float, float>::right();
+    auto vec2b = Math::Vector2<float, float>::forward();
+    Math::Vector2<float, float> vec2c(5.0f, 2.886751f);
 
     VERIFY_EQUAL(90.0f, vec2a.angleInDegrees(vec2b).angle);
     VERIFY_EQUAL(90.0f, vec2b.angleInDegrees(vec2a).angle);
@@ -686,8 +686,8 @@ SCENARIO( Vector, "Operation/Normal", "unit,math", "Vector2f can determine angle
 
 SCENARIO( Vector, "Operation/Normal", "unit,math", "Vector2d can determine angle between another." )
 {
-    Math::Vector2d vec2a = Math::Vector2d::right();
-    Math::Vector2d vec2b = Math::Vector2d::forward();
+    auto vec2a = Math::Vector2d::right();
+    auto vec2b = Math::Vector2d::forward();
     Math::Vector2d vec2c(5.0, 2.886751345948129);
 
     VERIFY_EQUAL(90.0, vec2a.angleInDegrees(vec2b).angle);
@@ -700,9 +700,9 @@ SCENARIO( Vector, "Operation/Normal", "unit,math", "Vector2d can determine angle
 
 SCENARIO( Vector, "Operation/Normal", "unit,math", "Vector3f can determine angle between another." )
 {
-    Math::Vector3f vec2a = Math::Vector3f::right();
-    Math::Vector3f vec2b = Math::Vector3f::forward();
-    Math::Vector3f vec2c(5.0f, 2.041241f, 2.041241f);
+    auto vec2a = Math::Vector3<float, float>::right();
+    auto vec2b = Math::Vector3<float, float>::forward();
+    Math::Vector3<float, float> vec2c(5.0f, 2.041241f, 2.041241f);
 
     VERIFY_EQUAL(90.0f, vec2a.angleInDegrees(vec2b).angle);
     VERIFY_EQUAL(90.0f, vec2b.angleInDegrees(vec2a).angle);
@@ -714,8 +714,8 @@ SCENARIO( Vector, "Operation/Normal", "unit,math", "Vector3f can determine angle
 
 SCENARIO( Vector, "Operation/Normal", "unit,math", "Vector3d can determine angle between another." )
 {
-    Math::Vector3d vec2a = Math::Vector3d::right();
-    Math::Vector3d vec2b = Math::Vector3d::forward();
+    auto vec2a = Math::Vector3d::right();
+    auto vec2b = Math::Vector3d::forward();
     Math::Vector3d vec2c(5.0, 2.041241452319315, 2.041241452319315);
 
     VERIFY_EQUAL(90.0, vec2a.angleInDegrees(vec2b).angle);

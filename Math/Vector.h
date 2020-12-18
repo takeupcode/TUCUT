@@ -21,14 +21,15 @@
 namespace TUCUT {
 namespace Math {
 
-template <typename T>
+template <typename T, typename Angle = double>
 class Vector1
 {
 public:
     static constexpr std::size_t dimensions = 1;
     static constexpr std::size_t axisX = 0;
     using type = T;
-    
+    using angle = Angle;
+
     constexpr Vector1 ()
     : x()
     { }
@@ -77,15 +78,15 @@ public:
         return x >= 0 ? x : -x;
     }
 
-    template<typename U = T>
-    Vector1<U> normal () const
+    template<typename U = T, typename V = Angle>
+    Vector1<U, V> unit () const
     {
         if (x == 0)
         {
-            throw Exception::InvalidOperationException("normal", "normal cannot be calculated for zero length vector.");
+            throw Exception::InvalidOperationException("unit", "unit cannot be calculated for zero length vector.");
         }
-        
-        return Vector1<U>(x > 0 ? 1 : -1);
+
+        return Vector1<U, V>(x > 0 ? 1 : -1);
     }
 
     Vector1 operator - () const
@@ -127,7 +128,36 @@ public:
     {
         return x * rhs.x;
     }
-    
+
+    Vector1 projectOnto (Vector1 const & target) const
+    {
+        auto targetLenSq = target.lengthSquared();
+        if (targetLenSq == 0)
+        {
+            return Vector1();
+        }
+
+        auto product = dot(target);
+        return target * product / targetLenSq;
+    }
+
+    Radians<Angle> angleInRadians (Vector1 const & rhs) const
+    {
+        auto product = dot(rhs);
+        return Radians<Angle>(product >= 0 ? multiplyPI(Angle{0}) : multiplyPI(Angle{1}));
+    }
+
+    Degrees<Angle> angleInDegrees (Vector1 const & rhs) const
+    {
+        auto product = dot(rhs);
+        return Degrees<Angle>(product >= 0 ? Angle{0} : Angle{180});
+    }
+
+    bool isParallel (Vector1 const & rhs) const
+    {
+        return true;
+    }
+
     std::string to_string () const
     {
         return "(vector: " + std::to_string(x) + ")";
@@ -141,13 +171,13 @@ public:
     T x;
 };
 
-template <typename T>
-Vector1<T> operator * (T lhs, Vector1<T> const & rhs)
+template <typename T, typename Angle>
+Vector1<T, Angle> operator * (T lhs, Vector1<T, Angle> const & rhs)
 {
-    return Vector1<T>(lhs * rhs.x);
+    return Vector1<T, Angle>(lhs * rhs.x);
 }
 
-template <typename T>
+template <typename T, typename Angle = double>
 class Vector2
 {
 public:
@@ -155,7 +185,8 @@ public:
     static constexpr std::size_t axisX = 0;
     static constexpr std::size_t axisY = 1;
     using type = T;
-    
+    using angle = Angle;
+
     constexpr Vector2 ()
     : x(), y()
     { }
@@ -220,25 +251,25 @@ public:
         return absoluteX + absoluteY;
     }
 
-    template<typename U = T>
-    Vector2<U> normal () const
+    template<typename U = T, typename V = Angle>
+    Vector2<U, V> unit () const
     {
         if (x == 0 && y == 0)
         {
-            throw Exception::InvalidOperationException("normal", "normal cannot be calculated for zero length vector.");
+            throw Exception::InvalidOperationException("unit", "unit cannot be calculated for zero length vector.");
         }
-        
+
         U length = std::sqrt(static_cast<U>(lengthSquared()));
-        
-        return Vector2<U>(static_cast<U>(x) / length, static_cast<U>(y) / length);
+
+        return Vector2<U, V>(static_cast<U>(x) / length, static_cast<U>(y) / length);
     }
 
-    Vector2 rotate (Degrees<T> const & deg) const
+    Vector2 rotate (Degrees<Angle> const & deg) const
     {
-        return rotate(Radians<T>(deg));
+        return rotate(Radians<Angle>(deg));
     }
 
-    Vector2 rotate (Radians<T> const & rad) const
+    Vector2 rotate (Radians<Angle> const & rad) const
     {
         auto sine = sin(rad.angle);
         auto cosine = cos(rad.angle);
@@ -295,16 +326,27 @@ public:
         return x * rhs.x + y * rhs.y;
     }
 
-    Radians<T> angleInRadians (Vector2 const & rhs) const
+    Vector2 projectOnto (Vector2 const & target) const
     {
-        auto norm = normal();
-        auto product = norm.dot(rhs.normal());
-        return Radians<T>(acos(product));
+        auto targetLenSq = target.lengthSquared();
+        if (targetLenSq == 0)
+        {
+            return Vector2();
+        }
+
+        auto product = dot(target);
+        return target * product / targetLenSq;
     }
 
-    Degrees<T> angleInDegrees (Vector2 const & rhs) const
+    Radians<Angle> angleInRadians (Vector2 const & rhs) const
     {
-        return Degrees<T>(angleInRadians(rhs));
+        auto product = unit<Angle>().dot(rhs.unit<Angle>());
+        return Radians<Angle>(acos(product));
+    }
+
+    Degrees<Angle> angleInDegrees (Vector2 const & rhs) const
+    {
+        return Degrees<Angle>(angleInRadians(rhs));
     }
 
     bool isParallel (Vector2 const & rhs) const
@@ -326,13 +368,13 @@ public:
     T y;
 };
 
-template <typename T>
-Vector2<T> operator * (T lhs, Vector2<T> const & rhs)
+template <typename T, typename Angle>
+Vector2<T, Angle> operator * (T lhs, Vector2<T, Angle> const & rhs)
 {
-    return Vector2<T>(lhs * rhs.x, lhs * rhs.y);
+    return Vector2<T, Angle>(lhs * rhs.x, lhs * rhs.y);
 }
 
-template <typename T>
+template <typename T, typename Angle = double>
 class Vector3
 {
 public:
@@ -341,7 +383,8 @@ public:
     static constexpr std::size_t axisY = 1;
     static constexpr std::size_t axisZ = 2;
     using type = T;
-    
+    using angle = Angle;
+
     constexpr Vector3 ()
     : x(), y(), z()
     { }
@@ -420,26 +463,26 @@ public:
         return absoluteX + absoluteY + absoluteZ;
     }
 
-    template<typename U = T>
-    Vector3<U> normal () const
+    template<typename U = T, typename V = Angle>
+    Vector3<U, V> unit () const
     {
         if (x == 0 && y == 0 && z == 0)
         {
-            throw Exception::InvalidOperationException("normal", "normal cannot be calculated for zero length vector.");
+            throw Exception::InvalidOperationException("unit", "unit cannot be calculated for zero length vector.");
         }
-        
+
         U length = std::sqrt(static_cast<U>(lengthSquared()));
 
-        return Vector3<U>(static_cast<U>(x) / length, static_cast<U>(y) / length,
+        return Vector3<U, V>(static_cast<U>(x) / length, static_cast<U>(y) / length,
             static_cast<U>(z) / length);
     }
 
-    Vector3 rotate (std::size_t axis, Degrees<T> const & deg) const
+    Vector3 rotate (std::size_t axis, Degrees<Angle> const & deg) const
     {
-        return rotate(axis, Radians<T>(deg));
+        return rotate(axis, Radians<Angle>(deg));
     }
 
-    Vector3 rotate (std::size_t axis, Radians<T> const & rad) const
+    Vector3 rotate (std::size_t axis, Radians<Angle> const & rad) const
     {
         auto sine = sin(rad.angle);
         auto cosine = cos(rad.angle);
@@ -535,21 +578,32 @@ public:
         return Vector3(y * rhs.z - z * rhs.y, z * rhs.x - x * rhs.z, x * rhs.y - y * rhs.x);
     }
 
-    Radians<T> angleInRadians (Vector3 const & rhs) const
+    Vector3 projectOnto (Vector3 const & target) const
     {
-        auto norm = normal();
-        auto product = norm.dot(rhs.normal());
-        return Radians<T>(acos(product));
+        auto targetLenSq = target.lengthSquared();
+        if (targetLenSq == 0)
+        {
+            return Vector3();
+        }
+
+        auto product = dot(target);
+        return target * product / targetLenSq;
     }
 
-    Degrees<T> angleInDegrees (Vector3 const & rhs) const
+    Radians<Angle> angleInRadians (Vector3 const & rhs) const
     {
-        return Degrees<T>(angleInRadians(rhs));
+        auto product = unit<Angle>().dot(rhs.unit<Angle>());
+        return Radians<Angle>(acos(product));
+    }
+
+    Degrees<Angle> angleInDegrees (Vector3 const & rhs) const
+    {
+        return Degrees<Angle>(angleInRadians(rhs));
     }
 
     bool isParallel (Vector3 const & rhs) const
     {
-        return compareEq(T(0), dot(rhs.rotateQuarter()));
+        return compareEq(T(0), cross(rhs).lengthSquared());
     }
 
     std::string to_string () const
@@ -568,13 +622,13 @@ public:
     T z;
 };
 
-template <typename T>
-Vector3<T> operator * (T lhs, Vector3<T> const & rhs)
+template <typename T, typename Angle>
+Vector3<T, Angle> operator * (T lhs, Vector3<T, Angle> const & rhs)
 {
-    return Vector3<T>(lhs * rhs.x, lhs * rhs.y, lhs * rhs.z);
+    return Vector3<T, Angle>(lhs * rhs.x, lhs * rhs.y, lhs * rhs.z);
 }
 
-template <typename T>
+template <typename T, typename Angle = double>
 class Vector4
 {
 public:
@@ -584,7 +638,8 @@ public:
     static constexpr std::size_t axisZ = 2;
     static constexpr std::size_t axisW = 3;
     using type = T;
-    
+    using angle = Angle;
+
     constexpr Vector4 ()
     : x(), y(), z(), w()
     { }
@@ -677,18 +732,72 @@ public:
         return absoluteX + absoluteY + absoluteZ + absoluteW;
     }
 
-    template<typename U = T>
-    Vector4<U> normal () const
+    template<typename U = T, typename V = Angle>
+    Vector4<U, V> unit () const
     {
         if (x == 0 && y == 0 && z == 0 && w == 0)
         {
-            throw Exception::InvalidOperationException("normal", "normal cannot be calculated for zero length vector.");
+            throw Exception::InvalidOperationException("unit", "unit cannot be calculated for zero length vector.");
         }
-        
+
         U length = std::sqrt(static_cast<U>(lengthSquared()));
 
-        return Vector4<U>(static_cast<U>(x) / length, static_cast<U>(y) / length,
+        return Vector4<U, V>(static_cast<U>(x) / length, static_cast<U>(y) / length,
             static_cast<U>(z) / length, static_cast<U>(w) / length);
+    }
+
+    Vector4 rotate (std::size_t axis, Degrees<Angle> const & deg) const
+    {
+        return rotate(axis, Radians<Angle>(deg));
+    }
+
+    Vector4 rotate (std::size_t axis, Radians<Angle> const & rad) const
+    {
+        auto sine = sin(rad.angle);
+        auto cosine = cos(rad.angle);
+
+        switch (axis)
+        {
+        case axisX:
+            return Vector3(
+                x,
+                y * cosine - z * sine,
+                y * sine + z * cosine
+                );
+
+        case axisY:
+            return Vector3(
+                x * cosine - z * sine,
+                y,
+                x * sine + z * cosine
+                );
+
+        case axisZ:
+            return Vector3(
+                x * cosine - y * sine,
+                x * sine + y * cosine,
+                z
+                );
+        }
+
+        throw Exception::InvalidArgumentException("axis", "axis must be between 0 and 3");
+    }
+
+    Vector4 rotateQuarter (std::size_t axis) const
+    {
+        switch (axis)
+        {
+        case axisX:
+            return Vector3(x, -z, y);
+
+        case axisY:
+            return Vector3(-z, y, x);
+
+        case axisZ:
+            return Vector3(-y, x, z);
+        }
+
+        throw Exception::InvalidArgumentException("axis", "axis must be between 0 and 3");
     }
 
     Vector4 operator - () const
@@ -733,7 +842,37 @@ public:
     {
         return x * rhs.x + y * rhs.y + z * rhs.z + w * rhs.w;
     }
-    
+
+    Vector4 projectOnto (Vector4 const & target) const
+    {
+        auto targetLenSq = target.lengthSquared();
+        if (targetLenSq == 0)
+        {
+            return Vector4();
+        }
+
+        auto product = dot(target);
+        return target * product / targetLenSq;
+    }
+
+    Radians<Angle> angleInRadians (Vector4 const & rhs) const
+    {
+        auto product = unit<Angle>().dot(rhs.unit<Angle>());
+        return Radians<Angle>(acos(product));
+    }
+
+    Degrees<Angle> angleInDegrees (Vector4 const & rhs) const
+    {
+        return Degrees<Angle>(angleInRadians(rhs));
+    }
+
+    bool isParallel (Vector4 const & rhs) const
+    {
+        auto product = dot(rhs);
+        return compareEq(T(0), lengthSquared() * rhs.lengthSquared() -
+            product * product);
+    }
+
     std::string to_string () const
     {
         return "(vector: " + std::to_string(x) + ", " + std::to_string(y) +
@@ -751,10 +890,10 @@ public:
     T w;
 };
 
-template <typename T>
-Vector4<T> operator * (T lhs, Vector4<T> const & rhs)
+template <typename T, typename Angle>
+Vector4<T, Angle> operator * (T lhs, Vector4<T, Angle> const & rhs)
 {
-    return Vector4<T>(lhs * rhs.x, lhs * rhs.y, lhs * rhs.z, lhs * rhs.w);
+    return Vector4<T, Angle>(lhs * rhs.x, lhs * rhs.y, lhs * rhs.z, lhs * rhs.w);
 }
 
 using Vector1i = Vector1<int>;
