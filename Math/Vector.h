@@ -42,7 +42,7 @@ public:
     : x(src.x)
     { }
 
-    static constexpr Vector1 one ()
+    static constexpr Vector1 ones ()
     {
         return Vector1(1);
     }
@@ -199,7 +199,7 @@ public:
     : x(src.x), y(src.y)
     { }
 
-    static constexpr Vector2 one ()
+    static constexpr Vector2 ones ()
     {
         return Vector2(1, 1);
     }
@@ -397,7 +397,7 @@ public:
     : x(src.x), y(src.y), z(src.z)
     { }
 
-    static constexpr Vector3 one ()
+    static constexpr Vector3 ones ()
     {
         return Vector3(1, 1, 1);
     }
@@ -652,7 +652,7 @@ public:
     : x(src.x), y(src.y), z(src.z), w(src.w)
     { }
 
-    static constexpr Vector4 one ()
+    static constexpr Vector4 ones ()
     {
         return Vector4(1, 1, 1, 1);
     }

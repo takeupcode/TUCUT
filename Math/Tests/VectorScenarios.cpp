@@ -76,24 +76,24 @@ SCENARIO( Vector, "Construction/Normal", "unit,math", "Vector can be copy constr
     VERIFY_EQUAL(vec4a, vec4b);
 }
 
-SCENARIO( Vector, "Construction/Normal", "unit,math", "Vector can be unit constructed." )
+SCENARIO( Vector, "Construction/Normal", "unit,math", "Vector can be constructed of all ones." )
 {
-    Math::Vector1i vec1a = Math::Vector1i::one();
-    Math::Vector1d vec1b = Math::Vector1d::one();
+    Math::Vector1i vec1a = Math::Vector1i::ones();
+    Math::Vector1d vec1b = Math::Vector1d::ones();
     
     VERIFY_EQUAL(1, vec1a.x);
     VERIFY_EQUAL(1.0, vec1b.x);
 
-    Math::Vector2i vec2a = Math::Vector2i::one();
-    Math::Vector2d vec2b = Math::Vector2d::one();
+    Math::Vector2i vec2a = Math::Vector2i::ones();
+    Math::Vector2d vec2b = Math::Vector2d::ones();
     
     VERIFY_EQUAL(1, vec2a.x);
     VERIFY_EQUAL(1, vec2a.y);
     VERIFY_EQUAL(1.0, vec2b.x);
     VERIFY_EQUAL(1.0, vec2b.y);
 
-    Math::Vector3i vec3a = Math::Vector3i::one();
-    Math::Vector3d vec3b = Math::Vector3d::one();
+    Math::Vector3i vec3a = Math::Vector3i::ones();
+    Math::Vector3d vec3b = Math::Vector3d::ones();
     
     VERIFY_EQUAL(1, vec3a.x);
     VERIFY_EQUAL(1, vec3a.y);
@@ -102,8 +102,8 @@ SCENARIO( Vector, "Construction/Normal", "unit,math", "Vector can be unit constr
     VERIFY_EQUAL(1.0, vec3b.y);
     VERIFY_EQUAL(1.0, vec3b.z);
 
-    Math::Vector4i vec4a = Math::Vector4i::one();
-    Math::Vector4d vec4b = Math::Vector4d::one();
+    Math::Vector4i vec4a = Math::Vector4i::ones();
+    Math::Vector4d vec4b = Math::Vector4d::ones();
     
     VERIFY_EQUAL(1, vec4a.x);
     VERIFY_EQUAL(1, vec4a.y);
