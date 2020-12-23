@@ -746,60 +746,6 @@ public:
             static_cast<U>(z) / length, static_cast<U>(w) / length);
     }
 
-    Vector4 rotate (std::size_t axis, Degrees<Angle> const & deg) const
-    {
-        return rotate(axis, Radians<Angle>(deg));
-    }
-
-    Vector4 rotate (std::size_t axis, Radians<Angle> const & rad) const
-    {
-        auto sine = sin(rad.angle);
-        auto cosine = cos(rad.angle);
-
-        switch (axis)
-        {
-        case axisX:
-            return Vector3(
-                x,
-                y * cosine - z * sine,
-                y * sine + z * cosine
-                );
-
-        case axisY:
-            return Vector3(
-                x * cosine - z * sine,
-                y,
-                x * sine + z * cosine
-                );
-
-        case axisZ:
-            return Vector3(
-                x * cosine - y * sine,
-                x * sine + y * cosine,
-                z
-                );
-        }
-
-        throw Exception::InvalidArgumentException("axis", "axis must be between 0 and 3");
-    }
-
-    Vector4 rotateQuarter (std::size_t axis) const
-    {
-        switch (axis)
-        {
-        case axisX:
-            return Vector3(x, -z, y);
-
-        case axisY:
-            return Vector3(-z, y, x);
-
-        case axisZ:
-            return Vector3(-y, x, z);
-        }
-
-        throw Exception::InvalidArgumentException("axis", "axis must be between 0 and 3");
-    }
-
     Vector4 operator - () const
     {
         return Vector4(-x, -y, -z, -w);

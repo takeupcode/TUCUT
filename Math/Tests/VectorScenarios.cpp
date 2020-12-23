@@ -13,7 +13,7 @@
 using namespace std;
 using namespace TUCUT;
 
-SCENARIO( Vector, "Construction/Normal", "unit,math", "Vector can be constructed." )
+SCENARIO( Vector, "Construction/Normal", "unit,math", "Vector<int> can be constructed." )
 {
     Math::Vector1i vec1a;
     Math::Vector2i vec2a;
@@ -53,7 +53,127 @@ SCENARIO( Vector, "Construction/Normal", "unit,math", "Vector can be constructed
     VERIFY_EQUAL(126, vec4b.w);
 }
 
-SCENARIO( Vector, "Construction/Normal", "unit,math", "Vector can be copy constructed." )
+SCENARIO( Vector, "Construction/Normal", "unit,math", "Vector<float> can be constructed." )
+{
+    Math::Vector1f vec1a;
+    Math::Vector2f vec2a;
+    Math::Vector3f vec3a;
+    Math::Vector4f vec4a;
+    Math::Vector1f vec1b(123.5f);
+    Math::Vector2f vec2b(123.5f, 124.5f);
+    Math::Vector3f vec3b(123.5f, 124.5f, 125.5f);
+    Math::Vector4f vec4b(123.5f, 124.5f, 125.5f, 126.5f);
+
+    VERIFY_EQUAL(0.0f, vec1a.x);
+
+    VERIFY_EQUAL(0.0f, vec2a.x);
+    VERIFY_EQUAL(0.0f, vec2a.y);
+
+    VERIFY_EQUAL(0.0f, vec3a.x);
+    VERIFY_EQUAL(0.0f, vec3a.y);
+    VERIFY_EQUAL(0.0f, vec3a.z);
+
+    VERIFY_EQUAL(0.0f, vec4a.x);
+    VERIFY_EQUAL(0.0f, vec4a.y);
+    VERIFY_EQUAL(0.0f, vec4a.z);
+    VERIFY_EQUAL(0.0f, vec4a.w);
+
+    VERIFY_EQUAL(123.5f, vec1b.x);
+
+    VERIFY_EQUAL(123.5f, vec2b.x);
+    VERIFY_EQUAL(124.5f, vec2b.y);
+
+    VERIFY_EQUAL(123.5f, vec3b.x);
+    VERIFY_EQUAL(124.5f, vec3b.y);
+    VERIFY_EQUAL(125.5f, vec3b.z);
+
+    VERIFY_EQUAL(123.5f, vec4b.x);
+    VERIFY_EQUAL(124.5f, vec4b.y);
+    VERIFY_EQUAL(125.5f, vec4b.z);
+    VERIFY_EQUAL(126.5f, vec4b.w);
+}
+
+SCENARIO( Vector, "Construction/Normal", "unit,math", "Vector<double> can be constructed." )
+{
+    Math::Vector1d vec1a;
+    Math::Vector2d vec2a;
+    Math::Vector3d vec3a;
+    Math::Vector4d vec4a;
+    Math::Vector1d vec1b(123.5);
+    Math::Vector2d vec2b(123.5, 124.5);
+    Math::Vector3d vec3b(123.5, 124.5, 125.5);
+    Math::Vector4d vec4b(123.5, 124.5, 125.5, 126.5);
+
+    VERIFY_EQUAL(0.0, vec1a.x);
+
+    VERIFY_EQUAL(0.0, vec2a.x);
+    VERIFY_EQUAL(0.0, vec2a.y);
+
+    VERIFY_EQUAL(0.0, vec3a.x);
+    VERIFY_EQUAL(0.0, vec3a.y);
+    VERIFY_EQUAL(0.0, vec3a.z);
+
+    VERIFY_EQUAL(0.0, vec4a.x);
+    VERIFY_EQUAL(0.0, vec4a.y);
+    VERIFY_EQUAL(0.0, vec4a.z);
+    VERIFY_EQUAL(0.0, vec4a.w);
+
+    VERIFY_EQUAL(123.5, vec1b.x);
+
+    VERIFY_EQUAL(123.5, vec2b.x);
+    VERIFY_EQUAL(124.5, vec2b.y);
+
+    VERIFY_EQUAL(123.5, vec3b.x);
+    VERIFY_EQUAL(124.5, vec3b.y);
+    VERIFY_EQUAL(125.5, vec3b.z);
+
+    VERIFY_EQUAL(123.5, vec4b.x);
+    VERIFY_EQUAL(124.5, vec4b.y);
+    VERIFY_EQUAL(125.5, vec4b.z);
+    VERIFY_EQUAL(126.5, vec4b.w);
+}
+
+SCENARIO( Vector, "Construction/Normal", "unit,math", "Vector<long double> can be constructed." )
+{
+    Math::Vector1l vec1a;
+    Math::Vector2l vec2a;
+    Math::Vector3l vec3a;
+    Math::Vector4l vec4a;
+    Math::Vector1l vec1b(123.5L);
+    Math::Vector2l vec2b(123.5L, 124.5L);
+    Math::Vector3l vec3b(123.5L, 124.5L, 125.5L);
+    Math::Vector4l vec4b(123.5L, 124.5L, 125.5L, 126.5L);
+
+    VERIFY_EQUAL(0.0L, vec1a.x);
+
+    VERIFY_EQUAL(0.0L, vec2a.x);
+    VERIFY_EQUAL(0.0L, vec2a.y);
+
+    VERIFY_EQUAL(0.0L, vec3a.x);
+    VERIFY_EQUAL(0.0L, vec3a.y);
+    VERIFY_EQUAL(0.0L, vec3a.z);
+
+    VERIFY_EQUAL(0.0L, vec4a.x);
+    VERIFY_EQUAL(0.0L, vec4a.y);
+    VERIFY_EQUAL(0.0L, vec4a.z);
+    VERIFY_EQUAL(0.0L, vec4a.w);
+
+    VERIFY_EQUAL(123.5L, vec1b.x);
+
+    VERIFY_EQUAL(123.5L, vec2b.x);
+    VERIFY_EQUAL(124.5L, vec2b.y);
+
+    VERIFY_EQUAL(123.5L, vec3b.x);
+    VERIFY_EQUAL(124.5L, vec3b.y);
+    VERIFY_EQUAL(125.5L, vec3b.z);
+
+    VERIFY_EQUAL(123.5L, vec4b.x);
+    VERIFY_EQUAL(124.5L, vec4b.y);
+    VERIFY_EQUAL(125.5L, vec4b.z);
+    VERIFY_EQUAL(126.5L, vec4b.w);
+}
+
+SCENARIO( Vector, "Construction/Normal", "unit,math", "Vector<int> can be copy constructed." )
 {
     Math::Vector1i vec1a(123);
     Math::Vector1i vec1b(vec1a);
@@ -73,6 +193,75 @@ SCENARIO( Vector, "Construction/Normal", "unit,math", "Vector can be copy constr
     Math::Vector4i vec4a(123, 124, 125, 126);
     Math::Vector4i vec4b(vec4a);
     
+    VERIFY_EQUAL(vec4a, vec4b);
+}
+
+SCENARIO( Vector, "Construction/Normal", "unit,math", "Vector<float> can be copy constructed." )
+{
+    Math::Vector1f vec1a(123.5f);
+    Math::Vector1f vec1b(vec1a);
+
+    VERIFY_EQUAL(vec1a, vec1b);
+
+    Math::Vector2f vec2a(123.5f, 124.5f);
+    Math::Vector2f vec2b(vec2a);
+
+    VERIFY_EQUAL(vec2a, vec2b);
+
+    Math::Vector3f vec3a(123.5f, 124.5f, 125.5f);
+    Math::Vector3f vec3b(vec3a);
+
+    VERIFY_EQUAL(vec3a, vec3b);
+
+    Math::Vector4f vec4a(123.5f, 124.5f, 125.5f, 126.5f);
+    Math::Vector4f vec4b(vec4a);
+
+    VERIFY_EQUAL(vec4a, vec4b);
+}
+
+SCENARIO( Vector, "Construction/Normal", "unit,math", "Vector<double> can be copy constructed." )
+{
+    Math::Vector1d vec1a(123.5);
+    Math::Vector1d vec1b(vec1a);
+
+    VERIFY_EQUAL(vec1a, vec1b);
+
+    Math::Vector2d vec2a(123.5, 124.5);
+    Math::Vector2d vec2b(vec2a);
+
+    VERIFY_EQUAL(vec2a, vec2b);
+
+    Math::Vector3d vec3a(123.5, 124.5, 125.5);
+    Math::Vector3d vec3b(vec3a);
+
+    VERIFY_EQUAL(vec3a, vec3b);
+
+    Math::Vector4d vec4a(123.5, 124.5, 125.5, 126.5);
+    Math::Vector4d vec4b(vec4a);
+
+    VERIFY_EQUAL(vec4a, vec4b);
+}
+
+SCENARIO( Vector, "Construction/Normal", "unit,math", "Vector<long double> can be copy constructed." )
+{
+    Math::Vector1f vec1a(123.5L);
+    Math::Vector1f vec1b(vec1a);
+
+    VERIFY_EQUAL(vec1a, vec1b);
+
+    Math::Vector2f vec2a(123.5L, 124.5L);
+    Math::Vector2f vec2b(vec2a);
+
+    VERIFY_EQUAL(vec2a, vec2b);
+
+    Math::Vector3f vec3a(123.5L, 124.5L, 125.5L);
+    Math::Vector3f vec3b(vec3a);
+
+    VERIFY_EQUAL(vec3a, vec3b);
+
+    Math::Vector4f vec4a(123.5L, 124.5L, 125.5L, 126.5L);
+    Math::Vector4f vec4b(vec4a);
+
     VERIFY_EQUAL(vec4a, vec4b);
 }
 
@@ -292,66 +481,102 @@ SCENARIO( Vector, "Operation/Normal", "unit,math", "Vector can be added." )
 {
     Math::Vector1i vec1a(1);
     Math::Vector1i vec1b(4);
+    Math::Vector1i vec1c(-4);
 
     Math::Vector1i sum1 = vec1a + vec1b;
     VERIFY_EQUAL(5, sum1.x);
+    sum1 = vec1a + vec1c;
+    VERIFY_EQUAL(-3, sum1.x);
 
     Math::Vector2i vec2a(1, 2);
     Math::Vector2i vec2b(4, 5);
+    Math::Vector2i vec2c(-4, -5);
 
     Math::Vector2i sum2 = vec2a + vec2b;
     VERIFY_EQUAL(5, sum2.x);
     VERIFY_EQUAL(7, sum2.y);
+    sum2 = vec2a + vec2c;
+    VERIFY_EQUAL(-3, sum2.x);
+    VERIFY_EQUAL(-3, sum2.y);
 
     Math::Vector3i vec3a(1, 2, 3);
     Math::Vector3i vec3b(4, 5, 6);
+    Math::Vector3i vec3c(-4, -5, -6);
 
     Math::Vector3i sum3 = vec3a + vec3b;
     VERIFY_EQUAL(5, sum3.x);
     VERIFY_EQUAL(7, sum3.y);
     VERIFY_EQUAL(9, sum3.z);
+    sum3 = vec3a + vec3c;
+    VERIFY_EQUAL(-3, sum3.x);
+    VERIFY_EQUAL(-3, sum3.y);
+    VERIFY_EQUAL(-3, sum3.z);
 
     Math::Vector4i vec4a(1, 2, 3, 4);
     Math::Vector4i vec4b(4, 5, 6, 7);
+    Math::Vector4i vec4c(-4, -5, -6, -7);
 
     Math::Vector4i sum4 = vec4a + vec4b;
     VERIFY_EQUAL(5, sum4.x);
     VERIFY_EQUAL(7, sum4.y);
     VERIFY_EQUAL(9, sum4.z);
     VERIFY_EQUAL(11, sum4.w);
+    sum4 = vec4a + vec4c;
+    VERIFY_EQUAL(-3, sum4.x);
+    VERIFY_EQUAL(-3, sum4.y);
+    VERIFY_EQUAL(-3, sum4.z);
+    VERIFY_EQUAL(-3, sum4.w);
 }
 
 SCENARIO( Vector, "Operation/Normal", "unit,math", "Vector can be subtracted." )
 {
     Math::Vector1i vec1a(1);
     Math::Vector1i vec1b(4);
-    
+    Math::Vector1i vec1c(-4);
+
     Math::Vector1i diff1 = vec1b - vec1a;
     VERIFY_EQUAL(3, diff1.x);
-    
+    diff1 = vec1a - vec1c;
+    VERIFY_EQUAL(5, diff1.x);
+
     Math::Vector2i vec2a(1, 2);
     Math::Vector2i vec2b(4, 5);
-    
+    Math::Vector2i vec2c(-4, -5);
+
     Math::Vector2i diff2 = vec2b - vec2a;
     VERIFY_EQUAL(3, diff2.x);
     VERIFY_EQUAL(3, diff2.y);
-    
+    diff2 = vec2a - vec2c;
+    VERIFY_EQUAL(5, diff2.x);
+    VERIFY_EQUAL(7, diff2.y);
+
     Math::Vector3i vec3a(1, 2, 3);
     Math::Vector3i vec3b(4, 5, 6);
-    
+    Math::Vector3i vec3c(-4, -5, -6);
+
     Math::Vector3i diff3 = vec3b - vec3a;
     VERIFY_EQUAL(3, diff3.x);
     VERIFY_EQUAL(3, diff3.y);
     VERIFY_EQUAL(3, diff3.z);
-    
+    diff3 = vec3a - vec3c;
+    VERIFY_EQUAL(5, diff3.x);
+    VERIFY_EQUAL(7, diff3.y);
+    VERIFY_EQUAL(9, diff3.z);
+
     Math::Vector4i vec4a(1, 2, 3, 4);
     Math::Vector4i vec4b(4, 5, 6, 7);
-    
+    Math::Vector4i vec4c(-4, -5, -6, -7);
+
     Math::Vector4i diff4 = vec4b - vec4a;
     VERIFY_EQUAL(3, diff4.x);
     VERIFY_EQUAL(3, diff4.y);
     VERIFY_EQUAL(3, diff4.z);
     VERIFY_EQUAL(3, diff4.w);
+    diff4 = vec4a - vec4c;
+    VERIFY_EQUAL(5, diff4.x);
+    VERIFY_EQUAL(7, diff4.y);
+    VERIFY_EQUAL(9, diff4.z);
+    VERIFY_EQUAL(11, diff4.w);
 }
 
 SCENARIO( Vector, "Operation/Normal", "unit,math", "Vector can be multiplied." )
@@ -439,6 +664,242 @@ SCENARIO( Vector, "Operation/Normal", "unit,math", "Vector can be dot multiplied
     VERIFY_EQUAL(122, dot4);
 }
 
+SCENARIO( Vector, "Operation/Normal", "unit,math", "Vector<int> can be projected." )
+{
+    Math::Vector1i vec1a(2);
+    Math::Vector1i vec1b(5);
+    Math::Vector1i vec1c(-5);
+    Math::Vector1i vec1d;
+
+    auto proj1 = vec1a.projectOnto(vec1b);
+    VERIFY_EQUAL(Math::Vector1i(2), proj1);
+    proj1 = vec1a.projectOnto(vec1c);
+    VERIFY_EQUAL(Math::Vector1i(2), proj1);
+    proj1 = vec1a.projectOnto(vec1d);
+    VERIFY_EQUAL(Math::Vector1i(), proj1);
+    proj1 = vec1b.projectOnto(vec1a);
+    VERIFY_EQUAL(Math::Vector1i(5), proj1);
+
+    Math::Vector2i vec2a(2, 3);
+    Math::Vector2i vec2b(5, 7);
+    Math::Vector2i vec2c(-5, -7);
+    Math::Vector2i vec2d;
+
+    auto proj2 = vec2a.projectOnto(vec2b);
+    VERIFY_EQUAL(Math::Vector2i(2, 3), proj2);
+    proj2 = vec2a.projectOnto(vec2c);
+    VERIFY_EQUAL(Math::Vector2i(2, 3), proj2);
+    proj2 = vec2a.projectOnto(vec2d);
+    VERIFY_EQUAL(Math::Vector2i(), proj2);
+    proj2 = vec2b.projectOnto(vec2a);
+    VERIFY_EQUAL(Math::Vector2i(5, 7), proj2);
+
+    Math::Vector3i vec3a(2, 3, 4);
+    Math::Vector3i vec3b(5, 7, 9);
+    Math::Vector3i vec3c(-5, -7, -9);
+    Math::Vector3i vec3d;
+
+    auto proj3 = vec3a.projectOnto(vec3b);
+    VERIFY_EQUAL(Math::Vector3i(2, 3, 4), proj3);
+    proj3 = vec3a.projectOnto(vec3c);
+    VERIFY_EQUAL(Math::Vector3i(2, 3, 4), proj3);
+    proj3 = vec3a.projectOnto(vec3d);
+    VERIFY_EQUAL(Math::Vector3i(), proj3);
+    proj3 = vec3b.projectOnto(vec3a);
+    VERIFY_EQUAL(Math::Vector3i(5, 7, 9), proj3);
+
+    Math::Vector4i vec4a(2, 3, 4, 5);
+    Math::Vector4i vec4b(5, 7, 9, 11);
+    Math::Vector4i vec4c(-5, -7, -9, -11);
+    Math::Vector4i vec4d;
+
+    auto proj4 = vec4a.projectOnto(vec4b);
+    VERIFY_EQUAL(Math::Vector4i(2, 3, 4, 5), proj4);
+    proj4 = vec4a.projectOnto(vec4c);
+    VERIFY_EQUAL(Math::Vector4i(2, 3, 4, 5), proj4);
+    proj4 = vec4a.projectOnto(vec4d);
+    VERIFY_EQUAL(Math::Vector4i(), proj4);
+    proj4 = vec4b.projectOnto(vec4a);
+    VERIFY_EQUAL(Math::Vector4i(5, 7, 9, 11), proj4);
+}
+
+SCENARIO( Vector, "Operation/Normal", "unit,math", "Vector<float> can be projected." )
+{
+    Math::Vector1f vec1a(2.0f);
+    Math::Vector1f vec1b(5.0f);
+    Math::Vector1f vec1c(-5.0f);
+    Math::Vector1f vec1d;
+
+    auto proj1 = vec1a.projectOnto(vec1b);
+    VERIFY_EQUAL(Math::Vector1i(2.0f), proj1);
+    proj1 = vec1a.projectOnto(vec1c);
+    VERIFY_EQUAL(Math::Vector1i(2.0f), proj1);
+    proj1 = vec1a.projectOnto(vec1d);
+    VERIFY_EQUAL(Math::Vector1i(), proj1);
+    proj1 = vec1b.projectOnto(vec1a);
+    VERIFY_EQUAL(Math::Vector1i(5.0f), proj1);
+
+    Math::Vector2f vec2a(2.0f, 3.0f);
+    Math::Vector2f vec2b(5.0f, 7.0f);
+    Math::Vector2f vec2c(-5.0f, -7.0f);
+    Math::Vector2f vec2d;
+
+    auto proj2 = vec2a.projectOnto(vec2b);
+    VERIFY_EQUAL(Math::Vector2i(2.0f, 3.0f), proj2);
+    proj2 = vec2a.projectOnto(vec2c);
+    VERIFY_EQUAL(Math::Vector2i(2.0f, 3.0f), proj2);
+    proj2 = vec2a.projectOnto(vec2d);
+    VERIFY_EQUAL(Math::Vector2i(), proj2);
+    proj2 = vec2b.projectOnto(vec2a);
+    VERIFY_EQUAL(Math::Vector2i(5.0f, 7.0f), proj2);
+
+    Math::Vector3f vec3a(2.0f, 3.0f, 4.0f);
+    Math::Vector3f vec3b(5.0f, 7.0f, 9.0f);
+    Math::Vector3f vec3c(-5.0f, -7.0f, -9.0f);
+    Math::Vector3f vec3d;
+
+    auto proj3 = vec3a.projectOnto(vec3b);
+    VERIFY_EQUAL(Math::Vector3i(2.0f, 3.0f, 4.0f), proj3);
+    proj3 = vec3a.projectOnto(vec3c);
+    VERIFY_EQUAL(Math::Vector3i(2.0f, 3.0f, 4.0f), proj3);
+    proj3 = vec3a.projectOnto(vec3d);
+    VERIFY_EQUAL(Math::Vector3i(), proj3);
+    proj3 = vec3b.projectOnto(vec3a);
+    VERIFY_EQUAL(Math::Vector3i(5.0f, 7.0f, 9.0f), proj3);
+
+    Math::Vector4f vec4a(2.0f, 3.0f, 4.0f, 5.0f);
+    Math::Vector4f vec4b(5.0f, 7.0f, 9.0f, 11.0f);
+    Math::Vector4f vec4c(-5.0f, -7.0f, -9.0f, -11.0f);
+    Math::Vector4f vec4d;
+
+    auto proj4 = vec4a.projectOnto(vec4b);
+    VERIFY_EQUAL(Math::Vector4i(2.0f, 3.0f, 4.0f, 5.0f), proj4);
+    proj4 = vec4a.projectOnto(vec4c);
+    VERIFY_EQUAL(Math::Vector4i(2.0f, 3.0f, 4.0f, 5.0f), proj4);
+    proj4 = vec4a.projectOnto(vec4d);
+    VERIFY_EQUAL(Math::Vector4i(), proj4);
+    proj4 = vec4b.projectOnto(vec4a);
+    VERIFY_EQUAL(Math::Vector4i(5.0f, 7.0f, 9.0f, 11.0f), proj4);
+}
+
+SCENARIO( Vector, "Operation/Normal", "unit,math", "Vector<double> can be projected." )
+{
+    Math::Vector1d vec1a(2.0);
+    Math::Vector1d vec1b(5.0);
+    Math::Vector1d vec1c(-5.0);
+    Math::Vector1d vec1d;
+
+    auto proj1 = vec1a.projectOnto(vec1b);
+    VERIFY_EQUAL(Math::Vector1d(2.0), proj1);
+    proj1 = vec1a.projectOnto(vec1c);
+    VERIFY_EQUAL(Math::Vector1d(2.0), proj1);
+    proj1 = vec1a.projectOnto(vec1d);
+    VERIFY_EQUAL(Math::Vector1d(), proj1);
+    proj1 = vec1b.projectOnto(vec1a);
+    VERIFY_EQUAL(Math::Vector1d(5.0), proj1);
+
+    Math::Vector2d vec2a(2.0, 3.0);
+    Math::Vector2d vec2b(5.0, 7.0);
+    Math::Vector2d vec2c(-5.0, -7.0);
+    Math::Vector2d vec2d;
+
+    auto proj2 = vec2a.projectOnto(vec2b);
+    VERIFY_EQUAL(Math::Vector2d(2.0, 3.0), proj2);
+    proj2 = vec2a.projectOnto(vec2c);
+    VERIFY_EQUAL(Math::Vector2d(2.0, 3.0), proj2);
+    proj2 = vec2a.projectOnto(vec2d);
+    VERIFY_EQUAL(Math::Vector2d(), proj2);
+    proj2 = vec2b.projectOnto(vec2a);
+    VERIFY_EQUAL(Math::Vector2d(5.0, 7.0), proj2);
+
+    Math::Vector3d vec3a(2.0, 3.0, 4.0);
+    Math::Vector3d vec3b(5.0, 7.0, 9.0);
+    Math::Vector3d vec3c(-5.0, -7.0, -9.0);
+    Math::Vector3d vec3d;
+
+    auto proj3 = vec3a.projectOnto(vec3b);
+    VERIFY_EQUAL(Math::Vector3d(2.0, 3.0, 4.0), proj3);
+    proj3 = vec3a.projectOnto(vec3c);
+    VERIFY_EQUAL(Math::Vector3d(2.0, 3.0, 4.0), proj3);
+    proj3 = vec3a.projectOnto(vec3d);
+    VERIFY_EQUAL(Math::Vector3d(), proj3);
+    proj3 = vec3b.projectOnto(vec3a);
+    VERIFY_EQUAL(Math::Vector3d(5.0, 7.0, 9.0), proj3);
+
+    Math::Vector4d vec4a(2.0, 3.0, 4.0, 5.0);
+    Math::Vector4d vec4b(5.0, 7.0, 9.0, 11.0);
+    Math::Vector4d vec4c(-5.0, -7.0, -9.0, -11.0);
+    Math::Vector4d vec4d;
+
+    auto proj4 = vec4a.projectOnto(vec4b);
+    VERIFY_EQUAL(Math::Vector4d(2.0, 3.0, 4.0, 5.0), proj4);
+    proj4 = vec4a.projectOnto(vec4c);
+    VERIFY_EQUAL(Math::Vector4d(2.0, 3.0, 4.0, 5.0), proj4);
+    proj4 = vec4a.projectOnto(vec4d);
+    VERIFY_EQUAL(Math::Vector4d(), proj4);
+    proj4 = vec4b.projectOnto(vec4a);
+    VERIFY_EQUAL(Math::Vector4d(5.0, 7.0, 9.0, 11.0), proj4);
+}
+
+SCENARIO( Vector, "Operation/Normal", "unit,math", "Vector<long double> can be projected." )
+{
+    Math::Vector1l vec1a(2.0L);
+    Math::Vector1l vec1b(5.0L);
+    Math::Vector1l vec1c(-5.0L);
+    Math::Vector1l vec1d;
+
+    auto proj1 = vec1a.projectOnto(vec1b);
+    VERIFY_EQUAL(Math::Vector1l(2.0L), proj1);
+    proj1 = vec1a.projectOnto(vec1c);
+    VERIFY_EQUAL(Math::Vector1l(2.0L), proj1);
+    proj1 = vec1a.projectOnto(vec1d);
+    VERIFY_EQUAL(Math::Vector1l(), proj1);
+    proj1 = vec1b.projectOnto(vec1a);
+    VERIFY_EQUAL(Math::Vector1l(5.0L), proj1);
+
+    Math::Vector2l vec2a(2.0L, 3.0L);
+    Math::Vector2l vec2b(5.0L, 7.0L);
+    Math::Vector2l vec2c(-5.0L, -7.0L);
+    Math::Vector2l vec2d;
+
+    auto proj2 = vec2a.projectOnto(vec2b);
+    VERIFY_EQUAL(Math::Vector2l(2.0L, 3.0L), proj2);
+    proj2 = vec2a.projectOnto(vec2c);
+    VERIFY_EQUAL(Math::Vector2l(2.0L, 3.0L), proj2);
+    proj2 = vec2a.projectOnto(vec2d);
+    VERIFY_EQUAL(Math::Vector2l(), proj2);
+    proj2 = vec2b.projectOnto(vec2a);
+    VERIFY_EQUAL(Math::Vector2l(5.0L, 7.0L), proj2);
+
+    Math::Vector3l vec3a(2.0L, 3.0L, 4.0L);
+    Math::Vector3l vec3b(5.0L, 7.0L, 9.0L);
+    Math::Vector3l vec3c(-5.0L, -7.0L, -9.0L);
+    Math::Vector3l vec3d;
+
+    auto proj3 = vec3a.projectOnto(vec3b);
+    VERIFY_EQUAL(Math::Vector3l(2.0L, 3.0L, 4.0L), proj3);
+    proj3 = vec3a.projectOnto(vec3c);
+    VERIFY_EQUAL(Math::Vector3l(2.0L, 3.0L, 4.0L), proj3);
+    proj3 = vec3a.projectOnto(vec3d);
+    VERIFY_EQUAL(Math::Vector3l(), proj3);
+    proj3 = vec3b.projectOnto(vec3a);
+    VERIFY_EQUAL(Math::Vector3l(5.0L, 7.0L, 9.0L), proj3);
+
+    Math::Vector4l vec4a(2.0L, 3.0L, 4.0L, 5.0L);
+    Math::Vector4l vec4b(5.0L, 7.0L, 9.0L, 11.0L);
+    Math::Vector4l vec4c(-5.0L, -7.0L, -9.0L, -11.0L);
+    Math::Vector4l vec4d;
+
+    auto proj4 = vec4a.projectOnto(vec4b);
+    VERIFY_EQUAL(Math::Vector4l(2.0L, 3.0L, 4.0L, 5.0L), proj4);
+    proj4 = vec4a.projectOnto(vec4c);
+    VERIFY_EQUAL(Math::Vector4l(2.0L, 3.0L, 4.0L, 5.0L), proj4);
+    proj4 = vec4a.projectOnto(vec4d);
+    VERIFY_EQUAL(Math::Vector4l(), proj4);
+    proj4 = vec4b.projectOnto(vec4a);
+    VERIFY_EQUAL(Math::Vector4l(5.0L, 7.0L, 9.0L, 11.0L), proj4);
+}
+
 SCENARIO( Vector, "Operation/Normal", "unit,math", "Vector3 can be cross multiplied." )
 {
     Math::Vector3i vec3a(2, 10, 5);
@@ -464,11 +925,119 @@ SCENARIO( Vector, "Operation/Normal", "unit,math", "Vector3 can be cross multipl
 SCENARIO( Vector, "Operation/Normal", "unit,math", "Vector3 cross product points in the right direction." )
 {
     Math::Vector3i vec3right = Math::Vector3i::right();
+    Math::Vector3i vec3left = Math::Vector3i::left();
     Math::Vector3i vec3forward = Math::Vector3i::forward();
-    
-    Math::Vector3i prod3 = vec3right.cross(vec3forward);
-    
+    Math::Vector3i vec3backward = Math::Vector3i::backward();
+    Math::Vector3i vec3up = Math::Vector3i::up();
+    Math::Vector3i vec3down = Math::Vector3i::down();
+
+    Math::Vector3i prod3 = vec3right.cross(vec3right);
+    VERIFY_EQUAL(Math::Vector3i(), prod3);
+
+    prod3 = vec3right.cross(vec3left);
+    VERIFY_EQUAL(Math::Vector3i(), prod3);
+
+    prod3 = vec3right.cross(vec3forward);
     VERIFY_EQUAL(Math::Vector3i::up(), prod3);
+
+    prod3 = vec3right.cross(vec3backward);
+    VERIFY_EQUAL(Math::Vector3i::down(), prod3);
+
+    prod3 = vec3right.cross(vec3up);
+    VERIFY_EQUAL(Math::Vector3i::backward(), prod3);
+
+    prod3 = vec3right.cross(vec3down);
+    VERIFY_EQUAL(Math::Vector3i::forward(), prod3);
+
+    prod3 = vec3left.cross(vec3right);
+    VERIFY_EQUAL(Math::Vector3i(), prod3);
+
+    prod3 = vec3left.cross(vec3left);
+    VERIFY_EQUAL(Math::Vector3i(), prod3);
+
+    prod3 = vec3left.cross(vec3forward);
+    VERIFY_EQUAL(Math::Vector3i::down(), prod3);
+
+    prod3 = vec3left.cross(vec3backward);
+    VERIFY_EQUAL(Math::Vector3i::up(), prod3);
+
+    prod3 = vec3left.cross(vec3up);
+    VERIFY_EQUAL(Math::Vector3i::forward(), prod3);
+
+    prod3 = vec3left.cross(vec3down);
+    VERIFY_EQUAL(Math::Vector3i::backward(), prod3);
+
+    prod3 = vec3forward.cross(vec3right);
+    VERIFY_EQUAL(Math::Vector3i::down(), prod3);
+
+    prod3 = vec3forward.cross(vec3left);
+    VERIFY_EQUAL(Math::Vector3i::up(), prod3);
+
+    prod3 = vec3forward.cross(vec3forward);
+    VERIFY_EQUAL(Math::Vector3i(), prod3);
+
+    prod3 = vec3forward.cross(vec3backward);
+    VERIFY_EQUAL(Math::Vector3i(), prod3);
+
+    prod3 = vec3forward.cross(vec3up);
+    VERIFY_EQUAL(Math::Vector3i::right(), prod3);
+
+    prod3 = vec3forward.cross(vec3down);
+    VERIFY_EQUAL(Math::Vector3i::left(), prod3);
+
+    prod3 = vec3backward.cross(vec3right);
+    VERIFY_EQUAL(Math::Vector3i::up(), prod3);
+
+    prod3 = vec3backward.cross(vec3left);
+    VERIFY_EQUAL(Math::Vector3i::down(), prod3);
+
+    prod3 = vec3backward.cross(vec3forward);
+    VERIFY_EQUAL(Math::Vector3i(), prod3);
+
+    prod3 = vec3backward.cross(vec3backward);
+    VERIFY_EQUAL(Math::Vector3i(), prod3);
+
+    prod3 = vec3backward.cross(vec3up);
+    VERIFY_EQUAL(Math::Vector3i::left(), prod3);
+
+    prod3 = vec3backward.cross(vec3down);
+    VERIFY_EQUAL(Math::Vector3i::right(), prod3);
+
+    prod3 = vec3up.cross(vec3right);
+    VERIFY_EQUAL(Math::Vector3i::forward(), prod3);
+
+    prod3 = vec3up.cross(vec3left);
+    VERIFY_EQUAL(Math::Vector3i::backward(), prod3);
+
+    prod3 = vec3up.cross(vec3forward);
+    VERIFY_EQUAL(Math::Vector3i::left(), prod3);
+
+    prod3 = vec3up.cross(vec3backward);
+    VERIFY_EQUAL(Math::Vector3i::right(), prod3);
+
+    prod3 = vec3up.cross(vec3up);
+    VERIFY_EQUAL(Math::Vector3i(), prod3);
+
+    prod3 = vec3up.cross(vec3down);
+    VERIFY_EQUAL(Math::Vector3i(), prod3);
+
+    prod3 = vec3down.cross(vec3right);
+    VERIFY_EQUAL(Math::Vector3i::backward(), prod3);
+
+    prod3 = vec3down.cross(vec3left);
+    VERIFY_EQUAL(Math::Vector3i::forward(), prod3);
+
+    prod3 = vec3down.cross(vec3forward);
+    VERIFY_EQUAL(Math::Vector3i::right(), prod3);
+
+    prod3 = vec3down.cross(vec3backward);
+    VERIFY_EQUAL(Math::Vector3i::left(), prod3);
+
+    prod3 = vec3down.cross(vec3up);
+    VERIFY_EQUAL(Math::Vector3i(), prod3);
+
+    prod3 = vec3down.cross(vec3down);
+    VERIFY_EQUAL(Math::Vector3i(), prod3);
 }
 
 SCENARIO( Vector, "Operation/Normal", "unit,math", "Vector can calculate length squared." )
@@ -700,30 +1269,92 @@ SCENARIO( Vector, "Operation/Normal", "unit,math", "Vector2d can determine angle
 
 SCENARIO( Vector, "Operation/Normal", "unit,math", "Vector3f can determine angle between another." )
 {
-    auto vec2a = Math::Vector3<float, float>::right();
-    auto vec2b = Math::Vector3<float, float>::forward();
-    Math::Vector3<float, float> vec2c(5.0f, 2.041241f, 2.041241f);
+    auto vec3a = Math::Vector3<float, float>::right();
+    auto vec3b = Math::Vector3<float, float>::forward();
+    auto vec3c = Math::Vector3<float, float>::up();
+    Math::Vector3<float, float> vec3d(5.0f, 2.041241f, 2.041241f);
 
-    VERIFY_EQUAL(90.0f, vec2a.angleInDegrees(vec2b).angle);
-    VERIFY_EQUAL(90.0f, vec2b.angleInDegrees(vec2a).angle);
-    VERIFY_EQUAL(30.0f, vec2a.angleInDegrees(vec2c).angle);
-    VERIFY_EQUAL(30.0f, vec2c.angleInDegrees(vec2a).angle);
-    VERIFY_EQUAL(69.295189f, vec2c.angleInDegrees(vec2b).angle);
-    VERIFY_EQUAL(69.295189f, vec2b.angleInDegrees(vec2c).angle);
+    VERIFY_EQUAL(90.0f, vec3a.angleInDegrees(vec3b).angle);
+    VERIFY_EQUAL(90.0f, vec3b.angleInDegrees(vec3a).angle);
+    VERIFY_EQUAL(90.0f, vec3a.angleInDegrees(vec3c).angle);
+    VERIFY_EQUAL(90.0f, vec3c.angleInDegrees(vec3a).angle);
+    VERIFY_EQUAL(90.0f, vec3b.angleInDegrees(vec3c).angle);
+    VERIFY_EQUAL(90.0f, vec3c.angleInDegrees(vec3b).angle);
+    VERIFY_EQUAL(30.0f, vec3a.angleInDegrees(vec3d).angle);
+    VERIFY_EQUAL(30.0f, vec3d.angleInDegrees(vec3a).angle);
+    VERIFY_EQUAL(69.295189f, vec3d.angleInDegrees(vec3b).angle);
+    VERIFY_EQUAL(69.295189f, vec3b.angleInDegrees(vec3d).angle);
 }
 
 SCENARIO( Vector, "Operation/Normal", "unit,math", "Vector3d can determine angle between another." )
 {
-    auto vec2a = Math::Vector3d::right();
-    auto vec2b = Math::Vector3d::forward();
-    Math::Vector3d vec2c(5.0, 2.041241452319315, 2.041241452319315);
+    auto vec3a = Math::Vector3d::right();
+    auto vec3b = Math::Vector3d::forward();
+    auto vec3c = Math::Vector3d::up();
+    Math::Vector3d vec3d(5.0, 2.041241452319315, 2.041241452319315);
 
-    VERIFY_EQUAL(90.0, vec2a.angleInDegrees(vec2b).angle);
-    VERIFY_EQUAL(90.0, vec2b.angleInDegrees(vec2a).angle);
-    VERIFY_EQUAL(30.0, vec2a.angleInDegrees(vec2c).angle);
-    VERIFY_EQUAL(30.0, vec2c.angleInDegrees(vec2a).angle);
-    VERIFY_EQUAL(69.29518894536457, vec2c.angleInDegrees(vec2b).angle);
-    VERIFY_EQUAL(69.29518894536457, vec2b.angleInDegrees(vec2c).angle);
+    VERIFY_EQUAL(90.0, vec3a.angleInDegrees(vec3b).angle);
+    VERIFY_EQUAL(90.0, vec3b.angleInDegrees(vec3a).angle);
+    VERIFY_EQUAL(90.0, vec3a.angleInDegrees(vec3c).angle);
+    VERIFY_EQUAL(90.0, vec3c.angleInDegrees(vec3a).angle);
+    VERIFY_EQUAL(90.0, vec3b.angleInDegrees(vec3c).angle);
+    VERIFY_EQUAL(90.0, vec3c.angleInDegrees(vec3b).angle);
+    VERIFY_EQUAL(30.0, vec3a.angleInDegrees(vec3d).angle);
+    VERIFY_EQUAL(30.0, vec3d.angleInDegrees(vec3a).angle);
+    VERIFY_EQUAL(69.29518894536457, vec3d.angleInDegrees(vec3b).angle);
+    VERIFY_EQUAL(69.29518894536457, vec3b.angleInDegrees(vec3d).angle);
+}
+
+SCENARIO( Vector, "Operation/Normal", "unit,math", "Vector4f can determine angle between another." )
+{
+    auto vec4a = Math::Vector4<float, float>::right();
+    auto vec4b = Math::Vector4<float, float>::forward();
+    auto vec4c = Math::Vector4<float, float>::up();
+    auto vec4d = Math::Vector4<float, float>::ana();
+    Math::Vector4<float, float> vec4e(5.0f, 2.041241f, 2.041241f, 0.0f);
+
+    VERIFY_EQUAL(90.0f, vec4a.angleInDegrees(vec4b).angle);
+    VERIFY_EQUAL(90.0f, vec4b.angleInDegrees(vec4a).angle);
+    VERIFY_EQUAL(90.0f, vec4a.angleInDegrees(vec4c).angle);
+    VERIFY_EQUAL(90.0f, vec4c.angleInDegrees(vec4a).angle);
+    VERIFY_EQUAL(90.0f, vec4a.angleInDegrees(vec4d).angle);
+    VERIFY_EQUAL(90.0f, vec4d.angleInDegrees(vec4a).angle);
+    VERIFY_EQUAL(90.0f, vec4b.angleInDegrees(vec4c).angle);
+    VERIFY_EQUAL(90.0f, vec4c.angleInDegrees(vec4b).angle);
+    VERIFY_EQUAL(90.0f, vec4b.angleInDegrees(vec4d).angle);
+    VERIFY_EQUAL(90.0f, vec4d.angleInDegrees(vec4b).angle);
+    VERIFY_EQUAL(90.0f, vec4c.angleInDegrees(vec4d).angle);
+    VERIFY_EQUAL(90.0f, vec4d.angleInDegrees(vec4c).angle);
+    VERIFY_EQUAL(30.0f, vec4a.angleInDegrees(vec4e).angle);
+    VERIFY_EQUAL(30.0f, vec4e.angleInDegrees(vec4a).angle);
+    VERIFY_EQUAL(69.295189f, vec4e.angleInDegrees(vec4b).angle);
+    VERIFY_EQUAL(69.295189f, vec4b.angleInDegrees(vec4e).angle);
+}
+
+SCENARIO( Vector, "Operation/Normal", "unit,math", "Vector4d can determine angle between another." )
+{
+    auto vec4a = Math::Vector4d::right();
+    auto vec4b = Math::Vector4d::forward();
+    auto vec4c = Math::Vector4d::up();
+    auto vec4d = Math::Vector4d::ana();
+    Math::Vector4d vec4e(5.0, 2.041241452319315, 2.041241452319315, 0.0);
+
+    VERIFY_EQUAL(90.0, vec4a.angleInDegrees(vec4b).angle);
+    VERIFY_EQUAL(90.0, vec4b.angleInDegrees(vec4a).angle);
+    VERIFY_EQUAL(90.0, vec4a.angleInDegrees(vec4c).angle);
+    VERIFY_EQUAL(90.0, vec4c.angleInDegrees(vec4a).angle);
+    VERIFY_EQUAL(90.0, vec4a.angleInDegrees(vec4d).angle);
+    VERIFY_EQUAL(90.0, vec4d.angleInDegrees(vec4a).angle);
+    VERIFY_EQUAL(90.0, vec4b.angleInDegrees(vec4c).angle);
+    VERIFY_EQUAL(90.0, vec4c.angleInDegrees(vec4b).angle);
+    VERIFY_EQUAL(90.0, vec4b.angleInDegrees(vec4d).angle);
+    VERIFY_EQUAL(90.0, vec4d.angleInDegrees(vec4b).angle);
+    VERIFY_EQUAL(90.0, vec4c.angleInDegrees(vec4d).angle);
+    VERIFY_EQUAL(90.0, vec4d.angleInDegrees(vec4c).angle);
+    VERIFY_EQUAL(30.0, vec4a.angleInDegrees(vec4e).angle);
+    VERIFY_EQUAL(30.0, vec4e.angleInDegrees(vec4a).angle);
+    VERIFY_EQUAL(69.29518894536457, vec4e.angleInDegrees(vec4b).angle);
+    VERIFY_EQUAL(69.29518894536457, vec4b.angleInDegrees(vec4e).angle);
 }
 
 SCENARIO( Vector, "Operation/Normal", "unit,math", "Vector2f can determine parallel with another." )
@@ -758,4 +1389,110 @@ SCENARIO( Vector, "Operation/Normal", "unit,math", "Vector2d can determine paral
     VERIFY_TRUE(vec2c.isParallel(vec2b));
     VERIFY_TRUE(vec2b.isParallel(vec2d));
     VERIFY_TRUE(vec2d.isParallel(vec2b));
+}
+
+SCENARIO( Vector, "Operation/Normal", "unit,math", "Vector3f can determine parallel with another." )
+{
+    Math::Vector3f vec3a(5.0f, 2.5f, 0.0f);
+    Math::Vector3f vec3b(5.0f, 3.0f, 0.0f);
+    Math::Vector3f vec3c(7.5f, 4.5f, 0.0f);
+    Math::Vector3f vec3d(-7.5f, -4.5f, 0.0f);
+    Math::Vector3f vec3e(5.0f, 3.0f, 1.0f);
+    Math::Vector3f vec3f(7.5f, 4.5f, 1.5f);
+
+    VERIFY_TRUE(vec3a.isParallel(vec3a));
+    VERIFY_FALSE(vec3a.isParallel(vec3b));
+    VERIFY_FALSE(vec3c.isParallel(vec3a));
+    VERIFY_FALSE(vec3a.isParallel(vec3d));
+    VERIFY_FALSE(vec3a.isParallel(vec3e));
+    VERIFY_FALSE(vec3a.isParallel(vec3f));
+    VERIFY_TRUE(vec3b.isParallel(vec3c));
+    VERIFY_TRUE(vec3c.isParallel(vec3b));
+    VERIFY_TRUE(vec3b.isParallel(vec3d));
+    VERIFY_TRUE(vec3d.isParallel(vec3b));
+    VERIFY_FALSE(vec3b.isParallel(vec3e));
+    VERIFY_TRUE(vec3e.isParallel(vec3f));
+}
+
+SCENARIO( Vector, "Operation/Normal", "unit,math", "Vector3d can determine parallel with another." )
+{
+    Math::Vector3d vec3a(5.0, 2.5, 0.0);
+    Math::Vector3d vec3b(5.0, 3.0, 0.0);
+    Math::Vector3d vec3c(7.5, 4.5, 0.0);
+    Math::Vector3d vec3d(-7.5, -4.5, 0.0);
+    Math::Vector3d vec3e(5.0, 3.0, 1.0);
+    Math::Vector3d vec3f(7.5, 4.5, 1.5);
+
+    VERIFY_TRUE(vec3a.isParallel(vec3a));
+    VERIFY_FALSE(vec3a.isParallel(vec3b));
+    VERIFY_FALSE(vec3c.isParallel(vec3a));
+    VERIFY_FALSE(vec3a.isParallel(vec3d));
+    VERIFY_FALSE(vec3a.isParallel(vec3e));
+    VERIFY_FALSE(vec3a.isParallel(vec3f));
+    VERIFY_TRUE(vec3b.isParallel(vec3c));
+    VERIFY_TRUE(vec3c.isParallel(vec3b));
+    VERIFY_TRUE(vec3b.isParallel(vec3d));
+    VERIFY_TRUE(vec3d.isParallel(vec3b));
+    VERIFY_FALSE(vec3b.isParallel(vec3e));
+    VERIFY_TRUE(vec3e.isParallel(vec3f));
+}
+
+SCENARIO( Vector, "Operation/Normal", "unit,math", "Vector4f can determine parallel with another." )
+{
+    Math::Vector4f vec4a(5.0f, 2.5f, 0.0f, 0.0f);
+    Math::Vector4f vec4b(5.0f, 3.0f, 0.0f, 0.0f);
+    Math::Vector4f vec4c(7.5f, 4.5f, 0.0f, 0.0f);
+    Math::Vector4f vec4d(-7.5f, -4.5f, 0.0f, 0.0f);
+    Math::Vector4f vec4e(5.0f, 3.0f, 1.0f, 0.0f);
+    Math::Vector4f vec4f(7.5f, 4.5f, 1.5f, 0.0f);
+    Math::Vector4f vec4g(5.0f, 3.0f, 1.0f, 2.0f);
+    Math::Vector4f vec4h(7.5f, 4.5f, 1.5f, 3.0f);
+
+    VERIFY_TRUE(vec4a.isParallel(vec4a));
+    VERIFY_FALSE(vec4a.isParallel(vec4b));
+    VERIFY_FALSE(vec4c.isParallel(vec4a));
+    VERIFY_FALSE(vec4a.isParallel(vec4d));
+    VERIFY_FALSE(vec4a.isParallel(vec4e));
+    VERIFY_FALSE(vec4a.isParallel(vec4f));
+    VERIFY_FALSE(vec4a.isParallel(vec4g));
+    VERIFY_FALSE(vec4a.isParallel(vec4h));
+    VERIFY_TRUE(vec4b.isParallel(vec4c));
+    VERIFY_TRUE(vec4c.isParallel(vec4b));
+    VERIFY_TRUE(vec4b.isParallel(vec4d));
+    VERIFY_TRUE(vec4d.isParallel(vec4b));
+    VERIFY_FALSE(vec4b.isParallel(vec4e));
+    VERIFY_TRUE(vec4e.isParallel(vec4f));
+    VERIFY_FALSE(vec4b.isParallel(vec4g));
+    VERIFY_FALSE(vec4e.isParallel(vec4g));
+    VERIFY_TRUE(vec4g.isParallel(vec4h));
+}
+
+SCENARIO( Vector, "Operation/Normal", "unit,math", "Vector4d can determine parallel with another." )
+{
+    Math::Vector4d vec4a(5.0, 2.5, 0.0, 0.0);
+    Math::Vector4d vec4b(5.0, 3.0, 0.0, 0.0);
+    Math::Vector4d vec4c(7.5, 4.5, 0.0, 0.0);
+    Math::Vector4d vec4d(-7.5, -4.5, 0.0, 0.0);
+    Math::Vector4d vec4e(5.0, 3.0, 1.0, 0.0);
+    Math::Vector4d vec4f(7.5, 4.5, 1.5, 0.0);
+    Math::Vector4d vec4g(5.0, 3.0, 1.0, 2.0);
+    Math::Vector4d vec4h(7.5, 4.5, 1.5, 3.0);
+
+    VERIFY_TRUE(vec4a.isParallel(vec4a));
+    VERIFY_FALSE(vec4a.isParallel(vec4b));
+    VERIFY_FALSE(vec4c.isParallel(vec4a));
+    VERIFY_FALSE(vec4a.isParallel(vec4d));
+    VERIFY_FALSE(vec4a.isParallel(vec4e));
+    VERIFY_FALSE(vec4a.isParallel(vec4f));
+    VERIFY_FALSE(vec4a.isParallel(vec4g));
+    VERIFY_FALSE(vec4a.isParallel(vec4h));
+    VERIFY_TRUE(vec4b.isParallel(vec4c));
+    VERIFY_TRUE(vec4c.isParallel(vec4b));
+    VERIFY_TRUE(vec4b.isParallel(vec4d));
+    VERIFY_TRUE(vec4d.isParallel(vec4b));
+    VERIFY_FALSE(vec4b.isParallel(vec4e));
+    VERIFY_TRUE(vec4e.isParallel(vec4f));
+    VERIFY_FALSE(vec4b.isParallel(vec4g));
+    VERIFY_FALSE(vec4e.isParallel(vec4g));
+    VERIFY_TRUE(vec4g.isParallel(vec4h));
 }

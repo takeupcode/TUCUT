@@ -159,6 +159,12 @@ public:
         initialize();
     }
 
+    EqualVerificationException (long double expectedValue, long double actualValue, int line)
+    : VerificationException(line), mExpectedValue(std::to_string(expectedValue)), mActualValue(std::to_string(actualValue))
+    {
+        initialize();
+    }
+
     EqualVerificationException (std::string const & expectedValue, std::string const & actualValue, int line)
     : VerificationException(line), mExpectedValue(expectedValue), mActualValue(actualValue)
     {
