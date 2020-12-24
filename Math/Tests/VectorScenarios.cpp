@@ -1244,6 +1244,18 @@ SCENARIO( Vector, "Operation/Normal", "unit,math", "Vector3d can be rotated." )
     VERIFY_EQUAL(vec3a, vec3c);
 }
 
+SCENARIO( Vector, "Operation/Normal", "unit,math", "Vector1f can determine angle between another." )
+{
+    auto vec1a = Math::Vector1<float, float>::right();
+    auto vec1b = Math::Vector1<float, float>::left();
+    Math::Vector1<float, float> vec1c(5.0f);
+
+    VERIFY_EQUAL(180.0f, vec1a.angleInDegrees(vec1b).angle);
+    VERIFY_EQUAL(180.0f, vec1b.angleInDegrees(vec1a).angle);
+    VERIFY_EQUAL(0.0f, vec1a.angleInDegrees(vec1c).angle);
+    VERIFY_EQUAL(180.0f, vec1c.angleInDegrees(vec1b).angle);
+}
+
 SCENARIO( Vector, "Operation/Normal", "unit,math", "Vector2f can determine angle between another." )
 {
     auto vec2a = Math::Vector2<float, float>::right();
@@ -1360,6 +1372,15 @@ SCENARIO( Vector, "Operation/Normal", "unit,math", "Vector4d can determine angle
     VERIFY_EQUAL(30.0, vec4e.angleInDegrees(vec4a).angle);
     VERIFY_EQUAL(69.29518894536457, vec4e.angleInDegrees(vec4b).angle);
     VERIFY_EQUAL(69.29518894536457, vec4b.angleInDegrees(vec4e).angle);
+}
+
+SCENARIO( Vector, "Operation/Normal", "unit,math", "Vector1f can determine parallel with another." )
+{
+    Math::Vector1f vec1a(5.0f);
+    Math::Vector1f vec1b(-7.5f);
+
+    VERIFY_TRUE(vec1a.isParallel(vec1a));
+    VERIFY_TRUE(vec1a.isParallel(vec1b));
 }
 
 SCENARIO( Vector, "Operation/Normal", "unit,math", "Vector2f can determine parallel with another." )
