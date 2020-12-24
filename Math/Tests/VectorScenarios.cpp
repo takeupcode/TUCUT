@@ -671,6 +671,11 @@ SCENARIO( Vector, "Operation/Normal", "unit,math", "Vector<int> can be projected
     Math::Vector1i vec1c(-5);
     Math::Vector1i vec1d;
 
+    // source = s
+    // target = t
+    // projected = p
+    // p = (s dot t) / ||t||^2 * t
+
     auto proj1 = vec1a.projectOnto(vec1b);
     VERIFY_EQUAL(Math::Vector1i(2), proj1);
     proj1 = vec1a.projectOnto(vec1c);
@@ -685,42 +690,42 @@ SCENARIO( Vector, "Operation/Normal", "unit,math", "Vector<int> can be projected
     Math::Vector2i vec2c(-5, -7);
     Math::Vector2i vec2d;
 
-    auto proj2 = vec2a.projectOnto(vec2b);
-    VERIFY_EQUAL(Math::Vector2i(2, 3), proj2);
+    auto proj2 = vec2a.projectOnto(vec2b); // ((2 * 5) + (3 * 7)) / (5^2 + 7^2) * vec2b
+    VERIFY_EQUAL(Math::Vector2i(2, 2), proj2); // 2.09, 2.93
     proj2 = vec2a.projectOnto(vec2c);
-    VERIFY_EQUAL(Math::Vector2i(2, 3), proj2);
+    VERIFY_EQUAL(Math::Vector2i(2, 2), proj2);
     proj2 = vec2a.projectOnto(vec2d);
     VERIFY_EQUAL(Math::Vector2i(), proj2);
-    proj2 = vec2b.projectOnto(vec2a);
-    VERIFY_EQUAL(Math::Vector2i(5, 7), proj2);
+    proj2 = vec2b.projectOnto(vec2a); // ((5 * 2) + (7 * 3)) / (2^2 + 3^2) * vec2a
+    VERIFY_EQUAL(Math::Vector2i(4, 7), proj2); // 4.77, 7.15
 
     Math::Vector3i vec3a(2, 3, 4);
     Math::Vector3i vec3b(5, 7, 9);
     Math::Vector3i vec3c(-5, -7, -9);
     Math::Vector3i vec3d;
 
-    auto proj3 = vec3a.projectOnto(vec3b);
-    VERIFY_EQUAL(Math::Vector3i(2, 3, 4), proj3);
+    auto proj3 = vec3a.projectOnto(vec3b); // 67 / 155 * vec3b
+    VERIFY_EQUAL(Math::Vector3i(2, 3, 3), proj3); // 2.16, 3.03, 3.89
     proj3 = vec3a.projectOnto(vec3c);
-    VERIFY_EQUAL(Math::Vector3i(2, 3, 4), proj3);
+    VERIFY_EQUAL(Math::Vector3i(2, 3, 3), proj3);
     proj3 = vec3a.projectOnto(vec3d);
     VERIFY_EQUAL(Math::Vector3i(), proj3);
-    proj3 = vec3b.projectOnto(vec3a);
-    VERIFY_EQUAL(Math::Vector3i(5, 7, 9), proj3);
+    proj3 = vec3b.projectOnto(vec3a); // 67 / 29 * vec3a
+    VERIFY_EQUAL(Math::Vector3i(4, 6, 9), proj3); // 4.62, 6.93, 9.24
 
     Math::Vector4i vec4a(2, 3, 4, 5);
     Math::Vector4i vec4b(5, 7, 9, 11);
     Math::Vector4i vec4c(-5, -7, -9, -11);
     Math::Vector4i vec4d;
 
-    auto proj4 = vec4a.projectOnto(vec4b);
-    VERIFY_EQUAL(Math::Vector4i(2, 3, 4, 5), proj4);
+    auto proj4 = vec4a.projectOnto(vec4b); // 122 / 276 * vec4b
+    VERIFY_EQUAL(Math::Vector4i(2, 3, 3, 4), proj4); // 2.21, 3.09, 3.98, 4.86
     proj4 = vec4a.projectOnto(vec4c);
-    VERIFY_EQUAL(Math::Vector4i(2, 3, 4, 5), proj4);
+    VERIFY_EQUAL(Math::Vector4i(2, 3, 3, 4), proj4);
     proj4 = vec4a.projectOnto(vec4d);
     VERIFY_EQUAL(Math::Vector4i(), proj4);
-    proj4 = vec4b.projectOnto(vec4a);
-    VERIFY_EQUAL(Math::Vector4i(5, 7, 9, 11), proj4);
+    proj4 = vec4b.projectOnto(vec4a); // 122 / 54 * vec4a
+    VERIFY_EQUAL(Math::Vector4i(4, 6, 9, 11), proj4); // 4.52, 6.78, 9.04, 11.30
 }
 
 SCENARIO( Vector, "Operation/Normal", "unit,math", "Vector<float> can be projected." )
@@ -731,55 +736,55 @@ SCENARIO( Vector, "Operation/Normal", "unit,math", "Vector<float> can be project
     Math::Vector1f vec1d;
 
     auto proj1 = vec1a.projectOnto(vec1b);
-    VERIFY_EQUAL(Math::Vector1i(2.0f), proj1);
+    VERIFY_EQUAL(Math::Vector1f(2.0f), proj1);
     proj1 = vec1a.projectOnto(vec1c);
-    VERIFY_EQUAL(Math::Vector1i(2.0f), proj1);
+    VERIFY_EQUAL(Math::Vector1f(2.0f), proj1);
     proj1 = vec1a.projectOnto(vec1d);
-    VERIFY_EQUAL(Math::Vector1i(), proj1);
+    VERIFY_EQUAL(Math::Vector1f(), proj1);
     proj1 = vec1b.projectOnto(vec1a);
-    VERIFY_EQUAL(Math::Vector1i(5.0f), proj1);
+    VERIFY_EQUAL(Math::Vector1f(5.0f), proj1);
 
     Math::Vector2f vec2a(2.0f, 3.0f);
     Math::Vector2f vec2b(5.0f, 7.0f);
     Math::Vector2f vec2c(-5.0f, -7.0f);
     Math::Vector2f vec2d;
 
-    auto proj2 = vec2a.projectOnto(vec2b);
-    VERIFY_EQUAL(Math::Vector2i(2.0f, 3.0f), proj2);
+    auto proj2 = vec2a.projectOnto(vec2b); // 31.0 / 74.0 * vec2b
+    VERIFY_EQUAL(Math::Vector2f(2.0945946f, 2.9324324f), proj2);
     proj2 = vec2a.projectOnto(vec2c);
-    VERIFY_EQUAL(Math::Vector2i(2.0f, 3.0f), proj2);
+    VERIFY_EQUAL(Math::Vector2f(2.0945946f, 2.9324324f), proj2);
     proj2 = vec2a.projectOnto(vec2d);
-    VERIFY_EQUAL(Math::Vector2i(), proj2);
-    proj2 = vec2b.projectOnto(vec2a);
-    VERIFY_EQUAL(Math::Vector2i(5.0f, 7.0f), proj2);
+    VERIFY_EQUAL(Math::Vector2f(), proj2);
+    proj2 = vec2b.projectOnto(vec2a); // 31.0 / 13.0 * vec2a
+    VERIFY_EQUAL(Math::Vector2f(4.7692308f, 7.1538462f), proj2);
 
     Math::Vector3f vec3a(2.0f, 3.0f, 4.0f);
     Math::Vector3f vec3b(5.0f, 7.0f, 9.0f);
     Math::Vector3f vec3c(-5.0f, -7.0f, -9.0f);
     Math::Vector3f vec3d;
 
-    auto proj3 = vec3a.projectOnto(vec3b);
-    VERIFY_EQUAL(Math::Vector3i(2.0f, 3.0f, 4.0f), proj3);
+    auto proj3 = vec3a.projectOnto(vec3b); // 67.0 / 155.0 * vec3b
+    VERIFY_EQUAL(Math::Vector3f(2.1612903f, 3.0258065f, 3.8903226f), proj3);
     proj3 = vec3a.projectOnto(vec3c);
-    VERIFY_EQUAL(Math::Vector3i(2.0f, 3.0f, 4.0f), proj3);
+    VERIFY_EQUAL(Math::Vector3f(2.1612903f, 3.0258065f, 3.8903226f), proj3);
     proj3 = vec3a.projectOnto(vec3d);
-    VERIFY_EQUAL(Math::Vector3i(), proj3);
-    proj3 = vec3b.projectOnto(vec3a);
-    VERIFY_EQUAL(Math::Vector3i(5.0f, 7.0f, 9.0f), proj3);
+    VERIFY_EQUAL(Math::Vector3f(), proj3);
+    proj3 = vec3b.projectOnto(vec3a); // 67.0 / 29.0 * vec3a
+    VERIFY_EQUAL(Math::Vector3f(4.6206897f, 6.9310345f, 9.2413793f), proj3);
 
     Math::Vector4f vec4a(2.0f, 3.0f, 4.0f, 5.0f);
     Math::Vector4f vec4b(5.0f, 7.0f, 9.0f, 11.0f);
     Math::Vector4f vec4c(-5.0f, -7.0f, -9.0f, -11.0f);
     Math::Vector4f vec4d;
 
-    auto proj4 = vec4a.projectOnto(vec4b);
-    VERIFY_EQUAL(Math::Vector4i(2.0f, 3.0f, 4.0f, 5.0f), proj4);
+    auto proj4 = vec4a.projectOnto(vec4b); // 122.0 / 276.0 * vec4b
+    VERIFY_EQUAL(Math::Vector4f(2.2101449f, 3.0942029f, 3.9782609f, 4.8623188f), proj4);
     proj4 = vec4a.projectOnto(vec4c);
-    VERIFY_EQUAL(Math::Vector4i(2.0f, 3.0f, 4.0f, 5.0f), proj4);
+    VERIFY_EQUAL(Math::Vector4f(2.2101449f, 3.0942029f, 3.9782609f, 4.8623188f), proj4);
     proj4 = vec4a.projectOnto(vec4d);
-    VERIFY_EQUAL(Math::Vector4i(), proj4);
-    proj4 = vec4b.projectOnto(vec4a);
-    VERIFY_EQUAL(Math::Vector4i(5.0f, 7.0f, 9.0f, 11.0f), proj4);
+    VERIFY_EQUAL(Math::Vector4f(), proj4);
+    proj4 = vec4b.projectOnto(vec4a); // 122.0 / 54.0 * vec4a
+    VERIFY_EQUAL(Math::Vector4f(4.5185185f, 6.7777778f, 9.0370370f, 11.2962963f), proj4);
 }
 
 SCENARIO( Vector, "Operation/Normal", "unit,math", "Vector<double> can be projected." )
@@ -803,42 +808,42 @@ SCENARIO( Vector, "Operation/Normal", "unit,math", "Vector<double> can be projec
     Math::Vector2d vec2c(-5.0, -7.0);
     Math::Vector2d vec2d;
 
-    auto proj2 = vec2a.projectOnto(vec2b);
-    VERIFY_EQUAL(Math::Vector2d(2.0, 3.0), proj2);
+    auto proj2 = vec2a.projectOnto(vec2b); // 31.0 / 74.0 * vec2b
+    VERIFY_EQUAL(Math::Vector2d(2.094594594594595, 2.932432432432432), proj2);
     proj2 = vec2a.projectOnto(vec2c);
-    VERIFY_EQUAL(Math::Vector2d(2.0, 3.0), proj2);
+    VERIFY_EQUAL(Math::Vector2d(2.094594594594595, 2.932432432432432), proj2);
     proj2 = vec2a.projectOnto(vec2d);
     VERIFY_EQUAL(Math::Vector2d(), proj2);
-    proj2 = vec2b.projectOnto(vec2a);
-    VERIFY_EQUAL(Math::Vector2d(5.0, 7.0), proj2);
+    proj2 = vec2b.projectOnto(vec2a); // 31.0 / 13.0 * vec2a
+    VERIFY_EQUAL(Math::Vector2d(4.769230769230769, 7.153846153846154), proj2);
 
     Math::Vector3d vec3a(2.0, 3.0, 4.0);
     Math::Vector3d vec3b(5.0, 7.0, 9.0);
     Math::Vector3d vec3c(-5.0, -7.0, -9.0);
     Math::Vector3d vec3d;
 
-    auto proj3 = vec3a.projectOnto(vec3b);
-    VERIFY_EQUAL(Math::Vector3d(2.0, 3.0, 4.0), proj3);
+    auto proj3 = vec3a.projectOnto(vec3b); // 67.0 / 155.0 * vec3b
+    VERIFY_EQUAL(Math::Vector3d(2.161290322580645, 3.025806451612903, 3.890322580645161), proj3);
     proj3 = vec3a.projectOnto(vec3c);
-    VERIFY_EQUAL(Math::Vector3d(2.0, 3.0, 4.0), proj3);
+    VERIFY_EQUAL(Math::Vector3d(2.161290322580645, 3.025806451612903, 3.890322580645161), proj3);
     proj3 = vec3a.projectOnto(vec3d);
     VERIFY_EQUAL(Math::Vector3d(), proj3);
-    proj3 = vec3b.projectOnto(vec3a);
-    VERIFY_EQUAL(Math::Vector3d(5.0, 7.0, 9.0), proj3);
+    proj3 = vec3b.projectOnto(vec3a); // 67.0 / 29.0 * vec3a
+    VERIFY_EQUAL(Math::Vector3d(4.620689655172414, 6.931034482758621, 9.241379310344828), proj3);
 
     Math::Vector4d vec4a(2.0, 3.0, 4.0, 5.0);
     Math::Vector4d vec4b(5.0, 7.0, 9.0, 11.0);
     Math::Vector4d vec4c(-5.0, -7.0, -9.0, -11.0);
     Math::Vector4d vec4d;
 
-    auto proj4 = vec4a.projectOnto(vec4b);
-    VERIFY_EQUAL(Math::Vector4d(2.0, 3.0, 4.0, 5.0), proj4);
+    auto proj4 = vec4a.projectOnto(vec4b); // 122.0 / 276.0 * vec4b
+    VERIFY_EQUAL(Math::Vector4d(2.210144927536232, 3.094202898550725, 3.978260869565217, 4.86231884057971), proj4);
     proj4 = vec4a.projectOnto(vec4c);
-    VERIFY_EQUAL(Math::Vector4d(2.0, 3.0, 4.0, 5.0), proj4);
+    VERIFY_EQUAL(Math::Vector4d(2.210144927536232, 3.094202898550725, 3.978260869565217, 4.86231884057971), proj4);
     proj4 = vec4a.projectOnto(vec4d);
     VERIFY_EQUAL(Math::Vector4d(), proj4);
-    proj4 = vec4b.projectOnto(vec4a);
-    VERIFY_EQUAL(Math::Vector4d(5.0, 7.0, 9.0, 11.0), proj4);
+    proj4 = vec4b.projectOnto(vec4a); // 122.0 / 54.0 * vec4a
+    VERIFY_EQUAL(Math::Vector4d(4.518518518518519, 6.777777777777778, 9.037037037037037, 11.2962962962963), proj4);
 }
 
 SCENARIO( Vector, "Operation/Normal", "unit,math", "Vector<long double> can be projected." )
@@ -862,42 +867,42 @@ SCENARIO( Vector, "Operation/Normal", "unit,math", "Vector<long double> can be p
     Math::Vector2l vec2c(-5.0L, -7.0L);
     Math::Vector2l vec2d;
 
-    auto proj2 = vec2a.projectOnto(vec2b);
-    VERIFY_EQUAL(Math::Vector2l(2.0L, 3.0L), proj2);
+    auto proj2 = vec2a.projectOnto(vec2b); // 31.0 / 74.0 * vec2b
+    VERIFY_EQUAL(Math::Vector2l(2.094594594594595L, 2.932432432432432L), proj2);
     proj2 = vec2a.projectOnto(vec2c);
-    VERIFY_EQUAL(Math::Vector2l(2.0L, 3.0L), proj2);
+    VERIFY_EQUAL(Math::Vector2l(2.094594594594595L, 2.932432432432432L), proj2);
     proj2 = vec2a.projectOnto(vec2d);
     VERIFY_EQUAL(Math::Vector2l(), proj2);
-    proj2 = vec2b.projectOnto(vec2a);
-    VERIFY_EQUAL(Math::Vector2l(5.0L, 7.0L), proj2);
+    proj2 = vec2b.projectOnto(vec2a); // 31.0 / 13.0 * vec2a
+    VERIFY_EQUAL(Math::Vector2l(4.769230769230769L, 7.153846153846154L), proj2);
 
     Math::Vector3l vec3a(2.0L, 3.0L, 4.0L);
     Math::Vector3l vec3b(5.0L, 7.0L, 9.0L);
     Math::Vector3l vec3c(-5.0L, -7.0L, -9.0L);
     Math::Vector3l vec3d;
 
-    auto proj3 = vec3a.projectOnto(vec3b);
-    VERIFY_EQUAL(Math::Vector3l(2.0L, 3.0L, 4.0L), proj3);
+    auto proj3 = vec3a.projectOnto(vec3b); // 67.0 / 155.0 * vec3b
+    VERIFY_EQUAL(Math::Vector3l(2.161290322580645L, 3.025806451612903L, 3.890322580645161L), proj3);
     proj3 = vec3a.projectOnto(vec3c);
-    VERIFY_EQUAL(Math::Vector3l(2.0L, 3.0L, 4.0L), proj3);
+    VERIFY_EQUAL(Math::Vector3l(2.161290322580645L, 3.025806451612903L, 3.890322580645161L), proj3);
     proj3 = vec3a.projectOnto(vec3d);
     VERIFY_EQUAL(Math::Vector3l(), proj3);
-    proj3 = vec3b.projectOnto(vec3a);
-    VERIFY_EQUAL(Math::Vector3l(5.0L, 7.0L, 9.0L), proj3);
+    proj3 = vec3b.projectOnto(vec3a); // 67.0 / 29.0 * vec3a
+    VERIFY_EQUAL(Math::Vector3l(4.620689655172414, 6.931034482758621, 9.241379310344828), proj3);
 
     Math::Vector4l vec4a(2.0L, 3.0L, 4.0L, 5.0L);
     Math::Vector4l vec4b(5.0L, 7.0L, 9.0L, 11.0L);
     Math::Vector4l vec4c(-5.0L, -7.0L, -9.0L, -11.0L);
     Math::Vector4l vec4d;
 
-    auto proj4 = vec4a.projectOnto(vec4b);
-    VERIFY_EQUAL(Math::Vector4l(2.0L, 3.0L, 4.0L, 5.0L), proj4);
+    auto proj4 = vec4a.projectOnto(vec4b); // 122.0 / 276.0 * vec4b
+    VERIFY_EQUAL(Math::Vector4l(2.210144927536232L, 3.094202898550725L, 3.978260869565217L, 4.86231884057971L), proj4);
     proj4 = vec4a.projectOnto(vec4c);
-    VERIFY_EQUAL(Math::Vector4l(2.0L, 3.0L, 4.0L, 5.0L), proj4);
+    VERIFY_EQUAL(Math::Vector4l(2.210144927536232L, 3.094202898550725L, 3.978260869565217L, 4.86231884057971L), proj4);
     proj4 = vec4a.projectOnto(vec4d);
     VERIFY_EQUAL(Math::Vector4l(), proj4);
-    proj4 = vec4b.projectOnto(vec4a);
-    VERIFY_EQUAL(Math::Vector4l(5.0L, 7.0L, 9.0L, 11.0L), proj4);
+    proj4 = vec4b.projectOnto(vec4a); // 122.0 / 54.0 * vec4a
+    VERIFY_EQUAL(Math::Vector4l(4.518518518518519L, 6.777777777777778L, 9.037037037037037L, 11.2962962962963L), proj4);
 }
 
 SCENARIO( Vector, "Operation/Normal", "unit,math", "Vector3 can be cross multiplied." )

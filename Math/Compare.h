@@ -69,7 +69,7 @@ inline bool compareEq (float a, float b, float margin = FLT_EPSILON, float small
     return diff <= smallest * margin;
 }
         
-inline bool compareEq (double a, double b, double margin = DBL_EPSILON, double smallFactor = 0.000000000001)
+inline bool compareEq (double a, double b, double margin = DBL_EPSILON * 2, double smallFactor = 0.000000000001)
 {
     if (a == b)
     {
@@ -118,7 +118,7 @@ inline bool compareEq (double a, double b, double margin = DBL_EPSILON, double s
 }
 
 // This seems to work best with a double margin instead of a long double.
-inline bool compareEq (long double a, long double b, double margin = DBL_EPSILON, double smallFactor = 0.000000000001)
+inline bool compareEq (long double a, long double b, double margin = DBL_EPSILON * 2, double smallFactor = 0.000000000001)
 {
     if (a == b)
     {
