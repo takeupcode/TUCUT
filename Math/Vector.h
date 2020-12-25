@@ -847,10 +847,10 @@ using Vector2i = Vector2<int>;
 using Vector3i = Vector3<int>;
 using Vector4i = Vector4<int>;
 
-using Vector1f = Vector1<float>;
-using Vector2f = Vector2<float>;
-using Vector3f = Vector3<float>;
-using Vector4f = Vector4<float>;
+using Vector1f = Vector1<float, float>;
+using Vector2f = Vector2<float, float>;
+using Vector3f = Vector3<float, float>;
+using Vector4f = Vector4<float, float>;
 
 using Vector1d = Vector1<double>;
 using Vector2d = Vector2<double>;

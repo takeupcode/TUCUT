@@ -244,23 +244,23 @@ SCENARIO( Vector, "Construction/Normal", "unit,math", "Vector<double> can be cop
 
 SCENARIO( Vector, "Construction/Normal", "unit,math", "Vector<long double> can be copy constructed." )
 {
-    Math::Vector1f vec1a(123.5L);
-    Math::Vector1f vec1b(vec1a);
+    Math::Vector1l vec1a(123.5L);
+    Math::Vector1l vec1b(vec1a);
 
     VERIFY_EQUAL(vec1a, vec1b);
 
-    Math::Vector2f vec2a(123.5L, 124.5L);
-    Math::Vector2f vec2b(vec2a);
+    Math::Vector2l vec2a(123.5L, 124.5L);
+    Math::Vector2l vec2b(vec2a);
 
     VERIFY_EQUAL(vec2a, vec2b);
 
-    Math::Vector3f vec3a(123.5L, 124.5L, 125.5L);
-    Math::Vector3f vec3b(vec3a);
+    Math::Vector3l vec3a(123.5L, 124.5L, 125.5L);
+    Math::Vector3l vec3b(vec3a);
 
     VERIFY_EQUAL(vec3a, vec3b);
 
-    Math::Vector4f vec4a(123.5L, 124.5L, 125.5L, 126.5L);
-    Math::Vector4f vec4b(vec4a);
+    Math::Vector4l vec4a(123.5L, 124.5L, 125.5L, 126.5L);
+    Math::Vector4l vec4b(vec4a);
 
     VERIFY_EQUAL(vec4a, vec4b);
 }
@@ -1183,10 +1183,10 @@ SCENARIO( Vector, "Operation/Normal", "unit,math", "Vector2f can be rotated." )
     Math::Vector2f vec2a = Math::Vector2f::right();
     Math::Vector2f vec2b = Math::Vector2f::forward();
 
-    vec2a = vec2a.rotate(Math::Degreesd(45));
+    vec2a = vec2a.rotate(Math::Degreesf(45));
     vec2a = vec2a.rotateQuarter();
 
-    vec2b = vec2b.rotate(Math::Radiansd(Math::PI_d / 4));
+    vec2b = vec2b.rotate(Math::Radiansf(Math::PI_f / 4));
 
     VERIFY_EQUAL(vec2a, vec2b);
 }
@@ -1210,15 +1210,15 @@ SCENARIO( Vector, "Operation/Normal", "unit,math", "Vector3f can be rotated." )
     Math::Vector3f vec3b = Math::Vector3f::forward();
     Math::Vector3f vec3c = Math::Vector3f::up();
 
-    vec3a = vec3a.rotate(Math::Vector3f::axisY, Math::Radiansd(Math::PI_d / 18));
-    vec3a = vec3a.rotate(Math::Vector3f::axisZ, Math::Degreesd(45));
+    vec3a = vec3a.rotate(Math::Vector3f::axisY, Math::Radiansf(Math::PI_f / 18));
+    vec3a = vec3a.rotate(Math::Vector3f::axisZ, Math::Degreesf(45));
     vec3a = vec3a.rotateQuarter(Math::Vector3f::axisZ);
 
-    vec3b = vec3b.rotate(Math::Vector3f::axisX, Math::Degreesd(10));
-    vec3b = vec3b.rotate(Math::Vector3f::axisZ, Math::Radiansd(Math::PI_d / 4));
+    vec3b = vec3b.rotate(Math::Vector3f::axisX, Math::Degreesf(10));
+    vec3b = vec3b.rotate(Math::Vector3f::axisZ, Math::Radiansf(Math::PI_f / 4));
 
-    vec3c = vec3c.rotate(Math::Vector3f::axisX, Math::Degreesd(-80));
-    vec3c = vec3c.rotate(Math::Vector3f::axisZ, Math::Radiansd(Math::PI_d / 4));
+    vec3c = vec3c.rotate(Math::Vector3f::axisX, Math::Degreesf(-80));
+    vec3c = vec3c.rotate(Math::Vector3f::axisZ, Math::Radiansf(Math::PI_f / 4));
 
     VERIFY_EQUAL(vec3a, vec3b);
     VERIFY_EQUAL(vec3a, vec3c);
@@ -1246,9 +1246,9 @@ SCENARIO( Vector, "Operation/Normal", "unit,math", "Vector3d can be rotated." )
 
 SCENARIO( Vector, "Operation/Normal", "unit,math", "Vector1f can determine angle between another." )
 {
-    auto vec1a = Math::Vector1<float, float>::right();
-    auto vec1b = Math::Vector1<float, float>::left();
-    Math::Vector1<float, float> vec1c(5.0f);
+    auto vec1a = Math::Vector1f::right();
+    auto vec1b = Math::Vector1f::left();
+    Math::Vector1f vec1c(5.0f);
 
     VERIFY_EQUAL(180.0f, vec1a.angleInDegrees(vec1b).angle);
     VERIFY_EQUAL(180.0f, vec1b.angleInDegrees(vec1a).angle);
@@ -1258,9 +1258,9 @@ SCENARIO( Vector, "Operation/Normal", "unit,math", "Vector1f can determine angle
 
 SCENARIO( Vector, "Operation/Normal", "unit,math", "Vector2f can determine angle between another." )
 {
-    auto vec2a = Math::Vector2<float, float>::right();
-    auto vec2b = Math::Vector2<float, float>::forward();
-    Math::Vector2<float, float> vec2c(5.0f, 2.886751f);
+    auto vec2a = Math::Vector2f::right();
+    auto vec2b = Math::Vector2f::forward();
+    Math::Vector2f vec2c(5.0f, 2.886751f);
 
     VERIFY_EQUAL(90.0f, vec2a.angleInDegrees(vec2b).angle);
     VERIFY_EQUAL(90.0f, vec2b.angleInDegrees(vec2a).angle);
@@ -1286,10 +1286,10 @@ SCENARIO( Vector, "Operation/Normal", "unit,math", "Vector2d can determine angle
 
 SCENARIO( Vector, "Operation/Normal", "unit,math", "Vector3f can determine angle between another." )
 {
-    auto vec3a = Math::Vector3<float, float>::right();
-    auto vec3b = Math::Vector3<float, float>::forward();
-    auto vec3c = Math::Vector3<float, float>::up();
-    Math::Vector3<float, float> vec3d(5.0f, 2.041241f, 2.041241f);
+    auto vec3a = Math::Vector3f::right();
+    auto vec3b = Math::Vector3f::forward();
+    auto vec3c = Math::Vector3f::up();
+    Math::Vector3f vec3d(5.0f, 2.041241f, 2.041241f);
 
     VERIFY_EQUAL(90.0f, vec3a.angleInDegrees(vec3b).angle);
     VERIFY_EQUAL(90.0f, vec3b.angleInDegrees(vec3a).angle);
@@ -1324,11 +1324,11 @@ SCENARIO( Vector, "Operation/Normal", "unit,math", "Vector3d can determine angle
 
 SCENARIO( Vector, "Operation/Normal", "unit,math", "Vector4f can determine angle between another." )
 {
-    auto vec4a = Math::Vector4<float, float>::right();
-    auto vec4b = Math::Vector4<float, float>::forward();
-    auto vec4c = Math::Vector4<float, float>::up();
-    auto vec4d = Math::Vector4<float, float>::ana();
-    Math::Vector4<float, float> vec4e(5.0f, 2.041241f, 2.041241f, 0.0f);
+    auto vec4a = Math::Vector4f::right();
+    auto vec4b = Math::Vector4f::forward();
+    auto vec4c = Math::Vector4f::up();
+    auto vec4d = Math::Vector4f::ana();
+    Math::Vector4f vec4e(5.0f, 2.041241f, 2.041241f, 0.0f);
 
     VERIFY_EQUAL(90.0f, vec4a.angleInDegrees(vec4b).angle);
     VERIFY_EQUAL(90.0f, vec4b.angleInDegrees(vec4a).angle);

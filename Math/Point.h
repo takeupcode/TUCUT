@@ -18,13 +18,15 @@
 namespace TUCUT {
 namespace Math {
 
-template <typename T>
+template <typename T, typename Angle = double>
 class Point1
 {
 public:
     static constexpr std::size_t dimensions = 1;
+    static constexpr std::size_t axisX = 0;
     using type = T;
-    
+    using angle = Angle;
+
     constexpr Point1 ()
     : x()
     { }
@@ -41,7 +43,7 @@ public:
     {
         switch (axis)
         {
-        case 0:
+        case axisX:
             return x;
         }
         
@@ -58,24 +60,24 @@ public:
         return !operator==(rhs);
     }
 
-    Vector1<T> operator - (Point1 const & rhs) const
+    Vector1<T, Angle> operator - (Point1 const & rhs) const
     {
-        return Vector1<T>(x - rhs.x);
+        return Vector1<T, Angle>(x - rhs.x);
     }
     
-    Point1 operator + (Vector1<T> const & rhs) const
+    Point1 operator + (Vector1<T, Angle> const & rhs) const
     {
         return Point1(x + rhs.x);
     }
     
-    Point1 operator - (Vector1<T> const & rhs) const
+    Point1 operator - (Vector1<T, Angle> const & rhs) const
     {
         return Point1(x - rhs.x);
     }
     
-    operator Vector1<T> () const
+    operator Vector1<T, Angle> () const
     {
-        return Vector1<T>(x);
+        return Vector1<T, Angle>(x);
     }
     
     std::string to_string () const
@@ -91,12 +93,15 @@ public:
     T x;
 };
 
-template <typename T>
+template <typename T, typename Angle = double>
 class Point2
 {
 public:
     static constexpr std::size_t dimensions = 2;
+    static constexpr std::size_t axisX = 0;
+    static constexpr std::size_t axisY = 1;
     using type = T;
+    using angle = Angle;
 
     constexpr Point2 ()
     : x(), y()
@@ -114,10 +119,10 @@ public:
     {
         switch (axis)
         {
-        case 0:
+        case axisX:
             return x;
             
-        case 1:
+        case axisY:
             return y;
         }
         
@@ -135,24 +140,24 @@ public:
         return !operator==(rhs);
     }
 
-    Vector2<T> operator - (Point2 const & rhs) const
+    Vector2<T, Angle> operator - (Point2 const & rhs) const
     {
-        return Vector2<T>(x - rhs.x, y - rhs.y);
+        return Vector2<T, Angle>(x - rhs.x, y - rhs.y);
     }
     
-    Point2 operator + (Vector2<T> const & rhs) const
+    Point2 operator + (Vector2<T, Angle> const & rhs) const
     {
         return Point2(x + rhs.x, y + rhs.y);
     }
     
-    Point2 operator - (Vector2<T> const & rhs) const
+    Point2 operator - (Vector2<T, Angle> const & rhs) const
     {
         return Point2(x - rhs.x, y - rhs.y);
     }
     
-    operator Vector2<T> () const
+    operator Vector2<T, Angle> () const
     {
-        return Vector2<T>(x, y);
+        return Vector2<T, Angle>(x, y);
     }
     
     std::string to_string () const
@@ -169,12 +174,16 @@ public:
     T y;
 };
 
-template <typename T>
+template <typename T, typename Angle = double>
 class Point3
 {
 public:
     static constexpr std::size_t dimensions = 3;
+    static constexpr std::size_t axisX = 0;
+    static constexpr std::size_t axisY = 1;
+    static constexpr std::size_t axisZ = 2;
     using type = T;
+    using angle = Angle;
 
     constexpr Point3 ()
     : x(), y(), z()
@@ -192,13 +201,13 @@ public:
     {
         switch (axis)
         {
-        case 0:
+        case axisX:
             return x;
             
-        case 1:
+        case axisY:
             return y;
             
-        case 2:
+        case axisZ:
             return z;
         }
         
@@ -217,24 +226,24 @@ public:
         return !operator==(rhs);
     }
 
-    Vector3<T> operator - (Point3 const & rhs) const
+    Vector3<T, Angle> operator - (Point3 const & rhs) const
     {
-        return Vector3<T>(x - rhs.x, y - rhs.y, z - rhs.z);
+        return Vector3<T, Angle>(x - rhs.x, y - rhs.y, z - rhs.z);
     }
     
-    Point3 operator + (Vector3<T> const & rhs) const
+    Point3 operator + (Vector3<T, Angle> const & rhs) const
     {
         return Point3(x + rhs.x, y + rhs.y, z + rhs.z);
     }
     
-    Point3 operator - (Vector3<T> const & rhs) const
+    Point3 operator - (Vector3<T, Angle> const & rhs) const
     {
         return Point3(x - rhs.x, y - rhs.y, z - rhs.z);
     }
     
-    operator Vector3<T> () const
+    operator Vector3<T, Angle> () const
     {
-        return Vector3<T>(x, y, z);
+        return Vector3<T, Angle>(x, y, z);
     }
     
     std::string to_string () const
@@ -253,12 +262,17 @@ public:
     T z;
 };
 
-template <typename T>
+template <typename T, typename Angle = double>
 class Point4
 {
 public:
     static constexpr std::size_t dimensions = 4;
+    static constexpr std::size_t axisX = 0;
+    static constexpr std::size_t axisY = 1;
+    static constexpr std::size_t axisZ = 2;
+    static constexpr std::size_t axisW = 3;
     using type = T;
+    using angle = Angle;
 
     constexpr Point4 ()
     : x(), y(), z(), w()
@@ -276,16 +290,16 @@ public:
     {
         switch (axis)
         {
-        case 0:
+        case axisX:
             return x;
             
-        case 1:
+        case axisY:
             return y;
             
-        case 2:
+        case axisZ:
             return z;
             
-        case 3:
+        case axisW:
             return w;
         }
         
@@ -305,24 +319,24 @@ public:
         return !operator==(rhs);
     }
 
-    Vector4<T> operator - (Point4 const & rhs) const
+    Vector4<T, Angle> operator - (Point4 const & rhs) const
     {
-        return Vector4<T>(x - rhs.x, y - rhs.y, z - rhs.z, w - rhs.w);
+        return Vector4<T, Angle>(x - rhs.x, y - rhs.y, z - rhs.z, w - rhs.w);
     }
     
-    Point4 operator + (Vector4<T> const & rhs) const
+    Point4 operator + (Vector4<T, Angle> const & rhs) const
     {
         return Point4(x + rhs.x, y + rhs.y, z + rhs.z, w + rhs.w);
     }
     
-    Point4 operator - (Vector4<T> const & rhs) const
+    Point4 operator - (Vector4<T, Angle> const & rhs) const
     {
         return Point4(x - rhs.x, y - rhs.y, z - rhs.z, w - rhs.w);
     }
     
-    operator Vector4<T> () const
+    operator Vector4<T, Angle> () const
     {
-        return Vector4<T>(x, y, z, w);
+        return Vector4<T, Angle>(x, y, z, w);
     }
     
     std::string to_string () const
@@ -347,10 +361,10 @@ using Point2i = Point2<int>;
 using Point3i = Point3<int>;
 using Point4i = Point4<int>;
 
-using Point1f = Point1<float>;
-using Point2f = Point2<float>;
-using Point3f = Point3<float>;
-using Point4f = Point4<float>;
+using Point1f = Point1<float, float>;
+using Point2f = Point2<float, float>;
+using Point3f = Point3<float, float>;
+using Point4f = Point4<float, float>;
 
 using Point1d = Point1<double>;
 using Point2d = Point2<double>;
