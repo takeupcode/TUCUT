@@ -35,6 +35,11 @@ xcuserdata/
 DerivedData/
 *~.nib
 
+#CodeLite Noise
+.codelite/
+compile_flags.txt
+tags
+
 # OSX Noise
 .DS_Store
 .Trashes
