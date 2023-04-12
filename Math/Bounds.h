@@ -16,22 +16,22 @@
 
 namespace TUCUT {
 namespace Math {
-        
+
 template <typename T>
 class Bounds1
 {
 public:
     static constexpr std::size_t dimensions = 1;
     using type = T;
-    
+
     constexpr Bounds1 ()
     : mExtent()
     { }
-    
+
     constexpr Bounds1 (T x, T extent)
     : mLocation(x), mExtent(extent)
     { }
-    
+
     constexpr Bounds1 (Point1<T> const & location, T extent)
     : mLocation(location), mExtent(extent)
     { }
@@ -39,6 +39,19 @@ public:
     constexpr Bounds1 (Bounds1 const & src)
     : mLocation(src.mLocation), mExtent(src.mExtent)
     { }
+
+    Bounds1 operator = (Bounds1 const & rhs)
+    {
+        if (this == &rhs)
+        {
+          return *this;
+        }
+
+        mLocation = rhs.mLocation;
+        mExtent = rhs.mExtent;
+
+        return *this;
+    }
 
     bool operator == (Bounds1 const & rhs) const
     {
@@ -55,32 +68,32 @@ public:
     {
         return mLocation;
     }
-    
+
     void setLocation (Point1<T> const & location)
     {
         mLocation = location;
     }
-    
+
     T extent () const
     {
         return mExtent;
     }
-    
+
     void setExtent (T extent)
     {
         mExtent = extent;
     }
-    
+
     Bounds1 operator + (Vector1<T> const & rhs) const
     {
         return Bounds1(mLocation.x + rhs.x, mExtent);
     }
-    
+
     Bounds1 operator - (Vector1<T> const & rhs) const
     {
         return Bounds1(mLocation.x - rhs.x, mExtent);
     }
-    
+
     Vector1<T> envelopeVector (Point1<T> const & point)
     {
         T x = 0;
@@ -94,10 +107,10 @@ public:
         {
             x = (loc - mExtent) - pointLoc;
         }
-        
+
         return Vector1<T>(x);
     }
-    
+
     Vector1<T> envelopeVector (Bounds1<T> const & bounds)
     {
         T x = 0;
@@ -111,7 +124,7 @@ public:
         {
             x = (loc - mExtent) - boundsLoc;
         }
-        
+
         return Vector1<T>(x);
     }
 
@@ -134,7 +147,7 @@ public:
                 x = (loc - mExtent) - (boundsLoc + bounds.mExtent);
             }
         }
-        
+
         return Vector1<T>(x);
     }
 
@@ -143,7 +156,7 @@ public:
         return "(location: " + mLocation.to_string() + ", extent: " +
             std::to_string(mExtent) + ")";
     }
-    
+
     operator std::string () const
     {
         return to_string();
@@ -153,22 +166,22 @@ private:
     Point1<T> mLocation;
     T mExtent;
 };
-    
+
 template <typename T>
 class Bounds2
 {
 public:
     static constexpr std::size_t dimensions = 2;
     using type = T;
-    
+
     constexpr Bounds2 ()
     : mExtent()
     { }
-    
+
     constexpr Bounds2 (T x, T y, T extent)
     : mLocation(x, y), mExtent(extent)
     { }
-    
+
     constexpr Bounds2 (Point2<T> const & location, T extent)
     : mLocation(location), mExtent(extent)
     { }
@@ -177,49 +190,62 @@ public:
     : mLocation(src.mLocation), mExtent(src.mExtent)
     { }
 
+    Bounds2 operator = (Bounds2 const & rhs)
+    {
+        if (this == &rhs)
+        {
+          return *this;
+        }
+
+        mLocation = rhs.mLocation;
+        mExtent = rhs.mExtent;
+
+        return *this;
+    }
+
     bool operator == (Bounds2 const & rhs) const
     {
         return mLocation == rhs.mLocation &&
             compareEq(mExtent, rhs.mExtent);
     }
-    
+
     bool operator != (Bounds2 const & rhs) const
     {
         return !operator==(rhs);
     }
-    
+
     Point2<T> location () const
     {
         return mLocation;
     }
-    
+
     void setLocation (Point2<T> const & location)
     {
         mLocation = location;
     }
-    
+
     T extent () const
     {
         return mExtent;
     }
-    
+
     void setExtent (T extent)
     {
         mExtent = extent;
     }
-    
+
     Bounds2 operator + (Vector2<T> const & rhs) const
     {
         return Bounds2(mLocation.x + rhs.x,
             mLocation.y + rhs.y, mExtent);
     }
-    
+
     Bounds2 operator - (Vector2<T> const & rhs) const
     {
         return Bounds2(mLocation.x - rhs.x,
             mLocation.y - rhs.y, mExtent);
     }
-    
+
     Vector2<T> envelopeVector (Point2<T> const & point)
     {
         std::array<T, 2> values = {0, 0};
@@ -239,7 +265,7 @@ public:
 
         return Vector2<T>(values[0], values[1]);
     }
-    
+
     Vector2<T> envelopeVector (Bounds2<T> const & bounds)
     {
         std::array<T, 2> values = {0, 0};
@@ -256,10 +282,10 @@ public:
                 values[axis] = (loc - mExtent) - boundsLoc;
             }
         }
-        
+
         return Vector2<T>(values[0], values[1]);
     }
-    
+
     Vector2<T> overlapVector (Bounds2<T> const & bounds)
     {
         std::array<T, 2> values = {0, 0};
@@ -282,21 +308,21 @@ public:
                 }
             }
         }
-        
+
         return Vector2<T>(values[0], values[1]);
     }
-    
+
     std::string to_string () const
     {
         return "(location: " + mLocation.to_string() + ", extent: " +
             std::to_string(mExtent) + ")";
     }
-    
+
     operator std::string () const
     {
         return to_string();
     }
-    
+
 private:
     Point2<T> mLocation;
     T mExtent;
@@ -308,15 +334,15 @@ class Bounds3
 public:
     static constexpr std::size_t dimensions = 3;
     using type = T;
-    
+
     constexpr Bounds3 ()
     : mExtent()
     { }
-    
+
     constexpr Bounds3 (T x, T y, T z, T extent)
     : mLocation(x, y, z), mExtent(extent)
     { }
-    
+
     constexpr Bounds3 (Point3<T> const & location, T extent)
     : mLocation(location), mExtent(extent)
     { }
@@ -325,51 +351,64 @@ public:
     : mLocation(src.mLocation), mExtent(src.mExtent)
     { }
 
+    Bounds3 operator = (Bounds3 const & rhs)
+    {
+        if (this == &rhs)
+        {
+          return *this;
+        }
+
+        mLocation = rhs.mLocation;
+        mExtent = rhs.mExtent;
+
+        return *this;
+    }
+
     bool operator == (Bounds3 const & rhs) const
     {
         return mLocation == rhs.mLocation &&
             compareEq(mExtent, rhs.mExtent);
     }
-    
+
     bool operator != (Bounds3 const & rhs) const
     {
         return !operator==(rhs);
     }
-    
+
     Point3<T> location () const
     {
         return mLocation;
     }
-    
+
     void setLocation (Point3<T> const & location)
     {
         mLocation = location;
     }
-    
+
     T extent () const
     {
         return mExtent;
     }
-    
+
     void setExtent (T extent)
     {
         mExtent = extent;
     }
-    
+
     Bounds3 operator + (Vector3<T> const & rhs) const
     {
         return Bounds3(mLocation.x + rhs.x,
             mLocation.y + rhs.y,
             mLocation.z + rhs.z, mExtent);
     }
-    
+
     Bounds3 operator - (Vector3<T> const & rhs) const
     {
         return Bounds3(mLocation.x - rhs.x,
             mLocation.y - rhs.y,
             mLocation.z - rhs.z, mExtent);
     }
-    
+
     Vector3<T> envelopeVector (Point3<T> const & point)
     {
         std::array<T, 3> values = {0, 0, 0};
@@ -386,10 +425,10 @@ public:
                 values[axis] = (loc - mExtent) - pointLoc;
             }
         }
-        
+
         return Vector3<T>(values[0], values[1], values[2]);
     }
-    
+
     Vector3<T> envelopeVector (Bounds3<T> const & bounds)
     {
         std::array<T, 3> values = {0, 0, 0};
@@ -406,10 +445,10 @@ public:
                 values[axis] = (loc - mExtent) - boundsLoc;
             }
         }
-        
+
         return Vector3<T>(values[0], values[1], values[2]);
     }
-    
+
     Vector3<T> overlapVector (Bounds3<T> const & bounds)
     {
         std::array<T, 3> values = {0, 0, 0};
@@ -432,21 +471,21 @@ public:
                 }
             }
         }
-        
+
         return Vector3<T>(values[0], values[1], values[2]);
     }
-    
+
     std::string to_string () const
     {
         return "(location: " + mLocation.to_string() + ", extent: " +
             std::to_string(mExtent) + ")";
     }
-    
+
     operator std::string () const
     {
         return to_string();
     }
-    
+
 private:
     Point3<T> mLocation;
     T mExtent;
@@ -458,15 +497,15 @@ class Bounds4
 public:
     static constexpr std::size_t dimensions = 4;
     using type = T;
-    
+
     constexpr Bounds4 ()
     : mExtent()
     { }
-    
+
     constexpr Bounds4 (T x, T y, T z, T w, T extent)
     : mLocation(x, y, z, w), mExtent(extent)
     { }
-    
+
     constexpr Bounds4 (Point4<T> const & location, T extent)
     : mLocation(location), mExtent(extent)
     { }
@@ -475,36 +514,49 @@ public:
     : mLocation(src.mLocation), mExtent(src.mExtent)
     { }
 
+    Bounds4 operator = (Bounds4 const & rhs)
+    {
+        if (this == &rhs)
+        {
+          return *this;
+        }
+
+        mLocation = rhs.mLocation;
+        mExtent = rhs.mExtent;
+
+        return *this;
+    }
+
     bool operator == (Bounds4 const & rhs) const
     {
         return mLocation == rhs.mLocation &&
             compareEq(mExtent, rhs.mExtent);    }
-    
+
     bool operator != (Bounds4 const & rhs) const
     {
         return !operator==(rhs);
     }
-    
+
     Point4<T> location () const
     {
         return mLocation;
     }
-    
+
     void setLocation (Point4<T> const & location)
     {
         mLocation = location;
     }
-    
+
     T extent () const
     {
         return mExtent;
     }
-    
+
     void setExtent (T extent)
     {
         mExtent = extent;
     }
-    
+
     Bounds4 operator + (Vector4<T> const & rhs) const
     {
         return Bounds4(mLocation.x + rhs.x,
@@ -512,7 +564,7 @@ public:
             mLocation.z + rhs.z,
             mLocation.w + rhs.w, mExtent);
     }
-    
+
     Bounds4 operator - (Vector4<T> const & rhs) const
     {
         return Bounds4(mLocation.x - rhs.x,
@@ -520,7 +572,7 @@ public:
             mLocation.z - rhs.z,
             mLocation.w - rhs.w, mExtent);
     }
-    
+
     Vector4<T> envelopeVector (Point4<T> const & point)
     {
         std::array<T, 4> values = {0, 0, 0, 0};
@@ -537,10 +589,10 @@ public:
                 values[axis] = (loc - mExtent) - pointLoc;
             }
         }
-        
+
         return Vector4<T>(values[0], values[1], values[2], values[3]);
     }
-    
+
     Vector4<T> envelopeVector (Bounds4<T> const & bounds)
     {
         std::array<T, 4> values = {0, 0, 0, 0};
@@ -557,10 +609,10 @@ public:
                 values[axis] = (loc - mExtent) - boundsLoc;
             }
         }
-        
+
         return Vector4<T>(values[0], values[1], values[2], values[3]);
     }
-    
+
     Vector4<T> overlapVector (Bounds4<T> const & bounds)
     {
         std::array<T, 4> values = {0, 0, 0, 0};
@@ -583,26 +635,26 @@ public:
                 }
             }
         }
-        
+
         return Vector4<T>(values[0], values[1], values[2], values[3]);
     }
-    
+
     std::string to_string () const
     {
         return "(location: " + mLocation.to_string() + ", extent: " +
             std::to_string(mExtent) + ")";
     }
-    
+
     operator std::string () const
     {
         return to_string();
     }
-    
+
 private:
     Point4<T> mLocation;
     T mExtent;
 };
-    
+
 using Bounds1i = Bounds1<int>;
 using Bounds2i = Bounds2<int>;
 using Bounds3i = Bounds3<int>;

@@ -5,20 +5,24 @@
 //  Created by Abdul Wahid Tanner on 10/28/17.
 //  Copyright © 2017 Take Up Code. All rights reserved.
 //
-
 #ifndef TUCUT_Log_LogManager_h
 #define TUCUT_Log_LogManager_h
 
+#include <fstream>
 #include <sstream>
 #include <string>
 
-namespace TUCUT {
-namespace Log {
-
-class LogManager
+namespace TUCUT::Log
 {
-public:
-    static LogManager * initialize (const std::string & logPath, const std::string baseName, const std::string extName = ".log");
+  class LogManager
+  {
+  public:
+    ~LogManager ();
+
+    static LogManager * initialize (
+      std::string const & logPath,
+      std::string const baseName,
+      std::string const extName = ".log");
     
     static void deinitialize ();
     
@@ -26,37 +30,38 @@ public:
     
     std::string logFileName ();
     
-    void logDebug(const std::string & message) const;
+    void logDebug (std::string const & message);
     
-    void logInfo(const std::string & message) const;
+    void logInfo (std::string const & message);
     
-    void logFatal(const std::string & message) const;
+    void logFatal (std::string const & message);
     
-private:
-    LogManager (const std::string & logFileName);
+  private:
+    LogManager () = default;
     
-    std::ofstream open () const;
-    
-    void close (std::ofstream & fs) const;
+    void open ();
+    void close ();
     
     static std::string time (bool includePunctuation = true);
     
-    static LogManager * mInstance;
     std::string mLogPath;
     std::string mLogFileName;
-};
+    bool mInitialized = false;
+    std::ofstream mLogFile;
+  };
+
+} // namespace TUCUT::Log
 
 #define INTERNAL_TUCUTLOG_FUNC_FINAL( level ) log ## level
-#define INTERNAL_TUCUTLOG_FUNC( level ) INTERNAL_TUCUTLOG_FUNC_FINAL( level )
+#define INTERNAL_TUCUTLOG_FUNC( level ) \
+  INTERNAL_TUCUTLOG_FUNC_FINAL( level )
 
 #define TUCUTLOG(level, msg) \
 do { \
     std::stringstream ss; \
     ss << msg; \
-    TUCUT::Log::LogManager::instance()->INTERNAL_TUCUTLOG_FUNC(level)(ss.str()); \
+    TUCUT::Log::LogManager::instance()-> \
+      INTERNAL_TUCUTLOG_FUNC(level)(ss.str()); \
 } while(false)
-    
-} // namespace Log
-} // namespace TUCUT
 
 #endif // TUCUT_Log_LogManager_h

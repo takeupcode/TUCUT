@@ -52,7 +52,7 @@ int NoiseGenerator::seed () const
 double NoiseGenerator::generate (double x, Math::Point1d * offset, size_t layers, Math::Point1d * derivative) const
 {
     double result;
-    
+
     std::mt19937 rng;
     rng.seed(mSeed);
     // An int distribution seems to be more reliable.
@@ -63,7 +63,7 @@ double NoiseGenerator::generate (double x, Math::Point1d * offset, size_t layers
     double originalX = x;
     double noise = 0.0;
     double dx = 0.0;
-    
+
     for (size_t currentLayer = 0; currentLayer < layers; currentLayer++)
     {
         x = originalX * frequency + dist(rng);
@@ -76,7 +76,7 @@ double NoiseGenerator::generate (double x, Math::Point1d * offset, size_t layers
         // coordinate of the noise point.
         int ix0 = dtoiflr(x);
         int ix1 = ix0 + 1;
-        
+
         // Get hashes for each grid point using the grid coordinates. 1 dimension is
         // easier because we can combine the hash of the dimension and the hash of the
         // grid point because they're the same.
@@ -123,12 +123,12 @@ double NoiseGenerator::generate (double x, Math::Point1d * offset, size_t layers
         // Define and calculate smooth blends starting with the letter s.
         // Only one blend is needed for each dimension.
         double s = Math::easeInOutPerlin(x0 / (gx1 - gx0));
-        
+
         // Define and calculate nodes based on the grid points.
         double a, b;
         a = node(hp0, x0);
         b = node(hp1, x1);
-        
+
         // This method returns:
         //   lerp(a, b, s)
         // which substitutes to create:
@@ -139,27 +139,27 @@ double NoiseGenerator::generate (double x, Math::Point1d * offset, size_t layers
         // ==>  a + s(b - a)
         // The derivative is:
         // ==>  s'(b - a)
-        
+
         // Define and calculate the constants needed.
         double c0 = b - a;
-        
+
         noise += amplitude * (a + s * c0);
-        
+
         if (derivative)
         {
             // Calculate smooth blend derivatives
             // starting with the letters ds.
             double ds = Math::easeInOutPerlinDerivative(x0 / (gx1 - gx0));
-            
+
             dx += amplitude * (ds * c0);
         }
-        
+
         frequency *= mLacunarity;
         amplitude *= mPersistence;
     }
-    
+
     result = noise;
-    
+
     if (derivative)
     {
         derivative->x = dx;
@@ -171,7 +171,7 @@ double NoiseGenerator::generate (double x, Math::Point1d * offset, size_t layers
 double NoiseGenerator::generate (double x, double y, Math::Point2d * offset, size_t layers, Math::Point2d * derivative) const
 {
     double result;
-    
+
     std::mt19937 rng;
     rng.seed(mSeed);
     // An int distribution seems to be more reliable.
@@ -319,9 +319,9 @@ double NoiseGenerator::generate (double x, double y, Math::Point2d * offset, siz
         double c0 = b - a;
         double c1 = c - a;
         double c2 = a + d - b - c;
-        
+
         noise += amplitude * (a + s * c0 + t * c1 + s * t * c2);
-        
+
         if (derivative)
         {
             // Calculate smooth blend derivatives
@@ -332,35 +332,19 @@ double NoiseGenerator::generate (double x, double y, Math::Point2d * offset, siz
             dx += amplitude * (ds * (c0 + t * c2));
             dy += amplitude * (dt * (c1 + s * c2));
         }
-        
+
         frequency *= mLacunarity;
         amplitude *= mPersistence;
     }
-    
+
     result = noise;
-    
+
     if (derivative)
     {
         derivative->x = dx;
         derivative->y = dy;
     }
 
-    return result;
-}
-
-double NoiseGenerator::generate (double x, double y, double z, Math::Point3d * offset, size_t layers, Math::Point3d * derivative) const
-{
-    double result = 0.0;
-    
-    
-    return result;
-}
-
-double NoiseGenerator::generate (double x, double y, double z, double w, Math::Point4d * offset, size_t layers, Math::Point4d * derivative) const
-{
-    double result = 0.0;
-    
-    
     return result;
 }
 

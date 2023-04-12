@@ -11,6 +11,8 @@
 
 #include "Point.h"
 
+#include <vector>
+
 namespace TUCUT {
 namespace Math {
 
@@ -46,11 +48,11 @@ P calculateImpl (std::vector<P> const & points, T t)
         V v1 = points[1];
         V v2 = points[2];
         V result;
-        
+
         result = (1 - t) * (1 - t) * v0 +
         2 * t * (1 - t) * v1 +
         t * t * v2;
-        
+
         return P() + result;
     }
     else if (points.size() == 4)
@@ -61,18 +63,18 @@ P calculateImpl (std::vector<P> const & points, T t)
         V v2 = points[2];
         V v3 = points[3];
         V result;
-        
+
         result = (1 - t) * (1 - t) * (1 - t) * v0 +
         3 * t * (1 - t) * (1 - t) * v1 +
         3 * t * t * (1 - t) * v2 +
         t * t * t * v3;
-        
+
         return P() + result;
     }
     else
     {
         std::vector<P> temp(points);
-        
+
         std::size_t dimensionIndex = temp.size() - 1;
         while (dimensionIndex != 0)
         {
@@ -82,7 +84,7 @@ P calculateImpl (std::vector<P> const & points, T t)
             }
             --dimensionIndex;
         }
-        
+
         return temp[0];
     }
 }
@@ -92,7 +94,7 @@ struct Bezier2
 {
     static constexpr std::size_t dimensions = 2;
     using type = T;
-    
+
     static Point2<T> calculate (std::vector<Point2<T>> const & points, T t)
     {
         return calculateImpl<T, Point2<T>, Vector2<T>>(points, t);
@@ -104,7 +106,7 @@ struct Bezier3
 {
     static constexpr std::size_t dimensions = 3;
     using type = T;
-    
+
     static Point3<T> calculate (std::vector<Point3<T>> const & points, T t)
     {
         return calculateImpl<T, Point3<T>, Vector3<T>>(points, t);
@@ -116,7 +118,7 @@ struct Bezier4
 {
     static constexpr std::size_t dimensions = 4;
     using type = T;
-    
+
     static Point4<T> calculate (std::vector<Point4<T>> const & points, T t)
     {
         return calculateImpl<T, Point4<T>, Vector4<T>>(points, t);

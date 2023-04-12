@@ -21,18 +21,18 @@
 
 namespace TUCUT {
 namespace Test {
-    
+
 inline std::vector<std::string> internalSplitString(std::string const & src, char delimiter)
 {
     std::stringstream ss(src);
     std::string element;
     std::vector<std::string> result;
-    
+
     while (std::getline(ss, element, delimiter))
     {
         result.push_back(element);
     }
-    
+
     return result;
 }
 
@@ -42,12 +42,12 @@ public:
     VerificationException (int line)
     : mLine(line)
     { }
-    
+
     virtual char const * what () const noexcept
     {
         return mMessage.c_str();
     }
-    
+
 protected:
     static std::string narrow (std::wstring const & wideString)
     {
@@ -74,7 +74,7 @@ public:
     {
         initialize();
     }
-    
+
     std::string expectedValue () const
     {
         if (mExpectedValue)
@@ -86,10 +86,10 @@ public:
             return "false";
         }
     }
-    
+
 protected:
     bool mExpectedValue;
-    
+
 private:
     void initialize ()
     {
@@ -106,7 +106,7 @@ public:
     {
         initialize();
     }
-    
+
 private:
     void initialize ()
     {
@@ -122,7 +122,7 @@ public:
     {
         initialize();
     }
-    
+
     EqualVerificationException (int expectedValue, int actualValue, int line)
     : VerificationException(line), mExpectedValue(std::to_string(expectedValue)), mActualValue(std::to_string(actualValue))
     {
@@ -141,7 +141,19 @@ public:
         initialize();
     }
 
+    EqualVerificationException (long long expectedValue, long long actualValue, int line)
+    : VerificationException(line), mExpectedValue(std::to_string(expectedValue)), mActualValue(std::to_string(actualValue))
+    {
+        initialize();
+    }
+
     EqualVerificationException (unsigned long expectedValue, unsigned long actualValue, int line)
+    : VerificationException(line), mExpectedValue(std::to_string(expectedValue)), mActualValue(std::to_string(actualValue))
+    {
+        initialize();
+    }
+
+    EqualVerificationException (unsigned long long expectedValue, unsigned long long actualValue, int line)
     : VerificationException(line), mExpectedValue(std::to_string(expectedValue)), mActualValue(std::to_string(actualValue))
     {
         initialize();
@@ -176,21 +188,21 @@ public:
     {
         initialize();
     }
-    
+
     std::string expectedValue () const
     {
         return mExpectedValue;
     }
-    
+
     std::string actualValue () const
     {
         return mActualValue;
     }
-    
+
 protected:
     std::string mExpectedValue;
     std::string mActualValue;
-    
+
 private:
     void initialize ()
     {
@@ -205,17 +217,17 @@ class ScenarioBase
 public:
     virtual ~ScenarioBase ()
     { }
-    
+
     virtual std::string categoryFullName () const
     {
         return mCategoryFullName;
     }
-    
+
     virtual std::string description () const
     {
         return mDescription;
     }
-    
+
     virtual std::string tag () const
     {
         return mTag;
@@ -225,12 +237,12 @@ public:
     {
         return mExceptionExpected;
     }
-    
+
     virtual bool passed () const
     {
         return mRunPassed;
     }
-    
+
     virtual bool run (std::vector<std::string> const & tags)
     {
         // Run scenario if either mTag or tags is empty. Otherwise
@@ -238,7 +250,7 @@ public:
         if (!mTag.empty())
         {
             bool matchFound = true;
-            
+
             std::vector<std::string> scenarioTags = internalSplitString(mTag, ',');
             for (auto & tag: tags)
             {
@@ -253,17 +265,17 @@ public:
                 return false;
             }
         }
-        
+
         // Scenarios will pass unless one of the verify methods fail.
         mRunPassed = true;
-        
+
         runSteps();
-        
+
         return true;
     }
-    
+
     virtual void runSteps () = 0;
-    
+
     virtual std::shared_ptr<ScenarioBase> clone () const = 0;
 
     virtual void verifyTrue (bool actualValue, int line)
@@ -274,7 +286,7 @@ public:
             throw BoolVerificationException(true, line);
         }
     }
-    
+
     virtual void verifyFalse (bool actualValue, int line)
     {
         if (actualValue)
@@ -283,7 +295,7 @@ public:
             throw BoolVerificationException(false, line);
         }
     }
-    
+
     virtual void verifyEqual (bool expectedValue, bool actualValue, int line)
     {
         if (actualValue != expectedValue)
@@ -366,7 +378,7 @@ public:
             throw EqualVerificationException(expectedValue, actualValue, line);
         }
     }
-    
+
     template <typename T>
     void verifyEqual (T const & expectedValue, T const & actualValue, int line)
     {
@@ -376,7 +388,7 @@ public:
             throw EqualVerificationException(expectedValue, actualValue, line);
         }
     }
-    
+
     template <typename T>
     void verifyEqual (T * expectedValue, T * actualValue, int line)
     {
@@ -401,14 +413,14 @@ protected:
     ScenarioBase (std::string const & categoryFullName, std::string const & scenarioDescription, bool exceptionExpected, std::string const & scenarioTag)
     : mCategoryFullName(categoryFullName), mDescription(scenarioDescription), mTag(scenarioTag), mExceptionExpected(exceptionExpected)
     { }
-    
+
     ScenarioBase (ScenarioBase const & src)
     : mCategoryFullName(src.mCategoryFullName), mDescription(src.mDescription), mTag(src.mTag), mExceptionExpected(src.mExceptionExpected)
     { }
-    
+
 private:
     ScenarioBase & operator = (ScenarioBase const & rhs) = delete;
-    
+
     std::string mCategoryFullName;
     std::string mDescription;
     std::string mTag;
@@ -423,15 +435,15 @@ public:
     Scenario (std::string const & categoryFullName, std::string const & scenarioDescription, bool exceptionExpected, std::string const & scenarioTag = "")
     : ScenarioBase(categoryFullName, scenarioDescription, exceptionExpected, scenarioTag)
     { }
-    
+
     virtual ~Scenario ()
     { }
-    
+
 protected:
     Scenario (Scenario const & src)
     : ScenarioBase(src)
     { }
-    
+
 private:
     Scenario & operator = (Scenario const & rhs) = delete;
 };
@@ -439,22 +451,22 @@ private:
 class Category
 {
     friend class ScenarioManager;
-    
+
 public:
     Category (std::string const & name, std::string const & fullName)
     : mName(name), mFullName(fullName), mPassCount(0), mFailCount(0), mSkipCount(0)
     {
     }
-    
+
     Category (Category const & src)
     : mName(src.mName), mFullName(src.mFullName),
       mPassCount(src.mPassCount), mFailCount(src.mFailCount), mSkipCount(src.mSkipCount),
       mChildCategories(src.mChildCategories), mChildScenarios(src.mChildScenarios)
     { }
-    
+
     virtual ~Category ()
     { }
-    
+
     virtual std::string name () const
     {
         return mName;
@@ -484,21 +496,21 @@ public:
     {
         return mChildCategories;
     }
-    
+
     std::vector<std::shared_ptr<ScenarioBase>> scenarios ()
     {
         return mChildScenarios;
     }
-    
+
     virtual std::shared_ptr<ScenarioBase> registerScenario (ScenarioBase const * scenario)
     {
         std::shared_ptr<ScenarioBase> sharedScenario(scenario->clone());
-        
+
         mChildScenarios.push_back(sharedScenario);
-        
+
         return sharedScenario;
     }
-    
+
     virtual void run (std::ostream & stream, std::vector<std::string> const & tags)
     {
         mPassCount = 0;
@@ -515,7 +527,7 @@ public:
             childCategoryFailCount += category->failCount();
             childCategorySkipCount += category->skipCount();
         }
-        
+
         if (!mChildScenarios.empty())
         {
             stream << "----- Running scenarios in: " << fullName() << " -----" << std::endl;
@@ -573,10 +585,10 @@ public:
         mFailCount = childCategoryFailCount + localFailCount;
         mSkipCount = childCategorySkipCount + localSkipCount;
     }
-    
+
 private:
     Category & operator = (Category const & rhs) = delete;
-    
+
     std::string mName;
     std::string mFullName;
     int mPassCount;
@@ -594,19 +606,19 @@ class ScenarioManager
 public:
     virtual ~ScenarioManager ()
     { }
-    
+
     static std::shared_ptr<ScenarioManager> instance ()
     {
         static std::shared_ptr<ScenarioManager> staticInstance(new ScenarioManager());
-        
+
         return staticInstance;
     }
-    
+
     std::vector<std::shared_ptr<Category>> categories ()
     {
         return mTopLevelCategories;
     }
-    
+
     virtual std::shared_ptr<Category> registerCategory (std::string const & categoryFullName)
     {
         // Skip over initial forward slash characters.
@@ -616,7 +628,7 @@ public:
         {
             throw std::invalid_argument("Category names cannot be empty or consist entirely of / characters.");
         }
-        
+
         std::string trimmedCategoryFullName(beginPosition, std::end(categoryFullName));
         std::vector<std::string> categories = internalSplitString(trimmedCategoryFullName, '/');
 
@@ -628,13 +640,13 @@ public:
             {
                 throw std::invalid_argument("Category names cannot be empty.");
             }
-            
+
             if (!currentFullName.empty())
             {
                 currentFullName += '/';
             }
             currentFullName += currentName;
-            
+
             auto categoryIter = mAllCategories.find(currentFullName);
             if (categoryIter == std::end(mAllCategories))
             {
@@ -649,13 +661,13 @@ public:
                     mTopLevelCategories.push_back(newCategory);
                 }
             }
-            
+
             previousCategory = categoryIter->second;
         }
-        
+
         return previousCategory;
     }
-    
+
     virtual void run (std::ostream & stream, std::vector<std::string> const & tags)
     {
         int passCount = 0;
@@ -674,14 +686,14 @@ public:
         stream << "Tests failed: " << failCount << std::endl;
         stream << "Tests skipped: " << skipCount << std::endl;
     }
-    
+
 private:
     ScenarioManager ()
     {
         mAllCategories.clear();
         mTopLevelCategories.clear();
     }
-    
+
     std::map<std::string, std::shared_ptr<Category>> mAllCategories;
     std::vector<std::shared_ptr<Category>> mTopLevelCategories;
 };
@@ -730,7 +742,7 @@ void INTERNAL_TUCUT_TEST_SCENARIO_CLASS_NAME( preprocGroupName )::runSteps ()
 
 namespace TUCUT {
 namespace Test {
-    
+
 int main (int argc, char const * argv[])
 {
     std::vector<std::string> tags;
@@ -738,21 +750,21 @@ int main (int argc, char const * argv[])
     {
         tags.push_back(argv[i]);
     }
-    
+
     auto scenarioManager = ScenarioManager::instance();
-    
+
     scenarioManager->run(std::cout, tags);
-    
+
     return 0;
 }
-        
+
 } // namespace Test
 } // namespace TUCUT
 
 int main (int argc, char const * argv[])
 {
     int result = TUCUT::Test::main(argc, argv);
-    
+
     return result;
 }
 
@@ -762,12 +774,12 @@ int main (int argc, char const * argv[])
 
 namespace TUCUT {
 namespace Test {
-        
-std::ostream & operator << (std::ostream & strm, Category const & category)
+
+std::ostream & operator << (std::ostream & strm, Category const &)
 {
     return strm;
 }
-        
+
 } // namespace Test
 } // namespace TUCUT
 

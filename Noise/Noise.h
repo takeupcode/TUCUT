@@ -24,18 +24,14 @@ public:
                              double amplitude = 1.0,
                              double lacunarity = 2.0,
                              double persistence = 0.5);
-    
+
     virtual ~NoiseGenerator () = default;
-    
+
     int seed () const;
-    
+
     virtual double generate (double x, Math::Point1d * offset = nullptr, size_t layers = 1, Math::Point1d * derivative = nullptr) const;
-    
+
     virtual double generate (double x, double y, Math::Point2d * offset = nullptr, size_t layers = 1, Math::Point2d * derivative = nullptr) const;
-    
-    virtual double generate (double x, double y, double z, Math::Point3d * offset = nullptr, size_t layers = 1, Math::Point3d * derivative = nullptr) const;
-    
-    virtual double generate (double x, double y, double z, double w, Math::Point4d * offset = nullptr, size_t layers = 1, Math::Point4d * derivative = nullptr) const;
 
 protected:
     int mSeed;

@@ -39,6 +39,8 @@ DerivedData/
 .codelite/
 compile_flags.txt
 tags
+s-TUCUT.txt
+t-TUCUT.txt
 
 # OSX Noise
 .DS_Store
@@ -51,3 +53,5 @@ profile
 
 # Generated output from tools
 Generated/
+Debug/
+.build-debug/

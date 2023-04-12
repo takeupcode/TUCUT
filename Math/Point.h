@@ -30,7 +30,7 @@ public:
     constexpr Point1 ()
     : x()
     { }
-    
+
     explicit constexpr Point1 (T x)
     : x(x)
     { }
@@ -46,8 +46,20 @@ public:
         case axisX:
             return x;
         }
-        
+
         throw Exception::InvalidArgumentException("axis", "axis must be 0");
+    }
+
+    Point1 operator = (Point1 const & rhs)
+    {
+        if (this == &rhs)
+        {
+          return *this;
+        }
+
+        x = rhs.x;
+
+        return *this;
     }
 
     bool operator == (Point1 const & rhs) const
@@ -64,27 +76,27 @@ public:
     {
         return Vector1<T, Angle>(x - rhs.x);
     }
-    
+
     Point1 operator + (Vector1<T, Angle> const & rhs) const
     {
         return Point1(x + rhs.x);
     }
-    
+
     Point1 operator - (Vector1<T, Angle> const & rhs) const
     {
         return Point1(x - rhs.x);
     }
-    
+
     operator Vector1<T, Angle> () const
     {
         return Vector1<T, Angle>(x);
     }
-    
+
     std::string to_string () const
     {
         return "(point: " + std::to_string(x) + ")";
     }
-    
+
     operator std::string () const
     {
         return to_string();
@@ -106,7 +118,7 @@ public:
     constexpr Point2 ()
     : x(), y()
     { }
-    
+
     constexpr Point2 (T x, T y)
     : x(x), y(y)
     { }
@@ -121,12 +133,25 @@ public:
         {
         case axisX:
             return x;
-            
+
         case axisY:
             return y;
         }
-        
+
         throw Exception::InvalidArgumentException("axis", "axis must be between 0 and 1");
+    }
+
+    Point2 operator = (Point2 const & rhs)
+    {
+        if (this == &rhs)
+        {
+          return *this;
+        }
+
+        x = rhs.x;
+        y = rhs.y;
+
+        return *this;
     }
 
     bool operator == (Point2 const & rhs) const
@@ -134,7 +159,7 @@ public:
         return compareEq(x, rhs.x) &&
             compareEq(y, rhs.y);
     }
-    
+
     bool operator != (Point2 const & rhs) const
     {
         return !operator==(rhs);
@@ -144,27 +169,27 @@ public:
     {
         return Vector2<T, Angle>(x - rhs.x, y - rhs.y);
     }
-    
+
     Point2 operator + (Vector2<T, Angle> const & rhs) const
     {
         return Point2(x + rhs.x, y + rhs.y);
     }
-    
+
     Point2 operator - (Vector2<T, Angle> const & rhs) const
     {
         return Point2(x - rhs.x, y - rhs.y);
     }
-    
+
     operator Vector2<T, Angle> () const
     {
         return Vector2<T, Angle>(x, y);
     }
-    
+
     std::string to_string () const
     {
         return "(point: " + std::to_string(x) + ", " + std::to_string(y) + ")";
     }
-    
+
     operator std::string () const
     {
         return to_string();
@@ -188,7 +213,7 @@ public:
     constexpr Point3 ()
     : x(), y(), z()
     { }
-    
+
     constexpr Point3 (T x, T y, T z)
     : x(x), y(y), z(z)
     { }
@@ -203,15 +228,29 @@ public:
         {
         case axisX:
             return x;
-            
+
         case axisY:
             return y;
-            
+
         case axisZ:
             return z;
         }
-        
+
         throw Exception::InvalidArgumentException("axis", "axis must be between 0 and 2");
+    }
+
+    Point3 operator = (Point3 const & rhs)
+    {
+        if (this == &rhs)
+        {
+          return *this;
+        }
+
+        x = rhs.x;
+        y = rhs.y;
+        z = rhs.z;
+
+        return *this;
     }
 
     bool operator == (Point3 const & rhs) const
@@ -220,7 +259,7 @@ public:
             compareEq(y, rhs.y) &&
             compareEq(z, rhs.z);
     }
-    
+
     bool operator != (Point3 const & rhs) const
     {
         return !operator==(rhs);
@@ -230,28 +269,28 @@ public:
     {
         return Vector3<T, Angle>(x - rhs.x, y - rhs.y, z - rhs.z);
     }
-    
+
     Point3 operator + (Vector3<T, Angle> const & rhs) const
     {
         return Point3(x + rhs.x, y + rhs.y, z + rhs.z);
     }
-    
+
     Point3 operator - (Vector3<T, Angle> const & rhs) const
     {
         return Point3(x - rhs.x, y - rhs.y, z - rhs.z);
     }
-    
+
     operator Vector3<T, Angle> () const
     {
         return Vector3<T, Angle>(x, y, z);
     }
-    
+
     std::string to_string () const
     {
         return "(point: " + std::to_string(x) + ", " + std::to_string(y) +
              ", " + std::to_string(z) + ")";
     }
-    
+
     operator std::string () const
     {
         return to_string();
@@ -277,7 +316,7 @@ public:
     constexpr Point4 ()
     : x(), y(), z(), w()
     { }
-    
+
     constexpr Point4 (T x, T y, T z, T w)
     : x(x), y(y), z(z), w(w)
     { }
@@ -292,18 +331,33 @@ public:
         {
         case axisX:
             return x;
-            
+
         case axisY:
             return y;
-            
+
         case axisZ:
             return z;
-            
+
         case axisW:
             return w;
         }
-        
+
         throw Exception::InvalidArgumentException("axis", "axis must be between 0 and 3");
+    }
+
+    Point4 operator = (Point4 const & rhs)
+    {
+        if (this == &rhs)
+        {
+          return *this;
+        }
+
+        x = rhs.x;
+        y = rhs.y;
+        z = rhs.z;
+        w = rhs.w;
+
+        return *this;
     }
 
     bool operator == (Point4 const & rhs) const
@@ -313,7 +367,7 @@ public:
             compareEq(z, rhs.z) &&
             compareEq(w, rhs.w);
     }
-    
+
     bool operator != (Point4 const & rhs) const
     {
         return !operator==(rhs);
@@ -323,28 +377,28 @@ public:
     {
         return Vector4<T, Angle>(x - rhs.x, y - rhs.y, z - rhs.z, w - rhs.w);
     }
-    
+
     Point4 operator + (Vector4<T, Angle> const & rhs) const
     {
         return Point4(x + rhs.x, y + rhs.y, z + rhs.z, w + rhs.w);
     }
-    
+
     Point4 operator - (Vector4<T, Angle> const & rhs) const
     {
         return Point4(x - rhs.x, y - rhs.y, z - rhs.z, w - rhs.w);
     }
-    
+
     operator Vector4<T, Angle> () const
     {
         return Vector4<T, Angle>(x, y, z, w);
     }
-    
+
     std::string to_string () const
     {
         return "(point: " + std::to_string(x) + ", " + std::to_string(y) +
             ", " + std::to_string(z) + ", " + std::to_string(w) + ")";
     }
-    
+
     operator std::string () const
     {
         return to_string();
@@ -355,7 +409,7 @@ public:
     T z;
     T w;
 };
-    
+
 using Point1i = Point1<int>;
 using Point2i = Point2<int>;
 using Point3i = Point3<int>;

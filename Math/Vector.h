@@ -51,7 +51,7 @@ public:
     {
         return Vector1(1);
     }
-    
+
     static constexpr Vector1 left ()
     {
         return Vector1(-1);
@@ -64,7 +64,7 @@ public:
         case 0:
             return x;
         }
-        
+
         throw Exception::InvalidArgumentException("axis", "axis must be 0");
     }
 
@@ -89,6 +89,18 @@ public:
         return Vector1<U, V>(x > 0 ? 1 : -1);
     }
 
+    Vector1 operator = (Vector1 const & rhs)
+    {
+        if (this == &rhs)
+        {
+          return *this;
+        }
+
+        x = rhs.x;
+
+        return *this;
+    }
+
     Vector1 operator - () const
     {
         return Vector1(-x);
@@ -98,7 +110,7 @@ public:
     {
         return compareEq(x, rhs.x);
     }
-    
+
     bool operator != (Vector1 const & rhs) const
     {
         return !operator==(rhs);
@@ -108,22 +120,22 @@ public:
     {
         return Vector1(x + rhs.x);
     }
-    
+
     Vector1 operator - (Vector1 const & rhs) const
     {
         return Vector1(x - rhs.x);
     }
-    
+
     Vector1 operator * (T rhs) const
     {
         return Vector1(x * rhs);
     }
-    
+
     Vector1 operator / (T rhs) const
     {
         return Vector1(x / rhs);
     }
-    
+
     T dot (Vector1 const & rhs) const
     {
         return x * rhs.x;
@@ -153,7 +165,7 @@ public:
         return Degrees<Angle>(product >= 0 ? Angle{0} : Angle{180});
     }
 
-    bool isParallel (Vector1 const & rhs) const
+    bool isParallel (Vector1 const &) const
     {
         return true;
     }
@@ -162,7 +174,7 @@ public:
     {
         return "(vector: " + std::to_string(x) + ")";
     }
-    
+
     operator std::string () const
     {
         return to_string();
@@ -190,7 +202,7 @@ public:
     constexpr Vector2 ()
     : x(), y()
     { }
-    
+
     constexpr Vector2 (T x, T y)
     : x(x), y(y)
     { }
@@ -203,12 +215,12 @@ public:
     {
         return Vector2(1, 1);
     }
-    
+
     static constexpr Vector2 right ()
     {
         return Vector2(1, 0);
     }
-    
+
     static constexpr Vector2 left ()
     {
         return Vector2(-1, 0);
@@ -218,7 +230,7 @@ public:
     {
         return Vector2(0, 1);
     }
-    
+
     static constexpr Vector2 backward ()
     {
         return Vector2(0, -1);
@@ -230,24 +242,24 @@ public:
         {
         case axisX:
             return x;
-            
+
         case axisY:
             return y;
         }
-        
+
         throw Exception::InvalidArgumentException("axis", "axis must be between 0 and 1");
     }
-    
+
     T lengthSquared () const
     {
         return x * x + y * y;
     }
-    
+
     T lengthManhattan () const
     {
         T absoluteX = x >= 0 ? x : -x;
         T absoluteY = y >= 0 ? y : -y;
-        
+
         return absoluteX + absoluteY;
     }
 
@@ -285,6 +297,19 @@ public:
         return Vector2(-y, x);
     }
 
+    Vector2 operator = (Vector2 const & rhs)
+    {
+        if (this == &rhs)
+        {
+          return *this;
+        }
+
+        x = rhs.x;
+        y = rhs.y;
+
+        return *this;
+    }
+
     Vector2 operator - () const
     {
         return Vector2(-x, -y);
@@ -295,7 +320,7 @@ public:
         return compareEq(x, rhs.x) &&
             compareEq(y, rhs.y);
     }
-    
+
     bool operator != (Vector2 const & rhs) const
     {
         return !operator==(rhs);
@@ -305,22 +330,22 @@ public:
     {
         return Vector2(x + rhs.x, y + rhs.y);
     }
-    
+
     Vector2 operator - (Vector2 const & rhs) const
     {
         return Vector2(x - rhs.x, y - rhs.y);
     }
-    
+
     Vector2 operator * (T rhs) const
     {
         return Vector2(x * rhs, y * rhs);
     }
-    
+
     Vector2 operator / (T rhs) const
     {
         return Vector2(x / rhs, y / rhs);
     }
-    
+
     T dot (Vector2 const & rhs) const
     {
         return x * rhs.x + y * rhs.y;
@@ -358,7 +383,7 @@ public:
     {
         return "(vector: " + std::to_string(x) + ", " + std::to_string(y) + ")";
     }
-    
+
     operator std::string () const
     {
         return to_string();
@@ -388,7 +413,7 @@ public:
     constexpr Vector3 ()
     : x(), y(), z()
     { }
-    
+
     constexpr Vector3 (T x, T y, T z)
     : x(x), y(y), z(z)
     { }
@@ -401,22 +426,22 @@ public:
     {
         return Vector3(1, 1, 1);
     }
-    
+
     static constexpr Vector3 right ()
     {
         return Vector3(1, 0, 0);
     }
-    
+
     static constexpr Vector3 left ()
     {
         return Vector3(-1, 0, 0);
     }
-    
+
     static constexpr Vector3 forward ()
     {
         return Vector3(0, 1, 0);
     }
-    
+
     static constexpr Vector3 backward ()
     {
         return Vector3(0, -1, 0);
@@ -426,7 +451,7 @@ public:
     {
         return Vector3(0, 0, 1);
     }
-    
+
     static constexpr Vector3 down ()
     {
         return Vector3(0, 0, -1);
@@ -445,15 +470,15 @@ public:
         case axisZ:
             return z;
         }
-        
+
         throw Exception::InvalidArgumentException("axis", "axis must be between 0 and 2");
     }
-    
+
     T lengthSquared () const
     {
         return x * x + y * y + z * z;
     }
-    
+
     T lengthManhattan () const
     {
         T absoluteX = x >= 0 ? x : -x;
@@ -531,6 +556,20 @@ public:
         throw Exception::InvalidArgumentException("axis", "axis must be between 0 and 2");
     }
 
+    Vector3 operator = (Vector3 const & rhs)
+    {
+        if (this == &rhs)
+        {
+          return *this;
+        }
+
+        x = rhs.x;
+        y = rhs.y;
+        z = rhs.z;
+
+        return *this;
+    }
+
     Vector3 operator - () const
     {
         return Vector3(-x, -y, -z);
@@ -542,7 +581,7 @@ public:
             compareEq(y, rhs.y) &&
             compareEq(z, rhs.z);
     }
-    
+
     bool operator != (Vector3 const & rhs) const
     {
         return !operator==(rhs);
@@ -552,27 +591,27 @@ public:
     {
         return Vector3(x + rhs.x, y + rhs.y, z + rhs.z);
     }
-    
+
     Vector3 operator - (Vector3 const & rhs) const
     {
         return Vector3(x - rhs.x, y - rhs.y, z - rhs.z);
     }
-    
+
     Vector3 operator * (T rhs) const
     {
         return Vector3(x * rhs, y * rhs, z * rhs);
     }
-    
+
     Vector3 operator / (T rhs) const
     {
         return Vector3(x / rhs, y / rhs, z / rhs);
     }
-    
+
     T dot (Vector3 const & rhs) const
     {
         return x * rhs.x + y * rhs.y + z * rhs.z;
     }
-    
+
     Vector3 cross (Vector3 const & rhs) const
     {
         return Vector3(y * rhs.z - z * rhs.y, z * rhs.x - x * rhs.z, x * rhs.y - y * rhs.x);
@@ -611,7 +650,7 @@ public:
         return "(vector: " + std::to_string(x) + ", " + std::to_string(y) +
         ", " + std::to_string(z) + ")";
     }
-    
+
     operator std::string () const
     {
         return to_string();
@@ -643,7 +682,7 @@ public:
     constexpr Vector4 ()
     : x(), y(), z(), w()
     { }
-    
+
     constexpr Vector4 (T x, T y, T z, T w)
     : x(x), y(y), z(z), w(w)
     { }
@@ -656,42 +695,42 @@ public:
     {
         return Vector4(1, 1, 1, 1);
     }
-    
+
     static constexpr Vector4 right ()
     {
         return Vector4(1, 0, 0, 0);
     }
-    
+
     static constexpr Vector4 left ()
     {
         return Vector4(-1, 0, 0, 0);
     }
-    
+
     static constexpr Vector4 forward ()
     {
         return Vector4(0, 1, 0, 0);
     }
-    
+
     static constexpr Vector4 backward ()
     {
         return Vector4(0, -1, 0, 0);
     }
-    
+
     static constexpr Vector4 up ()
     {
         return Vector4(0, 0, 1, 0);
     }
-    
+
     static constexpr Vector4 down ()
     {
         return Vector4(0, 0, -1, 0);
     }
-    
+
     static constexpr Vector4 ana ()
     {
         return Vector4(0, 0, 0, 1);
     }
-    
+
     static constexpr Vector4 kata ()
     {
         return Vector4(0, 0, 0, -1);
@@ -703,25 +742,25 @@ public:
         {
         case axisX:
             return x;
-            
+
         case axisY:
             return y;
-            
+
         case axisZ:
             return z;
-            
+
         case axisW:
             return w;
         }
-        
+
         throw Exception::InvalidArgumentException("axis", "axis must be between 0 and 3");
     }
-    
+
     T lengthSquared () const
     {
         return x * x + y * y + z * z + w * w;
     }
-    
+
     T lengthManhattan () const
     {
         T absoluteX = x >= 0 ? x : -x;
@@ -746,6 +785,21 @@ public:
             static_cast<U>(z) / length, static_cast<U>(w) / length);
     }
 
+    Vector4 operator = (Vector4 const & rhs)
+    {
+        if (this == &rhs)
+        {
+          return *this;
+        }
+
+        x = rhs.x;
+        y = rhs.y;
+        z = rhs.z;
+        w = rhs.w;
+
+        return *this;
+    }
+
     Vector4 operator - () const
     {
         return Vector4(-x, -y, -z, -w);
@@ -758,7 +812,7 @@ public:
         compareEq(z, rhs.z) &&
         compareEq(w, rhs.w);
     }
-    
+
     bool operator != (Vector4 const & rhs) const
     {
         return !operator==(rhs);
@@ -768,22 +822,22 @@ public:
     {
         return Vector4(x + rhs.x, y + rhs.y, z + rhs.z, w + rhs.w);
     }
-    
+
     Vector4 operator - (Vector4 const & rhs) const
     {
         return Vector4(x - rhs.x, y - rhs.y, z - rhs.z, w - rhs.w);
     }
-    
+
     Vector4 operator * (T rhs) const
     {
         return Vector4(x * rhs, y * rhs, z * rhs, w * rhs);
     }
-    
+
     Vector4 operator / (T rhs) const
     {
         return Vector4(x / rhs, y / rhs, z / rhs, w / rhs);
     }
-    
+
     T dot (Vector4 const & rhs) const
     {
         return x * rhs.x + y * rhs.y + z * rhs.z + w * rhs.w;
@@ -824,7 +878,7 @@ public:
         return "(vector: " + std::to_string(x) + ", " + std::to_string(y) +
         ", " + std::to_string(z) + ", " + std::to_string(w) + ")";
     }
-    
+
     operator std::string () const
     {
         return to_string();

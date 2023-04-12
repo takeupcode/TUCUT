@@ -59,7 +59,7 @@ public:
     virtual void notify (int id, const std::string & property)
     {
         mData->mId = id;
-        
+
         if (property == AdvancedPublisher::nameProperty)
         {
             mData->mNameNotified = true;
@@ -74,7 +74,7 @@ public:
         }
     }
 
-    virtual void notify (int id, int age, bool adult)
+    virtual void notify (int id, int, bool)
     {
         mData->mId = id;
         mData->mCombinedAgeAndAdultNotified = true;

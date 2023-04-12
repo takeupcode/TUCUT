@@ -49,13 +49,13 @@ bool GameSystem::hasGameObject (int identity) const
     {
         return false;
     }
-    
+
     auto gameObjectMapResult = mGameObjects.find(identity);
     if (gameObjectMapResult == mGameObjects.end())
     {
         return false;
     }
-    
+
     return true;
 }
 
@@ -68,7 +68,7 @@ void GameSystem::notify (int id, const std::shared_ptr<GameObject> & gameObject)
         // A game object will belong by default unless it's
         // missing a required component.
         gameObjectBelongs = true;
-        
+
         for (const auto & token: mRequiredAbilityTokens)
         {
             if (!gameObject->hasGameAbility(token))
@@ -86,7 +86,7 @@ void GameSystem::notify (int id, const std::shared_ptr<GameObject> & gameObject)
     {
         return;
     }
-    
+
     if (gameObjectBelongs)
     {
         if (!hasGameObject(gameObject->identity()))
@@ -108,7 +108,7 @@ void GameSystem::notify (int id, const std::shared_ptr<GameObject> & gameObject)
     }
 }
 
-void GameSystem::notify (int id, int commandId, const PropertyGroup & commandProperties)
+void GameSystem::notify (int, int, const PropertyGroup &)
 { }
 
 } // namespace Game
