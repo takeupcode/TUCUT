@@ -1,16 +1,8 @@
-//
-//  StringLiteralScenarios.cpp
-//  TestTUCUT
-//
-//  Created by Wahid Tanner on 8/3/14.
-//  Copyright © 2014 Take Up Code. All rights reserved.
-//
-
-#include <string>
-
 #include "../../Test/Test.h"
 
 #include "../StringLiteral.h"
+
+#include <string>
 
 using namespace std;
 using namespace TUCUT;

@@ -13,7 +13,7 @@ CurrentFileName        :=
 CurrentFilePath        :=
 CurrentFileFullPath    :=
 User                   :=wahid
-Date                   :=12/04/2023
+Date                   :=13/04/2023
 CodeLitePath           :="C:/Program Files/CodeLite"
 LinkerName             :=C:/MinGW/bin/g++.exe
 SharedObjectLinkerName :=C:/MinGW/bin/g++.exe -shared -fPIC
@@ -28,7 +28,7 @@ LibraryPathSwitch      :=-L
 PreprocessorSwitch     :=-D
 SourceSwitch           :=-c 
 OutputFile             :=$(IntermediateDirectory)/libTUCUT.a
-Preprocessors          :=
+Preprocessors          :=$(PreprocessorSwitch)UNICODE $(PreprocessorSwitch)_UNICODE 
 ObjectSwitch           :=-o 
 ArchiveOutputSwitch    := 
 PreprocessOnlySwitch   :=-E
@@ -62,13 +62,14 @@ AS       := C:/MinGW/bin/as.exe
 ## User defined environment variables
 ##
 CodeLiteDir:=C:\Program Files\CodeLite
-Objects0=$(IntermediateDirectory)/Game_PropertyGroup.cpp$(ObjectSuffix) $(IntermediateDirectory)/Game_PropertyContainer.cpp$(ObjectSuffix) $(IntermediateDirectory)/Game_GameManager.cpp$(ObjectSuffix) $(IntermediateDirectory)/Game_GameRegion.cpp$(ObjectSuffix) $(IntermediateDirectory)/Game_IMovementSystem.cpp$(ObjectSuffix) $(IntermediateDirectory)/Game_IPositionComponent.cpp$(ObjectSuffix) $(IntermediateDirectory)/Game_MovementComponent.cpp$(ObjectSuffix) $(IntermediateDirectory)/Game_MovementSystem.cpp$(ObjectSuffix) $(IntermediateDirectory)/Protocol_ProtoModel.cpp$(ObjectSuffix) $(IntermediateDirectory)/Protocol_OneofParser.cpp$(ObjectSuffix) \
-	$(IntermediateDirectory)/Protocol_OptionSingleParser.cpp$(ObjectSuffix) $(IntermediateDirectory)/Game_IMovementComponent.cpp$(ObjectSuffix) $(IntermediateDirectory)/Protocol_EnumValueParser.cpp$(ObjectSuffix) $(IntermediateDirectory)/Text_TextUtil.cpp$(ObjectSuffix) $(IntermediateDirectory)/Protocol_CodeGeneratorManager.cpp$(ObjectSuffix) $(IntermediateDirectory)/Protocol_CodeGeneratorCPP.cpp$(ObjectSuffix) $(IntermediateDirectory)/Protocol_ParserManager.cpp$(ObjectSuffix) $(IntermediateDirectory)/Game_PositionComponent.cpp$(ObjectSuffix) $(IntermediateDirectory)/Noise_NoiseUtil.cpp$(ObjectSuffix) $(IntermediateDirectory)/Config_ConfigInfo.cpp$(ObjectSuffix) \
-	$(IntermediateDirectory)/Protocol_OptionValueParser.cpp$(ObjectSuffix) $(IntermediateDirectory)/Noise_Noise.cpp$(ObjectSuffix) $(IntermediateDirectory)/Protocol_OptionModel.cpp$(ObjectSuffix) $(IntermediateDirectory)/Protocol_EnumModel.cpp$(ObjectSuffix) $(IntermediateDirectory)/Protocol_OneofModel.cpp$(ObjectSuffix) $(IntermediateDirectory)/Protocol_MessageFieldModel.cpp$(ObjectSuffix) $(IntermediateDirectory)/Protocol_ProtoParser.cpp$(ObjectSuffix) $(IntermediateDirectory)/Protocol_MessageParser.cpp$(ObjectSuffix) $(IntermediateDirectory)/File_FileManager.cpp$(ObjectSuffix) $(IntermediateDirectory)/Game_GameComponent.cpp$(ObjectSuffix) \
-	$(IntermediateDirectory)/Game_GameSystem.cpp$(ObjectSuffix) $(IntermediateDirectory)/Protocol_MessageFieldParser.cpp$(ObjectSuffix) $(IntermediateDirectory)/Game_PropertyValue.cpp$(ObjectSuffix) $(IntermediateDirectory)/Protocol_EnumValueModel.cpp$(ObjectSuffix) $(IntermediateDirectory)/Protocol_EnumParser.cpp$(ObjectSuffix) $(IntermediateDirectory)/Game_GameObject.cpp$(ObjectSuffix) 
+Objects0=$(IntermediateDirectory)/TUI_Prompt.cpp$(ObjectSuffix) $(IntermediateDirectory)/TUI_Input.cpp$(ObjectSuffix) $(IntermediateDirectory)/TUI_Game.cpp$(ObjectSuffix) $(IntermediateDirectory)/Game_PropertyGroup.cpp$(ObjectSuffix) $(IntermediateDirectory)/Game_PropertyContainer.cpp$(ObjectSuffix) $(IntermediateDirectory)/Game_GameManager.cpp$(ObjectSuffix) $(IntermediateDirectory)/Game_GameRegion.cpp$(ObjectSuffix) $(IntermediateDirectory)/Game_IMovementSystem.cpp$(ObjectSuffix) $(IntermediateDirectory)/Game_IPositionComponent.cpp$(ObjectSuffix) $(IntermediateDirectory)/TUI_Event.cpp$(ObjectSuffix) \
+	$(IntermediateDirectory)/Game_MovementComponent.cpp$(ObjectSuffix) $(IntermediateDirectory)/Game_MovementSystem.cpp$(ObjectSuffix) $(IntermediateDirectory)/Protocol_ProtoModel.cpp$(ObjectSuffix) $(IntermediateDirectory)/Protocol_OneofParser.cpp$(ObjectSuffix) $(IntermediateDirectory)/Protocol_OptionSingleParser.cpp$(ObjectSuffix) $(IntermediateDirectory)/Game_IMovementComponent.cpp$(ObjectSuffix) $(IntermediateDirectory)/Protocol_EnumValueParser.cpp$(ObjectSuffix) $(IntermediateDirectory)/Text_TextUtil.cpp$(ObjectSuffix) $(IntermediateDirectory)/Protocol_CodeGeneratorManager.cpp$(ObjectSuffix) $(IntermediateDirectory)/Protocol_CodeGeneratorCPP.cpp$(ObjectSuffix) \
+	$(IntermediateDirectory)/Protocol_ParserManager.cpp$(ObjectSuffix) $(IntermediateDirectory)/Game_PositionComponent.cpp$(ObjectSuffix) $(IntermediateDirectory)/Noise_NoiseUtil.cpp$(ObjectSuffix) $(IntermediateDirectory)/Config_ConfigInfo.cpp$(ObjectSuffix) $(IntermediateDirectory)/Protocol_OptionValueParser.cpp$(ObjectSuffix) $(IntermediateDirectory)/Noise_Noise.cpp$(ObjectSuffix) $(IntermediateDirectory)/Protocol_OptionModel.cpp$(ObjectSuffix) $(IntermediateDirectory)/Protocol_EnumModel.cpp$(ObjectSuffix) $(IntermediateDirectory)/Protocol_OneofModel.cpp$(ObjectSuffix) $(IntermediateDirectory)/Protocol_MessageFieldModel.cpp$(ObjectSuffix) \
+	$(IntermediateDirectory)/Protocol_ProtoParser.cpp$(ObjectSuffix) $(IntermediateDirectory)/Protocol_MessageParser.cpp$(ObjectSuffix) $(IntermediateDirectory)/File_FileManager.cpp$(ObjectSuffix) 
 
-Objects1=$(IntermediateDirectory)/Protocol_TokenReader.cpp$(ObjectSuffix) $(IntermediateDirectory)/Protocol_OptionGroupParser.cpp$(ObjectSuffix) $(IntermediateDirectory)/Protocol_OneofFieldParser.cpp$(ObjectSuffix) $(IntermediateDirectory)/Protocol_PackageParser.cpp$(ObjectSuffix) \
-	$(IntermediateDirectory)/Log_LogManager.cpp$(ObjectSuffix) $(IntermediateDirectory)/Protocol_MessageModel.cpp$(ObjectSuffix) $(IntermediateDirectory)/Protocol_ImportParser.cpp$(ObjectSuffix) 
+Objects1=$(IntermediateDirectory)/Game_GameComponent.cpp$(ObjectSuffix) $(IntermediateDirectory)/Game_GameSystem.cpp$(ObjectSuffix) $(IntermediateDirectory)/Protocol_MessageFieldParser.cpp$(ObjectSuffix) $(IntermediateDirectory)/Game_PropertyValue.cpp$(ObjectSuffix) $(IntermediateDirectory)/Protocol_EnumValueModel.cpp$(ObjectSuffix) $(IntermediateDirectory)/Protocol_EnumParser.cpp$(ObjectSuffix) $(IntermediateDirectory)/Game_GameObject.cpp$(ObjectSuffix) \
+	$(IntermediateDirectory)/Text_Encoding.cpp$(ObjectSuffix) $(IntermediateDirectory)/Protocol_TokenReader.cpp$(ObjectSuffix) $(IntermediateDirectory)/Protocol_OptionGroupParser.cpp$(ObjectSuffix) $(IntermediateDirectory)/Protocol_OneofFieldParser.cpp$(ObjectSuffix) $(IntermediateDirectory)/TUI_MessageQueue.cpp$(ObjectSuffix) $(IntermediateDirectory)/Protocol_PackageParser.cpp$(ObjectSuffix) $(IntermediateDirectory)/Log_LogManager.cpp$(ObjectSuffix) $(IntermediateDirectory)/TUI_Terminal.cpp$(ObjectSuffix) $(IntermediateDirectory)/Protocol_MessageModel.cpp$(ObjectSuffix) $(IntermediateDirectory)/Protocol_ImportParser.cpp$(ObjectSuffix) \
+	
 
 
 
@@ -102,6 +103,24 @@ PreBuild:
 ##
 ## Objects
 ##
+$(IntermediateDirectory)/TUI_Prompt.cpp$(ObjectSuffix): TUI/Prompt.cpp
+	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) -MG -MP -MT$(IntermediateDirectory)/TUI_Prompt.cpp$(ObjectSuffix) -MF$(IntermediateDirectory)/TUI_Prompt.cpp$(DependSuffix) -MM TUI/Prompt.cpp
+	$(CXX) $(IncludePCH) $(SourceSwitch) "C:/Projects/TUCUT/TUI/Prompt.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/TUI_Prompt.cpp$(ObjectSuffix) $(IncludePath)
+$(IntermediateDirectory)/TUI_Prompt.cpp$(PreprocessSuffix): TUI/Prompt.cpp
+	$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/TUI_Prompt.cpp$(PreprocessSuffix) TUI/Prompt.cpp
+
+$(IntermediateDirectory)/TUI_Input.cpp$(ObjectSuffix): TUI/Input.cpp
+	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) -MG -MP -MT$(IntermediateDirectory)/TUI_Input.cpp$(ObjectSuffix) -MF$(IntermediateDirectory)/TUI_Input.cpp$(DependSuffix) -MM TUI/Input.cpp
+	$(CXX) $(IncludePCH) $(SourceSwitch) "C:/Projects/TUCUT/TUI/Input.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/TUI_Input.cpp$(ObjectSuffix) $(IncludePath)
+$(IntermediateDirectory)/TUI_Input.cpp$(PreprocessSuffix): TUI/Input.cpp
+	$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/TUI_Input.cpp$(PreprocessSuffix) TUI/Input.cpp
+
+$(IntermediateDirectory)/TUI_Game.cpp$(ObjectSuffix): TUI/Game.cpp
+	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) -MG -MP -MT$(IntermediateDirectory)/TUI_Game.cpp$(ObjectSuffix) -MF$(IntermediateDirectory)/TUI_Game.cpp$(DependSuffix) -MM TUI/Game.cpp
+	$(CXX) $(IncludePCH) $(SourceSwitch) "C:/Projects/TUCUT/TUI/Game.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/TUI_Game.cpp$(ObjectSuffix) $(IncludePath)
+$(IntermediateDirectory)/TUI_Game.cpp$(PreprocessSuffix): TUI/Game.cpp
+	$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/TUI_Game.cpp$(PreprocessSuffix) TUI/Game.cpp
+
 $(IntermediateDirectory)/Game_PropertyGroup.cpp$(ObjectSuffix): Game/PropertyGroup.cpp
 	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) -MG -MP -MT$(IntermediateDirectory)/Game_PropertyGroup.cpp$(ObjectSuffix) -MF$(IntermediateDirectory)/Game_PropertyGroup.cpp$(DependSuffix) -MM Game/PropertyGroup.cpp
 	$(CXX) $(IncludePCH) $(SourceSwitch) "C:/Projects/TUCUT/Game/PropertyGroup.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/Game_PropertyGroup.cpp$(ObjectSuffix) $(IncludePath)
@@ -137,6 +156,12 @@ $(IntermediateDirectory)/Game_IPositionComponent.cpp$(ObjectSuffix): Game/IPosit
 	$(CXX) $(IncludePCH) $(SourceSwitch) "C:/Projects/TUCUT/Game/IPositionComponent.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/Game_IPositionComponent.cpp$(ObjectSuffix) $(IncludePath)
 $(IntermediateDirectory)/Game_IPositionComponent.cpp$(PreprocessSuffix): Game/IPositionComponent.cpp
 	$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/Game_IPositionComponent.cpp$(PreprocessSuffix) Game/IPositionComponent.cpp
+
+$(IntermediateDirectory)/TUI_Event.cpp$(ObjectSuffix): TUI/Event.cpp
+	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) -MG -MP -MT$(IntermediateDirectory)/TUI_Event.cpp$(ObjectSuffix) -MF$(IntermediateDirectory)/TUI_Event.cpp$(DependSuffix) -MM TUI/Event.cpp
+	$(CXX) $(IncludePCH) $(SourceSwitch) "C:/Projects/TUCUT/TUI/Event.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/TUI_Event.cpp$(ObjectSuffix) $(IncludePath)
+$(IntermediateDirectory)/TUI_Event.cpp$(PreprocessSuffix): TUI/Event.cpp
+	$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/TUI_Event.cpp$(PreprocessSuffix) TUI/Event.cpp
 
 $(IntermediateDirectory)/Game_MovementComponent.cpp$(ObjectSuffix): Game/MovementComponent.cpp
 	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) -MG -MP -MT$(IntermediateDirectory)/Game_MovementComponent.cpp$(ObjectSuffix) -MF$(IntermediateDirectory)/Game_MovementComponent.cpp$(DependSuffix) -MM Game/MovementComponent.cpp
@@ -318,6 +343,12 @@ $(IntermediateDirectory)/Game_GameObject.cpp$(ObjectSuffix): Game/GameObject.cpp
 $(IntermediateDirectory)/Game_GameObject.cpp$(PreprocessSuffix): Game/GameObject.cpp
 	$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/Game_GameObject.cpp$(PreprocessSuffix) Game/GameObject.cpp
 
+$(IntermediateDirectory)/Text_Encoding.cpp$(ObjectSuffix): Text/Encoding.cpp
+	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) -MG -MP -MT$(IntermediateDirectory)/Text_Encoding.cpp$(ObjectSuffix) -MF$(IntermediateDirectory)/Text_Encoding.cpp$(DependSuffix) -MM Text/Encoding.cpp
+	$(CXX) $(IncludePCH) $(SourceSwitch) "C:/Projects/TUCUT/Text/Encoding.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/Text_Encoding.cpp$(ObjectSuffix) $(IncludePath)
+$(IntermediateDirectory)/Text_Encoding.cpp$(PreprocessSuffix): Text/Encoding.cpp
+	$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/Text_Encoding.cpp$(PreprocessSuffix) Text/Encoding.cpp
+
 $(IntermediateDirectory)/Protocol_TokenReader.cpp$(ObjectSuffix): Protocol/TokenReader.cpp
 	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) -MG -MP -MT$(IntermediateDirectory)/Protocol_TokenReader.cpp$(ObjectSuffix) -MF$(IntermediateDirectory)/Protocol_TokenReader.cpp$(DependSuffix) -MM Protocol/TokenReader.cpp
 	$(CXX) $(IncludePCH) $(SourceSwitch) "C:/Projects/TUCUT/Protocol/TokenReader.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/Protocol_TokenReader.cpp$(ObjectSuffix) $(IncludePath)
@@ -336,6 +367,12 @@ $(IntermediateDirectory)/Protocol_OneofFieldParser.cpp$(ObjectSuffix): Protocol/
 $(IntermediateDirectory)/Protocol_OneofFieldParser.cpp$(PreprocessSuffix): Protocol/OneofFieldParser.cpp
 	$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/Protocol_OneofFieldParser.cpp$(PreprocessSuffix) Protocol/OneofFieldParser.cpp
 
+$(IntermediateDirectory)/TUI_MessageQueue.cpp$(ObjectSuffix): TUI/MessageQueue.cpp
+	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) -MG -MP -MT$(IntermediateDirectory)/TUI_MessageQueue.cpp$(ObjectSuffix) -MF$(IntermediateDirectory)/TUI_MessageQueue.cpp$(DependSuffix) -MM TUI/MessageQueue.cpp
+	$(CXX) $(IncludePCH) $(SourceSwitch) "C:/Projects/TUCUT/TUI/MessageQueue.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/TUI_MessageQueue.cpp$(ObjectSuffix) $(IncludePath)
+$(IntermediateDirectory)/TUI_MessageQueue.cpp$(PreprocessSuffix): TUI/MessageQueue.cpp
+	$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/TUI_MessageQueue.cpp$(PreprocessSuffix) TUI/MessageQueue.cpp
+
 $(IntermediateDirectory)/Protocol_PackageParser.cpp$(ObjectSuffix): Protocol/PackageParser.cpp
 	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) -MG -MP -MT$(IntermediateDirectory)/Protocol_PackageParser.cpp$(ObjectSuffix) -MF$(IntermediateDirectory)/Protocol_PackageParser.cpp$(DependSuffix) -MM Protocol/PackageParser.cpp
 	$(CXX) $(IncludePCH) $(SourceSwitch) "C:/Projects/TUCUT/Protocol/PackageParser.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/Protocol_PackageParser.cpp$(ObjectSuffix) $(IncludePath)
@@ -347,6 +384,12 @@ $(IntermediateDirectory)/Log_LogManager.cpp$(ObjectSuffix): Log/LogManager.cpp
 	$(CXX) $(IncludePCH) $(SourceSwitch) "C:/Projects/TUCUT/Log/LogManager.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/Log_LogManager.cpp$(ObjectSuffix) $(IncludePath)
 $(IntermediateDirectory)/Log_LogManager.cpp$(PreprocessSuffix): Log/LogManager.cpp
 	$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/Log_LogManager.cpp$(PreprocessSuffix) Log/LogManager.cpp
+
+$(IntermediateDirectory)/TUI_Terminal.cpp$(ObjectSuffix): TUI/Terminal.cpp
+	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) -MG -MP -MT$(IntermediateDirectory)/TUI_Terminal.cpp$(ObjectSuffix) -MF$(IntermediateDirectory)/TUI_Terminal.cpp$(DependSuffix) -MM TUI/Terminal.cpp
+	$(CXX) $(IncludePCH) $(SourceSwitch) "C:/Projects/TUCUT/TUI/Terminal.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/TUI_Terminal.cpp$(ObjectSuffix) $(IncludePath)
+$(IntermediateDirectory)/TUI_Terminal.cpp$(PreprocessSuffix): TUI/Terminal.cpp
+	$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/TUI_Terminal.cpp$(PreprocessSuffix) TUI/Terminal.cpp
 
 $(IntermediateDirectory)/Protocol_MessageModel.cpp$(ObjectSuffix): Protocol/MessageModel.cpp
 	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) -MG -MP -MT$(IntermediateDirectory)/Protocol_MessageModel.cpp$(ObjectSuffix) -MF$(IntermediateDirectory)/Protocol_MessageModel.cpp$(DependSuffix) -MM Protocol/MessageModel.cpp

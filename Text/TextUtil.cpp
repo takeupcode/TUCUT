@@ -1,20 +1,19 @@
-//
-//  TextUtil.cpp
-//  TUCUT (Take Up Code Utility)
-//
-//  Created by Abdul Wahid Tanner on 11/17/17.
-//  Copyright © 2017 Take Up Code. All rights reserved.
-//
 #include "TextUtil.h"
 
 #include <sstream>
 
-bool TUCUT::Text::TextUtil::isWhitespace (char c)
+std::string TUCUT::Text::to_string (
+  std::string const & src)
+{
+  return src;
+}
+
+bool TUCUT::Text::isWhitespace (char c)
 {
   return c == ' ' || c == '\t' || c == '\n';
 }
 
-std::vector<std::string> TUCUT::Text::TextUtil::splitString (
+std::vector<std::string> TUCUT::Text::splitString (
   std::string const & src,
   char delimiter)
 {
@@ -35,7 +34,7 @@ std::vector<std::string> TUCUT::Text::TextUtil::splitString (
   return result;
 }
 
-size_t TUCUT::Text::TextUtil::replaceAll (
+size_t TUCUT::Text::replaceAll (
   std::string & src,
   std::string_view searchValue,
   std::string_view replaceValue)

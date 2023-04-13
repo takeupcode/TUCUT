@@ -1,10 +1,3 @@
-//
-//  StringLiteral.h
-//  TUCUT (Take Up Code Utility)
-//
-//  Created by Wahid Tanner on 8/2/14.
-//  Copyright © 2014 Take Up Code. All rights reserved.
-//
 #ifndef TUCUT_Text_StringLiteral_h
 #define TUCUT_Text_StringLiteral_h
 

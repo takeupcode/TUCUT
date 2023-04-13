@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CodeLite_Project Name="t-TUCUT" Version="11000" InternalType="Console">
+  <VirtualDirectory Name="TUI">
+    <VirtualDirectory Name="Tests"/>
+  </VirtualDirectory>
   <Plugins>
     <Plugin Name="qmake">
       <![CDATA[00020001N0005Debug0000000000000001N0007Release000000000000]]>
@@ -125,6 +128,8 @@
       <Compiler Options="-g;-std=c++20;-Wall;-Wextra" C_Options="-g;-Wall" Assembler="">
         <IncludePath Value="."/>
         <IncludePath Value="/usr/local/include"/>
+        <Preprocessor Value="UNICODE"/>
+        <Preprocessor Value="_UNICODE"/>
       </Compiler>
       <Linker Options="-static">
         <LibraryPath Value="."/>

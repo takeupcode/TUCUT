@@ -1,10 +1,3 @@
-//
-//  CodeGeneratorCPP.cpp
-//  TUCUT
-//
-//  Created by Wahid Tanner on 10/17/14.
-//  Copyright © 2018 Take Up Code. All rights reserved.
-//
 #include "CodeGeneratorCPP.h"
 
 #include "CodeGeneratorPrologCPP.cpp"
@@ -241,7 +234,7 @@ writeProtoEnumsToHeader (
         headerFileWriter.writeNamespaceClosing();
       }
       currentPackage = enumPackage;
-      enumNamespaces = Text::TextUtil::splitString(
+      enumNamespaces = Text::splitString(
         enumPackage, '.');
       for (auto & str: enumNamespaces)
       {
@@ -312,7 +305,7 @@ writeProtoMessagesToHeader (
         headerFileWriter.writeNamespaceClosing();
       }
       currentPackage = messagePackage;
-      messageNamespaces = Text::TextUtil::splitString(
+      messageNamespaces = Text::splitString(
         messagePackage, '.');
       for (auto & str: messageNamespaces)
       {
@@ -341,7 +334,7 @@ writeProtoMessagesToHeader (
         headerFileWriter.writeNamespaceClosing();
       }
       currentPackage = messagePackage;
-      messageNamespaces = Text::TextUtil::splitString(
+      messageNamespaces = Text::splitString(
         messagePackage, '.');
       for (auto & str: messageNamespaces)
       {
@@ -368,7 +361,7 @@ writeProtoMessagesToHeader (
         headerFileWriter.writeNamespaceClosing();
       }
       currentPackage = messagePackage;
-      messageNamespaces = Text::TextUtil::splitString(
+      messageNamespaces = Text::splitString(
         messagePackage, '.');
       for (auto & str: messageNamespaces)
       {
@@ -1614,7 +1607,7 @@ writeMessageToSource (
   }
 
   std::string fullScope = messageModel.package();
-  Text::TextUtil::replaceAll(fullScope, ".", "::");
+  Text::replaceAll(fullScope, ".", "::");
   if (!fullScope.empty())
   {
     fullScope += "::";
@@ -2377,10 +2370,10 @@ fullTypeName (
     return "std::string";
   }
 
-  Text::TextUtil::replaceAll(fieldType, ".", "_");
+  Text::replaceAll(fieldType, ".", "_");
   std::string fieldTypePackage =
     messageFieldModel.fieldTypePackage();
-  Text::TextUtil::replaceAll(fieldTypePackage, ".", "::");
+  Text::replaceAll(fieldTypePackage, ".", "::");
   if (!fieldTypePackage.empty())
   {
     fieldTypePackage += "::";
@@ -2547,10 +2540,10 @@ fullTypeNameInternal (
     return fieldType;
   }
 
-  Text::TextUtil::replaceAll(fieldType, ".", "_");
+  Text::replaceAll(fieldType, ".", "_");
   std::string fieldTypePackage =
     messageFieldModel.fieldTypePackage();
-  Text::TextUtil::replaceAll(fieldTypePackage, ".", "::");
+  Text::replaceAll(fieldTypePackage, ".", "::");
   if (!fieldTypePackage.empty())
   {
     fieldTypePackage += "::";

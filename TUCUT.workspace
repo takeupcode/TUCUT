@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CodeLite_Workspace Name="TUCUT" Database="" Version="10.0.0">
-  <Project Name="s-TUCUT" Path="s-TUCUT.project" Active="No"/>
-  <Project Name="t-TUCUT" Path="t-TUCUT.project" Active="Yes"/>
+  <Project Name="s-TUCUT" Path="s-TUCUT.project" Active="Yes"/>
+  <Project Name="t-TUCUT" Path="t-TUCUT.project" Active="No"/>
   <BuildMatrix>
     <WorkspaceConfiguration Name="Debug" Selected="yes">
       <Environment/>
