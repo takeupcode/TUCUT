@@ -41,6 +41,10 @@ size_t TUCUT::Text::TextUtil::replaceAll (
   std::string_view replaceValue)
 {
   size_t count {};
+  if (searchValue.length() == 0)
+  {
+    return count;
+  }
 
   for (std::string::size_type currentPos {};
     std::string::npos !=

@@ -539,36 +539,36 @@ public:
         {
             try
             {
+                stream << "Scenario to run: " <<
+                    scenario->description();
                 if (!scenario->run(tags))
                 {
                     localSkipCount++;
+                    stream << " --- Skipped" << std::endl;
                 }
                 else if (scenario->passed())
                 {
                     localPassCount++;
-                    stream << "Scenario passed: " <<
-                        scenario->description() << std::endl;
+                    stream << " --- Passed" << std::endl;
                 }
                 else
                 {
                     localFailCount++;
-                    stream << "Scenario failed: " <<
-                        scenario->description() << std::endl;
+                    stream << " --- Failed" << std::endl;
                 }
             }
             catch (VerificationException const & ex)
             {
                 localFailCount++;
-                stream << "Scenario failed: " <<
-                    scenario->description() << std::endl <<
-                    ex.what();
+                stream << " --- Failed" << std::endl
+                    << ex.what();
                 continue;
             }
             catch (...)
             {
                 localFailCount++;
-                stream << "Scenario failed unexpectedly: " <<
-                    scenario->description() << std::endl;
+                stream << " --- Failed unexpectedly: "
+                    << std::endl;
                 continue;
             }
         }

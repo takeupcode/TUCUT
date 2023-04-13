@@ -19,8 +19,6 @@ using namespace TUCUT;
 
 SCENARIO( Log, "Construction/Singleton", "unit,log", "Log manager instances are the same." )
 {
-    Log::LogManager::initialize("logs", "testlogging");
-    
     Log::LogManager * pLogMgr1 = Log::LogManager::instance();
     Log::LogManager * pLogMgr2 = Log::LogManager::instance();
     

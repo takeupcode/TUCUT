@@ -88,7 +88,8 @@ void TUCUT::Log::LogManager::logDebug (
   }
 
   mLogFile << time()
-    << " debug=\"true\" message=\"" << message << "\"\n";
+    << " debug=\"true\" message=\"" << message << "\""
+    << std::endl;
 }
 
 void TUCUT::Log::LogManager::logInfo (
@@ -100,7 +101,8 @@ void TUCUT::Log::LogManager::logInfo (
   }
 
   mLogFile << time()
-    << " info=\"true\" message=\"" << message << "\"\n";
+    << " info=\"true\" message=\"" << message << "\""
+    << std::endl;
 }
 
 void TUCUT::Log::LogManager::logFatal (
@@ -112,14 +114,16 @@ void TUCUT::Log::LogManager::logFatal (
   }
 
   mLogFile << time()
-    << " fatal=\"true\" message=\"" << message << "\"\n";
+    << " fatal=\"true\" message=\"" << message << "\""
+    << std::endl;
 
   exit(1);
 }
 
 void TUCUT::Log::LogManager::open ()
 {
-  mLogFile.open(mLogFileName, std::ios_base::app);
+  mLogFile.open(mLogFileName,
+    std::ios_base::out | std::ios_base::app);
   if (mLogFile.fail())
   {
     std::string message = "Could not open ";
