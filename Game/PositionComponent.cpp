@@ -8,11 +8,12 @@
 
 #include "../Math/Adjust.h"
 
-std::string const
-TUCUT::Game::PositionComponent::defaultToken =
+using namespace TUCUT;
+
+std::string const Game::PositionComponent::defaultToken =
   "PositionComponent";
 
-void TUCUT::Game::PositionComponent::initialize ()
+void Game::PositionComponent::initialize ()
 {
   ECS::Component::initialize();
 
@@ -21,14 +22,14 @@ void TUCUT::Game::PositionComponent::initialize ()
     app->getOrCreateAction(positionChangedToken);
 }
 
-std::shared_ptr<TUCUT::Game::PositionComponent>
-TUCUT::Game::PositionComponent::getSharedPositionComponent ()
+std::shared_ptr<Game::PositionComponent>
+Game::PositionComponent::getSharedPositionComponent ()
 {
   return std::static_pointer_cast<PositionComponent>(
     shared_from_this());
 }
 
-void TUCUT::Game::PositionComponent::addDefaultProperties (
+void Game::PositionComponent::addDefaultProperties (
   std::shared_ptr<ECS::Entity> const & entity) const
 {
   if (not entity)
@@ -47,7 +48,7 @@ void TUCUT::Game::PositionComponent::addDefaultProperties (
   group->addValue(zOldName, defaultFloatValue);
 }
 
-void TUCUT::Game::PositionComponent::removeProperties (
+void Game::PositionComponent::removeProperties (
   std::shared_ptr<ECS::Entity> const & entity) const
 {
   if (not entity)
@@ -58,7 +59,7 @@ void TUCUT::Game::PositionComponent::removeProperties (
   entity->properties().removeGroup(groupName);
 }
 
-double TUCUT::Game::PositionComponent::getFloating (
+double Game::PositionComponent::getFloating (
   std::shared_ptr<ECS::Entity> const & entity,
   int propertyId) const
 {
@@ -97,8 +98,7 @@ double TUCUT::Game::PositionComponent::getFloating (
   return 0;
 }
 
-std::vector<double>
-TUCUT::Game::PositionComponent::getFloatings (
+std::vector<double> Game::PositionComponent::getFloatings (
   std::shared_ptr<ECS::Entity> const & entity,
   int propertyId) const
 {
@@ -137,7 +137,7 @@ TUCUT::Game::PositionComponent::getFloatings (
   return result;
 }
 
-void TUCUT::Game::PositionComponent::setFloating (
+void Game::PositionComponent::setFloating (
   std::shared_ptr<ECS::Entity> const & entity,
   int propertyId,
   double value) const
@@ -211,7 +211,7 @@ void TUCUT::Game::PositionComponent::setFloating (
   }
 }
 
-void TUCUT::Game::PositionComponent::setFloatings (
+void Game::PositionComponent::setFloatings (
   std::shared_ptr<ECS::Entity> const & entity,
   int propertyId,
   std::vector<double> const & value) const
@@ -278,13 +278,13 @@ void TUCUT::Game::PositionComponent::setFloatings (
   }
 }
 
-void TUCUT::Game::PositionComponent::setMinPosition (
+void Game::PositionComponent::setMinPosition (
   Math::Vector3d const & position)
 {
     mMinPosition = position;
 }
 
-void TUCUT::Game::PositionComponent::setMaxPosition (
+void Game::PositionComponent::setMaxPosition (
   Math::Vector3d const & position)
 {
     mMaxPosition = position;

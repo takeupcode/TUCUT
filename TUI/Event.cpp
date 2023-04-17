@@ -8,12 +8,14 @@
 
 #include <sstream>
 
-TUCUT::TUI::DropEscapeEvent::DropEscapeEvent (
+using namespace TUCUT;
+
+TUI::DropEscapeEvent::DropEscapeEvent (
   std::string const & sequence)
 : mUtf8(sequence)
 { }
 
-TUCUT::TUI::DropEscapeEvent::DropEscapeEvent (
+TUI::DropEscapeEvent::DropEscapeEvent (
   std::vector<std::optional<int>> const & parameters)
 {
   for (auto const & opt: parameters)
@@ -23,7 +25,7 @@ TUCUT::TUI::DropEscapeEvent::DropEscapeEvent (
   }
 }
 
-std::string TUCUT::TUI::DropEscapeEvent::to_string () const
+std::string TUI::DropEscapeEvent::to_string () const
 {
   std::stringstream ss;
   ss << "Dropped sequence: [ ";
@@ -35,7 +37,7 @@ std::string TUCUT::TUI::DropEscapeEvent::to_string () const
   return ss.str();
 }
 
-TUCUT::TUI::Event TUCUT::TUI::parseEscapeSequence (
+TUI::Event TUI::parseEscapeSequence (
   std::string const & sequence,
   bool endOfText)
 {
@@ -68,7 +70,7 @@ TUCUT::TUI::Event TUCUT::TUI::parseEscapeSequence (
   return parseCSI(sequence);
 }
 
-TUCUT::TUI::Event TUCUT::TUI::parseAltKey (
+TUI::Event TUI::parseAltKey (
   char code)
 {
   Event event = NoEvent {};
@@ -101,8 +103,7 @@ TUCUT::TUI::Event TUCUT::TUI::parseAltKey (
   return event;
 }
 
-TUCUT::TUI::Event TUCUT::TUI::parseCSI (
-  std::string const & sequence)
+TUI::Event TUI::parseCSI (std::string const & sequence)
 {
   Event event = NoEvent {};
 
@@ -210,7 +211,7 @@ TUCUT::TUI::Event TUCUT::TUI::parseCSI (
   return event;
 }
 
-TUCUT::TUI::Event TUCUT::TUI::parseVtCSI (
+TUI::Event TUI::parseVtCSI (
   std::vector<std::optional<int>> const & parameters)
 {
   Event event = DropEscapeEvent(parameters);
@@ -380,7 +381,7 @@ TUCUT::TUI::Event TUCUT::TUI::parseVtCSI (
   return event;
 }
 
-TUCUT::TUI::Event TUCUT::TUI::parseXtermCSI (
+TUI::Event TUI::parseXtermCSI (
   std::vector<std::optional<int>> const & parameters)
 {
   Event event = DropEscapeEvent(parameters);
@@ -502,7 +503,7 @@ TUCUT::TUI::Event TUCUT::TUI::parseXtermCSI (
   return event;
 }
 
-TUCUT::TUI::Event TUCUT::TUI::parseMouseCSI (
+TUI::Event TUI::parseMouseCSI (
   std::vector<std::optional<int>> const & parameters)
 {
   Event event = DropEscapeEvent(parameters);

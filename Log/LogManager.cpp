@@ -15,12 +15,14 @@
 #include <sstream>
 #include <stdexcept>
 
-TUCUT::Log::LogManager::~LogManager ()
+using namespace TUCUT;
+
+Log::LogManager::~LogManager ()
 {
   deinitialize();
 }
 
-TUCUT::Log::LogManager * TUCUT::Log::LogManager::initialize (
+Log::LogManager * Log::LogManager::initialize (
   std::string const & logPath,
   std::string const baseName,
   std::string const extName)
@@ -46,7 +48,7 @@ TUCUT::Log::LogManager * TUCUT::Log::LogManager::initialize (
   return lm;
 }
 
-void TUCUT::Log::LogManager::deinitialize ()
+void Log::LogManager::deinitialize ()
 {
   LogManager * lm = instance();
   if (not lm->mInitialized)
@@ -58,7 +60,7 @@ void TUCUT::Log::LogManager::deinitialize ()
   lm->mInitialized = false;
 }
 
-TUCUT::Log::LogManager * TUCUT::Log::LogManager::instance ()
+Log::LogManager * Log::LogManager::instance ()
 {
   static LogManager * lm = nullptr;
   if (lm == nullptr)
@@ -68,8 +70,8 @@ TUCUT::Log::LogManager * TUCUT::Log::LogManager::instance ()
 
   return lm;
 }
-    
-std::string TUCUT::Log::LogManager::logFileName ()
+
+std::string Log::LogManager::logFileName ()
 {
   if (not mInitialized)
   {
@@ -79,7 +81,7 @@ std::string TUCUT::Log::LogManager::logFileName ()
   return mLogFileName;
 }
 
-void TUCUT::Log::LogManager::logDebug (
+void Log::LogManager::logDebug (
   std::string const & message)
 {
   if (not mInitialized)
@@ -92,7 +94,7 @@ void TUCUT::Log::LogManager::logDebug (
     << std::endl;
 }
 
-void TUCUT::Log::LogManager::logInfo (
+void Log::LogManager::logInfo (
   std::string const & message)
 {
   if (not mInitialized)
@@ -105,7 +107,7 @@ void TUCUT::Log::LogManager::logInfo (
     << std::endl;
 }
 
-void TUCUT::Log::LogManager::logFatal (
+void Log::LogManager::logFatal (
   std::string const & message)
 {
   if (not mInitialized)
@@ -120,7 +122,7 @@ void TUCUT::Log::LogManager::logFatal (
   exit(1);
 }
 
-void TUCUT::Log::LogManager::open ()
+void Log::LogManager::open ()
 {
   mLogFile.open(mLogFileName,
     std::ios_base::out | std::ios_base::app);
@@ -132,12 +134,12 @@ void TUCUT::Log::LogManager::open ()
   }
 }
 
-void TUCUT::Log::LogManager::close ()
+void Log::LogManager::close ()
 {
   mLogFile.close();
 }
 
-std::string TUCUT::Log::LogManager::time (
+std::string Log::LogManager::time (
   bool includePunctuation)
 {
   auto timeNow = std::chrono::system_clock::now();

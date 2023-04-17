@@ -12,15 +12,15 @@
 #include <limits>
 #include <stdexcept>
 
-TUCUT::TUI::Prompt::Prompt (
-  Terminal & terminal)
+using namespace TUCUT;
+
+TUI::Prompt::Prompt (Terminal & terminal)
 : mTerminal(terminal),
   mOutput(terminal.output()),
   mInput(terminal.input())
 { }
 
-bool TUCUT::TUI::Prompt::promptYesOrNo (
-  std::string const & prompt)
+bool TUI::Prompt::promptYesOrNo (std::string const & prompt)
 {
   mOutput << prompt << " y/n: ";
   mTerminal.resetGraphics();
@@ -52,7 +52,7 @@ bool TUCUT::TUI::Prompt::promptYesOrNo (
   }
 }
 
-int TUCUT::TUI::Prompt::promptNumber (
+int TUI::Prompt::promptNumber (
   std::string const & prompt,
   int minimum,
   int maximum)
@@ -80,7 +80,7 @@ int TUCUT::TUI::Prompt::promptNumber (
   }
 }
 
-char TUCUT::TUI::Prompt::promptLetter (
+char TUI::Prompt::promptLetter (
   std::string const & prompt,
   char minimum,
   char maximum,
@@ -153,7 +153,7 @@ char TUCUT::TUI::Prompt::promptLetter (
   }
 }
 
-std::string TUCUT::TUI::Prompt::promptText (
+std::string TUI::Prompt::promptText (
   std::string const & prompt,
   bool makeUpperCase)
 {
@@ -180,7 +180,7 @@ std::string TUCUT::TUI::Prompt::promptText (
   return input;
 }
 
-int TUCUT::TUI::Prompt::promptChoice (
+int TUI::Prompt::promptChoice (
   std::string const & prompt,
   std::vector<std::string> const & choices)
 {

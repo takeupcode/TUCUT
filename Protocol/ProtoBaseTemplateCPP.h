@@ -1,4 +1,5 @@
-const std::string TUCUT::Protocol::CodeGeneratorCPP::mProtoBaseHeaderFileTemplate =
+std::string const
+Protocol::CodeGeneratorCPP::mProtoBaseHeaderFileTemplate =
 
 R"TUCUT(namespace TUCUT {
 namespace Protocol {
@@ -42,7 +43,7 @@ public:
     {
         return sizeVariableUnsignedInt32(static_cast<std::uint32_t>(value));
     }
-    
+
     static size_t sizeVariableUnsignedInt32 (std::uint32_t value)
     {
         std::uint32_t shiftBit = 1;
@@ -406,7 +407,7 @@ private:
 
             result += currentByte;
         }
-        
+
         return result;
     }
 
@@ -628,7 +629,7 @@ public:
         }
 
         ProtoBase::operator=(rhs);
-        
+
         mValue = rhs.mValue;
 
         return *this;
@@ -656,7 +657,7 @@ public:
 
         newValue.setIndex(this->index());
         newValue.setValue(message);
-        
+
         mCollection[index] = newValue;
     }
 
@@ -1009,7 +1010,7 @@ public:
             std::int64_t enumValue = PrimitiveEncoding::parseVariableInt64(pData, &bytesParsed);
 
             this->addValue(static_cast<EnumType>(enumValue));
-            
+
             pData += bytesParsed;
             remainingBytes -= bytesParsed;
         }
@@ -1126,7 +1127,7 @@ public:
         result += PrimitiveEncoding::serializeVariableUnsignedInt32(this->key());
 
         result += PrimitiveEncoding::serializeVariableInt32(this->value() ? 1 : 0);
-        
+
         return result;
     }
 
@@ -1142,7 +1143,7 @@ public:
         result += PrimitiveEncoding::sizeVariableUnsignedInt32(this->key());
 
         result += 1;
-        
+
         return result;
     }
 };
@@ -1379,7 +1380,7 @@ public:
             result += PrimitiveEncoding::sizeVariableUnsignedInt32(static_cast<std::uint32_t>(result));
             result += PrimitiveEncoding::sizeVariableUnsignedInt32(this->key());
         }
-        
+
         return result;
     }
 };
@@ -1449,9 +1450,9 @@ public:
         }
 
         result += PrimitiveEncoding::sizeVariableUnsignedInt32(this->key());
-        
+
         result += PrimitiveEncoding::sizeVariableInt64(this->value());
-        
+
         return result;
     }
 };
@@ -1527,7 +1528,7 @@ public:
             result += PrimitiveEncoding::sizeVariableUnsignedInt32(static_cast<std::uint32_t>(result));
             result += PrimitiveEncoding::sizeVariableUnsignedInt32(this->key());
         }
-        
+
         return result;
     }
 };
@@ -1597,9 +1598,9 @@ public:
         }
 
         result += PrimitiveEncoding::sizeVariableUnsignedInt32(this->key());
-        
+
         result += PrimitiveEncoding::sizeVariableUnsignedInt32(this->value());
-        
+
         return result;
     }
 };
@@ -1675,7 +1676,7 @@ public:
             result += PrimitiveEncoding::sizeVariableUnsignedInt32(static_cast<std::uint32_t>(result));
             result += PrimitiveEncoding::sizeVariableUnsignedInt32(this->key());
         }
-        
+
         return result;
     }
 };
@@ -1745,9 +1746,9 @@ public:
         }
 
         result += PrimitiveEncoding::sizeVariableUnsignedInt32(this->key());
-        
+
         result += PrimitiveEncoding::sizeVariableUnsignedInt64(this->value());
-        
+
         return result;
     }
 };
@@ -1823,7 +1824,7 @@ public:
             result += PrimitiveEncoding::sizeVariableUnsignedInt32(static_cast<std::uint32_t>(result));
             result += PrimitiveEncoding::sizeVariableUnsignedInt32(this->key());
         }
-        
+
         return result;
     }
 };
@@ -1893,9 +1894,9 @@ public:
         }
 
         result += PrimitiveEncoding::sizeVariableUnsignedInt32(this->key());
-        
+
         result += PrimitiveEncoding::sizeVariableSignedInt32(this->value());
-        
+
         return result;
     }
 };
@@ -1971,7 +1972,7 @@ public:
             result += PrimitiveEncoding::sizeVariableUnsignedInt32(static_cast<std::uint32_t>(result));
             result += PrimitiveEncoding::sizeVariableUnsignedInt32(this->key());
         }
-        
+
         return result;
     }
 };
@@ -2041,9 +2042,9 @@ public:
         }
 
         result += PrimitiveEncoding::sizeVariableUnsignedInt32(this->key());
-        
+
         result += PrimitiveEncoding::sizeVariableSignedInt64(this->value());
-        
+
         return result;
     }
 };
@@ -2119,7 +2120,7 @@ public:
             result += PrimitiveEncoding::sizeVariableUnsignedInt32(static_cast<std::uint32_t>(result));
             result += PrimitiveEncoding::sizeVariableUnsignedInt32(this->key());
         }
-        
+
         return result;
     }
 };
@@ -2193,9 +2194,9 @@ public:
         }
 
         result += PrimitiveEncoding::sizeVariableUnsignedInt32(this->key());
-        
+
         result += 4;
-        
+
         return result;
     }
 };
@@ -2274,7 +2275,7 @@ public:
             result += PrimitiveEncoding::sizeVariableUnsignedInt32(static_cast<std::uint32_t>(result));
             result += PrimitiveEncoding::sizeVariableUnsignedInt32(this->key());
         }
-        
+
         return result;
     }
 };
@@ -2348,9 +2349,9 @@ public:
         }
 
         result += PrimitiveEncoding::sizeVariableUnsignedInt32(this->key());
-        
+
         result += 8;
-        
+
         return result;
     }
 };
@@ -2429,7 +2430,7 @@ public:
             result += PrimitiveEncoding::sizeVariableUnsignedInt32(static_cast<std::uint32_t>(result));
             result += PrimitiveEncoding::sizeVariableUnsignedInt32(this->key());
         }
-        
+
         return result;
     }
 };
@@ -2533,7 +2534,7 @@ public:
             result += PrimitiveEncoding::sizeVariableUnsignedInt32(static_cast<std::uint32_t>(result));
             result += PrimitiveEncoding::sizeVariableUnsignedInt32(this->key());
         }
-        
+
         return result;
     }
 };
@@ -2637,7 +2638,7 @@ public:
             result += PrimitiveEncoding::sizeVariableUnsignedInt32(static_cast<std::uint32_t>(result));
             result += PrimitiveEncoding::sizeVariableUnsignedInt32(this->key());
         }
-        
+
         return result;
     }
 };
@@ -2711,9 +2712,9 @@ public:
         }
 
         result += PrimitiveEncoding::sizeVariableUnsignedInt32(this->key());
-        
+
         result += 4;
-        
+
         return result;
     }
 };
@@ -2792,7 +2793,7 @@ public:
             result += PrimitiveEncoding::sizeVariableUnsignedInt32(static_cast<std::uint32_t>(result));
             result += PrimitiveEncoding::sizeVariableUnsignedInt32(this->key());
         }
-        
+
         return result;
     }
 };
@@ -2866,9 +2867,9 @@ public:
         }
 
         result += PrimitiveEncoding::sizeVariableUnsignedInt32(this->key());
-        
+
         result += 8;
-        
+
         return result;
     }
 };
@@ -2947,7 +2948,7 @@ public:
             result += PrimitiveEncoding::sizeVariableUnsignedInt32(static_cast<std::uint32_t>(result));
             result += PrimitiveEncoding::sizeVariableUnsignedInt32(this->key());
         }
-        
+
         return result;
     }
 };
@@ -3024,7 +3025,7 @@ public:
         result += PrimitiveEncoding::serializeVariableUnsignedInt32(static_cast<std::uint32_t>(mValue.size()));
 
         result += mValue;
-        
+
         return result;
     }
 
@@ -3091,10 +3092,10 @@ public:
 
         newValue->setIndex(this->index());
         newValue->setValue(value);
-        
+
         mCollection[index] = newValue;
     }
-    
+
     virtual void addValue (const std::string & value)
     {
         std::shared_ptr<ProtoType> newValue(new ProtoType(mValueDefault));
@@ -3247,7 +3248,7 @@ public:
     : ProtoStringTypeCollection<ProtoBytes>(defaultValue)
     {}
 };
-    
+
 } // namespace Protocol
 } // namespace TUCUT
 )TUCUT";

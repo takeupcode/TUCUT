@@ -12,19 +12,19 @@
 #include <algorithm>
 #include <stdexcept>
 
-std::string const
-TUCUT::ECS::Entity::defaultToken = "Entity";
+using namespace TUCUT;
 
-void TUCUT::ECS::Entity::initialize ()
+std::string const ECS::Entity::defaultToken = "Entity";
+
+void ECS::Entity::initialize ()
 { }
 
-std::shared_ptr<TUCUT::ECS::Entity>
-TUCUT::ECS::Entity::getSharedEntity ()
+std::shared_ptr<ECS::Entity> ECS::Entity::getSharedEntity ()
 {
   return shared_from_this();
 }
 
-bool TUCUT::ECS::Entity::hasComponent (int componentId) const
+bool ECS::Entity::hasComponent (int componentId) const
 {
   if (componentId < 1)
   {
@@ -39,13 +39,13 @@ bool TUCUT::ECS::Entity::hasComponent (int componentId) const
   return false;
 }
 
-bool TUCUT::ECS::Entity::hasComponent (
+bool ECS::Entity::hasComponent (
   std::shared_ptr<Component> const & component) const
 {
   return hasComponent(component->identity());
 }
 
-bool TUCUT::ECS::Entity::addComponent (int componentId)
+bool ECS::Entity::addComponent (int componentId)
 {
   if (componentId < 1)
   {
@@ -60,7 +60,7 @@ bool TUCUT::ECS::Entity::addComponent (int componentId)
   return false;
 }
 
-bool TUCUT::ECS::Entity::addComponent (
+bool ECS::Entity::addComponent (
   std::shared_ptr<Component> const & component)
 {
   if (not component)
@@ -107,7 +107,7 @@ bool TUCUT::ECS::Entity::addComponent (
   return true;
 }
 
-void TUCUT::ECS::Entity::removeComponent (int componentId)
+void ECS::Entity::removeComponent (int componentId)
 {
   if (componentId < 1)
   {
@@ -120,7 +120,7 @@ void TUCUT::ECS::Entity::removeComponent (int componentId)
   removeComponent(component);
 }
 
-void TUCUT::ECS::Entity::removeComponent (
+void ECS::Entity::removeComponent (
   std::shared_ptr<Component> const & component)
 {
   if (not component)
@@ -161,7 +161,7 @@ void TUCUT::ECS::Entity::removeComponent (
   app->onEntityComponentChanged(entity);
 }
 
-bool TUCUT::ECS::Entity::hasAbility (int abilityId) const
+bool ECS::Entity::hasAbility (int abilityId) const
 {
   if (abilityId < 1)
   {
@@ -176,7 +176,7 @@ bool TUCUT::ECS::Entity::hasAbility (int abilityId) const
   return false;
 }
 
-bool TUCUT::ECS::Entity::hasAbility (
+bool ECS::Entity::hasAbility (
   std::string const & token) const
 {
   Application * app = Application::instance();
@@ -186,8 +186,8 @@ bool TUCUT::ECS::Entity::hasAbility (
   return hasAbility(abilityId);
 }
 
-std::shared_ptr<TUCUT::ECS::Component>
-TUCUT::ECS::Entity::getComponentFromAbility (
+std::shared_ptr<ECS::Component>
+ECS::Entity::getComponentFromAbility (
   int abilityId) const
 {
   if (abilityId < 1)
@@ -206,8 +206,8 @@ TUCUT::ECS::Entity::getComponentFromAbility (
   return nullptr;
 }
 
-std::shared_ptr<TUCUT::ECS::Component>
-TUCUT::ECS::Entity::getComponentFromAbility (
+std::shared_ptr<ECS::Component>
+ECS::Entity::getComponentFromAbility (
   std::string const & token) const
 {
   Application * app = Application::instance();

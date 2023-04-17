@@ -13,6 +13,8 @@
 #include <iostream>
 #include <limits>
 
+using namespace TUCUT;
+
 namespace
 {
   struct RGB final
@@ -178,7 +180,7 @@ namespace
   }
 
   unsigned int selectColor16Code (
-    TUCUT::TUI::TextLayer layer,
+    TUI::TextLayer layer,
     unsigned char red,
     unsigned char green,
     unsigned char blue)
@@ -194,7 +196,7 @@ namespace
     if (nearestIndex < 8)
     {
       unsigned int codeBegin = ForeDimBegin;
-      if (layer == TUCUT::TUI::TextLayer::Background)
+      if (layer == TUI::TextLayer::Background)
       {
         codeBegin = BackDimBegin;
       }
@@ -203,7 +205,7 @@ namespace
     else
     {
       unsigned int codeBegin = ForeBrightBegin;
-      if (layer == TUCUT::TUI::TextLayer::Background)
+      if (layer == TUI::TextLayer::Background)
       {
         codeBegin = BackBrightBegin;
       }
@@ -243,8 +245,8 @@ namespace
     static std::string useDefaultBackground ();
 
     static std::string setNearestColor (
-      TUCUT::TUI::TextLayer layer,
-      TUCUT::TUI::Palette palette,
+      TUI::TextLayer layer,
+      TUI::Palette palette,
       unsigned char red,
       unsigned char green,
       unsigned char blue);
@@ -296,24 +298,24 @@ std::string EscSequenceBuilder::useDefaultBackground ()
 }
 
 std::string EscSequenceBuilder::setNearestColor (
-  TUCUT::TUI::TextLayer layer,
-  TUCUT::TUI::Palette palette,
+  TUI::TextLayer layer,
+  TUI::Palette palette,
   unsigned char red,
   unsigned char green,
   unsigned char blue)
 {
-  if (palette == TUCUT::TUI::Palette::Colors16)
+  if (palette == TUI::Palette::Colors16)
   {
     std::string code = std::to_string(
       selectColor16Code(layer, red, green, blue));
     return setDisplayAttributes({code});
   }
 
-  if (palette == TUCUT::TUI::Palette::Colors256 ||
-    palette == TUCUT::TUI::Palette::ColorsTrue)
+  if (palette == TUI::Palette::Colors256 ||
+    palette == TUI::Palette::ColorsTrue)
   {
     std::string code;
-    if (layer == TUCUT::TUI::TextLayer::Background)
+    if (layer == TUI::TextLayer::Background)
     {
       code = "48";
     }
@@ -323,7 +325,7 @@ std::string EscSequenceBuilder::setNearestColor (
     }
 
     std::string mode;
-    if (palette == TUCUT::TUI::Palette::Colors256)
+    if (palette == TUI::Palette::Colors256)
     {
       mode = "5";
       std::string index = std::to_string(
@@ -445,7 +447,7 @@ std::string EscSequenceBuilder::buildCSI (
   return result;
 }
 
-TUCUT::TUI::Color::Color (TextLayer layer,
+TUI::Color::Color (TextLayer layer,
   Palette palette,
   unsigned char red,
   unsigned char green,
@@ -454,13 +456,13 @@ TUCUT::TUI::Color::Color (TextLayer layer,
     layer, palette, red, green, blue))
 { }
 
-std::string TUCUT::TUI::Color::operator () (
+std::string TUI::Color::operator () (
   std::string const & content)
 {
   return mEscSequence + content;
 }
 
-void TUCUT::TUI::Color::changeColor (TextLayer layer,
+void TUI::Color::changeColor (TextLayer layer,
   Palette palette,
   unsigned char red,
   unsigned char green,
@@ -470,7 +472,7 @@ void TUCUT::TUI::Color::changeColor (TextLayer layer,
     layer, palette, red, green, blue);
 }
 
-std::ostream & TUCUT::TUI::operator << (
+std::ostream & TUI::operator << (
   std::ostream & out,
   Color const & color)
 {
@@ -480,7 +482,7 @@ std::ostream & TUCUT::TUI::operator << (
 
 // The cursor is assumed to be visible so that the
 // setup method can hide it.
-TUCUT::TUI::Terminal::Terminal (bool useAlternateScreen)
+TUI::Terminal::Terminal (bool useAlternateScreen)
 : mOutput(std::cout),
   mUseAlternateScreen(useAlternateScreen),
   mCursorShown(true)
@@ -489,88 +491,88 @@ TUCUT::TUI::Terminal::Terminal (bool useAlternateScreen)
   setup();
 }
 
-TUCUT::TUI::Terminal::~Terminal ()
+TUI::Terminal::~Terminal ()
 {
   teardown();
 }
 
-std::ostream & TUCUT::TUI::Terminal::output ()
+std::ostream & TUI::Terminal::output ()
 {
   return mOutput;
 }
 
-TUCUT::TUI::Input & TUCUT::TUI::Terminal::input ()
+TUI::Input & TUI::Terminal::input ()
 {
   return *mInput;
 }
 
-void TUCUT::TUI::Terminal::resetGraphics ()
+void TUI::Terminal::resetGraphics ()
 {
   std::cout << EscSequenceBuilder::resetGraphics();
 }
 
-void TUCUT::TUI::Terminal::useDefaultForeground ()
+void TUI::Terminal::useDefaultForeground ()
 {
   std::cout << EscSequenceBuilder::useDefaultForeground();
 }
 
-void TUCUT::TUI::Terminal::useDefaultBackground ()
+void TUI::Terminal::useDefaultBackground ()
 {
   std::cout << EscSequenceBuilder::useDefaultBackground();
 }
 
-void TUCUT::TUI::Terminal::underlineOn ()
+void TUI::Terminal::underlineOn ()
 {
   std::cout << EscSequenceBuilder::underlineOn();
 }
 
-void TUCUT::TUI::Terminal::underlineOff ()
+void TUI::Terminal::underlineOff ()
 {
   std::cout << EscSequenceBuilder::underlineOff();
 }
 
-void TUCUT::TUI::Terminal::blinkOn ()
+void TUI::Terminal::blinkOn ()
 {
   std::cout << EscSequenceBuilder::blinkOn();
 }
 
-void TUCUT::TUI::Terminal::blinkOff ()
+void TUI::Terminal::blinkOff ()
 {
   std::cout << EscSequenceBuilder::blinkOff();
 }
 
-void TUCUT::TUI::Terminal::moveCursor (
+void TUI::Terminal::moveCursor (
   unsigned int row,
   unsigned int column)
 {
   std::cout << EscSequenceBuilder::moveCursor(row, column);
 }
 
-void TUCUT::TUI::Terminal::moveCursorUp (
+void TUI::Terminal::moveCursorUp (
   unsigned int lines)
 {
   std::cout << EscSequenceBuilder::moveCursorUp(lines);
 }
 
-void TUCUT::TUI::Terminal::moveCursorDown (
+void TUI::Terminal::moveCursorDown (
   unsigned int lines)
 {
   std::cout << EscSequenceBuilder::moveCursorDown(lines);
 }
 
-void TUCUT::TUI::Terminal::moveCursorForward (
+void TUI::Terminal::moveCursorForward (
   unsigned int columns)
 {
   std::cout << EscSequenceBuilder::moveCursorForward(columns);
 }
 
-void TUCUT::TUI::Terminal::moveCursorBack (
+void TUI::Terminal::moveCursorBack (
   unsigned int columns)
 {
   std::cout << EscSequenceBuilder::moveCursorBack(columns);
 }
 
-bool TUCUT::TUI::Terminal::showCursor ()
+bool TUI::Terminal::showCursor ()
 {
   bool previous = mCursorShown;
   if (not mCursorShown)
@@ -581,7 +583,7 @@ bool TUCUT::TUI::Terminal::showCursor ()
   return previous;
 }
 
-bool TUCUT::TUI::Terminal::hideCursor ()
+bool TUI::Terminal::hideCursor ()
 {
   bool previous = mCursorShown;
   if (mCursorShown)
@@ -592,13 +594,13 @@ bool TUCUT::TUI::Terminal::hideCursor ()
   return previous;
 }
 
-void TUCUT::TUI::Terminal::clearScreen ()
+void TUI::Terminal::clearScreen ()
 {
   std::cout << EscSequenceBuilder::clearScreen();
 }
 
 void onKeyboardEvent(KEY_EVENT_RECORD record,
-  TUCUT::TUI::Terminal * terminal)
+  TUI::Terminal * terminal)
 {
   // This string will remain between calls and will
   // accumulate any partial code units until a complete
@@ -611,7 +613,7 @@ void onKeyboardEvent(KEY_EVENT_RECORD record,
   }
   auto chWide = record.uChar.UnicodeChar;
   buffer += chWide;
-  std::string utf8 = TUCUT::Text::to_string(buffer, buffer);
+  std::string utf8 = Text::to_string(buffer, buffer);
   if (not utf8.empty())
   {
     // Give the input a single Unicode character as a
@@ -621,7 +623,7 @@ void onKeyboardEvent(KEY_EVENT_RECORD record,
 }
 
 void inputProc (std::stop_token stopToken,
-  TUCUT::TUI::Terminal * terminal)
+  TUI::Terminal * terminal)
 {
   if (not terminal)
   {
@@ -677,7 +679,7 @@ void inputProc (std::stop_token stopToken,
   }
 }
 
-void TUCUT::TUI::Terminal::setup ()
+void TUI::Terminal::setup ()
 {
 #if defined(_WIN32)
   // Get the current stdout and stdin modes and make sure
@@ -730,7 +732,7 @@ void TUCUT::TUI::Terminal::setup ()
   mInputThread = std::jthread(inputProc, this);
 }
 
-void TUCUT::TUI::Terminal::teardown ()
+void TUI::Terminal::teardown ()
 {
 #if defined(_WIN32)
   auto stdoutHandle = GetStdHandle(STD_OUTPUT_HANDLE);
@@ -749,22 +751,23 @@ void TUCUT::TUI::Terminal::teardown ()
   showCursor();
 }
 
-void TUCUT::TUI::Terminal::useAlternateScreen ()
+void TUI::Terminal::useAlternateScreen ()
 {
   std::cout << EscSequenceBuilder::useAlternateScreen();
 }
-void TUCUT::TUI::Terminal::useMainScreen ()
+
+void TUI::Terminal::useMainScreen ()
 {
   std::cout << EscSequenceBuilder::useMainScreen();
 }
 
-TUCUT::TUI::CursorShow::CursorShow (Terminal & terminal)
+TUI::CursorShow::CursorShow (Terminal & terminal)
 : mTerminal(terminal)
 {
   mCursorPreviouslyShown = mTerminal.showCursor();
 }
 
-TUCUT::TUI::CursorShow::~CursorShow ()
+TUI::CursorShow::~CursorShow ()
 {
   if (not mCursorPreviouslyShown)
   {
@@ -772,13 +775,13 @@ TUCUT::TUI::CursorShow::~CursorShow ()
   }
 }
 
-TUCUT::TUI::CursorHide::CursorHide (Terminal & terminal)
+TUI::CursorHide::CursorHide (Terminal & terminal)
 : mTerminal(terminal)
 {
   mCursorPreviouslyShown = mTerminal.hideCursor();
 }
 
-TUCUT::TUI::CursorHide::~CursorHide ()
+TUI::CursorHide::~CursorHide ()
 {
   if (mCursorPreviouslyShown)
   {

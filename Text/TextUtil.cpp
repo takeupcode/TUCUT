@@ -8,18 +8,20 @@
 
 #include <sstream>
 
-std::string TUCUT::Text::to_string (
+using namespace TUCUT;
+
+std::string Text::to_string (
   std::string const & src)
 {
   return src;
 }
 
-bool TUCUT::Text::isWhitespace (char c)
+bool Text::isWhitespace (char c)
 {
   return c == ' ' || c == '\t' || c == '\n';
 }
 
-std::vector<std::string> TUCUT::Text::splitString (
+std::vector<std::string> Text::splitString (
   std::string const & src,
   char delimiter)
 {
@@ -40,7 +42,7 @@ std::vector<std::string> TUCUT::Text::splitString (
   return result;
 }
 
-size_t TUCUT::Text::replaceAll (
+size_t Text::replaceAll (
   std::string & src,
   std::string_view searchValue,
   std::string_view replaceValue)

@@ -13,7 +13,9 @@
 #include <filesystem>
 #include <memory>
 
-bool TUCUT::Protocol::ImportParser::parse (
+using namespace TUCUT;
+
+bool Protocol::ImportParser::parse (
   TokenReader::iterator current,
   TokenReader::iterator end,
   bool,

@@ -10,10 +10,11 @@
 
 #include <stdexcept>
 
-std::string const
-TUCUT::ECS::System::defaultToken = "System";
+using namespace TUCUT;
 
-void TUCUT::ECS::System::initialize ()
+std::string const ECS::System::defaultToken = "System";
+
+void ECS::System::initialize ()
 {
   Application * app = Application::instance();
   for (auto const & token: mRequiredAbilityTokens)
@@ -39,13 +40,12 @@ void TUCUT::ECS::System::initialize ()
     idToken().toString(), getSharedSystem());
 }
 
-std::shared_ptr<TUCUT::ECS::System>
-TUCUT::ECS::System::getSharedSystem ()
+std::shared_ptr<ECS::System> ECS::System::getSharedSystem ()
 {
   return shared_from_this();
 }
 
-bool TUCUT::ECS::System::hasEntity (int identity) const
+bool ECS::System::hasEntity (int identity) const
 {
   if (identity < 1)
   {
@@ -55,7 +55,7 @@ bool TUCUT::ECS::System::hasEntity (int identity) const
   return mEntities.contains(identity);
 }
 
-void TUCUT::ECS::System::notify (
+void ECS::System::notify (
   int id,
   std::shared_ptr<Entity> const & entity)
 {
@@ -108,7 +108,7 @@ void TUCUT::ECS::System::notify (
   }
 }
 
-void TUCUT::ECS::System::notify (
+void ECS::System::notify (
   int,
   int,
   PropertyGroup const &)

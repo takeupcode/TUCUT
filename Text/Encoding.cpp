@@ -6,7 +6,9 @@
 //
 #include "Encoding.h"
 
-TUCUT::Text::CodePointResult TUCUT::Text::getCodePoint (
+using namespace TUCUT;
+
+Text::CodePointResult Text::getCodePoint (
   std::string const & utf8,
   size_t & index,
   uint32_t & point)
@@ -115,7 +117,7 @@ TUCUT::Text::CodePointResult TUCUT::Text::getCodePoint (
   return CodePointResult::Unsupported;
 }
 
-TUCUT::Text::CodePointResult TUCUT::Text::getCodePoint (
+Text::CodePointResult Text::getCodePoint (
   std::wstring const & utf16or32,
   size_t & index,
   uint32_t & point)
@@ -179,7 +181,7 @@ TUCUT::Text::CodePointResult TUCUT::Text::getCodePoint (
   }
 }
 
-std::string TUCUT::Text::to_string (
+std::string Text::to_string (
   std::wstring const & utf16or32,
   std::wstring & remainder)
 {
@@ -262,7 +264,7 @@ std::string TUCUT::Text::to_string (
   return utf8;
 }
 
-std::wstring TUCUT::Text::to_wstring (
+std::wstring Text::to_wstring (
   std::string const & utf8,
   std::string & remainder)
 {

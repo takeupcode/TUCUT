@@ -11,32 +11,33 @@
 #include "PositionComponent.h"
 #include "Region.h"
 
-std::string const TUCUT::Game::MovementSystem::defaultToken =
+using namespace TUCUT;
+
+std::string const Game::MovementSystem::defaultToken =
   "MovementSystem";
 
-bool TUCUT::Game::MovementSystem::isInstantMode () const
+bool Game::MovementSystem::isInstantMode () const
 {
   return mInstantMode;
 }
 
-void TUCUT::Game::MovementSystem::setInstantMode (bool instant)
+void Game::MovementSystem::setInstantMode (bool instant)
 {
   mInstantMode = instant;
 }
 
-std::shared_ptr<TUCUT::Game::Region>
-TUCUT::Game::MovementSystem::region ()
+std::shared_ptr<Game::Region> Game::MovementSystem::region ()
 {
   return mRegion;
 }
 
-void TUCUT::Game::MovementSystem::setRegion (
+void Game::MovementSystem::setRegion (
   std::shared_ptr<Region> region)
 {
   mRegion = std::move(region);
 }
 
-void TUCUT::Game::MovementSystem::update (
+void Game::MovementSystem::update (
   ECS::TimeResolution elapsedTime)
 {
   if (not mRegion)
@@ -185,7 +186,7 @@ void TUCUT::Game::MovementSystem::update (
   }
 }
 
-void TUCUT::Game::MovementSystem::notify (
+void Game::MovementSystem::notify (
   int id,
   int commandId,
   ECS::PropertyGroup const & commandProperties)

@@ -9,12 +9,13 @@
 #include <stdexcept>
 #include <thread>
 
-TimeResolution const
-TUCUT::ECS::Application::FixedFrameTime =
-  TimeResolution(TimeResolution::period::den /
-    TUCUT::ECS::Application::FramesPerSecond);
+using namespace TUCUT;
 
-Application * TUCUT::ECS::Application::instance ()
+ECS::TimeResolution const ECS::Application::FixedFrameTime =
+  ECS::TimeResolution(ECS::TimeResolution::period::den /
+    ECS::Application::FramesPerSecond);
+
+Application * ECS::Application::instance ()
 {
   static Application * mInstance = nullptr;
 
@@ -26,10 +27,10 @@ Application * TUCUT::ECS::Application::instance ()
   return mInstance;
 }
 
-void TUCUT::ECS::Application::initialize ()
+void ECS::Application::initialize ()
 { }
 
-void TUCUT::ECS::Application::deinitialize ()
+void ECS::Application::deinitialize ()
 {
   mEntities.clear();
   mRegisteredComponents.clear();
@@ -46,39 +47,38 @@ void TUCUT::ECS::Application::deinitialize ()
   mCommandEvents.clear();
 }
 
-void TUCUT::ECS::Application::run ()
+void ECS::Application::run ()
 {
   loop();
 }
 
-void TUCUT::ECS::Application::exit ()
+void ECS::Application::exit ()
 {
   mExit = true;
 }
 
-void TUCUT::ECS::Application::pause ()
+void ECS::Application::pause ()
 {
   mPaused = true;
 }
 
-void TUCUT::ECS::Application::resume ()
+void ECS::Application::resume ()
 {
   mPaused = false;
   loop();
 }
 
-void TUCUT::ECS::Application::step ()
+void ECS::Application::step ()
 {
   processFrame(FixedFrameTime);
 }
 
-TUCUT::ECS::TimeResolution
-TUCUT::ECS::Application::elapsed () const
+ECS::TimeResolution ECS::Application::elapsed () const
 {
   return mElapsed;
 }
 
-void TUCUT::ECS::Application::restartClock ()
+void ECS::Application::restartClock ()
 {
   auto currentTime = TimeClock::now();
   mElapsed = std::chrono::duration_cast<TimeResolution>(
@@ -87,17 +87,17 @@ void TUCUT::ECS::Application::restartClock ()
   mLastTime = currentTime;
 }
 
-bool TUCUT::ECS::Application::isFixedFrameReady () const
+bool ECS::Application::isFixedFrameReady () const
 {
   return mFixedFrameTotal > FixedFrameTime;
 }
 
-void TUCUT::ECS::Application::completeFixedFrame ()
+void ECS::Application::completeFixedFrame ()
 {
   mFixedFrameTotal -= FixedFrameTime;
 }
 
-void TUCUT::ECS::Application::waitForNextFixedFrame ()
+void ECS::Application::waitForNextFixedFrame ()
 {
   auto waitDuration = FixedFrameTime - mFixedFrameTotal;
   if (waitDuration > waitDuration.zero())
@@ -108,7 +108,7 @@ void TUCUT::ECS::Application::waitForNextFixedFrame ()
   }
 }
 
-void TUCUT::ECS::Application::loop ()
+void ECS::Application::loop ()
 {
   mLastTime = TimeClock::now();
 
@@ -128,7 +128,7 @@ void TUCUT::ECS::Application::loop ()
   }
 }
 
-void TUCUT::ECS::Application::processFrame (
+void ECS::Application::processFrame (
   TimeResolution elapsedTime)
 {
   handleInput();
@@ -136,7 +136,7 @@ void TUCUT::ECS::Application::processFrame (
   render();
 }
 
-int TUCUT::ECS::Application::createComponentId (
+int ECS::Application::createComponentId (
   std::string const & token)
 {
   if (token.empty())
@@ -157,7 +157,7 @@ int TUCUT::ECS::Application::createComponentId (
   return mNextComponentId++;
 }
 
-int TUCUT::ECS::Application::getComponentId (
+int ECS::Application::getComponentId (
   std::string const & token) const
 {
   auto componentMapResult = mRegisteredComponents.find(token);
@@ -169,7 +169,7 @@ int TUCUT::ECS::Application::getComponentId (
   return componentMapResult->second;
 }
 
-int TUCUT::ECS::Application::createSystemId (
+int ECS::Application::createSystemId (
   std::string const & token)
 {
   if (token.empty())
@@ -190,7 +190,7 @@ int TUCUT::ECS::Application::createSystemId (
   return mNextSystemId++;
 }
 
-int TUCUT::ECS::Application::getSystemId (
+int ECS::Application::getSystemId (
   std::string const & token) const
 {
   auto systemMapResult = mRegisteredSystems.find(token);
@@ -202,7 +202,7 @@ int TUCUT::ECS::Application::getSystemId (
   return systemMapResult->second;
 }
 
-int TUCUT::ECS::Application::createActionId (
+int ECS::Application::createActionId (
   std::string const & token)
 {
   if (token.empty())
@@ -223,7 +223,7 @@ int TUCUT::ECS::Application::createActionId (
   return mNextActionId++;
 }
 
-int TUCUT::ECS::Application::getActionId (
+int ECS::Application::getActionId (
   std::string const & token) const
 {
   auto actionMapResult = mRegisteredActions.find(token);
@@ -235,7 +235,7 @@ int TUCUT::ECS::Application::getActionId (
   return actionMapResult->second;
 }
 
-int TUCUT::ECS::Application::createAbilityId (
+int ECS::Application::createAbilityId (
   std::string const & token)
 {
   if (token.empty())
@@ -256,7 +256,7 @@ int TUCUT::ECS::Application::createAbilityId (
   return mNextAbilityId++;
 }
 
-int TUCUT::ECS::Application::getAbilityId (
+int ECS::Application::getAbilityId (
   std::string const & token) const
 {
   auto abilityMapResult = mRegisteredAbilities.find(token);
@@ -268,7 +268,7 @@ int TUCUT::ECS::Application::getAbilityId (
   return abilityMapResult->second;
 }
 
-int TUCUT::ECS::Application::createCommandId (
+int ECS::Application::createCommandId (
   std::string const & token)
 {
   if (token.empty())
@@ -289,7 +289,7 @@ int TUCUT::ECS::Application::createCommandId (
   return mNextCommandId++;
 }
 
-int TUCUT::ECS::Application::getCommandId (
+int ECS::Application::getCommandId (
   std::string const & token) const
 {
   auto commandMapResult = mRegisteredCommands.find(token);
@@ -301,7 +301,7 @@ int TUCUT::ECS::Application::getCommandId (
   return commandMapResult->second;
 }
 
-bool TUCUT::ECS::Application::hasEntity (int identity) const
+bool ECS::Application::hasEntity (int identity) const
 {
   if (identity < 1)
   {
@@ -317,7 +317,7 @@ bool TUCUT::ECS::Application::hasEntity (int identity) const
   return true;
 }
 
-void TUCUT::ECS::Application::removeEntity (int identity)
+void ECS::Application::removeEntity (int identity)
 {
   if (identity < 1)
   {
@@ -333,7 +333,7 @@ void TUCUT::ECS::Application::removeEntity (int identity)
   }
 }
 
-bool TUCUT::ECS::Application::hasComponent (int identity) const
+bool ECS::Application::hasComponent (int identity) const
 {
   if (identity < 1)
   {
@@ -348,7 +348,7 @@ bool TUCUT::ECS::Application::hasComponent (int identity) const
   return false;
 }
 
-bool TUCUT::ECS::Application::hasComponent (
+bool ECS::Application::hasComponent (
   std::string const & token) const
 {
   auto componentId = getComponentId(token);
@@ -360,7 +360,7 @@ bool TUCUT::ECS::Application::hasComponent (
   return hasComponent(componentId);
 }
 
-bool TUCUT::ECS::Application::hasSystem (int identity) const
+bool ECS::Application::hasSystem (int identity) const
 {
   if (identity < 1)
   {
@@ -375,7 +375,7 @@ bool TUCUT::ECS::Application::hasSystem (int identity) const
   return false;
 }
 
-bool TUCUT::ECS::Application::hasSystem (
+bool ECS::Application::hasSystem (
   std::string const & token) const
 {
   auto systemId = getSystemId(token);
@@ -387,7 +387,7 @@ bool TUCUT::ECS::Application::hasSystem (
   return hasSystem(systemId);
 }
 
-std::string TUCUT::ECS::Application::getAction (
+std::string ECS::Application::getAction (
   int identity) const
 {
   if (identity < 1)
@@ -403,7 +403,7 @@ std::string TUCUT::ECS::Application::getAction (
   return "";
 }
 
-int TUCUT::ECS::Application::getOrCreateAction (
+int ECS::Application::getOrCreateAction (
   std::string const & token)
 {
   auto actionId = getActionId(token);
@@ -416,7 +416,7 @@ int TUCUT::ECS::Application::getOrCreateAction (
   return actionId;
 }
 
-bool TUCUT::ECS::Application::hasAction (int identity) const
+bool ECS::Application::hasAction (int identity) const
 {
   if (identity < 1)
   {
@@ -431,7 +431,7 @@ bool TUCUT::ECS::Application::hasAction (int identity) const
   return false;
 }
 
-bool TUCUT::ECS::Application::hasAction (
+bool ECS::Application::hasAction (
   std::string const & token) const
 {
   auto actionId = getActionId(token);
@@ -443,7 +443,7 @@ bool TUCUT::ECS::Application::hasAction (
   return hasAction(actionId);
 }
 
-void TUCUT::ECS::Application::queueAction (
+void ECS::Application::queueAction (
   int objectId, int actionId)
 {
   if (objectId < 1 || actionId < 1)
@@ -454,7 +454,7 @@ void TUCUT::ECS::Application::queueAction (
   mEntityActions[objectId].push(actionId);
 }
 
-std::string TUCUT::ECS::Application::getAbility (
+std::string ECS::Application::getAbility (
   int identity) const
 {
   if (identity < 1)
@@ -470,7 +470,7 @@ std::string TUCUT::ECS::Application::getAbility (
   return "";
 }
 
-int TUCUT::ECS::Application::getOrCreateAbility (
+int ECS::Application::getOrCreateAbility (
   std::string const & token)
 {
   auto abilityId = getAbilityId(token);
@@ -483,7 +483,7 @@ int TUCUT::ECS::Application::getOrCreateAbility (
   return abilityId;
 }
 
-bool TUCUT::ECS::Application::hasAbility (int identity) const
+bool ECS::Application::hasAbility (int identity) const
 {
   if (identity < 1)
   {
@@ -498,7 +498,7 @@ bool TUCUT::ECS::Application::hasAbility (int identity) const
   return false;
 }
 
-bool TUCUT::ECS::Application::hasAbility (
+bool ECS::Application::hasAbility (
   std::string const & token) const
 {
   auto abilityId = getAbilityId(token);
@@ -510,8 +510,7 @@ bool TUCUT::ECS::Application::hasAbility (
   return hasAbility(abilityId);
 }
 
-std::string TUCUT::ECS::Application::getCommand (
-  int identity) const
+std::string ECS::Application::getCommand (int identity) const
 {
   if (identity < 1)
   {
@@ -526,7 +525,7 @@ std::string TUCUT::ECS::Application::getCommand (
   return "";
 }
 
-int TUCUT::ECS::Application::getOrCreateCommand (
+int ECS::Application::getOrCreateCommand (
   std::string const & token)
 {
   auto commandId = getCommandId(token);
@@ -539,7 +538,7 @@ int TUCUT::ECS::Application::getOrCreateCommand (
   return commandId;
 }
 
-bool TUCUT::ECS::Application::hasCommand (int identity) const
+bool ECS::Application::hasCommand (int identity) const
 {
   if (identity < 1)
   {
@@ -554,7 +553,7 @@ bool TUCUT::ECS::Application::hasCommand (int identity) const
   return false;
 }
 
-bool TUCUT::ECS::Application::hasCommand (
+bool ECS::Application::hasCommand (
   std::string const & token) const
 {
   auto commandId = getCommandId(token);
@@ -566,7 +565,7 @@ bool TUCUT::ECS::Application::hasCommand (
   return hasCommand(commandId);
 }
 
-void TUCUT::ECS::Application::handleInput ()
+void ECS::Application::handleInput ()
 {
   for (auto const & system: mLoadedSystems)
   {
@@ -577,7 +576,7 @@ void TUCUT::ECS::Application::handleInput ()
   }
 }
 
-void TUCUT::ECS::Application::update (
+void ECS::Application::update (
   TimeResolution elapsedTime)
 {
   for (auto const & system: mLoadedSystems)
@@ -608,7 +607,7 @@ void TUCUT::ECS::Application::update (
   }
 }
 
-void TUCUT::ECS::Application::render ()
+void ECS::Application::render ()
 {
   for (auto const & system: mLoadedSystems)
   {

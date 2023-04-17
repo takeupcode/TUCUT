@@ -8,18 +8,19 @@
 
 #include "../Math/Adjust.h"
 
-std::string const
-TUCUT::Game::MovementComponent::defaultToken =
+using namespace TUCUT;
+
+std::string const Game::MovementComponent::defaultToken =
   "MovementComponent";
 
-std::shared_ptr<TUCUT::Game::MovementComponent>
-TUCUT::Game::MovementComponent::getSharedMovementComponent ()
+std::shared_ptr<Game::MovementComponent>
+Game::MovementComponent::getSharedMovementComponent ()
 {
   return std::static_pointer_cast<MovementComponent>(
     shared_from_this());
 }
 
-void TUCUT::Game::MovementComponent::addDefaultProperties (
+void Game::MovementComponent::addDefaultProperties (
   std::shared_ptr<ECS::Entity> const & entity) const
 {
   if (not entity)
@@ -44,7 +45,7 @@ void TUCUT::Game::MovementComponent::addDefaultProperties (
   group->addValue(zAccelerationDefaultName, defaultFloatValue);
 }
 
-void TUCUT::Game::MovementComponent::removeProperties (
+void Game::MovementComponent::removeProperties (
   std::shared_ptr<ECS::Entity> const & entity) const
 {
   if (not entity)
@@ -55,7 +56,7 @@ void TUCUT::Game::MovementComponent::removeProperties (
   entity->properties().removeGroup(groupName);
 }
 
-double TUCUT::Game::MovementComponent::getFloating (
+double Game::MovementComponent::getFloating (
   std::shared_ptr<ECS::Entity> const & entity,
   int propertyId) const
 {
@@ -119,7 +120,7 @@ double TUCUT::Game::MovementComponent::getFloating (
 }
 
 std::vector<double>
-TUCUT::Game::MovementComponent::getFloatings (
+Game::MovementComponent::getFloatings (
   std::shared_ptr<ECS::Entity> const & entity,
   int propertyId) const
 {
@@ -172,7 +173,7 @@ TUCUT::Game::MovementComponent::getFloatings (
   return result;
 }
 
-void TUCUT::Game::MovementComponent::setFloating (
+void Game::MovementComponent::setFloating (
   std::shared_ptr<ECS::Entity> const & entity,
   int propertyId,
   double value) const
@@ -262,7 +263,7 @@ void TUCUT::Game::MovementComponent::setFloating (
   }
 }
 
-void TUCUT::Game::MovementComponent::setFloatings (
+void Game::MovementComponent::setFloatings (
   std::shared_ptr<ECS::Entity> const & entity,
   int propertyId,
   std::vector<double> const & value) const

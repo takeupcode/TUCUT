@@ -6,32 +6,33 @@
 //
 #include "CodeGeneratorCPP.h"
 
+#include "../Text/TextUtil.h"
+
 #include "CodeGeneratorPrologCPP.cpp"
 #include "CodeGeneratorUtilityCPP.h"
 #include "ProtoBaseTemplateCPP.h"
-
-#include "../Text/TextUtil.h"
 
 #include <filesystem>
 #include <fstream>
 #include <string>
 #include <vector>
 
+using namespace TUCUT;
+
 std::string const
-  TUCUT::Protocol::CodeGeneratorCPP::mHeaderFileExtension =
+  Protocol::CodeGeneratorCPP::mHeaderFileExtension =
   ".protocol.h";
 std::string const
-  TUCUT::Protocol::CodeGeneratorCPP::mSourceFileExtension =
+  Protocol::CodeGeneratorCPP::mSourceFileExtension =
   ".protocol.cpp";
 std::string const
-  TUCUT::Protocol::CodeGeneratorCPP::mBaseClassesNamespace =
+  Protocol::CodeGeneratorCPP::mBaseClassesNamespace =
   "TUCUT::Protocol";
 std::string const
-  TUCUT::Protocol::CodeGeneratorCPP::mBaseClassesFileName =
+  Protocol::CodeGeneratorCPP::mBaseClassesFileName =
   "ProtoBase";
 
-void TUCUT::Protocol::CodeGeneratorCPP::
-generateCode (
+void Protocol::CodeGeneratorCPP::generateCode (
   std::string const & outputFolder,
   ProtoModel const * protoModel,
   std::string const & projectName,
@@ -48,8 +49,7 @@ generateCode (
   }
 }
 
-void TUCUT::Protocol::CodeGeneratorCPP::
-generateHeaderFile (
+void Protocol::CodeGeneratorCPP::generateHeaderFile (
   std::string const & outputFolder,
   ProtoModel const & protoModel,
   std::string const & projectName) const
@@ -81,8 +81,7 @@ generateHeaderFile (
   headerFileWriter.writeHeaderIncludeBlockClosing();
 }
 
-void TUCUT::Protocol::CodeGeneratorCPP::
-generateHeaderFileCommon (
+void Protocol::CodeGeneratorCPP::generateHeaderFileCommon (
   std::string const & outputFolder,
   std::string const & projectName) const
 {
@@ -108,8 +107,7 @@ generateHeaderFileCommon (
   headerFileWriter.writeHeaderIncludeBlockClosing();
 }
 
-void TUCUT::Protocol::CodeGeneratorCPP::
-generateSourceFile (
+void Protocol::CodeGeneratorCPP::generateSourceFile (
   std::string const & outputFolder,
   ProtoModel const & protoModel,
   std::string const &) const
@@ -136,8 +134,7 @@ generateSourceFile (
   writeProtoMessagesToSource(sourceFileWriter, protoModel);
 }
 
-std::string TUCUT::Protocol::CodeGeneratorCPP::
-headerIncludeBlockText (
+std::string Protocol::CodeGeneratorCPP::headerIncludeBlockText (
   ProtoModel const & protoModel,
   std::string const & projectName) const
 {
@@ -154,8 +151,7 @@ headerIncludeBlockText (
   return text;
 }
 
-std::string TUCUT::Protocol::CodeGeneratorCPP::
-headerIncludeBlockText (
+std::string Protocol::CodeGeneratorCPP::headerIncludeBlockText (
   std::string const & headerBaseName,
   std::string const & projectName) const
 {
@@ -171,7 +167,7 @@ headerIncludeBlockText (
   return text;
 }
 
-void TUCUT::Protocol::CodeGeneratorCPP::
+void Protocol::CodeGeneratorCPP::
 writeStandardIncludeFileNamesToHeader (
   CodeWriter & headerFileWriter,
   bool includeBase) const
@@ -194,7 +190,7 @@ writeStandardIncludeFileNamesToHeader (
   }
 }
 
-void TUCUT::Protocol::CodeGeneratorCPP::
+void Protocol::CodeGeneratorCPP::
 writeIncludedProtoFileNamesToHeader (
   CodeWriter & headerFileWriter,
   ProtoModel const & protoModel) const
@@ -219,8 +215,7 @@ writeIncludedProtoFileNamesToHeader (
   }
 }
 
-void TUCUT::Protocol::CodeGeneratorCPP::
-writeProtoEnumsToHeader (
+void Protocol::CodeGeneratorCPP::writeProtoEnumsToHeader (
   CodeWriter & headerFileWriter,
   ProtoModel const & protoModel) const
 {
@@ -259,8 +254,8 @@ writeProtoEnumsToHeader (
   }
 }
 
-void TUCUT::Protocol::CodeGeneratorCPP::
-writeEnumToHeader (CodeWriter & headerFileWriter,
+void Protocol::CodeGeneratorCPP::writeEnumToHeader (
+  CodeWriter & headerFileWriter,
   ProtoModel const &,
   const EnumModel & enumModel,
   std::string const & enumName) const
@@ -290,8 +285,7 @@ writeEnumToHeader (CodeWriter & headerFileWriter,
   headerFileWriter.writeEnumClosing();
 }
 
-void TUCUT::Protocol::CodeGeneratorCPP::
-writeProtoMessagesToHeader (
+void Protocol::CodeGeneratorCPP::writeProtoMessagesToHeader (
   CodeWriter & headerFileWriter,
   ProtoModel const & protoModel) const
 {
@@ -385,7 +379,7 @@ writeProtoMessagesToHeader (
   }
 }
 
-void TUCUT::Protocol::CodeGeneratorCPP::
+void Protocol::CodeGeneratorCPP::
 writeMessageDeclarationToHeader (
   CodeWriter & headerFileWriter,
   ProtoModel const & protoModel,
@@ -410,8 +404,7 @@ writeMessageDeclarationToHeader (
   headerFileWriter.writeClassForwardDeclaration(className);
 }
 
-void TUCUT::Protocol::CodeGeneratorCPP::
-writeMessageEnumToHeader (
+void Protocol::CodeGeneratorCPP::writeMessageEnumToHeader (
   CodeWriter & headerFileWriter,
   ProtoModel const & protoModel,
   MessageModel const & messageModel,
@@ -449,8 +442,7 @@ writeMessageEnumToHeader (
   }
 }
 
-void TUCUT::Protocol::CodeGeneratorCPP::
-writeMessageToHeader (
+void Protocol::CodeGeneratorCPP::writeMessageToHeader (
   CodeWriter & headerFileWriter,
   ProtoModel const & protoModel,
   MessageModel const & messageModel,
@@ -675,7 +667,7 @@ writeMessageToHeader (
   headerFileWriter.writeClassClosing();
 }
 
-void TUCUT::Protocol::CodeGeneratorCPP::
+void Protocol::CodeGeneratorCPP::
 writeMessageConstructorToHeader (
   CodeWriter & headerFileWriter,
   ProtoModel const &,
@@ -691,7 +683,7 @@ writeMessageConstructorToHeader (
   headerFileWriter.writeClassMethodInlineClosing();
 }
 
-void TUCUT::Protocol::CodeGeneratorCPP::
+void Protocol::CodeGeneratorCPP::
 writeMessageCopyConstructorToHeader (
   CodeWriter & headerFileWriter,
   ProtoModel const &,
@@ -708,7 +700,7 @@ writeMessageCopyConstructorToHeader (
   headerFileWriter.writeClassMethodInlineClosing();
 }
 
-void TUCUT::Protocol::CodeGeneratorCPP::
+void Protocol::CodeGeneratorCPP::
 writeMessageDestructorToHeader (
   CodeWriter & headerFileWriter,
   ProtoModel const &,
@@ -723,7 +715,7 @@ writeMessageDestructorToHeader (
   headerFileWriter.writeClassMethodInlineClosing();
 }
 
-void TUCUT::Protocol::CodeGeneratorCPP::
+void Protocol::CodeGeneratorCPP::
 writeMessageAssignmentOperatorToHeader (
   CodeWriter & headerFileWriter,
   ProtoModel const &,
@@ -761,8 +753,7 @@ writeMessageAssignmentOperatorToHeader (
   headerFileWriter.writeClassMethodInlineClosing();
 }
 
-void TUCUT::Protocol::CodeGeneratorCPP::
-writeMessageSwapToHeader (
+void Protocol::CodeGeneratorCPP::writeMessageSwapToHeader (
   CodeWriter & headerFileWriter,
   ProtoModel const &,
   MessageModel const &,
@@ -791,8 +782,7 @@ writeMessageSwapToHeader (
   headerFileWriter.writeClassMethodInlineClosing();
 }
 
-void TUCUT::Protocol::CodeGeneratorCPP::
-writeMessageClearToHeader (
+void Protocol::CodeGeneratorCPP::writeMessageClearToHeader (
   CodeWriter & headerFileWriter,
   ProtoModel const &,
   MessageModel const &,
@@ -810,8 +800,7 @@ writeMessageClearToHeader (
   headerFileWriter.writeClassMethodInlineClosing();
 }
 
-void TUCUT::Protocol::CodeGeneratorCPP::
-writeMessageFieldToHeader (
+void Protocol::CodeGeneratorCPP::writeMessageFieldToHeader (
   CodeWriter & headerFileWriter,
   ProtoModel const & protoModel,
   MessageFieldModel const & messageFieldModel) const
@@ -856,7 +845,7 @@ writeMessageFieldToHeader (
   }
 }
 
-void TUCUT::Protocol::CodeGeneratorCPP::
+void Protocol::CodeGeneratorCPP::
 writeMessageOneofFieldToHeader (
   CodeWriter & headerFileWriter,
   ProtoModel const & protoModel,
@@ -884,7 +873,7 @@ writeMessageOneofFieldToHeader (
     messageFieldModel, &oneofModel);
 }
 
-void TUCUT::Protocol::CodeGeneratorCPP::
+void Protocol::CodeGeneratorCPP::
 writeMessageFieldSizeRepeatedToHeader (
   CodeWriter & headerFileWriter,
   ProtoModel const &,
@@ -907,7 +896,7 @@ writeMessageFieldSizeRepeatedToHeader (
   headerFileWriter.writeClassMethodInlineClosing();
 }
 
-void TUCUT::Protocol::CodeGeneratorCPP::
+void Protocol::CodeGeneratorCPP::
 writeMessageFieldGetRepeatedToHeader (
   CodeWriter & headerFileWriter,
   ProtoModel const &,
@@ -958,7 +947,7 @@ writeMessageFieldGetRepeatedToHeader (
   headerFileWriter.writeClassMethodInlineClosing();
 }
 
-void TUCUT::Protocol::CodeGeneratorCPP::
+void Protocol::CodeGeneratorCPP::
 writeMessageFieldSetRepeatedToHeader (
   CodeWriter & headerFileWriter,
   ProtoModel const &,
@@ -1010,7 +999,7 @@ writeMessageFieldSetRepeatedToHeader (
   headerFileWriter.writeClassMethodInlineClosing();
 }
 
-void TUCUT::Protocol::CodeGeneratorCPP::
+void Protocol::CodeGeneratorCPP::
 writeMessageFieldAddRepeatedToHeader (
   CodeWriter & headerFileWriter,
   ProtoModel const &,
@@ -1061,7 +1050,7 @@ writeMessageFieldAddRepeatedToHeader (
   headerFileWriter.writeClassMethodInlineClosing();
 }
 
-void TUCUT::Protocol::CodeGeneratorCPP::
+void Protocol::CodeGeneratorCPP::
 writeMessageFieldAddNewRepeatedToHeader (
   CodeWriter & headerFileWriter,
   ProtoModel const &,
@@ -1096,7 +1085,7 @@ writeMessageFieldAddNewRepeatedToHeader (
   }
 }
 
-void TUCUT::Protocol::CodeGeneratorCPP::
+void Protocol::CodeGeneratorCPP::
 writeMessageFieldClearRepeatedToHeader (
   CodeWriter & headerFileWriter,
   ProtoModel const &,
@@ -1120,8 +1109,7 @@ writeMessageFieldClearRepeatedToHeader (
   headerFileWriter.writeClassMethodInlineClosing();
 }
 
-void TUCUT::Protocol::CodeGeneratorCPP::
-writeMessageFieldHasToHeader (
+void Protocol::CodeGeneratorCPP::writeMessageFieldHasToHeader (
   CodeWriter & headerFileWriter,
   ProtoModel const &,
   MessageFieldModel const & messageFieldModel,
@@ -1165,8 +1153,7 @@ writeMessageFieldHasToHeader (
   headerFileWriter.writeClassMethodInlineClosing();
 }
 
-void TUCUT::Protocol::CodeGeneratorCPP::
-writeMessageFieldGetToHeader (
+void Protocol::CodeGeneratorCPP::writeMessageFieldGetToHeader (
   CodeWriter & headerFileWriter,
   ProtoModel const &,
   MessageFieldModel const & messageFieldModel,
@@ -1216,8 +1203,7 @@ writeMessageFieldGetToHeader (
   headerFileWriter.writeClassMethodInlineClosing();
 }
 
-void TUCUT::Protocol::CodeGeneratorCPP::
-writeMessageFieldSetToHeader (
+void Protocol::CodeGeneratorCPP::writeMessageFieldSetToHeader (
   CodeWriter & headerFileWriter,
   ProtoModel const &,
   MessageFieldModel const & messageFieldModel,
@@ -1283,7 +1269,7 @@ writeMessageFieldSetToHeader (
   headerFileWriter.writeClassMethodInlineClosing();
 }
 
-void TUCUT::Protocol::CodeGeneratorCPP::
+void Protocol::CodeGeneratorCPP::
 writeMessageFieldCreateNewToHeader (
   CodeWriter & headerFileWriter,
   ProtoModel const &,
@@ -1334,7 +1320,7 @@ writeMessageFieldCreateNewToHeader (
   }
 }
 
-void TUCUT::Protocol::CodeGeneratorCPP::
+void Protocol::CodeGeneratorCPP::
 writeMessageFieldClearToHeader (
   CodeWriter & headerFileWriter,
   ProtoModel const &,
@@ -1388,7 +1374,7 @@ writeMessageFieldClearToHeader (
   headerFileWriter.writeClassMethodInlineClosing();
 }
 
-void TUCUT::Protocol::CodeGeneratorCPP::
+void Protocol::CodeGeneratorCPP::
 writeMessageFieldBackingFieldsToHeader (
   CodeWriter & headerFileWriter,
   ProtoModel const &,
@@ -1417,7 +1403,7 @@ writeMessageFieldBackingFieldsToHeader (
   }
 }
 
-void TUCUT::Protocol::CodeGeneratorCPP::
+void Protocol::CodeGeneratorCPP::
 writeMessageFieldIndexToHeader (
   CodeWriter & headerFileWriter,
   MessageFieldModel const & messageFieldModel) const
@@ -1430,8 +1416,7 @@ writeMessageFieldIndexToHeader (
     std::to_string(messageFieldModel.index()), true);
 }
 
-void TUCUT::Protocol::CodeGeneratorCPP::
-writeOneofToHeader (
+void Protocol::CodeGeneratorCPP::writeOneofToHeader (
   CodeWriter & headerFileWriter,
   ProtoModel const & protoModel,
   OneofModel const & oneofModel) const
@@ -1477,7 +1462,7 @@ writeOneofToHeader (
   }
 }
 
-void TUCUT::Protocol::CodeGeneratorCPP::
+void Protocol::CodeGeneratorCPP::
 writeOneofBackingFieldsToHeader (
   CodeWriter & headerFileWriter,
   ProtoModel const & protoModel,
@@ -1505,7 +1490,7 @@ writeOneofBackingFieldsToHeader (
   }
 }
 
-void TUCUT::Protocol::CodeGeneratorCPP::
+void Protocol::CodeGeneratorCPP::
 writeMessageFieldIndexesToHeader (
   CodeWriter & headerFileWriter,
   OneofModel const & oneofModel) const
@@ -1523,7 +1508,7 @@ writeMessageFieldIndexesToHeader (
   }
 }
 
-void TUCUT::Protocol::CodeGeneratorCPP::
+void Protocol::CodeGeneratorCPP::
 writeMessageOneofCurrentToHeader (
   CodeWriter & headerFileWriter,
   ProtoModel const &,
@@ -1548,7 +1533,7 @@ writeMessageOneofCurrentToHeader (
   headerFileWriter.writeClassMethodInlineClosing();
 }
 
-void TUCUT::Protocol::CodeGeneratorCPP::
+void Protocol::CodeGeneratorCPP::
 writeMessageOneofClearToHeader (
   CodeWriter & headerFileWriter,
   ProtoModel const &,
@@ -1573,8 +1558,7 @@ writeMessageOneofClearToHeader (
   headerFileWriter.writeClassMethodInlineClosing();
 }
 
-void TUCUT::Protocol::CodeGeneratorCPP::
-writeProtoMessagesToSource (
+void Protocol::CodeGeneratorCPP::writeProtoMessagesToSource (
   CodeWriter & sourceFileWriter,
   ProtoModel const & protoModel) const
 {
@@ -1591,8 +1575,7 @@ writeProtoMessagesToSource (
   }
 }
 
-void TUCUT::Protocol::CodeGeneratorCPP::
-writeMessageToSource (
+void Protocol::CodeGeneratorCPP::writeMessageToSource (
   CodeWriter & sourceFileWriter,
   ProtoModel const & protoModel,
   MessageModel const & messageModel,
@@ -1636,7 +1619,7 @@ writeMessageToSource (
     protoModel, messageModel, className, fullScope);
 }
 
-void TUCUT::Protocol::CodeGeneratorCPP::
+void Protocol::CodeGeneratorCPP::
 writeMessageDataConstructorToSource (
   CodeWriter & sourceFileWriter,
   ProtoModel const & protoModel,
@@ -1757,7 +1740,7 @@ writeMessageDataConstructorToSource (
   sourceFileWriter.writeMethodImplementationClosing();
 }
 
-void TUCUT::Protocol::CodeGeneratorCPP::
+void Protocol::CodeGeneratorCPP::
 writeMessageDataFieldInitializationToSource (
   CodeWriter & sourceFileWriter,
   ProtoModel const &,
@@ -1785,7 +1768,7 @@ writeMessageDataFieldInitializationToSource (
   sourceFileWriter.writeLineIndented(statement);
 }
 
-std::string TUCUT::Protocol::CodeGeneratorCPP::
+std::string Protocol::CodeGeneratorCPP::
 messageFieldInitialization (
   MessageFieldModel const & messageFieldModel) const
 {
@@ -1854,8 +1837,7 @@ messageFieldInitialization (
   return fieldInitialization;
 }
 
-void TUCUT::Protocol::CodeGeneratorCPP::
-writeMessageParseToSource (
+void Protocol::CodeGeneratorCPP::writeMessageParseToSource (
   CodeWriter & sourceFileWriter,
   ProtoModel const &,
   MessageModel const & messageModel,
@@ -2060,8 +2042,7 @@ writeMessageParseToSource (
   sourceFileWriter.writeMethodImplementationClosing();
 }
 
-void TUCUT::Protocol::CodeGeneratorCPP::
-writeMessageSerializeToSource (
+void Protocol::CodeGeneratorCPP::writeMessageSerializeToSource (
   CodeWriter & sourceFileWriter,
   ProtoModel const &,
   MessageModel const & messageModel,
@@ -2203,8 +2184,7 @@ writeMessageSerializeToSource (
   sourceFileWriter.writeMethodImplementationClosing();
 }
 
-void TUCUT::Protocol::CodeGeneratorCPP::
-writeMessageByteSizeToSource (
+void Protocol::CodeGeneratorCPP::writeMessageByteSizeToSource (
   CodeWriter & sourceFileWriter,
   ProtoModel const &,
   MessageModel const & messageModel,
@@ -2264,8 +2244,7 @@ writeMessageByteSizeToSource (
   sourceFileWriter.writeMethodImplementationClosing();
 }
 
-void TUCUT::Protocol::CodeGeneratorCPP::
-writeMessageValidToSource (
+void Protocol::CodeGeneratorCPP::writeMessageValidToSource (
   CodeWriter & sourceFileWriter,
   ProtoModel const &,
   MessageModel const & messageModel,
@@ -2310,8 +2289,7 @@ writeMessageValidToSource (
   sourceFileWriter.writeMethodImplementationClosing();
 }
 
-std::string TUCUT::Protocol::CodeGeneratorCPP::
-fullTypeName (
+std::string Protocol::CodeGeneratorCPP::fullTypeName (
   MessageFieldModel const & messageFieldModel) const
 {
   std::string fieldType = messageFieldModel.fieldType();
@@ -2388,8 +2366,7 @@ fullTypeName (
   return fieldType;
 }
 
-std::string TUCUT::Protocol::CodeGeneratorCPP::
-fullTypeNameInternal (
+std::string Protocol::CodeGeneratorCPP::fullTypeNameInternal (
   MessageFieldModel const & messageFieldModel) const
 {
   std::string fieldType = messageFieldModel.fieldType();

@@ -6,6 +6,8 @@
 //
 #include "Input.h"
 
+using namespace TUCUT;
+
 namespace
 {
   template<class... Ts>
@@ -15,13 +17,12 @@ namespace
   };
 }
 
-TUCUT::TUI::Input::Input (
-  Terminal & terminal)
+TUI::Input::Input (Terminal & terminal)
 : mTerminal(terminal),
   mOutput(terminal.output())
 { }
 
-void TUCUT::TUI::Input::handleTimeout ()
+void TUI::Input::handleTimeout ()
 {
   static std::string etx {KeyCodes::EndOfText};
   // We accept an end of text character instead of
@@ -33,8 +34,7 @@ void TUCUT::TUI::Input::handleTimeout ()
   accept(etx);
 }
 
-void TUCUT::TUI::Input::accept (
-  std::string const & utf8)
+void TUI::Input::accept (std::string const & utf8)
 {
   // utf8 contains one or more code units that make
   // up a single Unicode code point. We need to post
@@ -185,18 +185,17 @@ void TUCUT::TUI::Input::accept (
   mMessages.post(event);
 }
 
-void TUCUT::TUI::Input::clearError ()
+void TUI::Input::clearError ()
 {
   mSuccess = true;
 }
 
-TUCUT::TUI::Input::operator bool () const
+TUI::Input::operator bool () const
 {
   return mSuccess;
 }
 
-TUCUT::TUI::Input & TUCUT::TUI::Input::operator >> (
-  int & i)
+TUI::Input & TUI::Input::operator >> (int & i)
 {
   if (not mSuccess)
   {
@@ -216,8 +215,7 @@ TUCUT::TUI::Input & TUCUT::TUI::Input::operator >> (
   return *this;
 }
 
-TUCUT::TUI::Input & TUCUT::TUI::Input::operator >> (
-  unsigned int & ui)
+TUI::Input & TUI::Input::operator >> (unsigned int & ui)
 {
   if (not mSuccess)
   {
@@ -237,8 +235,7 @@ TUCUT::TUI::Input & TUCUT::TUI::Input::operator >> (
   return *this;
 }
 
-TUCUT::TUI::Input & TUCUT::TUI::Input::operator >> (
-  double & d)
+TUI::Input & TUI::Input::operator >> (double & d)
 {
   if (not mSuccess)
   {
@@ -258,8 +255,7 @@ TUCUT::TUI::Input & TUCUT::TUI::Input::operator >> (
   return *this;
 }
 
-TUCUT::TUI::Input & TUCUT::TUI::Input::operator >> (
-  std::string & str)
+TUI::Input & TUI::Input::operator >> (std::string & str)
 {
   if (not mSuccess)
   {
@@ -271,7 +267,7 @@ TUCUT::TUI::Input & TUCUT::TUI::Input::operator >> (
   return *this;
 }
 
-std::stringstream TUCUT::TUI::Input::bufferedRead ()
+std::stringstream TUI::Input::bufferedRead ()
 {
   std::stringstream ss;
   while (true)

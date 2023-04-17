@@ -6,11 +6,12 @@
 //
 #include "Region.h"
 
-void TUCUT::Game::Region::initialize ()
+using namespace TUCUT;
+
+void Game::Region::initialize ()
 { }
 
-std::shared_ptr<TUCUT::Game::Region>
-TUCUT::Game::Region::getSharedRegion ()
+std::shared_ptr<Game::Region> Game::Region::getSharedRegion ()
 {
   return shared_from_this();
 }

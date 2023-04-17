@@ -8,94 +8,96 @@
 
 #include <stdexcept>
 
-std::unique_ptr<TUCUT::ECS::PropertyValue>
-TUCUT::ECS::PropertyValue::createStringPropertyValue (
+using namespace TUCUT;
+
+std::unique_ptr<ECS::PropertyValue>
+ECS::PropertyValue::createStringPropertyValue (
   std::string const & value, bool readOnly)
 {
   return std::unique_ptr<PropertyValue>(
     new StringPropertyValue(value, readOnly));
 }
 
-std::unique_ptr<TUCUT::ECS::PropertyValue>
-TUCUT::ECS::PropertyValue::createIntegerPropertyValue (
+std::unique_ptr<ECS::PropertyValue>
+ECS::PropertyValue::createIntegerPropertyValue (
   int value, bool readOnly)
 {
   return std::unique_ptr<PropertyValue>(
     new IntegerPropertyValue(value, readOnly));
 }
 
-std::unique_ptr<TUCUT::ECS::PropertyValue>
-TUCUT::ECS::PropertyValue::createFloatingPropertyValue (
+std::unique_ptr<ECS::PropertyValue>
+ECS::PropertyValue::createFloatingPropertyValue (
   double value, bool readOnly)
 {
   return std::unique_ptr<PropertyValue>(
     new FloatingPropertyValue(value, readOnly));
 }
 
-std::unique_ptr<TUCUT::ECS::PropertyValue>
-TUCUT::ECS::PropertyValue::createBooleanPropertyValue (
+std::unique_ptr<ECS::PropertyValue>
+ECS::PropertyValue::createBooleanPropertyValue (
   bool value, bool readOnly)
 {
   return std::unique_ptr<PropertyValue>(
     new BooleanPropertyValue(value, readOnly));
 }
 
-bool TUCUT::ECS::PropertyValue::isString () const
+bool ECS::PropertyValue::isString () const
 {
   return false;
 }
 
-bool TUCUT::ECS::PropertyValue::isInteger () const
+bool ECS::PropertyValue::isInteger () const
 {
   return false;
 }
 
-bool TUCUT::ECS::PropertyValue::isFloating () const
+bool ECS::PropertyValue::isFloating () const
 {
   return false;
 }
 
-bool TUCUT::ECS::PropertyValue::isBoolean () const
+bool ECS::PropertyValue::isBoolean () const
 {
   return false;
 }
 
-std::string TUCUT::ECS::PropertyValue::getString () const
+std::string ECS::PropertyValue::getString () const
 {
   throw std::runtime_error("Wrong type of PropertyValue");
 }
 
-int TUCUT::ECS::PropertyValue::getInteger () const
+int ECS::PropertyValue::getInteger () const
 {
   throw std::runtime_error("Wrong type of PropertyValue");
 }
 
-double TUCUT::ECS::PropertyValue::getFloating () const
+double ECS::PropertyValue::getFloating () const
 {
   throw std::runtime_error("Wrong type of PropertyValue");
 }
 
-bool TUCUT::ECS::PropertyValue::getBoolean () const
+bool ECS::PropertyValue::getBoolean () const
 {
   throw std::runtime_error("Wrong type of PropertyValue");
 }
 
-void TUCUT::ECS::PropertyValue::setString (std::string const &)
+void ECS::PropertyValue::setString (std::string const &)
 {
   throw std::runtime_error("Wrong type of PropertyValue");
 }
 
-void TUCUT::ECS::PropertyValue::setInteger (int)
+void ECS::PropertyValue::setInteger (int)
 {
   throw std::runtime_error("Wrong type of PropertyValue");
 }
 
-void TUCUT::ECS::PropertyValue::setFloating (double)
+void ECS::PropertyValue::setFloating (double)
 {
   throw std::runtime_error("Wrong type of PropertyValue");
 }
 
-void TUCUT::ECS::PropertyValue::setBoolean (bool)
+void ECS::PropertyValue::setBoolean (bool)
 {
   throw std::runtime_error("Wrong type of PropertyValue");
 }
