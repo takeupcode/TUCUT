@@ -1,232 +1,291 @@
-//
 //  PositionComponent.cpp
-//  TUCUT (Take Up Code Utility)
+//  TUCUT/Game (Take Up Code Utility)
 //
-//  Created by Abdul Wahid Tanner on 12/5/18.
-//  Copyright © 2018 Take Up Code. All rights reserved.
+//  Created by Abdul Wahid Tanner on 2018-12-05.
+//  Copyright © Take Up Code, Inc.
 //
-
 #include "PositionComponent.h"
+
 #include "../Math/Adjust.h"
 
-namespace TUCUT {
-namespace Game {
+std::string const
+TUCUT::Game::PositionComponent::defaultToken =
+  "PositionComponent";
 
-const std::string PositionComponent::defaultToken = "PositionComponent";
-
-void PositionComponent::initialize ()
+void TUCUT::Game::PositionComponent::initialize ()
 {
-    GameComponent::initialize();
-    
-    Game::GameManager * pGameMgr = Game::GameManager::instance();
-    mPositionChangedActionId = pGameMgr->getOrCreateGameAction(positionChangedToken);
+  ECS::Component::initialize();
+
+  ECS::Application * app = ECS::Application::instance();
+  mPositionChangedActionId =
+    app->getOrCreateAction(positionChangedToken);
 }
 
-std::shared_ptr<PositionComponent> PositionComponent::getSharedPositionComponent ()
+std::shared_ptr<TUCUT::Game::PositionComponent>
+TUCUT::Game::PositionComponent::getSharedPositionComponent ()
 {
-    return std::static_pointer_cast<PositionComponent>(shared_from_this());
+  return std::static_pointer_cast<PositionComponent>(
+    shared_from_this());
 }
 
-void PositionComponent::addDefaultProperties (const std::shared_ptr<GameObject> & object) const
+void TUCUT::Game::PositionComponent::addDefaultProperties (
+  std::shared_ptr<ECS::Entity> const & entity) const
 {
-    if (!object)
-    {
-        return;
-    }
-    
-    auto group = object->properties().addGroup(groupName);
-    
-    double defaultFloatValue = 0.0;
-    group->addValue(xName, defaultFloatValue);
-    group->addValue(yName, defaultFloatValue);
-    group->addValue(zName, defaultFloatValue);
-    group->addValue(xOldName, defaultFloatValue);
-    group->addValue(yOldName, defaultFloatValue);
-    group->addValue(zOldName, defaultFloatValue);
+  if (not entity)
+  {
+    return;
+  }
+
+  auto group = entity->properties().addGroup(groupName);
+
+  double defaultFloatValue = 0.0;
+  group->addValue(xName, defaultFloatValue);
+  group->addValue(yName, defaultFloatValue);
+  group->addValue(zName, defaultFloatValue);
+  group->addValue(xOldName, defaultFloatValue);
+  group->addValue(yOldName, defaultFloatValue);
+  group->addValue(zOldName, defaultFloatValue);
 }
 
-void PositionComponent::removeProperties (const std::shared_ptr<GameObject> & object) const
+void TUCUT::Game::PositionComponent::removeProperties (
+  std::shared_ptr<ECS::Entity> const & entity) const
 {
-    if (!object)
-    {
-        return;
-    }
-    
-    object->properties().removeGroup(groupName);
+  if (not entity)
+  {
+    return;
+  }
+
+  entity->properties().removeGroup(groupName);
 }
 
-double PositionComponent::getFloating (const std::shared_ptr<GameObject> & object, int propertyId) const
+double TUCUT::Game::PositionComponent::getFloating (
+  std::shared_ptr<ECS::Entity> const & entity,
+  int propertyId) const
 {
-    if (!object)
-    {
-        return 0;
-    }
-    
-    switch (propertyId)
-    {
-    case x:
-        return object->properties().getValue(groupName, xName)->getFloating();
-        
-    case y:
-        return object->properties().getValue(groupName, yName)->getFloating();
-        
-    case z:
-        return object->properties().getValue(groupName, zName)->getFloating();
-        
-    case xOld:
-        return object->properties().getValue(groupName, xOldName)->getFloating();
-        
-    case yOld:
-        return object->properties().getValue(groupName, yOldName)->getFloating();
-        
-    case zOld:
-        return object->properties().getValue(groupName, zOldName)->getFloating();
-    }
-    
-    return 0;
+  if (not entity)
+  {
+      return 0;
+  }
+
+  switch (propertyId)
+  {
+  case x:
+    return entity->properties().getValue(
+      groupName, xName)->getFloating();
+
+  case y:
+    return entity->properties().getValue(
+      groupName, yName)->getFloating();
+
+  case z:
+    return entity->properties().getValue(
+      groupName, zName)->getFloating();
+
+  case xOld:
+    return entity->properties().getValue(
+      groupName, xOldName)->getFloating();
+
+  case yOld:
+    return entity->properties().getValue(
+      groupName, yOldName)->getFloating();
+
+  case zOld:
+    return entity->properties().getValue(
+      groupName, zOldName)->getFloating();
+  }
+
+  return 0;
 }
 
-std::vector<double> PositionComponent::getFloatings (const std::shared_ptr<GameObject> & object, int propertyId) const
+std::vector<double>
+TUCUT::Game::PositionComponent::getFloatings (
+  std::shared_ptr<ECS::Entity> const & entity,
+  int propertyId) const
 {
-    std::vector<double> result;
-    
-    if (!object)
-    {
-        return result;
-    }
-    
-    switch (propertyId)
-    {
-    case xyz:
-        result.push_back(object->properties().getValue(groupName, xName)->getFloating());
+  std::vector<double> result;
 
-        result.push_back(object->properties().getValue(groupName, yName)->getFloating());
-        
-        result.push_back(object->properties().getValue(groupName, zName)->getFloating());
-        break;
-        
-    case xyzOld:
-        result.push_back(object->properties().getValue(groupName, xOldName)->getFloating());
-        
-        result.push_back(object->properties().getValue(groupName, yOldName)->getFloating());
-        
-        result.push_back(object->properties().getValue(groupName, zOldName)->getFloating());
-        break;
-    }
-    
+  if (not entity)
+  {
     return result;
+  }
+
+  switch (propertyId)
+  {
+  case xyz:
+    result.push_back(entity->properties().getValue(
+      groupName, xName)->getFloating());
+
+    result.push_back(entity->properties().getValue(
+      groupName, yName)->getFloating());
+
+    result.push_back(entity->properties().getValue(
+      groupName, zName)->getFloating());
+    break;
+
+  case xyzOld:
+    result.push_back(entity->properties().getValue(
+      groupName, xOldName)->getFloating());
+
+    result.push_back(entity->properties().getValue(
+      groupName, yOldName)->getFloating());
+
+    result.push_back(entity->properties().getValue(
+      groupName, zOldName)->getFloating());
+    break;
+  }
+
+  return result;
 }
 
-void PositionComponent::setFloating (const std::shared_ptr<GameObject> & object, int propertyId, double value) const
+void TUCUT::Game::PositionComponent::setFloating (
+  std::shared_ptr<ECS::Entity> const & entity,
+  int propertyId,
+  double value) const
 {
-    if (!object)
-    {
-        return;
-    }
+  if (not entity)
+  {
+    return;
+  }
 
-    Game::GameManager * pGameMgr = Game::GameManager::instance();
+  ECS::Application * app = ECS::Application::instance();
 
-    double old;
-    switch (propertyId)
-    {
-    case x:
-        value = Math::clamp(mMinPosition.x, mMaxPosition.x, value);
-        old = object->properties().getValue(groupName, xName)->getFloating();
-        object->properties().getValue(groupName, xOldName)->setFloating(old);
-        object->properties().getValue(groupName, xName)->setFloating(value);
-            
-        pGameMgr->queueGameAction(object->identity(), mPositionChangedActionId);
-        break;
-        
-    case y:
-        value = Math::clamp(mMinPosition.y, mMaxPosition.y, value);
-        old = object->properties().getValue(groupName, yName)->getFloating();
-        object->properties().getValue(groupName, yOldName)->setFloating(old);
-        object->properties().getValue(groupName, yName)->setFloating(value);
-            
-        pGameMgr->queueGameAction(object->identity(), mPositionChangedActionId);
-        break;
-        
-    case z:
-        value = Math::clamp(mMinPosition.z, mMaxPosition.z, value);
-        old = object->properties().getValue(groupName, zName)->getFloating();
-        object->properties().getValue(groupName, zOldName)->setFloating(old);
-        object->properties().getValue(groupName, zName)->setFloating(value);
-            
-        pGameMgr->queueGameAction(object->identity(), mPositionChangedActionId);
-        break;
-        
-    case xOld:
-        value = Math::clamp(mMinPosition.x, mMaxPosition.x, value);
-        object->properties().getValue(groupName, xOldName)->setFloating(value);
-        break;
-        
-    case yOld:
-        value = Math::clamp(mMinPosition.y, mMaxPosition.y, value);
-        object->properties().getValue(groupName, yOldName)->setFloating(value);
-        break;
-        
-    case zOld:
-        value = Math::clamp(mMinPosition.z, mMaxPosition.z, value);
-        object->properties().getValue(groupName, zOldName)->setFloating(value);
-        break;
-    }
+  double old;
+  switch (propertyId)
+  {
+  case x:
+    value = Math::clamp(mMinPosition.x, mMaxPosition.x, value);
+    old = entity->properties().getValue(
+      groupName, xName)->getFloating();
+    entity->properties().getValue(
+      groupName, xOldName)->setFloating(old);
+    entity->properties().getValue(
+      groupName, xName)->setFloating(value);
+
+    app->queueAction(
+      entity->identity(), mPositionChangedActionId);
+    break;
+
+  case y:
+    value = Math::clamp(mMinPosition.y, mMaxPosition.y, value);
+    old = entity->properties().getValue(
+      groupName, yName)->getFloating();
+    entity->properties().getValue(
+      groupName, yOldName)->setFloating(old);
+    entity->properties().getValue(
+      groupName, yName)->setFloating(value);
+
+    app->queueAction(
+      entity->identity(), mPositionChangedActionId);
+    break;
+
+  case z:
+    value = Math::clamp(mMinPosition.z, mMaxPosition.z, value);
+    old = entity->properties().getValue(
+      groupName, zName)->getFloating();
+    entity->properties().getValue(
+      groupName, zOldName)->setFloating(old);
+    entity->properties().getValue(
+      groupName, zName)->setFloating(value);
+
+    app->queueAction(
+      entity->identity(), mPositionChangedActionId);
+    break;
+
+  case xOld:
+    value = Math::clamp(mMinPosition.x, mMaxPosition.x, value);
+    entity->properties().getValue(
+      groupName, xOldName)->setFloating(value);
+    break;
+
+  case yOld:
+    value = Math::clamp(mMinPosition.y, mMaxPosition.y, value);
+    entity->properties().getValue(
+      groupName, yOldName)->setFloating(value);
+    break;
+
+  case zOld:
+    value = Math::clamp(mMinPosition.z, mMaxPosition.z, value);
+    entity->properties().getValue(
+      groupName, zOldName)->setFloating(value);
+    break;
+  }
 }
 
-void PositionComponent::setFloatings (const std::shared_ptr<GameObject> & object, int propertyId, const std::vector<double> & value) const
+void TUCUT::Game::PositionComponent::setFloatings (
+  std::shared_ptr<ECS::Entity> const & entity,
+  int propertyId,
+  std::vector<double> const & value) const
 {
-    if (!object)
-    {
-        return;
-    }
+  if (not entity || value.size() != 3)
+  {
+    return;
+  }
 
-    Game::GameManager * pGameMgr = Game::GameManager::instance();
+  ECS::Application * app = ECS::Application::instance();
 
-    double old;
-    double singleValue;
-    switch (propertyId)
-    {
-    case xyz:
-        singleValue = Math::clamp(mMinPosition.x, mMaxPosition.x, value[0]);
-        old = object->properties().getValue(groupName, xName)->getFloating();
-        object->properties().getValue(groupName, xOldName)->setFloating(old);
-        object->properties().getValue(groupName, xName)->setFloating(singleValue);
+  double old;
+  double singleValue;
+  switch (propertyId)
+  {
+  case xyz:
+    singleValue = Math::clamp(
+      mMinPosition.x, mMaxPosition.x, value[0]);
+    old = entity->properties().getValue(
+      groupName, xName)->getFloating();
+    entity->properties().getValue(
+      groupName, xOldName)->setFloating(old);
+    entity->properties().getValue(
+      groupName, xName)->setFloating(singleValue);
 
-        singleValue = Math::clamp(mMinPosition.y, mMaxPosition.y, value[1]);
-        old = object->properties().getValue(groupName, yName)->getFloating();
-        object->properties().getValue(groupName, yOldName)->setFloating(old);
-        object->properties().getValue(groupName, yName)->setFloating(singleValue);
+    singleValue = Math::clamp(
+      mMinPosition.y, mMaxPosition.y, value[1]);
+    old = entity->properties().getValue(
+      groupName, yName)->getFloating();
+    entity->properties().getValue(
+      groupName, yOldName)->setFloating(old);
+    entity->properties().getValue(
+      groupName, yName)->setFloating(singleValue);
 
-        singleValue = Math::clamp(mMinPosition.z, mMaxPosition.z, value[2]);
-        old = object->properties().getValue(groupName, zName)->getFloating();
-        object->properties().getValue(groupName, zOldName)->setFloating(old);
-        object->properties().getValue(groupName, zName)->setFloating(singleValue);
-            
-        pGameMgr->queueGameAction(object->identity(), mPositionChangedActionId);
-        break;
-        
-    case xyzOld:
-        singleValue = Math::clamp(mMinPosition.x, mMaxPosition.x, value[0]);
-        object->properties().getValue(groupName, xOldName)->setFloating(singleValue);
+    singleValue = Math::clamp(
+      mMinPosition.z, mMaxPosition.z, value[2]);
+    old = entity->properties().getValue(
+      groupName, zName)->getFloating();
+    entity->properties().getValue(
+      groupName, zOldName)->setFloating(old);
+    entity->properties().getValue(
+      groupName, zName)->setFloating(singleValue);
 
-        singleValue = Math::clamp(mMinPosition.y, mMaxPosition.y, value[1]);
-        object->properties().getValue(groupName, yOldName)->setFloating(singleValue);
+    app->queueAction(
+      entity->identity(), mPositionChangedActionId);
+    break;
 
-        singleValue = Math::clamp(mMinPosition.z, mMaxPosition.z, value[2]);
-        object->properties().getValue(groupName, zOldName)->setFloating(singleValue);
-        break;
-    }
+  case xyzOld:
+    singleValue = Math::clamp(
+      mMinPosition.x, mMaxPosition.x, value[0]);
+    entity->properties().getValue(
+      groupName, xOldName)->setFloating(singleValue);
+
+    singleValue = Math::clamp(
+      mMinPosition.y, mMaxPosition.y, value[1]);
+    entity->properties().getValue(
+      groupName, yOldName)->setFloating(singleValue);
+
+    singleValue = Math::clamp(
+      mMinPosition.z, mMaxPosition.z, value[2]);
+    entity->properties().getValue(
+      groupName, zOldName)->setFloating(singleValue);
+    break;
+  }
 }
 
-void PositionComponent::setMinPosition (const Math::Vector3d & position)
+void TUCUT::Game::PositionComponent::setMinPosition (
+  Math::Vector3d const & position)
 {
     mMinPosition = position;
 }
 
-void PositionComponent::setMaxPosition (const Math::Vector3d & position)
+void TUCUT::Game::PositionComponent::setMaxPosition (
+  Math::Vector3d const & position)
 {
     mMaxPosition = position;
 }
-
-} // namespace Game
-} // namespace TUCUT

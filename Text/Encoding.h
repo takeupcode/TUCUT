@@ -1,3 +1,9 @@
+//  Encoding.h
+//  TUCUT/Text (Take Up Code Utility)
+//
+//  Created by Abdul Wahid Tanner on 2023-04-01.
+//  Copyright © Take Up Code, Inc.
+//
 #ifndef TUCUT_Text_Encoding_h
 #define TUCUT_Text_Encoding_h
 

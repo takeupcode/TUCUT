@@ -1,11 +1,9 @@
-//
 //  Control.cpp
-//  TUCUT (Take Up Code Utility)
+//  TUCUT/TUI (Take Up Code Utility)
 //
-//  Created by Abdul Wahid Tanner on 11/24/17.
-//  Copyright © 2017 Take Up Code. All rights reserved.
+//  Created by Abdul Wahid Tanner on 2017-11-24.
+//  Copyright © Take Up Code, Inc.
 //
-
 #include "Control.h"
 
 namespace TUCUT {
@@ -21,14 +19,14 @@ void Control::onDrawNonClient () const
     {
         return;
     }
-    
+
     if (clientWidth() < 3)
     {
         return;
     }
-    
+
     chtype focusMarker = hasDirectFocus() ? ACS_VLINE : ' ';
-    
+
     setNonClientColor();
     for (int i = 0; i < clientHeight(); ++i)
     {

@@ -1,324 +1,409 @@
+//  Application.h
+//  TUCUT/ECS (Take Up Code Utility)
 //
-//  GameManager.h
-//  TUCUT (Take Up Code Utility)
+//  Created by Abdul Wahid Tanner on 2018-08-19.
+//  Copyright © Take Up Code, Inc.
 //
-//  Created by Abdul Wahid Tanner on 8/19/18.
-//  Copyright © 2018 Take Up Code. All rights reserved.
-//
+#ifndef TUCUT_ECS_Application_h
+#define TUCUT_ECS_Application_h
 
-#ifndef TUCUT_Game_GameManager_h
-#define TUCUT_Game_GameManager_h
+#include "../Event/EventPublisher.h"
+#include "ApplicationTime.h"
+#include "Component.h"
+#include "Entity.h"
+#include "System.h"
 
 #include <memory>
 #include <queue>
-#include <unordered_map>
 #include <stdexcept>
+#include <unordered_map>
 
-#include "GameObject.h"
-#include "GameComponent.h"
-#include "GameSystem.h"
-#include "GameTime.h"
-#include "../Event/EventPublisher.h"
-
-namespace TUCUT {
-namespace Game {
-
-class GameManager
+namespace TUCUT::ECS
 {
-public:
-    const static int GameObjectCreatedEventId = 1;
-    const static int GameObjectRemovingEventId = 2;
-    const static int GameObjectComponentEventId = 3;
-    const static int GameCommandSentEventId = 4;
+  class Application
+  {
+  public:
+    static int const EntityCreatedEventId = 1;
+    static int const EntityRemovingEventId = 2;
+    static int const EntityComponentEventId = 3;
+    static int const CommandSentEventId = 4;
 
-    using GameObjectCreatedEvent = Event::EventPublisher<const std::shared_ptr<GameObject> &>;
-    using GameObjectRemovingEvent = Event::EventPublisher<const std::shared_ptr<GameObject> &>;
-    using GameObjectComponentEvent = Event::EventPublisher<const std::shared_ptr<GameObject> &>;
-    using GameCommandSentEvent = Event::EventPublisher<int, const PropertyGroup &>;
+    using EntityCreatedEvent =
+      Event::EventPublisher<std::shared_ptr<Entity> const &>;
+    using EntityRemovingEvent =
+      Event::EventPublisher<std::shared_ptr<Entity> const &>;
+    using EntityComponentEvent =
+      Event::EventPublisher<std::shared_ptr<Entity> const &>;
+    using CommandSentEvent =
+      Event::EventPublisher<int, PropertyGroup const &>;
 
-    static GameManager * instance ();
-    
+    static Application * instance ();
+
     void initialize ();
-    
+
     void deinitialize ();
-    
-    void play ();
-    
+
+    void run ();
+
     void exit ();
-    
+
     void pause ();
-    
+
     void resume ();
-    
+
     void step ();
 
     template <typename T>
-    std::shared_ptr<GameObject> createGameObject (const std::string & token = "")
+    std::shared_ptr<Entity> createEntity (
+      std::string const & token = "")
     {
-        std::string actualToken = token.empty() ? T::defaultToken : token;
-        
-        // This will be an instance of T but a pointer to the base GameObject class.
-        auto gameObj = std::shared_ptr<GameObject>(new T(actualToken, mNextGameObjectId));
-        
-        gameObj->initialize();
+      std::string actualToken =
+        token.empty() ? T::defaultToken : token;
 
-        auto result = mGameObjects.try_emplace(mNextGameObjectId, gameObj);
-        if (!result.second)
-        {
-            throw std::runtime_error("Unable to create game object");
-        }
-        
-        ++mNextGameObjectId;
-        
-        mGameObjectCreated->signal(gameObj);
-        
-        return gameObj;
-    }
-    
-    template <typename T>
-    std::shared_ptr<GameObject> getGameObject (int identity) const
-    {
-        if (identity < 1)
-        {
-            return nullptr;
-        }
-        
-        auto gameObjectMapResult = mGameObjects.find(identity);
-        if (gameObjectMapResult == mGameObjects.end())
-        {
-            return nullptr;
-        }
-        
-        // Do some extra type checking in case a different T is requested than was originally provided.
-        return std::dynamic_pointer_cast<T>(gameObjectMapResult->second);
+      // This will be an instance of T but a pointer to
+      // the base Entity class.
+      auto entity = std::shared_ptr<Entity>(
+        new T(actualToken, mNextEntityId));
+
+      entity->initialize();
+
+      auto result = mEntities.try_emplace(
+        mNextEntityId, entity);
+      if (not result.second)
+      {
+        throw std::runtime_error(
+          "Unable to create entity");
+      }
+
+      ++mNextEntityId;
+
+      mEntityCreated->signal(entity);
+
+      return entity;
     }
 
-    bool hasGameObject (int identity) const;
-    
-    void removeGameObject (int identity);
-
-    // This method will try to get a component by id and return nullptr if not found.
-    // It will also return nullptr if the requested type T is not correct.
+    // This method will try to get an entity by id and
+    // return nullptr if not found. It will also return
+    // nullptr if the requested type T is not correct.
     template <typename T>
-    std::shared_ptr<T> getGameComponent (int identity) const
+    std::shared_ptr<T> getEntity (int identity) const
     {
-        if (identity < 1)
-        {
-            return nullptr;
-        }
-        
-        if (mLoadedGameComponents.size() > static_cast<std::size_t>(identity))
-        {
-            // Do some extra type checking in case a different T is requested than was originally provided.
-            return std::dynamic_pointer_cast<T>(mLoadedGameComponents[identity]);
-        }
-        
+      std::shared_ptr<Entity> base = getBaseEntity(identity);
+      if (not base)
+      {
         return nullptr;
+      }
+
+      return std::dynamic_pointer_cast<T>(base);
     }
 
-    // This method will try to get a component by token and will create a new component if not found.
-    // It will return nullptr if the requested type T is not correct.
-    template <typename T>
-    std::shared_ptr<T> getOrCreateGameComponent (const std::string & token = "")
+    std::shared_ptr<Entity> getBaseEntity (int identity) const
     {
-        std::string actualToken = token.empty() ? T::defaultToken : token;
-        
-        auto gameComponentId = getGameComponentId(actualToken);
-        if (gameComponentId == 0)
-        {
-            gameComponentId = createGameComponentId(actualToken);
-            // This will be an instance of T but a pointer to the base GameComponent class.
-            auto gameComponent = std::shared_ptr<GameComponent>(new T(actualToken, gameComponentId));
-            
-            gameComponent->initialize();
-
-            mLoadedGameComponents[gameComponentId] = gameComponent;
-            
-            // We can be sure this cast will work.
-            return std::static_pointer_cast<T>(gameComponent);
-        }
-        
-        // Do some extra type checking in case a different T is requested than was originally provided.
-        return std::dynamic_pointer_cast<T>(mLoadedGameComponents[gameComponentId]);
-    }
-
-    int getGameComponentId (const std::string & token) const;
-    
-    bool hasGameComponent (int identity) const;
-
-    bool hasGameComponent (const std::string & token) const;
-
-    // This method will try to get a system by id and return nullptr if not found.
-    // It will also return nullptr if the requested type T is not correct.
-    template <typename T>
-    std::shared_ptr<T> getGameSystem (int identity) const
-    {
-        if (identity < 1)
-        {
-            return nullptr;
-        }
-        
-        if (mLoadedGameSystems.size() > static_cast<std::size_t>(identity))
-        {
-            // Do some extra type checking in case a different T is requested than was originally provided.
-            return std::dynamic_pointer_cast<T>(mLoadedGameSystems[identity]);
-        }
-        
+      if (identity < 1)
+      {
         return nullptr;
+      }
+
+      auto entityMapResult = mEntities.find(identity);
+      if (mEntities.contains(identity))
+      {
+        return mEntities[identity];
+      }
+      return nullptr;
     }
-    
-    // This method will try to get a system by token and will create a new system if not found.
-    // It will return nullptr if the requested type T is not correct.
+
+    bool hasEntity (int identity) const;
+
+    void removeEntity (int identity);
+
+    // This method will try to get a component by id and
+    // return nullptr if not found. It will also return
+    // nullptr if the requested type T is not correct.
     template <typename T>
-    std::shared_ptr<T> getOrCreateGameSystem (const std::string & token = "")
+    std::shared_ptr<T> getComponent (int identity) const
     {
-        std::string actualToken = token.empty() ? T::defaultToken : token;
-        
-        auto gameSystemId = getGameSystemId(actualToken);
-        if (gameSystemId == 0)
+      std::shared_ptr<Component> base =
+        getBaseComponent(identity);
+      if (not base)
+      {
+        return nullptr;
+      }
+
+      return std::dynamic_pointer_cast<T>(base);
+    }
+
+    std::shared_ptr<Component> getBaseComponent (
+      int identity) const
+    {
+      if (identity < 1)
+      {
+        return nullptr;
+      }
+
+      if (mLoadedComponents.size() >
+        static_cast<size_t>(identity))
+      {
+        return mLoadedComponents[identity];
+      }
+
+      return nullptr;
+    }
+
+    // This method will try to get a component by token
+    // and will create a new component if not found.
+    // It will return nullptr if the requested type T
+    // is not correct.
+    template <typename T>
+    std::shared_ptr<T> getOrCreateComponent (
+      std::string const & token = "")
+    {
+      std::string actualToken =
+        token.empty() ? T::defaultToken : token;
+
+      auto componentId = getComponentId(actualToken);
+      if (componentId == 0)
+      {
+        componentId = createComponentId(actualToken);
+        // This will be an instance of T but a pointer
+        // to the base Component class.
+        auto component = std::shared_ptr<Component>(
+          new T(actualToken, componentId));
+
+        component->initialize();
+
+        mLoadedComponents[componentId] = component;
+
+        // We can be sure this cast will work.
+        return std::static_pointer_cast<T>(component);
+      }
+
+      // Do some extra type checking in case a different
+      // T is requested than was originally provided.
+      return std::dynamic_pointer_cast<T>(
+        mLoadedComponents[componentId]);
+    }
+
+    int getComponentId (std::string const & token) const;
+
+    bool hasComponent (int identity) const;
+
+    bool hasComponent (std::string const & token) const;
+
+    // This method will try to get a system by id and
+    // returns nullptr if not found. It will also return
+    // nullptr if the requested type T is not correct.
+    template <typename T>
+    std::shared_ptr<T> getSystem (int identity) const
+    {
+      std::shared_ptr<System> base = getBaseSystem(identity);
+      if (not base)
+      {
+        return nullptr;
+      }
+
+      return std::dynamic_pointer_cast<T>(base);
+    }
+
+    std::shared_ptr<System> getBaseSystem (int identity) const
+    {
+      if (identity < 1)
+      {
+        return nullptr;
+      }
+
+      if (mLoadedSystems.size() > static_cast<size_t>(identity))
+      {
+        return mLoadedSystems[identity];
+      }
+
+      return nullptr;
+    }
+
+    // This method will try to get a system by token
+    // and will create a new system if not found.
+    // It will return nullptr if the requested type T
+    // is not correct.
+    template <typename T>
+    std::shared_ptr<T> getOrCreateSystem (
+      std::string const & token = "")
+    {
+      std::string actualToken =
+        token.empty() ? T::defaultToken : token;
+
+      auto systemId = getSystemId(actualToken);
+      if (systemId == 0)
+      {
+        systemId = createSystemId(actualToken);
+        // This will be an instance of T but a pointer
+        // to the base System class.
+        auto system = std::shared_ptr<System>(
+          new T(actualToken, systemId));
+
+        system->initialize();
+
+        mLoadedSystems[systemId] = system;
+
+        // We can be sure this cast will work.
+        return std::static_pointer_cast<T>(system);
+      }
+
+      // Do some extra type checking in case a different
+      // T is requested than was originally provided.
+      return std::dynamic_pointer_cast<T>(
+        mLoadedSystems[systemId]);
+    }
+
+    int getSystemId (std::string const & token) const;
+
+    bool hasSystem (int identity) const;
+
+    bool hasSystem (std::string const & token) const;
+
+    // This method will try to get an action by id and
+    // return an empty string if not found.
+    std::string getAction (int identity) const;
+
+    // This method will try to get an action by token
+    // and will create a new action if not found.
+    int getOrCreateAction (std::string const & token);
+
+    int getActionId (std::string const & token) const;
+
+    bool hasAction (int identity) const;
+
+    bool hasAction (std::string const & token) const;
+
+    void queueAction (int objectId, int actionId);
+
+    // This method will try to get an ability by id
+    // and return an empty string if not found.
+    std::string getAbility (int identity) const;
+
+    // This method will try to get an ability by token
+    // and will create a new ability if not found.
+    int getOrCreateAbility (std::string const & token);
+
+    int getAbilityId (std::string const & token) const;
+
+    bool hasAbility (int identity) const;
+
+    bool hasAbility (std::string const & token) const;
+
+    // This method will try to get a command by id
+    // and return an empty string if not found.
+    std::string getCommand (int identity) const;
+
+    // This method will try to get a command by token
+    // and will create a new command if not found.
+    int getOrCreateCommand (std::string const & token);
+
+    int getCommandId (std::string const & token) const;
+
+    bool hasCommand (int identity) const;
+
+    bool hasCommand (std::string const & token) const;
+
+    void onEntityComponentChanged (
+      std::shared_ptr<Entity> const & entity) const
+    {
+      if (hasEntity(entity->identity()))
+      {
+        mEntityComponent->signal(entity);
+      }
+    }
+
+    EntityCreatedEvent * entityCreated ()
+    {
+      return mEntityCreated.get();
+    }
+
+    EntityRemovingEvent * entityRemoving ()
+    {
+      return mEntityRemoving.get();
+    }
+
+    EntityComponentEvent * entityComponentChanged ()
+    {
+      return mEntityComponent.get();
+    }
+
+    CommandSentEvent * commandSent (int commandId)
+    {
+      if (not hasCommand(commandId))
+      {
+        return nullptr;
+      }
+
+      auto commandEventMapResult =
+        mCommandEvents.find(commandId);
+      if (commandEventMapResult == mCommandEvents.end())
+      {
+        auto result = mCommandEvents.try_emplace(commandId,
+          std::unique_ptr<CommandSentEvent>(
+            new CommandSentEvent(CommandSentEventId)));
+        if (not result.second)
         {
-            gameSystemId = createGameSystemId(actualToken);
-            // This will be an instance of T but a pointer to the base GameSystem class.
-            auto gameSystem = std::shared_ptr<GameSystem>(new T(actualToken, gameSystemId));
-            
-            gameSystem->initialize();
-            
-            mLoadedGameSystems[gameSystemId] = gameSystem;
-            
-            // We can be sure this cast will work.
-            return std::static_pointer_cast<T>(gameSystem);
+          throw std::runtime_error(
+            "Unable to create command sent event");
         }
-        
-        // Do some extra type checking in case a different T is requested than was originally provided.
-        return std::dynamic_pointer_cast<T>(mLoadedGameSystems[gameSystemId]);
-    }
-    
-    int getGameSystemId (const std::string & token) const;
 
-    bool hasGameSystem (int identity) const;
-    
-    bool hasGameSystem (const std::string & token) const;
+        return result.first->second.get();
+      }
 
-    // This method will try to get an action by id and return an empty string if not found.
-    std::string getGameAction (int identity) const;
-    
-    // This method will try to get an action by token and will create a new action if not found.
-    int getOrCreateGameAction (const std::string & token);
-    
-    int getGameActionId (const std::string & token) const;
-    
-    bool hasGameAction (int identity) const;
-    
-    bool hasGameAction (const std::string & token) const;
-    
-    void queueGameAction (int objectId, int actionId);
-
-    // This method will try to get an ability by id and return an empty string if not found.
-    std::string getGameAbility (int identity) const;
-    
-    // This method will try to get an ability by token and will create a new ability if not found.
-    int getOrCreateGameAbility (const std::string & token);
-    
-    int getGameAbilityId (const std::string & token) const;
-    
-    bool hasGameAbility (int identity) const;
-    
-    bool hasGameAbility (const std::string & token) const;
-
-    // This method will try to get a command by id and return an empty string if not found.
-    std::string getGameCommand (int identity) const;
-    
-    // This method will try to get a command by token and will create a new command if not found.
-    int getOrCreateGameCommand (const std::string & token);
-    
-    int getGameCommandId (const std::string & token) const;
-    
-    bool hasGameCommand (int identity) const;
-    
-    bool hasGameCommand (const std::string & token) const;
-
-    void onGameObjectComponentChanged (const std::shared_ptr<GameObject> & gameObj) const
-    {
-        if (hasGameObject(gameObj->identity()))
-        {
-            mGameObjectComponent->signal(gameObj);
-        }
+      return commandEventMapResult->second.get();
     }
 
-    GameObjectCreatedEvent * gameObjectCreated ()
-    {
-        return mGameObjectCreated.get();
-    }
+  private:
+    // This is a text app and doesn't need a high frame rate.
+    static constexpr int FramesPerSecond = 20;
+    static TimeResolution const FixedFrameTime;
 
-    GameObjectRemovingEvent * gameObjectRemoving ()
-    {
-        return mGameObjectRemoving.get();
-    }
+    using EntityMap = std::unordered_map<
+      int, std::shared_ptr<Entity>>;
+    using ComponentMap = std::unordered_map<std::string, int>;
+    using ComponentVector = std::vector<
+      std::shared_ptr<Component>>;
+    using SystemMap = std::unordered_map<std::string, int>;
+    using SystemVector = std::vector<std::shared_ptr<System>>;
+    using ActionMap = std::unordered_map<std::string, int>;
+    using ActionVector = std::vector<std::string>;
+    using ActionQueue = std::queue<int>;
+    using EntityActionMap = std::unordered_map<
+      int, ActionQueue>;
+    using AbilityMap = std::unordered_map<std::string, int>;
+    using AbilityVector = std::vector<std::string>;
+    using CommandMap = std::unordered_map<std::string, int>;
+    using CommandVector = std::vector<std::string>;
+    using CommandEventMap = std::unordered_map<
+      int, std::unique_ptr<CommandSentEvent>>;
 
-    GameObjectComponentEvent * gameObjectComponentChanged ()
-    {
-        return mGameObjectComponent.get();
-    }
-
-    GameCommandSentEvent * gameCommandSent (int commandId)
-    {
-        if (!hasGameCommand(commandId))
-        {
-            return nullptr;
-        }
-        
-        auto gameCommandEventMapResult = mGameCommandEvents.find(commandId);
-        if (gameCommandEventMapResult == mGameCommandEvents.end())
-        {
-            auto result = mGameCommandEvents.try_emplace(commandId,
-                std::unique_ptr<GameCommandSentEvent>(new GameCommandSentEvent(GameCommandSentEventId)));
-            if (!result.second)
-            {
-                throw std::runtime_error("Unable to create command sent event");
-            }
-            
-            return result.first->second.get();
-        }
-        
-        return gameCommandEventMapResult->second.get();
-    }
-
-private:
-    static constexpr int FramesPerSecond = 20; // This is a text game and doesn't need a high frame rate.
-    static const TimeResolution FixedFrameTime;
-    
-    using GameObjectMap = std::unordered_map<int, std::shared_ptr<GameObject>>;
-    using GameComponentMap = std::unordered_map<std::string, int>;
-    using GameComponentVector = std::vector<std::shared_ptr<GameComponent>>;
-    using GameSystemMap = std::unordered_map<std::string, int>;
-    using GameSystemVector = std::vector<std::shared_ptr<GameSystem>>;
-    using GameActionMap = std::unordered_map<std::string, int>;
-    using GameActionVector = std::vector<std::string>;
-    using GameActionQueue = std::queue<int>;
-    using GameObjectActionMap = std::unordered_map<int, GameActionQueue>;
-    using GameAbilityMap = std::unordered_map<std::string, int>;
-    using GameAbilityVector = std::vector<std::string>;
-    using GameCommandMap = std::unordered_map<std::string, int>;
-    using GameCommandVector = std::vector<std::string>;
-    using GameCommandEventMap = std::unordered_map<int, std::unique_ptr<GameCommandSentEvent>>;
-
-    GameManager ()
-    : mElapsed(0), mFixedFrameTotal(0), mExit(false), mPaused(false),
-    mNextGameObjectId(1), mNextGameComponentId(1), mNextGameSystemId(1),
-    mNextGameActionId(1), mNextGameAbilityId(1), mNextGameCommandId(1),
-    mGameObjectCreated(new GameObjectCreatedEvent(GameObjectCreatedEventId)),
-    mGameObjectRemoving(new GameObjectRemovingEvent(GameObjectRemovingEventId)),
-    mGameObjectComponent(new GameObjectComponentEvent(GameObjectComponentEventId))
+    Application ()
+    : mElapsed(0),
+      mFixedFrameTotal(0),
+      mExit(false),
+      mPaused(false),
+      mNextEntityId(1),
+      mNextComponentId(1),
+      mNextSystemId(1),
+      mNextActionId(1),
+      mNextAbilityId(1),
+      mNextCommandId(1),
+      mEntityCreated(new EntityCreatedEvent(
+        EntityCreatedEventId)),
+      mEntityRemoving(new EntityRemovingEvent(
+        EntityRemovingEventId)),
+      mEntityComponent(new EntityComponentEvent(
+        EntityComponentEventId))
     { }
-    
+
     void loop ();
 
     void processFrame (TimeResolution elapsedTime);
-    
+
     void handleInput ();
 
     void update (TimeResolution elapsedTime);
-    
+
     void render ();
 
     TimeResolution elapsed () const;
@@ -327,15 +412,15 @@ private:
     void completeFixedFrame ();
     void waitForNextFixedFrame ();
 
-    int createGameComponentId (const std::string & token);
-    
-    int createGameSystemId (const std::string & token);
+    int createComponentId (std::string const & token);
 
-    int createGameActionId (const std::string & token);
+    int createSystemId (std::string const & token);
 
-    int createGameAbilityId (const std::string & token);
+    int createActionId (std::string const & token);
 
-    int createGameCommandId (const std::string & token);
+    int createAbilityId (std::string const & token);
+
+    int createCommandId (std::string const & token);
 
     TimePoint mLastTime;
     TimeResolution mElapsed;
@@ -343,31 +428,29 @@ private:
     bool mExit;
     bool mPaused;
 
-    int mNextGameObjectId;
-    int mNextGameComponentId;
-    int mNextGameSystemId;
-    int mNextGameActionId;
-    int mNextGameAbilityId;
-    int mNextGameCommandId;
-    GameObjectMap mGameObjects;
-    GameComponentMap mRegisteredGameComponents;
-    GameComponentVector mLoadedGameComponents;
-    GameSystemMap mRegisteredGameSystems;
-    GameSystemVector mLoadedGameSystems;
-    GameActionMap mRegisteredGameActions;
-    GameActionVector mLoadedGameActions;
-    GameObjectActionMap mGameObjectActions;
-    GameAbilityMap mRegisteredGameAbilities;
-    GameAbilityVector mLoadedGameAbilities;
-    GameCommandMap mRegisteredGameCommands;
-    GameCommandVector mLoadedGameCommands;
-    GameCommandEventMap mGameCommandEvents;
-    std::unique_ptr<GameObjectCreatedEvent> mGameObjectCreated;
-    std::unique_ptr<GameObjectRemovingEvent> mGameObjectRemoving;
-    std::unique_ptr<GameObjectComponentEvent> mGameObjectComponent;
-};
+    int mNextEntityId;
+    int mNextComponentId;
+    int mNextSystemId;
+    int mNextActionId;
+    int mNextAbilityId;
+    int mNextCommandId;
+    EntityMap mEntities;
+    ComponentMap mRegisteredComponents;
+    ComponentVector mLoadedComponents;
+    SystemMap mRegisteredSystems;
+    SystemVector mLoadedSystems;
+    ActionMap mRegisteredActions;
+    ActionVector mLoadedActions;
+    EntityActionMap mEntityActions;
+    AbilityMap mRegisteredGameAbilities;
+    AbilityVector mLoadedGameAbilities;
+    CommandMap mRegisteredCommands;
+    CommandVector mLoadedCommands;
+    CommandEventMap mCommandEvents;
+    std::unique_ptr<EntityCreatedEvent> mEntityCreated;
+    std::unique_ptr<EntityRemovingEvent> mEntityRemoving;
+    std::unique_ptr<EntityComponentEvent> mEntityComponent;
+  };
+} // namespace TUCUT::ECS
 
-} // namespace Game
-} // namespace TUCUT
-
-#endif // TUCUT_Game_GameManager_h
+#endif // TUCUT_ECS_Application_h

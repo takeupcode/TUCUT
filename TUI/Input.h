@@ -1,8 +1,14 @@
+//  Input.h
+//  TUCUT/TUI (Take Up Code Utility)
+//
+//  Created by Abdul Wahid Tanner on 2023-04-01.
+//  Copyright © Take Up Code, Inc.
+//
 #ifndef TUCUT_TUI_Input_h
 #define TUCUT_TUI_Input_h
 
+#include "../Event/MessageQueue.h"
 #include "Event.h"
-#include "MessageQueue.h"
 #include "Terminal.h"
 
 #include <ostream>
@@ -33,7 +39,7 @@ namespace TUCUT::TUI
 
     Terminal & mTerminal;
     std::ostream & mOutput;
-    MessageQueue<Event> mMessages;
+    Event::MessageQueue<Event> mMessages;
     bool mSuccess = true;
   };
 } // namespace TUCUT::TUI

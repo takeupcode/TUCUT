@@ -1,45 +1,45 @@
+//  System.h
+//  TUCUT/ECS (Take Up Code Utility)
 //
-//  GameSystem.h
-//  TUCUT (Take Up Code Utility)
+//  Created by Abdul Wahid Tanner on 2018-11-27.
+//  Copyright © Take Up Code, Inc.
 //
-//  Created by Abdul Wahid Tanner on 11/27/18.
-//  Copyright © 2018 Take Up Code. All rights reserved.
-//
+#ifndef TUCUT_ECS_System_h
+#define TUCUT_ECS_System_h
 
-#ifndef TUCUT_Game_GameSystem_h
-#define TUCUT_Game_GameSystem_h
+#include "../Event/EventSubscriber.h"
+#include "../Identity/Identifiable.h"
+#include "ApplicationTime.h"
+#include "Entity.h"
 
 #include <memory>
 #include <string>
 #include <vector>
 
-#include "GameObject.h"
-#include "GameTime.h"
-#include "../Identity/Identifiable.h"
-#include "../Event/EventSubscriber.h"
-
-namespace TUCUT {
-namespace Game {
-
-class GameSystem : public std::enable_shared_from_this<GameSystem>, public Identity::Identifiable<int>,
-    public Event::EventSubscriber<const std::shared_ptr<GameObject> &>,
-    public Event::EventSubscriber<int, const PropertyGroup &>
+namespace TUCUT::ECS
 {
-public:
-    static const std::string defaultToken;
+  class System : public std::enable_shared_from_this<System>,
+    public Identity::Identifiable<int>,
+    public Event::EventSubscriber<
+      std::shared_ptr<Entity> const &>,
+    public Event::EventSubscriber<int, PropertyGroup const &>
+  {
+  public:
+    static std::string const defaultToken;
 
-    std::shared_ptr<GameSystem> getSharedGameSystem ();
+    std::shared_ptr<System> getSharedSystem ();
 
-    virtual ~GameSystem () = default;
+    virtual ~System () = default;
 
-    bool hasGameObject (int identity) const;
+    bool hasEntity (int identity) const;
 
-protected:
-    friend class GameManager;
+  protected:
+    friend class Application;
 
-    using GameObjectMap = std::unordered_map<int, std::shared_ptr<GameObject>>;
+    using EntityMap =
+      std::unordered_map<int, std::shared_ptr<Entity>>;
 
-    GameSystem (const std::string & token, int identity)
+    System (std::string const & token, int identity)
     : Identifiable(token, identity)
     { }
 
@@ -57,17 +57,18 @@ protected:
     virtual void onAction (int, int)
     { }
 
-    void notify (int id, const std::shared_ptr<GameObject> & gameObject) override;
+    void notify (int id,
+      std::shared_ptr<Entity> const & entity) override;
 
-    void notify (int id, int commandId, const PropertyGroup & commandProperties) override;
+    void notify (int id,
+      int commandId,
+      PropertyGroup const & commandProperties) override;
 
-    GameObjectMap mGameObjects;
+    EntityMap mEntities;
     std::vector<std::string> mRequiredAbilityTokens;
     std::vector<std::string> mRequiredCommandTokens;
     std::vector<std::string> mActionTokens;
-};
+  };
+} // namespace TUCUT::ECS
 
-} // namespace Game
-} // namespace TUCUT
-
-#endif // TUCUT_Game_GameSystem_h
+#endif // TUCUT_ECS_System_h

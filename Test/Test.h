@@ -1,11 +1,9 @@
-//
 //  Test.h
-//  TUCUT (Take Up Code Utility)
+//  TUCUT/Test (Take Up Code Utility)
 //
-//  Created by Abdul Wahid Tanner on 5/13/13.
-//  Copyright © 2017 Take Up Code. All rights reserved.
+//  Created by Abdul Wahid Tanner on 2013-05-13.
+//  Copyright © Take Up Code, Inc.
 //
-
 #ifndef TUCUT_Test_Test_h
 #define TUCUT_Test_Test_h
 

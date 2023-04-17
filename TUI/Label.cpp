@@ -1,11 +1,9 @@
-//
 //  Label.cpp
-//  TUCUT (Take Up Code Utility)
+//  TUCUT/TUI (Take Up Code Utility)
 //
-//  Created by Abdul Wahid Tanner on 11/11/17.
-//  Copyright © 2017 Take Up Code. All rights reserved.
+//  Created by Abdul Wahid Tanner on 2017-11-11.
+//  Copyright © Take Up Code, Inc.
 //
-
 #include "Label.h"
 
 #include "ConsoleManager.h"
@@ -19,7 +17,7 @@ Label::Label (const std::string & name, const std::string & text, int y, int x, 
   mMultiline(multiline)
 {
     setIsDirectFocusPossible(false);
-    
+
     setFillClientArea(false);
 }
 
@@ -31,9 +29,9 @@ void Label::initialize ()
 std::shared_ptr<Label> Label::createSharedLabel (const std::string & name, const std::string & text, int y, int x, int height, int width, int foreColor, int backColor, Justification::Horizontal horizontalJustification, Justification::Vertical verticalJustification, bool multiline)
 {
     auto result = std::shared_ptr<Label>(new Label(name, text, y, x, height, width, foreColor, backColor, horizontalJustification, verticalJustification, multiline));
-    
+
     result->initialize();
-    
+
     return result;
 }
 
@@ -48,7 +46,7 @@ void Label::onDrawClient () const
     {
         return;
     }
-    
+
     if (isMultiline())
     {
         std::vector<ConsoleManager::LineBreakpoint> lineBreakPoints = ConsoleManager::calculateLineBreakpoints (mText, clientWidth());
@@ -58,11 +56,11 @@ void Label::onDrawClient () const
             case Justification::Vertical::top:
                 margin = 0;
                 break;
-                
+
             case Justification::Vertical::center:
                 margin = (clientHeight() - static_cast<int>(lineBreakPoints.size())) / 2;
                 break;
-                
+
             case Justification::Vertical::bottom:
                 margin = clientHeight() - static_cast<int>(lineBreakPoints.size());
                 break;
@@ -71,7 +69,7 @@ void Label::onDrawClient () const
         {
             margin = 0;
         }
-        
+
         int i = 0;
         for (; i < margin; ++i)
         {
@@ -94,7 +92,7 @@ void Label::onDrawClient () const
         ConsoleManager::printMessage(*this, vertCenter, 0, clientWidth(), mText, clientForeColor(), clientBackColor(), mHorizontalJustification, true);
     }
 }
-    
+
 void Label::onDrawNonClient () const
 { }
 

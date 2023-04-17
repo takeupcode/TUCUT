@@ -1,11 +1,9 @@
-//
 //  DisplayBox.h
-//  TUCUT (Take Up Code Utility)
+//  TUCUT/TUI (Take Up Code Utility)
 //
-//  Created by Abdul Wahid Tanner on 8/2/18.
-//  Copyright © 2018 Take Up Code. All rights reserved.
+//  Created by Abdul Wahid Tanner on 2018-08-02.
+//  Copyright © Take Up Code, Inc.
 //
-
 #ifndef TUCUT_Curses_DisplayBox_h
 #define TUCUT_Curses_DisplayBox_h
 
@@ -35,47 +33,47 @@ public:
     using AfterCenterChangedEvent = Event::EventPublisher<WindowSystem *, DisplayBox *, int, int>;
 
     static std::shared_ptr<DisplayBox> createSharedDisplayBox (const std::string & name, char centerChar, int y, int x, int height, int width, int contentHeight, int contentWidth, int foreColor, int backColor, bool autoScrolling = false, bool allowCenterControls = false, int scrollMarginTop = 0, int scrollMarginRight = 0, int scrollMarginBottom = 0, int scrollMarginLeft = 0);
-    
+
     std::shared_ptr<DisplayBox> getSharedDisplayBox ();
-    
+
     bool onKeyPress (WindowSystem * ws, int key) override;
-    
+
     void onMouseEvent (WindowSystem * ws, short id, int y, int x, mmask_t buttonState) override;
-    
+
     void onDrawClient () const override;
-    
+
     int textClientWidth () const;
-    
+
     void setMinHeight (int height) override;
-    
+
     void setMinWidth (int width) override;
-    
+
     char symbol (int y, int x) const;
-    
+
     void setSymbol (char symbol, int y, int x);
-    
+
     void setSymbols (const std::string & symbols, int y);
 
     bool isClickLocationShown () const;
     void showClickLocation (bool show);
-    
+
     int getClickedY () const;
     int getClickedX () const;
 
     int getScrollY () const;
     int getScrollX () const;
-    
+
     bool scrollUp ();
     bool scrollDown ();
     bool scrollLeft ();
     bool scrollRight ();
-    
+
     void ensurePointIsVisible (int y, int x);
     void ensureCenterIsVisible ();
 
     int getCenterY () const;
     int getCenterX () const;
-    
+
     void setCenter (int y, int x);
 
     bool moveCenterUp ();
@@ -84,29 +82,29 @@ public:
     bool moveCenterRight ();
 
     ClickedEvent * clicked ();
-    
+
     ScrollChangedEvent * scrollChanged ();
-    
+
     BeforeCenterChangedEvent * beforeCenterChanged ();
-    
+
     AfterCenterChangedEvent * afterCenterChanged ();
 
 protected:
     DisplayBox (const std::string & name, char centerChar, int y, int x, int height, int width, int contentHeight, int contentWidth, int foreColor, int backColor, bool autoScrolling, bool allowCenterControls, int scrollMarginTop, int scrollMarginRight, int scrollMarginBottom, int scrollMarginLeft);
-    
+
     void initialize () override;
-    
+
 private:
     void notify (int id, WindowSystem * ws, Button * button) override;
-    
+
     void handleClicked (WindowSystem * ws, int y, int x);
-    
+
     void handleScrollChanged (WindowSystem * ws, int y, int x);
-    
+
     void handleBeforeCenterChanged (WindowSystem * ws, int y, int x, bool & cancel);
-    
+
     void handleAfterCenterChanged (WindowSystem * ws, int y, int x);
-    
+
     void verifyY (int y) const;
     void verifyX (int x) const;
     void verifyYX (int y, int x) const;
@@ -153,7 +151,7 @@ private:
     bool mAllowCenterControls;
     bool mShowClickLocation;
 };
-        
+
 } // namespace Curses
 } // namespace TUCUT
 

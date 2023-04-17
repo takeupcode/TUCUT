@@ -1,11 +1,9 @@
-//
 //  ListBox.cpp
-//  TUCUT (Take Up Code Utility)
+//  TUCUT/TUI (Take Up Code Utility)
 //
-//  Created by Abdul Wahid Tanner on 11/24/17.
-//  Copyright © 2017 Take Up Code. All rights reserved.
+//  Created by Abdul Wahid Tanner on 2017-11-24.
+//  Copyright © Take Up Code, Inc.
 //
-
 #include "ListBox.h"
 
 #include <sstream>
@@ -37,32 +35,32 @@ ListBox::ListBox (const std::string & name, const std::vector<std::string> & ite
     {
         throw std::out_of_range("width cannot be less than 3.");
     }
-    
+
     mMinHeight = 4;
     mMinWidth = 3;
-    
+
     setFillClientArea(false);
-    
+
     appendItems(items);
 }
 
 void ListBox::initialize ()
 {
     Control::initialize();
-    
+
     mMoveSelectionUpButton = Button::createSharedButton(moveSelectionUpButtonName, "+", 0, 0, 1, 1, Colors::COLOR_DIM_BLACK, Colors::COLOR_DIM_WHITE, Colors::COLOR_DIM_BLACK, Colors::COLOR_DIM_WHITE);
     mMoveSelectionUpButton->clicked()->connect(windowName, getSharedListBox());
     mMoveSelectionUpButton->setIsDirectFocusPossible(false);
     addControl(mMoveSelectionUpButton);
-    
+
     mMoveSelectionDownButton = Button::createSharedButton(moveSelectionDownButtonName, "-", 0, 0, 1, 1, Colors::COLOR_DIM_BLACK, Colors::COLOR_DIM_WHITE, Colors::COLOR_DIM_BLACK, Colors::COLOR_DIM_WHITE);
     mMoveSelectionDownButton->clicked()->connect(windowName, getSharedListBox());
     mMoveSelectionDownButton->setIsDirectFocusPossible(false);
     addControl(mMoveSelectionDownButton);
-    
+
     mMoveSelectionUpButton->setAnchorTop(0);
     mMoveSelectionUpButton->setAnchorRight(0);
-    
+
     mMoveSelectionDownButton->setAnchorTop(1);
     mMoveSelectionDownButton->setAnchorRight(0);
 }
@@ -70,9 +68,9 @@ void ListBox::initialize ()
 std::shared_ptr<ListBox> ListBox::createSharedListBox (const std::string & name, const std::vector<std::string> & items, int y, int x, int height, int width, int foreColor, int backColor, int selectionForeColor, int selectionBackColor)
 {
     auto result = std::shared_ptr<ListBox>(new ListBox(name, items, y, x, height, width, foreColor, backColor, selectionForeColor, selectionBackColor));
-    
+
     result->initialize();
-    
+
     return result;
 }
 
@@ -87,19 +85,19 @@ bool ListBox::onKeyPress (WindowSystem * ws, int key)
     {
         return false;
     }
-    
+
     switch (key)
     {
         case KEY_UP:
         case KEY_RIGHT:
             moveSelectionUp();
             break;
-            
+
         case KEY_DOWN:
         case KEY_LEFT:
             moveSelectionDown();
             break;
-            
+
         default:
             if (parent())
             {
@@ -107,7 +105,7 @@ bool ListBox::onKeyPress (WindowSystem * ws, int key)
             }
             break;
     }
-    
+
     return true;
 }
 
@@ -117,12 +115,12 @@ void ListBox::onMouseEvent (WindowSystem * ws, short id, int y, int x, mmask_t b
     {
         return;
     }
-    
+
     if (buttonState & BUTTON1_CLICKED)
     {
         int winY = y - clientY();
         int winX = x - clientX();
-        
+
         // Don't move the cursor if the click is in the non-client area.
         if (winX == 0 ||
             winX > textClientWidth())
@@ -130,12 +128,12 @@ void ListBox::onMouseEvent (WindowSystem * ws, short id, int y, int x, mmask_t b
             return;
         }
         int item = winY + mScrollItem;
-        
+
         if (item >= (static_cast<int>(mItems.size())))
         {
             item = static_cast<int>(mItems.size()) - 1;
         }
-        
+
         mSelectionItem = item;
         ensureSelectionIsVisible();
     }
@@ -147,7 +145,7 @@ void ListBox::onDrawClient () const
     {
         return;
     }
-    
+
     int i = 0;
     for (; i < clientHeight(); ++i)
     {
@@ -155,9 +153,9 @@ void ListBox::onDrawClient () const
         {
             break;
         }
-        
+
         std::string itemText = mItems[i + mScrollItem].substr(0, textClientWidth());
-        
+
         if (hasDirectFocus() && mSelectionItem == i + mScrollItem)
         {
             ConsoleManager::printMessage(*this, i, 1, textClientWidth(), itemText, selectionForeColor(), selectionBackColor(), Justification::Horizontal::left, true);
@@ -190,7 +188,7 @@ void ListBox::setMinHeight (int height)
     {
         throw std::out_of_range("height cannot be less than 4.");
     }
-    
+
     mMinHeight = height;
 }
 
@@ -200,7 +198,7 @@ void ListBox::setMinWidth (int width)
     {
         throw std::out_of_range("width cannot be less than 3.");
     }
-    
+
     mMinWidth = width;
 }
 
@@ -240,7 +238,7 @@ std::string ListBox::text (int index) const
     {
         throw std::out_of_range("index out of range.");
     }
-    
+
     return mItems[index];
 }
 
@@ -250,7 +248,7 @@ void ListBox::setText (int index, const std::string & text)
     {
         throw std::out_of_range("index out of range.");
     }
-    
+
     mItems[index] = text;
 }
 
@@ -265,7 +263,7 @@ void ListBox::insertItems (int index, const std::vector<std::string> & items)
     {
         throw std::out_of_range("index out of range.");
     }
-    
+
     mItems.reserve(mItems.size() + items.size());
     mItems.insert(mItems.end() + index, items.begin(), items.end());
 }
@@ -281,7 +279,7 @@ void ListBox::notify (int id, WindowSystem * ws, Button * button)
     {
         return;
     }
-    
+
     if (button->name() == moveSelectionUpButtonName)
     {
         moveSelectionUp();
@@ -302,7 +300,7 @@ void ListBox::moveSelectionUp ()
     if (mSelectionItem > 0)
     {
         --mSelectionItem;
-        
+
         ensureSelectionIsVisible();
     }
 }
@@ -312,7 +310,7 @@ void ListBox::moveSelectionDown ()
     if (mSelectionItem < (static_cast<int>(mItems.size()) - 1))
     {
         ++mSelectionItem;
-        
+
         ensureSelectionIsVisible();
     }
 }

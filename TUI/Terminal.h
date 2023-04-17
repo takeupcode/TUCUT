@@ -1,3 +1,9 @@
+//  Terminal.h
+//  TUCUT/TUI (Take Up Code Utility)
+//
+//  Created by Abdul Wahid Tanner on 2023-03-26.
+//  Copyright © Take Up Code, Inc.
+//
 #ifndef TUCUT_TUI_Terminal_h
 #define TUCUT_TUI_Terminal_h
 

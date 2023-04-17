@@ -1,57 +1,59 @@
-//
 //  PropertyGroup.h
-//  TUCUT (Take Up Code Utility)
+//  TUCUT/ECS (Take Up Code Utility)
 //
-//  Created by Abdul Wahid Tanner on 7/31/18.
-//  Copyright © 2018 Take Up Code. All rights reserved.
+//  Created by Abdul Wahid Tanner on 2018-07-31.
+//  Copyright © Take Up Code, Inc.
 //
+#ifndef TUCUT_ECS_PropertyGroup_h
+#define TUCUT_ECS_PropertyGroup_h
 
-#ifndef TUCUT_Game_PropertyGroup_h
-#define TUCUT_Game_PropertyGroup_h
+#include "PropertyValue.h"
 
 #include <string>
 #include <unordered_map>
 
-#include "PropertyValue.h"
-
-namespace TUCUT {
-namespace Game {
-
-class PropertyGroup
+namespace TUCUT::ECS
 {
-public:
+  class PropertyGroup
+  {
+  public:
     PropertyGroup ();
-    
-    PropertyGroup (const PropertyGroup & src);
-    
+
+    PropertyGroup (PropertyGroup const & src);
+
     PropertyGroup (PropertyGroup && src);
 
     virtual ~PropertyGroup () = default;
-    
+
     std::unique_ptr<PropertyGroup> clone () const;
-    
-    PropertyGroup & operator = (const PropertyGroup & rhs);
+
+    PropertyGroup & operator = (PropertyGroup const & rhs);
     PropertyGroup & operator = (PropertyGroup && rhs);
 
-    bool addValue (const std::string & valueName, const std::string & value, bool readOnly = false);
-    bool addValue (const std::string & valueName, const char * value, bool readOnly = false);
-    bool addValue (const std::string & valueName, int value, bool readOnly = false);
-    bool addValue (const std::string & valueName, double value, bool readOnly = false);
-    bool addValue (const std::string & valueName, bool value, bool readOnly = false);
+    bool addValue (std::string const & valueName,
+      std::string const & value, bool readOnly = false);
+    bool addValue (std::string const & valueName,
+      char const * value, bool readOnly = false);
+    bool addValue (std::string const & valueName,
+      int value, bool readOnly = false);
+    bool addValue (std::string const & valueName,
+      double value, bool readOnly = false);
+    bool addValue (std::string const & valueName,
+      bool value, bool readOnly = false);
 
-    void removeValue (const std::string & valueName);
+    void removeValue (std::string const & valueName);
 
-    PropertyValue * getValue (const std::string & valueName);
+    PropertyValue * getValue (std::string const & valueName);
 
-    const PropertyValue * getValue (const std::string & valueName) const;
+    PropertyValue const * getValue (
+      std::string const & valueName) const;
 
-private:
-    using ValueMap = std::unordered_map<std::string, std::unique_ptr<PropertyValue>>;
-    
+  private:
+    using ValueMap = std::unordered_map<
+      std::string, std::unique_ptr<PropertyValue>>;
+
     std::unique_ptr<ValueMap> mValues;
-};
-    
-} // namespace Game
-} // namespace TUCUT
+  };
+} // namespace TUCUT::ECS
 
-#endif // TUCUT_Game_PropertyGroup_h
+#endif // TUCUT_ECS_PropertyGroup_h

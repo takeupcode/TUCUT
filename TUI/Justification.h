@@ -1,11 +1,9 @@
-//
 //  Justification.h
-//  TUCUT (Take Up Code Utility)
+//  TUCUT/TUI (Take Up Code Utility)
 //
-//  Created by Abdul Wahid Tanner on 11/16/17.
-//  Copyright © 2017 Take Up Code. All rights reserved.
+//  Created by Abdul Wahid Tanner on 2017-11-16.
+//  Copyright © Take Up Code, Inc.
 //
-
 #ifndef TUCUT_Curses_Justification_h
 #define TUCUT_Curses_Justification_h
 
@@ -20,7 +18,7 @@ struct Justification
         center,
         right
     };
-    
+
     enum class Vertical
     {
         top,
@@ -28,7 +26,7 @@ struct Justification
         bottom
     };
 };
-    
+
 } // namespace Curses
 } // namespace TUCUT
 

@@ -1,33 +1,49 @@
-//
 //  IMovementComponent.cpp
-//  TUCUT (Take Up Code Utility)
+//  TUCUT/Game (Take Up Code Utility)
 //
-//  Created by Abdul Wahid Tanner on 12/15/18.
-//  Copyright © 2018 Take Up Code. All rights reserved.
+//  Created by Abdul Wahid Tanner on 2018-12-15.
+//  Copyright © Take Up Code, Inc.
 //
-
 #include "IMovementComponent.h"
 
-namespace TUCUT {
-namespace Game {
-
-const std::string IMovementComponent::groupName = "GameMoveable";
-const std::string IMovementComponent::xyzVelocityName = "xyzVelocity";
-const std::string IMovementComponent::xVelocityName = "xVelocity";
-const std::string IMovementComponent::yVelocityName = "yVelocity";
-const std::string IMovementComponent::zVelocityName = "zVelocity";
-const std::string IMovementComponent::xyzVelocityMaxName = "xyzVelocityMax";
-const std::string IMovementComponent::xVelocityMaxName = "xVelocityMax";
-const std::string IMovementComponent::yVelocityMaxName = "yVelocityMax";
-const std::string IMovementComponent::zVelocityMaxName = "zVelocityMax";
-const std::string IMovementComponent::xyzAccelerationName = "xyzAcceleration";
-const std::string IMovementComponent::xAccelerationName = "xAcceleration";
-const std::string IMovementComponent::yAccelerationName = "yAcceleration";
-const std::string IMovementComponent::zAccelerationName = "zAcceleration";
-const std::string IMovementComponent::xyzAccelerationDefaultName = "xyzAccelerationDefault";
-const std::string IMovementComponent::xAccelerationDefaultName = "xAccelerationDefault";
-const std::string IMovementComponent::yAccelerationDefaultName = "yAccelerationDefault";
-const std::string IMovementComponent::zAccelerationDefaultName = "zAccelerationDefault";
-
-} // namespace Game
-} // namespace TUCUT
+namespace TUCUT::Game
+{
+  std::string const
+    IMovementComponent::groupName = "Moveable";
+  std::string const
+    IMovementComponent::xyzVelocityName = "xyzVelocity";
+  std::string const
+    IMovementComponent::xVelocityName = "xVelocity";
+  std::string const
+    IMovementComponent::yVelocityName = "yVelocity";
+  std::string const
+    IMovementComponent::zVelocityName = "zVelocity";
+  std::string const
+    IMovementComponent::xyzVelocityMaxName = "xyzVelocityMax";
+  std::string const
+    IMovementComponent::xVelocityMaxName = "xVelocityMax";
+  std::string const
+    IMovementComponent::yVelocityMaxName = "yVelocityMax";
+  std::string const
+    IMovementComponent::zVelocityMaxName = "zVelocityMax";
+  std::string const
+    IMovementComponent::xyzAccelerationName = "xyzAcceleration";
+  std::string const
+    IMovementComponent::xAccelerationName = "xAcceleration";
+  std::string const
+    IMovementComponent::yAccelerationName = "yAcceleration";
+  std::string const
+    IMovementComponent::zAccelerationName = "zAcceleration";
+  std::string const
+    IMovementComponent::xyzAccelerationDefaultName =
+      "xyzAccelerationDefault";
+  std::string const
+    IMovementComponent::xAccelerationDefaultName =
+      "xAccelerationDefault";
+  std::string const
+    IMovementComponent::yAccelerationDefaultName =
+      "yAccelerationDefault";
+  std::string const
+    IMovementComponent::zAccelerationDefaultName =
+      "zAccelerationDefault";
+} // namespace TUCUT::Game

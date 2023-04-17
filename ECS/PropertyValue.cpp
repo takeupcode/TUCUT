@@ -1,97 +1,101 @@
-//
 //  PropertyValue.cpp
-//  TUCUT (Take Up Code Utility)
+//  TUCUT/ECS (Take Up Code Utility)
 //
-//  Created by Abdul Wahid Tanner on 7/31/18.
-//  Copyright © 2018 Take Up Code. All rights reserved.
+//  Created by Abdul Wahid Tanner on 2018-07-31.
+//  Copyright © Take Up Code, Inc.
 //
-
 #include "PropertyValue.h"
 
 #include <stdexcept>
 
-namespace TUCUT {
-namespace Game {
-
-std::unique_ptr<PropertyValue> PropertyValue::createStringPropertyValue (const std::string & value, bool readOnly)
+std::unique_ptr<TUCUT::ECS::PropertyValue>
+TUCUT::ECS::PropertyValue::createStringPropertyValue (
+  std::string const & value, bool readOnly)
 {
-    return std::unique_ptr<PropertyValue>(new StringPropertyValue(value, readOnly));
+  return std::unique_ptr<PropertyValue>(
+    new StringPropertyValue(value, readOnly));
 }
 
-std::unique_ptr<PropertyValue> PropertyValue::createIntegerPropertyValue (int value, bool readOnly)
+std::unique_ptr<TUCUT::ECS::PropertyValue>
+TUCUT::ECS::PropertyValue::createIntegerPropertyValue (
+  int value, bool readOnly)
 {
-    return std::unique_ptr<PropertyValue>(new IntegerPropertyValue(value, readOnly));
+  return std::unique_ptr<PropertyValue>(
+    new IntegerPropertyValue(value, readOnly));
 }
 
-std::unique_ptr<PropertyValue> PropertyValue::createFloatingPropertyValue (double value, bool readOnly)
+std::unique_ptr<TUCUT::ECS::PropertyValue>
+TUCUT::ECS::PropertyValue::createFloatingPropertyValue (
+  double value, bool readOnly)
 {
-    return std::unique_ptr<PropertyValue>(new FloatingPropertyValue(value, readOnly));
+  return std::unique_ptr<PropertyValue>(
+    new FloatingPropertyValue(value, readOnly));
 }
 
-std::unique_ptr<PropertyValue> PropertyValue::createBooleanPropertyValue (bool value, bool readOnly)
+std::unique_ptr<TUCUT::ECS::PropertyValue>
+TUCUT::ECS::PropertyValue::createBooleanPropertyValue (
+  bool value, bool readOnly)
 {
-    return std::unique_ptr<PropertyValue>(new BooleanPropertyValue(value, readOnly));
+  return std::unique_ptr<PropertyValue>(
+    new BooleanPropertyValue(value, readOnly));
 }
 
-bool PropertyValue::isString () const
+bool TUCUT::ECS::PropertyValue::isString () const
 {
-    return false;
+  return false;
 }
 
-bool PropertyValue::isInteger () const
+bool TUCUT::ECS::PropertyValue::isInteger () const
 {
-    return false;
+  return false;
 }
 
-bool PropertyValue::isFloating () const
+bool TUCUT::ECS::PropertyValue::isFloating () const
 {
-    return false;
+  return false;
 }
 
-bool PropertyValue::isBoolean () const
+bool TUCUT::ECS::PropertyValue::isBoolean () const
 {
-    return false;
+  return false;
 }
 
-std::string PropertyValue::getString () const
+std::string TUCUT::ECS::PropertyValue::getString () const
 {
-    throw std::runtime_error("Wrong type of PropertyValue");
+  throw std::runtime_error("Wrong type of PropertyValue");
 }
 
-int PropertyValue::getInteger () const
+int TUCUT::ECS::PropertyValue::getInteger () const
 {
-    throw std::runtime_error("Wrong type of PropertyValue");
+  throw std::runtime_error("Wrong type of PropertyValue");
 }
 
-double PropertyValue::getFloating () const
+double TUCUT::ECS::PropertyValue::getFloating () const
 {
-    throw std::runtime_error("Wrong type of PropertyValue");
+  throw std::runtime_error("Wrong type of PropertyValue");
 }
 
-bool PropertyValue::getBoolean () const
+bool TUCUT::ECS::PropertyValue::getBoolean () const
 {
-    throw std::runtime_error("Wrong type of PropertyValue");
+  throw std::runtime_error("Wrong type of PropertyValue");
 }
 
-void PropertyValue::setString (const std::string &)
+void TUCUT::ECS::PropertyValue::setString (std::string const &)
 {
-    throw std::runtime_error("Wrong type of PropertyValue");
+  throw std::runtime_error("Wrong type of PropertyValue");
 }
 
-void PropertyValue::setInteger (int)
+void TUCUT::ECS::PropertyValue::setInteger (int)
 {
-    throw std::runtime_error("Wrong type of PropertyValue");
+  throw std::runtime_error("Wrong type of PropertyValue");
 }
 
-void PropertyValue::setFloating (double)
+void TUCUT::ECS::PropertyValue::setFloating (double)
 {
-    throw std::runtime_error("Wrong type of PropertyValue");
+  throw std::runtime_error("Wrong type of PropertyValue");
 }
 
-void PropertyValue::setBoolean (bool)
+void TUCUT::ECS::PropertyValue::setBoolean (bool)
 {
-    throw std::runtime_error("Wrong type of PropertyValue");
+  throw std::runtime_error("Wrong type of PropertyValue");
 }
-    
-} // namespace Game
-} // namespace TUCUT

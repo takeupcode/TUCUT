@@ -1,210 +1,218 @@
+//  Entity.cpp
+//  TUCUT/ECS (Take Up Code Utility)
 //
-//  GameObject.cpp
-//  TUCUT (Take Up Code Utility)
+//  Created by Abdul Wahid Tanner on 2018-08-19.
+//  Copyright © Take Up Code, Inc.
 //
-//  Created by Abdul Wahid Tanner on 8/19/18.
-//  Copyright © 2018 Take Up Code. All rights reserved.
-//
+#include "Entity.h"
 
-#include "GameObject.h"
-#include "GameComponent.h"
-#include "GameManager.h"
+#include "Application.h"
+#include "Component.h"
 
 #include <algorithm>
 #include <stdexcept>
 
-namespace TUCUT {
-namespace Game {
+std::string const
+TUCUT::ECS::Entity::defaultToken = "Entity";
 
-const std::string GameObject::defaultToken = "GameObject";
-    
-void GameObject::initialize ()
+void TUCUT::ECS::Entity::initialize ()
 { }
 
-std::shared_ptr<GameObject> GameObject::getSharedGameObject ()
+std::shared_ptr<TUCUT::ECS::Entity>
+TUCUT::ECS::Entity::getSharedEntity ()
 {
-    return shared_from_this();
+  return shared_from_this();
 }
-    
-bool GameObject::hasGameComponent (int componentId) const
+
+bool TUCUT::ECS::Entity::hasComponent (int componentId) const
 {
-    if (componentId < 1)
-    {
-        return false;
-    }
-    
-    if (mComponents.size() > static_cast<std::size_t>(componentId))
-    {
-        return mComponents[componentId];
-    }
-    
+  if (componentId < 1)
+  {
     return false;
+  }
+
+  if (mComponents.size() > static_cast<size_t>(componentId))
+  {
+    return mComponents[componentId];
+  }
+
+  return false;
 }
 
-bool GameObject::hasGameComponent (const std::shared_ptr<GameComponent> & component) const
+bool TUCUT::ECS::Entity::hasComponent (
+  std::shared_ptr<Component> const & component) const
 {
-    return hasGameComponent(component->identity());
+  return hasComponent(component->identity());
 }
 
-bool GameObject::addGameComponent (int componentId)
+bool TUCUT::ECS::Entity::addComponent (int componentId)
 {
-    if (componentId < 1)
-    {
-        return false;
-    }
-    
-    Game::GameManager * pGameMgr = Game::GameManager::instance();
-    auto component = pGameMgr->getGameComponent<GameComponent>(componentId);
-    
-    return addGameComponent(component);
-    
+  if (componentId < 1)
+  {
     return false;
+  }
+
+  Application * app = Application::instance();
+  auto component = app->getBaseComponent(componentId);
+
+  return addComponent(component);
+
+  return false;
 }
 
-bool GameObject::addGameComponent (const std::shared_ptr<GameComponent> & component)
+bool TUCUT::ECS::Entity::addComponent (
+  std::shared_ptr<Component> const & component)
 {
-    if (!component)
-    {
-        return false;
-    }
-    
-    auto componentId = component->identity();
-    while (mComponents.size() <= static_cast<std::size_t>(componentId))
-    {
-        mComponents.push_back(false);
-    }
-    
-    if (mComponents[componentId])
-    {
-        return false;
-    }
-    else
-    {
-        Game::GameManager * pGameMgr = Game::GameManager::instance();
-        
-        for (const auto & ability: component->getAbilities())
-        {
-            auto abilityId = pGameMgr->getGameAbilityId(ability);
-            if (abilityId < 1)
-            {
-                throw std::runtime_error("Unable to find registered game ability");
-            }
-            
-            while (mAbilities.size() <= static_cast<std::size_t>(abilityId))
-            {
-                mAbilities.push_back({});
-            }
-            mAbilities[abilityId].push_back(component);
-        }
-        
-        mComponents[componentId] = true;
-        
-        auto object = getSharedGameObject();
-        component->addDefaultProperties(object);
-        
-        pGameMgr->onGameObjectComponentChanged(object);
-    }
-    
-    return true;
-}
+  if (not component)
+  {
+    return false;
+  }
 
-void GameObject::removeGameComponent (int componentId)
-{
-    if (componentId < 1)
-    {
-        return;
-    }
-    
-    Game::GameManager * pGameMgr = Game::GameManager::instance();
-    auto component = pGameMgr->getGameComponent<GameComponent>(componentId);
+  auto componentId = component->identity();
+  while (mComponents.size() <= static_cast<size_t>(componentId))
+  {
+    mComponents.push_back(false);
+  }
 
-    removeGameComponent(component);
-}
+  if (mComponents[componentId])
+  {
+    return false;
+  }
 
-void GameObject::removeGameComponent (const std::shared_ptr<GameComponent> & component)
-{
-    if (!component)
-    {
-        return;
-    }
-    
-    auto componentId = component->identity();
-    if (mComponents.size() > static_cast<std::size_t>(componentId))
-    {
-        if (mComponents[componentId])
-        {
-            Game::GameManager * pGameMgr = Game::GameManager::instance();
-            
-            mComponents[componentId] = false;
-            
-            for (const auto & ability: component->getAbilities())
-            {
-                auto abilityId = pGameMgr->getGameAbilityId(ability);
-                if (abilityId > 0 && mAbilities.size() > static_cast<std::size_t>(abilityId))
-                {
-                    mAbilities[abilityId].erase(std::find(mAbilities[abilityId].begin(), mAbilities[abilityId].end(),
-                                                          component));
-                }
-            }
+  Application * app = Application::instance();
 
-            auto object = getSharedGameObject();
-            component->removeProperties(object);
-            
-            pGameMgr->onGameObjectComponentChanged(object);
-        }
-    }
-}
-    
-bool GameObject::hasGameAbility (int abilityId) const
-{
+  for (auto const & ability: component->getAbilities())
+  {
+    auto abilityId = app->getAbilityId(ability);
     if (abilityId < 1)
     {
-        return false;
+      throw std::runtime_error(
+        "Unable to find registered ability");
     }
-    
-    if (mAbilities.size() > static_cast<std::size_t>(abilityId))
+
+    while (mAbilities.size() <= static_cast<size_t>(abilityId))
     {
-        return !mAbilities[abilityId].empty();
+      mAbilities.push_back({});
     }
-    
-    return false;
+    mAbilities[abilityId].push_back(component);
+  }
+
+  mComponents[componentId] = true;
+
+  auto entity = getSharedEntity();
+  component->addDefaultProperties(entity);
+
+  app->onEntityComponentChanged(entity);
+
+  return true;
 }
 
-bool GameObject::hasGameAbility (const std::string & token) const
+void TUCUT::ECS::Entity::removeComponent (int componentId)
 {
-    Game::GameManager * pGameMgr = Game::GameManager::instance();
-    
-    auto abilityId = pGameMgr->getGameAbilityId(token);
-    
-    return hasGameAbility(abilityId);
+  if (componentId < 1)
+  {
+    return;
+  }
+
+  Application * app = Application::instance();
+  auto component = app->getBaseComponent(componentId);
+
+  removeComponent(component);
 }
-    
-std::shared_ptr<GameComponent> GameObject::getGameComponentFromAbility (int abilityId) const
+
+void TUCUT::ECS::Entity::removeComponent (
+  std::shared_ptr<Component> const & component)
 {
-    if (abilityId < 1)
+  if (not component)
+  {
+    return;
+  }
+
+  auto componentId = component->identity();
+  if (mComponents.size() <= static_cast<size_t>(componentId))
+  {
+    return;
+  }
+
+  if (not mComponents[componentId])
+  {
+    return;
+  }
+
+  Application * app = Application::instance();
+
+  mComponents[componentId] = false;
+
+  for (auto const & ability: component->getAbilities())
+  {
+    auto abilityId = app->getAbilityId(ability);
+    if (abilityId > 0 &&
+      mAbilities.size() > static_cast<size_t>(abilityId))
     {
-        return nullptr;
+      mAbilities[abilityId].erase(
+        std::find(mAbilities[abilityId].begin(),
+          mAbilities[abilityId].end(), component));
     }
-    
-    if (mAbilities.size() > static_cast<std::size_t>(abilityId))
-    {
-        if (!mAbilities[abilityId].empty())
-        {
-            return mAbilities[abilityId].back();
-        }
-    }
-    
+  }
+
+  auto entity = getSharedEntity();
+  component->removeProperties(entity);
+
+  app->onEntityComponentChanged(entity);
+}
+
+bool TUCUT::ECS::Entity::hasAbility (int abilityId) const
+{
+  if (abilityId < 1)
+  {
+    return false;
+  }
+
+  if (mAbilities.size() > static_cast<size_t>(abilityId))
+  {
+    return not mAbilities[abilityId].empty();
+  }
+
+  return false;
+}
+
+bool TUCUT::ECS::Entity::hasAbility (
+  std::string const & token) const
+{
+  Application * app = Application::instance();
+
+  auto abilityId = app->getAbilityId(token);
+
+  return hasAbility(abilityId);
+}
+
+std::shared_ptr<TUCUT::ECS::Component>
+TUCUT::ECS::Entity::getComponentFromAbility (
+  int abilityId) const
+{
+  if (abilityId < 1)
+  {
     return nullptr;
+  }
+
+  if (mAbilities.size() > static_cast<size_t>(abilityId))
+  {
+    if (not mAbilities[abilityId].empty())
+    {
+      return mAbilities[abilityId].back();
+    }
+  }
+
+  return nullptr;
 }
 
-std::shared_ptr<GameComponent> GameObject::getGameComponentFromAbility (const std::string & token) const
+std::shared_ptr<TUCUT::ECS::Component>
+TUCUT::ECS::Entity::getComponentFromAbility (
+  std::string const & token) const
 {
-    Game::GameManager * pGameMgr = Game::GameManager::instance();
-    
-    auto abilityId = pGameMgr->getGameAbilityId(token);
-    
-    return getGameComponentFromAbility(abilityId);
-}
+  Application * app = Application::instance();
 
-} // namespace Game
-} // namespace TUCUT
+  auto abilityId = app->getAbilityId(token);
+
+  return getComponentFromAbility(abilityId);
+}

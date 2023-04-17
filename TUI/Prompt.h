@@ -1,3 +1,9 @@
+//  Prompt.h
+//  TUCUT/TUI (Take Up Code Utility)
+//
+//  Created by Abdul Wahid Tanner on 2017-11-01.
+//  Copyright © Take Up Code, Inc.
+//
 #ifndef TUCUT_TUI_Prompt_h
 #define TUCUT_TUI_Prompt_h
 

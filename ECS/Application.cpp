@@ -1,588 +1,620 @@
+//  Application.cpp
+//  TUCUT/ECS (Take Up Code Utility)
 //
-//  GameManager.cpp
-//  TUCUT (Take Up Code Utility)
+//  Created by Abdul Wahid Tanner on 2018-08-19.
+//  Copyright © Take Up Code, Inc.
 //
-//  Created by Abdul Wahid Tanner on 8/19/18.
-//  Copyright © 2018 Take Up Code. All rights reserved.
-//
-
-#include "GameManager.h"
+#include "Application.h"
 
 #include <stdexcept>
 #include <thread>
 
-namespace TUCUT {
-namespace Game {
+TimeResolution const
+TUCUT::ECS::Application::FixedFrameTime =
+  TimeResolution(TimeResolution::period::den /
+    TUCUT::ECS::Application::FramesPerSecond);
 
-const TimeResolution GameManager::FixedFrameTime =
-    TimeResolution(TimeResolution::period::den / GameManager::FramesPerSecond);
-
-GameManager * GameManager::instance ()
+Application * TUCUT::ECS::Application::instance ()
 {
-    static GameManager * mInstance = nullptr;
-    
-    if (!mInstance)
-    {
-        mInstance = new GameManager();
-    }
-    
-    return mInstance;
+  static Application * mInstance = nullptr;
+
+  if (not mInstance)
+  {
+    mInstance = new Application();
+  }
+
+  return mInstance;
 }
 
-void GameManager::initialize ()
+void TUCUT::ECS::Application::initialize ()
 { }
 
-void GameManager::deinitialize ()
+void TUCUT::ECS::Application::deinitialize ()
 {
-    mGameObjects.clear();
-    mRegisteredGameComponents.clear();
-    mLoadedGameComponents.clear();
-    mRegisteredGameSystems.clear();
-    mLoadedGameSystems.clear();
-    mRegisteredGameActions.clear();
-    mLoadedGameActions.clear();
-    mGameObjectActions.clear();
-    mRegisteredGameAbilities.clear();
-    mLoadedGameAbilities.clear();
-    mRegisteredGameCommands.clear();
-    mLoadedGameCommands.clear();
-    mGameCommandEvents.clear();
+  mEntities.clear();
+  mRegisteredComponents.clear();
+  mLoadedComponents.clear();
+  mRegisteredSystems.clear();
+  mLoadedSystems.clear();
+  mRegisteredActions.clear();
+  mLoadedActions.clear();
+  mEntityActions.clear();
+  mRegisteredAbilities.clear();
+  mLoadedAbilities.clear();
+  mRegisteredCommands.clear();
+  mLoadedCommands.clear();
+  mCommandEvents.clear();
 }
 
-void GameManager::play ()
+void TUCUT::ECS::Application::run ()
 {
-    loop();
+  loop();
 }
 
-void GameManager::exit ()
+void TUCUT::ECS::Application::exit ()
 {
-    mExit = true;
-}
-    
-void GameManager::pause ()
-{
-    mPaused = true;
+  mExit = true;
 }
 
-void GameManager::resume ()
+void TUCUT::ECS::Application::pause ()
 {
-    mPaused = false;
-    loop();
+  mPaused = true;
 }
 
-void GameManager::step ()
+void TUCUT::ECS::Application::resume ()
 {
-    processFrame(FixedFrameTime);
+  mPaused = false;
+  loop();
 }
 
-TimeResolution GameManager::elapsed () const
+void TUCUT::ECS::Application::step ()
 {
-    return mElapsed;
+  processFrame(FixedFrameTime);
 }
 
-void GameManager::restartClock ()
+TUCUT::ECS::TimeResolution
+TUCUT::ECS::Application::elapsed () const
 {
-    auto currentTime = TimeClock::now();
-    mElapsed = std::chrono::duration_cast<TimeResolution>(currentTime - mLastTime);
-    mFixedFrameTotal += mElapsed;
-    mLastTime = currentTime;
+  return mElapsed;
 }
 
-bool GameManager::isFixedFrameReady () const
+void TUCUT::ECS::Application::restartClock ()
 {
-    return mFixedFrameTotal > FixedFrameTime;
+  auto currentTime = TimeClock::now();
+  mElapsed = std::chrono::duration_cast<TimeResolution>(
+    currentTime - mLastTime);
+  mFixedFrameTotal += mElapsed;
+  mLastTime = currentTime;
 }
 
-void GameManager::completeFixedFrame ()
+bool TUCUT::ECS::Application::isFixedFrameReady () const
 {
-    mFixedFrameTotal -= FixedFrameTime;
+  return mFixedFrameTotal > FixedFrameTime;
 }
 
-void GameManager::waitForNextFixedFrame ()
+void TUCUT::ECS::Application::completeFixedFrame ()
 {
-    auto waitDuration = FixedFrameTime - mFixedFrameTotal;
-    if (waitDuration > waitDuration.zero())
+  mFixedFrameTotal -= FixedFrameTime;
+}
+
+void TUCUT::ECS::Application::waitForNextFixedFrame ()
+{
+  auto waitDuration = FixedFrameTime - mFixedFrameTotal;
+  if (waitDuration > waitDuration.zero())
+  {
+    std::this_thread::sleep_for(
+      std::chrono::duration_cast<std::chrono::milliseconds>(
+        waitDuration));
+  }
+}
+
+void TUCUT::ECS::Application::loop ()
+{
+  mLastTime = TimeClock::now();
+
+  while (not mExit && not mPaused)
+  {
+    if (isFixedFrameReady())
     {
-        std::this_thread::sleep_for(std::chrono::duration_cast<std::chrono::milliseconds>(waitDuration));
+      processFrame(elapsed());
+
+      completeFixedFrame();
     }
+    else
+    {
+      waitForNextFixedFrame();
+    }
+    restartClock();
+  }
 }
 
-void GameManager::loop ()
+void TUCUT::ECS::Application::processFrame (
+  TimeResolution elapsedTime)
 {
-    mLastTime = TimeClock::now();
-    
-    while (!mExit && !mPaused)
-    {
-        if (isFixedFrameReady())
-        {
-            processFrame(elapsed());
-            
-            completeFixedFrame();
-        }
-        else
-        {
-            waitForNextFixedFrame();
-        }
-        restartClock();
-    }
+  handleInput();
+  update(elapsedTime);
+  render();
 }
 
-void GameManager::processFrame (TimeResolution elapsedTime)
+int TUCUT::ECS::Application::createComponentId (
+  std::string const & token)
 {
-    handleInput();
-    update(elapsedTime);
-    render();
+  if (token.empty())
+  {
+    throw std::runtime_error("Unable to create component id");
+  }
+
+  mRegisteredComponents[token] = mNextComponentId;
+
+  // Make sure there's always a matching entry in the
+  // loaded components vector.
+  while (mLoadedComponents.size() <= static_cast<size_t>(
+    mNextComponentId))
+  {
+    mLoadedComponents.push_back(nullptr);
+  }
+
+  return mNextComponentId++;
 }
 
-int GameManager::createGameComponentId (const std::string & token)
+int TUCUT::ECS::Application::getComponentId (
+  std::string const & token) const
 {
-    if (token.empty())
-    {
-        throw std::runtime_error("Unable to create game component id");
-    }
-    
-    mRegisteredGameComponents[token] = mNextGameComponentId;
-    
-    // Make sure there's always a matching entry in the loaded components vector.
-    while (mLoadedGameComponents.size() <= static_cast<std::size_t>(mNextGameComponentId))
-    {
-        mLoadedGameComponents.push_back(nullptr);
-    }
+  auto componentMapResult = mRegisteredComponents.find(token);
+  if (componentMapResult == mRegisteredComponents.end())
+  {
+    return 0;
+  }
 
-    return mNextGameComponentId++;
+  return componentMapResult->second;
 }
 
-int GameManager::getGameComponentId (const std::string & token) const
+int TUCUT::ECS::Application::createSystemId (
+  std::string const & token)
 {
-    auto gameComponentMapResult = mRegisteredGameComponents.find(token);
-    if (gameComponentMapResult == mRegisteredGameComponents.end())
-    {
-        return 0;
-    }
-    
-    return gameComponentMapResult->second;
-}
-    
-int GameManager::createGameSystemId (const std::string & token)
-{
-    if (token.empty())
-    {
-        throw std::runtime_error("Unable to create game system id");
-    }
-    
-    mRegisteredGameSystems[token] = mNextGameSystemId;
-    
-    // Make sure there's always a matching entry in the loaded systems vector.
-    while (mLoadedGameSystems.size() <= static_cast<std::size_t>(mNextGameSystemId))
-    {
-        mLoadedGameSystems.push_back(nullptr);
-    }
-    
-    return mNextGameSystemId++;
+  if (token.empty())
+  {
+    throw std::runtime_error("Unable to create system id");
+  }
+
+  mRegisteredSystems[token] = mNextSystemId;
+
+  // Make sure there's always a matching entry in the
+  // loaded systems vector.
+  while (mLoadedSystems.size() <= static_cast<size_t>(
+    mNextSystemId))
+  {
+    mLoadedSystems.push_back(nullptr);
+  }
+
+  return mNextSystemId++;
 }
 
-int GameManager::getGameSystemId (const std::string & token) const
+int TUCUT::ECS::Application::getSystemId (
+  std::string const & token) const
 {
-    auto gameSystemMapResult = mRegisteredGameSystems.find(token);
-    if (gameSystemMapResult == mRegisteredGameSystems.end())
-    {
-        return 0;
-    }
-    
-    return gameSystemMapResult->second;
+  auto systemMapResult = mRegisteredSystems.find(token);
+  if (systemMapResult == mRegisteredSystems.end())
+  {
+    return 0;
+  }
+
+  return systemMapResult->second;
 }
 
-int GameManager::createGameActionId (const std::string & token)
+int TUCUT::ECS::Application::createActionId (
+  std::string const & token)
 {
-    if (token.empty())
-    {
-        throw std::runtime_error("Unable to create game action id");
-    }
-    
-    mRegisteredGameActions[token] = mNextGameActionId;
-    
-    // Make sure there's always a matching entry in the loaded actions vector.
-    while (mLoadedGameActions.size() <= static_cast<std::size_t>(mNextGameActionId))
-    {
-        mLoadedGameActions.push_back("");
-    }
-    
-    return mNextGameActionId++;
+  if (token.empty())
+  {
+    throw std::runtime_error("Unable to create action id");
+  }
+
+  mRegisteredActions[token] = mNextActionId;
+
+  // Make sure there's always a matching entry in the
+  // loaded actions vector.
+  while (mLoadedActions.size() <= static_cast<size_t>(
+    mNextActionId))
+  {
+    mLoadedActions.push_back("");
+  }
+
+  return mNextActionId++;
 }
 
-int GameManager::getGameActionId (const std::string & token) const
+int TUCUT::ECS::Application::getActionId (
+  std::string const & token) const
 {
-    auto gameActionMapResult = mRegisteredGameActions.find(token);
-    if (gameActionMapResult == mRegisteredGameActions.end())
-    {
-        return 0;
-    }
-    
-    return gameActionMapResult->second;
+  auto actionMapResult = mRegisteredActions.find(token);
+  if (actionMapResult == mRegisteredActions.end())
+  {
+    return 0;
+  }
+
+  return actionMapResult->second;
 }
 
-int GameManager::createGameAbilityId (const std::string & token)
+int TUCUT::ECS::Application::createAbilityId (
+  std::string const & token)
 {
-    if (token.empty())
-    {
-        throw std::runtime_error("Unable to create game ability id");
-    }
-    
-    mRegisteredGameAbilities[token] = mNextGameAbilityId;
-    
-    // Make sure there's always a matching entry in the loaded abilities vector.
-    while (mLoadedGameAbilities.size() <= static_cast<std::size_t>(mNextGameAbilityId))
-    {
-        mLoadedGameAbilities.push_back("");
-    }
-    
-    return mNextGameAbilityId++;
+  if (token.empty())
+  {
+    throw std::runtime_error("Unable to create ability id");
+  }
+
+  mRegisteredAbilities[token] = mNextAbilityId;
+
+  // Make sure there's always a matching entry in the
+  // loaded abilities vector.
+  while (mLoadedAbilities.size() <= static_cast<size_t>(
+    mNextAbilityId))
+  {
+    mLoadedAbilities.push_back("");
+  }
+
+  return mNextAbilityId++;
 }
 
-int GameManager::getGameAbilityId (const std::string & token) const
+int TUCUT::ECS::Application::getAbilityId (
+  std::string const & token) const
 {
-    auto gameAbilityMapResult = mRegisteredGameAbilities.find(token);
-    if (gameAbilityMapResult == mRegisteredGameAbilities.end())
-    {
-        return 0;
-    }
-    
-    return gameAbilityMapResult->second;
+  auto abilityMapResult = mRegisteredAbilities.find(token);
+  if (abilityMapResult == mRegisteredAbilities.end())
+  {
+    return 0;
+  }
+
+  return abilityMapResult->second;
 }
 
-int GameManager::createGameCommandId (const std::string & token)
+int TUCUT::ECS::Application::createCommandId (
+  std::string const & token)
 {
-    if (token.empty())
-    {
-        throw std::runtime_error("Unable to create game command id");
-    }
-    
-    mRegisteredGameCommands[token] = mNextGameCommandId;
-    
-    // Make sure there's always a matching entry in the loaded commands vector.
-    while (mLoadedGameCommands.size() <= static_cast<std::size_t>(mNextGameCommandId))
-    {
-        mLoadedGameCommands.push_back("");
-    }
-    
-    return mNextGameCommandId++;
+  if (token.empty())
+  {
+    throw std::runtime_error("Unable to create command id");
+  }
+
+  mRegisteredCommands[token] = mNextCommandId;
+
+  // Make sure there's always a matching entry in the
+  // loaded commands vector.
+  while (mLoadedCommands.size() <= static_cast<size_t>(
+    mNextCommandId))
+  {
+    mLoadedCommands.push_back("");
+  }
+
+  return mNextCommandId++;
 }
 
-int GameManager::getGameCommandId (const std::string & token) const
+int TUCUT::ECS::Application::getCommandId (
+  std::string const & token) const
 {
-    auto gameCommandMapResult = mRegisteredGameCommands.find(token);
-    if (gameCommandMapResult == mRegisteredGameCommands.end())
-    {
-        return 0;
-    }
-    
-    return gameCommandMapResult->second;
+  auto commandMapResult = mRegisteredCommands.find(token);
+  if (commandMapResult == mRegisteredCommands.end())
+  {
+    return 0;
+  }
+
+  return commandMapResult->second;
 }
 
-bool GameManager::hasGameObject (int identity) const
+bool TUCUT::ECS::Application::hasEntity (int identity) const
 {
-    if (identity < 1)
-    {
-        return false;
-    }
-    
-    auto gameObjectMapResult = mGameObjects.find(identity);
-    if (gameObjectMapResult == mGameObjects.end())
-    {
-        return false;
-    }
-    
-    return true;
-}
-
-void GameManager::removeGameObject (int identity)
-{
-    if (identity < 1)
-    {
-        return;
-    }
-    
-    auto gameObjectMapResult = mGameObjects.find(identity);
-    if (gameObjectMapResult != mGameObjects.end())
-    {
-        mGameObjectRemoving->signal(gameObjectMapResult->second);
-        
-        mGameObjects.erase(identity);
-    }
-}
-
-bool GameManager::hasGameComponent (int identity) const
-{
-    if (identity < 1)
-    {
-        return false;
-    }
-    
-    if (mLoadedGameComponents.size() > static_cast<std::size_t>(identity))
-    {
-        return mLoadedGameComponents[identity] != nullptr;
-    }
-    
+  if (identity < 1)
+  {
     return false;
-}
+  }
 
-bool GameManager::hasGameComponent (const std::string & token) const
-{
-    auto gameComponentId = getGameComponentId(token);
-    if (gameComponentId == 0)
-    {
-        return false;
-    }
-    
-    return hasGameComponent(gameComponentId);
-}
-
-bool GameManager::hasGameSystem (int identity) const
-{
-    if (identity < 1)
-    {
-        return false;
-    }
-    
-    if (mLoadedGameSystems.size() > static_cast<std::size_t>(identity))
-    {
-        return mLoadedGameSystems[identity] != nullptr;
-    }
-    
+  auto entityMapResult = mEntities.find(identity);
+  if (entityMapResult == mEntities.end())
+  {
     return false;
+  }
+
+  return true;
 }
 
-bool GameManager::hasGameSystem (const std::string & token) const
+void TUCUT::ECS::Application::removeEntity (int identity)
 {
-    auto gameSystemId = getGameSystemId(token);
-    if (gameSystemId == 0)
-    {
-        return false;
-    }
-    
-    return hasGameSystem(gameSystemId);
+  if (identity < 1)
+  {
+    return;
+  }
+
+  auto entityMapResult = mEntities.find(identity);
+  if (entityMapResult != mEntities.end())
+  {
+    mEntityRemoving->signal(entityMapResult->second);
+
+    mEntities.erase(identity);
+  }
 }
 
-std::string GameManager::getGameAction (int identity) const
+bool TUCUT::ECS::Application::hasComponent (int identity) const
 {
-    if (identity < 1)
-    {
-        return "";
-    }
-    
-    if (mLoadedGameActions.size() > static_cast<std::size_t>(identity))
-    {
-        return mLoadedGameActions[identity];
-    }
-    
+  if (identity < 1)
+  {
+    return false;
+  }
+
+  if (mLoadedComponents.size() > static_cast<size_t>(identity))
+  {
+    return mLoadedComponents[identity] != nullptr;
+  }
+
+  return false;
+}
+
+bool TUCUT::ECS::Application::hasComponent (
+  std::string const & token) const
+{
+  auto componentId = getComponentId(token);
+  if (componentId == 0)
+  {
+    return false;
+  }
+
+  return hasComponent(componentId);
+}
+
+bool TUCUT::ECS::Application::hasSystem (int identity) const
+{
+  if (identity < 1)
+  {
+    return false;
+  }
+
+  if (mLoadedSystems.size() > static_cast<size_t>(identity))
+  {
+    return mLoadedSystems[identity] != nullptr;
+  }
+
+  return false;
+}
+
+bool TUCUT::ECS::Application::hasSystem (
+  std::string const & token) const
+{
+  auto systemId = getSystemId(token);
+  if (systemId == 0)
+  {
+    return false;
+  }
+
+  return hasSystem(systemId);
+}
+
+std::string TUCUT::ECS::Application::getAction (
+  int identity) const
+{
+  if (identity < 1)
+  {
     return "";
+  }
+
+  if (mLoadedActions.size() > static_cast<size_t>(identity))
+  {
+    return mLoadedActions[identity];
+  }
+
+  return "";
 }
 
-int GameManager::getOrCreateGameAction (const std::string & token)
+int TUCUT::ECS::Application::getOrCreateAction (
+  std::string const & token)
 {
-    auto gameActionId = getGameActionId(token);
-    if (gameActionId == 0)
-    {
-        gameActionId = createGameActionId(token);
-        mLoadedGameActions[gameActionId] = token;
-    }
-    
-    return gameActionId;
+  auto actionId = getActionId(token);
+  if (actionId == 0)
+  {
+    actionId = createActionId(token);
+    mLoadedActions[actionId] = token;
+  }
+
+  return actionId;
 }
 
-bool GameManager::hasGameAction (int identity) const
+bool TUCUT::ECS::Application::hasAction (int identity) const
 {
-    if (identity < 1)
-    {
-        return false;
-    }
-    
-    if (mLoadedGameActions.size() > static_cast<std::size_t>(identity))
-    {
-        return !mLoadedGameActions[identity].empty();
-    }
-    
+  if (identity < 1)
+  {
     return false;
+  }
+
+  if (mLoadedActions.size() > static_cast<size_t>(identity))
+  {
+    return not mLoadedActions[identity].empty();
+  }
+
+  return false;
 }
 
-bool GameManager::hasGameAction (const std::string & token) const
+bool TUCUT::ECS::Application::hasAction (
+  std::string const & token) const
 {
-    auto gameActionId = getGameActionId(token);
-    if (gameActionId == 0)
-    {
-        return false;
-    }
-    
-    return hasGameAction(gameActionId);
+  auto actionId = getActionId(token);
+  if (actionId == 0)
+  {
+    return false;
+  }
+
+  return hasAction(actionId);
 }
 
-void GameManager::queueGameAction (int objectId, int actionId)
+void TUCUT::ECS::Application::queueAction (
+  int objectId, int actionId)
 {
-    if (objectId < 1 || actionId < 1)
-    {
-        return;
-    }
+  if (objectId < 1 || actionId < 1)
+  {
+    return;
+  }
 
-    mGameObjectActions[objectId].push(actionId);
+  mEntityActions[objectId].push(actionId);
 }
 
-std::string GameManager::getGameAbility (int identity) const
+std::string TUCUT::ECS::Application::getAbility (
+  int identity) const
 {
-    if (identity < 1)
-    {
-        return "";
-    }
-    
-    if (mLoadedGameAbilities.size() > static_cast<std::size_t>(identity))
-    {
-        return mLoadedGameAbilities[identity];
-    }
-    
+  if (identity < 1)
+  {
     return "";
+  }
+
+  if (mLoadedAbilities.size() > static_cast<size_t>(identity))
+  {
+    return mLoadedAbilities[identity];
+  }
+
+  return "";
 }
 
-int GameManager::getOrCreateGameAbility (const std::string & token)
+int TUCUT::ECS::Application::getOrCreateAbility (
+  std::string const & token)
 {
-    auto gameAbilityId = getGameAbilityId(token);
-    if (gameAbilityId == 0)
-    {
-        gameAbilityId = createGameAbilityId(token);
-        mLoadedGameAbilities[gameAbilityId] = token;
-    }
-    
-    return gameAbilityId;
+  auto abilityId = getAbilityId(token);
+  if (abilityId == 0)
+  {
+    abilityId = createAbilityId(token);
+    mLoadedAbilities[abilityId] = token;
+  }
+
+  return abilityId;
 }
 
-bool GameManager::hasGameAbility (int identity) const
+bool TUCUT::ECS::Application::hasAbility (int identity) const
 {
-    if (identity < 1)
-    {
-        return false;
-    }
-    
-    if (mLoadedGameAbilities.size() > static_cast<std::size_t>(identity))
-    {
-        return !mLoadedGameAbilities[identity].empty();
-    }
-    
+  if (identity < 1)
+  {
     return false;
+  }
+
+  if (mLoadedAbilities.size() > static_cast<size_t>(identity))
+  {
+    return not mLoadedAbilities[identity].empty();
+  }
+
+  return false;
 }
 
-bool GameManager::hasGameAbility (const std::string & token) const
+bool TUCUT::ECS::Application::hasAbility (
+  std::string const & token) const
 {
-    auto gameAbilityId = getGameAbilityId(token);
-    if (gameAbilityId == 0)
-    {
-        return false;
-    }
-    
-    return hasGameAbility(gameAbilityId);
+  auto abilityId = getAbilityId(token);
+  if (abilityId == 0)
+  {
+    return false;
+  }
+
+  return hasAbility(abilityId);
 }
 
-std::string GameManager::getGameCommand (int identity) const
+std::string TUCUT::ECS::Application::getCommand (
+  int identity) const
 {
-    if (identity < 1)
-    {
-        return "";
-    }
-    
-    if (mLoadedGameCommands.size() > static_cast<std::size_t>(identity))
-    {
-        return mLoadedGameCommands[identity];
-    }
-    
+  if (identity < 1)
+  {
     return "";
+  }
+
+  if (mLoadedCommands.size() > static_cast<size_t>(identity))
+  {
+    return mLoadedCommands[identity];
+  }
+
+  return "";
 }
 
-int GameManager::getOrCreateGameCommand (const std::string & token)
+int TUCUT::ECS::Application::getOrCreateCommand (
+  std::string const & token)
 {
-    auto gameCommandId = getGameCommandId(token);
-    if (gameCommandId == 0)
-    {
-        gameCommandId = createGameCommandId(token);
-        mLoadedGameCommands[gameCommandId] = token;
-    }
-    
-    return gameCommandId;
+  auto commandId = getCommandId(token);
+  if (commandId == 0)
+  {
+    commandId = createCommandId(token);
+    mLoadedCommands[commandId] = token;
+  }
+
+  return commandId;
 }
 
-bool GameManager::hasGameCommand (int identity) const
+bool TUCUT::ECS::Application::hasCommand (int identity) const
 {
-    if (identity < 1)
-    {
-        return false;
-    }
-    
-    if (mLoadedGameCommands.size() > static_cast<std::size_t>(identity))
-    {
-        return !mLoadedGameCommands[identity].empty();
-    }
-    
+  if (identity < 1)
+  {
     return false;
+  }
+
+  if (mLoadedCommands.size() > static_cast<size_t>(identity))
+  {
+    return not mLoadedCommands[identity].empty();
+  }
+
+  return false;
 }
 
-bool GameManager::hasGameCommand (const std::string & token) const
+bool TUCUT::ECS::Application::hasCommand (
+  std::string const & token) const
 {
-    auto gameCommandId = getGameCommandId(token);
-    if (gameCommandId == 0)
-    {
-        return false;
-    }
-    
-    return hasGameCommand(gameCommandId);
+  auto commandId = getCommandId(token);
+  if (commandId == 0)
+  {
+    return false;
+  }
+
+  return hasCommand(commandId);
 }
 
-void GameManager::handleInput ()
+void TUCUT::ECS::Application::handleInput ()
 {
-    for (const auto & gameSystem: mLoadedGameSystems)
+  for (auto const & system: mLoadedSystems)
+  {
+    if (system)
     {
-        if (gameSystem)
-        {
-            gameSystem->handleInput();
-        }
+      system->handleInput();
     }
-}
-    
-void GameManager::update (TimeResolution elapsedTime)
-{
-    for (const auto & gameSystem: mLoadedGameSystems)
-    {
-        if (gameSystem)
-        {
-            gameSystem->update(elapsedTime);
-        }
-    }
-    
-    auto actionQueueIter = mGameObjectActions.begin();
-    while (actionQueueIter != mGameObjectActions.end())
-    {
-        while (!actionQueueIter->second.empty())
-        {
-            int actionId = actionQueueIter->second.front();
-            for (const auto & gameSystem: mLoadedGameSystems)
-            {
-                if (gameSystem)
-                {
-                    gameSystem->onAction(actionQueueIter->first, actionId);
-                }
-            }
-            actionQueueIter->second.pop();
-        }
-        mGameObjectActions.erase(actionQueueIter);
-        actionQueueIter = mGameObjectActions.begin();
-    }
+  }
 }
 
-void GameManager::render ()
+void TUCUT::ECS::Application::update (
+  TimeResolution elapsedTime)
 {
-    for (const auto & gameSystem: mLoadedGameSystems)
+  for (auto const & system: mLoadedSystems)
+  {
+    if (system)
     {
-        if (gameSystem)
-        {
-            gameSystem->render();
-        }
+      system->update(elapsedTime);
     }
+  }
+
+  auto actionQueueIter = mEntityActions.begin();
+  while (actionQueueIter != mEntityActions.end())
+  {
+    while (not actionQueueIter->second.empty())
+    {
+      int actionId = actionQueueIter->second.front();
+      for (auto const & system: mLoadedSystems)
+      {
+        if (system)
+        {
+          system->onAction(actionQueueIter->first, actionId);
+        }
+      }
+      actionQueueIter->second.pop();
+    }
+    mEntityActions.erase(actionQueueIter);
+    actionQueueIter = mEntityActions.begin();
+  }
 }
 
-} // namespace Game
-} // namespace TUCUT
+void TUCUT::ECS::Application::render ()
+{
+  for (auto const & system: mLoadedSystems)
+  {
+    if (system)
+    {
+      system->render();
+    }
+  }
+}

@@ -1,26 +1,32 @@
-//
 //  IPositionComponent.cpp
-//  TUCUT (Take Up Code Utility)
+//  TUCUT/Game (Take Up Code Utility)
 //
-//  Created by Abdul Wahid Tanner on 12/15/18.
-//  Copyright © 2018 Take Up Code. All rights reserved.
+//  Created by Abdul Wahid Tanner on 2018-12-15.
+//  Copyright © Take Up Code, Inc.
 //
-
 #include "IPositionComponent.h"
 
-namespace TUCUT {
-namespace Game {
-    
-const std::string IPositionComponent::groupName = "GamePosition";
-const std::string IPositionComponent::xyzName = "xyz";
-const std::string IPositionComponent::xName = "x";
-const std::string IPositionComponent::yName = "y";
-const std::string IPositionComponent::zName = "z";
-const std::string IPositionComponent::xyzOldName = "xyzOld";
-const std::string IPositionComponent::xOldName = "xOld";
-const std::string IPositionComponent::yOldName = "yOld";
-const std::string IPositionComponent::zOldName = "zOld";
-const std::string IPositionComponent::positionChangedToken = "GamePositionChanged";
-    
-} // namespace Game
-} // namespace TUCUT
+namespace TUCUT::Game
+{
+  std::string const
+    IPositionComponent::groupName = "Position";
+  std::string const
+    IPositionComponent::xyzName = "xyz";
+  std::string const
+    IPositionComponent::xName = "x";
+  std::string const
+    IPositionComponent::yName = "y";
+  std::string const
+    IPositionComponent::zName = "z";
+  std::string const
+    IPositionComponent::xyzOldName = "xyzOld";
+  std::string const
+    IPositionComponent::xOldName = "xOld";
+  std::string const
+    IPositionComponent::yOldName = "yOld";
+  std::string const
+    IPositionComponent::zOldName = "zOld";
+  std::string const
+    IPositionComponent::positionChangedToken =
+      "PositionChanged";
+} // namespace TUCUT::Game

@@ -1,3 +1,9 @@
+//  Terminal.cpp
+//  TUCUT/TUI (Take Up Code Utility)
+//
+//  Created by Abdul Wahid Tanner on 2023-03-26.
+//  Copyright © Take Up Code, Inc.
+//
 #include "Terminal.h"
 
 #include "../Text/Encoding.h"

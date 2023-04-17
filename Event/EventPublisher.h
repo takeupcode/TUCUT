@@ -1,166 +1,168 @@
-//
 //  EventPublisher.h
-//  TUCUT (Take Up Code Utility)
+//  TUCUT/Event (Take Up Code Utility)
 //
-//  Created by Abdul Wahid Tanner on 7/24/16.
-//  Copyright © 2016 Take Up Code. All rights reserved.
+//  Created by Abdul Wahid Tanner on 2016-07-24.
+//  Copyright © Take Up Code, Inc.
 //
-
 #ifndef TUCUT_Event_EventPublisher_h
 #define TUCUT_Event_EventPublisher_h
 
-#include <unordered_map>
-#include <memory>
-#include <string>
-#include <vector>
-
 #include "EventSubscriber.h"
 
-namespace TUCUT {
-namespace Event {
-    
-template <typename... Args>
-class EventPublisher
+#include <memory>
+#include <string>
+#include <unordered_map>
+#include <vector>
+
+namespace TUCUT::Event
 {
-public:
+  template <typename... Args>
+  class EventPublisher
+  {
+  public:
     using PublisherType = EventPublisher<Args...>;
     using SubscriberType = EventSubscriber<Args...>;
     using WeakSubscriberType = std::weak_ptr<SubscriberType> ;
-    using SharedSubscriberType = std::shared_ptr<SubscriberType>;
-    
-private:
-    using MappedWeakSubscriberType = std::unordered_map<std::string, WeakSubscriberType>;
-    
+    using SharedSubscriberType =
+      std::shared_ptr<SubscriberType>;
+
+  private:
+    using MappedWeakSubscriberType =
+      std::unordered_map<std::string, WeakSubscriberType>;
+
     struct EventPublisherData
     {
-        int mId;
-        MappedWeakSubscriberType mSubscribers;
-        
-        explicit EventPublisherData (int id)
-        : mId(id)
-        { }
-        
-        EventPublisherData (const EventPublisherData & src)
-        : mId(src.mId), mSubscribers(src.mSubscribers)
-        { }
-        
-        ~EventPublisherData ()
-        { }
-        
-        EventPublisherData & operator = (const EventPublisherData & rhs)
+      int mId;
+      MappedWeakSubscriberType mSubscribers;
+
+      explicit EventPublisherData (int id)
+      : mId(id)
+      { }
+
+      EventPublisherData (EventPublisherData const & src)
+      : mId(src.mId), mSubscribers(src.mSubscribers)
+      { }
+
+      EventPublisherData & operator = (
+        EventPublisherData const & rhs)
+      {
+        if (this == &rhs)
         {
-            if (this == &rhs)
-            {
-                return *this;
-            }
-            
-            mId = rhs.mId;
-            mSubscribers = rhs.mSubscribers;
-            
-            return *this;
+          return *this;
         }
+
+        mId = rhs.mId;
+        mSubscribers = rhs.mSubscribers;
+
+        return *this;
+      }
     };
-    
+
     std::unique_ptr<EventPublisherData> mData;
 
-public:
+  public:
     explicit EventPublisher (int id)
     : mData(new EventPublisherData(id))
     { }
-    
-    EventPublisher (const PublisherType & src)
+
+    EventPublisher (PublisherType const & src)
     : mData(new EventPublisherData(*src.mData))
     { }
-    
+
     EventPublisher (PublisherType && src)
     : mData(src.mData.release())
     { }
 
-    virtual ~EventPublisher ()
-    { }
-    
+    virtual ~EventPublisher () = default;
+
     void swap (PublisherType & other)
     {
-        std::unique_ptr<EventPublisherData> thisData(mData.release());
-        std::unique_ptr<EventPublisherData> otherData(other.mData.release());
-        
-        mData.reset(otherData.release());
-        other.mData.reset(thisData.release());
+      std::unique_ptr<EventPublisherData>
+        thisData(mData.release());
+      std::unique_ptr<EventPublisherData>
+        otherData(other.mData.release());
+
+      mData.reset(otherData.release());
+      other.mData.reset(thisData.release());
     }
-    
-    PublisherType & operator = (const PublisherType & rhs)
+
+    PublisherType & operator = (PublisherType const & rhs)
     {
-        if (this == &rhs)
-        {
-            return *this;
-        }
-        
-        *mData = *rhs.mData;
-        
+      if (this == &rhs)
+      {
         return *this;
+      }
+
+      *mData = *rhs.mData;
+
+      return *this;
     }
-    
+
     PublisherType & operator = (PublisherType && rhs)
     {
-        if (this == &rhs)
-        {
-            return *this;
-        }
-        
-        mData.reset(rhs.mData.release());
-        
+      if (this == &rhs)
+      {
         return *this;
+      }
+
+      mData.reset(rhs.mData.release());
+
+      return *this;
     }
 
     void signal (Args... args) const
     {
-        std::vector<std::string> badConnectionIdentities;
-        
-        // Iterate through a copy of the subscribers because the notify handlers
-        // could decide to unsubscribe which would invalidate the iterator if
-        // we were iterating through the original collection.
-        MappedWeakSubscriberType mSubscribersCopy = mData->mSubscribers;
-        for (auto & identifiedSubscriberPair : mSubscribersCopy)
+      std::vector<std::string> badConnectionIdentities;
+
+      // Iterate through a copy of the subscribers because
+      // the notify handlers could decide to unsubscribe
+      // which would invalidate the iterator if we were
+      // iterating through the original collection.
+      MappedWeakSubscriberType mSubscribersCopy =
+        mData->mSubscribers;
+      for (auto & identifiedSubscriberPair : mSubscribersCopy)
+      {
+        try
         {
-            try
-            {
-                SharedSubscriberType sharedSubscriber(identifiedSubscriberPair.second);
-                
-                sharedSubscriber->notify(mData->mId, args...);
-            }
-            catch (const std::bad_weak_ptr &)
-            {
-                badConnectionIdentities.push_back(identifiedSubscriberPair.first);
-            }
+          SharedSubscriberType sharedSubscriber(
+            identifiedSubscriberPair.second);
+
+          sharedSubscriber->notify(mData->mId, args...);
         }
-        for (auto & identity : badConnectionIdentities)
+        catch (std::bad_weak_ptr const &)
         {
-            mData->mSubscribers.erase(identity);
+          badConnectionIdentities.push_back(
+            identifiedSubscriberPair.first);
         }
-    }
-    
-    void connect (const std::string & identity, const SharedSubscriberType & subscriber)
-    {
-        WeakSubscriberType weakSubscriber = subscriber;
-        
-        auto identifiedPosition = mData->mSubscribers.find(identity);
-        if (identifiedPosition != mData->mSubscribers.end())
-        {
-            identifiedPosition->second = weakSubscriber;
-        }
-        else
-        {
-            mData->mSubscribers.insert({identity, weakSubscriber});
-        }
-    }
-    
-    void disconnect (const std::string & identity)
-    {
+      }
+      for (auto & identity : badConnectionIdentities)
+      {
         mData->mSubscribers.erase(identity);
+      }
     }
-};
-    
-} // namespace Event
-} // namespace TUCUT
+
+    void connect (std::string const & identity,
+      SharedSubscriberType const & subscriber)
+    {
+      WeakSubscriberType weakSubscriber = subscriber;
+
+      auto identifiedPosition =
+        mData->mSubscribers.find(identity);
+      if (identifiedPosition != mData->mSubscribers.end())
+      {
+        identifiedPosition->second = weakSubscriber;
+      }
+      else
+      {
+        mData->mSubscribers.insert({identity, weakSubscriber});
+      }
+    }
+
+    void disconnect (std::string const & identity)
+    {
+      mData->mSubscribers.erase(identity);
+    }
+  };
+} // namespace TUCUT::Event
 
 #endif // TUCUT_Event_EventPublisher_h

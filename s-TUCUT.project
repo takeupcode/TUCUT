@@ -1,25 +1,61 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CodeLite_Project Name="s-TUCUT" Version="11000" InternalType="Library">
-  <VirtualDirectory Name="TUI">
-    <File Name="TUI/Window.h"/>
-    <File Name="TUI/Terminal.h"/>
-    <File Name="TUI/Terminal.cpp"/>
-    <File Name="TUI/Prompt.h"/>
-    <File Name="TUI/Prompt.cpp"/>
-    <File Name="TUI/MessageQueue.h"/>
-    <File Name="TUI/MessageQueue.cpp"/>
-    <File Name="TUI/Input.h"/>
-    <File Name="TUI/Input.cpp"/>
-    <File Name="TUI/Game.h"/>
-    <File Name="TUI/Game.cpp"/>
-    <File Name="TUI/Event.h"/>
-    <File Name="TUI/Event.cpp"/>
+  <VirtualDirectory Name="ECS">
+    <File Name="ECS/System.h"/>
+    <File Name="ECS/System.cpp"/>
+    <File Name="ECS/PropertyValue.h"/>
+    <File Name="ECS/PropertyValue.cpp"/>
+    <File Name="ECS/PropertyGroup.h"/>
+    <File Name="ECS/PropertyGroup.cpp"/>
+    <File Name="ECS/PropertyContainer.h"/>
+    <File Name="ECS/PropertyContainer.cpp"/>
+    <File Name="ECS/Entity.h"/>
+    <File Name="ECS/Entity.cpp"/>
+    <File Name="ECS/Component.h"/>
+    <File Name="ECS/Component.cpp"/>
+    <File Name="ECS/ApplicationTime.h"/>
+    <File Name="ECS/Application.h"/>
+    <File Name="ECS/Application.cpp"/>
   </VirtualDirectory>
   <Plugins>
     <Plugin Name="qmake">
       <![CDATA[00020001N0005Debug0000000000000001N0007Release000000000000]]>
     </Plugin>
   </Plugins>
+  <VirtualDirectory Name="TUI">
+    <File Name="TUI/WindowSystem.h"/>
+    <File Name="TUI/WindowSystem.cpp"/>
+    <File Name="TUI/Window.h"/>
+    <File Name="TUI/Window.cpp"/>
+    <File Name="TUI/TextRegion.h"/>
+    <File Name="TUI/TextRegion.cpp"/>
+    <File Name="TUI/TextBox.h"/>
+    <File Name="TUI/TextBox.cpp"/>
+    <File Name="TUI/Terminal.h"/>
+    <File Name="TUI/Terminal.cpp"/>
+    <File Name="TUI/Prompt.h"/>
+    <File Name="TUI/Prompt.cpp"/>
+    <File Name="TUI/NumberBox.h"/>
+    <File Name="TUI/NumberBox.cpp"/>
+    <File Name="TUI/ListBox.h"/>
+    <File Name="TUI/ListBox.cpp"/>
+    <File Name="TUI/Label.h"/>
+    <File Name="TUI/Label.cpp"/>
+    <File Name="TUI/Justification.h"/>
+    <File Name="TUI/Justification.cpp"/>
+    <File Name="TUI/Input.h"/>
+    <File Name="TUI/Input.cpp"/>
+    <File Name="TUI/Event.h"/>
+    <File Name="TUI/Event.cpp"/>
+    <File Name="TUI/DisplayBox.h"/>
+    <File Name="TUI/DisplayBox.cpp"/>
+    <File Name="TUI/Control.h"/>
+    <File Name="TUI/Control.cpp"/>
+    <File Name="TUI/CheckBox.h"/>
+    <File Name="TUI/CheckBox.cpp"/>
+    <File Name="TUI/Button.h"/>
+    <File Name="TUI/Button.cpp"/>
+  </VirtualDirectory>
   <VirtualDirectory Name="Color">
     <File Name="Color/Color.h"/>
   </VirtualDirectory>
@@ -61,6 +97,8 @@
     <File Name="Test/Test.h"/>
   </VirtualDirectory>
   <VirtualDirectory Name="Event">
+    <File Name="Event/MessageQueue.h"/>
+    <File Name="Event/MessageQueue.cpp"/>
     <File Name="Event/EventPublisher.h"/>
     <File Name="Event/EventSubscriber.h"/>
   </VirtualDirectory>
@@ -140,6 +178,8 @@
     <File Name="Hash/Hash.h"/>
   </VirtualDirectory>
   <VirtualDirectory Name="Game">
+    <File Name="Game/Region.h"/>
+    <File Name="Game/Region.cpp"/>
     <File Name="Game/PositionComponent.h"/>
     <File Name="Game/PositionComponent.cpp"/>
     <File Name="Game/MovementSystem.h"/>
@@ -152,23 +192,6 @@
     <File Name="Game/IMovementSystem.cpp"/>
     <File Name="Game/IMovementComponent.h"/>
     <File Name="Game/IMovementComponent.cpp"/>
-    <File Name="Game/GameTime.h"/>
-    <File Name="Game/GameSystem.h"/>
-    <File Name="Game/GameSystem.cpp"/>
-    <File Name="Game/GameRegion.h"/>
-    <File Name="Game/GameRegion.cpp"/>
-    <File Name="Game/GameManager.h"/>
-    <File Name="Game/GameManager.cpp"/>
-    <File Name="Game/GameComponent.h"/>
-    <File Name="Game/GameComponent.cpp"/>
-    <File Name="Game/PropertyGroup.h"/>
-    <File Name="Game/PropertyContainer.cpp"/>
-    <File Name="Game/GameObject.h"/>
-    <File Name="Game/GameObject.cpp"/>
-    <File Name="Game/PropertyContainer.h"/>
-    <File Name="Game/PropertyValue.h"/>
-    <File Name="Game/PropertyGroup.cpp"/>
-    <File Name="Game/PropertyValue.cpp"/>
   </VirtualDirectory>
   <VirtualDirectory Name="Identity">
     <File Name="Identity/Identifiable.h"/>

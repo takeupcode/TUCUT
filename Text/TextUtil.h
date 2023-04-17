@@ -1,3 +1,9 @@
+//  TextUtil.h
+//  TUCUT/Text (Take Up Code Utility)
+//
+//  Created by Abdul Wahid Tanner on 2017-11-17.
+//  Copyright © Take Up Code, Inc.
+//
 #ifndef TUCUT_Text_TextUtil_h
 #define TUCUT_Text_TextUtil_h
 

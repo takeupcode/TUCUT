@@ -1,58 +1,57 @@
+//  Region.h
+//  TUCUT/Game (Take Up Code Utility)
 //
-//  GameRegion.h
-//  TUCUT (Take Up Code Utility)
+//  Created by Abdul Wahid Tanner on 2019-01-25.
+//  Copyright © Take Up Code, Inc.
 //
-//  Created by Abdul Wahid Tanner on 1/25/19.
-//  Copyright © 2019 Take Up Code. All rights reserved.
-//
-
-#ifndef TUCUT_Game_GameRegion_h
-#define TUCUT_Game_GameRegion_h
-
-#include <memory>
+#ifndef TUCUT_Game_Region_h
+#define TUCUT_Game_Region_h
 
 #include "../Math/Point.h"
 
-namespace TUCUT {
-namespace Game {
+#include <memory>
 
-class GameRegion : public std::enable_shared_from_this<GameRegion>
+namespace TUCUT::Game
 {
-public:
+  class Region : public std::enable_shared_from_this<Region>
+  {
+  public:
     template <typename T, typename... Args>
-    static std::shared_ptr<T> createGameRegion (Args... args)
+    static std::shared_ptr<T> createRegion (Args... args)
     {
-        // This will be an instance of T but a pointer to the base GameRegion class.
-        auto gameRegion = std::shared_ptr<GameRegion>(new T(args...));
-        
-        gameRegion->initialize();
-    
-        // We can be sure this cast will work.
-        return std::static_pointer_cast<T>(gameRegion);
-    }
-    
-    std::shared_ptr<GameRegion> getSharedGameRegion ();
-    
-    virtual ~GameRegion () = default;
-    
-    virtual double getFriction (const Math::Point3d & position) const = 0;
-    
-    virtual Math::Point3d resolveCollisions (const Math::Point3d & currentPosition, const Math::Point3d & newPosition) const = 0;
+      // This will be an instance of T but a pointer to
+      // the base Region class.
+      auto region = std::shared_ptr<Region>(new T(args...));
 
-protected:
-    GameRegion ()
+      region->initialize();
+
+      // We can be sure this cast will work.
+      return std::static_pointer_cast<T>(region);
+    }
+
+    std::shared_ptr<Region> getSharedRegion ();
+
+    virtual ~Region () = default;
+
+    virtual double getFriction (
+      Math::Point3d const & position) const = 0;
+
+    virtual Math::Point3d resolveCollisions (
+      Math::Point3d const & currentPosition,
+      Math::Point3d const & newPosition) const = 0;
+
+  protected:
+    Region ()
     { }
-    
-    GameRegion (const GameRegion &) = delete;
-    GameRegion (GameRegion &&) = delete;
-    
-    GameRegion & operator = (const GameRegion &) = delete;
-    GameRegion & operator = (GameRegion &&) = delete;
+
+    Region (Region const &) = delete;
+    Region (Region &&) = delete;
+
+    Region & operator = (Region const &) = delete;
+    Region & operator = (Region &&) = delete;
 
     virtual void initialize ();
-};
+  };
+} // namespace TUCUT::Game
 
-} // namespace Game
-} // namespace TUCUT
-
-#endif // TUCUT_Game_GameRegion_h
+#endif // TUCUT_Game_Region_h

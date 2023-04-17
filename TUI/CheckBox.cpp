@@ -1,11 +1,9 @@
-//
 //  CheckBox.cpp
-//  TUCUT (Take Up Code Utility)
+//  TUCUT/TUI (Take Up Code Utility)
 //
-//  Created by Abdul Wahid Tanner on 11/24/17.
-//  Copyright © 2017 Take Up Code. All rights reserved.
+//  Created by Abdul Wahid Tanner on 2017-11-24.
+//  Copyright © Take Up Code, Inc.
 //
-
 #include "CheckBox.h"
 
 #include <stdexcept>
@@ -25,7 +23,7 @@ mText(text), mClicked(new ClickedEvent(ClickedEventId))
     {
         throw std::out_of_range("width cannot be less than 6.");
     }
-    
+
     setFillClientArea(false);
 }
 
@@ -37,9 +35,9 @@ void CheckBox::initialize ()
 std::shared_ptr<CheckBox> CheckBox::createSharedCheckBox (const std::string & name, const std::string & text, int y, int x, int height, int width, int foreColor, int backColor, int focusForeColor, int focusBackColor)
 {
     auto result = std::shared_ptr<CheckBox>(new CheckBox(name, text, y, x, height, width, foreColor, backColor, focusForeColor, focusBackColor));
-    
+
     result->initialize();
-    
+
     return result;
 }
 
@@ -54,14 +52,14 @@ bool CheckBox::onKeyPress (WindowSystem * ws, int key)
     {
         return false;
     }
-    
+
     switch (key)
     {
         case 32: // Space
         case 10: // Enter
             handleClick(ws);
             break;
-            
+
         default:
             if (parent())
             {
@@ -69,7 +67,7 @@ bool CheckBox::onKeyPress (WindowSystem * ws, int key)
             }
             return false;
     }
-    
+
     return true;
 }
 
@@ -79,7 +77,7 @@ void CheckBox::onMouseEvent (WindowSystem * ws, short id, int y, int x, mmask_t 
     {
         return;
     }
-    
+
     if (buttonState & BUTTON1_CLICKED)
     {
         handleClick(ws);
@@ -92,12 +90,12 @@ void CheckBox::onDrawClient () const
     {
         return;
     }
-    
+
     cchar_t check = {0, L'\u25A3'};
     cchar_t uncheck = {0, L'\u25A1'};
-    
+
     int vertCenter = height() / 2;
-    
+
     if (hasDirectFocus())
     {
         ConsoleManager::printMessage(*this, vertCenter, 1, 3, "   ", focusForeColor(), focusBackColor(), Justification::Horizontal::left, false);
@@ -125,7 +123,7 @@ void CheckBox::setIsChecked (bool value)
 void CheckBox::handleClick (WindowSystem * ws)
 {
     mIsChecked = !mIsChecked;
-    
+
     mClicked->signal(ws, this);
 }
 

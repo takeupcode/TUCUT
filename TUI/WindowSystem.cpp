@@ -1,11 +1,9 @@
-//
 //  WindowSystem.cpp
-//  TUCUT (Take Up Code Utility)
+//  TUCUT/TUI (Take Up Code Utility)
 //
-//  Created by Abdul Wahid Tanner on 10/26/17.
-//  Copyright © 2017 Take Up Code. All rights reserved.
+//  Created by Abdul Wahid Tanner on 2017-10-26.
+//  Copyright © Take Up Code, Inc.
 //
-
 #include "WindowSystem.h"
 
 #include <curses.h>
@@ -130,26 +128,26 @@ void WindowSystem::handleInput ()
         mCurrentWindow = mNextWindow;
         mNextWindow = nullptr;
     }
-    
+
     if (!mCurrentWindow)
     {
         return;
     }
-    
+
     mCurrentWindow->processInput(this);
 }
-    
+
 void WindowSystem::update (Game::TimeResolution elapsedTime)
 {
     if (!mCurrentWindow)
     {
         return;
     }
-    
+
     CursesUtil::getScreenMaxYX(mScreenMaxY, mScreenMaxX);
-    
+
     mCurrentWindow->resize(checkHeightBounds(screenHeight()), checkWidthBounds(screenWidth()));
-    
+
     mCurrentWindow->update();
 }
 
@@ -159,12 +157,12 @@ void WindowSystem::render ()
     {
         return;
     }
-    
+
     mCurrentWindow->draw();
-    
+
     doupdate();
 }
-    
+
 int WindowSystem::checkHeightBounds (int height) const
 {
     if (height < mMinScreenHeight)

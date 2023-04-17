@@ -1,11 +1,9 @@
-//
 //  Window.cpp
-//  TUCUT (Take Up Code Utility)
+//  TUCUT/TUI (Take Up Code Utility)
 //
-//  Created by Abdul Wahid Tanner on 11/1/17.
-//  Copyright © 2017 Take Up Code. All rights reserved.
+//  Created by Abdul Wahid Tanner on 2017-11-01.
+//  Copyright © Take Up Code, Inc.
 //
-
 #include "Window.h"
 #include "Control.h"
 
@@ -32,11 +30,11 @@ Window::Window (const std::string & name, int y, int x, int height, int width, i
     mMinHeight = mBorder ? 3 : 1;
     mMinWidth = mBorder ? 3 : 1;
 }
-    
+
 void Window::initialize ()
 {
     createWindows();
-    
+
     setFocus(true);
 }
 
@@ -44,13 +42,13 @@ Window::~Window ()
 {
     destroyWindows();
 }
-    
+
 std::shared_ptr<Window> Window::createSharedWindow (const std::string & name, int y, int x, int height, int width, int clientForeColor, int clientBackColor, int borderForeColor, int borderBackColor, int focusForeColor, int focusBackColor, bool border)
 {
     auto result = std::shared_ptr<Window>(new Window(name, y, x, height, width, clientForeColor, clientBackColor, borderForeColor, borderBackColor, focusForeColor, focusBackColor, border));
-    
+
     result->initialize();
-    
+
     return result;
 }
 
@@ -72,7 +70,7 @@ void Window::processInput (WindowSystem * ws)
     {
     case ERR:
         break;
-            
+
     case 9: // Tab
         if (!advanceFocus())
         {
@@ -84,7 +82,7 @@ void Window::processInput (WindowSystem * ws)
             }
         }
         break;
-            
+
     case KEY_MOUSE:
         if (getmouse(&mouseEvent) == OK)
         {
@@ -118,7 +116,7 @@ void Window::draw () const
         touchwin(mBorderWindow->cursesWindow());
         wnoutrefresh(mBorderWindow->cursesWindow());
     }
-    
+
     if (mFillClientArea)
     {
         ConsoleManager::fillRect(*this, 0, 0, clientHeight(), clientWidth(), mClientForeColor, mClientBackColor);
@@ -251,7 +249,7 @@ void Window::setMinHeight (int height)
             throw std::out_of_range("height cannot be less than 1.");
         }
     }
-    
+
     mMinHeight = height;
 }
 
@@ -297,7 +295,7 @@ void Window::setMinWidth (int width)
             throw std::out_of_range("width cannot be less than 1.");
         }
     }
-    
+
     mMinWidth = width;
 }
 
@@ -473,22 +471,22 @@ void Window::setFocusBackColor (int color)
 void Window::addControl (const std::shared_ptr<Window> & control)
 {
     control->setParent(this);
-    
+
     anchorWindow(control.get());
-    
+
     mControls.push_back(control);
-    
+
     setFocus(true);
 }
 
 void Window::addControl (std::shared_ptr<Window> && control)
 {
     control->setParent(this);
-    
+
     anchorWindow(control.get());
-    
+
     mControls.push_back(std::move(control));
-    
+
     setFocus(true);
 }
 
@@ -505,10 +503,10 @@ Window * Window::findWindow (int y, int x)
                 return result;
             }
         }
-        
+
         return this;
     }
-    
+
     return nullptr;
 }
 
@@ -519,12 +517,12 @@ Window * Window::findFocus ()
         // This window and none of its control windows have the focus.
         return nullptr;
     }
-    
+
     if (mHasDirectFocus)
     {
         return this;
     }
-    
+
     for (auto & control: mControls)
     {
         Window * result = control->findFocus();
@@ -533,7 +531,7 @@ Window * Window::findFocus ()
             return result;
         }
     }
-    
+
     // Even though this window doesn't have direct focus, we can still route
     // keys to it.
     return this;
@@ -577,7 +575,7 @@ bool Window::setFocus (bool focus)
             control->setFocus(false);
         }
     }
-    
+
     if (foundFirstFocusControl)
     {
         mHasFocus = true;
@@ -593,14 +591,14 @@ bool Window::setFocus (bool focus)
         mHasFocus = false;
         mHasDirectFocus = false;
     }
-    
+
     return mHasFocus;
 }
 
 bool Window::setFocus (int y, int x)
 {
     bool foundDirectFocus = false;
-    
+
     if (y >= mY && y < (mY + mHeight) &&
         x >= mX && x < (mX + mWidth))
     {
@@ -613,7 +611,7 @@ bool Window::setFocus (int y, int x)
                 foundDirectFocus = true;
             }
         }
-        
+
         if (foundDirectFocus)
         {
             mHasFocus = true;
@@ -625,7 +623,7 @@ bool Window::setFocus (int y, int x)
             {
                 // No child can have direct focus but this window can.
                 foundDirectFocus = true;
-                
+
                 mHasFocus = true;
                 mHasDirectFocus = true;
             }
@@ -647,7 +645,7 @@ bool Window::setFocus (int y, int x)
             setFocus(false);
         }
     }
-    
+
     return foundDirectFocus;
 }
 
@@ -689,7 +687,7 @@ bool Window::advanceFocus ()
                 }
             }
         }
-        
+
         // We went through all the child controls with no further advancement.
         if (canHaveDirectFocus())
         {
@@ -761,16 +759,16 @@ void Window::createWindows ()
     {
         throw std::out_of_range("y or x cannot be less than 0.");
     }
-    
+
     if (mBorder)
     {
         if (mHeight < 3 || mWidth < 3)
         {
             throw std::out_of_range("height or width cannot be less than 3 when using a border.");
         }
-        
+
         mBorderWindow.reset(new Window("border", mY, mX, mHeight, mWidth, mBorderForeColor, mBorderBackColor, mBorderForeColor, mBorderBackColor, mBorderForeColor, mBorderBackColor, false));
-        
+
         mBorderWindow->initialize();
         mBorderWindow->setFillClientArea(false);
     }
@@ -781,21 +779,21 @@ void Window::createWindows ()
             throw std::out_of_range("height or width cannot be less than 1.");
         }
     }
-    
+
     mClientCursesWindow = newwin(clientHeight(), clientWidth(), clientY(), clientX());
     if (!mClientCursesWindow)
     {
         std::string message = "Could not create window.";
         throw std::runtime_error(message);
     }
-    
+
     nodelay(mClientCursesWindow, true);
     keypad(mClientCursesWindow, true);
-    
+
     for (const auto & control: mControls)
     {
         anchorWindow(control.get());
-        
+
         control->createWindows();
     }
 }
@@ -822,7 +820,7 @@ void Window::anchorWindow (Window * win)
     int newBottom = win->y() + win->height();
     int newLeft = win->x();
     int newRight = win->x() + win->width();
-    
+
     if (win->anchorTop() != -1 && win->anchorBottom() != -1)
     {
         newTop = clientY() + win->anchorTop();
@@ -847,7 +845,7 @@ void Window::anchorWindow (Window * win)
             newBottom = win->height();
         }
     }
-    
+
     if (win->anchorLeft() != -1 && win->anchorRight() != -1)
     {
         newLeft = clientX() + win->anchorLeft();
@@ -872,7 +870,7 @@ void Window::anchorWindow (Window * win)
             newRight = win->width();
         }
     }
-    
+
     win->moveAndResize(newTop, newLeft, newBottom - newTop, newRight - newLeft);
 }
 

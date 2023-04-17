@@ -1,250 +1,313 @@
+//  Component.cpp
+//  TUCUT/ECS (Take Up Code Utility)
 //
-//  GameComponent.cpp
-//  TUCUT (Take Up Code Utility)
+//  Created by Abdul Wahid Tanner on 2018-11-15.
+//  Copyright © Take Up Code, Inc.
 //
-//  Created by Abdul Wahid Tanner on 11/15/18.
-//  Copyright © 2018 Take Up Code. All rights reserved.
-//
+#include "Component.h"
 
-#include "GameComponent.h"
-#include "GameManager.h"
+#include "Application.h"
 
-namespace TUCUT {
-namespace Game {
+std::string const
+TUCUT::ECS::Component::defaultToken = "Component";
 
-const std::string GameComponent::defaultToken = "GameComponent";
-
-void GameComponent::initialize ()
+void TUCUT::ECS::Component::initialize ()
 {
-    Game::GameManager * pGameMgr = Game::GameManager::instance();
-    for (const auto & token: mAbilityTokens)
-    {
-        pGameMgr->getOrCreateGameAbility(token);
-    }
-    for (const auto & token: mActionTokens)
-    {
-        pGameMgr->getOrCreateGameAction(token);
-    }
+  Application * app = Application::instance();
+  for (auto const & token: mAbilityTokens)
+  {
+    app->getOrCreateAbility(token);
+  }
+  for (auto const & token: mActionTokens)
+  {
+    app->getOrCreateAction(token);
+  }
 }
 
-std::shared_ptr<GameComponent> GameComponent::getSharedGameComponent ()
+std::shared_ptr<TUCUT::ECS::Component>
+TUCUT::ECS::Component::getSharedComponent ()
 {
-    return shared_from_this();
+  return shared_from_this();
 }
 
-void GameComponent::addDefaultProperties (int objectId) const
+void TUCUT::ECS::Component::addDefaultProperties (
+  int entityId) const
 {
-    GameManager * pGameMgr = GameManager::instance();
-    auto gameObj = pGameMgr->getGameObject<GameObject>(objectId);
+  Application * app = Application::instance();
+  auto entity = app->getBaseEntity(entityId);
 
-    return addDefaultProperties(gameObj);
+  return addDefaultProperties(entity);
 }
 
-void GameComponent::addDefaultProperties (const std::shared_ptr<GameObject> &) const
+void TUCUT::ECS::Component::addDefaultProperties (
+  std::shared_ptr<Entity> const &) const
 { }
 
-void GameComponent::removeProperties (int objectId) const
+void TUCUT::ECS::Component::removeProperties (
+  int entityId) const
 {
-    GameManager * pGameMgr = GameManager::instance();
-    auto gameObj = pGameMgr->getGameObject<GameObject>(objectId);
+  Application * app = Application::instance();
+  auto entity = app->getBaseEntity(entityId);
 
-    return removeProperties(gameObj);
+  return removeProperties(entity);
 }
 
-void GameComponent::removeProperties (const std::shared_ptr<GameObject> &) const
+void TUCUT::ECS::Component::removeProperties (
+  std::shared_ptr<Entity> const &) const
 { }
 
-std::string GameComponent::getString (int objectId, int propertyId) const
+std::string TUCUT::ECS::Component::getString (
+  int entityId, int propertyId) const
 {
-    GameManager * pGameMgr = GameManager::instance();
-    auto gameObj = pGameMgr->getGameObject<GameObject>(objectId);
+  Application * app = Application::instance();
+  auto entity = app->getBaseEntity(entityId);
 
-    return getString(gameObj, propertyId);
+  return getString(entity, propertyId);
 }
 
-std::string GameComponent::getString (const std::shared_ptr<GameObject> &, int) const
+std::string TUCUT::ECS::Component::getString (
+  std::shared_ptr<Entity> const &, int) const
 {
-    return "";
+  return "";
 }
 
-int GameComponent::getInteger (int objectId, int propertyId) const
+int TUCUT::ECS::Component::getInteger (
+  int entityId, int propertyId) const
 {
-    GameManager * pGameMgr = GameManager::instance();
-    auto gameObj = pGameMgr->getGameObject<GameObject>(objectId);
+  Application * app = Application::instance();
+  auto entity = app->getBaseEntity(entityId);
 
-    return getInteger(gameObj, propertyId);
+  return getInteger(entity, propertyId);
 }
 
-int GameComponent::getInteger (const std::shared_ptr<GameObject> &, int) const
+int TUCUT::ECS::Component::getInteger (
+  std::shared_ptr<Entity> const &, int) const
 {
     return 0;
 }
 
-double GameComponent::getFloating (int objectId, int propertyId) const
+double TUCUT::ECS::Component::getFloating (
+  int entityId, int propertyId) const
 {
-    GameManager * pGameMgr = GameManager::instance();
-    auto gameObj = pGameMgr->getGameObject<GameObject>(objectId);
+  Application * app = Application::instance();
+  auto entity = app->getBaseEntity(entityId);
 
-    return getFloating(gameObj, propertyId);
+  return getFloating(entity, propertyId);
 }
 
-double GameComponent::getFloating (const std::shared_ptr<GameObject> &, int) const
+double TUCUT::ECS::Component::getFloating (
+  std::shared_ptr<Entity> const &, int) const
 {
-    return 0;
+  return 0;
 }
 
-bool GameComponent::getBoolean (int objectId, int propertyId) const
+bool TUCUT::ECS::Component::getBoolean (
+  int entityId, int propertyId) const
 {
-    GameManager * pGameMgr = GameManager::instance();
-    auto gameObj = pGameMgr->getGameObject<GameObject>(objectId);
+  Application * app = Application::instance();
+  auto entity = app->getBaseEntity(entityId);
 
-    return getBoolean(gameObj, propertyId);
+  return getBoolean(entity, propertyId);
 }
 
-bool GameComponent::getBoolean (const std::shared_ptr<GameObject> &, int) const
+bool TUCUT::ECS::Component::getBoolean (
+  std::shared_ptr<Entity> const &, int) const
 {
-    return false;
+  return false;
 }
 
-std::vector<std::string> GameComponent::getStrings (int objectId, int propertyId) const
+std::vector<std::string> TUCUT::ECS::Component::getStrings (
+  int entityId, int propertyId) const
 {
-    GameManager * pGameMgr = GameManager::instance();
-    auto gameObj = pGameMgr->getGameObject<GameObject>(objectId);
+  Application * app = Application::instance();
+  auto entity = app->getBaseEntity(entityId);
 
-    return getStrings(gameObj, propertyId);
+  return getStrings(entity, propertyId);
 }
 
-std::vector<std::string> GameComponent::getStrings (const std::shared_ptr<GameObject> &, int) const
+std::vector<std::string> TUCUT::ECS::Component::getStrings (
+  std::shared_ptr<Entity> const &, int) const
 {
-    return std::vector<std::string>();
+  return std::vector<std::string>();
 }
 
-std::vector<int> GameComponent::getIntegers (int objectId, int propertyId) const
+std::vector<int> TUCUT::ECS::Component::getIntegers (
+  int entityId, int propertyId) const
 {
-    GameManager * pGameMgr = GameManager::instance();
-    auto gameObj = pGameMgr->getGameObject<GameObject>(objectId);
+  Application * app = Application::instance();
+  auto entity = app->getBaseEntity(entityId);
 
-    return getIntegers(gameObj, propertyId);
+  return getIntegers(entity, propertyId);
 }
 
-std::vector<int> GameComponent::getIntegers (const std::shared_ptr<GameObject> &, int) const
+std::vector<int> TUCUT::ECS::Component::getIntegers (
+  std::shared_ptr<Entity> const &, int) const
 {
-    return std::vector<int>();
+  return std::vector<int>();
 }
 
-std::vector<double> GameComponent::getFloatings (int objectId, int propertyId) const
+std::vector<double> TUCUT::ECS::Component::getFloatings (
+  int entityId, int propertyId) const
 {
-    GameManager * pGameMgr = GameManager::instance();
-    auto gameObj = pGameMgr->getGameObject<GameObject>(objectId);
+  Application * app = Application::instance();
+  auto entity = app->getBaseEntity(entityId);
 
-    return getFloatings(gameObj, propertyId);
+  return getFloatings(entity, propertyId);
 }
 
-std::vector<double> GameComponent::getFloatings (const std::shared_ptr<GameObject> &, int) const
+std::vector<double> TUCUT::ECS::Component::getFloatings (
+  std::shared_ptr<Entity> const &, int) const
 {
-    return std::vector<double>();
+  return std::vector<double>();
 }
 
-std::vector<bool> GameComponent::getBooleans (int objectId, int propertyId) const
+std::vector<bool> TUCUT::ECS::Component::getBooleans (
+  int entityId, int propertyId) const
 {
-    GameManager * pGameMgr = GameManager::instance();
-    auto gameObj = pGameMgr->getGameObject<GameObject>(objectId);
+  Application * app = Application::instance();
+  auto entity = app->getBaseEntity(entityId);
 
-    return getBooleans(gameObj, propertyId);
+  return getBooleans(entity, propertyId);
 }
 
-std::vector<bool> GameComponent::getBooleans (const std::shared_ptr<GameObject> &, int) const
+std::vector<bool> TUCUT::ECS::Component::getBooleans (
+  std::shared_ptr<Entity> const &, int) const
 {
-    return std::vector<bool>();
+  return std::vector<bool>();
 }
 
-void GameComponent::setString (int objectId, int propertyId, const std::string & value) const
+void TUCUT::ECS::Component::setString (
+  int entityId,
+  int propertyId,
+  std::string const & value) const
 {
-    GameManager * pGameMgr = GameManager::instance();
-    auto gameObj = pGameMgr->getGameObject<GameObject>(objectId);
+  Application * app = Application::instance();
+  auto entity = app->getBaseEntity(entityId);
 
-    setString(gameObj, propertyId, value);
+  setString(entity, propertyId, value);
 }
 
-void GameComponent::setString (const std::shared_ptr<GameObject> &, int, const std::string &) const
+void TUCUT::ECS::Component::setString (
+  std::shared_ptr<Entity> const &,
+  int,
+  std::string const &) const
 { }
 
-void GameComponent::setInteger (int objectId, int propertyId, int value) const
+void TUCUT::ECS::Component::setInteger (
+  int entityId,
+  int propertyId,
+  int value) const
 {
-    GameManager * pGameMgr = GameManager::instance();
-    auto gameObj = pGameMgr->getGameObject<GameObject>(objectId);
+  Application * app = Application::instance();
+  auto entity = app->getBaseEntity(entityId);
 
-    setInteger(gameObj, propertyId, value);
+  setInteger(entity, propertyId, value);
 }
 
-void GameComponent::setInteger (const std::shared_ptr<GameObject> &, int, int) const
+void TUCUT::ECS::Component::setInteger (
+  std::shared_ptr<Entity> const &,
+  int,
+  int) const
 { }
 
-void GameComponent::setFloating (int objectId, int propertyId, double value) const
+void TUCUT::ECS::Component::setFloating (
+  int entityId,
+  int propertyId,
+  double value) const
 {
-    GameManager * pGameMgr = GameManager::instance();
-    auto gameObj = pGameMgr->getGameObject<GameObject>(objectId);
+  Application * app = Application::instance();
+  auto entity = app->getBaseEntity(entityId);
 
-    setFloating(gameObj, propertyId, value);
+  setFloating(entity, propertyId, value);
 }
 
-void GameComponent::setFloating (const std::shared_ptr<GameObject> &, int, double) const
+void TUCUT::ECS::Component::setFloating (
+  std::shared_ptr<Entity> const &,
+  int,
+  double) const
 { }
 
-void GameComponent::setBoolean (int objectId, int propertyId, bool value) const
+void TUCUT::ECS::Component::setBoolean (
+  int entityId,
+  int propertyId,
+  bool value) const
 {
-    GameManager * pGameMgr = GameManager::instance();
-    auto gameObj = pGameMgr->getGameObject<GameObject>(objectId);
+  Application * app = Application::instance();
+  auto entity = app->getBaseEntity(entityId);
 
-    setBoolean(gameObj, propertyId, value);
+  setBoolean(entity, propertyId, value);
 }
 
-void GameComponent::setBoolean (const std::shared_ptr<GameObject> &, int, bool) const
+void TUCUT::ECS::Component::setBoolean (
+  std::shared_ptr<Entity> const &,
+  int,
+  bool) const
 { }
 
-void GameComponent::setStrings (int objectId, int propertyId, const std::vector<std::string> & value) const
+void TUCUT::ECS::Component::setStrings (
+  int entityId,
+  int propertyId,
+  std::vector<std::string> const & value) const
 {
-    GameManager * pGameMgr = GameManager::instance();
-    auto gameObj = pGameMgr->getGameObject<GameObject>(objectId);
+  Application * app = Application::instance();
+  auto entity = app->getBaseEntity(entityId);
 
-    setStrings(gameObj, propertyId, value);
+  setStrings(entity, propertyId, value);
 }
 
-void GameComponent::setStrings (const std::shared_ptr<GameObject> &, int, const std::vector<std::string> &) const
+void TUCUT::ECS::Component::setStrings (
+  std::shared_ptr<Entity> const &,
+  int,
+  std::vector<std::string> const &) const
 { }
 
-void GameComponent::setIntegers (int objectId, int propertyId, const std::vector<int> & value) const
+void TUCUT::ECS::Component::setIntegers (
+  int entityId,
+  int propertyId,
+  std::vector<int> const & value) const
 {
-    GameManager * pGameMgr = GameManager::instance();
-    auto gameObj = pGameMgr->getGameObject<GameObject>(objectId);
+  Application * app = Application::instance();
+  auto entity = app->getBaseEntity(entityId);
 
-    setIntegers(gameObj, propertyId, value);
+  setIntegers(entity, propertyId, value);
 }
 
-void GameComponent::setIntegers (const std::shared_ptr<GameObject> &, int, const std::vector<int> &) const
+void TUCUT::ECS::Component::setIntegers (
+  std::shared_ptr<Entity> const &,
+  int,
+  std::vector<int> const &) const
 { }
 
-void GameComponent::setFloatings (int objectId, int propertyId, const std::vector<double> & value) const
+void TUCUT::ECS::Component::setFloatings (
+  int entityId,
+  int propertyId,
+  std::vector<double> const & value) const
 {
-    GameManager * pGameMgr = GameManager::instance();
-    auto gameObj = pGameMgr->getGameObject<GameObject>(objectId);
+  Application * app = Application::instance();
+  auto entity = app->getBaseEntity(entityId);
 
-    setFloatings(gameObj, propertyId, value);
+  setFloatings(entity, propertyId, value);
 }
 
-void GameComponent::setFloatings (const std::shared_ptr<GameObject> &, int, const std::vector<double> &) const
+void TUCUT::ECS::Component::setFloatings (
+  std::shared_ptr<Entity> const &,
+  int,
+  std::vector<double> const &) const
 { }
 
-void GameComponent::setBooleans (int objectId, int propertyId, const std::vector<bool> & value) const
+void TUCUT::ECS::Component::setBooleans (
+  int entityId,
+  int propertyId,
+  std::vector<bool> const & value) const
 {
-    GameManager * pGameMgr = GameManager::instance();
-    auto gameObj = pGameMgr->getGameObject<GameObject>(objectId);
+  Application * app = Application::instance();
+  auto entity = app->getBaseEntity(entityId);
 
-    setBooleans(gameObj, propertyId, value);
+  setBooleans(entity, propertyId, value);
 }
 
-void GameComponent::setBooleans (const std::shared_ptr<GameObject> &, int, const std::vector<bool> &) const
+void TUCUT::ECS::Component::setBooleans (
+  std::shared_ptr<Entity> const &,
+  int,
+  std::vector<bool> const &) const
 { }
-
-} // namespace Game
-} // namespace TUCUT

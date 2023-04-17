@@ -1,11 +1,9 @@
-//
 //  NumberBox.cpp
-//  TUCUT (Take Up Code Utility)
+//  TUCUT/TUI (Take Up Code Utility)
 //
-//  Created by Abdul Wahid Tanner on 11/24/17.
-//  Copyright © 2017 Take Up Code. All rights reserved.
+//  Created by Abdul Wahid Tanner on 2017-11-24.
+//  Copyright © Take Up Code, Inc.
 //
-
 #include "NumberBox.h"
 
 #include <sstream>
@@ -31,33 +29,33 @@ NumberBox::NumberBox (const std::string & name, int number, int y, int x, int wi
     {
         throw std::out_of_range("width cannot be less than 5.");
     }
-    
+
     mMinHeight = 1;
     mMinWidth = 5;
-    
+
     setFillClientArea(false);
-    
+
     setNumber(number);
 }
 
 void NumberBox::initialize ()
 {
     Control::initialize();
-    
+
     mIncrementButton = Button::createSharedButton(incrementButtonName, "+", 0, 0, 1, 1, Colors::COLOR_DIM_BLACK, Colors::COLOR_DIM_WHITE, Colors::COLOR_DIM_BLACK, Colors::COLOR_DIM_WHITE);
     mIncrementButton->clicked()->connect(windowName, getSharedNumberBox());
     mIncrementButton->setIsDirectFocusPossible(false);
-    
+
     mDecrementButton = Button::createSharedButton(decrementButtonName, "-", 0, 0, 1, 1, Colors::COLOR_DIM_BLACK, Colors::COLOR_DIM_WHITE, Colors::COLOR_DIM_BLACK, Colors::COLOR_DIM_WHITE);
     mDecrementButton->clicked()->connect(windowName, getSharedNumberBox());
     mDecrementButton->setIsDirectFocusPossible(false);
-    
+
     mIncrementButton->setAnchorTop(0);
     mIncrementButton->setAnchorRight(2);
-    
+
     mDecrementButton->setAnchorTop(0);
     mDecrementButton->setAnchorRight(1);
-    
+
     addControl(mIncrementButton);
     addControl(mDecrementButton);
 }
@@ -65,9 +63,9 @@ void NumberBox::initialize ()
 std::shared_ptr<NumberBox> NumberBox::createSharedNumberBox (const std::string & name, int number, int y, int x, int width, int foreColor, int backColor)
 {
     auto result = std::shared_ptr<NumberBox>(new NumberBox(name, number, y, x, width, foreColor, backColor));
-    
+
     result->initialize();
-    
+
     return result;
 }
 
@@ -82,7 +80,7 @@ bool NumberBox::onKeyPress (WindowSystem * ws, int key)
     {
         return false;
     }
-    
+
     switch (key)
     {
     case 127: // Delete
@@ -94,39 +92,39 @@ bool NumberBox::onKeyPress (WindowSystem * ws, int key)
             handleNumberChange(ws);
         }
         break;
-        
+
     case KEY_UP:
     case KEY_RIGHT:
     {
         int oldValue = number();
-        
+
         increment();
-        
+
         int newValue = number();
-        
+
         if (newValue != oldValue)
         {
             handleNumberChange(ws);
         }
         break;
     }
-        
+
     case KEY_DOWN:
     case KEY_LEFT:
     {
         int oldValue = number();
-        
+
         decrement();
-        
+
         int newValue = number();
-        
+
         if (newValue != oldValue)
         {
             handleNumberChange(ws);
         }
         break;
     }
-        
+
     default:
         if (addChar(key))
         {
@@ -138,7 +136,7 @@ bool NumberBox::onKeyPress (WindowSystem * ws, int key)
         }
         break;
     }
-    
+
     return true;
 }
 
@@ -148,7 +146,7 @@ void NumberBox::onDrawClient () const
     {
         return;
     }
-    
+
     ConsoleManager::printMessage(*this, 0, 1, textClientWidth(), mText, clientForeColor(), clientBackColor(), Justification::Horizontal::right, true);
 }
 
@@ -164,7 +162,7 @@ void NumberBox::setMinWidth (int width)
     {
         throw std::out_of_range("width cannot be less than 5.");
     }
-    
+
     mMinWidth = width;
 }
 
@@ -179,30 +177,30 @@ void NumberBox::setNumber (int value)
     {
         value = 0;
     }
-    
+
     int currentValue = number();
     if (currentValue == value)
     {
         return;
     }
-    
+
     std::ostringstream ss;
     ss << value;
-    
+
     mText = ss.str();
 }
 
 void NumberBox::increment ()
 {
     int value = number() + 1;
-    
+
     setNumber(value);
 }
 
 void NumberBox::decrement ()
 {
     int value = number() - 1;
-    
+
     setNumber(value);
 }
 
@@ -217,9 +215,9 @@ void NumberBox::notify (int id, WindowSystem * ws, Button * button)
     {
         return;
     }
-    
+
     int oldValue = number();
-    
+
     if (button->name() == incrementButtonName)
     {
         increment();
@@ -228,9 +226,9 @@ void NumberBox::notify (int id, WindowSystem * ws, Button * button)
     {
         decrement();
     }
-    
+
     int newValue = number();
-    
+
     if (newValue != oldValue)
     {
         handleNumberChange(ws);
@@ -248,13 +246,13 @@ bool NumberBox::removeChar ()
     {
         return false;
     }
-    
+
     mText.pop_back();
     if (mText.empty())
     {
         mText = "0";
     }
-    
+
     return true;
 }
 
@@ -265,7 +263,7 @@ bool NumberBox::addChar (int key)
     {
         return false;
     }
-    
+
     if (mText == "0")
     {
         if (c == '0')
@@ -275,9 +273,9 @@ bool NumberBox::addChar (int key)
         }
         mText.clear();
     }
-    
+
     mText.push_back(c);
-    
+
     return true;
 }
 

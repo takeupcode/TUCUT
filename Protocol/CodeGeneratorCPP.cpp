@@ -1,3 +1,9 @@
+//  CodeGeneratorCPP.cpp
+//  TUCUT/Protocol (Take Up Code Utility)
+//
+//  Created by Abdul Wahid Tanner on 2014-10-17.
+//  Copyright © Take Up Code, Inc.
+//
 #include "CodeGeneratorCPP.h"
 
 #include "CodeGeneratorPrologCPP.cpp"

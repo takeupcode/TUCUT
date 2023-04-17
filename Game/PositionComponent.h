@@ -1,68 +1,82 @@
-//
 //  PositionComponent.h
-//  TUCUT (Take Up Code Utility)
+//  TUCUT/Game (Take Up Code Utility)
 //
-//  Created by Abdul Wahid Tanner on 12/5/18.
-//  Copyright © 2018 Take Up Code. All rights reserved.
+//  Created by Abdul Wahid Tanner on 2018-12-05.
+//  Copyright © Take Up Code, Inc.
 //
-
 #ifndef TUCUT_Game_PositionComponent_hpp
 #define TUCUT_Game_PositionComponent_hpp
+
+#include "../ECS/Application.h"
+#include "../Math/Vector.h"
+#include "IPositionComponent.h"
 
 #include <memory>
 #include <string>
 #include <vector>
-    
-#include "GameManager.h"
-#include "IPositionComponent.h"
-#include "../Math/Vector.h"
 
-namespace TUCUT {
-namespace Game {
-
-class PositionComponent : public IPositionComponent
+namespace TUCUT::Game
 {
-public:
-    static const std::string defaultToken;
+  class PositionComponent : public IPositionComponent
+  {
+  public:
+    static std::string const defaultToken;
 
-    std::shared_ptr<PositionComponent> getSharedPositionComponent ();
-    
-    void addDefaultProperties (const std::shared_ptr<GameObject> & object) const override;
-    
-    void removeProperties (const std::shared_ptr<GameObject> & object) const override;
+    std::shared_ptr<PositionComponent>
+    getSharedPositionComponent ();
 
-    double getFloating (const std::shared_ptr<GameObject> & object, int propertyId) const override;
+    void addDefaultProperties (
+      std::shared_ptr<GameObject> const & object
+      ) const override;
 
-    std::vector<double> getFloatings (const std::shared_ptr<GameObject> & object, int propertyId) const override;
+    void removeProperties (
+      std::shared_ptr<GameObject> const & object
+      ) const override;
 
-    void setFloating (const std::shared_ptr<GameObject> & object, int propertyId, double value) const override;
+    double getFloating (
+      std::shared_ptr<GameObject> const & object,
+      int propertyId
+      ) const override;
 
-    void setFloatings (const std::shared_ptr<GameObject> & object, int propertyId, const std::vector<double> & value) const override;
+    std::vector<double> getFloatings (
+      std::shared_ptr<GameObject> const & object,
+      int propertyId
+      ) const override;
 
-    void setMinPosition (const Math::Vector3d & position);
-    
-    void setMaxPosition (const Math::Vector3d & position);
+    void setFloating (
+      std::shared_ptr<GameObject> const & object,
+      int propertyId,
+      double value
+      ) const override;
 
-protected:
-    friend class GameManager;
+    void setFloatings (
+      std::shared_ptr<GameObject> const & object,
+      int propertyId,
+      std::vector<double> const & value
+      ) const override;
 
-    PositionComponent (const std::string & token, int identity)
+    void setMinPosition (Math::Vector3d const & position);
+
+    void setMaxPosition (Math::Vector3d const & position);
+
+  protected:
+    friend class ECS::Application;
+
+    PositionComponent (std::string const & token, int identity)
     : IPositionComponent(token, identity)
     {
-        mAbilityTokens.push_back("GamePosition");
-        
-        mActionTokens.push_back(positionChangedToken);
+      mAbilityTokens.push_back("Position");
+
+      mActionTokens.push_back(positionChangedToken);
     }
-    
+
     void initialize () override;
 
-private:
+  private:
     Math::Vector3d mMinPosition;
     Math::Vector3d mMaxPosition;
     int mPositionChangedActionId = 0;
-};
-
-} // namespace Game
-} // namespace TUCUT
+  };
+} // namespace TUCUT::Game
 
 #endif // TUCUT_Game_PositionComponent_h

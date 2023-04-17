@@ -1,11 +1,9 @@
-//
 //  DisplayBox.cpp
-//  TUCUT (Take Up Code Utility)
+//  TUCUT/TUI (Take Up Code Utility)
 //
-//  Created by Abdul Wahid Tanner on 8/2/18.
-//  Copyright © 2018 Take Up Code. All rights reserved.
+//  Created by Abdul Wahid Tanner on 2018-08-02.
+//  Copyright © Take Up Code, Inc.
 //
-
 #include "DisplayBox.h"
 
 #include <sstream>
@@ -18,7 +16,7 @@
 
 namespace TUCUT {
 namespace Curses {
-        
+
 const std::string DisplayBox::windowName = "parent";
 const std::string DisplayBox::moveCenterUpButtonName = "moveCenterUpButton";
 const std::string DisplayBox::moveCenterDownButtonName = "moveCenterDownButton";
@@ -76,7 +74,7 @@ DisplayBox::DisplayBox (const std::string & name, char centerChar, int y, int x,
 
     mMinHeight = 4;
     mMinWidth = 4;
-    
+
     setFillClientArea(false);
 
     for (int i = 0; i < mContentHeight; i++)
@@ -88,7 +86,7 @@ DisplayBox::DisplayBox (const std::string & name, char centerChar, int y, int x,
 void DisplayBox::initialize ()
 {
     Control::initialize();
-    
+
     if (mAllowCenterControls)
     {
         mMoveCenterLeftButton = Button::createSharedButton(moveCenterLeftButtonName, "<", 0, 0, 1, 1, Colors::COLOR_DIM_BLACK, Colors::COLOR_DIM_WHITE, Colors::COLOR_DIM_BLACK, Colors::COLOR_DIM_WHITE);
@@ -105,21 +103,21 @@ void DisplayBox::initialize ()
         mMoveCenterUpButton->clicked()->connect(windowName, getSharedDisplayBox());
         mMoveCenterUpButton->setIsDirectFocusPossible(false);
         addControl(mMoveCenterUpButton);
-        
+
         mMoveCenterDownButton = Button::createSharedButton(moveCenterDownButtonName, "-", 0, 0, 1, 1, Colors::COLOR_DIM_BLACK, Colors::COLOR_DIM_WHITE, Colors::COLOR_DIM_BLACK, Colors::COLOR_DIM_WHITE);
         mMoveCenterDownButton->clicked()->connect(windowName, getSharedDisplayBox());
         mMoveCenterDownButton->setIsDirectFocusPossible(false);
         addControl(mMoveCenterDownButton);
-        
+
         mMoveCenterUpButton->setAnchorTop(0);
         mMoveCenterUpButton->setAnchorRight(0);
-        
+
         mMoveCenterDownButton->setAnchorTop(1);
         mMoveCenterDownButton->setAnchorRight(0);
-        
+
         mMoveCenterLeftButton->setAnchorTop(2);
         mMoveCenterLeftButton->setAnchorRight(0);
-        
+
         mMoveCenterRightButton->setAnchorTop(3);
         mMoveCenterRightButton->setAnchorRight(0);
     }
@@ -128,9 +126,9 @@ void DisplayBox::initialize ()
 std::shared_ptr<DisplayBox> DisplayBox::createSharedDisplayBox (const std::string & name, char centerChar, int y, int x, int height, int width, int contentHeight, int contentWidth, int foreColor, int backColor, bool autoScrolling, bool allowCenterControls, int scrollMarginTop, int scrollMarginRight, int scrollMarginBottom, int scrollMarginLeft)
 {
     auto result = std::shared_ptr<DisplayBox>(new DisplayBox(name, centerChar, y, x, height, width, contentHeight, contentWidth, foreColor, backColor, autoScrolling, allowCenterControls, scrollMarginTop, scrollMarginRight, scrollMarginBottom, scrollMarginLeft));
-    
+
     result->initialize();
-    
+
     return result;
 }
 
@@ -160,19 +158,19 @@ bool DisplayBox::onKeyPress (WindowSystem * ws, int key)
             case KEY_UP:
                 handleMoveCenterUp(ws);
                 break;
-                
+
             case KEY_DOWN:
                 handleMoveCenterDown(ws);
                 break;
-                
+
             case KEY_LEFT:
                 handleMoveCenterLeft(ws);
                 break;
-                
+
             case KEY_RIGHT:
                 handleMoveCenterRight(ws);
                 break;
-                
+
             default:
                 if (parent())
                 {
@@ -181,7 +179,7 @@ bool DisplayBox::onKeyPress (WindowSystem * ws, int key)
                 break;
         }
     }
-    
+
     return true;
 }
 
@@ -191,12 +189,12 @@ void DisplayBox::onMouseEvent (WindowSystem * ws, short id, int y, int x, mmask_
     {
         return;
     }
-    
+
     if (buttonState & BUTTON1_CLICKED)
     {
         int winY = y - clientY();
         int winX = x - clientX();
-        
+
         // Don't move the cursor if the click is in the non-client area.
         if (winX == 0 ||
             winX > textClientWidth())
@@ -205,17 +203,17 @@ void DisplayBox::onMouseEvent (WindowSystem * ws, short id, int y, int x, mmask_
         }
         int line = winY + mScrollLine;
         int column = winX + mScrollColumn - 1; // Subtract one for the focus marker.
-        
+
         if (line >= mContentHeight)
         {
             line = mContentHeight - 1;
         }
-        
+
         if (column >= mContentWidth)
         {
             column = mContentWidth - 1;
         }
-        
+
         if (mClickedLine != line || mClickedColumn != column)
         {
             mClickedLine = line;
@@ -232,7 +230,7 @@ void DisplayBox::onDrawClient () const
     {
         return;
     }
-    
+
     int i = 0;
     for (; i < clientHeight(); ++i)
     {
@@ -240,7 +238,7 @@ void DisplayBox::onDrawClient () const
         {
             break;
         }
-        
+
         std::string lineText = mContent[i + mScrollLine].substr(mScrollColumn, textClientWidth());
         if (mCenterChar && mCenterLine == (i + mScrollLine) && mCenterColumn >= mScrollColumn)
         {
@@ -274,7 +272,7 @@ void DisplayBox::setMinHeight (int height)
     {
         throw std::out_of_range("height cannot be less than 4.");
     }
-    
+
     mMinHeight = height;
 }
 
@@ -284,10 +282,10 @@ void DisplayBox::setMinWidth (int width)
     {
         throw std::out_of_range("width cannot be less than 4.");
     }
-    
+
     mMinWidth = width;
 }
-    
+
 void DisplayBox::verifyY (int y) const
 {
     if (y < 0 || y >= mContentHeight)
@@ -313,7 +311,7 @@ void DisplayBox::verifyYX (int y, int x) const
 char DisplayBox::symbol (int y, int x) const
 {
     verifyYX(y, x);
-    
+
     return mContent[y][x];
 }
 
@@ -323,16 +321,16 @@ void DisplayBox::setSymbol (char symbol, int y, int x)
 
     mContent[y][x] = symbol;
 }
-    
+
 void DisplayBox::setSymbols (const std::string & symbols, int y)
 {
     verifyY(y);
-    
+
     if (mContentWidth != static_cast<int>(symbols.size()))
     {
         throw std::out_of_range("symbols width must equal content width.");
     }
-    
+
     mContent[y] = symbols;
 }
 
@@ -362,7 +360,7 @@ void DisplayBox::notify (int id, WindowSystem * ws, Button * button)
     {
         return;
     }
-    
+
     if (button->name() == moveCenterUpButtonName)
     {
         handleMoveCenterUp(ws);
@@ -406,7 +404,7 @@ void DisplayBox::handleMoveCenterUp (WindowSystem * ws)
     if (canMoveCenterUp())
     {
         bool cancel = false;
-        
+
         handleBeforeCenterChanged(ws, getCenterY() - 1, getCenterX(), cancel);
         if (cancel)
         {
@@ -417,9 +415,9 @@ void DisplayBox::handleMoveCenterUp (WindowSystem * ws)
     {
         return;
     }
-    
+
     bool centerMoved = moveCenterUp();
-    
+
     bool scrollMoved = false;
     if (centerMoved && mAutoScrolling)
     {
@@ -429,7 +427,7 @@ void DisplayBox::handleMoveCenterUp (WindowSystem * ws)
             scrollMoved = scrollDown();
         }
     }
-    
+
     if (centerMoved)
     {
         handleAfterCenterChanged(ws, mCenterLine, mCenterColumn);
@@ -445,7 +443,7 @@ void DisplayBox::handleMoveCenterDown (WindowSystem * ws)
     if (canMoveCenterDown())
     {
         bool cancel = false;
-        
+
         handleBeforeCenterChanged(ws, getCenterY() + 1, getCenterX(), cancel);
         if (cancel)
         {
@@ -456,9 +454,9 @@ void DisplayBox::handleMoveCenterDown (WindowSystem * ws)
     {
         return;
     }
-    
+
     bool centerMoved = moveCenterDown();
-    
+
     bool scrollMoved = false;
     if (centerMoved && mAutoScrolling)
     {
@@ -468,7 +466,7 @@ void DisplayBox::handleMoveCenterDown (WindowSystem * ws)
             scrollMoved = scrollUp();
         }
     }
-    
+
     if (centerMoved)
     {
         handleAfterCenterChanged(ws, mCenterLine, mCenterColumn);
@@ -484,7 +482,7 @@ void DisplayBox::handleMoveCenterLeft (WindowSystem * ws)
     if (canMoveCenterLeft())
     {
         bool cancel = false;
-        
+
         handleBeforeCenterChanged(ws, getCenterY(), getCenterX() - 1, cancel);
         if (cancel)
         {
@@ -495,9 +493,9 @@ void DisplayBox::handleMoveCenterLeft (WindowSystem * ws)
     {
         return;
     }
-    
+
     bool centerMoved = moveCenterLeft();
-    
+
     bool scrollMoved = false;
     if (centerMoved && mAutoScrolling)
     {
@@ -507,7 +505,7 @@ void DisplayBox::handleMoveCenterLeft (WindowSystem * ws)
             scrollMoved = scrollRight();
         }
     }
-    
+
     if (centerMoved)
     {
         handleAfterCenterChanged(ws, mCenterLine, mCenterColumn);
@@ -523,7 +521,7 @@ void DisplayBox::handleMoveCenterRight (WindowSystem * ws)
     if (canMoveCenterRight())
     {
         bool cancel = false;
-        
+
         handleBeforeCenterChanged(ws, getCenterY(), getCenterX() + 1, cancel);
         if (cancel)
         {
@@ -534,9 +532,9 @@ void DisplayBox::handleMoveCenterRight (WindowSystem * ws)
     {
         return;
     }
-    
+
     bool centerMoved = moveCenterRight();
-    
+
     bool scrollMoved = false;
     if (centerMoved && mAutoScrolling)
     {
@@ -546,7 +544,7 @@ void DisplayBox::handleMoveCenterRight (WindowSystem * ws)
             scrollMoved = scrollLeft();
         }
     }
-    
+
     if (centerMoved)
     {
         handleAfterCenterChanged(ws, mCenterLine, mCenterColumn);
@@ -592,10 +590,10 @@ bool DisplayBox::scrollUp ()
     if ((mContentHeight - mScrollLine) > clientHeight())
     {
         ++mScrollLine;
-        
+
         return true;
     }
-    
+
     return false;
 }
 
@@ -604,7 +602,7 @@ bool DisplayBox::scrollDown ()
     if (mScrollLine > 0)
     {
         --mScrollLine;
-        
+
         return true;
     }
 
@@ -616,10 +614,10 @@ bool DisplayBox::scrollLeft ()
     if ((mContentWidth - mScrollColumn) > textClientWidth())
     {
         ++mScrollColumn;
-        
+
         return true;
     }
-    
+
     return false;
 }
 
@@ -628,7 +626,7 @@ bool DisplayBox::scrollRight ()
     if (mScrollColumn > 0)
     {
         --mScrollColumn;
-        
+
         return true;
     }
 
@@ -655,7 +653,7 @@ void DisplayBox::ensurePointIsVisible (int y, int x)
             mScrollLine = mContentHeight - clientHeight();
         }
     }
-    
+
     if (x < mScrollColumn + mScrollMarginLeft)
     {
         mScrollColumn = x - mScrollMarginLeft;
@@ -673,7 +671,7 @@ void DisplayBox::ensurePointIsVisible (int y, int x)
         }
     }
 }
-    
+
 void DisplayBox::ensureCenterIsVisible ()
 {
     ensurePointIsVisible(mCenterLine, mCenterColumn);
@@ -688,7 +686,7 @@ int DisplayBox::getCenterX () const
 {
     return mCenterColumn;
 }
-    
+
 void DisplayBox::setCenter (int y, int x)
 {
     verifyYX(y, x);
@@ -722,10 +720,10 @@ bool DisplayBox::moveCenterUp ()
     if (canMoveCenterUp())
     {
         --mCenterLine;
-        
+
         return true;
     }
-    
+
     return false;
 }
 
@@ -734,10 +732,10 @@ bool DisplayBox::moveCenterDown ()
     if (canMoveCenterDown())
     {
         ++mCenterLine;
-        
+
         return true;
     }
-    
+
     return false;
 }
 
@@ -746,10 +744,10 @@ bool DisplayBox::moveCenterLeft ()
     if (canMoveCenterLeft())
     {
         --mCenterColumn;
-        
+
         return true;
     }
-    
+
     return false;
 }
 
@@ -758,10 +756,10 @@ bool DisplayBox::moveCenterRight ()
     if (canMoveCenterRight())
     {
         ++mCenterColumn;
-        
+
         return true;
     }
-    
+
     return false;
 }
 

@@ -1,23 +1,16 @@
+//  Region.cpp
+//  TUCUT/Game (Take Up Code Utility)
 //
-//  GameRegion.cpp
-//  TUCUT (Take Up Code Utility)
+//  Created by Abdul Wahid Tanner on 2019-01-25.
+//  Copyright © Take Up Code, Inc.
 //
-//  Created by Abdul Wahid Tanner on 1/25/19.
-//  Copyright © 2019 Take Up Code. All rights reserved.
-//
+#include "Region.h"
 
-#include "GameRegion.h"
-
-namespace TUCUT {
-namespace Game {
-
-void GameRegion::initialize ()
+void TUCUT::Game::Region::initialize ()
 { }
 
-std::shared_ptr<GameRegion> GameRegion::getSharedGameRegion ()
+std::shared_ptr<TUCUT::Game::Region>
+TUCUT::Game::Region::getSharedRegion ()
 {
-    return shared_from_this();
+  return shared_from_this();
 }
-
-} // namespace Game
-} // namespace TUCUT

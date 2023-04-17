@@ -1,3 +1,9 @@
+//  WindowSystem.h
+//  TUCUT/TUI (Take Up Code Utility)
+//
+//  Created by Abdul Wahid Tanner on 2017-10-26.
+//  Copyright © Take Up Code, Inc.
+//
 #ifndef TUCUT_TUI_WindowSystem_h
 #define TUCUT_TUI_WindowSystem_h
 

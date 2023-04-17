@@ -1,24 +1,21 @@
-//
 //  IMovementComponent.h
-//  TUCUT (Take Up Code Utility)
+//  TUCUT/Game (Take Up Code Utility)
 //
-//  Created by Abdul Wahid Tanner on 12/15/18.
-//  Copyright © 2018 Take Up Code. All rights reserved.
+//  Created by Abdul Wahid Tanner on 2018-12-15.
+//  Copyright © Take Up Code, Inc.
 //
-
 #ifndef TUCUT_Game_IMovementComponent_h
 #define TUCUT_Game_IMovementComponent_h
 
+#include "../ECS/Component.h"
+
 #include <string>
 
-#include "GameComponent.h"
-
-namespace TUCUT {
-namespace Game {
-
-class IMovementComponent : public Game::GameComponent
+namespace TUCUT::Game
 {
-public:
+  class IMovementComponent : public ECS::Component
+  {
+  public:
     static constexpr int xyzVelocity = 1;
     static constexpr int xVelocity = 2;
     static constexpr int yVelocity = 3;
@@ -35,31 +32,29 @@ public:
     static constexpr int xAccelerationDefault = 14;
     static constexpr int yAccelerationDefault = 15;
     static constexpr int zAccelerationDefault = 16;
-    static const std::string groupName;
-    static const std::string xyzVelocityName;
-    static const std::string xVelocityName;
-    static const std::string yVelocityName;
-    static const std::string zVelocityName;
-    static const std::string xyzVelocityMaxName;
-    static const std::string xVelocityMaxName;
-    static const std::string yVelocityMaxName;
-    static const std::string zVelocityMaxName;
-    static const std::string xyzAccelerationName;
-    static const std::string xAccelerationName;
-    static const std::string yAccelerationName;
-    static const std::string zAccelerationName;
-    static const std::string xyzAccelerationDefaultName;
-    static const std::string xAccelerationDefaultName;
-    static const std::string yAccelerationDefaultName;
-    static const std::string zAccelerationDefaultName;
+    static std::string const groupName;
+    static std::string const xyzVelocityName;
+    static std::string const xVelocityName;
+    static std::string const yVelocityName;
+    static std::string const zVelocityName;
+    static std::string const xyzVelocityMaxName;
+    static std::string const xVelocityMaxName;
+    static std::string const yVelocityMaxName;
+    static std::string const zVelocityMaxName;
+    static std::string const xyzAccelerationName;
+    static std::string const xAccelerationName;
+    static std::string const yAccelerationName;
+    static std::string const zAccelerationName;
+    static std::string const xyzAccelerationDefaultName;
+    static std::string const xAccelerationDefaultName;
+    static std::string const yAccelerationDefaultName;
+    static std::string const zAccelerationDefaultName;
 
-protected:
-    IMovementComponent (const std::string & token, int identity)
-    : GameComponent(token, identity)
+  protected:
+    IMovementComponent (std::string const & token, int identity)
+    : Component(token, identity)
     { }
-};
-
-} // namespace Game
-} // namespace TUCUT
+  };
+} // namespace TUCUT::Game
 
 #endif // TUCUT_Game_IMovementComponent_h

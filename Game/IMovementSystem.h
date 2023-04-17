@@ -1,37 +1,32 @@
-//
 //  IMovementSystem.h
-//  TUCUT (Take Up Code Utility)
+//  TUCUT/Game (Take Up Code Utility)
 //
-//  Created by Abdul Wahid Tanner on 12/15/18.
-//  Copyright © 2018 Take Up Code. All rights reserved.
+//  Created by Abdul Wahid Tanner on 2018-12-15.
+//  Copyright © Take Up Code, Inc.
 //
-
 #ifndef TUCUT_Game_IMovementSystem_h
 #define TUCUT_Game_IMovementSystem_h
 
+#include "../ECS/System.h"
+
 #include <string>
 
-#include "GameSystem.h"
-
-namespace TUCUT {
-namespace Game {
-
-class IMovementSystem : public Game::GameSystem
+namespace TUCUT::Game
 {
-public:
+  class IMovementSystem : public ECS::System
+  {
+  public:
     static constexpr int moveCmd = 1;
-    static const std::string targetIdName;
-    static const std::string xAccelerationName;
-    static const std::string yAccelerationName;
-    static const std::string zAccelerationName;
-    
-protected:
-    IMovementSystem (const std::string & token, int identity)
-    : GameSystem(token, identity)
-    { }
-};
+    static std::string const targetIdName;
+    static std::string const xAccelerationName;
+    static std::string const yAccelerationName;
+    static std::string const zAccelerationName;
 
-} // namespace Game
-} // namespace TUCUT
+  protected:
+    IMovementSystem (std::string const & token, int identity)
+    : System(token, identity)
+    { }
+  };
+} // namespace TUCUT::Game
 
 #endif // TUCUT_Game_IMovementSystem_h

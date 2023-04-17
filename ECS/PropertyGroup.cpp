@@ -1,137 +1,150 @@
-//
 //  PropertyGroup.cpp
-//  TUCUT (Take Up Code Utility)
+//  TUCUT/ECS (Take Up Code Utility)
 //
-//  Created by Abdul Wahid Tanner on 7/31/18.
-//  Copyright © 2018 Take Up Code. All rights reserved.
+//  Created by Abdul Wahid Tanner on 2018-07-31.
+//  Copyright © Take Up Code, Inc.
 //
-
 #include "PropertyGroup.h"
 
 #include <stdexcept>
-
-namespace TUCUT {
-namespace Game {
 
 PropertyGroup::PropertyGroup ()
 : mValues(new ValueMap())
 { }
 
-PropertyGroup::PropertyGroup (const PropertyGroup & src)
+PropertyGroup::PropertyGroup (PropertyGroup const & src)
 : mValues(new ValueMap())
 {
-    for (const auto & valuePair: *src.mValues)
+  for (auto const & valuePair: *src.mValues)
+  {
+    auto result = mValues->try_emplace(
+      valuePair.first, valuePair.second->clone());
+    if (not result.second)
     {
-        auto result = mValues->try_emplace(valuePair.first, valuePair.second->clone());
-        if (!result.second)
-        {
-            throw std::runtime_error("Unable to copy PropertyValue");
-        }
+      throw std::runtime_error("Unable to copy PropertyValue");
     }
+  }
 }
-    
+
 PropertyGroup::PropertyGroup (PropertyGroup && src)
 : mValues(src.mValues.release())
 { }
 
-PropertyGroup & PropertyGroup::operator = (const PropertyGroup & rhs)
+PropertyGroup & PropertyGroup::operator = (
+  PropertyGroup const & rhs)
 {
-    if (this == &rhs)
-    {
-        return *this;
-    }
-    
-    mValues->clear();
-    for (const auto & valuePair: *rhs.mValues)
-    {
-        auto result = mValues->try_emplace(valuePair.first, valuePair.second->clone());
-        if (!result.second)
-        {
-            throw std::runtime_error("Unable to copy PropertyValue");
-        }
-    }
-
+  if (this == &rhs)
+  {
     return *this;
+  }
+
+  mValues->clear();
+  for (auto const & valuePair: *rhs.mValues)
+  {
+    auto result = mValues->try_emplace(
+      valuePair.first, valuePair.second->clone());
+    if (not result.second)
+    {
+      throw std::runtime_error("Unable to copy PropertyValue");
+    }
+  }
+
+  return *this;
 }
-    
+
 PropertyGroup & PropertyGroup::operator = (PropertyGroup && rhs)
 {
-    if (this == &rhs)
-    {
-        return *this;
-    }
-    
-    mValues = std::move(rhs.mValues);
-    
+  if (this == &rhs)
+  {
     return *this;
+  }
+
+  mValues = std::move(rhs.mValues);
+
+  return *this;
 }
-    
+
 std::unique_ptr<PropertyGroup> PropertyGroup::clone () const
 {
-    return std::unique_ptr<PropertyGroup>(new PropertyGroup(*this));
-}
-    
-bool PropertyGroup::addValue (const std::string & valueName, const std::string & value, bool readOnly)
-{
-    auto result = mValues->try_emplace(valueName, PropertyValue::createStringPropertyValue(value, readOnly));
-    
-    return result.second;
+  return std::unique_ptr<PropertyGroup>(
+    new PropertyGroup(*this));
 }
 
-bool PropertyGroup::addValue (const std::string & valueName, const char * value, bool readOnly)
+bool PropertyGroup::addValue (std::string const & valueName,
+  std::string const & value, bool readOnly)
 {
-    auto result = mValues->try_emplace(valueName, PropertyValue::createStringPropertyValue(value, readOnly));
-    
-    return result.second;
+  auto result = mValues->try_emplace(valueName,
+    PropertyValue::createStringPropertyValue(value,
+      readOnly));
+
+  return result.second;
 }
 
-bool PropertyGroup::addValue (const std::string & valueName, int value, bool readOnly)
+bool PropertyGroup::addValue (std::string const & valueName,
+  char const * value, bool readOnly)
 {
-    auto result = mValues->try_emplace(valueName, PropertyValue::createIntegerPropertyValue(value, readOnly));
-    
-    return result.second;
+  auto result = mValues->try_emplace(valueName,
+    PropertyValue::createStringPropertyValue(value,
+      readOnly));
+
+  return result.second;
 }
 
-bool PropertyGroup::addValue (const std::string & valueName, double value, bool readOnly)
+bool PropertyGroup::addValue (std::string const & valueName,
+  int value, bool readOnly)
 {
-    auto result = mValues->try_emplace(valueName, PropertyValue::createFloatingPropertyValue(value, readOnly));
-    
-    return result.second;
+  auto result = mValues->try_emplace(valueName,
+    PropertyValue::createIntegerPropertyValue(value,
+      readOnly));
+
+  return result.second;
 }
 
-bool PropertyGroup::addValue (const std::string & valueName, bool value, bool readOnly)
+bool PropertyGroup::addValue (std::string const & valueName,
+  double value, bool readOnly)
 {
-    auto result = mValues->try_emplace(valueName, PropertyValue::createBooleanPropertyValue(value, readOnly));
-    
-    return result.second;
+  auto result = mValues->try_emplace(valueName,
+    PropertyValue::createFloatingPropertyValue(value,
+      readOnly));
+
+  return result.second;
 }
 
-void PropertyGroup::removeValue (const std::string & valueName)
+bool PropertyGroup::addValue (std::string const & valueName,
+  bool value, bool readOnly)
 {
-    mValues->erase(valueName);
+  auto result = mValues->try_emplace(valueName,
+    PropertyValue::createBooleanPropertyValue(value,
+      readOnly));
+
+  return result.second;
 }
 
-PropertyValue * PropertyGroup::getValue (const std::string & valueName)
+void PropertyGroup::removeValue (std::string const & valueName)
 {
-    auto valueMapResult = mValues->find(valueName);
-    if (valueMapResult == mValues->end())
-    {
-        return nullptr;
-    }
-    
-    return valueMapResult->second.get();
+  mValues->erase(valueName);
 }
 
-const PropertyValue * PropertyGroup::getValue (const std::string & valueName) const
+PropertyValue * PropertyGroup::getValue (
+  std::string const & valueName)
 {
-    auto valueMapResult = mValues->find(valueName);
-    if (valueMapResult == mValues->end())
-    {
-        return nullptr;
-    }
-    
-    return valueMapResult->second.get();
+  auto valueMapResult = mValues->find(valueName);
+  if (valueMapResult == mValues->end())
+  {
+    return nullptr;
+  }
+
+  return valueMapResult->second.get();
 }
 
-} // namespace Game
-} // namespace TUCUT
+PropertyValue const * PropertyGroup::getValue (
+  std::string const & valueName) const
+{
+  auto valueMapResult = mValues->find(valueName);
+  if (valueMapResult == mValues->end())
+  {
+    return nullptr;
+  }
+
+  return valueMapResult->second.get();
+}

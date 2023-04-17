@@ -1,115 +1,115 @@
+//  System.cpp
+//  TUCUT/ECS (Take Up Code Utility)
 //
-//  GameSystem.cpp
-//  TUCUT (Take Up Code Utility)
+//  Created by Abdul Wahid Tanner on 2018-11-27.
+//  Copyright © Take Up Code, Inc.
 //
-//  Created by Abdul Wahid Tanner on 11/27/18.
-//  Copyright © 2018 Take Up Code. All rights reserved.
-//
+#include "System.h"
 
-#include "GameSystem.h"
-#include "GameManager.h"
+#include "Application.h"
 
 #include <stdexcept>
 
-namespace TUCUT {
-namespace Game {
+std::string const
+TUCUT::ECS::System::defaultToken = "System";
 
-const std::string GameSystem::defaultToken = "GameSystem";
-
-void GameSystem::initialize ()
+void TUCUT::ECS::System::initialize ()
 {
-    GameManager * pGameMgr = GameManager::instance();
-    for (const auto & token: mRequiredAbilityTokens)
-    {
-        pGameMgr->getOrCreateGameAbility(token);
-    }
-    for (const auto & token: mRequiredCommandTokens)
-    {
-        auto commandId = pGameMgr->getOrCreateGameCommand(token);
-        pGameMgr->gameCommandSent(commandId)->connect(idToken().toString(), getSharedGameSystem());
-    }
-    for (const auto & token: mActionTokens)
-    {
-        pGameMgr->getOrCreateGameAction(token);
-    }
+  Application * app = Application::instance();
+  for (auto const & token: mRequiredAbilityTokens)
+  {
+    app->getOrCreateAbility(token);
+  }
+  for (auto const & token: mRequiredCommandTokens)
+  {
+    auto commandId = app->getOrCreateCommand(token);
+    app->commandSent(commandId)->connect(
+      idToken().toString(), getSharedSystem());
+  }
+  for (auto const & token: mActionTokens)
+  {
+    app->getOrCreateAction(token);
+  }
 
-    pGameMgr->gameObjectCreated()->connect(idToken().toString(), getSharedGameSystem());
-    pGameMgr->gameObjectRemoving()->connect(idToken().toString(), getSharedGameSystem());
-    pGameMgr->gameObjectComponentChanged()->connect(idToken().toString(), getSharedGameSystem());
+  app->entityCreated()->connect(
+    idToken().toString(), getSharedSystem());
+  app->entityRemoving()->connect(
+    idToken().toString(), getSharedSystem());
+  app->entityComponentChanged()->connect(
+    idToken().toString(), getSharedSystem());
 }
 
-std::shared_ptr<GameSystem> GameSystem::getSharedGameSystem ()
+std::shared_ptr<TUCUT::ECS::System>
+TUCUT::ECS::System::getSharedSystem ()
 {
-    return shared_from_this();
+  return shared_from_this();
 }
 
-bool GameSystem::hasGameObject (int identity) const
+bool TUCUT::ECS::System::hasEntity (int identity) const
 {
-    if (identity < 1)
-    {
-        return false;
-    }
+  if (identity < 1)
+  {
+    return false;
+  }
 
-    auto gameObjectMapResult = mGameObjects.find(identity);
-    if (gameObjectMapResult == mGameObjects.end())
-    {
-        return false;
-    }
-
-    return true;
+  return mEntities.contains(identity);
 }
 
-void GameSystem::notify (int id, const std::shared_ptr<GameObject> & gameObject)
+void TUCUT::ECS::System::notify (
+  int id,
+  std::shared_ptr<Entity> const & entity)
 {
-    bool gameObjectBelongs = false;
-    if (id == GameManager::GameObjectCreatedEventId ||
-        id == GameManager::GameObjectComponentEventId)
-    {
-        // A game object will belong by default unless it's
-        // missing a required component.
-        gameObjectBelongs = true;
+  bool entityBelongs = false;
+  if (id == Application::EntityCreatedEventId ||
+    id == Application::EntityComponentEventId)
+  {
+    // An entity will belong by default unless it's
+    // missing a required component.
+    entityBelongs = true;
 
-        for (const auto & token: mRequiredAbilityTokens)
-        {
-            if (!gameObject->hasGameAbility(token))
-            {
-                gameObjectBelongs = false;
-                break;
-            }
-        }
-    }
-    else if (id == GameManager::GameObjectRemovingEventId)
+    for (auto const & token: mRequiredAbilityTokens)
     {
-        gameObjectBelongs = false;
+      if (not entity->hasAbility(token))
+      {
+        entityBelongs = false;
+        break;
+      }
     }
-    else
-    {
-        return;
-    }
+  }
+  else if (id == Application::EntityRemovingEventId)
+  {
+    entityBelongs = false;
+  }
+  else
+  {
+    return;
+  }
 
-    if (gameObjectBelongs)
+  if (entityBelongs)
+  {
+    if (not hasEntity(entity->identity()))
     {
-        if (!hasGameObject(gameObject->identity()))
-        {
-            auto result = mGameObjects.try_emplace(gameObject->identity(), gameObject);
-            if (!result.second)
-            {
-                throw std::runtime_error("Unable to add game object to system");
-            }
-        }
+      auto result = mEntities.try_emplace(
+        entity->identity(), entity);
+      if (not result.second)
+      {
+        throw std::runtime_error(
+          "Unable to add entity to system");
+      }
     }
-    else
+  }
+  else
+  {
+    auto entityMapResult = mEntities.find(entity->identity());
+    if (entityMapResult != mEntities.end())
     {
-        auto gameObjectMapResult = mGameObjects.find(gameObject->identity());
-        if (gameObjectMapResult != mGameObjects.end())
-        {
-            mGameObjects.erase(gameObject->identity());
-        }
+      mEntities.erase(entity->identity());
     }
+  }
 }
 
-void GameSystem::notify (int, int, const PropertyGroup &)
+void TUCUT::ECS::System::notify (
+  int,
+  int,
+  PropertyGroup const &)
 { }
-
-} // namespace Game
-} // namespace TUCUT

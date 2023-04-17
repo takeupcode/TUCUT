@@ -1,81 +1,77 @@
-//
 //  PropertyContainer.h
-//  TUCUT (Take Up Code Utility)
+//  TUCUT/ECS (Take Up Code Utility)
 //
-//  Created by Abdul Wahid Tanner on 7/31/18.
-//  Copyright © 2018 Take Up Code. All rights reserved.
+//  Created by Abdul Wahid Tanner on 2018-07-31.
+//  Copyright © Take Up Code, Inc.
 //
+#ifndef TUCUT_ECS_PropertyContainer_h
+#define TUCUT_ECS_PropertyContainer_h
 
-#ifndef TUCUT_Game_PropertyContainer_h
-#define TUCUT_Game_PropertyContainer_h
+#include "PropertyGroup.h"
 
 #include <string>
 #include <unordered_map>
 #include <vector>
 
-#include "PropertyGroup.h"
-
-namespace TUCUT {
-namespace Game {
-
-class PropertyContainer
+namespace TUCUT::ECS
 {
-public:
+  class PropertyContainer
+  {
+  public:
     PropertyContainer ();
-    
-    PropertyContainer (const PropertyContainer & src);
+
+    PropertyContainer (PropertyContainer const & src);
 
     PropertyContainer (PropertyContainer && src);
-    
+
     virtual ~PropertyContainer () = default;
-    
-    PropertyContainer & operator = (const PropertyContainer & rhs);
+
+    PropertyContainer & operator = (
+      PropertyContainer const & rhs);
     PropertyContainer & operator = (PropertyContainer && rhs);
 
-    PropertyGroup * addGroup (const std::string & groupName);
-    
-    void removeGroup (const std::string & groupName);
+    PropertyGroup * addGroup (std::string const & groupName);
 
-    bool hasGroup (const std::string & groupName) const
+    void removeGroup (std::string const & groupName);
+
+    bool hasGroup (std::string const & groupName) const
     {
-        auto groupMapResult = mGroups->find(groupName);
-        if (groupMapResult == mGroups->end())
-        {
-            return false;
-        }
-        
-        return true;
+      return mGroups->contains(groupName);
     }
 
-    bool hasAllGroups (const std::vector<std::string> & groupNames) const
+    bool hasAllGroups (
+      std::vector<std::string> const & groupNames) const
     {
-        for (const auto & groupName: groupNames)
+      for (const auto & groupName: groupNames)
+      {
+        if (not mGroups->contains(groupName))
         {
-            auto groupMapResult = mGroups->find(groupName);
-            if (groupMapResult == mGroups->end())
-            {
-                return false;
-            }
+          return false;
         }
-        
-        return true;
+      }
+
+      return true;
     }
 
-    PropertyGroup * getGroup (const std::string & groupName);
+    PropertyGroup * getGroup (std::string const & groupName);
 
-    const PropertyGroup * getGroup (const std::string & groupName) const;
+    PropertyGroup const * getGroup (
+      std::string const & groupName) const;
 
-    PropertyValue * getValue (const std::string & groupName, const std::string & valueName);
+    PropertyValue * getValue (
+      std::string const & groupName,
+      std::string const & valueName);
 
-    const PropertyValue * getValue (const std::string & groupName, const std::string & valueName) const;
+    PropertyValue const * getValue (
+      std::string const & groupName,
+      std::string const & valueName) const;
 
-private:
-    using GroupMap = std::unordered_map<std::string, std::unique_ptr<PropertyGroup>>;
-    
+  private:
+    using GroupMap = std::unordered_map<
+      std::string, std::unique_ptr<PropertyGroup>>;
+
     std::unique_ptr<GroupMap> mGroups;
-};
-    
-} // namespace Game
-} // namespace TUCUT
+  };
+} // namespace TUCUT::ECS
 
-#endif // TUCUT_Game_PropertyContainer_h
+#endif // TUCUT_ECS_PropertyContainer_h

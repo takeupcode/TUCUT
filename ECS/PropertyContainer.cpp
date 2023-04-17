@@ -1,125 +1,131 @@
-//
 //  PropertyContainer.cpp
-//  TUCUT (Take Up Code Utility)
+//  TUCUT/ECS (Take Up Code Utility)
 //
-//  Created by Abdul Wahid Tanner on 7/31/18.
-//  Copyright © 2018 Take Up Code. All rights reserved.
+//  Created by Abdul Wahid Tanner on 2018-07-31.
+//  Copyright © Take Up Code, Inc.
 //
-
 #include "PropertyContainer.h"
-
-namespace TUCUT {
-namespace Game {
 
 PropertyContainer::PropertyContainer ()
 : mGroups(new GroupMap())
 { }
 
-PropertyContainer::PropertyContainer (const PropertyContainer & src)
+PropertyContainer::PropertyContainer (
+  PropertyContainer const & src)
 : mGroups(new GroupMap())
 {
-    for (const auto & groupPair: *src.mGroups)
+  for (auto const & groupPair: *src.mGroups)
+  {
+    auto result = mGroups->try_emplace(groupPair.first,
+      groupPair.second->clone());
+    if (not result.second)
     {
-        auto result = mGroups->try_emplace(groupPair.first, groupPair.second->clone());
-        if (!result.second)
-        {
-            throw std::runtime_error("Unable to copy PropertyGroup");
-        }
+      throw std::runtime_error("Unable to copy PropertyGroup");
     }
+  }
 }
 
 PropertyContainer::PropertyContainer (PropertyContainer && src)
 : mGroups(src.mGroups.release())
 { }
 
-PropertyContainer & PropertyContainer::operator = (const PropertyContainer & rhs)
+PropertyContainer & PropertyContainer::operator = (
+  PropertyContainer const & rhs)
 {
-    if (this == &rhs)
-    {
-        return *this;
-    }
-    
-    mGroups->clear();
-    for (const auto & groupPair: *rhs.mGroups)
-    {
-        auto result = mGroups->try_emplace(groupPair.first, groupPair.second->clone());
-        if (!result.second)
-        {
-            throw std::runtime_error("Unable to copy PropertyGroup");
-        }
-    }
-    
+  if (this == &rhs)
+  {
     return *this;
+  }
+
+  mGroups->clear();
+  for (auto const & groupPair: *rhs.mGroups)
+  {
+    auto result = mGroups->try_emplace(
+      groupPair.first, groupPair.second->clone());
+    if (not result.second)
+    {
+      throw std::runtime_error("Unable to copy PropertyGroup");
+    }
+  }
+
+  return *this;
 }
 
-PropertyContainer & PropertyContainer::operator = (PropertyContainer && rhs)
+PropertyContainer & PropertyContainer::operator = (
+  PropertyContainer && rhs)
 {
-    if (this == &rhs)
-    {
-        return *this;
-    }
-    
-    mGroups = std::move(rhs.mGroups);
-    
+  if (this == &rhs)
+  {
     return *this;
+  }
+
+  mGroups = std::move(rhs.mGroups);
+
+  return *this;
 }
 
-PropertyGroup * PropertyContainer::addGroup (const std::string & groupName)
+PropertyGroup * PropertyContainer::addGroup (
+  std::string const & groupName)
 {
-    auto result = mGroups->try_emplace(groupName, std::make_unique<PropertyGroup>());
-    
-    auto & group = result.first->second;
-    return group.get();
+  auto result = mGroups->try_emplace(
+    groupName, std::make_unique<PropertyGroup>());
+
+  auto & group = result.first->second;
+  return group.get();
 }
 
-void PropertyContainer::removeGroup (const std::string & groupName)
+void PropertyContainer::removeGroup (
+  std::string const & groupName)
 {
-    mGroups->erase(groupName);
+  mGroups->erase(groupName);
 }
 
-PropertyGroup * PropertyContainer::getGroup (const std::string & groupName)
+PropertyGroup * PropertyContainer::getGroup (
+  std::string const & groupName)
 {
-    auto groupMapResult = mGroups->find(groupName);
-    if (groupMapResult == mGroups->end())
-    {
-        return nullptr;
-    }
-    
-    return groupMapResult->second.get();
+  auto groupMapResult = mGroups->find(groupName);
+  if (groupMapResult == mGroups->end())
+  {
+    return nullptr;
+  }
+
+  return groupMapResult->second.get();
 }
 
-const PropertyGroup * PropertyContainer::getGroup (const std::string & groupName) const
+PropertyGroup const * PropertyContainer::getGroup (
+  std::string const & groupName) const
 {
-    auto groupMapResult = mGroups->find(groupName);
-    if (groupMapResult == mGroups->end())
-    {
-        return nullptr;
-    }
-    
-    return groupMapResult->second.get();
+  auto groupMapResult = mGroups->find(groupName);
+  if (groupMapResult == mGroups->end())
+  {
+    return nullptr;
+  }
+
+  return groupMapResult->second.get();
 }
 
-PropertyValue * PropertyContainer::getValue (const std::string & groupName, const std::string & valueName)
+PropertyValue * PropertyContainer::getValue (
+  std::string const & groupName,
+  std::string const & valueName)
 {
-    auto group = getGroup(groupName);
-    if (!group)
-    {
-        return nullptr;
-    }
-    
-    return group->getValue(valueName);
+  auto group = getGroup(groupName);
+  if (not group)
+  {
+    return nullptr;
+  }
+
+  return group->getValue(valueName);
 }
 
-const PropertyValue * PropertyContainer::getValue (const std::string & groupName, const std::string & valueName) const
+PropertyValue const * PropertyContainer::getValue (
+  std::string const & groupName,
+  std::string const & valueName) const
 {
-    auto group = getGroup(groupName);
-    if (!group)
-    {
-        return nullptr;
-    }
-    
-    return group->getValue(valueName);
-}
+  auto group = getGroup(groupName);
+  if (not group)
+  {
+    return nullptr;
+  }
 
-} // namespace Game
-} // namespace TUCUT
+  return group->getValue(valueName);
+}

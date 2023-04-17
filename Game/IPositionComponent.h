@@ -1,24 +1,21 @@
+//  IPositionComponent.h
+//  TUCUT/Game (Take Up Code Utility)
 //
-//  IPositionComponent.hpp
-//  TUCUT (Take Up Code Utility)
+//  Created by Abdul Wahid Tanner on 2018-12-15.
+//  Copyright © Take Up Code, Inc.
 //
-//  Created by Abdul Wahid Tanner on 12/15/18.
-//  Copyright © 2018 Take Up Code. All rights reserved.
-//
-
 #ifndef TUCUT_Game_IPositionComponent_h
 #define TUCUT_Game_IPositionComponent_h
 
+#include "../ECS/Component.h"
+
 #include <string>
 
-#include "GameComponent.h"
-
-namespace TUCUT {
-namespace Game {
-
-class IPositionComponent : public Game::GameComponent
+namespace TUCUT::Game
 {
-public:
+  class IPositionComponent : public ECS::Component
+  {
+  public:
     static constexpr int xyz = 1;
     static constexpr int x = 2;
     static constexpr int y = 3;
@@ -27,24 +24,22 @@ public:
     static constexpr int xOld = 6;
     static constexpr int yOld = 7;
     static constexpr int zOld = 8;
-    static const std::string groupName;
-    static const std::string xyzName;
-    static const std::string xName;
-    static const std::string yName;
-    static const std::string zName;
-    static const std::string xyzOldName;
-    static const std::string xOldName;
-    static const std::string yOldName;
-    static const std::string zOldName;
-    static const std::string positionChangedToken;
+    static std::string const groupName;
+    static std::string const xyzName;
+    static std::string const xName;
+    static std::string const yName;
+    static std::string const zName;
+    static std::string const xyzOldName;
+    static std::string const xOldName;
+    static std::string const yOldName;
+    static std::string const zOldName;
+    static std::string const positionChangedToken;
 
-protected:
-    IPositionComponent (const std::string & token, int identity)
-    : GameComponent(token, identity)
+  protected:
+    IPositionComponent (std::string const & token, int identity)
+    : Component(token, identity)
     { }
-};
-
-} // namespace Game
-} // namespace TUCUT
+  };
+} // namespace TUCUT::Game
 
 #endif // TUCUT_Game_IPositionComponent_h

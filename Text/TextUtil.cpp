@@ -1,3 +1,9 @@
+//  TextUtil.cpp
+//  TUCUT/Text (Take Up Code Utility)
+//
+//  Created by Abdul Wahid Tanner on 2017-11-17.
+//  Copyright © Take Up Code, Inc.
+//
 #include "TextUtil.h"
 
 #include <sstream>
