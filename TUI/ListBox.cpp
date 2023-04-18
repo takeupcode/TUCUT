@@ -17,11 +17,11 @@
 namespace TUCUT {
 namespace Curses {
 
-const std::string ListBox::windowName = "parent";
-const std::string ListBox::moveSelectionUpButtonName = "moveUpButton";
-const std::string ListBox::moveSelectionDownButtonName = "moveDownButton";
+std::string const ListBox::windowName = "parent";
+std::string const ListBox::moveSelectionUpButtonName = "moveUpButton";
+std::string const ListBox::moveSelectionDownButtonName = "moveDownButton";
 
-ListBox::ListBox (const std::string & name, const std::vector<std::string> & items, int y, int x, int height, int width, int foreColor, int backColor, int selectionForeColor, int selectionBackColor)
+ListBox::ListBox (std::string const & name, std::vector<std::string> const & items, int y, int x, int height, int width, int foreColor, int backColor, int selectionForeColor, int selectionBackColor)
 : Control(name, y, x, height, width, foreColor, backColor, foreColor, backColor),
   mSelectionChanged(new SelectionChangedEvent(SelectionChangedEventId)),
   mSelectionForeColor(selectionForeColor), mSelectionBackColor(selectionBackColor),
@@ -65,7 +65,7 @@ void ListBox::initialize ()
     mMoveSelectionDownButton->setAnchorRight(0);
 }
 
-std::shared_ptr<ListBox> ListBox::createSharedListBox (const std::string & name, const std::vector<std::string> & items, int y, int x, int height, int width, int foreColor, int backColor, int selectionForeColor, int selectionBackColor)
+std::shared_ptr<ListBox> ListBox::createSharedListBox (std::string const & name, std::vector<std::string> const & items, int y, int x, int height, int width, int foreColor, int backColor, int selectionForeColor, int selectionBackColor)
 {
     auto result = std::shared_ptr<ListBox>(new ListBox(name, items, y, x, height, width, foreColor, backColor, selectionForeColor, selectionBackColor));
 
@@ -242,7 +242,7 @@ std::string ListBox::text (int index) const
     return mItems[index];
 }
 
-void ListBox::setText (int index, const std::string & text)
+void ListBox::setText (int index, std::string const & text)
 {
     if (index > static_cast<int>(mItems.size()))
     {
@@ -252,12 +252,12 @@ void ListBox::setText (int index, const std::string & text)
     mItems[index] = text;
 }
 
-void ListBox::appendItems (const std::vector<std::string> & items)
+void ListBox::appendItems (std::vector<std::string> const & items)
 {
     insertItems(static_cast<int>(mItems.size()), items);
 }
 
-void ListBox::insertItems (int index, const std::vector<std::string> & items)
+void ListBox::insertItems (int index, std::vector<std::string> const & items)
 {
     if (index > static_cast<int>(mItems.size()))
     {

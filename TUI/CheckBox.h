@@ -18,11 +18,11 @@ namespace Curses {
 class CheckBox : public Control
 {
 public:
-    const static int ClickedEventId = 1;
+    static int const ClickedEventId = 1;
 
     using ClickedEvent = Event::EventPublisher<WindowSystem *, CheckBox *>;
 
-    static std::shared_ptr<CheckBox> createSharedCheckBox (const std::string & name, const std::string & text, int y, int x, int height, int width, int foreColor, int backColor, int focusForeColor, int focusBackColor);
+    static std::shared_ptr<CheckBox> createSharedCheckBox (std::string const & name, std::string const & text, int y, int x, int height, int width, int foreColor, int backColor, int focusForeColor, int focusBackColor);
 
     std::shared_ptr<CheckBox> getSharedCheckBox ();
 
@@ -39,7 +39,7 @@ public:
     ClickedEvent * clicked ();
 
 protected:
-    CheckBox (const std::string & name, const std::string & text, int y, int x, int height, int width, int foreColor, int backColor, int focusForeColor, int focusBackColor);
+    CheckBox (std::string const & name, std::string const & text, int y, int x, int height, int width, int foreColor, int backColor, int focusForeColor, int focusBackColor);
 
     void initialize () override;
 

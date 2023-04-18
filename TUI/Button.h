@@ -18,11 +18,11 @@ namespace Curses {
 class Button : public Control
 {
 public:
-    const static int ClickedEventId = 1;
+    static int const ClickedEventId = 1;
 
     using ClickedEvent = Event::EventPublisher<WindowSystem *, Button *>;
 
-    static std::shared_ptr<Button> createSharedButton (const std::string & name, const std::string & text, int y, int x, int height, int width, int foreColor, int backColor, int focusForeColor, int focusBackColor);
+    static std::shared_ptr<Button> createSharedButton (std::string const & name, std::string const & text, int y, int x, int height, int width, int foreColor, int backColor, int focusForeColor, int focusBackColor);
 
     std::shared_ptr<Button> getSharedButton ();
 
@@ -35,7 +35,7 @@ public:
     ClickedEvent * clicked ();
 
 protected:
-    Button (const std::string & name, const std::string & text, int y, int x, int height, int width, int foreColor, int backColor, int focusForeColor, int focusBackColor);
+    Button (std::string const & name, std::string const & text, int y, int x, int height, int width, int foreColor, int backColor, int focusForeColor, int focusBackColor);
 
     void initialize () override;
 

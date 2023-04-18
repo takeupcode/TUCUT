@@ -22,11 +22,11 @@ class Button;
 class TextBox : public Control, public Event::EventSubscriber<WindowSystem *, Button *>
 {
 public:
-    const static int TextChangedEventId = 1;
+    static int const TextChangedEventId = 1;
 
     using TextChangedEvent = Event::EventPublisher<WindowSystem *, TextBox *>;
 
-    static std::shared_ptr<TextBox> createSharedTextBox (const std::string & name, const std::string & text, int y, int x, int height, int width, int foreColor, int backColor, bool multiline = false);
+    static std::shared_ptr<TextBox> createSharedTextBox (std::string const & name, std::string const & text, int y, int x, int height, int width, int foreColor, int backColor, bool multiline = false);
 
     std::shared_ptr<TextBox> getSharedTextBox ();
 
@@ -48,16 +48,16 @@ public:
 
     std::string text () const;
 
-    void setText (const std::string & text);
+    void setText (std::string const & text);
 
-    void appendLines (const std::string & text);
+    void appendLines (std::string const & text);
 
-    void insertLines (const std::string & text);
+    void insertLines (std::string const & text);
 
     TextChangedEvent * textChanged ();
 
 protected:
-    TextBox (const std::string & name, const std::string & text, int y, int x, int height, int width, int foreColor, int backColor, bool multiline);
+    TextBox (std::string const & name, std::string const & text, int y, int x, int height, int width, int foreColor, int backColor, bool multiline);
 
     void initialize () override;
 
@@ -77,11 +77,11 @@ private:
     void placeCursorClosestToDesiredColumn ();
     void ensureCursorIsVisible ();
 
-    static const std::string windowName;
-    static const std::string moveCursorUpButtonName;
-    static const std::string moveCursorDownButtonName;
-    static const std::string moveCursorLeftButtonName;
-    static const std::string moveCursorRightButtonName;
+    static std::string const windowName;
+    static std::string const moveCursorUpButtonName;
+    static std::string const moveCursorDownButtonName;
+    static std::string const moveCursorLeftButtonName;
+    static std::string const moveCursorRightButtonName;
 
     std::vector<std::string> mText;
     std::unique_ptr<TextChangedEvent> mTextChanged;

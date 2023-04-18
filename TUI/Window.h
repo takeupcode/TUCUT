@@ -69,7 +69,7 @@ namespace TUCUT::TUI
 
     virtual void onResize ();
 
-    const std::string & name () const;
+    std::string const & name () const;
 
     virtual int y () const;
 
@@ -161,7 +161,7 @@ namespace TUCUT::TUI
 
     void setFocusBackColor (int color);
 
-    void addControl(const std::shared_ptr<Window> & control);
+    void addControl(std::shared_ptr<Window> const & control);
 
     void addControl(std::shared_ptr<Window> && control);
 
@@ -200,7 +200,7 @@ namespace TUCUT::TUI
     virtual void drawInsideBorder () const;
 
 protected:
-    Window (const std::string & name, int y, int x, int height, int width, int clientForeColor, int clientBackColor, int borderForeColor, int borderBackColor, int focusForeColor, int focusBackColor, bool border);
+    Window (std::string const & name, int y, int x, int height, int width, int clientForeColor, int clientBackColor, int borderForeColor, int borderBackColor, int focusForeColor, int focusBackColor, bool border);
 
     virtual void initialize ();
 

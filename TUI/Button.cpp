@@ -13,7 +13,7 @@
 namespace TUCUT {
 namespace Curses {
 
-Button::Button (const std::string & name, const std::string & text, int y, int x, int height, int width, int foreColor, int backColor, int focusForeColor, int focusBackColor)
+Button::Button (std::string const & name, std::string const & text, int y, int x, int height, int width, int foreColor, int backColor, int focusForeColor, int focusBackColor)
 : Control(name, y, x, height, width, foreColor, backColor, focusForeColor, focusBackColor),
   mText(text), mClicked(new ClickedEvent(ClickedEventId))
 {
@@ -25,7 +25,7 @@ void Button::initialize ()
     Control::initialize();
 }
 
-std::shared_ptr<Button> Button::createSharedButton (const std::string & name, const std::string & text, int y, int x, int height, int width, int foreColor, int backColor, int focusForeColor, int focusBackColor)
+std::shared_ptr<Button> Button::createSharedButton (std::string const & name, std::string const & text, int y, int x, int height, int width, int foreColor, int backColor, int focusForeColor, int focusBackColor)
 {
     auto result = std::shared_ptr<Button>(new Button(name, text, y, x, height, width, foreColor, backColor, focusForeColor, focusBackColor));
 

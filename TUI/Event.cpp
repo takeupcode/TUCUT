@@ -39,7 +39,8 @@ std::string TUI::DropEscapeEvent::to_string () const
 
 TUI::Event TUI::parseEscapeSequence (
   std::string const & sequence,
-  bool endOfText)
+  bool endOfText,
+  bool cursorPositionReportExpected)
 {
   if (sequence.empty())
   {
@@ -67,7 +68,7 @@ TUI::Event TUI::parseEscapeSequence (
     return parseAltKey(sequence[1]);
   }
 
-  return parseCSI(sequence);
+  return parseCSI(sequence, cursorPositionReportExpected);
 }
 
 TUI::Event TUI::parseAltKey (
@@ -103,7 +104,8 @@ TUI::Event TUI::parseAltKey (
   return event;
 }
 
-TUI::Event TUI::parseCSI (std::string const & sequence)
+TUI::Event TUI::parseCSI (std::string const & sequence,
+  bool cursorPositionReportExpected)
 {
   Event event = NoEvent {};
 
@@ -204,7 +206,8 @@ TUI::Event TUI::parseCSI (std::string const & sequence)
       // sequence and we need to add the terminating
       // character to the parameters.
       parameters.push_back(sequence[i]);
-      return parseXtermCSI(parameters);
+      return parseXtermCSI(parameters,
+        cursorPositionReportExpected);
     }
   }
 
@@ -382,7 +385,8 @@ TUI::Event TUI::parseVtCSI (
 }
 
 TUI::Event TUI::parseXtermCSI (
-  std::vector<std::optional<int>> const & parameters)
+  std::vector<std::optional<int>> const & parameters,
+  bool cursorPositionReportExpected)
 {
   Event event = DropEscapeEvent(parameters);
   if (parameters.empty())
@@ -484,6 +488,10 @@ TUI::Event TUI::parseXtermCSI (
     break;
 
   case KeyCodes::RChar:
+    if (cursorPositionReportExpected)
+    {
+      return parseCursorPositionCSI(parameters);
+    }
     event = ExtendedCharacterEvent
     {
       .mKey = ExtendedKeys::F3,
@@ -579,6 +587,30 @@ TUI::Event TUI::parseMouseCSI (
     .mButton = button,
     .mAction = action,
     .mKeyModifier = modifier,
+    .mX = paramX,
+    .mY = paramY
+  };
+
+  return event;
+}
+
+TUI::Event TUI::parseCursorPositionCSI (
+  std::vector<std::optional<int>> const & parameters)
+{
+  Event event = DropEscapeEvent(parameters);
+
+  // There should be 2 parameters.
+  // 0 - row or y
+  // 1 - column or x
+  if (parameters.size() != 2)
+  {
+    return event;
+  }
+
+  int paramY = parameters[0].value();
+  int paramX = parameters[1].value();
+  event = CursorPositionEvent
+  {
     .mX = paramX,
     .mY = paramY
   };

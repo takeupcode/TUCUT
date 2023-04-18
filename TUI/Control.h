@@ -18,7 +18,7 @@ public:
     void onDrawNonClient () const override;
 
 protected:
-    Control (const std::string & name, int y, int x, int height, int width, int clientForeColor, int clientBackColor, int focusForeColor, int focusBackColor);
+    Control (std::string const & name, int y, int x, int height, int width, int clientForeColor, int clientBackColor, int focusForeColor, int focusBackColor);
 };
 
 } // namespace Curses

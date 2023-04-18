@@ -121,7 +121,7 @@ void TUI::Input::accept (std::string const & utf8)
       escapeSequence += utf8[0];
     }
     Event event = parseEscapeSequence(escapeSequence,
-      endOfText);
+      endOfText, mCursorPositionReportExpected);
     std::visit(overloaded
       {
         [] (NoEvent &)
@@ -133,6 +133,13 @@ void TUI::Input::accept (std::string const & utf8)
           //mOutput << arg.to_string();
 
           escapeSequence.clear();
+        },
+
+        [this] (CursorPositionEvent &)
+        {
+          mCursorPositionReportExpected = false;
+          escapeSequence.clear();
+          mMessages.post(arg);
         },
 
         [this] (auto & arg)
@@ -188,6 +195,11 @@ void TUI::Input::accept (std::string const & utf8)
 void TUI::Input::clearError ()
 {
   mSuccess = true;
+}
+
+void TUI::Input::expectCursorPositionReport ()
+{
+  mCursorPositionReportExpected = true;
 }
 
 TUI::Input::operator bool () const

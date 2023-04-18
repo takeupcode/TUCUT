@@ -31,17 +31,17 @@ public:
         return mRows;
     }
 
-    bool addTileType (const std::string & typeName, char symbol);
+    bool addTileType (std::string const & typeName, char symbol);
 
     char tile (unsigned int x, unsigned int y);
 
-    void setTile (unsigned int x, unsigned int y, const std::string & typeName);
+    void setTile (unsigned int x, unsigned int y, std::string const & typeName);
 
     void removeTile (unsigned int x, unsigned int y);
 
-    double getFriction (const Math::Point3d & position) const override;
+    double getFriction (Math::Point3d const & position) const override;
 
-    Math::Point3d resolveCollisions (const Math::Point3d & currentPosition, const Math::Point3d & newPosition) const override;
+    Math::Point3d resolveCollisions (Math::Point3d const & currentPosition, Math::Point3d const & newPosition) const override;
 
 private:
     friend class Game::GameRegion;
@@ -52,15 +52,15 @@ private:
         mTiles.resize(columns * rows);
     }
 
-    TextRegion (const TextRegion &) = delete;
+    TextRegion (TextRegion const &) = delete;
     TextRegion (TextRegion &&) = delete;
 
-    TextRegion & operator = (const TextRegion &) = delete;
+    TextRegion & operator = (TextRegion const &) = delete;
     TextRegion & operator = (TextRegion &&) = delete;
 
-    int getTileTypeId (const std::string & typeName) const;
+    int getTileTypeId (std::string const & typeName) const;
 
-    int createTileType (const std::string & typeName, char symbol);
+    int createTileType (std::string const & typeName, char symbol);
 
     unsigned int mColumns;
     unsigned int mRows;

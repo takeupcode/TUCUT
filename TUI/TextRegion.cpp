@@ -16,7 +16,7 @@ std::shared_ptr<TextRegion> TextRegion::getSharedTextRegion ()
     return std::static_pointer_cast<TextRegion>(shared_from_this());
 }
 
-bool TextRegion::addTileType (const std::string & typeName, char symbol)
+bool TextRegion::addTileType (std::string const & typeName, char symbol)
 {
     if (getTileTypeId(typeName))
     {
@@ -40,7 +40,7 @@ char TextRegion::tile (unsigned int x, unsigned int y)
     return ' ';
 }
 
-void TextRegion::setTile (unsigned int x, unsigned int y, const std::string & typeName)
+void TextRegion::setTile (unsigned int x, unsigned int y, std::string const & typeName)
 {
     int tileTypeId = getTileTypeId(typeName);
     if (tileTypeId == 0)
@@ -58,12 +58,12 @@ void TextRegion::removeTile (unsigned int x, unsigned int y)
     mTiles[tileIndex] = 0;
 }
 
-double TextRegion::getFriction (const Math::Point3d & position) const
+double TextRegion::getFriction (Math::Point3d const & position) const
 {
     return 10.0;
 }
 
-Math::Point3d TextRegion::resolveCollisions (const Math::Point3d & currentPosition, const Math::Point3d & newPosition) const
+Math::Point3d TextRegion::resolveCollisions (Math::Point3d const & currentPosition, Math::Point3d const & newPosition) const
 {
     int x = static_cast<int>(newPosition.x);
     int y = static_cast<int>(newPosition.y);
@@ -77,7 +77,7 @@ Math::Point3d TextRegion::resolveCollisions (const Math::Point3d & currentPositi
     return newPosition;
 }
 
-int TextRegion::getTileTypeId (const std::string & typeName) const
+int TextRegion::getTileTypeId (std::string const & typeName) const
 {
     auto tileTypeMapResult = mTileTypes.find(typeName);
     if (tileTypeMapResult == mTileTypes.end())
@@ -88,7 +88,7 @@ int TextRegion::getTileTypeId (const std::string & typeName) const
     return tileTypeMapResult->second;
 }
 
-int TextRegion::createTileType (const std::string & typeName, char symbol)
+int TextRegion::createTileType (std::string const & typeName, char symbol)
 {
     if (typeName.empty())
     {

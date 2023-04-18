@@ -120,6 +120,7 @@ namespace TUCUT::TUI
 
     bool showCursor ();
     bool hideCursor ();
+    void reportCursorPosition ();
 
     void clearScreen ();
 

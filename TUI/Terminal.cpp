@@ -266,6 +266,7 @@ namespace
 
     static std::string showCursor ();
     static std::string hideCursor ();
+    static std::string reportCursorPosition ();
 
     static std::string clearScreen ();
 
@@ -403,6 +404,11 @@ std::string EscSequenceBuilder::showCursor ()
 std::string EscSequenceBuilder::hideCursor ()
 {
   return buildCSI({}, "?25l");
+}
+
+std::string EscSequenceBuilder::reportCursorPosition ()
+{
+  return buildCSI({}, "6n");
 }
 
 std::string EscSequenceBuilder::clearScreen ()
@@ -592,6 +598,12 @@ bool TUI::Terminal::hideCursor ()
     mCursorShown = false;
   }
   return previous;
+}
+
+void TUI::Terminal::reportCursorPosition ()
+{
+  mInput->expectCursorPositionReport();
+  std::cout << EscSequenceBuilder::reportCursorPosition();
 }
 
 void TUI::Terminal::clearScreen ()

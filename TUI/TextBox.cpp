@@ -17,13 +17,13 @@
 namespace TUCUT {
 namespace Curses {
 
-const std::string TextBox::windowName = "parent";
-const std::string TextBox::moveCursorUpButtonName = "moveUpButton";
-const std::string TextBox::moveCursorDownButtonName = "moveDownButton";
-const std::string TextBox::moveCursorLeftButtonName = "moveLeftButton";
-const std::string TextBox::moveCursorRightButtonName = "moveRightButton";
+std::string const TextBox::windowName = "parent";
+std::string const TextBox::moveCursorUpButtonName = "moveUpButton";
+std::string const TextBox::moveCursorDownButtonName = "moveDownButton";
+std::string const TextBox::moveCursorLeftButtonName = "moveLeftButton";
+std::string const TextBox::moveCursorRightButtonName = "moveRightButton";
 
-TextBox::TextBox (const std::string & name, const std::string & text, int y, int x, int height, int width, int foreColor, int backColor, bool multiline)
+TextBox::TextBox (std::string const & name, std::string const & text, int y, int x, int height, int width, int foreColor, int backColor, bool multiline)
 : Control(name, y, x, height, width, foreColor, backColor, foreColor, backColor),
   mTextChanged(new TextChangedEvent(TextChangedEventId)),
   mScrollLine(0), mScrollColumn(0), mCursorLine(0), mCursorColumn(0), mDesiredColumn(0), mMultiline(multiline)
@@ -111,7 +111,7 @@ void TextBox::initialize ()
     addControl(mMoveCursorRightButton);
 }
 
-std::shared_ptr<TextBox> TextBox::createSharedTextBox (const std::string & name, const std::string & text, int y, int x, int height, int width, int foreColor, int backColor, bool multiline)
+std::shared_ptr<TextBox> TextBox::createSharedTextBox (std::string const & name, std::string const & text, int y, int x, int height, int width, int foreColor, int backColor, bool multiline)
 {
     auto result = std::shared_ptr<TextBox>(new TextBox(name, text, y, x, height, width, foreColor, backColor, multiline));
 
@@ -364,7 +364,7 @@ std::string TextBox::text () const
     std::ostringstream ss;
 
     bool firstLine = true;
-    for (const auto & line: mText)
+    for (auto const & line: mText)
     {
         if (!firstLine)
         {
@@ -378,7 +378,7 @@ std::string TextBox::text () const
     return ss.str();
 }
 
-void TextBox::setText (const std::string & text)
+void TextBox::setText (std::string const & text)
 {
     mText.clear();
 
@@ -395,7 +395,7 @@ void TextBox::setText (const std::string & text)
     ensureCursorIsVisible();
 }
 
-void TextBox::appendLines (const std::string & text)
+void TextBox::appendLines (std::string const & text)
 {
     mCursorLine = static_cast<int>(mText.size());
 
@@ -406,7 +406,7 @@ void TextBox::appendLines (const std::string & text)
     ensureCursorIsVisible();
 }
 
-void TextBox::insertLines (const std::string & text)
+void TextBox::insertLines (std::string const & text)
 {
     std::istringstream ss(text);
     std::string line;

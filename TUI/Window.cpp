@@ -15,7 +15,7 @@
 namespace TUCUT {
 namespace Curses {
 
-Window::Window (const std::string & name, int y, int x, int height, int width, int clientForeColor, int clientBackColor, int borderForeColor, int borderBackColor, int focusForeColor, int focusBackColor, bool border)
+Window::Window (std::string const & name, int y, int x, int height, int width, int clientForeColor, int clientBackColor, int borderForeColor, int borderBackColor, int focusForeColor, int focusBackColor, bool border)
 : mClientCursesWindow(nullptr), mBorderWindow(nullptr), mName(name),
   mY(y), mX(x), mHeight(height), mWidth(width),
   mAnchorTop(-1), mAnchorBottom(-1), mAnchorLeft(-1), mAnchorRight(-1),
@@ -43,7 +43,7 @@ Window::~Window ()
     destroyWindows();
 }
 
-std::shared_ptr<Window> Window::createSharedWindow (const std::string & name, int y, int x, int height, int width, int clientForeColor, int clientBackColor, int borderForeColor, int borderBackColor, int focusForeColor, int focusBackColor, bool border)
+std::shared_ptr<Window> Window::createSharedWindow (std::string const & name, int y, int x, int height, int width, int clientForeColor, int clientBackColor, int borderForeColor, int borderBackColor, int focusForeColor, int focusBackColor, bool border)
 {
     auto result = std::shared_ptr<Window>(new Window(name, y, x, height, width, clientForeColor, clientBackColor, borderForeColor, borderBackColor, focusForeColor, focusBackColor, border));
 
@@ -127,7 +127,7 @@ void Window::draw () const
     touchwin(mClientCursesWindow);
     wnoutrefresh(mClientCursesWindow);
 
-    for (const auto & control: mControls)
+    for (auto const & control: mControls)
     {
         control->draw();
     }
@@ -151,7 +151,7 @@ void Window::onDrawNonClient () const
 void Window::onResize ()
 { }
 
-const std::string & Window::name () const
+std::string const & Window::name () const
 {
     return mName;
 }
@@ -468,7 +468,7 @@ void Window::setFocusBackColor (int color)
     mFocusBackColor = color;
 }
 
-void Window::addControl (const std::shared_ptr<Window> & control)
+void Window::addControl (std::shared_ptr<Window> const & control)
 {
     control->setParent(this);
 
@@ -790,7 +790,7 @@ void Window::createWindows ()
     nodelay(mClientCursesWindow, true);
     keypad(mClientCursesWindow, true);
 
-    for (const auto & control: mControls)
+    for (auto const & control: mControls)
     {
         anchorWindow(control.get());
 
@@ -800,7 +800,7 @@ void Window::createWindows ()
 
 void Window::destroyWindows ()
 {
-    for (const auto & control: mControls)
+    for (auto const & control: mControls)
     {
         control->destroyWindows();
     }

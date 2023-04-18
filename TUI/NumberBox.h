@@ -21,11 +21,11 @@ class Button;
 class NumberBox : public Control, public Event::EventSubscriber<WindowSystem *, Button *>
 {
 public:
-    const static int NumberChangedEventId = 1;
+    static int const NumberChangedEventId = 1;
 
     using NumberChangedEvent = Event::EventPublisher<WindowSystem *, NumberBox *>;
 
-    static std::shared_ptr<NumberBox> createSharedNumberBox (const std::string & name, int number, int y, int x, int width, int foreColor, int backColor);
+    static std::shared_ptr<NumberBox> createSharedNumberBox (std::string const & name, int number, int y, int x, int width, int foreColor, int backColor);
 
     std::shared_ptr<NumberBox> getSharedNumberBox ();
 
@@ -48,7 +48,7 @@ public:
     NumberChangedEvent * numberChanged ();
 
 protected:
-    NumberBox (const std::string & name, int number, int y, int x, int width, int foreColor, int backColor);
+    NumberBox (std::string const & name, int number, int y, int x, int width, int foreColor, int backColor);
 
     void initialize () override;
 
@@ -60,9 +60,9 @@ private:
     bool removeChar ();
     bool addChar (int key);
 
-    static const std::string windowName;
-    static const std::string incrementButtonName;
-    static const std::string decrementButtonName;
+    static std::string const windowName;
+    static std::string const incrementButtonName;
+    static std::string const decrementButtonName;
 
     std::string mText;
     std::unique_ptr<NumberChangedEvent> mNumberChanged;

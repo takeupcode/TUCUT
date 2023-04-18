@@ -17,11 +17,11 @@
 namespace TUCUT {
 namespace Curses {
 
-const std::string NumberBox::windowName = "parent";
-const std::string NumberBox::incrementButtonName = "incrementButton";
-const std::string NumberBox::decrementButtonName = "decrementButton";
+std::string const NumberBox::windowName = "parent";
+std::string const NumberBox::incrementButtonName = "incrementButton";
+std::string const NumberBox::decrementButtonName = "decrementButton";
 
-NumberBox::NumberBox (const std::string & name, int number, int y, int x, int width, int foreColor, int backColor)
+NumberBox::NumberBox (std::string const & name, int number, int y, int x, int width, int foreColor, int backColor)
 : Control(name, y, x, 1, width, foreColor, backColor, foreColor, backColor),
   mText("0"), mNumberChanged(new NumberChangedEvent(NumberChangedEventId))
 {
@@ -60,7 +60,7 @@ void NumberBox::initialize ()
     addControl(mDecrementButton);
 }
 
-std::shared_ptr<NumberBox> NumberBox::createSharedNumberBox (const std::string & name, int number, int y, int x, int width, int foreColor, int backColor)
+std::shared_ptr<NumberBox> NumberBox::createSharedNumberBox (std::string const & name, int number, int y, int x, int width, int foreColor, int backColor)
 {
     auto result = std::shared_ptr<NumberBox>(new NumberBox(name, number, y, x, width, foreColor, backColor));
 

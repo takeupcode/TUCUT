@@ -149,6 +149,12 @@ namespace TUCUT::TUI
     int mY;
   };
 
+  struct CursorPositionEvent
+  {
+    int mX;
+    int mY;
+  };
+
   using Event = std::variant<
     NoEvent,
     DropEscapeEvent,
@@ -156,25 +162,32 @@ namespace TUCUT::TUI
     CharacterEvent,
     NonPrintingCharacterEvent,
     ExtendedCharacterEvent,
-    MouseEvent>;
+    MouseEvent,
+    CursorPositionEvent>;
 
   Event parseEscapeSequence (
     std::string const & sequence,
-    bool endOfText);
+    bool endOfText,
+    bool cursorPositionReportExpected);
 
   Event parseAltKey (
     char code);
 
   Event parseCSI (
-    std::string const & sequence);
+    std::string const & sequence,
+    bool cursorPositionReportExpected);
 
   Event parseVtCSI (
     std::vector<std::optional<int>> const & parameters);
 
   Event parseXtermCSI (
-    std::vector<std::optional<int>> const & parameters);
+    std::vector<std::optional<int>> const & parameters,
+    bool cursorPositionReportExpected);
 
   Event parseMouseCSI (
+    std::vector<std::optional<int>> const & parameters);
+
+  Event parseCursorPositionCSI (
     std::vector<std::optional<int>> const & parameters);
 } // namespace TUCUT::TUI
 

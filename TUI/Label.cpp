@@ -11,7 +11,7 @@
 namespace TUCUT {
 namespace Curses {
 
-Label::Label (const std::string & name, const std::string & text, int y, int x, int height, int width, int foreColor, int backColor, Justification::Horizontal horizontalJustification, Justification::Vertical verticalJustification, bool multiline)
+Label::Label (std::string const & name, std::string const & text, int y, int x, int height, int width, int foreColor, int backColor, Justification::Horizontal horizontalJustification, Justification::Vertical verticalJustification, bool multiline)
 : Control(name, y, x, height, width, foreColor, backColor, foreColor, backColor),
   mText(text), mHorizontalJustification(horizontalJustification), mVerticalJustification(verticalJustification),
   mMultiline(multiline)
@@ -26,7 +26,7 @@ void Label::initialize ()
     Control::initialize();
 }
 
-std::shared_ptr<Label> Label::createSharedLabel (const std::string & name, const std::string & text, int y, int x, int height, int width, int foreColor, int backColor, Justification::Horizontal horizontalJustification, Justification::Vertical verticalJustification, bool multiline)
+std::shared_ptr<Label> Label::createSharedLabel (std::string const & name, std::string const & text, int y, int x, int height, int width, int foreColor, int backColor, Justification::Horizontal horizontalJustification, Justification::Vertical verticalJustification, bool multiline)
 {
     auto result = std::shared_ptr<Label>(new Label(name, text, y, x, height, width, foreColor, backColor, horizontalJustification, verticalJustification, multiline));
 
@@ -111,7 +111,7 @@ std::string Label::text () const
     return mText;
 }
 
-void Label::setText (const std::string & text)
+void Label::setText (std::string const & text)
 {
     mText = text;
 }

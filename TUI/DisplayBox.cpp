@@ -17,13 +17,13 @@
 namespace TUCUT {
 namespace Curses {
 
-const std::string DisplayBox::windowName = "parent";
-const std::string DisplayBox::moveCenterUpButtonName = "moveCenterUpButton";
-const std::string DisplayBox::moveCenterDownButtonName = "moveCenterDownButton";
-const std::string DisplayBox::moveCenterLeftButtonName = "moveCenterLeftButton";
-const std::string DisplayBox::moveCenterRightButtonName = "moveCenterRightButton";
+std::string const DisplayBox::windowName = "parent";
+std::string const DisplayBox::moveCenterUpButtonName = "moveCenterUpButton";
+std::string const DisplayBox::moveCenterDownButtonName = "moveCenterDownButton";
+std::string const DisplayBox::moveCenterLeftButtonName = "moveCenterLeftButton";
+std::string const DisplayBox::moveCenterRightButtonName = "moveCenterRightButton";
 
-DisplayBox::DisplayBox (const std::string & name, char centerChar, int y, int x, int height, int width, int contentHeight, int contentWidth, int foreColor, int backColor, bool autoScrolling, bool allowCenterControls, int scrollMarginTop, int scrollMarginRight, int scrollMarginBottom, int scrollMarginLeft)
+DisplayBox::DisplayBox (std::string const & name, char centerChar, int y, int x, int height, int width, int contentHeight, int contentWidth, int foreColor, int backColor, bool autoScrolling, bool allowCenterControls, int scrollMarginTop, int scrollMarginRight, int scrollMarginBottom, int scrollMarginLeft)
 : Control(name, y, x, height, width, foreColor, backColor, foreColor, backColor),
   mClicked(new ClickedEvent(ClickedEventId)),
   mScrollChanged(new ScrollChangedEvent(ScrollChangedEventId)),
@@ -123,7 +123,7 @@ void DisplayBox::initialize ()
     }
 }
 
-std::shared_ptr<DisplayBox> DisplayBox::createSharedDisplayBox (const std::string & name, char centerChar, int y, int x, int height, int width, int contentHeight, int contentWidth, int foreColor, int backColor, bool autoScrolling, bool allowCenterControls, int scrollMarginTop, int scrollMarginRight, int scrollMarginBottom, int scrollMarginLeft)
+std::shared_ptr<DisplayBox> DisplayBox::createSharedDisplayBox (std::string const & name, char centerChar, int y, int x, int height, int width, int contentHeight, int contentWidth, int foreColor, int backColor, bool autoScrolling, bool allowCenterControls, int scrollMarginTop, int scrollMarginRight, int scrollMarginBottom, int scrollMarginLeft)
 {
     auto result = std::shared_ptr<DisplayBox>(new DisplayBox(name, centerChar, y, x, height, width, contentHeight, contentWidth, foreColor, backColor, autoScrolling, allowCenterControls, scrollMarginTop, scrollMarginRight, scrollMarginBottom, scrollMarginLeft));
 
@@ -322,7 +322,7 @@ void DisplayBox::setSymbol (char symbol, int y, int x)
     mContent[y][x] = symbol;
 }
 
-void DisplayBox::setSymbols (const std::string & symbols, int y)
+void DisplayBox::setSymbols (std::string const & symbols, int y)
 {
     verifyY(y);
 

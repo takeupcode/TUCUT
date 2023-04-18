@@ -22,11 +22,11 @@ class Button;
 class ListBox : public Control, public Event::EventSubscriber<WindowSystem *, Button *>
 {
 public:
-    const static int SelectionChangedEventId = 1;
+    static int const SelectionChangedEventId = 1;
 
     using SelectionChangedEvent = Event::EventPublisher<WindowSystem *, ListBox *>;
 
-    static std::shared_ptr<ListBox> createSharedListBox (const std::string & name, const std::vector<std::string> & items, int y, int x, int height, int width, int foreColor, int backColor, int selectionForeColor, int selectionBackColor);
+    static std::shared_ptr<ListBox> createSharedListBox (std::string const & name, std::vector<std::string> const & items, int y, int x, int height, int width, int foreColor, int backColor, int selectionForeColor, int selectionBackColor);
 
     std::shared_ptr<ListBox> getSharedListBox ();
 
@@ -58,16 +58,16 @@ public:
 
     std::string text (int index) const;
 
-    void setText (int index, const std::string & text);
+    void setText (int index, std::string const & text);
 
-    void appendItems (const std::vector<std::string> & items);
+    void appendItems (std::vector<std::string> const & items);
 
-    void insertItems (int index, const std::vector<std::string> & items);
+    void insertItems (int index, std::vector<std::string> const & items);
 
     SelectionChangedEvent * selectionChanged ();
 
 protected:
-    ListBox (const std::string & name, const std::vector<std::string> & items, int y, int x, int height, int width, int foreColor, int backColor, int selectionForeColor, int selectionBackColor);
+    ListBox (std::string const & name, std::vector<std::string> const & items, int y, int x, int height, int width, int foreColor, int backColor, int selectionForeColor, int selectionBackColor);
 
     void initialize () override;
 
@@ -81,9 +81,9 @@ private:
 
     void ensureSelectionIsVisible ();
 
-    static const std::string windowName;
-    static const std::string moveSelectionUpButtonName;
-    static const std::string moveSelectionDownButtonName;
+    static std::string const windowName;
+    static std::string const moveSelectionUpButtonName;
+    static std::string const moveSelectionDownButtonName;
 
     std::vector<std::string> mItems;
     std::unique_ptr<SelectionChangedEvent> mSelectionChanged;

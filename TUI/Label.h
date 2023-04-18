@@ -16,7 +16,7 @@ namespace Curses {
 class Label : public Control
 {
 public:
-    static std::shared_ptr<Label> createSharedLabel (const std::string & name, const std::string & text, int y, int x, int height, int width, int foreColor, int backColor, Justification::Horizontal horizontalJustification = Justification::Horizontal::left, Justification::Vertical verticalJustification = Justification::Vertical::center, bool multiline = false);
+    static std::shared_ptr<Label> createSharedLabel (std::string const & name, std::string const & text, int y, int x, int height, int width, int foreColor, int backColor, Justification::Horizontal horizontalJustification = Justification::Horizontal::left, Justification::Vertical verticalJustification = Justification::Vertical::center, bool multiline = false);
 
     std::shared_ptr<Label> getSharedLabel ();
 
@@ -30,10 +30,10 @@ public:
 
     std::string text () const;
 
-    void setText (const std::string & text);
+    void setText (std::string const & text);
 
 protected:
-    Label (const std::string & name, const std::string & text, int y, int x, int height, int width, int foreColor, int backColor, Justification::Horizontal horizontalJustification, Justification::Vertical verticalJustification, bool multiline);
+    Label (std::string const & name, std::string const & text, int y, int x, int height, int width, int foreColor, int backColor, Justification::Horizontal horizontalJustification, Justification::Vertical verticalJustification, bool multiline);
 
     void initialize () override;
 

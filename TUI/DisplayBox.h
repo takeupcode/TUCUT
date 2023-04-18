@@ -22,17 +22,17 @@ class Button;
 class DisplayBox : public Control, public Event::EventSubscriber<WindowSystem *, Button *>
 {
 public:
-    const static int ClickedEventId = 1;
-    const static int ScrollChangedEventId = 2;
-    const static int BeforeCenterChangedEventId = 3;
-    const static int AfterCenterChangedEventId = 4;
+    static int const ClickedEventId = 1;
+    static int const ScrollChangedEventId = 2;
+    static int const BeforeCenterChangedEventId = 3;
+    static int const AfterCenterChangedEventId = 4;
 
     using ClickedEvent = Event::EventPublisher<WindowSystem *, DisplayBox *, int, int>;
     using ScrollChangedEvent = Event::EventPublisher<WindowSystem *, DisplayBox *, int, int>;
     using BeforeCenterChangedEvent = Event::EventPublisher<WindowSystem *, DisplayBox *, int, int, bool &>;
     using AfterCenterChangedEvent = Event::EventPublisher<WindowSystem *, DisplayBox *, int, int>;
 
-    static std::shared_ptr<DisplayBox> createSharedDisplayBox (const std::string & name, char centerChar, int y, int x, int height, int width, int contentHeight, int contentWidth, int foreColor, int backColor, bool autoScrolling = false, bool allowCenterControls = false, int scrollMarginTop = 0, int scrollMarginRight = 0, int scrollMarginBottom = 0, int scrollMarginLeft = 0);
+    static std::shared_ptr<DisplayBox> createSharedDisplayBox (std::string const & name, char centerChar, int y, int x, int height, int width, int contentHeight, int contentWidth, int foreColor, int backColor, bool autoScrolling = false, bool allowCenterControls = false, int scrollMarginTop = 0, int scrollMarginRight = 0, int scrollMarginBottom = 0, int scrollMarginLeft = 0);
 
     std::shared_ptr<DisplayBox> getSharedDisplayBox ();
 
@@ -52,7 +52,7 @@ public:
 
     void setSymbol (char symbol, int y, int x);
 
-    void setSymbols (const std::string & symbols, int y);
+    void setSymbols (std::string const & symbols, int y);
 
     bool isClickLocationShown () const;
     void showClickLocation (bool show);
@@ -90,7 +90,7 @@ public:
     AfterCenterChangedEvent * afterCenterChanged ();
 
 protected:
-    DisplayBox (const std::string & name, char centerChar, int y, int x, int height, int width, int contentHeight, int contentWidth, int foreColor, int backColor, bool autoScrolling, bool allowCenterControls, int scrollMarginTop, int scrollMarginRight, int scrollMarginBottom, int scrollMarginLeft);
+    DisplayBox (std::string const & name, char centerChar, int y, int x, int height, int width, int contentHeight, int contentWidth, int foreColor, int backColor, bool autoScrolling, bool allowCenterControls, int scrollMarginTop, int scrollMarginRight, int scrollMarginBottom, int scrollMarginLeft);
 
     void initialize () override;
 
@@ -119,11 +119,11 @@ private:
     void handleMoveCenterLeft (WindowSystem * ws);
     void handleMoveCenterRight (WindowSystem * ws);
 
-    static const std::string windowName;
-    static const std::string moveCenterUpButtonName;
-    static const std::string moveCenterDownButtonName;
-    static const std::string moveCenterLeftButtonName;
-    static const std::string moveCenterRightButtonName;
+    static std::string const windowName;
+    static std::string const moveCenterUpButtonName;
+    static std::string const moveCenterDownButtonName;
+    static std::string const moveCenterLeftButtonName;
+    static std::string const moveCenterRightButtonName;
 
     std::vector<std::string> mContent;
     std::unique_ptr<ClickedEvent> mClicked;
