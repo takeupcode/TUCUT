@@ -95,8 +95,8 @@ int TUI::WindowSystem::maxScreenHeight () const
 void TUI::WindowSystem::setMaxScreenDimensions (
   int width, int height)
 {
-  mMaxScreenHeight = height;
   mMaxScreenWidth = width;
+  mMaxScreenHeight = height;
 }
 
 void TUI::WindowSystem::initialize ()

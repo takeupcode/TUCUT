@@ -104,16 +104,14 @@ void Window::processInput (WindowSystem * ws)
     }
 }
 
-void Window::update ()
+void Window::update (ECS::TimeResolution)
 { }
 
-void Window::draw () const
+void Window::draw (WindowSystem * ws) const
 {
     if (mBorder)
     {
-        mBorderWindow->drawInsideBorder();
-        touchwin(mBorderWindow->cursesWindow());
-        wnoutrefresh(mBorderWindow->cursesWindow());
+      ConsoleManager::drawBox(*this, y(), x(), clientHeight(), clientWidth(), mBorderForeColor, mBorderBackColor);
     }
 
     if (mFillClientArea)
@@ -121,10 +119,8 @@ void Window::draw () const
         ConsoleManager::fillRect(*this, 0, 0, clientHeight(), clientWidth(), mClientForeColor, mClientBackColor);
     }
 
-    onDrawClient();
-    onDrawNonClient();
-    touchwin(mClientCursesWindow);
-    wnoutrefresh(mClientCursesWindow);
+    drawClient();
+    drawNonClient();
 
     for (auto const & control: mControls)
     {
@@ -132,19 +128,18 @@ void Window::draw () const
     }
 }
 
-bool Window::onKeyPress (WindowSystem * ws, int key)
+bool Window::onKeyPress (WindowSystem *, Event const &)
 {
-    return false;
+  return false;
 }
 
-void Window::onMouseEvent (WindowSystem * ws, short id, int y, int x, mmask_t buttonState)
-{
-}
-
-void Window::onDrawClient () const
+void Window::onMouseEvent (WindowSystem *, Event const &)
 { }
 
-void Window::onDrawNonClient () const
+void Window::onDrawClient (WindowSystem *) const
+{ }
+
+void Window::onDrawNonClient (WindowSystem *) const
 { }
 
 void Window::onResize ()
@@ -765,11 +760,6 @@ void Window::createWindows ()
         {
             throw std::out_of_range("height or width cannot be less than 3 when using a border.");
         }
-
-        mBorderWindow.reset(new Window("border", mY, mX, mHeight, mWidth, mBorderForeColor, mBorderBackColor, mBorderForeColor, mBorderBackColor, mBorderForeColor, mBorderBackColor, false));
-
-        mBorderWindow->initialize();
-        mBorderWindow->setFillClientArea(false);
     }
     else
     {
@@ -778,16 +768,6 @@ void Window::createWindows ()
             throw std::out_of_range("height or width cannot be less than 1.");
         }
     }
-
-    mClientCursesWindow = newwin(clientHeight(), clientWidth(), clientY(), clientX());
-    if (not mClientCursesWindow)
-    {
-        std::string message = "Could not create window.";
-        throw std::runtime_error(message);
-    }
-
-    nodelay(mClientCursesWindow, true);
-    keypad(mClientCursesWindow, true);
 
     for (auto const & control: mControls)
     {
@@ -803,14 +783,6 @@ void Window::destroyWindows ()
     {
         control->destroyWindows();
     }
-
-    if (mClientCursesWindow)
-    {
-        delwin(mClientCursesWindow);
-        mClientCursesWindow = nullptr;
-    }
-
-    mBorderWindow.reset();
 }
 
 void Window::anchorWindow (Window * win)
@@ -871,17 +843,6 @@ void Window::anchorWindow (Window * win)
     }
 
     win->moveAndResize(newTop, newLeft, newBottom - newTop, newRight - newLeft);
-}
-
-void Window::drawInsideBorder () const
-{
-    ConsoleManager::drawBox(*this, y(), x(), clientHeight(), clientWidth(), mBorderForeColor, mBorderBackColor);
-}
-
-void Window::setNonClientColor () const
-{
-    int i = Colors::colorPairIndex(Colors::COLOR_DIM_BLACK, Colors::COLOR_DIM_WHITE);
-    wattrset(cursesWindow(), COLOR_PAIR(i));
 }
 
 } // namespace Curses

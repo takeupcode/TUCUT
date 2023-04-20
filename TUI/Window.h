@@ -7,6 +7,7 @@
 #ifndef TUCUT_TUI_Window_h
 #define TUCUT_TUI_Window_h
 
+#include "../ECS/ApplicationTime.h"
 #include "Event.h"
 #include "Terminal.h"
 
@@ -38,44 +39,39 @@ namespace TUCUT::TUI
 
     static std::shared_ptr<Window> createSharedWindow (
       std::string const & name,
-      int y,
       int x,
-      int height,
+      int y,
       int width,
-      int clientForeColor,
-      int clientBackColor,
-      int borderForeColor,
-      int borderBackColor,
-      int focusForeColor,
-      int focusBackColor,
+      int height,
+      Color const & clientForeColor,
+      Color const & clientBackColor,
+      Color const & borderForeColor,
+      Color const & borderBackColor,
+      Color const & focusForeColor,
+      Color const & focusBackColor,
       bool border);
 
     std::shared_ptr<Window> getSharedWindow ();
 
-    virtual void processInput (WindowSystem * ws,
+    virtual void processInput (WindowSystem * ws);
+
+    virtual void update (ECS::TimeResolution elapsedTime);
+
+    void draw (WindowSystem * ws) const;
+
+    virtual bool onKeyPress (WindowSystem * ws,
       Event const & event);
 
-    virtual void update ();
+    virtual void onMouseEvent (WindowSystem * ws,
+      Event const & event);
 
-    void draw () const;
+    virtual void onDrawClient (WindowSystem * ws) const;
 
-    virtual bool onKeyPress (WindowSystem * ws, int key);
-
-    virtual void onMouseEvent (WindowSystem * ws, short id, int y, int x, mmask_t buttonState);
-
-    virtual void onDrawClient () const;
-
-    virtual void onDrawNonClient () const;
+    virtual void onDrawNonClient (WindowSystem * ws) const;
 
     virtual void onResize ();
 
     std::string const & name () const;
-
-    virtual int y () const;
-
-    virtual int clientY () const;
-
-    virtual void setY (int y);
 
     virtual int x () const;
 
@@ -83,17 +79,13 @@ namespace TUCUT::TUI
 
     virtual void setX (int x);
 
-    virtual void move (int y, int x);
+    virtual int y () const;
 
-    virtual int height () const;
+    virtual int clientY () const;
 
-    virtual int minHeight () const;
+    virtual void setY (int y);
 
-    virtual int clientHeight () const;
-
-    virtual void setHeight (int height);
-
-    virtual void setMinHeight (int height);
+    virtual void move (int x, int y);
 
     virtual int width () const;
 
@@ -105,13 +97,27 @@ namespace TUCUT::TUI
 
     virtual void setMinWidth (int width);
 
-    virtual void resize (int height, int width);
+    virtual int height () const;
 
-    virtual void moveAndResize (int y, int x, int height, int width);
+    virtual int minHeight () const;
+
+    virtual int clientHeight () const;
+
+    virtual void setHeight (int height);
+
+    virtual void setMinHeight (int height);
+
+    virtual void resize (int width, int height);
+
+    virtual void moveAndResize (int x, int y, int width, int height);
 
     int anchorTop () const;
 
     void setAnchorTop (int anchor);
+
+    int anchorRight () const;
+
+    void setAnchorRight (int anchor);
 
     int anchorBottom () const;
 
@@ -121,13 +127,9 @@ namespace TUCUT::TUI
 
     void setAnchorLeft (int anchor);
 
-    int anchorRight () const;
-
-    void setAnchorRight (int anchor);
-
     void setAnchorsAll (int anchor);
 
-    void setAnchorsAll (int top, int bottom, int left, int right);
+    void setAnchorsAll (int top, int right, int bottom, int left);
 
     void setAnchorsTopBottom (int top, int bottom);
 
@@ -137,35 +139,35 @@ namespace TUCUT::TUI
 
     virtual void setBorder (bool border);
 
-    int clientForeColor () const;
+    Color clientForeColor () const;
 
-    void setClientForeColor (int color);
+    void setClientForeColor (Color const & color);
 
-    int clientBackColor () const;
+    Color clientBackColor () const;
 
-    void setClientBackColor (int color);
+    void setClientBackColor (Color const & color);
 
-    int borderForeColor () const;
+    Color borderForeColor () const;
 
-    void setBorderForeColor (int color);
+    void setBorderForeColor (Color const & color);
 
-    int borderBackColor () const;
+    Color borderBackColor () const;
 
-    void setBorderBackColor (int color);
+    void setBorderBackColor (Color const & color);
 
-    int focusForeColor () const;
+    Color focusForeColor () const;
 
-    void setFocusForeColor (int color);
+    void setFocusForeColor (Color const & color);
 
-    int focusBackColor () const;
+    Color focusBackColor () const;
 
-    void setFocusBackColor (int color);
+    void setFocusBackColor (Color const & color);
 
     void addControl(std::shared_ptr<Window> const & control);
 
     void addControl(std::shared_ptr<Window> && control);
 
-    Window * findWindow (int y, int x);
+    Window * findWindow (int x, int y);
 
     Window * findFocus ();
 
@@ -177,7 +179,7 @@ namespace TUCUT::TUI
 
     virtual bool setFocus (bool focus);
 
-    virtual bool setFocus (int y, int x);
+    virtual bool setFocus (int x, int y);
 
     virtual bool advanceFocus ();
 
@@ -197,10 +199,20 @@ namespace TUCUT::TUI
 
     virtual void setEnableState (EnableState value);
 
-    virtual void drawInsideBorder () const;
-
 protected:
-    Window (std::string const & name, int y, int x, int height, int width, int clientForeColor, int clientBackColor, int borderForeColor, int borderBackColor, int focusForeColor, int focusBackColor, bool border);
+    Window (
+      std::string const & name,
+      int x,
+      int y,
+      int width,
+      int height,
+      Color const & clientForeColor,
+      Color const & clientBackColor,
+      Color const & borderForeColor,
+      Color const & borderBackColor,
+      Color const & focusForeColor,
+      Color const & focusBackColor,
+      bool border);
 
     virtual void initialize ();
 
@@ -212,27 +224,23 @@ protected:
 
     void anchorWindow (Window * win);
 
-    void setNonClientColor () const;
-
-    WINDOW * mClientCursesWindow;
-    std::unique_ptr<Window> mBorderWindow;
     std::string mName;
-    int mY;
     int mX;
-    int mHeight;
+    int mY;
     int mWidth;
-    int mMinHeight;
+    int mHeight;
     int mMinWidth;
+    int mMinHeight;
     int mAnchorTop;
+    int mAnchorRight;
     int mAnchorBottom;
     int mAnchorLeft;
-    int mAnchorRight;
-    int mClientForeColor;
-    int mClientBackColor;
-    int mBorderForeColor;
-    int mBorderBackColor;
-    int mFocusForeColor;
-    int mFocusBackColor;
+    Color mClientForeColor;
+    Color mClientBackColor;
+    Color mBorderForeColor;
+    Color mBorderBackColor;
+    Color mFocusForeColor;
+    Color mFocusBackColor;
     std::vector<std::shared_ptr<Window>> mControls;
     Window * mParent;
     bool mBorder;
@@ -243,12 +251,6 @@ protected:
     bool mWantEnter;
     VisibleState mVisibleState;
     EnableState mEnableState;
-
-  private:
-    Window (Terminal & terminal);
-
-    Terminal & mTerminal;
-    std::ostream & mOutput;
   };
 } // namespace TUCUT::TUI
 
