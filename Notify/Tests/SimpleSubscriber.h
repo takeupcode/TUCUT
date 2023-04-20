@@ -1,29 +1,27 @@
-//
 //  SimpleSubscriber.h
-//  TestTUCUT
+//  TUCUT/Notify (Take Up Code Utility)
 //
-//  Created by Wahid Tanner on 6/25/13.
-//  Copyright © 2013 Take Up Code. All rights reserved.
+//  Created by Abdul Wahid Tanner on 2013-06-25.
+//  Copyright © Take Up Code, Inc.
 //
-
-#ifndef TestTUCUT_Event_SimpleSubscriber_h
-#define TestTUCUT_Event_SimpleSubscriber_h
+#ifndef TestTUCUT_Notify_SimpleSubscriber_h
+#define TestTUCUT_Notify_SimpleSubscriber_h
 
 #include <string>
 
 #include "../EventSubscriber.h"
 #include "SimplePublisher.h"
 
-class SimpleSubscriber : public TUCUT::Event::EventSubscriber<const std::string &>
+class SimpleSubscriber : public TUCUT::Notify::EventSubscriber<const std::string &>
 {
 public:
     explicit SimpleSubscriber ()
     : mNotified(false), mId(0)
     { }
-    
+
     virtual ~SimpleSubscriber ()
     { }
-    
+
     virtual void notify (int id, const std::string & stringArg)
     {
         mNotified = true;
@@ -35,7 +33,7 @@ public:
     {
         return mNotified;
     }
-    
+
     int id ()
     {
         return mId;
@@ -45,11 +43,11 @@ public:
     {
         return mProperty;
     }
-    
+
 private:
     bool mNotified;
     int mId;
     std::string mProperty;
 };
 
-#endif // TestTUCUT_Event_SimpleSubscriber_h
+#endif // TestTUCUT_Notify_SimpleSubscriber_h

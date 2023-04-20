@@ -5,12 +5,11 @@
 //  Copyright © Take Up Code, Inc.
 //
 #include "Window.h"
+
+#include "../TUI/Application.h"
 #include "Control.h"
 
 #include <stdexcept>
-
-#include "Colors.h"
-#include "ConsoleManager.h"
 
 namespace TUCUT {
 namespace Curses {

@@ -1,11 +1,9 @@
-//
 //  AdvancedPublisher.cpp
-//  TestTUCUT
+//  TUCUT/Notify (Take Up Code Utility)
 //
-//  Created by Wahid Tanner on 7/28/14.
-//  Copyright © 2014 Take Up Code. All rights reserved.
+//  Created by Abdul Wahid Tanner on 2014-07-28.
+//  Copyright © Take Up Code, Inc.
 //
-
 #include "AdvancedPublisher.h"
 
 using namespace TUCUT;

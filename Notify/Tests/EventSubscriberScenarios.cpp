@@ -1,11 +1,9 @@
-//
 //  EventSubscriberScenarios.cpp
-//  TestTUCUT
+//  TUCUT/Notify (Take Up Code Utility)
 //
-//  Created by Wahid Tanner on 6/25/13.
-//  Copyright © 2013 Take Up Code. All rights reserved.
+//  Created by Abdul Wahid Tanner on 2013-06-25.
+//  Copyright © Take Up Code, Inc.
 //
-
 #include <string>
 
 #include "../../Test/Test.h"
@@ -24,12 +22,12 @@ SCENARIO( Observer, "Construction/Normal", "unit,event", "Subscriber derived cla
 SCENARIO( Observer, "Operation/Direct", "unit,event", "SimpleSubscriber can be notified directly." )
 {
     SimpleSubscriber subscriber;
-    
+
     // This is not the normal usage. This class is designed to be notified through an
     // Observable signal.
     std::string parameter = "Name";
     subscriber.notify(3, parameter);
-    
+
     VERIFY_TRUE(subscriber.notified());
     VERIFY_EQUAL(3, subscriber.id());
     VERIFY_EQUAL(parameter, subscriber.property());
@@ -54,7 +52,7 @@ SCENARIO( Observer, "Operation/Direct", "unit,event", "AdvancedSubscriber can be
     VERIFY_FALSE(subscriber.ageNotified());
     VERIFY_FALSE(subscriber.adultNotified());
     VERIFY_FALSE(subscriber.combinedAgeAndAdultNotified());
-    
+
     subscriber.resetData();
     subscriber.notify(2, AdvancedPublisher::ageProperty);
     VERIFY_EQUAL(2, subscriber.id());
@@ -62,7 +60,7 @@ SCENARIO( Observer, "Operation/Direct", "unit,event", "AdvancedSubscriber can be
     VERIFY_TRUE(subscriber.ageNotified());
     VERIFY_FALSE(subscriber.adultNotified());
     VERIFY_FALSE(subscriber.combinedAgeAndAdultNotified());
-    
+
     subscriber.resetData();
     subscriber.notify(3, AdvancedPublisher::adultProperty);
     VERIFY_EQUAL(3, subscriber.id());
@@ -70,7 +68,7 @@ SCENARIO( Observer, "Operation/Direct", "unit,event", "AdvancedSubscriber can be
     VERIFY_FALSE(subscriber.ageNotified());
     VERIFY_TRUE(subscriber.adultNotified());
     VERIFY_FALSE(subscriber.combinedAgeAndAdultNotified());
-    
+
     subscriber.resetData();
     subscriber.notify(4, 50, true);
     VERIFY_EQUAL(4, subscriber.id());

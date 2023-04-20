@@ -1,13 +1,11 @@
-//
 //  AdvancedPublisher.h
-//  TestTUCUT
+//  TUCUT/Notify (Take Up Code Utility)
 //
-//  Created by Wahid Tanner on 7/19/14.
-//  Copyright © 2014 Take Up Code. All rights reserved.
+//  Created by Abdul Wahid Tanner on 2014-07-19.
+//  Copyright © Take Up Code, Inc.
 //
-
-#ifndef TestTUCUT_Event_AdvancedPublisher_h
-#define TestTUCUT_Event_AdvancedPublisher_h
+#ifndef TestTUCUT_Notify_AdvancedPublisher_h
+#define TestTUCUT_Notify_AdvancedPublisher_h
 
 #include <memory>
 #include <string>
@@ -20,8 +18,8 @@ private:
     const int minimumAdultAge = 20;
 
 public:
-    using PropertyChangedEvent = TUCUT::Event::EventPublisher<const std::string &>;
-    using AgeAndAdultEvent = TUCUT::Event::EventPublisher<int, bool>;
+    using PropertyChangedEvent = TUCUT::Notify::EventPublisher<const std::string &>;
+    using AgeAndAdultEvent = TUCUT::Notify::EventPublisher<int, bool>;
 
     static const std::string nameProperty;
     static const std::string ageProperty;
@@ -113,4 +111,4 @@ private:
     std::unique_ptr<AgeAndAdultEvent> mAgeAndAdult;
 };
 
-#endif // TestTUCUT_Event_AdvancedPublisher_h
+#endif // TestTUCUT_Notify_AdvancedPublisher_h

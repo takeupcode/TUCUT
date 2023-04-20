@@ -7,7 +7,7 @@
 #ifndef TUCUT_TUI_Input_h
 #define TUCUT_TUI_Input_h
 
-#include "../Event/MessageQueue.h"
+#include "../Notify/MessageQueue.h"
 #include "Event.h"
 #include "Terminal.h"
 
@@ -49,7 +49,7 @@ namespace TUCUT::TUI
 
     Terminal & mTerminal;
     std::ostream & mOutput;
-    Event::MessageQueue<Event> mMessages;
+    Notify::MessageQueue<Event> mMessages;
     bool mSuccess = true;
     std::atomic<bool> mCursorPositionReportExpected = false;
   };

@@ -1,11 +1,9 @@
-//
 //  EventPublisherScenarios.cpp
-//  TestTUCUT
+//  TUCUT/Notify (Take Up Code Utility)
 //
-//  Created by Wahid Tanner on 6/26/13.
-//  Copyright © 2013 Take Up Code. All rights reserved.
+//  Created by Abdul Wahid Tanner on 2013-06-26.
+//  Copyright © Take Up Code, Inc.
 //
-
 #include <memory>
 #include <string>
 
@@ -27,14 +25,14 @@ SCENARIO( Observable, "Construction/Normal", "unit,event", "Publisher derived cl
 SCENARIO( Observable, "Operation/Normal", "unit,event", "SimplePublisher can notify subscriber." )
 {
     SimplePublisher publisher;
-    
+
     std::shared_ptr<SimpleSubscriber> subscriber(new SimpleSubscriber());
-    
+
     publisher.propertyChanged()->connect("test", subscriber);
-    
+
     std::string parameter = "Name";
     publisher.propertyChanged()->signal(parameter);
-    
+
     VERIFY_TRUE(subscriber->notified());
     VERIFY_EQUAL(1, subscriber->id());
     VERIFY_EQUAL(parameter, subscriber->property());
@@ -54,7 +52,7 @@ SCENARIO( Observable, "Operation/Normal", "unit,event", "AdvancedPublisher can n
     VERIFY_FALSE(subscriber->ageNotified());
     VERIFY_FALSE(subscriber->adultNotified());
     VERIFY_FALSE(subscriber->combinedAgeAndAdultNotified());
-    
+
     subscriber->resetData();
     publisher.setAge(11);
     VERIFY_EQUAL(1, subscriber->id());

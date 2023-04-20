@@ -1,11 +1,11 @@
 //  EventPublisher.h
-//  TUCUT/Event (Take Up Code Utility)
+//  TUCUT/Notify (Take Up Code Utility)
 //
 //  Created by Abdul Wahid Tanner on 2016-07-24.
 //  Copyright © Take Up Code, Inc.
 //
-#ifndef TUCUT_Event_EventPublisher_h
-#define TUCUT_Event_EventPublisher_h
+#ifndef TUCUT_Notify_EventPublisher_h
+#define TUCUT_Notify_EventPublisher_h
 
 #include "EventSubscriber.h"
 
@@ -14,7 +14,7 @@
 #include <unordered_map>
 #include <vector>
 
-namespace TUCUT::Event
+namespace TUCUT::Notify
 {
   template <typename... Args>
   class EventPublisher
@@ -163,6 +163,6 @@ namespace TUCUT::Event
       mData->mSubscribers.erase(identity);
     }
   };
-} // namespace TUCUT::Event
+} // namespace TUCUT::Notify
 
-#endif // TUCUT_Event_EventPublisher_h
+#endif // TUCUT_Notify_EventPublisher_h

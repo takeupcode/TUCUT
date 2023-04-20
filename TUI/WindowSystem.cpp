@@ -6,10 +6,7 @@
 //
 #include "WindowSystem.h"
 
-#include "Colors.h"
 #include "Window.h"
-
-#include <curses.h>
 
 using namespace TUCUT;
 

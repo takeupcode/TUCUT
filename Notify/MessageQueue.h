@@ -1,18 +1,18 @@
 //  MessageQueue.h
-//  TUCUT/Event (Take Up Code Utility)
+//  TUCUT/Notify (Take Up Code Utility)
 //
 //  Created by Abdul Wahid Tanner on 2023-04-01.
 //  Copyright © Take Up Code, Inc.
 //
-#ifndef TUCUT_Event_MessageQueue_h
-#define TUCUT_Event_MessageQueue_h
+#ifndef TUCUT_Notify_MessageQueue_h
+#define TUCUT_Notify_MessageQueue_h
 
 #include <condition_variable>
 #include <memory>
 #include <mutex>
 #include <queue>
 
-namespace TUCUT::Event
+namespace TUCUT::Notify
 {
   template <class T>
   class MessageQueue final
@@ -97,6 +97,6 @@ namespace TUCUT::Event
     std::condition_variable mCV;
     bool mExit = false;
   };
-} // namespace TUCUT::Event
+} // namespace TUCUT::Notify
 
-#endif // TUCUT_Event_MessageQueue_h
+#endif // TUCUT_Notify_MessageQueue_h

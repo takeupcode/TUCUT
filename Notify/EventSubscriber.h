@@ -1,13 +1,13 @@
 //  EventSubscriber.h
-//  TUCUT/Event (Take Up Code Utility)
+//  TUCUT/Notify (Take Up Code Utility)
 //
 //  Created by Abdul Wahid Tanner on 2016-07-24.
 //  Copyright © Take Up Code, Inc.
 //
-#ifndef TUCUT_Event_EventSubscriber_h
-#define TUCUT_Event_EventSubscriber_h
+#ifndef TUCUT_Notify_EventSubscriber_h
+#define TUCUT_Notify_EventSubscriber_h
 
-namespace TUCUT::Event
+namespace TUCUT::Notify
 {
   template <typename... Args>
   class EventPublisher;
@@ -23,6 +23,6 @@ namespace TUCUT::Event
 
     virtual void notify (int id, Args... args) = 0;
   };
-} // namespace TUCUT::Event
+} // namespace TUCUT::Notify
 
-#endif // TUCUT_Event_EventSubscriber_h
+#endif // TUCUT_Notify_EventSubscriber_h

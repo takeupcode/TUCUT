@@ -1,13 +1,11 @@
-//
 //  AdvancedSubscriber.h
-//  TestTUCUT
+//  TUCUT/Notify (Take Up Code Utility)
 //
-//  Created by Wahid Tanner on 7/20/14.
-//  Copyright © 2014 Take Up Code. All rights reserved.
+//  Created by Abdul Wahid Tanner on 2014-07-20.
+//  Copyright © Take Up Code, Inc.
 //
-
-#ifndef TestTUCUT_Event_AdvancedSubscriber_h
-#define TestTUCUT_Event_AdvancedSubscriber_h
+#ifndef TestTUCUT_Notify_AdvancedSubscriber_h
+#define TestTUCUT_Notify_AdvancedSubscriber_h
 
 #include <memory>
 #include <string>
@@ -15,8 +13,8 @@
 #include "../EventSubscriber.h"
 #include "AdvancedPublisher.h"
 
-class AdvancedSubscriber : public TUCUT::Event::EventSubscriber<const std::string &>,
-    public TUCUT::Event::EventSubscriber<int, bool>
+class AdvancedSubscriber : public TUCUT::Notify::EventSubscriber<const std::string &>,
+    public TUCUT::Notify::EventSubscriber<int, bool>
 {
 private:
     struct AdvancedSubscriberData
@@ -114,4 +112,4 @@ private:
     std::unique_ptr<AdvancedSubscriberData> mData;
 };
 
-#endif // TestTUCUT_Event_AdvancedSubscriber_h
+#endif // TestTUCUT_Notify_AdvancedSubscriber_h

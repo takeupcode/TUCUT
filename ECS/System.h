@@ -7,8 +7,8 @@
 #ifndef TUCUT_ECS_System_h
 #define TUCUT_ECS_System_h
 
-#include "../Event/EventSubscriber.h"
 #include "../Identity/Identifiable.h"
+#include "../Notify/EventSubscriber.h"
 #include "ApplicationTime.h"
 #include "Entity.h"
 
@@ -20,9 +20,9 @@ namespace TUCUT::ECS
 {
   class System : public std::enable_shared_from_this<System>,
     public Identity::Identifiable<int>,
-    public Event::EventSubscriber<
+    public Notify::EventSubscriber<
       std::shared_ptr<Entity> const &>,
-    public Event::EventSubscriber<int, PropertyGroup const &>
+    public Notify::EventSubscriber<int, PropertyGroup const &>
   {
   public:
     static std::string const defaultToken;

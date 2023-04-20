@@ -7,7 +7,7 @@
 #ifndef TUCUT_ECS_Application_h
 #define TUCUT_ECS_Application_h
 
-#include "../Event/EventPublisher.h"
+#include "../Notify/EventPublisher.h"
 #include "ApplicationTime.h"
 #include "Component.h"
 #include "Entity.h"
@@ -29,13 +29,13 @@ namespace TUCUT::ECS
     static int const CommandSentEventId = 4;
 
     using EntityCreatedEvent =
-      Event::EventPublisher<std::shared_ptr<Entity> const &>;
+      Notify::EventPublisher<std::shared_ptr<Entity> const &>;
     using EntityRemovingEvent =
-      Event::EventPublisher<std::shared_ptr<Entity> const &>;
+      Notify::EventPublisher<std::shared_ptr<Entity> const &>;
     using EntityComponentEvent =
-      Event::EventPublisher<std::shared_ptr<Entity> const &>;
+      Notify::EventPublisher<std::shared_ptr<Entity> const &>;
     using CommandSentEvent =
-      Event::EventPublisher<int, PropertyGroup const &>;
+      Notify::EventPublisher<int, PropertyGroup const &>;
 
     static Application * instance ();
 

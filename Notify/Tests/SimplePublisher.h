@@ -1,13 +1,11 @@
-//
 //  SimplePublisher.h
-//  TestTUCUT
+//  TUCUT/Notify (Take Up Code Utility)
 //
-//  Created by Wahid Tanner on 6/26/13.
-//  Copyright © 2013 Take Up Code. All rights reserved.
+//  Created by Abdul Wahid Tanner on 2013-06-26.
+//  Copyright © Take Up Code, Inc.
 //
-
-#ifndef TestTUCUT_Event_SimplePublisher_h
-#define TestTUCUT_Event_SimplePublisher_h
+#ifndef TestTUCUT_Notify_SimplePublisher_h
+#define TestTUCUT_Notify_SimplePublisher_h
 
 #include <memory>
 #include <string>
@@ -17,12 +15,12 @@
 class SimplePublisher
 {
 public:
-    using PropertyChangedEvent = TUCUT::Event::EventPublisher<const std::string &>;
+    using PropertyChangedEvent = TUCUT::Notify::EventPublisher<const std::string &>;
 
     SimplePublisher ()
     : mPropertyChanged(new PropertyChangedEvent(1))
     { }
-    
+
     virtual ~SimplePublisher ()
     { }
 
@@ -35,4 +33,4 @@ private:
     std::unique_ptr<PropertyChangedEvent> mPropertyChanged;
 };
 
-#endif // TestTUCUT_Event_SimplePublisher_h
+#endif // TestTUCUT_Notify_SimplePublisher_h
