@@ -257,8 +257,9 @@ namespace
     static std::string blinkOn ();
     static std::string blinkOff ();
 
-    static std::string moveCursor (unsigned int row,
-      unsigned int column);
+    static std::string moveCursor (
+      unsigned int column,
+      unsigned int row);
     static std::string moveCursorUp (unsigned int lines);
     static std::string moveCursorDown (unsigned int lines);
     static std::string moveCursorForward (unsigned int lines);
@@ -365,8 +366,8 @@ std::string EscSequenceBuilder::blinkOff ()
 }
 
 std::string EscSequenceBuilder::moveCursor (
-  unsigned int row,
-  unsigned int column)
+  unsigned int column,
+  unsigned int row)
 {
   return buildCSI(
     {std::to_string(row), std::to_string(column)}, "H");
@@ -548,10 +549,10 @@ void TUI::Terminal::blinkOff ()
 }
 
 void TUI::Terminal::moveCursor (
-  unsigned int row,
-  unsigned int column)
+  unsigned int column,
+  unsigned int row)
 {
-  std::cout << EscSequenceBuilder::moveCursor(row, column);
+  std::cout << EscSequenceBuilder::moveCursor(column, row);
 }
 
 void TUI::Terminal::moveCursorUp (
@@ -600,10 +601,30 @@ bool TUI::Terminal::hideCursor ()
   return previous;
 }
 
-void TUI::Terminal::reportCursorPosition ()
+bool TUI::Terminal::getCursorPosition (
+  unsigned int & column, unsigned int & row)
 {
   mInput->expectCursorPositionReport();
   std::cout << EscSequenceBuilder::reportCursorPosition();
+
+  Event event;
+  bool result = mInput->getEvent(event);
+  while (result &&
+    std::get_if<CursorPositionEvent>(&event) == nullptr)
+  {
+    result = mInput->getEvent(event);
+  }
+  if (not result)
+  {
+    return false;
+  }
+
+  CursorPositionEvent * cursor =
+    std::get_if<CursorPositionEvent>(&event);
+  column = cursor->mX;
+  row = cursor->mY;
+
+  return true;
 }
 
 void TUI::Terminal::clearScreen ()
@@ -746,6 +767,16 @@ void TUI::Terminal::setup ()
 
 void TUI::Terminal::teardown ()
 {
+  mInputThread.request_stop();
+  mInputThread.join();
+  mInput->exit();
+
+  if (mUseAlternateScreen)
+  {
+    useMainScreen();
+  }
+  showCursor();
+
 #if defined(_WIN32)
   auto stdoutHandle = GetStdHandle(STD_OUTPUT_HANDLE);
   auto stdinHandle = GetStdHandle(STD_INPUT_HANDLE);
@@ -755,12 +786,6 @@ void TUI::Terminal::teardown ()
 #else
   tcsetattr(STDIN_FILENO, TCSANOW, &mTerm);
 #endif
-
-  if (mUseAlternateScreen)
-  {
-    useMainScreen();
-  }
-  showCursor();
 }
 
 void TUI::Terminal::useAlternateScreen ()

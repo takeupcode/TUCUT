@@ -22,6 +22,27 @@ TUI::Input::Input (Terminal & terminal)
   mOutput(terminal.output())
 { }
 
+void TUI::Input::exit ()
+{
+  // We don't wait for the message queue to be done.
+  // If there are multiple threads waiting for input,
+  // then the caller should wait for each of the
+  // threads to detect that there is no more input.
+  // Calling this exit method will wake up all the
+  // waiting threads which will let them handle any
+  // remaining input and then detect that no more
+  // input will be available.
+  mMessages.exit();
+}
+
+bool TUI::Input::empty ()
+{
+  // Just because the message queue is empty doesn't
+  // mean that all threads have finished waiting for
+  // input.
+  return mMessages.empty();
+}
+
 void TUI::Input::handleTimeout ()
 {
   static std::string etx {KeyCodes::EndOfText};
@@ -277,6 +298,16 @@ TUI::Input & TUI::Input::operator >> (std::string & str)
   auto ss = bufferedRead();
   str = ss.str();
   return *this;
+}
+
+bool TUI::Input::getEvent (Event & event)
+{
+  return mMessages.get(event);
+}
+
+bool TUI::Input::getEventNonBlocking (Event & event)
+{
+  return mMessages.getNonBlocking(event);
 }
 
 std::stringstream TUI::Input::bufferedRead ()

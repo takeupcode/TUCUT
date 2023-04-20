@@ -144,7 +144,7 @@ bool DisplayBox::onKeyPress (WindowSystem * ws, int key)
         return false;
     }
 
-    if (!mAllowCenterControls)
+    if (not mAllowCenterControls)
     {
         if (parent())
         {

@@ -26,8 +26,6 @@ namespace TUCUT::TUI
 
     std::shared_ptr<WindowSystem> getSharedWindowSystem ();
 
-    ~WindowSystem ();
-
     void initialize () override;
 
     void addWindow(std::shared_ptr<Window> const & window);
@@ -55,8 +53,6 @@ namespace TUCUT::TUI
     friend class ECS::Application;
 
     WindowSystem (std::string const & token, int identity);
-
-    void deinitialize ();
 
     void handleInput () override;
 

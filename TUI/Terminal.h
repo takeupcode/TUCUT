@@ -112,7 +112,7 @@ namespace TUCUT::TUI
     void blinkOn ();
     void blinkOff ();
 
-    void moveCursor (unsigned int row, unsigned int column);
+    void moveCursor (unsigned int column, unsigned int row);
     void moveCursorUp (unsigned int lines);
     void moveCursorDown (unsigned int lines);
     void moveCursorForward (unsigned int columns);
@@ -120,7 +120,8 @@ namespace TUCUT::TUI
 
     bool showCursor ();
     bool hideCursor ();
-    void reportCursorPosition ();
+    bool getCursorPosition (
+      unsigned int & column, unsigned int & row);
 
     void clearScreen ();
 

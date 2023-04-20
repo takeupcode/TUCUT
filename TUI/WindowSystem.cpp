@@ -33,11 +33,6 @@ TUI::WindowSystem::WindowSystem (
   mNextWindow(nullptr), mCurrentWindow(nullptr)
 { }
 
-TUI::WindowSystem::~WindowSystem ()
-{
-  deinitialize();
-}
-
 void TUI::WindowSystem::addWindow(
   std::shared_ptr<Window> const & window)
 {
@@ -111,22 +106,9 @@ void TUI::WindowSystem::initialize ()
 {
   System::initialize();
 
-  initscr();
-  start_color();
-  raw();
-  noecho();
-  curs_set(0);
-  nodelay(stdscr, true);
-  keypad(stdscr, true);
-  mousemask(ALL_MOUSE_EVENTS | REPORT_MOUSE_POSITION, nullptr);
-  Colors::initializeColorPairs();
-
-  CursesUtil::getScreenMaxYX(mScreenMaxY, mScreenMaxX);
-}
-
-void TUI::WindowSystem::deinitialize ()
-{
-  endwin();
+  mTerminal.moveCursor(1'000, 1'000);
+  mTerminal.reportCursorPosition(mScreenMaxX, mScreenMaxY);
+  mTerminal.moveCursor(0, 0);
 }
 
 void TUI::WindowSystem::handleInput ()
@@ -138,7 +120,7 @@ void TUI::WindowSystem::handleInput ()
     mNextWindow = nullptr;
   }
 
-  if (!mCurrentWindow)
+  if (not mCurrentWindow)
   {
     return;
   }
@@ -148,30 +130,22 @@ void TUI::WindowSystem::handleInput ()
 
 void TUI::WindowSystem::update (ECS::TimeResolution elapsedTime)
 {
-  if (!mCurrentWindow)
+  if (not mCurrentWindow)
   {
     return;
   }
 
-  CursesUtil::getScreenMaxYX(mScreenMaxY, mScreenMaxX);
-
-  mCurrentWindow->resize(
-    checkHeightBounds(screenHeight()),
-    checkWidthBounds(screenWidth()));
-
-  mCurrentWindow->update();
+  mCurrentWindow->update(elapsedTime);
 }
 
 void TUI::WindowSystem::render ()
 {
-  if (!mCurrentWindow)
+  if (not mCurrentWindow)
   {
     return;
   }
 
   mCurrentWindow->draw();
-
-  doupdate();
 }
 
 int TUI::WindowSystem::clampWidthBounds (int width) const

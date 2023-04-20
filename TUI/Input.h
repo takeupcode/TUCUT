@@ -18,11 +18,15 @@
 
 namespace TUCUT::TUI
 {
-  class Input
+  class Input final
   {
   public:
     Input (
       Terminal & terminal);
+
+    void exit ();
+
+    bool empty ();
 
     void handleTimeout ();
     void accept (std::string const & utf8);
@@ -36,6 +40,9 @@ namespace TUCUT::TUI
     Input & operator >> (unsigned int & ui);
     Input & operator >> (double & d);
     Input & operator >> (std::string & str);
+
+    bool getEvent (Event & event);
+    bool getEventNonBlocking (Event & event);
 
   private:
     std::stringstream bufferedRead ();

@@ -82,19 +82,13 @@ namespace TUCUT::Event
         std::lock_guard<std::mutex> lock(mMutex);
         mExit = true;
       }
-      mCV.notify_one();
+      mCV.notify_all();
     }
 
     bool empty () const
     {
       std::lock_guard<std::mutex> lock(mMutex);
       return mQueue.empty();
-    }
-
-    bool done () const
-    {
-      std::lock_guard<std::mutex> lock(mMutex);
-      return mExit && mQueue.empty();
     }
 
   private:

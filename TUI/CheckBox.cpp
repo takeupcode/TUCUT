@@ -122,7 +122,7 @@ void CheckBox::setIsChecked (bool value)
 
 void CheckBox::handleClick (WindowSystem * ws)
 {
-    mIsChecked = !mIsChecked;
+    mIsChecked = not mIsChecked;
 
     mClicked->signal(ws, this);
 }

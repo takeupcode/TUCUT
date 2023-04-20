@@ -72,10 +72,10 @@ void Window::processInput (WindowSystem * ws)
         break;
 
     case 9: // Tab
-        if (!advanceFocus())
+        if (not advanceFocus())
         {
             // If we couldn't advance the focus, start the cycle over again.
-            if (!setFocus(true))
+            if (not setFocus(true))
             {
                 // If no window can accept direct focus, set regular focus to this window.
                 mHasFocus = true;
@@ -512,7 +512,7 @@ Window * Window::findWindow (int y, int x)
 
 Window * Window::findFocus ()
 {
-    if (!mHasFocus)
+    if (not mHasFocus)
     {
         // This window and none of its control windows have the focus.
         return nullptr;
@@ -563,7 +563,7 @@ bool Window::setFocus (bool focus)
     bool foundFirstFocusControl = false;
     for (auto & control: mControls)
     {
-        if (!foundFirstFocusControl)
+        if (not foundFirstFocusControl)
         {
             // This works for both clearing as well as setting focus.
             foundFirstFocusControl = control->setFocus(focus);
@@ -665,7 +665,7 @@ bool Window::advanceFocus ()
         bool foundFirstFocusControl = false;
         for (auto & control: mControls)
         {
-            if (!foundFirstFocusControl)
+            if (not foundFirstFocusControl)
             {
                 if (control->mHasFocus)
                 {
@@ -781,7 +781,7 @@ void Window::createWindows ()
     }
 
     mClientCursesWindow = newwin(clientHeight(), clientWidth(), clientY(), clientX());
-    if (!mClientCursesWindow)
+    if (not mClientCursesWindow)
     {
         std::string message = "Could not create window.";
         throw std::runtime_error(message);
