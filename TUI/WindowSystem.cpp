@@ -99,6 +99,36 @@ void TUI::WindowSystem::setMaxScreenDimensions (
   mMaxScreenHeight = height;
 }
 
+// Figure out if the screen or the window has the smallest
+// max x and y. Whichever is smallest is the max x and y
+// that will be visible. Translate the max x and y back
+// into window coordinates. Return false if the window
+// is off the screen.
+bool TUI::WindowSystem::getMaxWindowCoordinates (
+  Window const * win, int & x, int & y)
+{
+  int worldX = win->worldX();
+  int worldY = win->worldY();
+  if (worldX >= mMaxScreenWidth ||
+    worldY >= mMaxScreenHeight)
+  {
+    return false;
+  }
+
+  int maxWorldX = worldX + win->width() - 1;
+  int maxWorldY = worldY + win->height() - 1;
+
+  int maxX = (maxWorldX < mMaxScreenWidth) ?
+    maxWorldX : (mMaxScreenWidth - 1);
+  int maxY = (maxWorldY < mMaxScreenHeight) ?
+    maxWorldY : (mMaxScreenHeight - 1);
+
+  x = maxX - worldX;
+  y = maxY - worldY;
+
+  return true;
+}
+
 void TUI::WindowSystem::initialize ()
 {
   System::initialize();

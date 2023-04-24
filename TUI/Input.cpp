@@ -8,15 +8,6 @@
 
 using namespace TUCUT;
 
-namespace
-{
-  template<class... Ts>
-  struct overloaded : Ts...
-  {
-    using Ts::operator()...;
-  };
-}
-
 TUI::Input::Input (Terminal & terminal)
 : mTerminal(terminal),
   mOutput(terminal.output())
@@ -156,7 +147,7 @@ void TUI::Input::accept (std::string const & utf8)
           escapeSequence.clear();
         },
 
-        [this] (CursorPositionEvent &)
+        [this] (CursorPositionEvent & arg)
         {
           mCursorPositionReportExpected = false;
           escapeSequence.clear();

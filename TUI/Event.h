@@ -14,11 +14,18 @@
 
 namespace TUCUT::TUI
 {
+  template<class... Ts>
+  struct overloaded : Ts...
+  {
+    using Ts::operator()...;
+  };
+
   namespace KeyCodes
   {
     constexpr char NullChar       =   0;
     constexpr char EndOfText      =   3;
     constexpr char BackspaceChar  =   8;
+    constexpr char TabChar        =   9;
     constexpr char NewlineChar    =  10;
     constexpr char EnterChar      =  13;
     constexpr char CancelChar     =  24;

@@ -10,6 +10,7 @@
 #include "../ECS/Application.h"
 #include "../ECS/ApplicationTime.h"
 #include "../ECS/System.h"
+#include "Terminal.h"
 
 #include <memory>
 #include <string>
@@ -33,6 +34,11 @@ namespace TUCUT::TUI
 
     void selectNextWindow(std::string const & name);
 
+    Terminal & terminal ()
+    {
+      return mTerminal;
+    }
+
     int screenWidth () const;
 
     int screenHeight () const;
@@ -48,6 +54,9 @@ namespace TUCUT::TUI
     int maxScreenHeight () const;
 
     void setMaxScreenDimensions (int width, int height);
+
+    bool getMaxWindowCoordinates (
+      Window const * win, int & x, int & y)
 
   private:
     friend class ECS::Application;

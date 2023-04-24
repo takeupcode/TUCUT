@@ -35,7 +35,7 @@ namespace TUCUT::TUI
       Enabled
     };
 
-    virtual ~Window ();
+    virtual ~Window () = default;
 
     static std::shared_ptr<Window> createSharedWindow (
       std::string const & name,
@@ -59,11 +59,46 @@ namespace TUCUT::TUI
 
     void draw (WindowSystem * ws) const;
 
+    void drawText (WindowSystem * ws,
+      int x,
+      int y,
+      std::string const & utf8) const;
+
+    void drawText (WindowSystem * ws,
+      int x,
+      int y,
+      int width,
+      int height,
+      std::string const & utf8) const;
+
+    void drawBorder (WindowSystem * ws,
+      int x,
+      int y,
+      int width,
+      int height,
+      Color const & foreColor,
+      Color const & backColor) const;
+
+    void fillRect (WindowSystem * ws,
+      int x,
+      int y,
+      int width,
+      int height,
+      std::string const & utf8,
+      Color const & foreColor,
+      Color const & backColor) const;
+
     virtual bool onKeyPress (WindowSystem * ws,
-      Event const & event);
+      CharacterEvent const & event);
+
+    virtual bool onNonPrintingKeyPress (WindowSystem * ws,
+      NonPrintingCharacterEvent const & event);
+
+    virtual bool onExtendedKeyPress (WindowSystem * ws,
+      ExtendedCharacterEvent const & event);
 
     virtual void onMouseEvent (WindowSystem * ws,
-      Event const & event);
+      MouseEvent const & event);
 
     virtual void onDrawClient (WindowSystem * ws) const;
 
@@ -75,11 +110,15 @@ namespace TUCUT::TUI
 
     virtual int x () const;
 
+    virtual int worldX () const;
+
     virtual int clientX () const;
 
     virtual void setX (int x);
 
     virtual int y () const;
+
+    virtual int worldY () const;
 
     virtual int clientY () const;
 
@@ -109,7 +148,8 @@ namespace TUCUT::TUI
 
     virtual void resize (int width, int height);
 
-    virtual void moveAndResize (int x, int y, int width, int height);
+    virtual void moveAndResize (int x, int y,
+      int width, int height);
 
     int anchorTop () const;
 
@@ -129,7 +169,8 @@ namespace TUCUT::TUI
 
     void setAnchorsAll (int anchor);
 
-    void setAnchorsAll (int top, int right, int bottom, int left);
+    void setAnchorsAll (int top, int right,
+      int bottom, int left);
 
     void setAnchorsTopBottom (int top, int bottom);
 
@@ -167,9 +208,13 @@ namespace TUCUT::TUI
 
     void addControl(std::shared_ptr<Window> && control);
 
-    Window * findWindow (int x, int y);
+    Window * findWindow (int worldX, int worldY);
 
     Window * findFocus ();
+
+    Window * findDefaultEnter ();
+
+    Window * findDefaultEscape ();
 
     virtual bool canHaveDirectFocus () const;
 
@@ -179,7 +224,7 @@ namespace TUCUT::TUI
 
     virtual bool setFocus (bool focus);
 
-    virtual bool setFocus (int x, int y);
+    virtual bool setFocus (Window * win);
 
     virtual bool advanceFocus ();
 
@@ -187,9 +232,21 @@ namespace TUCUT::TUI
 
     void setParent (Window * parent);
 
+    virtual bool wantTab () const;
+
+    virtual void setWantTab (bool value);
+
     virtual bool wantEnter () const;
 
     virtual void setWantEnter (bool value);
+
+    virtual bool defaultEnter () const;
+
+    virtual void setDefaultEnter (bool value);
+
+    virtual bool defaultEscape () const;
+
+    virtual void setDefaultEscape (bool value);
 
     virtual VisibleState visibleState () const;
 
@@ -248,7 +305,10 @@ protected:
     bool mIsDirectFocusPossible;
     bool mHasDirectFocus;
     bool mFillClientArea;
+    bool mWantTab;
     bool mWantEnter;
+    bool mDefaultEnter;
+    bool mDefaultEscape;
     VisibleState mVisibleState;
     EnableState mEnableState;
   };

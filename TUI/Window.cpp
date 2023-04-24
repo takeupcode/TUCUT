@@ -11,839 +11,1216 @@
 
 #include <stdexcept>
 
-namespace TUCUT {
-namespace Curses {
+using namespace TUCUT;
 
-Window::Window (std::string const & name, int y, int x, int height, int width, int clientForeColor, int clientBackColor, int borderForeColor, int borderBackColor, int focusForeColor, int focusBackColor, bool border)
-: mClientCursesWindow(nullptr), mBorderWindow(nullptr), mName(name),
-  mY(y), mX(x), mHeight(height), mWidth(width),
-  mAnchorTop(-1), mAnchorBottom(-1), mAnchorLeft(-1), mAnchorRight(-1),
-  mClientForeColor(clientForeColor), mClientBackColor(clientBackColor),
-  mBorderForeColor(borderForeColor), mBorderBackColor(borderBackColor),
-  mFocusForeColor(focusForeColor), mFocusBackColor(focusBackColor),
-  mParent(nullptr), mBorder(border),
-  mHasFocus(false), mIsDirectFocusPossible(true), mHasDirectFocus(false),
-  mFillClientArea(true), mWantEnter(false),
-  mVisibleState(VisibleState::shown), mEnableState(EnableState::enabled)
-{
-    mMinHeight = mBorder ? 3 : 1;
-    mMinWidth = mBorder ? 3 : 1;
-}
-
-void Window::initialize ()
-{
-    createWindows();
-
-    setFocus(true);
-}
-
-Window::~Window ()
-{
-    destroyWindows();
-}
-
-std::shared_ptr<Window> Window::createSharedWindow (std::string const & name, int y, int x, int height, int width, int clientForeColor, int clientBackColor, int borderForeColor, int borderBackColor, int focusForeColor, int focusBackColor, bool border)
-{
-    auto result = std::shared_ptr<Window>(new Window(name, y, x, height, width, clientForeColor, clientBackColor, borderForeColor, borderBackColor, focusForeColor, focusBackColor, border));
-
-    result->initialize();
-
-    return result;
-}
-
-std::shared_ptr<Window> Window::getSharedWindow ()
-{
-    return shared_from_this();
-}
-
-WINDOW * Window::cursesWindow () const
-{
-    return mClientCursesWindow;
-}
-
-void Window::processInput (WindowSystem * ws)
-{
-    MEVENT mouseEvent;
-    int c = wgetch(cursesWindow());
-    switch(c)
-    {
-    case ERR:
-        break;
-
-    case 9: // Tab
-        if (not advanceFocus())
-        {
-            // If we couldn't advance the focus, start the cycle over again.
-            if (not setFocus(true))
-            {
-                // If no window can accept direct focus, set regular focus to this window.
-                mHasFocus = true;
-            }
-        }
-        break;
-
-    case KEY_MOUSE:
-        if (getmouse(&mouseEvent) == OK)
-        {
-            setFocus(mouseEvent.y, mouseEvent.x);
-            Window * control = findWindow(mouseEvent.y, mouseEvent.x);
-            if (control)
-            {
-                control->onMouseEvent(ws, mouseEvent.id, mouseEvent.y, mouseEvent.x, mouseEvent.bstate);
-            }
-        }
-        break;
-    default:
-        {
-            Window * control = findFocus();
-            if (control)
-            {
-                control->onKeyPress(ws, c);
-            }
-        }
-    }
-}
-
-void Window::update (ECS::TimeResolution)
+TUI::Window::Window (
+  std::string const & name,
+  int x,
+  int y,
+  int width,
+  int height,
+  int clientForeColor,
+  int clientBackColor,
+  int borderForeColor,
+  int borderBackColor,
+  int focusForeColor,
+  int focusBackColor,
+  bool border)
+: mName(name),
+  mX(x),
+  mY(y),
+  mWidth(width),
+  mHeight(height),
+  mMinWidth(border ? 3 : 1),
+  mMinHeight(border ? 3 : 1),
+  mAnchorTop(-1),
+  mAnchorRight(-1),
+  mAnchorBottom(-1),
+  mAnchorLeft(-1),
+  mClientForeColor(clientForeColor),
+  mClientBackColor(clientBackColor),
+  mBorderForeColor(borderForeColor),
+  mBorderBackColor(borderBackColor),
+  mFocusForeColor(focusForeColor),
+  mFocusBackColor(focusBackColor),
+  mParent(nullptr),
+  mBorder(border),
+  mHasFocus(false),
+  mIsDirectFocusPossible(true),
+  mHasDirectFocus(false),
+  mFillClientArea(true),
+  mWantTab(false),
+  mWantEnter(false),
+  mDefaultEnter(false),
+  mDefaultEscape(false),
+  mVisibleState(VisibleState::shown),
+  mEnableState(EnableState::enabled)
 { }
 
-void Window::draw (WindowSystem * ws) const
+void TUI::Window::initialize ()
+{ }
+
+std::shared_ptr<TUI::Window>
+TUI::Window::createSharedWindow (
+  std::string const & name,
+  int x,
+  int y,
+  int width,
+  int height,
+  int clientForeColor,
+  int clientBackColor,
+  int borderForeColor,
+  int borderBackColor,
+  int focusForeColor,
+  int focusBackColor,
+  bool border)
 {
-    if (mBorder)
-    {
-      ConsoleManager::drawBox(*this, y(), x(), clientHeight(), clientWidth(), mBorderForeColor, mBorderBackColor);
-    }
+  auto result = std::shared_ptr<Window>(new Window(
+    name, x, y, width, height,
+    clientForeColor, clientBackColor,
+    borderForeColor, borderBackColor,
+    focusForeColor, focusBackColor,
+    border));
 
-    if (mFillClientArea)
-    {
-        ConsoleManager::fillRect(*this, 0, 0, clientHeight(), clientWidth(), mClientForeColor, mClientBackColor);
-    }
+  result->initialize();
 
-    drawClient();
-    drawNonClient();
-
-    for (auto const & control: mControls)
-    {
-        control->draw();
-    }
+  return result;
 }
 
-bool Window::onKeyPress (WindowSystem *, Event const &)
+std::shared_ptr<TUI::Window> TUI::Window::getSharedWindow ()
+{
+  return shared_from_this();
+}
+
+void TUI::Window::processInput (WindowSystem * ws)
+{
+  Event event;
+  if (not getEvent(event))
+  {
+    return;
+  }
+  std::visit(overloaded
+    {
+      [this] (NonPrintingCharacterEvent & arg)
+      {
+        if (arg.mKey == KeyCodes::TabChar)
+        {
+          Window * control = findFocus();
+          if (control && control->wantTab())
+          {
+            control->onNonPrintingKeyPress(ws, arg);
+          }
+          else if (not advanceFocus())
+          {
+            // If we couldn't advance the focus,
+            // start the cycle over again.
+            if (not setFocus(true))
+            {
+              // If no window can accept direct focus,
+              // set regular focus to this window.
+              mHasFocus = true;
+            }
+          }
+        }
+        else if (arg.mKey == KeyCodes::NewlineChar)
+        {
+          Window * control = findFocus();
+          if (control && control->wantEnter())
+          {
+            control->onNonPrintingKeyPress(ws, arg);
+            return;
+          }
+
+          control = findDefaultEnter();
+          if (control)
+          {
+            control->onNonPrintingKeyPress(ws, arg);
+            return;
+          }
+        }
+        else if (arg.mKey == KeyCodes::EscapeChar)
+        {
+          Window * control = findDefaultEscape();
+          if (control)
+          {
+            control->onNonPrintingKeyPress(ws, arg);
+            return;
+          }
+        }
+      },
+
+      [this] (CharacterEvent & arg)
+      {
+        Window * control = findFocus();
+        if (control)
+        {
+          control->onKeyPress(ws, arg);
+        }
+      },
+
+      [this] (ExtendedCharacterEvent & arg)
+      {
+        Window * control = findFocus();
+        if (control)
+        {
+          control->onExtendedKeyPress(ws, arg);
+        }
+      },
+
+      [this] (MouseEvent & arg)
+      {
+        Window * control = findWindow(arg.mX, arg.mY);
+        if (control)
+        {
+          setFocus(control);
+          control->onMouseEvent(ws, arg);
+        }
+      },
+
+      [this] (auto &)
+      { } // Ignore everything else.
+    },
+    event);
+}
+
+void TUI::Window::update (ECS::TimeResolution)
+{ }
+
+void TUI::Window::draw (WindowSystem * ws) const
+{
+  if (mBorder)
+  {
+    drawBorder(ws,
+      0, 0, mWidth, mHeight,
+      mBorderForeColor, mBorderBackColor);
+  }
+
+  if (mFillClientArea)
+  {
+    fillRect(ws,
+      clientX(), clientY(), clientHeight(), clientWidth(),
+      " ",
+      mClientForeColor, mClientBackColor);
+  }
+
+  drawClient();
+  drawNonClient();
+
+  for (auto const & control: mControls)
+  {
+    control->draw();
+  }
+}
+
+void TUI::Window::drawText (WindowSystem * ws,
+  int x,
+  int y,
+  std::string const & utf8) const
+{
+  drawText(ws, x, y, 1, 1, utf8);
+}
+
+void TUI::Window::drawText (WindowSystem * ws,
+  int x,
+  int y,
+  int width,
+  int height,
+  std::string const & utf8) const
+{
+  int maxX;
+  int maxY;
+  if (not ws->getMaxWindowCoordinates(this, maxX, maxY))
+  {
+    return;
+  }
+
+  auto & terminal = ws->terminal();
+  auto & output = terminal.output();
+  for (int currentY = y;
+    currentY <= maxY && currentY - y < height;
+    ++currentY)
+  {
+    for (int currentX = x;
+      currentX <= maxX && currentX - x < width;
+      ++currentX)
+    {
+      terminal.moveCursor(
+        currentX + worldX(), currentY + worldY());
+      output << utf8;
+    }
+  }
+}
+
+void TUI::Window::drawBorder (WindowSystem * ws,
+  int x,
+  int y,
+  int width,
+  int height,
+  Color const & foreColor,
+  Color const & backColor) const
+{
+  int maxX;
+  int maxY;
+  if (not ws->getMaxWindowCoordinates(this, maxX, maxY))
+  {
+    return;
+  }
+  if (x > maxX || y > maxY ||
+    width < 2 || height < 2)
+  {
+    return;
+  }
+
+  std::string hLine;
+  for (int i = 0;
+    i < width - 2 && x + i + 1 <= maxX;
+    ++i)
+  {
+    hLine += "─";
+  }
+  if (not hLine.empty())
+  {
+    hLine = foreColor(backColor(hLine));
+  }
+
+  std::string vLine = foreColor(backColor("│"));
+
+  std::string ulCorner = foreColor(backColor("┌"));
+  std::string urCorner = foreColor(backColor("┐"));
+  std::string llCorner = foreColor(backColor("└"));
+  std::string lrCorner = foreColor(backColor("┘"));
+
+  drawText(x, y, ulCorner);
+  if (not hLine.empty())
+  {
+    drawText(x + 1, y, hLine);
+  }
+  drawText(x + width - 1, y, urCorner);
+
+  for (int currentY = y + 1;
+    currentY < y + height && currentY <= maxY;
+    ++currentY)
+  {
+    drawText(x, currentY, vLine);
+    drawText(x + width - 1, currentY, vLine);
+  }
+
+  drawText(x, y + height - 1, llCorner);
+  if (not hLine.empty())
+  {
+    drawText(x + 1, y + height - 1, hLine);
+  }
+  drawText(x + width - 1, y + height - 1, lrCorner);
+}
+
+void TUI::Window::fillRect (WindowSystem * ws,
+  int x,
+  int y,
+  int width,
+  int height,
+  std::string const & utf8,
+  Color const & foreColor,
+  Color const & backColor) const
+{
+  int maxX;
+  int maxY;
+  if (not ws->getMaxWindowCoordinates(this, maxX, maxY))
+  {
+    return;
+  }
+  if (x > maxX || y > maxY ||
+    width == 0 || height == 0)
+  {
+    return;
+  }
+
+  std::string row;
+  for (int i = 0;
+    i < width && x + i <= maxX;
+    ++i)
+  {
+    row += utf8;
+  }
+  if (not row.empty())
+  {
+    row = foreColor(backColor(row));
+  }
+
+  drawText(x, y, 1, height, row);
+}
+
+bool TUI::Window::onKeyPress (WindowSystem *, Event const &)
 {
   return false;
 }
 
-void Window::onMouseEvent (WindowSystem *, Event const &)
+void TUI::Window::onMouseEvent (WindowSystem *, Event const &)
 { }
 
-void Window::onDrawClient (WindowSystem *) const
+void TUI::Window::onDrawClient (WindowSystem *) const
 { }
 
-void Window::onDrawNonClient (WindowSystem *) const
+void TUI::Window::onDrawNonClient (WindowSystem *) const
 { }
 
-void Window::onResize ()
+void TUI::Window::onResize ()
 { }
 
-std::string const & Window::name () const
+std::string const & TUI::Window::name () const
 {
-    return mName;
+  return mName;
 }
 
-int Window::y () const
+int TUI::Window::x () const
 {
-    return mY;
+  return mX;
 }
 
-int Window::clientY () const
+int TUI::Window::worldX () const
 {
-    return mBorder ? mY + 1 : mY;
-}
-
-void Window::setY (int y)
-{
-    if (mY != y)
-    {
-        destroyWindows();
-        mY = y;
-        createWindows();
-    }
-}
-
-int Window::x () const
-{
+  if (mParent == nullptr)
+  {
     return mX;
+  }
+
+  return mX + mParent->worldX();
 }
 
-int Window::clientX () const
+int TUI::Window::clientX () const
 {
-    return mBorder ? mX + 1 : mX;
+  return mBorder ? 1 : 0;
 }
 
-void Window::setX (int x)
+void TUI::Window::setX (int x)
 {
-    if (mX != x)
+  if (x < 0)
+  {
+    throw std::out_of_range("x cannot be less than 0.");
+  }
+
+  if (mX != x)
+  {
+    mX = x;
+    onResize();
+  }
+}
+
+int TUI::Window::y () const
+{
+  return mY;
+}
+
+int TUI::Window::worldY () const
+{
+  if (mParent == nullptr)
+  {
+    return mY;
+  }
+
+  return mY + mParent->worldY();
+}
+
+int TUI::Window::clientY () const
+{
+  return mBorder ? 1 : 0;
+}
+
+void TUI::Window::setY (int y)
+{
+  if (y < 0)
+  {
+    throw std::out_of_range("y cannot be less than 0.");
+  }
+
+  if (mY != y)
+  {
+    mY = y;
+    onResize();
+  }
+}
+
+void TUI::Window::move (int x, int y)
+{
+  if (x < 0 || y < 0)
+  {
+    throw std::out_of_range("x and y cannot be less than 0.");
+  }
+
+  if (mX != x || mY != y)
+  {
+    mX = x;
+    mY = y;
+    onResize();
+  }
+}
+
+int TUI::Window::width () const
+{
+  return mWidth;
+}
+
+int TUI::Window::clientWidth () const
+{
+  return mBorder ? mWidth - 2 : mWidth;
+}
+
+int TUI::Window::minWidth () const
+{
+  return mMinWidth;
+}
+
+void TUI::Window::setWidth (int width)
+{
+  if (mWidth != width)
+  {
+    mWidth = width;
+    if (mWidth < mMinWidth)
     {
-        destroyWindows();
-        mX = x;
-        createWindows();
+      mWidth = mMinWidth;
     }
+    onResize();
+  }
 }
 
-void Window::move (int y, int x)
+void TUI::Window::setMinWidth (int width)
 {
-    if (mY != y || mX != x)
+  if (mBorder)
+  {
+    if (width < 3)
     {
-        destroyWindows();
-        mY = y;
-        mX = x;
-        createWindows();
+      throw std::out_of_range(
+        "width cannot be less than 3 when using a border.");
     }
-}
-
-int Window::height () const
-{
-    return mHeight;
-}
-
-int Window::clientHeight () const
-{
-    return mBorder ? mHeight - 2 : mHeight;
-}
-
-int Window::minHeight () const
-{
-    return mMinHeight;
-}
-
-void Window::setHeight (int height)
-{
-    if (mHeight != height)
+  }
+  else
+  {
+    if (width < 1)
     {
-        destroyWindows();
-        mHeight = height;
-        createWindows();
-        onResize();
+      throw std::out_of_range("width cannot be less than 1.");
     }
+  }
+
+  mMinWidth = width;
 }
 
-void Window::setMinHeight (int height)
+int TUI::Window::height () const
 {
-    if (mBorder)
+  return mHeight;
+}
+
+int TUI::Window::clientHeight () const
+{
+  return mBorder ? mHeight - 2 : mHeight;
+}
+
+int TUI::Window::minHeight () const
+{
+  return mMinHeight;
+}
+
+void TUI::Window::setHeight (int height)
+{
+  if (mHeight != height)
+  {
+    mHeight = height;
+    if (mHeight < mMinHeight)
     {
-        if (height < 3)
-        {
-            throw std::out_of_range("height cannot be less than 3 when using a border.");
-        }
+      mHeight = mMinHeight;
     }
-    else
+    onResize();
+  }
+}
+
+void TUI::Window::setMinHeight (int height)
+{
+  if (mBorder)
+  {
+    if (height < 3)
     {
-        if (height < 1)
-        {
-            throw std::out_of_range("height cannot be less than 1.");
-        }
+      throw std::out_of_range(
+        "height cannot be less than 3 when using a border.");
     }
-
-    mMinHeight = height;
-}
-
-int Window::width () const
-{
-    return mWidth;
-}
-
-int Window::clientWidth () const
-{
-    return mBorder ? mWidth - 2 : mWidth;
-}
-
-int Window::minWidth () const
-{
-    return mMinWidth;
-}
-
-void Window::setWidth (int width)
-{
-    if (mWidth != width)
+  }
+  else
+  {
+    if (height < 1)
     {
-        destroyWindows();
-        mWidth = width;
-        createWindows();
-        onResize();
+      throw std::out_of_range("height cannot be less than 1.");
     }
+  }
+
+  mMinHeight = height;
 }
 
-void Window::setMinWidth (int width)
+void TUI::Window::resize (int width, int height)
 {
-    if (mBorder)
+  if (mWidth != width || mHeight != height)
+  {
+    setWidth(width);
+    setHeight(height);
+    onResize();
+  }
+}
+
+void TUI::Window::moveAndResize (int x, int y,
+  int width, int height)
+{
+  if (x < 0 || y < 0)
+  {
+    throw std::out_of_range("x and y cannot be less than 0.");
+  }
+
+  if (mBorder)
+  {
+    if (mHeight < 3 || mWidth < 3)
     {
-        if (width < 3)
-        {
-            throw std::out_of_range("width cannot be less than 3 when using a border.");
-        }
+      throw std::out_of_range(
+        "height or width cannot be less than 3"
+        " when using a border.");
     }
-    else
+  }
+  else
+  {
+    if (mHeight < 1 || mWidth < 1)
     {
-        if (width < 1)
-        {
-            throw std::out_of_range("width cannot be less than 1.");
-        }
+      throw std::out_of_range(
+        "height or width cannot be less than 1.");
     }
+  }
 
-    mMinWidth = width;
+  if (mX != x || mY != y ||
+    mWidth != width || mHeight != height)
+  {
+    mX = x;
+    mY = y;
+    setWidth(width);
+    setHeight(height);
+    onResize();
+  }
 }
 
-void Window::resize (int height, int width)
+int TUI::Window::anchorTop () const
 {
-    if (mHeight != height || mWidth != width)
-    {
-        destroyWindows();
-        mHeight = height;
-        mWidth = width;
-        createWindows();
-        onResize();
-    }
+  return mAnchorTop;
 }
 
-void Window::moveAndResize (int y, int x, int height, int width)
+void TUI::Window::setAnchorTop (int anchor)
 {
-    if (mY != y || mX != x || mHeight != height || mWidth != width)
-    {
-        destroyWindows();
-        mY = y;
-        mX = x;
-        mHeight = height;
-        mWidth = width;
-        createWindows();
-        onResize();
-    }
+  mAnchorTop = anchor;
 }
 
-int Window::anchorTop () const
+int TUI::Window::anchorRight () const
 {
-    return mAnchorTop;
+  return mAnchorRight;
 }
 
-void Window::setAnchorTop (int anchor)
+void TUI::Window::setAnchorRight (int anchor)
 {
-    mAnchorTop = anchor;
+  mAnchorRight = anchor;
 }
 
-int Window::anchorBottom () const
+int TUI::Window::anchorBottom () const
 {
-    return mAnchorBottom;
+  return mAnchorBottom;
 }
 
-void Window::setAnchorBottom (int anchor)
+void TUI::Window::setAnchorBottom (int anchor)
 {
-    mAnchorBottom = anchor;
+  mAnchorBottom = anchor;
 }
 
-int Window::anchorLeft () const
+int TUI::Window::anchorLeft () const
 {
-    return mAnchorLeft;
+  return mAnchorLeft;
 }
 
-void Window::setAnchorLeft (int anchor)
+void TUI::Window::setAnchorLeft (int anchor)
 {
-    mAnchorLeft = anchor;
+  mAnchorLeft = anchor;
 }
 
-int Window::anchorRight () const
+void TUI::Window::setAnchorsAll (int anchor)
 {
-    return mAnchorRight;
+  mAnchorTop = anchor;
+  mAnchorRight = anchor;
+  mAnchorBottom = anchor;
+  mAnchorLeft = anchor;
 }
 
-void Window::setAnchorRight (int anchor)
+void TUI::Window::setAnchorsAll (int top, int right, int bottom, int left)
 {
-    mAnchorRight = anchor;
+  mAnchorTop = top;
+  mAnchorRight = right;
+  mAnchorBottom = bottom;
+  mAnchorLeft = left;
 }
 
-void Window::setAnchorsAll (int anchor)
+void TUI::Window::setAnchorsTopBottom (int top, int bottom)
 {
-    mAnchorTop = anchor;
-    mAnchorBottom = anchor;
-    mAnchorLeft = anchor;
-    mAnchorRight = anchor;
+  mAnchorTop = top;
+  mAnchorBottom = bottom;
 }
 
-void Window::setAnchorsAll (int top, int bottom, int left, int right)
+void TUI::Window::setAnchorsLeftRight (int left, int right)
 {
-    mAnchorTop = top;
-    mAnchorBottom = bottom;
-    mAnchorLeft = left;
-    mAnchorRight = right;
+  mAnchorLeft = left;
+  mAnchorRight = right;
 }
 
-void Window::setAnchorsTopBottom (int top, int bottom)
+bool TUI::Window::hasBorder () const
 {
-    mAnchorTop = top;
-    mAnchorBottom = bottom;
+  return mBorder;
 }
 
-void Window::setAnchorsLeftRight (int left, int right)
+void TUI::Window::setBorder (bool border)
 {
-    mAnchorLeft = left;
-    mAnchorRight = right;
+  if (mBorder != border)
+  {
+    mBorder = border;
+    onResize();
+  }
 }
 
-bool Window::hasBorder () const
+TUI::Color TUI::Window::clientForeColor () const
 {
-    return mBorder;
+  return mClientForeColor;
 }
 
-void Window::setBorder (bool border)
+void TUI::Window::setClientForeColor (TUI::Color const & color)
 {
-    if (mBorder != border)
-    {
-        destroyWindows();
-        mBorder = border;
-        createWindows();
-    }
+  mClientForeColor = color;
 }
 
-int Window::clientForeColor () const
+TUI::Color TUI::Window::clientBackColor () const
 {
-    return mClientForeColor;
+  return mClientBackColor;
 }
 
-void Window::setClientForeColor (int color)
+void TUI::Window::setClientBackColor (TUI::Color const & color)
 {
-    mClientForeColor = color;
+  mClientBackColor = color;
 }
 
-int Window::clientBackColor () const
+TUI::Color TUI::Window::borderForeColor () const
 {
-    return mClientBackColor;
+  return mBorderForeColor;
 }
 
-void Window::setClientBackColor (int color)
+void TUI::Window::setBorderForeColor (TUI::Color const & color)
 {
-    mClientBackColor = color;
+  mBorderForeColor = color;
 }
 
-int Window::borderForeColor () const
+TUI::Color TUI::Window::borderBackColor () const
 {
-    return mBorderForeColor;
+  return mBorderBackColor;
 }
 
-void Window::setBorderForeColor (int color)
+void TUI::Window::setBorderBackColor (TUI::Color const & color)
 {
-    mBorderForeColor = color;
+  mBorderBackColor = color;
 }
 
-int Window::borderBackColor () const
+TUI::Color TUI::Window::focusForeColor () const
 {
-    return mBorderBackColor;
+  return mFocusForeColor;
 }
 
-void Window::setBorderBackColor (int color)
+void TUI::Window::setFocusForeColor (TUI::Color const & color)
 {
-    mBorderBackColor = color;
+  mFocusForeColor = color;
 }
 
-int Window::focusForeColor () const
+TUI::Color TUI::Window::focusBackColor () const
 {
-    return mFocusForeColor;
+  return mFocusBackColor;
 }
 
-void Window::setFocusForeColor (int color)
+void TUI::Window::setFocusBackColor (TUI::Color const & color)
 {
-    mFocusForeColor = color;
+  mFocusBackColor = color;
 }
 
-int Window::focusBackColor () const
+void TUI::Window::addControl (
+  std::shared_ptr<Window> const & control)
 {
-    return mFocusBackColor;
+  control->setParent(this);
+
+  anchorWindow(control.get());
+
+  mControls.push_back(control);
+
+  setFocus(true);
 }
 
-void Window::setFocusBackColor (int color)
+void TUI::Window::addControl (
+  std::shared_ptr<Window> && control)
 {
-    mFocusBackColor = color;
+  control->setParent(this);
+
+  anchorWindow(control.get());
+
+  mControls.push_back(std::move(control));
+
+  setFocus(true);
 }
 
-void Window::addControl (std::shared_ptr<Window> const & control)
+Window * TUI::Window::findWindow (int worldX, int worldY)
 {
-    control->setParent(this);
-
-    anchorWindow(control.get());
-
-    mControls.push_back(control);
-
-    setFocus(true);
-}
-
-void Window::addControl (std::shared_ptr<Window> && control)
-{
-    control->setParent(this);
-
-    anchorWindow(control.get());
-
-    mControls.push_back(std::move(control));
-
-    setFocus(true);
-}
-
-Window * Window::findWindow (int y, int x)
-{
-    if (y >= mY && y < (mY + mHeight) &&
-        x >= mX && x < (mX + mWidth))
-    {
-        for (auto & control: mControls)
-        {
-            Window * result = control->findWindow(y, x);
-            if (result)
-            {
-                return result;
-            }
-        }
-
-        return this;
-    }
-
-    return nullptr;
-}
-
-Window * Window::findFocus ()
-{
-    if (not mHasFocus)
-    {
-        // This window and none of its control windows have the focus.
-        return nullptr;
-    }
-
-    if (mHasDirectFocus)
-    {
-        return this;
-    }
-
+  if (y >= mY && y < (mY + mHeight) &&
+      x >= mX && x < (mX + mWidth))
+  {
     for (auto & control: mControls)
     {
-        Window * result = control->findFocus();
-        if (result)
-        {
-            return result;
-        }
+      Window * result = control->findWindow(y, x);
+      if (result)
+      {
+        return result;
+      }
     }
 
-    // Even though this window doesn't have direct focus, we can still route
-    // keys to it.
     return this;
+  }
+
+  return nullptr;
 }
 
-bool Window::canHaveDirectFocus () const
+Window * TUI::Window::findFocus ()
 {
-    return mIsDirectFocusPossible && mVisibleState == VisibleState::shown && mEnableState != EnableState::disabled;
+  if (not mHasFocus)
+  {
+    // This window and none of its control windows have
+    // the focus.
+    return nullptr;
+  }
+
+  if (mHasDirectFocus)
+  {
+    return this;
+  }
+
+  for (auto & control: mControls)
+  {
+    Window * result = control->findFocus();
+    if (result)
+    {
+      return result;
+    }
+  }
+
+  // Even though this window doesn't have direct focus,
+  // we can still route events to it.
+  return this;
 }
 
-bool Window::hasDirectFocus () const
+Window * TUI::Window::findDefaultEnter ()
 {
-    return mHasDirectFocus;
+  if (not mHasFocus)
+  {
+    // This window and none of its control windows have
+    // the focus.
+    return nullptr;
+  }
+
+  if (mHasDirectFocus)
+  {
+    return this;
+  }
+
+  for (auto & control: mControls)
+  {
+    Window * result = control->findFocus();
+    if (result)
+    {
+      return result;
+    }
+  }
+
+  // Even though this window doesn't have direct focus,
+  // we can still route events to it.
+  return this;
 }
 
-void Window::setIsDirectFocusPossible (bool value)
+Window * TUI::Window::findDefaultEscape ()
 {
-    mIsDirectFocusPossible = value;
+  if (not mHasFocus)
+  {
+    // This window and none of its control windows have
+    // the focus.
+    return nullptr;
+  }
+
+  if (mHasDirectFocus)
+  {
+    return this;
+  }
+
+  for (auto & control: mControls)
+  {
+    Window * result = control->findFocus();
+    if (result)
+    {
+      return result;
+    }
+  }
+
+  // Even though this window doesn't have direct focus,
+  // we can still route events to it.
+  return this;
 }
 
-bool Window::setFocus (bool focus)
+bool TUI::Window::canHaveDirectFocus () const
 {
-    // If focus is false, then this method will clear the focus
-    // from this window and all control windows.
-    // If focus is true, then this method will try to set the
-    // focus to the first control window descendent. And if
-    // there are no control windows that can accept the focus,
-    // then this window will try to accept direct focus.
+  return mIsDirectFocusPossible &&
+    mVisibleState == VisibleState::shown &&
+    mEnableState != EnableState::disabled;
+}
+
+bool TUI::Window::hasDirectFocus () const
+{
+  return mHasDirectFocus;
+}
+
+void TUI::Window::setIsDirectFocusPossible (bool value)
+{
+  mIsDirectFocusPossible = value;
+}
+
+bool TUI::Window::setFocus (bool focus)
+{
+  // If focus is false, then this method will clear the focus
+  // from this window and all control windows.
+  // If focus is true, then this method will try to set the
+  // focus to the first control window descendent. And if
+  // there are no control windows that can accept the focus,
+  // then this window will try to accept direct focus.
+  bool foundFirstFocusControl = false;
+  for (auto & control: mControls)
+  {
+    if (not foundFirstFocusControl)
+    {
+      // This works for both clearing as well as setting focus.
+      foundFirstFocusControl = control->setFocus(focus);
+    }
+    else
+    {
+      // We can't exit the loop early. Once we set the first
+      // focus, we clear any other focus that might exist.
+      control->setFocus(false);
+    }
+  }
+
+  if (foundFirstFocusControl)
+  {
+    mHasFocus = true;
+    mHasDirectFocus = false;
+  }
+  else if (canHaveDirectFocus())
+  {
+    mHasFocus = focus;
+    mHasDirectFocus = focus;
+  }
+  else
+  {
+    mHasFocus = false;
+    mHasDirectFocus = false;
+  }
+
+  return mHasFocus;
+}
+
+bool TUI::Window::setFocus (Window * win)
+{
+  bool foundDirectFocus = false;
+
+  if (y >= mY && y < (mY + mHeight) &&
+      x >= mX && x < (mX + mWidth))
+  {
+    for (auto & control: mControls)
+    {
+      bool result = control->setFocus(y, x);
+      if (result)
+      {
+        // Some child control was able to accept the
+        // direct focus.
+        foundDirectFocus = true;
+      }
+    }
+
+    if (foundDirectFocus)
+    {
+      mHasFocus = true;
+      mHasDirectFocus = false;
+    }
+    else
+    {
+      if (canHaveDirectFocus())
+      {
+        // No child can have direct focus but this window can.
+        foundDirectFocus = true;
+
+        mHasFocus = true;
+        mHasDirectFocus = true;
+      }
+      else
+      {
+        // No child could be found to take direct focus and
+        // this window also cannot take direct focus, then
+        // give this window regular focus.
+        mHasFocus = true;
+        mHasDirectFocus = false;
+      }
+    }
+  }
+  else
+  {
+    // The coordinates are outside this window so it and
+    // its children cannot have focus.
+    if (mHasFocus)
+    {
+      setFocus(false);
+    }
+  }
+
+  return foundDirectFocus;
+}
+
+bool TUI::Window::advanceFocus ()
+{
+  if (mHasDirectFocus)
+  {
+    // The parent window gets focus last. So if we have
+    // the focus, then we can't advance any more.
+    mHasFocus = false;
+    mHasDirectFocus = false;
+    return false;
+  }
+  else if (mHasFocus)
+  {
+    // One of the child windows has focus. Find it and
+    // then advance.
     bool foundFirstFocusControl = false;
     for (auto & control: mControls)
     {
-        if (not foundFirstFocusControl)
+      if (not foundFirstFocusControl)
+      {
+        if (control->mHasFocus)
         {
-            // This works for both clearing as well as setting focus.
-            foundFirstFocusControl = control->setFocus(focus);
-        }
-        else
-        {
-            // We can't exit the loop early. Once we set the first
-            // focus, we clear any other focus that might exist.
-            control->setFocus(false);
-        }
-    }
-
-    if (foundFirstFocusControl)
-    {
-        mHasFocus = true;
-        mHasDirectFocus = false;
-    }
-    else if (canHaveDirectFocus())
-    {
-        mHasFocus = focus;
-        mHasDirectFocus = focus;
-    }
-    else
-    {
-        mHasFocus = false;
-        mHasDirectFocus = false;
-    }
-
-    return mHasFocus;
-}
-
-bool Window::setFocus (int y, int x)
-{
-    bool foundDirectFocus = false;
-
-    if (y >= mY && y < (mY + mHeight) &&
-        x >= mX && x < (mX + mWidth))
-    {
-        for (auto & control: mControls)
-        {
-            bool result = control->setFocus(y, x);
-            if (result)
-            {
-                // Some child control was able to accept the direct focus.
-                foundDirectFocus = true;
-            }
-        }
-
-        if (foundDirectFocus)
-        {
-            mHasFocus = true;
-            mHasDirectFocus = false;
-        }
-        else
-        {
-            if (canHaveDirectFocus())
-            {
-                // No child can have direct focus but this window can.
-                foundDirectFocus = true;
-
-                mHasFocus = true;
-                mHasDirectFocus = true;
-            }
-            else
-            {
-                // No child could be found to take direct focus and this window
-                // also cannot take direct focus, then give this window regular
-                // focus.
-                mHasFocus = true;
-                mHasDirectFocus = false;
-            }
-        }
-    }
-    else
-    {
-        // The coordinates are outside this window so it and its children cannot have focus.
-        if (mHasFocus)
-        {
-            setFocus(false);
-        }
-    }
-
-    return foundDirectFocus;
-}
-
-bool Window::advanceFocus ()
-{
-    if (mHasDirectFocus)
-    {
-        // The parent window gets focus last. So if we have the focus,
-        // then we can't advance any more.
-        mHasFocus = false;
-        mHasDirectFocus = false;
-        return false;
-    }
-    else if (mHasFocus)
-    {
-        // One of the child windows has focus. Find it and then advance.
-        bool foundFirstFocusControl = false;
-        for (auto & control: mControls)
-        {
-            if (not foundFirstFocusControl)
-            {
-                if (control->mHasFocus)
-                {
-                    // We found the first control with focus. Give it the first
-                    // chance to advance.
-                    foundFirstFocusControl = true;
-                    if (control->advanceFocus())
-                    {
-                        return true;
-                    }
-                }
-            }
-            else
-            {
-                // Now we try each control until one can accept the focus.
-                if (control->advanceFocus())
-                {
-                    return true;
-                }
-            }
-        }
-
-        // We went through all the child controls with no further advancement.
-        if (canHaveDirectFocus())
-        {
-            mHasDirectFocus = true;
+          // We found the first control with focus. Give
+          // it the first chance to advance.
+          foundFirstFocusControl = true;
+          if (control->advanceFocus())
+          {
             return true;
+          }
         }
-        else
+      }
+      else
+      {
+        // Now we try each control until one can accept
+        // the focus.
+        if (control->advanceFocus())
         {
-            mHasFocus = false;
-            return false;
+          return true;
         }
+      }
+    }
+
+    // We went through all the child controls with no
+    // further advancement.
+    if (canHaveDirectFocus())
+    {
+      mHasDirectFocus = true;
+      return true;
     }
     else
     {
-        // Since we did not yet have focus, set the focus to the first
-        // available window or to this window if necessary and allowed.
-        return setFocus(true);
+      mHasFocus = false;
+      return false;
     }
+  }
+  else
+  {
+    // Since we did not yet have focus, set the focus to
+    // the first available window or to this window if
+    // necessary and allowed.
+    return setFocus(true);
+  }
 }
 
-Window * Window::parent () const
+Window * TUI::Window::parent () const
 {
-    return mParent;
+  return mParent;
 }
 
-void Window::setParent (Window * parent)
+void TUI::Window::setParent (Window * parent)
 {
-    mParent = parent;
+  mParent = parent;
 }
 
-bool Window::wantEnter () const
+bool TUI::Window::wantTab () const
 {
-    return mWantEnter;
+  return mWantTab;
 }
 
-void Window::setWantEnter (bool value)
+void TUI::Window::setWantTab (bool value)
 {
-    mWantEnter = value;
+  mWantTab = value;
 }
 
-Window::VisibleState Window::visibleState () const
+bool TUI::Window::wantEnter () const
 {
-    return mVisibleState;
+  return mWantEnter;
 }
 
-void Window::setVisibleState (VisibleState value)
+void TUI::Window::setWantEnter (bool value)
 {
-    mVisibleState = value;
+  mWantEnter = value;
 }
 
-Window::EnableState Window::enableState () const
+bool TUI::Window::defaultEnter () const
 {
-    return mEnableState;
+  return mDefaultEnter;
 }
 
-void Window::setEnableState (EnableState value)
+void TUI::Window::setDefaultEnter (bool value)
 {
-    mEnableState = value;
+  mDefaultEnter = value;
 }
 
-void Window::setFillClientArea (bool value)
+bool TUI::Window::defaultEscape () const
 {
-    mFillClientArea = value;
+  return mDefaultEscape;
 }
 
-void Window::createWindows ()
+void TUI::Window::setDefaultEscape (bool value)
 {
-    if (mY < 0 || mX < 0)
+  mDefaultEscape = value;
+}
+
+TUI::Window::VisibleState TUI::Window::visibleState () const
+{
+  return mVisibleState;
+}
+
+void TUI::Window::setVisibleState (VisibleState value)
+{
+  mVisibleState = value;
+  if (mParent)
+  {
+    mParent->onResize();
+  }
+}
+
+TUI::Window::EnableState TUI::Window::enableState () const
+{
+  return mEnableState;
+}
+
+void TUI::Window::setEnableState (EnableState value)
+{
+  mEnableState = value;
+}
+
+void TUI::Window::setFillClientArea (bool value)
+{
+  mFillClientArea = value;
+}
+
+void TUI::Window::createWindows ()
+{
+  if (mY < 0 || mX < 0)
+  {
+    throw std::out_of_range("y or x cannot be less than 0.");
+  }
+
+  if (mBorder)
+  {
+    if (mHeight < 3 || mWidth < 3)
     {
-        throw std::out_of_range("y or x cannot be less than 0.");
+      throw std::out_of_range(
+        "height or width cannot be less than 3"
+        " when using a border.");
     }
-
-    if (mBorder)
+  }
+  else
+  {
+    if (mHeight < 1 || mWidth < 1)
     {
-        if (mHeight < 3 || mWidth < 3)
-        {
-            throw std::out_of_range("height or width cannot be less than 3 when using a border.");
-        }
+      throw std::out_of_range(
+        "height or width cannot be less than 1.");
     }
-    else
-    {
-        if (mHeight < 1 || mWidth < 1)
-        {
-            throw std::out_of_range("height or width cannot be less than 1.");
-        }
-    }
+  }
 
-    for (auto const & control: mControls)
-    {
-        anchorWindow(control.get());
+  for (auto const & control: mControls)
+  {
+    anchorWindow(control.get());
 
-        control->createWindows();
-    }
+    control->createWindows();
+  }
 }
 
-void Window::destroyWindows ()
+void TUI::Window::anchorWindow (Window * win)
 {
-    for (auto const & control: mControls)
+  int newLeft = win->x();
+  int newRight = win->x() + win->width();
+  int newTop = win->y();
+  int newBottom = win->y() + win->height();
+
+  if (win->anchorLeft() != -1 && win->anchorRight() != -1)
+  {
+    newLeft = clientX() + win->anchorLeft();
+    newRight = clientX() + clientWidth() -
+      win->anchorRight(); // This is one past the right column.
+    if (newRight <= newLeft + win->minWidth())
     {
-        control->destroyWindows();
+      newRight = newLeft + win->minWidth();
     }
+  }
+  else if (win->anchorLeft() != -1)
+  {
+    newLeft = clientX() + win->anchorLeft();
+    newRight = newLeft + win->width();
+  }
+  else if (win->anchorRight() != -1)
+  {
+    newRight = clientX() + clientWidth() -
+      win->anchorRight(); // This is one past the right column.
+    newLeft = newRight - win->width();
+    if (newLeft < 0)
+    {
+      newLeft = 0;
+      newRight = win->width();
+    }
+  }
+
+  if (win->anchorTop() != -1 && win->anchorBottom() != -1)
+  {
+    newTop = clientY() + win->anchorTop();
+    newBottom = clientY() + clientHeight() -
+      win->anchorBottom(); // This is one past the bottom row.
+    if (newBottom <= newTop + win->minHeight())
+    {
+      newBottom = newTop+ win->minHeight();
+    }
+  }
+  else if (win->anchorTop() != -1)
+  {
+    newTop = clientY() + win->anchorTop();
+    newBottom = newTop + win->height();
+  }
+  else if (win->anchorBottom() != -1)
+  {
+    newBottom = clientY() + clientHeight() -
+      win->anchorBottom(); // This is one past the bottom row.
+    newTop = newBottom - win->height();
+    if (newTop < 0)
+    {
+      newTop = 0;
+      newBottom = win->height();
+    }
+  }
+
+  win->moveAndResize(newLeft, newTop,
+    newRight - newLeft, newBottom - newTop);
 }
-
-void Window::anchorWindow (Window * win)
-{
-    int newTop = win->y();
-    int newBottom = win->y() + win->height();
-    int newLeft = win->x();
-    int newRight = win->x() + win->width();
-
-    if (win->anchorTop() != -1 && win->anchorBottom() != -1)
-    {
-        newTop = clientY() + win->anchorTop();
-        newBottom = clientY() + clientHeight() - win->anchorBottom(); // This is one past the bottom row.
-        if (newBottom <= newTop + win->minHeight())
-        {
-            newBottom = newTop+ win->minHeight();
-        }
-    }
-    else if (win->anchorTop() != -1)
-    {
-        newTop = clientY() + win->anchorTop();
-        newBottom = newTop + win->height();
-    }
-    else if (win->anchorBottom() != -1)
-    {
-        newBottom = clientY() + clientHeight() - win->anchorBottom(); // This is one past the bottom row.
-        newTop = newBottom - win->height();
-        if (newTop < 0)
-        {
-            newTop = 0;
-            newBottom = win->height();
-        }
-    }
-
-    if (win->anchorLeft() != -1 && win->anchorRight() != -1)
-    {
-        newLeft = clientX() + win->anchorLeft();
-        newRight = clientX() + clientWidth() - win->anchorRight(); // This is one past the right column.
-        if (newRight <= newLeft + win->minWidth())
-        {
-            newRight = newLeft + win->minWidth();
-        }
-    }
-    else if (win->anchorLeft() != -1)
-    {
-        newLeft = clientX() + win->anchorLeft();
-        newRight = newLeft + win->width();
-    }
-    else if (win->anchorRight() != -1)
-    {
-        newRight = clientX() + clientWidth() - win->anchorRight(); // This is one past the right column.
-        newLeft = newRight - win->width();
-        if (newLeft < 0)
-        {
-            newLeft = 0;
-            newRight = win->width();
-        }
-    }
-
-    win->moveAndResize(newTop, newLeft, newBottom - newTop, newRight - newLeft);
-}
-
-} // namespace Curses
-} // namespace TUCUT
