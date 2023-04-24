@@ -749,8 +749,6 @@ void TUI::Window::addControl (
   anchorWindow(control.get());
 
   mControls.push_back(control);
-
-  setFocus(true);
 }
 
 void TUI::Window::addControl (
@@ -761,18 +759,16 @@ void TUI::Window::addControl (
   anchorWindow(control.get());
 
   mControls.push_back(std::move(control));
-
-  setFocus(true);
 }
 
-Window * TUI::Window::findWindow (int worldX, int worldY)
+TUI::Window * TUI::Window::findWindow (int worldX, int worldY)
 {
-  if (y >= mY && y < (mY + mHeight) &&
-      x >= mX && x < (mX + mWidth))
+  if (worldX >= worldX() && worldX < (worldX() + mWidth)) &&
+      worldY >= worldY() && worldY < (worldY() + mHeight)
   {
     for (auto & control: mControls)
     {
-      Window * result = control->findWindow(y, x);
+      Window * result = control->findWindow(worldX, worldY);
       if (result)
       {
         return result;
@@ -785,7 +781,7 @@ Window * TUI::Window::findWindow (int worldX, int worldY)
   return nullptr;
 }
 
-Window * TUI::Window::findFocus ()
+TUI::Window * TUI::Window::findFocus ()
 {
   if (not mHasFocus)
   {
@@ -808,72 +804,40 @@ Window * TUI::Window::findFocus ()
     }
   }
 
-  // Even though this window doesn't have direct focus,
-  // we can still route events to it.
-  return this;
+  return nullptr;
 }
 
-Window * TUI::Window::findDefaultEnter ()
+TUI::Window * TUI::Window::findDefaultEnter ()
 {
-  if (not mHasFocus)
-  {
-    // This window and none of its control windows have
-    // the focus.
-    return nullptr;
-  }
-
-  if (mHasDirectFocus)
-  {
-    return this;
-  }
-
   for (auto & control: mControls)
   {
-    Window * result = control->findFocus();
-    if (result)
+    if (control->defaultEnter())
     {
-      return result;
+      return control.get();
     }
   }
 
-  // Even though this window doesn't have direct focus,
-  // we can still route events to it.
-  return this;
+  return nullptr;
 }
 
-Window * TUI::Window::findDefaultEscape ()
+TUI::Window * TUI::Window::findDefaultEscape ()
 {
-  if (not mHasFocus)
-  {
-    // This window and none of its control windows have
-    // the focus.
-    return nullptr;
-  }
-
-  if (mHasDirectFocus)
-  {
-    return this;
-  }
-
   for (auto & control: mControls)
   {
-    Window * result = control->findFocus();
-    if (result)
+    if (control->defaultEscape())
     {
-      return result;
+      return control.get();
     }
   }
 
-  // Even though this window doesn't have direct focus,
-  // we can still route events to it.
-  return this;
+  return nullptr;
 }
 
 bool TUI::Window::canHaveDirectFocus () const
 {
   return mIsDirectFocusPossible &&
-    mVisibleState == VisibleState::shown &&
-    mEnableState != EnableState::disabled;
+    mVisibleState == VisibleState::Shown &&
+    mEnableState != EnableState::Disabled;
 }
 
 bool TUI::Window::hasDirectFocus () const
@@ -894,13 +858,19 @@ bool TUI::Window::setFocus (bool focus)
   // focus to the first control window descendent. And if
   // there are no control windows that can accept the focus,
   // then this window will try to accept direct focus.
-  bool foundFirstFocusControl = false;
+  if (mVisibleState != VisibleState::Shown ||
+    mEnableState == EnableState::Disabled)
+  {
+    focus = false;
+  }
+
+  bool foundDirectFocus = false;
   for (auto & control: mControls)
   {
-    if (not foundFirstFocusControl)
+    if (not foundDirectFocus)
     {
       // This works for both clearing as well as setting focus.
-      foundFirstFocusControl = control->setFocus(focus);
+      foundDirectFocus = control->setFocus(focus);
     }
     else
     {
@@ -910,7 +880,7 @@ bool TUI::Window::setFocus (bool focus)
     }
   }
 
-  if (foundFirstFocusControl)
+  if (foundDirectFocus)
   {
     mHasFocus = true;
     mHasDirectFocus = false;
@@ -929,21 +899,32 @@ bool TUI::Window::setFocus (bool focus)
   return mHasFocus;
 }
 
-bool TUI::Window::setFocus (Window * win)
+bool TUI::Window::setFocus (int worldX, int worldY)
 {
+  if (mVisibleState != VisibleState::Shown ||
+    mEnableState == EnableState::Disabled)
+  {
+    setFocus(false);
+    return false;
+  }
+
   bool foundDirectFocus = false;
 
-  if (y >= mY && y < (mY + mHeight) &&
-      x >= mX && x < (mX + mWidth))
+  if (worldX >= worldX() && worldX < (worldX() + mWidth)) &&
+      worldY >= worldY() && worldY < (worldY() + mHeight)
   {
     for (auto & control: mControls)
     {
-      bool result = control->setFocus(y, x);
-      if (result)
+      if (not foundDirectFocus)
       {
-        // Some child control was able to accept the
-        // direct focus.
-        foundDirectFocus = true;
+        foundDirectFocus = control->setFocus(worldX, worldY);
+      }
+      else
+      {
+        // We can't exit the loop early. Once we set the first
+        // focus, we clear any other focus that might exist.
+        // We don't handle overlapping windows.
+        control->setFocus(false);
       }
     }
 
@@ -957,17 +938,15 @@ bool TUI::Window::setFocus (Window * win)
       if (canHaveDirectFocus())
       {
         // No child can have direct focus but this window can.
-        foundDirectFocus = true;
-
         mHasFocus = true;
         mHasDirectFocus = true;
+        foundDirectFocus = true;
       }
       else
       {
         // No child could be found to take direct focus and
-        // this window also cannot take direct focus, then
-        // give this window regular focus.
-        mHasFocus = true;
+        // this window also cannot take direct focus.
+        mHasFocus = false;
         mHasDirectFocus = false;
       }
     }
@@ -987,6 +966,12 @@ bool TUI::Window::setFocus (Window * win)
 
 bool TUI::Window::advanceFocus ()
 {
+  if (mVisibleState != VisibleState::Shown ||
+    mEnableState == EnableState::Disabled)
+  {
+    return false;
+  }
+
   if (mHasDirectFocus)
   {
     // The parent window gets focus last. So if we have

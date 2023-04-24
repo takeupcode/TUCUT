@@ -224,7 +224,7 @@ namespace TUCUT::TUI
 
     virtual bool setFocus (bool focus);
 
-    virtual bool setFocus (Window * win);
+    virtual bool setFocus (int worldX, int worldY);
 
     virtual bool advanceFocus ();
 
