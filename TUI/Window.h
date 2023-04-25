@@ -59,53 +59,6 @@ namespace TUCUT::TUI
 
     void draw (WindowSystem * ws) const;
 
-    void drawText (WindowSystem * ws,
-      int x,
-      int y,
-      std::string const & utf8) const;
-
-    void drawText (WindowSystem * ws,
-      int x,
-      int y,
-      int width,
-      int height,
-      std::string const & utf8) const;
-
-    void drawBorder (WindowSystem * ws,
-      int x,
-      int y,
-      int width,
-      int height,
-      Color const & foreColor,
-      Color const & backColor) const;
-
-    void fillRect (WindowSystem * ws,
-      int x,
-      int y,
-      int width,
-      int height,
-      std::string const & utf8,
-      Color const & foreColor,
-      Color const & backColor) const;
-
-    virtual bool onKeyPress (WindowSystem * ws,
-      CharacterEvent const & event);
-
-    virtual bool onNonPrintingKeyPress (WindowSystem * ws,
-      NonPrintingCharacterEvent const & event);
-
-    virtual bool onExtendedKeyPress (WindowSystem * ws,
-      ExtendedCharacterEvent const & event);
-
-    virtual void onMouseEvent (WindowSystem * ws,
-      MouseEvent const & event);
-
-    virtual void onDrawClient (WindowSystem * ws) const;
-
-    virtual void onDrawNonClient (WindowSystem * ws) const;
-
-    virtual void onResize ();
-
     std::string const & name () const;
 
     virtual int x () const;
@@ -148,9 +101,6 @@ namespace TUCUT::TUI
 
     virtual void resize (int width, int height);
 
-    virtual void moveAndResize (int x, int y,
-      int width, int height);
-
     int anchorTop () const;
 
     void setAnchorTop (int anchor);
@@ -174,7 +124,7 @@ namespace TUCUT::TUI
 
     void setAnchorsTopBottom (int top, int bottom);
 
-    void setAnchorsLeftRight (int left, int right);
+    void setAnchorsRightLeft (int right, int left);
 
     virtual bool hasBorder () const;
 
@@ -204,9 +154,9 @@ namespace TUCUT::TUI
 
     void setFocusBackColor (Color const & color);
 
-    void addControl(std::shared_ptr<Window> const & control);
+    void addControl (std::shared_ptr<Window> const & control);
 
-    void addControl(std::shared_ptr<Window> && control);
+    void addControl (std::shared_ptr<Window> && control);
 
     Window * findWindow (int worldX, int worldY);
 
@@ -273,13 +223,56 @@ protected:
 
     virtual void initialize ();
 
+    void drawText (WindowSystem * ws,
+      int x,
+      int y,
+      std::string const & utf8) const;
+
+    void drawText (WindowSystem * ws,
+      int x,
+      int y,
+      int width,
+      int height,
+      std::string const & utf8) const;
+
+    void drawBorder (WindowSystem * ws,
+      int x,
+      int y,
+      int width,
+      int height,
+      Color const & foreColor,
+      Color const & backColor) const;
+
+    void fillRect (WindowSystem * ws,
+      int x,
+      int y,
+      int width,
+      int height,
+      std::string const & utf8,
+      Color const & foreColor,
+      Color const & backColor) const;
+
+    virtual bool onKeyPress (WindowSystem * ws,
+      CharacterEvent const & event);
+
+    virtual bool onNonPrintingKeyPress (WindowSystem * ws,
+      NonPrintingCharacterEvent const & event);
+
+    virtual bool onExtendedKeyPress (WindowSystem * ws,
+      ExtendedCharacterEvent const & event);
+
+    virtual void onMouseEvent (WindowSystem * ws,
+      MouseEvent const & event);
+
+    virtual void onDrawClient (WindowSystem * ws) const;
+
+    virtual void onDrawNonClient (WindowSystem * ws) const;
+
+    virtual void onResize ();
+
     void setFillClientArea (bool value);
 
-    void createWindows ();
-
-    void destroyWindows ();
-
-    void anchorWindow (Window * win);
+    void anchorWindow ();
 
     std::string mName;
     int mX;

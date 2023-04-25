@@ -114,12 +114,7 @@ void TUI::Window::processInput (WindowSystem * ws)
           {
             // If we couldn't advance the focus,
             // start the cycle over again.
-            if (not setFocus(true))
-            {
-              // If no window can accept direct focus,
-              // set regular focus to this window.
-              mHasFocus = true;
-            }
+            setFocus(true);
           }
         }
         else if (arg.mKey == KeyCodes::NewlineChar)
@@ -172,7 +167,7 @@ void TUI::Window::processInput (WindowSystem * ws)
         Window * control = findWindow(arg.mX, arg.mY);
         if (control)
         {
-          setFocus(control);
+          setFocus(arg.mX, arg.mY);
           control->onMouseEvent(ws, arg);
         }
       },
@@ -364,7 +359,13 @@ void TUI::Window::onDrawNonClient (WindowSystem *) const
 { }
 
 void TUI::Window::onResize ()
-{ }
+{
+  for (auto & control: mControls)
+  {
+    control->anchorWindow();
+    control->onResize();
+  }
+}
 
 std::string const & TUI::Window::name () const
 {
@@ -393,16 +394,7 @@ int TUI::Window::clientX () const
 
 void TUI::Window::setX (int x)
 {
-  if (x < 0)
-  {
-    throw std::out_of_range("x cannot be less than 0.");
-  }
-
-  if (mX != x)
-  {
-    mX = x;
-    onResize();
-  }
+  move(x, mY);
 }
 
 int TUI::Window::y () const
@@ -427,29 +419,28 @@ int TUI::Window::clientY () const
 
 void TUI::Window::setY (int y)
 {
+  move(mX, y);
+}
+
+void TUI::Window::move (int x, int y)
+{
+  if (x < 0)
+  {
+    throw std::out_of_range("x cannot be less than 0.");
+  }
   if (y < 0)
   {
     throw std::out_of_range("y cannot be less than 0.");
   }
 
-  if (mY != y)
+  if (x != mX || y != mY)
   {
-    mY = y;
-    onResize();
-  }
-}
+    x = mX;
+    y = mY;
 
-void TUI::Window::move (int x, int y)
-{
-  if (x < 0 || y < 0)
-  {
-    throw std::out_of_range("x and y cannot be less than 0.");
-  }
-
-  if (mX != x || mY != y)
-  {
-    mX = x;
-    mY = y;
+    // Changing the position can also affect the size of
+    // anchored windows.
+    anchorWindow();
     onResize();
   }
 }
@@ -471,15 +462,7 @@ int TUI::Window::minWidth () const
 
 void TUI::Window::setWidth (int width)
 {
-  if (mWidth != width)
-  {
-    mWidth = width;
-    if (mWidth < mMinWidth)
-    {
-      mWidth = mMinWidth;
-    }
-    onResize();
-  }
+  resize(width, mHeight);
 }
 
 void TUI::Window::setMinWidth (int width)
@@ -501,6 +484,10 @@ void TUI::Window::setMinWidth (int width)
   }
 
   mMinWidth = width;
+  if (mWidth < mMinWidth)
+  {
+    resize(mMinWidth, mHeight);
+  }
 }
 
 int TUI::Window::height () const
@@ -520,15 +507,7 @@ int TUI::Window::minHeight () const
 
 void TUI::Window::setHeight (int height)
 {
-  if (mHeight != height)
-  {
-    mHeight = height;
-    if (mHeight < mMinHeight)
-    {
-      mHeight = mMinHeight;
-    }
-    onResize();
-  }
+  resize(mWidth, height);
 }
 
 void TUI::Window::setMinHeight (int height)
@@ -550,51 +529,37 @@ void TUI::Window::setMinHeight (int height)
   }
 
   mMinHeight = height;
+  if (mHeight < mMinHeight)
+  {
+    resize(mWidth, mMinHeight);
+  }
 }
 
 void TUI::Window::resize (int width, int height)
 {
-  if (mWidth != width || mHeight != height)
+  if (width < 1)
   {
-    setWidth(width);
-    setHeight(height);
-    onResize();
+    throw std::out_of_range("width cannot be less than 1.");
   }
-}
-
-void TUI::Window::moveAndResize (int x, int y,
-  int width, int height)
-{
-  if (x < 0 || y < 0)
+  if (height < 1)
   {
-    throw std::out_of_range("x and y cannot be less than 0.");
+    throw std::out_of_range("height cannot be less than 1.");
   }
 
-  if (mBorder)
+  if (width != mWidth || height != mHeight)
   {
-    if (mHeight < 3 || mWidth < 3)
+    if (width < mMinWidth)
     {
-      throw std::out_of_range(
-        "height or width cannot be less than 3"
-        " when using a border.");
+      width = mMinWidth;
     }
-  }
-  else
-  {
-    if (mHeight < 1 || mWidth < 1)
-    {
-      throw std::out_of_range(
-        "height or width cannot be less than 1.");
-    }
-  }
+    mWidth = width;
 
-  if (mX != x || mY != y ||
-    mWidth != width || mHeight != height)
-  {
-    mX = x;
-    mY = y;
-    setWidth(width);
-    setHeight(height);
+    if (height < mMinHeight)
+    {
+      height = mMinHeight;
+    }
+    mHeight = height;
+    anchorWindow();
     onResize();
   }
 }
@@ -606,7 +571,20 @@ int TUI::Window::anchorTop () const
 
 void TUI::Window::setAnchorTop (int anchor)
 {
-  mAnchorTop = anchor;
+  if (anchor < -1)
+  {
+    throw std::out_of_range("Anchors cannot be less than -1.");
+  }
+
+  if (anchor != mAnchorTop)
+  {
+    mAnchorTop = anchor;
+    if (mParent)
+    {
+      anchorWindow();
+      onResize();
+    }
+  }
 }
 
 int TUI::Window::anchorRight () const
@@ -616,7 +594,20 @@ int TUI::Window::anchorRight () const
 
 void TUI::Window::setAnchorRight (int anchor)
 {
-  mAnchorRight = anchor;
+  if (anchor < -1)
+  {
+    throw std::out_of_range("Anchors cannot be less than -1.");
+  }
+
+  if (anchor != mAnchorRight)
+  {
+    mAnchorRight = anchor;
+    if (mParent)
+    {
+      anchorWindow();
+      onResize();
+    }
+  }
 }
 
 int TUI::Window::anchorBottom () const
@@ -626,7 +617,20 @@ int TUI::Window::anchorBottom () const
 
 void TUI::Window::setAnchorBottom (int anchor)
 {
-  mAnchorBottom = anchor;
+  if (anchor < -1)
+  {
+    throw std::out_of_range("Anchors cannot be less than -1.");
+  }
+
+  if (anchor != mAnchorBottom)
+  {
+    mAnchorBottom = anchor;
+    if (mParent)
+    {
+      anchorWindow();
+      onResize();
+    }
+  }
 }
 
 int TUI::Window::anchorLeft () const
@@ -636,35 +640,114 @@ int TUI::Window::anchorLeft () const
 
 void TUI::Window::setAnchorLeft (int anchor)
 {
-  mAnchorLeft = anchor;
+  if (anchor < -1)
+  {
+    throw std::out_of_range("Anchors cannot be less than -1.");
+  }
+
+  if (anchor != mAnchorLeft)
+  {
+    mAnchorLeft = anchor;
+    if (mParent)
+    {
+      anchorWindow();
+      onResize();
+    }
+  }
 }
 
 void TUI::Window::setAnchorsAll (int anchor)
 {
-  mAnchorTop = anchor;
-  mAnchorRight = anchor;
-  mAnchorBottom = anchor;
-  mAnchorLeft = anchor;
+  if (anchor < -1)
+  {
+    throw std::out_of_range("Anchors cannot be less than -1.");
+  }
+
+  if (anchor != mAnchorTop ||
+    anchor != mAnchorRight ||
+    anchor != mAnchorBottom ||
+    anchor != mAnchorLeft)
+  {
+    mAnchorTop = anchor;
+    mAnchorRight = anchor;
+    mAnchorBottom = anchor;
+    mAnchorLeft = anchor;
+    if (mParent)
+    {
+      anchorWindow();
+      onResize();
+    }
+  }
 }
 
-void TUI::Window::setAnchorsAll (int top, int right, int bottom, int left)
+void TUI::Window::setAnchorsAll (int top, int right,
+  int bottom, int left)
 {
-  mAnchorTop = top;
-  mAnchorRight = right;
-  mAnchorBottom = bottom;
-  mAnchorLeft = left;
+  if (top < -1 ||
+    right < -1 ||
+    bottom < -1 ||
+    left < -1)
+  {
+    throw std::out_of_range("Anchors cannot be less than -1.");
+  }
+
+  if (top != mAnchorTop ||
+    right != mAnchorRight ||
+    bottom != mAnchorBottom ||
+    left != mAnchorLeft)
+  {
+    mAnchorTop = top;
+    mAnchorRight = right;
+    mAnchorBottom = bottom;
+    mAnchorLeft = left;
+    if (mParent)
+    {
+      anchorWindow();
+      onResize();
+    }
+  }
 }
 
 void TUI::Window::setAnchorsTopBottom (int top, int bottom)
 {
-  mAnchorTop = top;
-  mAnchorBottom = bottom;
+  if (top < -1 ||
+    bottom < -1)
+  {
+    throw std::out_of_range("Anchors cannot be less than -1.");
+  }
+
+  if (top != mAnchorTop ||
+    bottom != mAnchorBottom)
+  {
+    mAnchorTop = top;
+    mAnchorBottom = bottom;
+    if (mParent)
+    {
+      anchorWindow();
+      onResize();
+    }
+  }
 }
 
-void TUI::Window::setAnchorsLeftRight (int left, int right)
+void TUI::Window::setAnchorsRightLeft (int right, int left)
 {
-  mAnchorLeft = left;
-  mAnchorRight = right;
+  if (right < -1 ||
+    left < -1)
+  {
+    throw std::out_of_range("Anchors cannot be less than -1.");
+  }
+
+  if (right != mAnchorRight ||
+    left != mAnchorLeft)
+  {
+    mAnchorRight = right;
+    mAnchorLeft = left;
+    if (mParent)
+    {
+      anchorWindow();
+      onResize();
+    }
+  }
 }
 
 bool TUI::Window::hasBorder () const
@@ -676,6 +759,17 @@ void TUI::Window::setBorder (bool border)
 {
   if (mBorder != border)
   {
+    if (border)
+    {
+      if (mWidth < 3 || mMinWidth < 3 ||
+        mHeight < 3 || mMinHeight < 3)
+      {
+        throw std::out_of_range(
+          "Dimensions or minimum dimensions are too small"
+          " for a border.");
+      }
+    }
+
     mBorder = border;
     onResize();
   }
@@ -745,9 +839,7 @@ void TUI::Window::addControl (
   std::shared_ptr<Window> const & control)
 {
   control->setParent(this);
-
-  anchorWindow(control.get());
-
+  control->anchorWindow();
   mControls.push_back(control);
 }
 
@@ -755,9 +847,7 @@ void TUI::Window::addControl (
   std::shared_ptr<Window> && control)
 {
   control->setParent(this);
-
-  anchorWindow(control.get());
-
+  control->anchorWindow();
   mControls.push_back(std::move(control));
 }
 
@@ -1112,100 +1202,76 @@ void TUI::Window::setFillClientArea (bool value)
   mFillClientArea = value;
 }
 
-void TUI::Window::createWindows ()
+void TUI::Window::anchorWindow ()
 {
-  if (mY < 0 || mX < 0)
+  if (mParent == nullptr)
   {
-    throw std::out_of_range("y or x cannot be less than 0.");
+    return;
   }
 
-  if (mBorder)
+  int newLeft = mX;
+  int newRight = mX + mWidth;
+  int newTop = mY;
+  int newBottom = mY + mHeight;
+
+  if (mAnchorLeft != -1 && mAnchorRight != -1)
   {
-    if (mHeight < 3 || mWidth < 3)
+    newLeft = mParent->clientX() + mAnchorLeft;
+    newRight = mParent->clientX() + mParent->clientWidth() -
+      mAnchorRight; // This is one past the right column.
+    if (newRight <= newLeft + mMinWidth)
     {
-      throw std::out_of_range(
-        "height or width cannot be less than 3"
-        " when using a border.");
+      newRight = newLeft + mMinWidth;
     }
   }
-  else
+  else if (mAnchorLeft != -1)
   {
-    if (mHeight < 1 || mWidth < 1)
-    {
-      throw std::out_of_range(
-        "height or width cannot be less than 1.");
-    }
+    newLeft = mParent->clientX() + mAnchorLeft;
+    newRight = newLeft + mWidth;
   }
-
-  for (auto const & control: mControls)
+  else if (mAnchorRight != -1)
   {
-    anchorWindow(control.get());
-
-    control->createWindows();
-  }
-}
-
-void TUI::Window::anchorWindow (Window * win)
-{
-  int newLeft = win->x();
-  int newRight = win->x() + win->width();
-  int newTop = win->y();
-  int newBottom = win->y() + win->height();
-
-  if (win->anchorLeft() != -1 && win->anchorRight() != -1)
-  {
-    newLeft = clientX() + win->anchorLeft();
-    newRight = clientX() + clientWidth() -
-      win->anchorRight(); // This is one past the right column.
-    if (newRight <= newLeft + win->minWidth())
-    {
-      newRight = newLeft + win->minWidth();
-    }
-  }
-  else if (win->anchorLeft() != -1)
-  {
-    newLeft = clientX() + win->anchorLeft();
-    newRight = newLeft + win->width();
-  }
-  else if (win->anchorRight() != -1)
-  {
-    newRight = clientX() + clientWidth() -
-      win->anchorRight(); // This is one past the right column.
-    newLeft = newRight - win->width();
+    newRight = mParent->clientX() + mParent->clientWidth() -
+      mAnchorRight; // This is one past the right column.
+    newLeft = newRight - mWidth;
     if (newLeft < 0)
     {
       newLeft = 0;
-      newRight = win->width();
+      newRight = mWidth;
     }
   }
 
-  if (win->anchorTop() != -1 && win->anchorBottom() != -1)
+  if (mAnchorTop != -1 && mAnchorBottom != -1)
   {
-    newTop = clientY() + win->anchorTop();
-    newBottom = clientY() + clientHeight() -
-      win->anchorBottom(); // This is one past the bottom row.
-    if (newBottom <= newTop + win->minHeight())
+    newTop = mParent->clientY() + mAnchorTop;
+    newBottom = mParent->clientY() + mParent->clientHeight() -
+      mAnchorBottom; // This is one past the bottom row.
+    if (newBottom <= newTop + mMinHeight)
     {
-      newBottom = newTop+ win->minHeight();
+      newBottom = newTop + mMinHeight;
     }
   }
-  else if (win->anchorTop() != -1)
+  else if (mAnchorTop != -1)
   {
-    newTop = clientY() + win->anchorTop();
-    newBottom = newTop + win->height();
+    newTop = mParent->clientY() + mAnchorTop;
+    newBottom = newTop + mHeight;
   }
-  else if (win->anchorBottom() != -1)
+  else if (mAnchorBottom != -1)
   {
-    newBottom = clientY() + clientHeight() -
-      win->anchorBottom(); // This is one past the bottom row.
-    newTop = newBottom - win->height();
+    newBottom = mParent->clientY() + mParent->clientHeight() -
+      mAnchorBottom; // This is one past the bottom row.
+    newTop = newBottom - mHeight;
     if (newTop < 0)
     {
       newTop = 0;
-      newBottom = win->height();
+      newBottom = mHeight;
     }
   }
 
-  win->moveAndResize(newLeft, newTop,
-    newRight - newLeft, newBottom - newTop);
+  // Update the values directly instead of calling
+  // moveAndResize to avoid another call to anchor.
+  mX = newLeft;
+  mY = newTop;
+  mWidth = newRight - newLeft;
+  mHeight = newBottom - newTop;
 }
