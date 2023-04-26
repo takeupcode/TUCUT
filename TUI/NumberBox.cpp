@@ -14,14 +14,13 @@
 #include "ConsoleManager.h"
 #include "Justification.h"
 
-namespace TUCUT {
-namespace Curses {
+using namespace TUCUT;
 
-std::string const NumberBox::windowName = "parent";
-std::string const NumberBox::incrementButtonName = "incrementButton";
-std::string const NumberBox::decrementButtonName = "decrementButton";
+std::string const TUI::NumberBox::windowName = "parent";
+std::string const TUI::NumberBox::incrementButtonName = "incrementButton";
+std::string const TUI::NumberBox::decrementButtonName = "decrementButton";
 
-NumberBox::NumberBox (std::string const & name,
+TUI::NumberBox::NumberBox (std::string const & name,
   int number,
   int x,
   int y,
@@ -53,7 +52,7 @@ NumberBox::NumberBox (std::string const & name,
     setNumber(number);
 }
 
-void NumberBox::initialize ()
+void TUI::NumberBox::initialize ()
 {
     Control::initialize();
 
@@ -75,7 +74,7 @@ void NumberBox::initialize ()
     addControl(mDecrementButton);
 }
 
-std::shared_ptr<NumberBox> NumberBox::createSharedNumberBox (
+std::shared_ptr<NumberBox> TUI::NumberBox::createSharedNumberBox (
   std::string const & name,
   int number,
   int x,
@@ -98,12 +97,12 @@ std::shared_ptr<NumberBox> NumberBox::createSharedNumberBox (
   return result;
 }
 
-std::shared_ptr<NumberBox> NumberBox::getSharedNumberBox ()
+std::shared_ptr<NumberBox> TUI::NumberBox::getSharedNumberBox ()
 {
     return std::static_pointer_cast<NumberBox>(shared_from_this());
 }
 
-bool NumberBox::onKeyPress (WindowSystem * ws, int key)
+bool TUI::NumberBox::onKeyPress (WindowSystem * ws, int key)
 {
     if (enableState() != Window::EnableState::enabled)
     {
@@ -169,7 +168,7 @@ bool NumberBox::onKeyPress (WindowSystem * ws, int key)
     return true;
 }
 
-void NumberBox::onDrawClient () const
+void TUI::NumberBox::onDrawClient () const
 {
     if (visibleState() != Window::VisibleState::shown)
     {
@@ -179,13 +178,13 @@ void NumberBox::onDrawClient () const
     ConsoleManager::printMessage(*this, 0, 1, textClientWidth(), mText, clientForeColor(), clientBackColor(), Justification::Horizontal::right, true);
 }
 
-int NumberBox::textClientWidth () const
+int TUI::NumberBox::textClientWidth () const
 {
     // This method accounts for the area used by the increment/decrement buttons and focus markers.
     return clientWidth() - 4;
 }
 
-void NumberBox::setMinWidth (int width)
+void TUI::NumberBox::setMinWidth (int width)
 {
     if (width < 5)
     {
@@ -195,12 +194,12 @@ void NumberBox::setMinWidth (int width)
     mMinWidth = width;
 }
 
-int NumberBox::number () const
+int TUI::NumberBox::number () const
 {
     return std::stoi(mText);
 }
 
-void NumberBox::setNumber (int value)
+void TUI::NumberBox::setNumber (int value)
 {
     if (value < 0)
     {
@@ -219,26 +218,26 @@ void NumberBox::setNumber (int value)
     mText = ss.str();
 }
 
-void NumberBox::increment ()
+void TUI::NumberBox::increment ()
 {
     int value = number() + 1;
 
     setNumber(value);
 }
 
-void NumberBox::decrement ()
+void TUI::NumberBox::decrement ()
 {
     int value = number() - 1;
 
     setNumber(value);
 }
 
-NumberBox::NumberChangedEvent * NumberBox::numberChanged ()
+TUI::NumberBox::NumberChangedEvent * TUI::NumberBox::numberChanged ()
 {
     return mNumberChanged.get();
 }
 
-void NumberBox::notify (int id, WindowSystem * ws, Button * button)
+void TUI::NumberBox::notify (int id, WindowSystem * ws, Button * button)
 {
     if (id != Button::ClickedEventId)
     {
@@ -264,12 +263,12 @@ void NumberBox::notify (int id, WindowSystem * ws, Button * button)
     }
 }
 
-void NumberBox::handleNumberChange (WindowSystem * ws)
+void TUI::NumberBox::handleNumberChange (WindowSystem * ws)
 {
     mNumberChanged->signal(ws, this);
 }
 
-bool NumberBox::removeChar ()
+bool TUI::NumberBox::removeChar ()
 {
     if (mText == "0")
     {
@@ -285,7 +284,7 @@ bool NumberBox::removeChar ()
     return true;
 }
 
-bool NumberBox::addChar (int key)
+bool TUI::NumberBox::addChar (int key)
 {
     char c = static_cast<char>(key);
     if (c < '0' || c > '9')
@@ -307,6 +306,3 @@ bool NumberBox::addChar (int key)
 
     return true;
 }
-
-} // namespace Curses
-} // namespace TUCUT

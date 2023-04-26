@@ -8,10 +8,9 @@
 
 #include "ConsoleManager.h"
 
-namespace TUCUT {
-namespace Curses {
+using namespace TUCUT;
 
-Label::Label (std::string const & name,
+TUI::Label::Label (std::string const & name,
   std::string const & text,
   int x,
   int y,
@@ -41,12 +40,12 @@ Label::Label (std::string const & name,
   setFillClientArea(false);
 }
 
-void Label::initialize ()
+void TUI::Label::initialize ()
 {
     Control::initialize();
 }
 
-std::shared_ptr<Label> Label::createSharedLabel (
+std::shared_ptr<Label> TUI::Label::createSharedLabel (
   std::string const & name,
   std::string const & text,
   int x,
@@ -77,12 +76,12 @@ std::shared_ptr<Label> Label::createSharedLabel (
   return result;
 }
 
-std::shared_ptr<Label> Label::getSharedLabel ()
+std::shared_ptr<Label> TUI::Label::getSharedLabel ()
 {
     return std::static_pointer_cast<Label>(shared_from_this());
 }
 
-void Label::onDrawClient () const
+void TUI::Label::onDrawClient () const
 {
     if (visibleState() != Window::VisibleState::shown)
     {
@@ -135,28 +134,25 @@ void Label::onDrawClient () const
     }
 }
 
-void Label::onDrawNonClient () const
+void TUI::Label::onDrawNonClient () const
 { }
 
-bool Label::isMultiline () const
+bool TUI::Label::isMultiline () const
 {
     return mMultiline;
 }
 
-void Label::setMultiline (bool multiline)
+void TUI::Label::setMultiline (bool multiline)
 {
     mMultiline = multiline;
 }
 
-std::string Label::text () const
+std::string TUI::Label::text () const
 {
     return mText;
 }
 
-void Label::setText (std::string const & text)
+void TUI::Label::setText (std::string const & text)
 {
     mText = text;
 }
-
-} // namespace Curses
-} // namespace TUCUT

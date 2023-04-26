@@ -14,14 +14,13 @@
 #include "ConsoleManager.h"
 #include "Justification.h"
 
-namespace TUCUT {
-namespace Curses {
+using namespace TUCUT;
 
-std::string const ListBox::windowName = "parent";
-std::string const ListBox::moveSelectionUpButtonName = "moveUpButton";
-std::string const ListBox::moveSelectionDownButtonName = "moveDownButton";
+std::string const TUI::ListBox::windowName = "parent";
+std::string const TUI::ListBox::moveSelectionUpButtonName = "moveUpButton";
+std::string const TUI::ListBox::moveSelectionDownButtonName = "moveDownButton";
 
-ListBox::ListBox (std::string const & name,
+TUI::ListBox::ListBox (std::string const & name,
   std::vector<std::string> const & items,
   int x,
   int y,
@@ -63,7 +62,7 @@ ListBox::ListBox (std::string const & name,
   appendItems(items);
 }
 
-void ListBox::initialize ()
+void TUI::ListBox::initialize ()
 {
     Control::initialize();
 
@@ -84,7 +83,7 @@ void ListBox::initialize ()
     mMoveSelectionDownButton->setAnchorRight(0);
 }
 
-std::shared_ptr<ListBox> ListBox::createSharedListBox (
+std::shared_ptr<ListBox> TUI::ListBox::createSharedListBox (
   std::string const & name,
   std::vector<std::string> const & items,
   int x,
@@ -113,12 +112,12 @@ std::shared_ptr<ListBox> ListBox::createSharedListBox (
   return result;
 }
 
-std::shared_ptr<ListBox> ListBox::getSharedListBox ()
+std::shared_ptr<ListBox> TUI::ListBox::getSharedListBox ()
 {
     return std::static_pointer_cast<ListBox>(shared_from_this());
 }
 
-bool ListBox::onKeyPress (WindowSystem * ws, int key)
+bool TUI::ListBox::onKeyPress (WindowSystem * ws, int key)
 {
     if (enableState() != Window::EnableState::enabled)
     {
@@ -148,7 +147,7 @@ bool ListBox::onKeyPress (WindowSystem * ws, int key)
     return true;
 }
 
-void ListBox::onMouseEvent (WindowSystem * ws, short id, int y, int x, mmask_t buttonState)
+void TUI::ListBox::onMouseEvent (WindowSystem * ws, short id, int y, int x, mmask_t buttonState)
 {
     if (enableState() != Window::EnableState::enabled)
     {
@@ -178,7 +177,7 @@ void ListBox::onMouseEvent (WindowSystem * ws, short id, int y, int x, mmask_t b
     }
 }
 
-void ListBox::onDrawClient () const
+void TUI::ListBox::onDrawClient () const
 {
     if (visibleState() != Window::VisibleState::shown)
     {
@@ -210,18 +209,18 @@ void ListBox::onDrawClient () const
     }
 }
 
-void ListBox::onResize ()
+void TUI::ListBox::onResize ()
 {
     ensureSelectionIsVisible();
 }
 
-int ListBox::textClientWidth () const
+int TUI::ListBox::textClientWidth () const
 {
     // This method accounts for the area used by the scrolling buttons and focus marker.
     return clientWidth() - 2;
 }
 
-void ListBox::setMinHeight (int height)
+void TUI::ListBox::setMinHeight (int height)
 {
     if (height < 4)
     {
@@ -231,7 +230,7 @@ void ListBox::setMinHeight (int height)
     mMinHeight = height;
 }
 
-void ListBox::setMinWidth (int width)
+void TUI::ListBox::setMinWidth (int width)
 {
     if (width < 3)
     {
@@ -241,37 +240,37 @@ void ListBox::setMinWidth (int width)
     mMinWidth = width;
 }
 
-Color ListBox::selectionForeColor () const
+Color TUI::ListBox::selectionForeColor () const
 {
     return mSelectionForeColor;
 }
 
-void ListBox::setSelectionForeColor (Color const & color)
+void TUI::ListBox::setSelectionForeColor (Color const & color)
 {
     mSelectionForeColor = color;
 }
 
-Color ListBox::selectionBackColor () const
+Color TUI::ListBox::selectionBackColor () const
 {
     return mSelectionBackColor;
 }
 
-void ListBox::setSelectionBackColor (Color const & color)
+void TUI::ListBox::setSelectionBackColor (Color const & color)
 {
     mSelectionBackColor = color;
 }
 
-int ListBox::size () const
+int TUI::ListBox::size () const
 {
     return static_cast<int>(mItems.size());
 }
 
-int ListBox::selection () const
+int TUI::ListBox::selection () const
 {
     return mSelectionItem;
 }
 
-std::string ListBox::text (int index) const
+std::string TUI::ListBox::text (int index) const
 {
     if (index > static_cast<int>(mItems.size()))
     {
@@ -281,7 +280,7 @@ std::string ListBox::text (int index) const
     return mItems[index];
 }
 
-void ListBox::setText (int index, std::string const & text)
+void TUI::ListBox::setText (int index, std::string const & text)
 {
     if (index > static_cast<int>(mItems.size()))
     {
@@ -291,12 +290,12 @@ void ListBox::setText (int index, std::string const & text)
     mItems[index] = text;
 }
 
-void ListBox::appendItems (std::vector<std::string> const & items)
+void TUI::ListBox::appendItems (std::vector<std::string> const & items)
 {
     insertItems(static_cast<int>(mItems.size()), items);
 }
 
-void ListBox::insertItems (int index, std::vector<std::string> const & items)
+void TUI::ListBox::insertItems (int index, std::vector<std::string> const & items)
 {
     if (index > static_cast<int>(mItems.size()))
     {
@@ -307,12 +306,12 @@ void ListBox::insertItems (int index, std::vector<std::string> const & items)
     mItems.insert(mItems.end() + index, items.begin(), items.end());
 }
 
-ListBox::SelectionChangedEvent * ListBox::selectionChanged ()
+TUI::ListBox::SelectionChangedEvent * TUI::ListBox::selectionChanged ()
 {
     return mSelectionChanged.get();
 }
 
-void ListBox::notify (int id, WindowSystem * ws, Button * button)
+void TUI::ListBox::notify (int id, WindowSystem * ws, Button * button)
 {
     if (id != Button::ClickedEventId)
     {
@@ -329,12 +328,12 @@ void ListBox::notify (int id, WindowSystem * ws, Button * button)
     }
 }
 
-void ListBox::handleSelectionChange (WindowSystem * ws)
+void TUI::ListBox::handleSelectionChange (WindowSystem * ws)
 {
     mSelectionChanged->signal(ws, this);
 }
 
-void ListBox::moveSelectionUp ()
+void TUI::ListBox::moveSelectionUp ()
 {
     if (mSelectionItem > 0)
     {
@@ -344,7 +343,7 @@ void ListBox::moveSelectionUp ()
     }
 }
 
-void ListBox::moveSelectionDown ()
+void TUI::ListBox::moveSelectionDown ()
 {
     if (mSelectionItem < (static_cast<int>(mItems.size()) - 1))
     {
@@ -354,7 +353,7 @@ void ListBox::moveSelectionDown ()
     }
 }
 
-void ListBox::ensureSelectionIsVisible ()
+void TUI::ListBox::ensureSelectionIsVisible ()
 {
     if (mSelectionItem < mScrollItem)
     {
@@ -365,6 +364,3 @@ void ListBox::ensureSelectionIsVisible ()
         mScrollItem = mSelectionItem - clientHeight() + 1;
     }
 }
-
-} // namespace Curses
-} // namespace TUCUT

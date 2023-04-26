@@ -14,16 +14,15 @@
 #include "ConsoleManager.h"
 #include "Justification.h"
 
-namespace TUCUT {
-namespace Curses {
+using namespace TUCUT;
 
-std::string const DisplayBox::windowName = "parent";
-std::string const DisplayBox::moveCenterUpButtonName = "moveCenterUpButton";
-std::string const DisplayBox::moveCenterDownButtonName = "moveCenterDownButton";
-std::string const DisplayBox::moveCenterLeftButtonName = "moveCenterLeftButton";
-std::string const DisplayBox::moveCenterRightButtonName = "moveCenterRightButton";
+std::string const TUI::DisplayBox::windowName = "parent";
+std::string const TUI::DisplayBox::moveCenterUpButtonName = "moveCenterUpButton";
+std::string const TUI::DisplayBox::moveCenterDownButtonName = "moveCenterDownButton";
+std::string const TUI::DisplayBox::moveCenterLeftButtonName = "moveCenterLeftButton";
+std::string const TUI::DisplayBox::moveCenterRightButtonName = "moveCenterRightButton";
 
-DisplayBox::DisplayBox (std::string const & name,
+TUI::DisplayBox::DisplayBox (std::string const & name,
   char centerChar,
   int x,
   int y,
@@ -113,7 +112,7 @@ DisplayBox::DisplayBox (std::string const & name,
     }
 }
 
-void DisplayBox::initialize ()
+void TUI::DisplayBox::initialize ()
 {
     Control::initialize();
 
@@ -154,7 +153,7 @@ void DisplayBox::initialize ()
 }
 
 std::shared_ptr<DisplayBox>
-DisplayBox::createSharedDisplayBox (
+TUI::DisplayBox::createSharedDisplayBox (
   std::string const & name,
   char centerChar,
   int x,
@@ -195,12 +194,12 @@ DisplayBox::createSharedDisplayBox (
   return result;
 }
 
-std::shared_ptr<DisplayBox> DisplayBox::getSharedDisplayBox ()
+std::shared_ptr<DisplayBox> TUI::DisplayBox::getSharedDisplayBox ()
 {
     return std::static_pointer_cast<DisplayBox>(shared_from_this());
 }
 
-bool DisplayBox::onKeyPress (WindowSystem * ws, int key)
+bool TUI::DisplayBox::onKeyPress (WindowSystem * ws, int key)
 {
     if (enableState() != Window::EnableState::enabled)
     {
@@ -246,7 +245,7 @@ bool DisplayBox::onKeyPress (WindowSystem * ws, int key)
     return true;
 }
 
-void DisplayBox::onMouseEvent (WindowSystem * ws, short id, int y, int x, mmask_t buttonState)
+void TUI::DisplayBox::onMouseEvent (WindowSystem * ws, short id, int y, int x, mmask_t buttonState)
 {
     if (enableState() != Window::EnableState::enabled)
     {
@@ -287,7 +286,7 @@ void DisplayBox::onMouseEvent (WindowSystem * ws, short id, int y, int x, mmask_
     }
 }
 
-void DisplayBox::onDrawClient () const
+void TUI::DisplayBox::onDrawClient () const
 {
     if (visibleState() != Window::VisibleState::shown)
     {
@@ -323,13 +322,13 @@ void DisplayBox::onDrawClient () const
     }
 }
 
-int DisplayBox::textClientWidth () const
+int TUI::DisplayBox::textClientWidth () const
 {
     // This method accounts for the area used by the scrolling buttons and focus marker.
     return clientWidth() - 2;
 }
 
-void DisplayBox::setMinHeight (int height)
+void TUI::DisplayBox::setMinHeight (int height)
 {
     if (height < 4)
     {
@@ -339,7 +338,7 @@ void DisplayBox::setMinHeight (int height)
     mMinHeight = height;
 }
 
-void DisplayBox::setMinWidth (int width)
+void TUI::DisplayBox::setMinWidth (int width)
 {
     if (width < 4)
     {
@@ -349,7 +348,7 @@ void DisplayBox::setMinWidth (int width)
     mMinWidth = width;
 }
 
-void DisplayBox::verifyY (int y) const
+void TUI::DisplayBox::verifyY (int y) const
 {
     if (y < 0 || y >= mContentHeight)
     {
@@ -357,7 +356,7 @@ void DisplayBox::verifyY (int y) const
     }
 }
 
-void DisplayBox::verifyX (int x) const
+void TUI::DisplayBox::verifyX (int x) const
 {
     if (x < 0 || x >= mContentWidth)
     {
@@ -365,27 +364,27 @@ void DisplayBox::verifyX (int x) const
     }
 }
 
-void DisplayBox::verifyYX (int y, int x) const
+void TUI::DisplayBox::verifyYX (int y, int x) const
 {
     verifyY(y);
     verifyX(x);
 }
 
-char DisplayBox::symbol (int y, int x) const
+char TUI::DisplayBox::symbol (int y, int x) const
 {
     verifyYX(y, x);
 
     return mContent[y][x];
 }
 
-void DisplayBox::setSymbol (char symbol, int y, int x)
+void TUI::DisplayBox::setSymbol (char symbol, int y, int x)
 {
     verifyYX(y, x);
 
     mContent[y][x] = symbol;
 }
 
-void DisplayBox::setSymbols (std::string const & symbols, int y)
+void TUI::DisplayBox::setSymbols (std::string const & symbols, int y)
 {
     verifyY(y);
 
@@ -397,27 +396,27 @@ void DisplayBox::setSymbols (std::string const & symbols, int y)
     mContent[y] = symbols;
 }
 
-DisplayBox::ClickedEvent * DisplayBox::clicked ()
+TUI::DisplayBox::ClickedEvent * TUI::DisplayBox::clicked ()
 {
     return mClicked.get();
 }
 
-DisplayBox::ScrollChangedEvent * DisplayBox::scrollChanged ()
+TUI::DisplayBox::ScrollChangedEvent * TUI::DisplayBox::scrollChanged ()
 {
     return mScrollChanged.get();
 }
 
-DisplayBox::BeforeCenterChangedEvent * DisplayBox::beforeCenterChanged ()
+TUI::DisplayBox::BeforeCenterChangedEvent * TUI::DisplayBox::beforeCenterChanged ()
 {
     return mBeforeCenterChanged.get();
 }
 
-DisplayBox::AfterCenterChangedEvent * DisplayBox::afterCenterChanged ()
+TUI::DisplayBox::AfterCenterChangedEvent * TUI::DisplayBox::afterCenterChanged ()
 {
     return mAfterCenterChanged.get();
 }
 
-void DisplayBox::notify (int id, WindowSystem * ws, Button * button)
+void TUI::DisplayBox::notify (int id, WindowSystem * ws, Button * button)
 {
     if (id != Button::ClickedEventId)
     {
@@ -442,27 +441,27 @@ void DisplayBox::notify (int id, WindowSystem * ws, Button * button)
     }
 }
 
-void DisplayBox::handleClicked (WindowSystem * ws, int y, int x)
+void TUI::DisplayBox::handleClicked (WindowSystem * ws, int y, int x)
 {
     mClicked->signal(ws, this, y, x);
 }
 
-void DisplayBox::handleScrollChanged (WindowSystem * ws, int y, int x)
+void TUI::DisplayBox::handleScrollChanged (WindowSystem * ws, int y, int x)
 {
     mScrollChanged->signal(ws, this, y, x);
 }
 
-void DisplayBox::handleBeforeCenterChanged (WindowSystem * ws, int y, int x, bool & cancel)
+void TUI::DisplayBox::handleBeforeCenterChanged (WindowSystem * ws, int y, int x, bool & cancel)
 {
     mBeforeCenterChanged->signal(ws, this, y, x, cancel);
 }
 
-void DisplayBox::handleAfterCenterChanged (WindowSystem * ws, int y, int x)
+void TUI::DisplayBox::handleAfterCenterChanged (WindowSystem * ws, int y, int x)
 {
     mAfterCenterChanged->signal(ws, this, y, x);
 }
 
-void DisplayBox::handleMoveCenterUp (WindowSystem * ws)
+void TUI::DisplayBox::handleMoveCenterUp (WindowSystem * ws)
 {
     if (canMoveCenterUp())
     {
@@ -501,7 +500,7 @@ void DisplayBox::handleMoveCenterUp (WindowSystem * ws)
     }
 }
 
-void DisplayBox::handleMoveCenterDown (WindowSystem * ws)
+void TUI::DisplayBox::handleMoveCenterDown (WindowSystem * ws)
 {
     if (canMoveCenterDown())
     {
@@ -540,7 +539,7 @@ void DisplayBox::handleMoveCenterDown (WindowSystem * ws)
     }
 }
 
-void DisplayBox::handleMoveCenterLeft (WindowSystem * ws)
+void TUI::DisplayBox::handleMoveCenterLeft (WindowSystem * ws)
 {
     if (canMoveCenterLeft())
     {
@@ -579,7 +578,7 @@ void DisplayBox::handleMoveCenterLeft (WindowSystem * ws)
     }
 }
 
-void DisplayBox::handleMoveCenterRight (WindowSystem * ws)
+void TUI::DisplayBox::handleMoveCenterRight (WindowSystem * ws)
 {
     if (canMoveCenterRight())
     {
@@ -618,37 +617,37 @@ void DisplayBox::handleMoveCenterRight (WindowSystem * ws)
     }
 }
 
-bool DisplayBox::isClickLocationShown () const
+bool TUI::DisplayBox::isClickLocationShown () const
 {
     return mShowClickLocation;
 }
 
-void DisplayBox::showClickLocation (bool show)
+void TUI::DisplayBox::showClickLocation (bool show)
 {
     mShowClickLocation = show;
 }
 
-int DisplayBox::getClickedY () const
+int TUI::DisplayBox::getClickedY () const
 {
     return mClickedLine;
 }
 
-int DisplayBox::getClickedX () const
+int TUI::DisplayBox::getClickedX () const
 {
     return mClickedColumn;
 }
 
-int DisplayBox::getScrollY () const
+int TUI::DisplayBox::getScrollY () const
 {
     return mScrollLine;
 }
 
-int DisplayBox::getScrollX () const
+int TUI::DisplayBox::getScrollX () const
 {
     return mScrollColumn;
 }
 
-bool DisplayBox::scrollUp ()
+bool TUI::DisplayBox::scrollUp ()
 {
     if ((mContentHeight - mScrollLine) > clientHeight())
     {
@@ -660,7 +659,7 @@ bool DisplayBox::scrollUp ()
     return false;
 }
 
-bool DisplayBox::scrollDown ()
+bool TUI::DisplayBox::scrollDown ()
 {
     if (mScrollLine > 0)
     {
@@ -672,7 +671,7 @@ bool DisplayBox::scrollDown ()
     return false;
 }
 
-bool DisplayBox::scrollLeft ()
+bool TUI::DisplayBox::scrollLeft ()
 {
     if ((mContentWidth - mScrollColumn) > textClientWidth())
     {
@@ -684,7 +683,7 @@ bool DisplayBox::scrollLeft ()
     return false;
 }
 
-bool DisplayBox::scrollRight ()
+bool TUI::DisplayBox::scrollRight ()
 {
     if (mScrollColumn > 0)
     {
@@ -696,7 +695,7 @@ bool DisplayBox::scrollRight ()
     return false;
 }
 
-void DisplayBox::ensurePointIsVisible (int y, int x)
+void TUI::DisplayBox::ensurePointIsVisible (int y, int x)
 {
     verifyYX(y, x);
 
@@ -735,22 +734,22 @@ void DisplayBox::ensurePointIsVisible (int y, int x)
     }
 }
 
-void DisplayBox::ensureCenterIsVisible ()
+void TUI::DisplayBox::ensureCenterIsVisible ()
 {
     ensurePointIsVisible(mCenterLine, mCenterColumn);
 }
 
-int DisplayBox::getCenterY () const
+int TUI::DisplayBox::getCenterY () const
 {
     return mCenterLine;
 }
 
-int DisplayBox::getCenterX () const
+int TUI::DisplayBox::getCenterX () const
 {
     return mCenterColumn;
 }
 
-void DisplayBox::setCenter (int y, int x)
+void TUI::DisplayBox::setCenter (int y, int x)
 {
     verifyYX(y, x);
 
@@ -758,27 +757,27 @@ void DisplayBox::setCenter (int y, int x)
     mCenterColumn = x;
 }
 
-bool DisplayBox::canMoveCenterUp ()
+bool TUI::DisplayBox::canMoveCenterUp ()
 {
     return mCenterLine > 0;
 }
 
-bool DisplayBox::canMoveCenterDown ()
+bool TUI::DisplayBox::canMoveCenterDown ()
 {
     return mCenterLine < (mContentHeight - 1);
 }
 
-bool DisplayBox::canMoveCenterLeft ()
+bool TUI::DisplayBox::canMoveCenterLeft ()
 {
     return mCenterColumn > 0;
 }
 
-bool DisplayBox::canMoveCenterRight ()
+bool TUI::DisplayBox::canMoveCenterRight ()
 {
     return mCenterColumn < (mContentWidth - 1);
 }
 
-bool DisplayBox::moveCenterUp ()
+bool TUI::DisplayBox::moveCenterUp ()
 {
     if (canMoveCenterUp())
     {
@@ -790,7 +789,7 @@ bool DisplayBox::moveCenterUp ()
     return false;
 }
 
-bool DisplayBox::moveCenterDown ()
+bool TUI::DisplayBox::moveCenterDown ()
 {
     if (canMoveCenterDown())
     {
@@ -802,7 +801,7 @@ bool DisplayBox::moveCenterDown ()
     return false;
 }
 
-bool DisplayBox::moveCenterLeft ()
+bool TUI::DisplayBox::moveCenterLeft ()
 {
     if (canMoveCenterLeft())
     {
@@ -814,7 +813,7 @@ bool DisplayBox::moveCenterLeft ()
     return false;
 }
 
-bool DisplayBox::moveCenterRight ()
+bool TUI::DisplayBox::moveCenterRight ()
 {
     if (canMoveCenterRight())
     {
@@ -825,6 +824,3 @@ bool DisplayBox::moveCenterRight ()
 
     return false;
 }
-
-} // namespace Curses
-} // namespace TUCUT

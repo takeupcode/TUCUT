@@ -14,16 +14,15 @@
 #include "ConsoleManager.h"
 #include "Justification.h"
 
-namespace TUCUT {
-namespace Curses {
+using namespace TUCUT;
 
-std::string const TextBox::windowName = "parent";
-std::string const TextBox::moveCursorUpButtonName = "moveUpButton";
-std::string const TextBox::moveCursorDownButtonName = "moveDownButton";
-std::string const TextBox::moveCursorLeftButtonName = "moveLeftButton";
-std::string const TextBox::moveCursorRightButtonName = "moveRightButton";
+std::string const TUI::TextBox::windowName = "parent";
+std::string const TUI::TextBox::moveCursorUpButtonName = "moveUpButton";
+std::string const TUI::TextBox::moveCursorDownButtonName = "moveDownButton";
+std::string const TUI::TextBox::moveCursorLeftButtonName = "moveLeftButton";
+std::string const TUI::TextBox::moveCursorRightButtonName = "moveRightButton";
 
-TextBox::TextBox (std::string const & name,
+TUI::TextBox::TextBox (std::string const & name,
   std::string const & text,
   int x,
   int y,
@@ -83,7 +82,7 @@ TextBox::TextBox (std::string const & name,
     setText(text);
 }
 
-void TextBox::initialize ()
+void TUI::TextBox::initialize ()
 {
     Control::initialize();
 
@@ -132,7 +131,7 @@ void TextBox::initialize ()
     addControl(mMoveCursorRightButton);
 }
 
-std::shared_ptr<TextBox> TextBox::createSharedTextBox (
+std::shared_ptr<TextBox> TUI::TextBox::createSharedTextBox (
   std::string const & name,
   std::string const & text,
   int x,
@@ -159,12 +158,12 @@ std::shared_ptr<TextBox> TextBox::createSharedTextBox (
   return result;
 }
 
-std::shared_ptr<TextBox> TextBox::getSharedTextBox ()
+std::shared_ptr<TextBox> TUI::TextBox::getSharedTextBox ()
 {
     return std::static_pointer_cast<TextBox>(shared_from_this());
 }
 
-bool TextBox::onKeyPress (WindowSystem * ws, int key)
+bool TUI::TextBox::onKeyPress (WindowSystem * ws, int key)
 {
     if (enableState() != Window::EnableState::enabled)
     {
@@ -245,7 +244,7 @@ bool TextBox::onKeyPress (WindowSystem * ws, int key)
     return true;
 }
 
-void TextBox::onMouseEvent (WindowSystem * ws, short id, int y, int x, mmask_t buttonState)
+void TUI::TextBox::onMouseEvent (WindowSystem * ws, short id, int y, int x, mmask_t buttonState)
 {
     if (enableState() != Window::EnableState::enabled)
     {
@@ -286,7 +285,7 @@ void TextBox::onMouseEvent (WindowSystem * ws, short id, int y, int x, mmask_t b
     }
 }
 
-void TextBox::onDrawClient () const
+void TUI::TextBox::onDrawClient () const
 {
     if (visibleState() != Window::VisibleState::shown)
     {
@@ -335,12 +334,12 @@ void TextBox::onDrawClient () const
     }
 }
 
-void TextBox::onResize ()
+void TUI::TextBox::onResize ()
 {
     ensureCursorIsVisible();
 }
 
-int TextBox::textClientWidth () const
+int TUI::TextBox::textClientWidth () const
 {
     // This method accounts for the area used by the scrolling buttons and focus marker.
     if (mMultiline)
@@ -353,7 +352,7 @@ int TextBox::textClientWidth () const
     return clientWidth() - 4;
 }
 
-void TextBox::setMinHeight (int height)
+void TUI::TextBox::setMinHeight (int height)
 {
     if (mMultiline)
     {
@@ -373,7 +372,7 @@ void TextBox::setMinHeight (int height)
     mMinHeight = height;
 }
 
-void TextBox::setMinWidth (int width)
+void TUI::TextBox::setMinWidth (int width)
 {
     if (mMultiline)
     {
@@ -393,12 +392,12 @@ void TextBox::setMinWidth (int width)
     mMinWidth = width;
 }
 
-bool TextBox::isMultiline () const
+bool TUI::TextBox::isMultiline () const
 {
     return mMultiline;
 }
 
-std::string TextBox::text () const
+std::string TUI::TextBox::text () const
 {
     std::ostringstream ss;
 
@@ -417,7 +416,7 @@ std::string TextBox::text () const
     return ss.str();
 }
 
-void TextBox::setText (std::string const & text)
+void TUI::TextBox::setText (std::string const & text)
 {
     mText.clear();
 
@@ -434,7 +433,7 @@ void TextBox::setText (std::string const & text)
     ensureCursorIsVisible();
 }
 
-void TextBox::appendLines (std::string const & text)
+void TUI::TextBox::appendLines (std::string const & text)
 {
     mCursorLine = static_cast<int>(mText.size());
 
@@ -445,7 +444,7 @@ void TextBox::appendLines (std::string const & text)
     ensureCursorIsVisible();
 }
 
-void TextBox::insertLines (std::string const & text)
+void TUI::TextBox::insertLines (std::string const & text)
 {
     std::istringstream ss(text);
     std::string line;
@@ -459,12 +458,12 @@ void TextBox::insertLines (std::string const & text)
     }
 }
 
-TextBox::TextChangedEvent * TextBox::textChanged ()
+TUI::TextBox::TextChangedEvent * TUI::TextBox::textChanged ()
 {
     return mTextChanged.get();
 }
 
-void TextBox::notify (int id, WindowSystem * ws, Button * button)
+void TUI::TextBox::notify (int id, WindowSystem * ws, Button * button)
 {
     if (id != Button::ClickedEventId)
     {
@@ -489,12 +488,12 @@ void TextBox::notify (int id, WindowSystem * ws, Button * button)
     }
 }
 
-void TextBox::handleTextChange (WindowSystem * ws)
+void TUI::TextBox::handleTextChange (WindowSystem * ws)
 {
     mTextChanged->signal(ws, this);
 }
 
-void TextBox::moveCursorUp ()
+void TUI::TextBox::moveCursorUp ()
 {
     if (mCursorLine > 0)
     {
@@ -505,7 +504,7 @@ void TextBox::moveCursorUp ()
     }
 }
 
-void TextBox::moveCursorDown ()
+void TUI::TextBox::moveCursorDown ()
 {
     if (mCursorLine < (static_cast<int>(mText.size()) - 1))
     {
@@ -516,7 +515,7 @@ void TextBox::moveCursorDown ()
     }
 }
 
-void TextBox::moveCursorLeft ()
+void TUI::TextBox::moveCursorLeft ()
 {
     if (mCursorColumn > 0)
     {
@@ -535,7 +534,7 @@ void TextBox::moveCursorLeft ()
     }
 }
 
-void TextBox::moveCursorRight ()
+void TUI::TextBox::moveCursorRight ()
 {
     if (mCursorColumn < (static_cast<int>(mText[mCursorLine].size())))
     {
@@ -554,7 +553,7 @@ void TextBox::moveCursorRight ()
     }
 }
 
-void TextBox::breakLineAtCursor ()
+void TUI::TextBox::breakLineAtCursor ()
 {
     std::string currentText = mText[mCursorLine].substr(0, mCursorColumn);
     std::string nextText = mText[mCursorLine].substr(mCursorColumn, mText[mCursorLine].size());
@@ -567,7 +566,7 @@ void TextBox::breakLineAtCursor ()
     ensureCursorIsVisible();
 }
 
-bool TextBox::removeCharAtCursor ()
+bool TUI::TextBox::removeCharAtCursor ()
 {
     if (mCursorColumn == static_cast<int>(mText[mCursorLine].size()) &&
         mCursorLine < static_cast<int>(mText.size()) - 1)
@@ -587,7 +586,7 @@ bool TextBox::removeCharAtCursor ()
     return false;
 }
 
-bool TextBox::addCharAtCursor (int key)
+bool TUI::TextBox::addCharAtCursor (int key)
 {
     if (key < 32 || key > 126)
     {
@@ -602,7 +601,7 @@ bool TextBox::addCharAtCursor (int key)
     return true;
 }
 
-void TextBox::placeCursorClosestToDesiredColumn ()
+void TUI::TextBox::placeCursorClosestToDesiredColumn ()
 {
     if (mDesiredColumn > static_cast<int>(mText[mCursorLine].size()))
     {
@@ -614,7 +613,7 @@ void TextBox::placeCursorClosestToDesiredColumn ()
     }
 }
 
-void TextBox::ensureCursorIsVisible ()
+void TUI::TextBox::ensureCursorIsVisible ()
 {
     if (mCursorLine < mScrollLine)
     {
@@ -634,6 +633,3 @@ void TextBox::ensureCursorIsVisible ()
         mScrollColumn = mCursorColumn - textClientWidth() + 1;
     }
 }
-
-} // namespace Curses
-} // namespace TUCUT

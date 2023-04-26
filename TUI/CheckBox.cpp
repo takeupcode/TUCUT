@@ -12,10 +12,9 @@
 #include "WindowSystem.h"
 #include "Justification.h"
 
-namespace TUCUT {
-namespace Curses {
+using namespace TUCUT;
 
-CheckBox::CheckBox (std::string const & name,
+TUI::CheckBox::CheckBox (std::string const & name,
   std::string const & text,
   int x,
   int y,
@@ -45,12 +44,12 @@ CheckBox::CheckBox (std::string const & name,
   setFillClientArea(false);
 }
 
-void CheckBox::initialize ()
+void TUI::CheckBox::initialize ()
 {
   Control::initialize();
 }
 
-std::shared_ptr<CheckBox> CheckBox::createSharedCheckBox (
+std::shared_ptr<CheckBox> TUI::CheckBox::createSharedCheckBox (
   std::string const & name,
   std::string const & text,
   int x,
@@ -79,12 +78,12 @@ std::shared_ptr<CheckBox> CheckBox::createSharedCheckBox (
   return result;
 }
 
-std::shared_ptr<CheckBox> CheckBox::getSharedCheckBox ()
+std::shared_ptr<CheckBox> TUI::CheckBox::getSharedCheckBox ()
 {
     return std::static_pointer_cast<CheckBox>(shared_from_this());
 }
 
-bool CheckBox::onKeyPress (WindowSystem * ws, int key)
+bool TUI::CheckBox::onKeyPress (WindowSystem * ws, int key)
 {
     if (enableState() != Window::EnableState::enabled)
     {
@@ -109,7 +108,7 @@ bool CheckBox::onKeyPress (WindowSystem * ws, int key)
     return true;
 }
 
-void CheckBox::onMouseEvent (WindowSystem * ws, short id, int y, int x, mmask_t buttonState)
+void TUI::CheckBox::onMouseEvent (WindowSystem * ws, short id, int y, int x, mmask_t buttonState)
 {
     if (enableState() != Window::EnableState::enabled)
     {
@@ -122,7 +121,7 @@ void CheckBox::onMouseEvent (WindowSystem * ws, short id, int y, int x, mmask_t 
     }
 }
 
-void CheckBox::onDrawClient () const
+void TUI::CheckBox::onDrawClient () const
 {
     if (visibleState() != Window::VisibleState::shown)
     {
@@ -148,27 +147,24 @@ void CheckBox::onDrawClient () const
     }
 }
 
-bool CheckBox::isChecked () const
+bool TUI::CheckBox::isChecked () const
 {
     return mIsChecked;
 }
 
-void CheckBox::setIsChecked (bool value)
+void TUI::CheckBox::setIsChecked (bool value)
 {
     mIsChecked = value;
 }
 
-void CheckBox::handleClick (WindowSystem * ws)
+void TUI::CheckBox::handleClick (WindowSystem * ws)
 {
     mIsChecked = not mIsChecked;
 
     mClicked->signal(ws, this);
 }
 
-CheckBox::ClickedEvent * CheckBox::clicked ()
+TUI::CheckBox::ClickedEvent * TUI::CheckBox::clicked ()
 {
     return mClicked.get();
 }
-
-} // namespace Curses
-} // namespace TUCUT

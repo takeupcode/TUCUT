@@ -6,10 +6,9 @@
 //
 #include "Control.h"
 
-namespace TUCUT {
-namespace Curses {
+using namespace TUCUT;
 
-Control::Control (std::string const & name,
+TUI::Control::Control (std::string const & name,
   int x,
   int y,
   int width,
@@ -32,32 +31,29 @@ Control::Control (std::string const & name,
   false)
 { }
 
-void Control::onDrawNonClient () const
+void TUI::Control::onDrawNonClient () const
 {
-    if (visibleState() != Window::VisibleState::shown)
-    {
-        return;
-    }
+  if (visibleState() != Window::VisibleState::shown)
+  {
+    return;
+  }
 
-    if (clientWidth() < 3)
-    {
-        return;
-    }
+  if (clientWidth() < 3)
+  {
+    return;
+  }
 
-    chtype focusMarker = hasDirectFocus() ? ACS_VLINE : ' ';
+  std::string focusMarker = hasDirectFocus() ? "│" : " ";
+  focusMarker = focusForeColor(focusBackColor(focusMarker));
 
-    setNonClientColor();
-    for (int i = 0; i < clientHeight(); ++i)
+  for (int i = 0; i < clientHeight(); ++i)
+  {
+    mvwaddch(cursesWindow(), i, 0, focusMarker);
+    if (wantEnter())
     {
-        mvwaddch(cursesWindow(), i, 0, focusMarker);
-        if (wantEnter())
-        {
-            cchar_t ch = {0, L'\u25B7'};
-            wadd_wch(cursesWindow(), &ch);
-        }
-        mvwaddch(cursesWindow(), i, clientWidth() - 1, focusMarker);
+      cchar_t ch = {0, L'\u25B7'};
+      wadd_wch(cursesWindow(), &ch);
     }
+    mvwaddch(cursesWindow(), i, clientWidth() - 1, focusMarker);
+  }
 }
-
-} // namespace Curses
-} // namespace TUCUT

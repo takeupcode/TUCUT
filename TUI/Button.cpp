@@ -10,10 +10,9 @@
 #include "WindowSystem.h"
 #include "Justification.h"
 
-namespace TUCUT {
-namespace Curses {
+using namespace TUCUT;
 
-Button::Button (std::string const & name,
+TUI::Button::Button (std::string const & name,
   std::string const & text,
   int x,
   int y,
@@ -38,12 +37,12 @@ Button::Button (std::string const & name,
   setFillClientArea(false);
 }
 
-void Button::initialize ()
+void TUI::Button::initialize ()
 {
   Control::initialize();
 }
 
-std::shared_ptr<Button> Button::createSharedButton (
+std::shared_ptr<Button> TUI::Button::createSharedButton (
   std::string const & name,
   std::string const & text,
   int x,
@@ -72,12 +71,12 @@ std::shared_ptr<Button> Button::createSharedButton (
   return result;
 }
 
-std::shared_ptr<Button> Button::getSharedButton ()
+std::shared_ptr<Button> TUI::Button::getSharedButton ()
 {
     return std::static_pointer_cast<Button>(shared_from_this());
 }
 
-bool Button::onKeyPress (WindowSystem * ws, int key)
+bool TUI::Button::onKeyPress (WindowSystem * ws, int key)
 {
     if (enableState() != Window::EnableState::enabled)
     {
@@ -102,7 +101,7 @@ bool Button::onKeyPress (WindowSystem * ws, int key)
     return true;
 }
 
-void Button::onMouseEvent (WindowSystem * ws, short id, int y, int x, mmask_t buttonState)
+void TUI::Button::onMouseEvent (WindowSystem * ws, short id, int y, int x, mmask_t buttonState)
 {
     if (enableState() != Window::EnableState::enabled)
     {
@@ -115,7 +114,7 @@ void Button::onMouseEvent (WindowSystem * ws, short id, int y, int x, mmask_t bu
     }
 }
 
-void Button::onDrawClient () const
+void TUI::Button::onDrawClient () const
 {
     if (visibleState() != Window::VisibleState::shown)
     {
@@ -134,15 +133,12 @@ void Button::onDrawClient () const
     }
 }
 
-void Button::handleClick (WindowSystem * ws)
+void TUI::Button::handleClick (WindowSystem * ws)
 {
     mClicked->signal(ws, this);
 }
 
-Button::ClickedEvent * Button::clicked ()
+TUI::Button::ClickedEvent * TUI::Button::clicked ()
 {
     return mClicked.get();
 }
-
-} // namespace Curses
-} // namespace TUCUT
