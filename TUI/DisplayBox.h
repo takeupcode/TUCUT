@@ -4,8 +4,8 @@
 //  Created by Abdul Wahid Tanner on 2018-08-02.
 //  Copyright © Take Up Code, Inc.
 //
-#ifndef TUCUT_Curses_DisplayBox_h
-#define TUCUT_Curses_DisplayBox_h
+#ifndef TUCUT_TUI_DisplayBox_h
+#define TUCUT_TUI_DisplayBox_h
 
 #include <string>
 #include <vector>
@@ -14,14 +14,13 @@
 #include "../Event/EventSubscriber.h"
 #include "Control.h"
 
-namespace TUCUT {
-namespace Curses {
-
-class Button;
-
-class DisplayBox : public Control, public Event::EventSubscriber<WindowSystem *, Button *>
+namespace TUCUT::TUI
 {
-public:
+  class Button;
+
+  class DisplayBox : public Control, public Event::EventSubscriber<WindowSystem *, Button *>
+  {
+  public:
     static int const ClickedEventId = 1;
     static int const ScrollChangedEventId = 2;
     static int const BeforeCenterChangedEventId = 3;
@@ -32,7 +31,23 @@ public:
     using BeforeCenterChangedEvent = Event::EventPublisher<WindowSystem *, DisplayBox *, int, int, bool &>;
     using AfterCenterChangedEvent = Event::EventPublisher<WindowSystem *, DisplayBox *, int, int>;
 
-    static std::shared_ptr<DisplayBox> createSharedDisplayBox (std::string const & name, char centerChar, int y, int x, int height, int width, int contentHeight, int contentWidth, int foreColor, int backColor, bool autoScrolling = false, bool allowCenterControls = false, int scrollMarginTop = 0, int scrollMarginRight = 0, int scrollMarginBottom = 0, int scrollMarginLeft = 0);
+    static std::shared_ptr<DisplayBox> createSharedDisplayBox (
+      std::string const & name,
+      char centerChar,
+      int x,
+      int y,
+      int width,
+      int height,
+      int contentWidth,
+      int contentHeight,
+      Color const & foreColor,
+      Color const & backColor,
+      bool autoScrolling = false,
+      bool allowCenterControls = false,
+      int scrollMarginTop = 0,
+      int scrollMarginRight = 0,
+      int scrollMarginBottom = 0,
+      int scrollMarginLeft = 0);
 
     std::shared_ptr<DisplayBox> getSharedDisplayBox ();
 
@@ -89,12 +104,27 @@ public:
 
     AfterCenterChangedEvent * afterCenterChanged ();
 
-protected:
-    DisplayBox (std::string const & name, char centerChar, int y, int x, int height, int width, int contentHeight, int contentWidth, int foreColor, int backColor, bool autoScrolling, bool allowCenterControls, int scrollMarginTop, int scrollMarginRight, int scrollMarginBottom, int scrollMarginLeft);
+  protected:
+    DisplayBox (std::string const & name,
+      char centerChar,
+      int x,
+      int y,
+      int width,
+      int height,
+      int contentWidth,
+      int contentHeight,
+      Color const & foreColor,
+      Color const & backColor,
+      bool autoScrolling,
+      bool allowCenterControls,
+      int scrollMarginTop,
+      int scrollMarginRight,
+      int scrollMarginBottom,
+      int scrollMarginLeft);
 
     void initialize () override;
 
-private:
+  private:
     void notify (int id, WindowSystem * ws, Button * button) override;
 
     void handleClicked (WindowSystem * ws, int y, int x);
@@ -150,9 +180,7 @@ private:
     bool mAutoScrolling;
     bool mAllowCenterControls;
     bool mShowClickLocation;
-};
+  };
+} // namespace TUCUT::TUI
 
-} // namespace Curses
-} // namespace TUCUT
-
-#endif // TUCUT_Curses_DisplayBox_h
+#endif // TUCUT_TUI_DisplayBox_h

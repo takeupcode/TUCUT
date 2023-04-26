@@ -9,8 +9,27 @@
 namespace TUCUT {
 namespace Curses {
 
-Control::Control (std::string const & name, int y, int x, int height, int width, int clientForeColor, int clientBackColor, int focusForeColor, int focusBackColor)
-: Window(name, y, x, height, width, clientForeColor, clientBackColor, clientForeColor, clientBackColor, focusForeColor, focusBackColor, false)
+Control::Control (std::string const & name,
+  int x,
+  int y,
+  int width,
+  int height,
+  Color const & clientForeColor,
+  Color const & clientBackColor,
+  Color const & focusForeColor,
+  Color const & focusBackColor)
+: Window(name,
+  x,
+  y,
+  width,
+  height,
+  clientForeColor,
+  clientBackColor,
+  clientForeColor,
+  clientBackColor,
+  focusForeColor,
+  focusBackColor,
+  false)
 { }
 
 void Control::onDrawNonClient () const

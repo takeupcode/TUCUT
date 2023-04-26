@@ -4,19 +4,31 @@
 //  Created by Abdul Wahid Tanner on 2017-11-11.
 //  Copyright © Take Up Code, Inc.
 //
-#ifndef TUCUT_Curses_Label_h
-#define TUCUT_Curses_Label_h
+#ifndef TUCUT_TUI_Label_h
+#define TUCUT_TUI_Label_h
 
 #include "Justification.h"
 #include "Control.h"
 
-namespace TUCUT {
-namespace Curses {
-
-class Label : public Control
+namespace TUCUT::TUI
 {
-public:
-    static std::shared_ptr<Label> createSharedLabel (std::string const & name, std::string const & text, int y, int x, int height, int width, int foreColor, int backColor, Justification::Horizontal horizontalJustification = Justification::Horizontal::left, Justification::Vertical verticalJustification = Justification::Vertical::center, bool multiline = false);
+  class Label : public Control
+  {
+  public:
+    static std::shared_ptr<Label> createSharedLabel (
+      std::string const & name,
+      std::string const & text,
+      int x,
+      int y,
+      int width,
+      int height,
+      Color const & foreColor,
+      Color const & backColor,
+      Justification::Horizontal horizontalJustification =
+        Justification::Horizontal::left,
+      Justification::Vertical verticalJustification =
+        Justification::Vertical::center,
+      bool multiline = false);
 
     std::shared_ptr<Label> getSharedLabel ();
 
@@ -32,19 +44,27 @@ public:
 
     void setText (std::string const & text);
 
-protected:
-    Label (std::string const & name, std::string const & text, int y, int x, int height, int width, int foreColor, int backColor, Justification::Horizontal horizontalJustification, Justification::Vertical verticalJustification, bool multiline);
+  protected:
+    Label (std::string const & name,
+      std::string const & text,
+      int x,
+      int y,
+      int width,
+      int height,
+      Color const & foreColor,
+      Color const & backColor,
+      Justification::Horizontal horizontalJustification,
+      Justification::Vertical verticalJustification,
+      bool multiline);
 
     void initialize () override;
 
-private:
+  private:
     std::string mText;
     Justification::Horizontal mHorizontalJustification;
     Justification::Vertical mVerticalJustification;
     bool mMultiline;
-};
+  };
+} // namespace TUCUT::TUI
 
-} // namespace Curses
-} // namespace TUCUT
-
-#endif // TUCUT_Curses_Label_h
+#endif // TUCUT_TUI_Label_h

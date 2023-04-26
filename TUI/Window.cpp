@@ -1128,6 +1128,15 @@ Window * TUI::Window::parent () const
   return mParent;
 }
 
+Window * TUI::Window::root () const
+{
+  if (mParent)
+  {
+    return mParent->root();
+  }
+  return this;
+}
+
 void TUI::Window::setParent (Window * parent)
 {
   mParent = parent;
@@ -1180,7 +1189,19 @@ TUI::Window::VisibleState TUI::Window::visibleState () const
 
 void TUI::Window::setVisibleState (VisibleState value)
 {
+  if (mVisibleState == value)
+  {
+    return;
+  }
+
   mVisibleState = value;
+  // This might be redundant but it's good to be clear.
+  // If we have focus, then the current state must be
+  // shown which means the new state is not shown.
+  if (mHasFocus && value != VisibleState::Shown)
+  {
+    root()->setFocus(false);
+  }
   if (mParent)
   {
     mParent->onResize();
@@ -1194,7 +1215,16 @@ TUI::Window::EnableState TUI::Window::enableState () const
 
 void TUI::Window::setEnableState (EnableState value)
 {
+  if (mEnableState == value)
+  {
+    return;
+  }
+
   mEnableState = value;
+  if (mHasFocus && value == EnableState::Disabled)
+  {
+    root()->setFocus(false);
+  }
 }
 
 void TUI::Window::setFillClientArea (bool value)

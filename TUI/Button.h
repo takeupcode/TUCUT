@@ -4,25 +4,34 @@
 //  Created by Abdul Wahid Tanner on 2017-11-05.
 //  Copyright © Take Up Code, Inc.
 //
-#ifndef TUCUT_Curses_Button_h
-#define TUCUT_Curses_Button_h
+#ifndef TUCUT_TUI_Button_h
+#define TUCUT_TUI_Button_h
 
 #include <memory>
 
 #include "../Event/EventPublisher.h"
 #include "Control.h"
 
-namespace TUCUT {
-namespace Curses {
-
-class Button : public Control
+namespace TUCUT::TUI
 {
-public:
+  class Button : public Control
+  {
+  public:
     static int const ClickedEventId = 1;
 
     using ClickedEvent = Event::EventPublisher<WindowSystem *, Button *>;
 
-    static std::shared_ptr<Button> createSharedButton (std::string const & name, std::string const & text, int y, int x, int height, int width, int foreColor, int backColor, int focusForeColor, int focusBackColor);
+    static std::shared_ptr<Button> createSharedButton (
+      std::string const & name,
+      std::string const & text,
+      int x,
+      int y,
+      int width,
+      int height,
+      Color const & foreColor,
+      Color const & backColor,
+      Color const & focusForeColor,
+      Color const & focusBackColor);
 
     std::shared_ptr<Button> getSharedButton ();
 
@@ -34,19 +43,26 @@ public:
 
     ClickedEvent * clicked ();
 
-protected:
-    Button (std::string const & name, std::string const & text, int y, int x, int height, int width, int foreColor, int backColor, int focusForeColor, int focusBackColor);
+  protected:
+    Button (std::string const & name,
+      std::string const & text,
+      int x,
+      int y,
+      int width,
+      int height,
+      Color const & foreColor,
+      Color const & backColor,
+      Color const & focusForeColor,
+      Color const & focusBackColor);
 
     void initialize () override;
 
-private:
+  private:
     void handleClick (WindowSystem * ws);
 
     std::string mText;
     std::unique_ptr<ClickedEvent> mClicked;
-};
+  };
+} // namespace TUCUT::TUI
 
-} // namespace Curses
-} // namespace TUCUT
-
-#endif // TUCUT_Curses_Button_h
+#endif // TUCUT_TUI_Button_h

@@ -4,25 +4,34 @@
 //  Created by Abdul Wahid Tanner on 2017-11-24.
 //  Copyright © Take Up Code, Inc.
 //
-#ifndef TUCUT_Curses_CheckBox_h
-#define TUCUT_Curses_CheckBox_h
+#ifndef TUCUT_TUI_CheckBox_h
+#define TUCUT_TUI_CheckBox_h
 
 #include <memory>
 
 #include "../Event/EventPublisher.h"
 #include "Control.h"
 
-namespace TUCUT {
-namespace Curses {
-
-class CheckBox : public Control
+namespace TUCUT::TUI
 {
-public:
+  class CheckBox : public Control
+  {
+  public:
     static int const ClickedEventId = 1;
 
     using ClickedEvent = Event::EventPublisher<WindowSystem *, CheckBox *>;
 
-    static std::shared_ptr<CheckBox> createSharedCheckBox (std::string const & name, std::string const & text, int y, int x, int height, int width, int foreColor, int backColor, int focusForeColor, int focusBackColor);
+    static std::shared_ptr<CheckBox> createSharedCheckBox (
+      std::string const & name,
+      std::string const & text,
+      int x,
+      int y,
+      int width,
+      int height,
+      Color const & foreColor,
+      Color const & backColor,
+      Color const & focusForeColor,
+      Color const & focusBackColor);
 
     std::shared_ptr<CheckBox> getSharedCheckBox ();
 
@@ -38,20 +47,27 @@ public:
 
     ClickedEvent * clicked ();
 
-protected:
-    CheckBox (std::string const & name, std::string const & text, int y, int x, int height, int width, int foreColor, int backColor, int focusForeColor, int focusBackColor);
+  protected:
+    CheckBox (std::string const & name,
+      std::string const & text,
+      int x,
+      int y,
+      int width,
+      int height,
+      Color const & foreColor,
+      Color const & backColor,
+      Color const & focusForeColor,
+      Color const & focusBackColor);
 
     void initialize () override;
 
-private:
+  private:
     void handleClick (WindowSystem * ws);
 
     std::string mText;
     std::unique_ptr<ClickedEvent> mClicked;
     bool mIsChecked;
-};
+  };
+} // namespace TUCUT::TUI
 
-} // namespace Curses
-} // namespace TUCUT
-
-#endif // TUCUT_Curses_CheckBox_h
+#endif // TUCUT_TUI_CheckBox_h

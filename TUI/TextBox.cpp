@@ -23,10 +23,31 @@ std::string const TextBox::moveCursorDownButtonName = "moveDownButton";
 std::string const TextBox::moveCursorLeftButtonName = "moveLeftButton";
 std::string const TextBox::moveCursorRightButtonName = "moveRightButton";
 
-TextBox::TextBox (std::string const & name, std::string const & text, int y, int x, int height, int width, int foreColor, int backColor, bool multiline)
-: Control(name, y, x, height, width, foreColor, backColor, foreColor, backColor),
+TextBox::TextBox (std::string const & name,
+  std::string const & text,
+  int x,
+  int y,
+  int width,
+  int height,
+  Color const & foreColor,
+  Color const & backColor,
+  bool multiline)
+: Control(name,
+    x,
+    y,
+    width,
+    height,
+    foreColor,
+    backColor,
+    foreColor,
+    backColor),
   mTextChanged(new TextChangedEvent(TextChangedEventId)),
-  mScrollLine(0), mScrollColumn(0), mCursorLine(0), mCursorColumn(0), mDesiredColumn(0), mMultiline(multiline)
+  mScrollLine(0),
+  mScrollColumn(0),
+  mCursorLine(0),
+  mCursorColumn(0),
+  mDesiredColumn(0),
+  mMultiline(multiline)
 {
     if (multiline)
     {
@@ -111,13 +132,31 @@ void TextBox::initialize ()
     addControl(mMoveCursorRightButton);
 }
 
-std::shared_ptr<TextBox> TextBox::createSharedTextBox (std::string const & name, std::string const & text, int y, int x, int height, int width, int foreColor, int backColor, bool multiline)
+std::shared_ptr<TextBox> TextBox::createSharedTextBox (
+  std::string const & name,
+  std::string const & text,
+  int x,
+  int y,
+  int width,
+  int height,
+  Color const & foreColor,
+  Color const & backColor,
+  bool multiline)
 {
-    auto result = std::shared_ptr<TextBox>(new TextBox(name, text, y, x, height, width, foreColor, backColor, multiline));
+  auto result = std::shared_ptr<TextBox>(new TextBox(
+    name,
+    text,
+    x,
+    y,
+    width,
+    height,
+    foreColor,
+    backColor,
+    multiline));
 
-    result->initialize();
+  result->initialize();
 
-    return result;
+  return result;
 }
 
 std::shared_ptr<TextBox> TextBox::getSharedTextBox ()

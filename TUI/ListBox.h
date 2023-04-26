@@ -4,8 +4,8 @@
 //  Created by Abdul Wahid Tanner on 2017-11-24.
 //  Copyright © Take Up Code, Inc.
 //
-#ifndef TUCUT_Curses_ListBox_h
-#define TUCUT_Curses_ListBox_h
+#ifndef TUCUT_TUI_ListBox_h
+#define TUCUT_TUI_ListBox_h
 
 #include <string>
 #include <vector>
@@ -14,19 +14,28 @@
 #include "../Event/EventSubscriber.h"
 #include "Control.h"
 
-namespace TUCUT {
-namespace Curses {
-
-class Button;
-
-class ListBox : public Control, public Event::EventSubscriber<WindowSystem *, Button *>
+namespace TUCUT::TUI
 {
-public:
+  class Button;
+
+  class ListBox : public Control, public Event::EventSubscriber<WindowSystem *, Button *>
+  {
+  public:
     static int const SelectionChangedEventId = 1;
 
     using SelectionChangedEvent = Event::EventPublisher<WindowSystem *, ListBox *>;
 
-    static std::shared_ptr<ListBox> createSharedListBox (std::string const & name, std::vector<std::string> const & items, int y, int x, int height, int width, int foreColor, int backColor, int selectionForeColor, int selectionBackColor);
+    static std::shared_ptr<ListBox> createSharedListBox (
+      std::string const & name,
+      std::vector<std::string> const & items,
+      int x,
+      int y,
+      int width,
+      int height,
+      Color const & foreColor,
+      Color const & backColor,
+      Color const & selectionForeColor,
+      Color const & selectionBackColor);
 
     std::shared_ptr<ListBox> getSharedListBox ();
 
@@ -44,13 +53,13 @@ public:
 
     void setMinWidth (int width) override;
 
-    int selectionForeColor () const;
+    Color selectionForeColor () const;
 
-    void setSelectionForeColor (int color);
+    void setSelectionForeColor (Color const & color);
 
-    int selectionBackColor () const;
+    Color selectionBackColor () const;
 
-    void setSelectionBackColor (int color);
+    void setSelectionBackColor (Color const & color);
 
     int size () const;
 
@@ -66,12 +75,21 @@ public:
 
     SelectionChangedEvent * selectionChanged ();
 
-protected:
-    ListBox (std::string const & name, std::vector<std::string> const & items, int y, int x, int height, int width, int foreColor, int backColor, int selectionForeColor, int selectionBackColor);
+  protected:
+    ListBox (std::string const & name,
+      std::vector<std::string> const & items,
+      int x,
+      int y,
+      int width,
+      int height,
+      Color const & foreColor,
+      Color const & backColor,
+      Color const & selectionForeColor,
+      Color const & selectionBackColor);
 
     void initialize () override;
 
-private:
+  private:
     void notify (int id, WindowSystem * ws, Button * button) override;
 
     void handleSelectionChange (WindowSystem * ws);
@@ -89,13 +107,11 @@ private:
     std::unique_ptr<SelectionChangedEvent> mSelectionChanged;
     std::shared_ptr<Button> mMoveSelectionUpButton;
     std::shared_ptr<Button> mMoveSelectionDownButton;
-    int mSelectionForeColor;
-    int mSelectionBackColor;
+    Color mSelectionForeColor;
+    Color mSelectionBackColor;
     int mScrollItem;
     int mSelectionItem;
-};
+  };
+} // namespace TUCUT::TUI
 
-} // namespace Curses
-} // namespace TUCUT
-
-#endif // TUCUT_Curses_ListBox_h
+#endif // TUCUT_TUI_ListBox_h

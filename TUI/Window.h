@@ -180,6 +180,8 @@ namespace TUCUT::TUI
 
     Window * parent () const;
 
+    Window * root () const;
+
     void setParent (Window * parent);
 
     virtual bool wantTab () const;

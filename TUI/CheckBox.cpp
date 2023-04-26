@@ -15,30 +15,68 @@
 namespace TUCUT {
 namespace Curses {
 
-CheckBox::CheckBox (std::string const & name, std::string const & text, int y, int x, int height, int width, int foreColor, int backColor, int focusForeColor, int focusBackColor)
-: Control(name, y, x, height, width, foreColor, backColor, focusForeColor, focusBackColor),
-mText(text), mClicked(new ClickedEvent(ClickedEventId))
+CheckBox::CheckBox (std::string const & name,
+  std::string const & text,
+  int x,
+  int y,
+  int width,
+  int height,
+  Color const & foreColor,
+  Color const & backColor,
+  Color const & focusForeColor,
+  Color const & focusBackColor)
+: Control(name,
+  x,
+  y,
+  width,
+  height,
+  foreColor,
+  backColor,
+  focusForeColor,
+  focusBackColor),
+  mText(text),
+  mClicked(new ClickedEvent(ClickedEventId))
 {
-    if (width < 6)
-    {
-        throw std::out_of_range("width cannot be less than 6.");
-    }
+  if (width < 6)
+  {
+    throw std::out_of_range("width cannot be less than 6.");
+  }
 
-    setFillClientArea(false);
+  setFillClientArea(false);
 }
 
 void CheckBox::initialize ()
 {
-    Control::initialize();
+  Control::initialize();
 }
 
-std::shared_ptr<CheckBox> CheckBox::createSharedCheckBox (std::string const & name, std::string const & text, int y, int x, int height, int width, int foreColor, int backColor, int focusForeColor, int focusBackColor)
+std::shared_ptr<CheckBox> CheckBox::createSharedCheckBox (
+  std::string const & name,
+  std::string const & text,
+  int x,
+  int y,
+  int width,
+  int height,
+  Color const & foreColor,
+  Color const & backColor,
+  Color const & focusForeColor,
+  Color const & focusBackColor)
 {
-    auto result = std::shared_ptr<CheckBox>(new CheckBox(name, text, y, x, height, width, foreColor, backColor, focusForeColor, focusBackColor));
+  auto result = std::shared_ptr<CheckBox>(new CheckBox(
+    name,
+    text,
+    x,
+    y,
+    width,
+    height,
+    foreColor,
+    backColor,
+    focusForeColor,
+    focusBackColor));
 
-    result->initialize();
+  result->initialize();
 
-    return result;
+  return result;
 }
 
 std::shared_ptr<CheckBox> CheckBox::getSharedCheckBox ()

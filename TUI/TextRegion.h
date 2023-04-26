@@ -4,8 +4,8 @@
 //  Created by Abdul Wahid Tanner on 2018-12-16.
 //  Copyright © Take Up Code, Inc.
 //
-#ifndef TUCUT_Curses_TextRegion_h
-#define TUCUT_Curses_TextRegion_h
+#ifndef TUCUT_TUI_TextRegion_h
+#define TUCUT_TUI_TextRegion_h
 
 #include <string>
 #include <unordered_map>
@@ -13,12 +13,11 @@
 
 #include "../Game/GameRegion.h"
 
-namespace TUCUT {
-namespace Curses {
-
-class TextRegion : public Game::GameRegion
+namespace TUCUT::TUI
 {
-public:
+  class TextRegion : public Game::GameRegion
+  {
+  public:
     std::shared_ptr<TextRegion> getSharedTextRegion ();
 
     unsigned int columns () const
@@ -43,13 +42,16 @@ public:
 
     Math::Point3d resolveCollisions (Math::Point3d const & currentPosition, Math::Point3d const & newPosition) const override;
 
-private:
+  private:
     friend class Game::GameRegion;
 
-    TextRegion (unsigned int columns, unsigned int rows)
-    : mColumns(columns), mRows(rows), mNextTileTypeId(1)
+    TextRegion (unsigned int columns,
+      unsigned int rows)
+    : mColumns(columns),
+      mRows(rows),
+      mNextTileTypeId(1)
     {
-        mTiles.resize(columns * rows);
+      mTiles.resize(columns * rows);
     }
 
     TextRegion (TextRegion const &) = delete;
@@ -68,9 +70,7 @@ private:
     std::unordered_map<std::string, int> mTileTypes;
     std::vector<char> mTileSymbols;
     std::vector<int> mTiles;
-};
+  };
+} // namespace TUCUT::TUI
 
-} // namespace Curses
-} // namespace TUCUT
-
-#endif // TUCUT_Curses_TextRegion_h
+#endif // TUCUT_TUI_TextRegion_h

@@ -4,8 +4,8 @@
 //  Created by Abdul Wahid Tanner on 2017-11-18.
 //  Copyright © Take Up Code, Inc.
 //
-#ifndef TUCUT_Curses_TextBox_h
-#define TUCUT_Curses_TextBox_h
+#ifndef TUCUT_TUI_TextBox_h
+#define TUCUT_TUI_TextBox_h
 
 #include <string>
 #include <vector>
@@ -14,19 +14,27 @@
 #include "../Event/EventSubscriber.h"
 #include "Control.h"
 
-namespace TUCUT {
-namespace Curses {
-
-class Button;
-
-class TextBox : public Control, public Event::EventSubscriber<WindowSystem *, Button *>
+namespace TUCUT::TUI
 {
-public:
+  class Button;
+
+  class TextBox : public Control, public Event::EventSubscriber<WindowSystem *, Button *>
+  {
+  public:
     static int const TextChangedEventId = 1;
 
     using TextChangedEvent = Event::EventPublisher<WindowSystem *, TextBox *>;
 
-    static std::shared_ptr<TextBox> createSharedTextBox (std::string const & name, std::string const & text, int y, int x, int height, int width, int foreColor, int backColor, bool multiline = false);
+    static std::shared_ptr<TextBox> createSharedTextBox (
+      std::string const & name,
+      std::string const & text,
+      int x,
+      int y,
+      int width,
+      int height,
+      Color const & foreColor,
+      Color const & backColor,
+      bool multiline = false);
 
     std::shared_ptr<TextBox> getSharedTextBox ();
 
@@ -56,12 +64,20 @@ public:
 
     TextChangedEvent * textChanged ();
 
-protected:
-    TextBox (std::string const & name, std::string const & text, int y, int x, int height, int width, int foreColor, int backColor, bool multiline);
+  protected:
+    TextBox (std::string const & name,
+      std::string const & text,
+      int x,
+      int y,
+      int width,
+      int height,
+      Color const & foreColor,
+      Color const & backColor,
+      bool multiline);
 
     void initialize () override;
 
-private:
+  private:
     void notify (int id, WindowSystem * ws, Button * button) override;
 
     void handleTextChange (WindowSystem * ws);
@@ -95,9 +111,7 @@ private:
     int mCursorColumn;
     int mDesiredColumn;
     bool mMultiline;
-};
+  };
+} // namespace TUCUT::TUI
 
-} // namespace Curses
-} // namespace TUCUT
-
-#endif // TUCUT_Curses_TextBox_h
+#endif // TUCUT_TUI_TextBox_h

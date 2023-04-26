@@ -13,25 +13,63 @@
 namespace TUCUT {
 namespace Curses {
 
-Button::Button (std::string const & name, std::string const & text, int y, int x, int height, int width, int foreColor, int backColor, int focusForeColor, int focusBackColor)
-: Control(name, y, x, height, width, foreColor, backColor, focusForeColor, focusBackColor),
-  mText(text), mClicked(new ClickedEvent(ClickedEventId))
+Button::Button (std::string const & name,
+  std::string const & text,
+  int x,
+  int y,
+  int width,
+  int height,
+  Color const & foreColor,
+  Color const & backColor,
+  Color const & focusForeColor,
+  Color const & focusBackColor)
+: Control(name,
+  x,
+  y,
+  width,
+  height,
+  foreColor,
+  backColor,
+  focusForeColor,
+  focusBackColor),
+  mText(text),
+  mClicked(new ClickedEvent(ClickedEventId))
 {
-    setFillClientArea(false);
+  setFillClientArea(false);
 }
 
 void Button::initialize ()
 {
-    Control::initialize();
+  Control::initialize();
 }
 
-std::shared_ptr<Button> Button::createSharedButton (std::string const & name, std::string const & text, int y, int x, int height, int width, int foreColor, int backColor, int focusForeColor, int focusBackColor)
+std::shared_ptr<Button> Button::createSharedButton (
+  std::string const & name,
+  std::string const & text,
+  int x,
+  int y,
+  int width,
+  int height,
+  Color const & foreColor,
+  Color const & backColor,
+  Color const & focusForeColor,
+  Color const & focusBackColor)
 {
-    auto result = std::shared_ptr<Button>(new Button(name, text, y, x, height, width, foreColor, backColor, focusForeColor, focusBackColor));
+  auto result = std::shared_ptr<Button>(new Button(
+    name,
+    text,
+    x,
+    y,
+    width,
+    height,
+    foreColor,
+    backColor,
+    focusForeColor,
+    focusBackColor));
 
-    result->initialize();
+  result->initialize();
 
-    return result;
+  return result;
 }
 
 std::shared_ptr<Button> Button::getSharedButton ()

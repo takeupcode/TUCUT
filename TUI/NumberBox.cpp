@@ -21,9 +21,24 @@ std::string const NumberBox::windowName = "parent";
 std::string const NumberBox::incrementButtonName = "incrementButton";
 std::string const NumberBox::decrementButtonName = "decrementButton";
 
-NumberBox::NumberBox (std::string const & name, int number, int y, int x, int width, int foreColor, int backColor)
-: Control(name, y, x, 1, width, foreColor, backColor, foreColor, backColor),
-  mText("0"), mNumberChanged(new NumberChangedEvent(NumberChangedEventId))
+NumberBox::NumberBox (std::string const & name,
+  int number,
+  int x,
+  int y,
+  int width,
+  Color const & foreColor,
+  Color const & backColor)
+: Control(name,
+    x,
+    y,
+    width,
+    1,
+    foreColor,
+    backColor,
+    foreColor,
+    backColor),
+  mText("0"),
+  mNumberChanged(new NumberChangedEvent(NumberChangedEventId))
 {
     if (width < 5)
     {
@@ -60,13 +75,27 @@ void NumberBox::initialize ()
     addControl(mDecrementButton);
 }
 
-std::shared_ptr<NumberBox> NumberBox::createSharedNumberBox (std::string const & name, int number, int y, int x, int width, int foreColor, int backColor)
+std::shared_ptr<NumberBox> NumberBox::createSharedNumberBox (
+  std::string const & name,
+  int number,
+  int x,
+  int y,
+  int width,
+  Color const & foreColor,
+  Color const & backColor)
 {
-    auto result = std::shared_ptr<NumberBox>(new NumberBox(name, number, y, x, width, foreColor, backColor));
+  auto result = std::shared_ptr<NumberBox>(new NumberBox(
+    name,
+    number,
+    x,
+    y,
+    width,
+    foreColor,
+    backColor));
 
-    result->initialize();
+  result->initialize();
 
-    return result;
+  return result;
 }
 
 std::shared_ptr<NumberBox> NumberBox::getSharedNumberBox ()

@@ -21,27 +21,46 @@ std::string const ListBox::windowName = "parent";
 std::string const ListBox::moveSelectionUpButtonName = "moveUpButton";
 std::string const ListBox::moveSelectionDownButtonName = "moveDownButton";
 
-ListBox::ListBox (std::string const & name, std::vector<std::string> const & items, int y, int x, int height, int width, int foreColor, int backColor, int selectionForeColor, int selectionBackColor)
-: Control(name, y, x, height, width, foreColor, backColor, foreColor, backColor),
+ListBox::ListBox (std::string const & name,
+  std::vector<std::string> const & items,
+  int x,
+  int y,
+  int width,
+  int height,
+  Color const & foreColor,
+  Color const & backColor,
+  Color const & selectionForeColor,
+  Color const & selectionBackColor)
+: Control(name,
+    x,
+    y,
+    width,
+    height,
+    foreColor,
+    backColor,
+    foreColor,
+    backColor),
   mSelectionChanged(new SelectionChangedEvent(SelectionChangedEventId)),
-  mSelectionForeColor(selectionForeColor), mSelectionBackColor(selectionBackColor),
-  mScrollItem(0), mSelectionItem(0)
+  mSelectionForeColor(selectionForeColor),
+  mSelectionBackColor(selectionBackColor),
+  mScrollItem(0),
+  mSelectionItem(0)
 {
-    if (height < 4)
-    {
-        throw std::out_of_range("height cannot be less than 4.");
-    }
-    if (width < 3)
-    {
-        throw std::out_of_range("width cannot be less than 3.");
-    }
+  if (height < 4)
+  {
+    throw std::out_of_range("height cannot be less than 4.");
+  }
+  if (width < 3)
+  {
+    throw std::out_of_range("width cannot be less than 3.");
+  }
 
-    mMinHeight = 4;
-    mMinWidth = 3;
+  mMinHeight = 4;
+  mMinWidth = 3;
 
-    setFillClientArea(false);
+  setFillClientArea(false);
 
-    appendItems(items);
+  appendItems(items);
 }
 
 void ListBox::initialize ()
@@ -65,13 +84,33 @@ void ListBox::initialize ()
     mMoveSelectionDownButton->setAnchorRight(0);
 }
 
-std::shared_ptr<ListBox> ListBox::createSharedListBox (std::string const & name, std::vector<std::string> const & items, int y, int x, int height, int width, int foreColor, int backColor, int selectionForeColor, int selectionBackColor)
+std::shared_ptr<ListBox> ListBox::createSharedListBox (
+  std::string const & name,
+  std::vector<std::string> const & items,
+  int x,
+  int y,
+  int width,
+  int height,
+  Color const & foreColor,
+  Color const & backColor,
+  Color const & selectionForeColor,
+  Color const & selectionBackColor)
 {
-    auto result = std::shared_ptr<ListBox>(new ListBox(name, items, y, x, height, width, foreColor, backColor, selectionForeColor, selectionBackColor));
+  auto result = std::shared_ptr<ListBox>(new ListBox(
+    name,
+    items,
+    x,
+    y,
+    width,
+    height,
+    foreColor,
+    backColor,
+    selectionForeColor,
+    selectionBackColor));
 
-    result->initialize();
+  result->initialize();
 
-    return result;
+  return result;
 }
 
 std::shared_ptr<ListBox> ListBox::getSharedListBox ()
@@ -202,22 +241,22 @@ void ListBox::setMinWidth (int width)
     mMinWidth = width;
 }
 
-int ListBox::selectionForeColor () const
+Color ListBox::selectionForeColor () const
 {
     return mSelectionForeColor;
 }
 
-void ListBox::setSelectionForeColor (int color)
+void ListBox::setSelectionForeColor (Color const & color)
 {
     mSelectionForeColor = color;
 }
 
-int ListBox::selectionBackColor () const
+Color ListBox::selectionBackColor () const
 {
     return mSelectionBackColor;
 }
 
-void ListBox::setSelectionBackColor (int color)
+void ListBox::setSelectionBackColor (Color const & color)
 {
     mSelectionBackColor = color;
 }

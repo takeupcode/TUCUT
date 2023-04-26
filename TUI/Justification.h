@@ -4,30 +4,27 @@
 //  Created by Abdul Wahid Tanner on 2017-11-16.
 //  Copyright © Take Up Code, Inc.
 //
-#ifndef TUCUT_Curses_Justification_h
-#define TUCUT_Curses_Justification_h
+#ifndef TUCUT_TUI_Justification_h
+#define TUCUT_TUI_Justification_h
 
-namespace TUCUT {
-namespace Curses {
-
-struct Justification
+namespace TUCUT::TUI
 {
+  struct Justification
+  {
     enum class Horizontal
     {
-        left,
-        center,
-        right
+      Left,
+      Center,
+      Right
     };
 
     enum class Vertical
     {
-        top,
-        center,
-        bottom
+      Top,
+      Center,
+      Bottom
     };
-};
+  };
+} // namespace TUCUT::TUI
 
-} // namespace Curses
-} // namespace TUCUT
-
-#endif // TUCUT_Curses_Justification_h
+#endif // TUCUT_TUI_Justification_h

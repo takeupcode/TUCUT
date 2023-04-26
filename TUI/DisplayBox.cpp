@@ -23,20 +23,50 @@ std::string const DisplayBox::moveCenterDownButtonName = "moveCenterDownButton";
 std::string const DisplayBox::moveCenterLeftButtonName = "moveCenterLeftButton";
 std::string const DisplayBox::moveCenterRightButtonName = "moveCenterRightButton";
 
-DisplayBox::DisplayBox (std::string const & name, char centerChar, int y, int x, int height, int width, int contentHeight, int contentWidth, int foreColor, int backColor, bool autoScrolling, bool allowCenterControls, int scrollMarginTop, int scrollMarginRight, int scrollMarginBottom, int scrollMarginLeft)
-: Control(name, y, x, height, width, foreColor, backColor, foreColor, backColor),
+DisplayBox::DisplayBox (std::string const & name,
+  char centerChar,
+  int x,
+  int y,
+  int width,
+  int height,
+  int contentWidth,
+  int contentHeight,
+  Color const & foreColor,
+  Color const & backColor,
+  bool autoScrolling,
+  bool allowCenterControls,
+  int scrollMarginTop,
+  int scrollMarginRight,
+  int scrollMarginBottom,
+  int scrollMarginLeft)
+: Control(name,
+    x,
+    y,
+    width,
+    height,
+    foreColor,
+    backColor,
+    foreColor,
+    backColor),
   mClicked(new ClickedEvent(ClickedEventId)),
   mScrollChanged(new ScrollChangedEvent(ScrollChangedEventId)),
   mBeforeCenterChanged(new BeforeCenterChangedEvent(BeforeCenterChangedEventId)),
   mAfterCenterChanged(new AfterCenterChangedEvent(AfterCenterChangedEventId)),
-  mClickedLine(0), mClickedColumn(0),
-  mScrollLine(0), mScrollColumn(0),
-  mCenterLine(0), mCenterColumn(0),
-  mContentHeight(contentHeight), mContentWidth(contentWidth),
-  mScrollMarginTop(scrollMarginTop), mScrollMarginRight(scrollMarginRight),
-  mScrollMarginBottom(scrollMarginBottom), mScrollMarginLeft(scrollMarginLeft),
+  mClickedLine(0),
+  mClickedColumn(0),
+  mScrollLine(0),
+  mScrollColumn(0),
+  mCenterLine(0),
+  mCenterColumn(0),
+  mContentHeight(contentHeight),
+  mContentWidth(contentWidth),
+  mScrollMarginTop(scrollMarginTop),
+  mScrollMarginRight(scrollMarginRight),
+  mScrollMarginBottom(scrollMarginBottom),
+  mScrollMarginLeft(scrollMarginLeft),
   mCenterChar(centerChar),
-  mAutoScrolling(autoScrolling), mAllowCenterControls(allowCenterControls),
+  mAutoScrolling(autoScrolling),
+  mAllowCenterControls(allowCenterControls),
   mShowClickLocation(false)
 {
     if (height < 4)
@@ -123,13 +153,46 @@ void DisplayBox::initialize ()
     }
 }
 
-std::shared_ptr<DisplayBox> DisplayBox::createSharedDisplayBox (std::string const & name, char centerChar, int y, int x, int height, int width, int contentHeight, int contentWidth, int foreColor, int backColor, bool autoScrolling, bool allowCenterControls, int scrollMarginTop, int scrollMarginRight, int scrollMarginBottom, int scrollMarginLeft)
+std::shared_ptr<DisplayBox>
+DisplayBox::createSharedDisplayBox (
+  std::string const & name,
+  char centerChar,
+  int x,
+  int y,
+  int width,
+  int height,
+  int contentWidth,
+  int contentHeight,
+  Color const & foreColor,
+  Color const & backColor,
+  bool autoScrolling,
+  bool allowCenterControls,
+  int scrollMarginTop,
+  int scrollMarginRight,
+  int scrollMarginBottom,
+  int scrollMarginLeft)
 {
-    auto result = std::shared_ptr<DisplayBox>(new DisplayBox(name, centerChar, y, x, height, width, contentHeight, contentWidth, foreColor, backColor, autoScrolling, allowCenterControls, scrollMarginTop, scrollMarginRight, scrollMarginBottom, scrollMarginLeft));
+  auto result = std::shared_ptr<DisplayBox>(new DisplayBox(
+    name,
+    centerChar,
+    x,
+    y,
+    width,
+    height,
+    contentWidth,
+    contentHeight,
+    foreColor,
+    backColor,
+    autoScrolling,
+    allowCenterControls,
+    scrollMarginTop,
+    scrollMarginRight,
+    scrollMarginBottom,
+    scrollMarginLeft));
 
-    result->initialize();
+  result->initialize();
 
-    return result;
+  return result;
 }
 
 std::shared_ptr<DisplayBox> DisplayBox::getSharedDisplayBox ()

@@ -4,8 +4,8 @@
 //  Created by Abdul Wahid Tanner on 2017-11-24.
 //  Copyright © Take Up Code, Inc.
 //
-#ifndef TUCUT_Curses_NumberBox_h
-#define TUCUT_Curses_NumberBox_h
+#ifndef TUCUT_TUI_NumberBox_h
+#define TUCUT_TUI_NumberBox_h
 
 #include <string>
 
@@ -13,19 +13,25 @@
 #include "../Event/EventSubscriber.h"
 #include "Control.h"
 
-namespace TUCUT {
-namespace Curses {
-
-class Button;
-
-class NumberBox : public Control, public Event::EventSubscriber<WindowSystem *, Button *>
+namespace TUCUT::TUI
 {
-public:
+  class Button;
+
+  class NumberBox : public Control, public Event::EventSubscriber<WindowSystem *, Button *>
+  {
+  public:
     static int const NumberChangedEventId = 1;
 
     using NumberChangedEvent = Event::EventPublisher<WindowSystem *, NumberBox *>;
 
-    static std::shared_ptr<NumberBox> createSharedNumberBox (std::string const & name, int number, int y, int x, int width, int foreColor, int backColor);
+    static std::shared_ptr<NumberBox> createSharedNumberBox (
+      std::string const & name,
+      int number,
+      int x,
+      int y,
+      int width,
+      Color const & foreColor,
+      Color const & backColor);
 
     std::shared_ptr<NumberBox> getSharedNumberBox ();
 
@@ -47,12 +53,18 @@ public:
 
     NumberChangedEvent * numberChanged ();
 
-protected:
-    NumberBox (std::string const & name, int number, int y, int x, int width, int foreColor, int backColor);
+  protected:
+    NumberBox (std::string const & name,
+      int number,
+      int x,
+      int y,
+      int width,
+      Color const & foreColor,
+      Color const & backColor);
 
     void initialize () override;
 
-private:
+  private:
     void notify (int id, WindowSystem * ws, Button * button) override;
 
     void handleNumberChange (WindowSystem * ws);
@@ -68,9 +80,7 @@ private:
     std::unique_ptr<NumberChangedEvent> mNumberChanged;
     std::shared_ptr<Button> mIncrementButton;
     std::shared_ptr<Button> mDecrementButton;
-};
+  };
+} // namespace TUCUT::TUI
 
-} // namespace Curses
-} // namespace TUCUT
-
-#endif // TUCUT_Curses_NumberBox_h
+#endif // TUCUT_TUI_NumberBox_h

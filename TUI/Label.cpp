@@ -11,14 +11,34 @@
 namespace TUCUT {
 namespace Curses {
 
-Label::Label (std::string const & name, std::string const & text, int y, int x, int height, int width, int foreColor, int backColor, Justification::Horizontal horizontalJustification, Justification::Vertical verticalJustification, bool multiline)
-: Control(name, y, x, height, width, foreColor, backColor, foreColor, backColor),
-  mText(text), mHorizontalJustification(horizontalJustification), mVerticalJustification(verticalJustification),
+Label::Label (std::string const & name,
+  std::string const & text,
+  int x,
+  int y,
+  int width,
+  int height,
+  Color const & foreColor,
+  Color const & backColor,
+  Justification::Horizontal horizontalJustification,
+  Justification::Vertical verticalJustification,
+  bool multiline)
+: Control(name,
+    x,
+    y,
+    width,
+    height,
+    foreColor,
+    backColor,
+    foreColor,
+    backColor),
+  mText(text),
+  mHorizontalJustification(horizontalJustification),
+  mVerticalJustification(verticalJustification),
   mMultiline(multiline)
 {
-    setIsDirectFocusPossible(false);
+  setIsDirectFocusPossible(false);
 
-    setFillClientArea(false);
+  setFillClientArea(false);
 }
 
 void Label::initialize ()
@@ -26,13 +46,35 @@ void Label::initialize ()
     Control::initialize();
 }
 
-std::shared_ptr<Label> Label::createSharedLabel (std::string const & name, std::string const & text, int y, int x, int height, int width, int foreColor, int backColor, Justification::Horizontal horizontalJustification, Justification::Vertical verticalJustification, bool multiline)
+std::shared_ptr<Label> Label::createSharedLabel (
+  std::string const & name,
+  std::string const & text,
+  int x,
+  int y,
+  int width,
+  int height,
+  Color const & foreColor,
+  Color const & backColor,
+  Justification::Horizontal horizontalJustification,
+  Justification::Vertical verticalJustification,
+  bool multiline)
 {
-    auto result = std::shared_ptr<Label>(new Label(name, text, y, x, height, width, foreColor, backColor, horizontalJustification, verticalJustification, multiline));
+  auto result = std::shared_ptr<Label>(new Label(
+    name,
+    text,
+    x,
+    y,
+    width,
+    height,
+    foreColor,
+    backColor,
+    horizontalJustification,
+    verticalJustification,
+    multiline));
 
-    result->initialize();
+  result->initialize();
 
-    return result;
+  return result;
 }
 
 std::shared_ptr<Label> Label::getSharedLabel ()
