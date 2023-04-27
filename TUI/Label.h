@@ -7,8 +7,8 @@
 #ifndef TUCUT_TUI_Label_h
 #define TUCUT_TUI_Label_h
 
-#include "Justification.h"
 #include "Control.h"
+#include "Justification.h"
 
 namespace TUCUT::TUI
 {
@@ -32,9 +32,9 @@ namespace TUCUT::TUI
 
     std::shared_ptr<Label> getSharedLabel ();
 
-    void onDrawClient () const override;
+    void onDrawClient (WindowSystem * ws) const override;
 
-    void onDrawNonClient () const override;
+    void onDrawNonClient (WindowSystem * ws) const override;
 
     bool isMultiline () const;
 

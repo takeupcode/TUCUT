@@ -7,23 +7,26 @@
 #ifndef TUCUT_TUI_ListBox_h
 #define TUCUT_TUI_ListBox_h
 
+#include "../Notify/EventPublisher.h"
+#include "../Notify/EventSubscriber.h"
+#include "Control.h"
+#include "Event.h"
+
 #include <string>
 #include <vector>
-
-#include "../Event/EventPublisher.h"
-#include "../Event/EventSubscriber.h"
-#include "Control.h"
 
 namespace TUCUT::TUI
 {
   class Button;
 
-  class ListBox : public Control, public Event::EventSubscriber<WindowSystem *, Button *>
+  class ListBox : public Control,
+    public Notify::EventSubscriber<WindowSystem *, Button *>
   {
   public:
     static int const SelectionChangedEventId = 1;
 
-    using SelectionChangedEvent = Event::EventPublisher<WindowSystem *, ListBox *>;
+    using SelectionChangedEvent = Notify::EventPublisher<
+      WindowSystem *, ListBox *>;
 
     static std::shared_ptr<ListBox> createSharedListBox (
       std::string const & name,
@@ -39,19 +42,21 @@ namespace TUCUT::TUI
 
     std::shared_ptr<ListBox> getSharedListBox ();
 
-    bool onKeyPress (WindowSystem * ws, int key) override;
+    bool onExtendedKeyPress (WindowSystem * ws,
+      ExtendedCharacterEvent const & event) override;
 
-    void onMouseEvent (WindowSystem * ws, short id, int y, int x, mmask_t buttonState) override;
+    void onMouseEvent (WindowSystem * ws,
+      MouseEvent const & event) override;
 
-    void onDrawClient () const override;
+    void onDrawClient (WindowSystem * ws) const override;
 
     void onResize () override;
 
     int textClientWidth () const;
 
-    void setMinHeight (int height) override;
-
     void setMinWidth (int width) override;
+
+    void setMinHeight (int height) override;
 
     Color selectionForeColor () const;
 
@@ -71,7 +76,8 @@ namespace TUCUT::TUI
 
     void appendItems (std::vector<std::string> const & items);
 
-    void insertItems (int index, std::vector<std::string> const & items);
+    void insertItems (int index,
+      std::vector<std::string> const & items);
 
     SelectionChangedEvent * selectionChanged ();
 
@@ -90,7 +96,8 @@ namespace TUCUT::TUI
     void initialize () override;
 
   private:
-    void notify (int id, WindowSystem * ws, Button * button) override;
+    void notify (int id, WindowSystem * ws,
+      Button * button) override;
 
     void handleSelectionChange (WindowSystem * ws);
 

@@ -14,7 +14,7 @@ namespace TUCUT::TUI
   class Control : public Window
   {
   public:
-    void onDrawNonClient () const override;
+    void onDrawNonClient (WindowSystem * ws) const override;
 
   protected:
     Control (std::string const & name,
@@ -24,8 +24,11 @@ namespace TUCUT::TUI
       int height,
       Color const & clientForeColor,
       Color const & clientBackColor,
+      Color const & borderForeColor,
+      Color const & borderBackColor,
       Color const & focusForeColor,
-      Color const & focusBackColor);
+      Color const & focusBackColor,
+      bool border);
   };
 } // namespace TUCUT::TUI
 

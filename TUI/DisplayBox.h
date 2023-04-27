@@ -7,18 +7,20 @@
 #ifndef TUCUT_TUI_DisplayBox_h
 #define TUCUT_TUI_DisplayBox_h
 
+#include "../Notify/EventPublisher.h"
+#include "../Notify/EventSubscriber.h"
+#include "Control.h"
+#include "Event.h"
+
 #include <string>
 #include <vector>
-
-#include "../Event/EventPublisher.h"
-#include "../Event/EventSubscriber.h"
-#include "Control.h"
 
 namespace TUCUT::TUI
 {
   class Button;
 
-  class DisplayBox : public Control, public Event::EventSubscriber<WindowSystem *, Button *>
+  class DisplayBox : public Control,
+    public Notify::EventSubscriber<WindowSystem *, Button *>
   {
   public:
     static int const ClickedEventId = 1;
@@ -26,10 +28,14 @@ namespace TUCUT::TUI
     static int const BeforeCenterChangedEventId = 3;
     static int const AfterCenterChangedEventId = 4;
 
-    using ClickedEvent = Event::EventPublisher<WindowSystem *, DisplayBox *, int, int>;
-    using ScrollChangedEvent = Event::EventPublisher<WindowSystem *, DisplayBox *, int, int>;
-    using BeforeCenterChangedEvent = Event::EventPublisher<WindowSystem *, DisplayBox *, int, int, bool &>;
-    using AfterCenterChangedEvent = Event::EventPublisher<WindowSystem *, DisplayBox *, int, int>;
+    using ClickedEvent = Notify::EventPublisher<
+      WindowSystem *, DisplayBox *, int, int>;
+    using ScrollChangedEvent = Notify::EventPublisher<
+      WindowSystem *, DisplayBox *, int, int>;
+    using BeforeCenterChangedEvent = Notify::EventPublisher<
+      WindowSystem *, DisplayBox *, int, int, bool &>;
+    using AfterCenterChangedEvent = Notify::EventPublisher<
+      WindowSystem *, DisplayBox *, int, int>;
 
     static std::shared_ptr<DisplayBox> createSharedDisplayBox (
       std::string const & name,
@@ -51,45 +57,47 @@ namespace TUCUT::TUI
 
     std::shared_ptr<DisplayBox> getSharedDisplayBox ();
 
-    bool onKeyPress (WindowSystem * ws, int key) override;
+    bool onExtendedKeyPress (WindowSystem * ws,
+      ExtendedCharacterEvent const & event) override;
 
-    void onMouseEvent (WindowSystem * ws, short id, int y, int x, mmask_t buttonState) override;
+    void onMouseEvent (WindowSystem * ws,
+      MouseEvent const & event) override;
 
-    void onDrawClient () const override;
+    void onDrawClient (WindowSystem * ws) const override;
 
     int textClientWidth () const;
 
-    void setMinHeight (int height) override;
-
     void setMinWidth (int width) override;
 
-    char symbol (int y, int x) const;
+    void setMinHeight (int height) override;
 
-    void setSymbol (char symbol, int y, int x);
+    char symbol (int x, int y) const;
+
+    void setSymbol (char symbol, int x, int y);
 
     void setSymbols (std::string const & symbols, int y);
 
     bool isClickLocationShown () const;
     void showClickLocation (bool show);
 
-    int getClickedY () const;
     int getClickedX () const;
+    int getClickedY () const;
 
-    int getScrollY () const;
     int getScrollX () const;
+    int getScrollY () const;
 
     bool scrollUp ();
     bool scrollDown ();
     bool scrollLeft ();
     bool scrollRight ();
 
-    void ensurePointIsVisible (int y, int x);
+    void ensurePointIsVisible (int x, int y);
     void ensureCenterIsVisible ();
 
-    int getCenterY () const;
     int getCenterX () const;
+    int getCenterY () const;
 
-    void setCenter (int y, int x);
+    void setCenter (int x, int y);
 
     bool moveCenterUp ();
     bool moveCenterDown ();
@@ -125,19 +133,24 @@ namespace TUCUT::TUI
     void initialize () override;
 
   private:
-    void notify (int id, WindowSystem * ws, Button * button) override;
+    void notify (int id, WindowSystem * ws,
+      Button * button) override;
 
-    void handleClicked (WindowSystem * ws, int y, int x);
+    void handleClicked (WindowSystem * ws,
+      int x, int y);
 
-    void handleScrollChanged (WindowSystem * ws, int y, int x);
+    void handleScrollChanged (WindowSystem * ws,
+      int x, int y);
 
-    void handleBeforeCenterChanged (WindowSystem * ws, int y, int x, bool & cancel);
+    void handleBeforeCenterChanged (WindowSystem * ws,
+      int x, int y, bool & cancel);
 
-    void handleAfterCenterChanged (WindowSystem * ws, int y, int x);
+    void handleAfterCenterChanged (WindowSystem * ws,
+      int x, int y);
 
-    void verifyY (int y) const;
     void verifyX (int x) const;
-    void verifyYX (int y, int x) const;
+    void verifyY (int y) const;
+    void verifyXY (int x, int y) const;
 
     bool canMoveCenterUp ();
     bool canMoveCenterDown ();
@@ -158,20 +171,22 @@ namespace TUCUT::TUI
     std::vector<std::string> mContent;
     std::unique_ptr<ClickedEvent> mClicked;
     std::unique_ptr<ScrollChangedEvent> mScrollChanged;
-    std::unique_ptr<BeforeCenterChangedEvent> mBeforeCenterChanged;
-    std::unique_ptr<AfterCenterChangedEvent> mAfterCenterChanged;
+    std::unique_ptr<BeforeCenterChangedEvent>
+      mBeforeCenterChanged;
+    std::unique_ptr<AfterCenterChangedEvent>
+      mAfterCenterChanged;
     std::shared_ptr<Button> mMoveCenterUpButton;
     std::shared_ptr<Button> mMoveCenterDownButton;
     std::shared_ptr<Button> mMoveCenterLeftButton;
     std::shared_ptr<Button> mMoveCenterRightButton;
-    int mClickedLine;
     int mClickedColumn;
-    int mScrollLine;
+    int mClickedLine;
     int mScrollColumn;
-    int mCenterLine;
+    int mScrollLine;
     int mCenterColumn;
-    int mContentHeight;
+    int mCenterLine;
     int mContentWidth;
+    int mContentHeight;
     int mScrollMarginTop;
     int mScrollMarginRight;
     int mScrollMarginBottom;

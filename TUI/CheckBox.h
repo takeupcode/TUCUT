@@ -7,10 +7,11 @@
 #ifndef TUCUT_TUI_CheckBox_h
 #define TUCUT_TUI_CheckBox_h
 
-#include <memory>
-
-#include "../Event/EventPublisher.h"
+#include "../Notify/EventPublisher.h"
 #include "Control.h"
+#include "Event.h"
+
+#include <memory>
 
 namespace TUCUT::TUI
 {
@@ -19,7 +20,8 @@ namespace TUCUT::TUI
   public:
     static int const ClickedEventId = 1;
 
-    using ClickedEvent = Event::EventPublisher<WindowSystem *, CheckBox *>;
+    using ClickedEvent = Notify::EventPublisher<
+      WindowSystem *, CheckBox *>;
 
     static std::shared_ptr<CheckBox> createSharedCheckBox (
       std::string const & name,
@@ -35,11 +37,16 @@ namespace TUCUT::TUI
 
     std::shared_ptr<CheckBox> getSharedCheckBox ();
 
-    bool onKeyPress (WindowSystem * ws, int key) override;
+    bool onKeyPress (WindowSystem * ws,
+      CharacterEvent const & event) override;
 
-    void onMouseEvent (WindowSystem * ws, short id, int y, int x, mmask_t buttonState) override;
+    bool onNonPrintingKeyPress (WindowSystem * ws,
+      NonPrintingCharacterEvent const & event) override;
 
-    void onDrawClient () const override;
+    void onMouseEvent (WindowSystem * ws,
+      MouseEvent const & event) override;
+
+    void onDrawClient (WindowSystem * ws) const override;
 
     virtual bool isChecked () const;
 

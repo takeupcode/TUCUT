@@ -7,22 +7,25 @@
 #ifndef TUCUT_TUI_NumberBox_h
 #define TUCUT_TUI_NumberBox_h
 
-#include <string>
-
-#include "../Event/EventPublisher.h"
-#include "../Event/EventSubscriber.h"
+#include "../Notify/EventPublisher.h"
+#include "../Notify/EventSubscriber.h"
 #include "Control.h"
+#include "Event.h"
+
+#include <string>
 
 namespace TUCUT::TUI
 {
   class Button;
 
-  class NumberBox : public Control, public Event::EventSubscriber<WindowSystem *, Button *>
+  class NumberBox : public Control,
+    public Notify::EventSubscriber<WindowSystem *, Button *>
   {
   public:
     static int const NumberChangedEventId = 1;
 
-    using NumberChangedEvent = Event::EventPublisher<WindowSystem *, NumberBox *>;
+    using NumberChangedEvent = Notify::EventPublisher<
+      WindowSystem *, NumberBox *>;
 
     static std::shared_ptr<NumberBox> createSharedNumberBox (
       std::string const & name,
@@ -35,9 +38,13 @@ namespace TUCUT::TUI
 
     std::shared_ptr<NumberBox> getSharedNumberBox ();
 
-    bool onKeyPress (WindowSystem * ws, int key) override;
+    bool onNonPrintingKeyPress (WindowSystem * ws,
+      NonPrintingCharacterEvent const & event) override;
 
-    void onDrawClient () const override;
+    bool onExtendedKeyPress (WindowSystem * ws,
+      ExtendedCharacterEvent const & event) override;
+
+    void onDrawClient (WindowSystem * ws) const override;
 
     int textClientWidth () const;
 
@@ -65,7 +72,8 @@ namespace TUCUT::TUI
     void initialize () override;
 
   private:
-    void notify (int id, WindowSystem * ws, Button * button) override;
+    void notify (int id, WindowSystem * ws,
+      Button * button) override;
 
     void handleNumberChange (WindowSystem * ws);
 

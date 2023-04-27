@@ -15,8 +15,11 @@ TUI::Control::Control (std::string const & name,
   int height,
   Color const & clientForeColor,
   Color const & clientBackColor,
+  Color const & borderForeColor,
+  Color const & borderBackColor,
   Color const & focusForeColor,
-  Color const & focusBackColor)
+  Color const & focusBackColor,
+  bool border)
 : Window(name,
   x,
   y,
@@ -24,36 +27,23 @@ TUI::Control::Control (std::string const & name,
   height,
   clientForeColor,
   clientBackColor,
-  clientForeColor,
-  clientBackColor,
+  borderForeColor,
+  borderBackColor,
   focusForeColor,
   focusBackColor,
-  false)
+  border)
 { }
 
-void TUI::Control::onDrawNonClient () const
+void TUI::Control::onDrawNonClient (WindowSystem * ws) const
 {
-  if (visibleState() != Window::VisibleState::shown)
+  if (visibleState() != Window::VisibleState::Shown ||
+    not border() ||
+    not hasDirectFocus())
   {
     return;
   }
 
-  if (clientWidth() < 3)
-  {
-    return;
-  }
-
-  std::string focusMarker = hasDirectFocus() ? "│" : " ";
-  focusMarker = focusForeColor(focusBackColor(focusMarker));
-
-  for (int i = 0; i < clientHeight(); ++i)
-  {
-    mvwaddch(cursesWindow(), i, 0, focusMarker);
-    if (wantEnter())
-    {
-      cchar_t ch = {0, L'\u25B7'};
-      wadd_wch(cursesWindow(), &ch);
-    }
-    mvwaddch(cursesWindow(), i, clientWidth() - 1, focusMarker);
-  }
+  std::string focusMarker = u8"\u25B7";
+  focusMarker = borderForeColor(borderBackColor(focusMarker));
+  drawText(ws, 0, 0, 1, height(), focusMarker);
 }

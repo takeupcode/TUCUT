@@ -7,23 +7,26 @@
 #ifndef TUCUT_TUI_TextBox_h
 #define TUCUT_TUI_TextBox_h
 
+#include "../Notify/EventPublisher.h"
+#include "../Notify/EventSubscriber.h"
+#include "Control.h"
+#include "Event.h"
+
 #include <string>
 #include <vector>
-
-#include "../Event/EventPublisher.h"
-#include "../Event/EventSubscriber.h"
-#include "Control.h"
 
 namespace TUCUT::TUI
 {
   class Button;
 
-  class TextBox : public Control, public Event::EventSubscriber<WindowSystem *, Button *>
+  class TextBox : public Control,
+    public Notify::EventSubscriber<WindowSystem *, Button *>
   {
   public:
     static int const TextChangedEventId = 1;
 
-    using TextChangedEvent = Event::EventPublisher<WindowSystem *, TextBox *>;
+    using TextChangedEvent = Notify::EventPublisher<
+      WindowSystem *, TextBox *>;
 
     static std::shared_ptr<TextBox> createSharedTextBox (
       std::string const & name,
@@ -38,19 +41,27 @@ namespace TUCUT::TUI
 
     std::shared_ptr<TextBox> getSharedTextBox ();
 
-    bool onKeyPress (WindowSystem * ws, int key) override;
+    bool onKeyPress (WindowSystem * ws,
+      CharacterEvent const & event) override;
 
-    void onMouseEvent (WindowSystem * ws, short id, int y, int x, mmask_t buttonState) override;
+    bool onNonPrintingKeyPress (WindowSystem * ws,
+      NonPrintingCharacterEvent const & event) override;
 
-    void onDrawClient () const override;
+    bool onExtendedKeyPress (WindowSystem * ws,
+      ExtendedCharacterEvent const & event) override;
+
+    void onMouseEvent (WindowSystem * ws,
+      MouseEvent const & event) override;
+
+    void onDrawClient (WindowSystem * ws) const override;
 
     void onResize () override;
 
     int textClientWidth () const;
 
-    void setMinHeight (int height) override;
-
     void setMinWidth (int width) override;
+
+    void setMinHeight (int height) override;
 
     bool isMultiline () const;
 
@@ -78,7 +89,8 @@ namespace TUCUT::TUI
     void initialize () override;
 
   private:
-    void notify (int id, WindowSystem * ws, Button * button) override;
+    void notify (int id, WindowSystem * ws,
+      Button * button) override;
 
     void handleTextChange (WindowSystem * ws);
 
