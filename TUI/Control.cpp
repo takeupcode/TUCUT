@@ -45,5 +45,5 @@ void TUI::Control::onDrawNonClient (WindowSystem * ws) const
 
   std::string focusMarker = u8"\u25B7";
   focusMarker = borderForeColor(borderBackColor(focusMarker));
-  drawText(ws, 0, 0, 1, height(), focusMarker);
+  drawTiledText(ws, 0, 0, 1, height(), focusMarker);
 }

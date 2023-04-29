@@ -6,7 +6,7 @@
 //
 #include "Window.h"
 
-#include "../TUI/Application.h"
+#include "../Text/Encoding.h"
 #include "Control.h"
 
 #include <stdexcept>
@@ -212,10 +212,78 @@ void TUI::Window::drawText (WindowSystem * ws,
   int y,
   std::string const & utf8) const
 {
-  drawText(ws, x, y, 1, 1, utf8);
+  drawTiledText(ws, x, y, 1, 1, utf8);
 }
 
 void TUI::Window::drawText (WindowSystem * ws,
+  int x,
+  int y,
+  int width,
+  std::string const & utf8,
+  std::string const & utf8Fill,
+  Justification::Horizontal justification) const
+{
+  int maxX;
+  int maxY;
+  if (not ws->getMaxWindowCoordinates(this, maxX, maxY))
+  {
+    return;
+  }
+  if (x > maxX || y > maxY || width < 1)
+  {
+    return;
+  }
+
+  int margin = 0;
+  size_t utf8Length = Text::getUtf8Length(utf8);
+  switch (justification)
+  {
+  case Justification::Horizontal::Left:
+    margin = 0;
+    break;
+
+  case Justification::Horizontal::Center:
+    margin = (width - static_cast<int>(utf8Length)) / 2;
+    break;
+
+  case Justification::Horizontal::Right:
+    margin = width - static_cast<int>(utf8Length);
+    break;
+  }
+  if (margin < 0)
+  {
+    margin = 0;
+  }
+  int textX = x + margin;
+
+  if (not utf8Fill.empty())
+  {
+    for (int i = x; i < textX; ++i)
+    {
+      if (i > maxX)
+      {
+        return;
+      }
+      drawText(ws, i, y, utf8Fill);
+    }
+  }
+
+  drawText(ws, textX, y, utf8);
+
+  if (not utf8Fill.empty())
+  {
+    for (int i = textX + utf8Length; i < x + width; ++i)
+    {
+      if (i > maxX)
+      {
+        return;
+      }
+      drawText(ws, i, y, utf8Fill);
+    }
+  }
+}
+
+void TUI::Window::drawTiledText (WindowSystem * ws,
   int x,
   int y,
   int width,
@@ -341,7 +409,7 @@ void TUI::Window::fillRect (WindowSystem * ws,
     row = foreColor(backColor(row));
   }
 
-  drawText(x, y, 1, height, row);
+  drawTiledText(x, y, 1, height, row);
 }
 
 bool TUI::Window::onKeyPress (WindowSystem *, Event const &)

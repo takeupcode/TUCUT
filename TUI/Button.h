@@ -62,8 +62,6 @@ namespace TUCUT::TUI
       Color const & focusForeColor,
       Color const & focusBackColor);
 
-    void initialize () override;
-
   private:
     void handleClick (WindowSystem * ws);
 

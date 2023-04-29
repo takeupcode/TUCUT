@@ -8,6 +8,68 @@
 
 using namespace TUCUT;
 
+size_t Text::getUtf8Length (
+  std::string const & utf8)
+{
+  size_t length {};
+  size_t index {};
+  while (index < utf8.length())
+  {
+    uint8_t const unit0 = utf8[index];
+    if ((unit0 & 0b1100'0000) == 0b1000'0000)
+    {
+      // All utf8 code points must either begin with
+      // 0 or 11. If the code unit begins with 10,
+      // then the code unit is a trailing code unit.
+      // This represents a malformed string so we
+      // return what we have counted so far.
+      return length;
+    }
+
+    // If the msb of the leading code unit is 0, then
+    // the code point is a single code unit.
+    if ((unit0 & 0b1000'0000) == 0b0000'0000)
+    {
+      ++length;
+      ++index;
+      continue;
+    }
+
+    // If the leading code unit begins with 110, then
+    // the code point consists of two code units.
+    if ((unit0 & 0b1110'0000) == 0b1100'0000)
+    {
+      ++length;
+      index += 2;
+      continue;
+    }
+
+    // If the leading code unit begins with 1110, then
+    // the code point consists of three code units.
+    if ((unit0 & 0b1111'0000) == 0b1110'0000)
+    {
+      ++length;
+      index += 3;
+      continue;
+    }
+
+    // If the leading code unit begins with 11110, then
+    // the code point consists of four code units.
+    if ((unit0 & 0b1111'1000) == 0b1111'0000)
+    {
+      ++length;
+      index += 4;
+      continue;
+    }
+
+    // Anything else is a malformed string and we
+    // return what we have counted so far.
+    return length;
+  }
+
+  return length;
+}
+
 Text::CodePointResult Text::getCodePoint (
   std::string const & utf8,
   size_t & index,

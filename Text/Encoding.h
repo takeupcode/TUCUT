@@ -21,6 +21,9 @@ namespace TUCUT::Text
     Unsupported // Code point with more than 4 code units.
   };
 
+  size_t getUtf8Length (
+    std::string const & utf8);
+
   CodePointResult getCodePoint (
     std::string const & utf8,
     size_t & index,

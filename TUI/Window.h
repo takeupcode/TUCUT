@@ -9,6 +9,7 @@
 
 #include "../ECS/ApplicationTime.h"
 #include "Event.h"
+#include "Justification.h"
 #include "Terminal.h"
 
 #include <memory>
@@ -231,6 +232,15 @@ protected:
       std::string const & utf8) const;
 
     void drawText (WindowSystem * ws,
+      int x,
+      int y,
+      int width,
+      std::string const & utf8,
+      std::string const & utf8Fill = "",
+      Justification::Horizontal justification =
+        Justification::Horizontal::Left) const;
+
+    void drawTiledText (WindowSystem * ws,
       int x,
       int y,
       int width,

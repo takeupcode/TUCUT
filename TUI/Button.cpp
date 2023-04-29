@@ -23,23 +23,21 @@ TUI::Button::Button (std::string const & name,
   Color const & focusForeColor,
   Color const & focusBackColor)
 : Control(name,
-  x,
-  y,
-  width,
-  height,
-  foreColor,
-  backColor,
-  focusForeColor,
-  focusBackColor),
+    x,
+    y,
+    width,
+    height,
+    foreColor,
+    backColor,
+    foreColor,
+    backColor,
+    focusForeColor,
+    focusBackColor,
+    false),
   mText(text),
   mClicked(new ClickedEvent(ClickedEventId))
 {
   setFillClientArea(false);
-}
-
-void TUI::Button::initialize ()
-{
-  Control::initialize();
 }
 
 std::shared_ptr<Button> TUI::Button::createSharedButton (
@@ -73,32 +71,32 @@ std::shared_ptr<Button> TUI::Button::createSharedButton (
 
 std::shared_ptr<Button> TUI::Button::getSharedButton ()
 {
-    return std::static_pointer_cast<Button>(shared_from_this());
+  return std::static_pointer_cast<Button>(shared_from_this());
 }
 
 bool TUI::Button::onKeyPress (WindowSystem * ws, int key)
 {
-    if (enableState() != Window::EnableState::enabled)
-    {
-        return false;
-    }
+  if (enableState() != Window::EnableState::enabled)
+  {
+      return false;
+  }
 
-    switch (key)
-    {
-    case 32: // Space
-    case 10: // Enter
-        handleClick(ws);
-        break;
+  switch (key)
+  {
+  case 32: // Space
+  case 10: // Enter
+      handleClick(ws);
+      break;
 
-    default:
-        if (parent())
-        {
-            return parent()->onKeyPress(ws, key);
-        }
-        return false;
-    }
+  default:
+      if (parent())
+      {
+          return parent()->onKeyPress(ws, key);
+      }
+      return false;
+  }
 
-    return true;
+  return true;
 }
 
 void TUI::Button::onMouseEvent (WindowSystem * ws, short id, int y, int x, mmask_t buttonState)
