@@ -12,7 +12,6 @@
 #include "Control.h"
 #include "Event.h"
 
-#include <string>
 #include <vector>
 
 namespace TUCUT::TUI
@@ -39,7 +38,7 @@ namespace TUCUT::TUI
 
     static std::shared_ptr<DisplayBox> createSharedDisplayBox (
       std::string const & name,
-      char centerChar,
+      std::string const & centerSymbol,
       int x,
       int y,
       int width,
@@ -71,9 +70,9 @@ namespace TUCUT::TUI
 
     void setMinHeight (int height) override;
 
-    char symbol (int x, int y) const;
+    std::string symbol (int x, int y) const;
 
-    void setSymbol (char symbol, int x, int y);
+    void setSymbol (std::string const & symbol, int x, int y);
 
     void setSymbols (std::string const & symbols, int y);
 
@@ -114,7 +113,7 @@ namespace TUCUT::TUI
 
   protected:
     DisplayBox (std::string const & name,
-      char centerChar,
+      std::string const & centerSymbol,
       int x,
       int y,
       int width,
@@ -162,7 +161,6 @@ namespace TUCUT::TUI
     void handleMoveCenterLeft (WindowSystem * ws);
     void handleMoveCenterRight (WindowSystem * ws);
 
-    static std::string const windowName;
     static std::string const moveCenterUpButtonName;
     static std::string const moveCenterDownButtonName;
     static std::string const moveCenterLeftButtonName;
@@ -191,7 +189,7 @@ namespace TUCUT::TUI
     int mScrollMarginRight;
     int mScrollMarginBottom;
     int mScrollMarginLeft;
-    char mCenterChar;
+    std::string mCenterSymbol;
     bool mAutoScrolling;
     bool mAllowCenterControls;
     bool mShowClickLocation;

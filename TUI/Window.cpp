@@ -55,7 +55,27 @@ TUI::Window::Window (
   mDefaultEscape(false),
   mVisibleState(VisibleState::shown),
   mEnableState(EnableState::enabled)
-{ }
+{
+  if (mX < 0)
+  {
+    mX = 0;
+  }
+
+  if (mY < 0)
+  {
+    mY = 0;
+  }
+
+  if (mWidth < mMinWidth)
+  {
+    mWidth = mMinWidth;
+  }
+
+  if (mHeight < mMinHeight)
+  {
+    mHeight = mMinHeight;
+  }
+}
 
 void TUI::Window::initialize ()
 { }
@@ -221,6 +241,8 @@ void TUI::Window::drawText (WindowSystem * ws,
   int width,
   std::string const & utf8,
   std::string const & utf8Fill,
+  Color const & foreColor,
+  Color const & backColor,
   Justification::Horizontal justification) const
 {
   int maxX;
@@ -234,8 +256,14 @@ void TUI::Window::drawText (WindowSystem * ws,
     return;
   }
 
+  if (x + width - 1 > maxX)
+  {
+    width = maxX - x + 1;
+  }
+
+  std::string text = Text::truncate(width, utf8);
   int margin = 0;
-  size_t utf8Length = Text::getUtf8Length(utf8);
+  size_t textLength = Text::countCodePoints(text);
   switch (justification)
   {
   case Justification::Horizontal::Left:
@@ -243,11 +271,11 @@ void TUI::Window::drawText (WindowSystem * ws,
     break;
 
   case Justification::Horizontal::Center:
-    margin = (width - static_cast<int>(utf8Length)) / 2;
+    margin = (width - static_cast<int>(textLength)) / 2;
     break;
 
   case Justification::Horizontal::Right:
-    margin = width - static_cast<int>(utf8Length);
+    margin = width - static_cast<int>(textLength);
     break;
   }
   if (margin < 0)
@@ -255,6 +283,10 @@ void TUI::Window::drawText (WindowSystem * ws,
     margin = 0;
   }
   int textX = x + margin;
+
+  auto & terminal = ws->terminal();
+  auto & output = terminal.output();
+  output << foreColor << backColor;
 
   if (not utf8Fill.empty())
   {
@@ -268,11 +300,11 @@ void TUI::Window::drawText (WindowSystem * ws,
     }
   }
 
-  drawText(ws, textX, y, utf8);
+  drawText(ws, textX, y, text);
 
   if (not utf8Fill.empty())
   {
-    for (int i = textX + utf8Length; i < x + width; ++i)
+    for (int i = textX + textLength; i < x + width; ++i)
     {
       if (i > maxX)
       {

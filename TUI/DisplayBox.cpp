@@ -10,20 +10,20 @@
 #include <stdexcept>
 
 #include "Button.h"
-#include "Colors.h"
-#include "ConsoleManager.h"
-#include "Justification.h"
 
 using namespace TUCUT;
 
-std::string const TUI::DisplayBox::windowName = "parent";
-std::string const TUI::DisplayBox::moveCenterUpButtonName = "moveCenterUpButton";
-std::string const TUI::DisplayBox::moveCenterDownButtonName = "moveCenterDownButton";
-std::string const TUI::DisplayBox::moveCenterLeftButtonName = "moveCenterLeftButton";
-std::string const TUI::DisplayBox::moveCenterRightButtonName = "moveCenterRightButton";
+std::string const TUI::DisplayBox::moveCenterUpButtonName =
+  "moveCenterUpButton";
+std::string const TUI::DisplayBox::moveCenterDownButtonName =
+  "moveCenterDownButton";
+std::string const TUI::DisplayBox::moveCenterLeftButtonName =
+  "moveCenterLeftButton";
+std::string const TUI::DisplayBox::moveCenterRightButtonName =
+  "moveCenterRightButton";
 
 TUI::DisplayBox::DisplayBox (std::string const & name,
-  char centerChar,
+  std::string const & centerSymbol,
   int x,
   int y,
   int width,
@@ -46,24 +46,29 @@ TUI::DisplayBox::DisplayBox (std::string const & name,
     foreColor,
     backColor,
     foreColor,
-    backColor),
+    backColor,
+    foreColor,
+    backColor,
+    false),
   mClicked(new ClickedEvent(ClickedEventId)),
   mScrollChanged(new ScrollChangedEvent(ScrollChangedEventId)),
-  mBeforeCenterChanged(new BeforeCenterChangedEvent(BeforeCenterChangedEventId)),
-  mAfterCenterChanged(new AfterCenterChangedEvent(AfterCenterChangedEventId)),
-  mClickedLine(0),
+  mBeforeCenterChanged(new BeforeCenterChangedEvent(
+    BeforeCenterChangedEventId)),
+  mAfterCenterChanged(new AfterCenterChangedEvent(
+    AfterCenterChangedEventId)),
   mClickedColumn(0),
-  mScrollLine(0),
+  mClickedLine(0),
   mScrollColumn(0),
-  mCenterLine(0),
+  mScrollLine(0),
   mCenterColumn(0),
-  mContentHeight(contentHeight),
+  mCenterLine(0),
   mContentWidth(contentWidth),
+  mContentHeight(contentHeight),
   mScrollMarginTop(scrollMarginTop),
   mScrollMarginRight(scrollMarginRight),
   mScrollMarginBottom(scrollMarginBottom),
   mScrollMarginLeft(scrollMarginLeft),
-  mCenterChar(centerChar),
+  mCenterSymbol(centerSymbol),
   mAutoScrolling(autoScrolling),
   mAllowCenterControls(allowCenterControls),
   mShowClickLocation(false)
@@ -348,38 +353,40 @@ void TUI::DisplayBox::setMinWidth (int width)
     mMinWidth = width;
 }
 
-void TUI::DisplayBox::verifyY (int y) const
-{
-    if (y < 0 || y >= mContentHeight)
-    {
-        throw std::out_of_range("y must be less than content height.");
-    }
-}
-
 void TUI::DisplayBox::verifyX (int x) const
 {
-    if (x < 0 || x >= mContentWidth)
-    {
-        throw std::out_of_range("x must be less than content width.");
-    }
+  if (x < 0 || x >= mContentWidth)
+  {
+    throw std::out_of_range(
+      "x must be less than content width.");
+  }
 }
 
-void TUI::DisplayBox::verifyYX (int y, int x) const
+void TUI::DisplayBox::verifyY (int y) const
 {
-    verifyY(y);
-    verifyX(x);
+  if (y < 0 || y >= mContentHeight)
+  {
+    throw std::out_of_range(
+      "y must be less than content height.");
+  }
 }
 
-char TUI::DisplayBox::symbol (int y, int x) const
+void TUI::DisplayBox::verifyXY (int x, int y) const
 {
-    verifyYX(y, x);
+  verifyX(x);
+  verifyY(y);
+}
+
+char TUI::DisplayBox::symbol (int x, int y) const
+{
+    verifyXY(x, y);
 
     return mContent[y][x];
 }
 
-void TUI::DisplayBox::setSymbol (char symbol, int y, int x)
+void TUI::DisplayBox::setSymbol (char symbol, int x, int y)
 {
-    verifyYX(y, x);
+    verifyXY(x, y);
 
     mContent[y][x] = symbol;
 }
@@ -441,24 +448,24 @@ void TUI::DisplayBox::notify (int id, WindowSystem * ws, Button * button)
     }
 }
 
-void TUI::DisplayBox::handleClicked (WindowSystem * ws, int y, int x)
+void TUI::DisplayBox::handleClicked (WindowSystem * ws, int x, int y)
 {
-    mClicked->signal(ws, this, y, x);
+    mClicked->signal(ws, this, x, y);
 }
 
-void TUI::DisplayBox::handleScrollChanged (WindowSystem * ws, int y, int x)
+void TUI::DisplayBox::handleScrollChanged (WindowSystem * ws, int x, int y)
 {
-    mScrollChanged->signal(ws, this, y, x);
+    mScrollChanged->signal(ws, this, x, y);
 }
 
-void TUI::DisplayBox::handleBeforeCenterChanged (WindowSystem * ws, int y, int x, bool & cancel)
+void TUI::DisplayBox::handleBeforeCenterChanged (WindowSystem * ws, int x, int y, bool & cancel)
 {
-    mBeforeCenterChanged->signal(ws, this, y, x, cancel);
+    mBeforeCenterChanged->signal(ws, this, x, y, cancel);
 }
 
-void TUI::DisplayBox::handleAfterCenterChanged (WindowSystem * ws, int y, int x)
+void TUI::DisplayBox::handleAfterCenterChanged (WindowSystem * ws, int x, int y)
 {
-    mAfterCenterChanged->signal(ws, this, y, x);
+    mAfterCenterChanged->signal(ws, this, x, y);
 }
 
 void TUI::DisplayBox::handleMoveCenterUp (WindowSystem * ws)
@@ -695,9 +702,9 @@ bool TUI::DisplayBox::scrollRight ()
     return false;
 }
 
-void TUI::DisplayBox::ensurePointIsVisible (int y, int x)
+void TUI::DisplayBox::ensurePointIsVisible (int x, int y)
 {
-    verifyYX(y, x);
+    verifyXY(x, y);
 
     if (y < mScrollLine + mScrollMarginTop)
     {
@@ -749,9 +756,9 @@ int TUI::DisplayBox::getCenterX () const
     return mCenterColumn;
 }
 
-void TUI::DisplayBox::setCenter (int y, int x)
+void TUI::DisplayBox::setCenter (int x, int y)
 {
-    verifyYX(y, x);
+    verifyXY(x, y);
 
     mCenterLine = y;
     mCenterColumn = x;

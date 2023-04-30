@@ -8,66 +8,136 @@
 
 using namespace TUCUT;
 
-size_t Text::getUtf8Length (
+std::string Text::truncate (
+  size_t length,
   std::string const & utf8)
 {
-  size_t length {};
+  size_t count {};
   size_t index {};
-  while (index < utf8.length())
+  while (count < length)
   {
-    uint8_t const unit0 = utf8[index];
-    if ((unit0 & 0b1100'0000) == 0b1000'0000)
+    size_t current = getCodePointSize(index, utf8);
+    if (current == 0)
     {
-      // All utf8 code points must either begin with
-      // 0 or 11. If the code unit begins with 10,
-      // then the code unit is a trailing code unit.
-      // This represents a malformed string so we
-      // return what we have counted so far.
-      return length;
+      // If the current code point is invalid or the
+      // index is past the end of the string, break
+      // and return what we have so far.
+      break;
     }
 
-    // If the msb of the leading code unit is 0, then
-    // the code point is a single code unit.
-    if ((unit0 & 0b1000'0000) == 0b0000'0000)
-    {
-      ++length;
-      ++index;
-      continue;
-    }
-
-    // If the leading code unit begins with 110, then
-    // the code point consists of two code units.
-    if ((unit0 & 0b1110'0000) == 0b1100'0000)
-    {
-      ++length;
-      index += 2;
-      continue;
-    }
-
-    // If the leading code unit begins with 1110, then
-    // the code point consists of three code units.
-    if ((unit0 & 0b1111'0000) == 0b1110'0000)
-    {
-      ++length;
-      index += 3;
-      continue;
-    }
-
-    // If the leading code unit begins with 11110, then
-    // the code point consists of four code units.
-    if ((unit0 & 0b1111'1000) == 0b1111'0000)
-    {
-      ++length;
-      index += 4;
-      continue;
-    }
-
-    // Anything else is a malformed string and we
-    // return what we have counted so far.
-    return length;
+    ++count;
+    index += current;
   }
 
-  return length;
+  return utf8.substr(0, index);
+}
+
+size_t Text::countCodePoints (
+  std::string const & utf8)
+{
+  size_t count {};
+  size_t index {};
+  while (true)
+  {
+    size_t current = getCodePointSize(index, utf8);
+    if (current == 0)
+    {
+      // If the current code point is invalid or the
+      // index is past the end of the string, break
+      // and return what we have counted so far.
+      break;
+    }
+
+    ++count;
+    index += current;
+  }
+
+  return count;
+}
+
+size_t Text::getCodePointSize (
+  size_t index,
+  std::string const & utf8)
+{
+  if (index >= utf8.size())
+  {
+    return 0;
+  }
+
+  uint8_t const unit0 = utf8[index];
+  // If the msb of the leading code unit is 0, then
+  // the code point is a single code unit.
+  if ((unit0 & 0b1000'0000) == 0b0000'0000)
+  {
+    return 1;
+  }
+
+  // If the leading code unit begins with 110, then
+  // the code point consists of two code units.
+  if ((unit0 & 0b1110'0000) == 0b1100'0000)
+  {
+    // Make sure there's enough room for the trailing
+    // code units.
+    if (index + 1 >= utf8.size())
+    {
+      return 0;
+    }
+    // And make sure the trailing code units are correct.
+    uint8_t const unit1 = utf8[index + 1];
+    if ((unit1 & 0b1100'0000) != 0b1000'0000)
+    {
+      return 0;
+    }
+    return 2;
+  }
+
+  // If the leading code unit begins with 1110, then
+  // the code point consists of three code units.
+  if ((unit0 & 0b1111'0000) == 0b1110'0000)
+  {
+    // Make sure there's enough room for the trailing
+    // code units.
+    if (index + 2 >= utf8.size())
+    {
+      return 0;
+    }
+    // And make sure the trailing code units are correct.
+    uint8_t const unit1 = utf8[index + 1];
+    uint8_t const unit2 = utf8[index + 2];
+    if ((unit1 & 0b1100'0000) != 0b1000'0000 ||
+      (unit2 & 0b1100'0000) != 0b1000'0000)
+    {
+      return 0;
+    }
+    return 3;
+  }
+
+  // If the leading code unit begins with 11110, then
+  // the code point consists of four code units.
+  if ((unit0 & 0b1111'1000) == 0b1111'0000)
+  {
+    // Make sure there's enough room for the trailing
+    // code units.
+    if (index + 3 >= utf8.size())
+    {
+      return 0;
+    }
+    // And make sure the trailing code units are correct.
+    uint8_t const unit1 = utf8[index + 1];
+    uint8_t const unit2 = utf8[index + 2];
+    uint8_t const unit3 = utf8[index + 3];
+    if ((unit1 & 0b1100'0000) != 0b1000'0000 ||
+      (unit2 & 0b1100'0000) != 0b1000'0000 ||
+      (unit3 & 0b1100'0000) != 0b1000'0000)
+    {
+      return 0;
+    }
+    return 4;
+  }
+
+  // Anything else is a malformed code point and we
+  // return zero.
+  return 0;
 }
 
 Text::CodePointResult Text::getCodePoint (

@@ -6,9 +6,7 @@
 //
 #include "Button.h"
 
-#include "ConsoleManager.h"
 #include "WindowSystem.h"
-#include "Justification.h"
 
 using namespace TUCUT;
 
@@ -74,69 +72,91 @@ std::shared_ptr<Button> TUI::Button::getSharedButton ()
   return std::static_pointer_cast<Button>(shared_from_this());
 }
 
-bool TUI::Button::onKeyPress (WindowSystem * ws, int key)
+bool TUI::Button::onKeyPress (WindowSystem * ws,
+  CharacterEvent const & event)
 {
   if (enableState() != Window::EnableState::enabled)
   {
-      return false;
+    return false;
   }
 
-  switch (key)
+  if (event.mUtf8 == " ")
   {
-  case 32: // Space
-  case 10: // Enter
-      handleClick(ws);
-      break;
-
-  default:
-      if (parent())
-      {
-          return parent()->onKeyPress(ws, key);
-      }
-      return false;
+    handleClick(ws);
+    return true;
   }
 
-  return true;
+  if (parent())
+  {
+    return parent()->onKeyPress(ws, event);
+  }
+
+  return false;
 }
 
-void TUI::Button::onMouseEvent (WindowSystem * ws, short id, int y, int x, mmask_t buttonState)
+bool TUI::Button::onNonPrintingKeyPress (WindowSystem * ws,
+  NonPrintingCharacterEvent const & event)
 {
-    if (enableState() != Window::EnableState::enabled)
-    {
-        return;
-    }
+  if (enableState() != Window::EnableState::enabled)
+  {
+    return false;
+  }
 
-    if (buttonState & BUTTON1_CLICKED)
-    {
-        handleClick(ws);
-    }
+  if (event.mKey == KeyCodes::NewlineChar)
+  {
+    handleClick(ws);
+    return true;
+  }
+
+  if (parent())
+  {
+    return parent()->onNonPrintingKeyPress(ws, event);
+  }
+
+  return false;
 }
 
-void TUI::Button::onDrawClient () const
+void TUI::Button::onMouseEvent (WindowSystem * ws,
+  MouseEvent const & event)
 {
-    if (visibleState() != Window::VisibleState::shown)
-    {
-        return;
-    }
+  if (enableState() != Window::EnableState::enabled)
+  {
+    return;
+  }
 
-    int vertCenter = height() / 2;
+  if (event.mAction == MouseActions::ButtonPressed &&
+    event.mButton == MouseButtons::Left)
+  {
+    handleClick(ws);
+  }
+}
 
-    if (hasDirectFocus())
-    {
-        ConsoleManager::printMessage(*this, vertCenter, 0, width(), mText, focusForeColor(), focusBackColor(), Justification::Horizontal::center, true);
-    }
-    else
-    {
-        ConsoleManager::printMessage(*this, vertCenter, 0, width(), mText, clientForeColor(), clientBackColor(), Justification::Horizontal::center, true);
-    }
+void TUI::Button::onDrawClient (WindowSystem * ws) const
+{
+  if (visibleState() != Window::VisibleState::Shown)
+  {
+    return;
+  }
+
+  int vertCenter = height() / 2;
+
+  drawText(ws,
+    0,
+    vertCenter,
+    width(),
+    mText,
+    hasDirectFocus() ? focusForeColor() : clientForeColor(),
+    hasDirectFocus() ? focusBackColor() : clientBackColor(),
+    " ",
+    Justification::Horizontal::Center);
 }
 
 void TUI::Button::handleClick (WindowSystem * ws)
 {
-    mClicked->signal(ws, this);
+  mClicked->signal(ws, this);
 }
 
 TUI::Button::ClickedEvent * TUI::Button::clicked ()
 {
-    return mClicked.get();
+  return mClicked.get();
 }

@@ -236,6 +236,8 @@ protected:
       int y,
       int width,
       std::string const & utf8,
+      Color const & foreColor,
+      Color const & backColor,
       std::string const & utf8Fill = "",
       Justification::Horizontal justification =
         Justification::Horizontal::Left) const;

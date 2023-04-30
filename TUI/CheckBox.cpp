@@ -6,11 +6,7 @@
 //
 #include "CheckBox.h"
 
-#include <stdexcept>
-
-#include "ConsoleManager.h"
 #include "WindowSystem.h"
-#include "Justification.h"
 
 using namespace TUCUT;
 
@@ -25,28 +21,21 @@ TUI::CheckBox::CheckBox (std::string const & name,
   Color const & focusForeColor,
   Color const & focusBackColor)
 : Control(name,
-  x,
-  y,
-  width,
-  height,
-  foreColor,
-  backColor,
-  focusForeColor,
-  focusBackColor),
+    x,
+    y,
+    width,
+    height,
+    foreColor,
+    backColor,
+    foreColor,
+    backColor,
+    focusForeColor,
+    focusBackColor,
+    false),
   mText(text),
   mClicked(new ClickedEvent(ClickedEventId))
 {
-  if (width < 6)
-  {
-    throw std::out_of_range("width cannot be less than 6.");
-  }
-
   setFillClientArea(false);
-}
-
-void TUI::CheckBox::initialize ()
-{
-  Control::initialize();
 }
 
 std::shared_ptr<CheckBox> TUI::CheckBox::createSharedCheckBox (
@@ -80,91 +69,118 @@ std::shared_ptr<CheckBox> TUI::CheckBox::createSharedCheckBox (
 
 std::shared_ptr<CheckBox> TUI::CheckBox::getSharedCheckBox ()
 {
-    return std::static_pointer_cast<CheckBox>(shared_from_this());
+  return std::static_pointer_cast<CheckBox>(shared_from_this());
 }
 
-bool TUI::CheckBox::onKeyPress (WindowSystem * ws, int key)
+bool TUI::CheckBox::onKeyPress (WindowSystem * ws,
+  CharacterEvent const & event)
 {
-    if (enableState() != Window::EnableState::enabled)
-    {
-        return false;
-    }
+  if (enableState() != Window::EnableState::enabled)
+  {
+    return false;
+  }
 
-    switch (key)
-    {
-        case 32: // Space
-        case 10: // Enter
-            handleClick(ws);
-            break;
-
-        default:
-            if (parent())
-            {
-                return parent()->onKeyPress(ws, key);
-            }
-            return false;
-    }
-
+  if (event.mUtf8 == " ")
+  {
+    handleClick(ws);
     return true;
+  }
+
+  if (parent())
+  {
+    return parent()->onKeyPress(ws, event);
+  }
+
+  return false;
 }
 
-void TUI::CheckBox::onMouseEvent (WindowSystem * ws, short id, int y, int x, mmask_t buttonState)
+bool TUI::CheckBox::onNonPrintingKeyPress (WindowSystem * ws,
+  NonPrintingCharacterEvent const & event)
 {
-    if (enableState() != Window::EnableState::enabled)
-    {
-        return;
-    }
+  if (enableState() != Window::EnableState::enabled)
+  {
+    return false;
+  }
 
-    if (buttonState & BUTTON1_CLICKED)
-    {
-        handleClick(ws);
-    }
+  if (event.mKey == KeyCodes::NewlineChar)
+  {
+    handleClick(ws);
+    return true;
+  }
+
+  if (parent())
+  {
+    return parent()->onNonPrintingKeyPress(ws, event);
+  }
+
+  return false;
 }
 
-void TUI::CheckBox::onDrawClient () const
+void TUI::CheckBox::onMouseEvent (WindowSystem * ws,
+  MouseEvent const & event)
 {
-    if (visibleState() != Window::VisibleState::shown)
-    {
-        return;
-    }
+  if (enableState() != Window::EnableState::enabled)
+  {
+    return;
+  }
 
-    cchar_t check = {0, L'\u25A3'};
-    cchar_t uncheck = {0, L'\u25A1'};
+  if (event.mAction == MouseActions::ButtonPressed &&
+    event.mButton == MouseButtons::Left)
+  {
+    handleClick(ws);
+  }
+}
 
-    int vertCenter = height() / 2;
+void TUI::CheckBox::onDrawClient (WindowSystem * ws) const
+{
+  if (visibleState() != Window::VisibleState::Shown)
+  {
+    return;
+  }
 
-    if (hasDirectFocus())
-    {
-        ConsoleManager::printMessage(*this, vertCenter, 1, 3, "   ", focusForeColor(), focusBackColor(), Justification::Horizontal::left, false);
-        mvwadd_wch(cursesWindow(), vertCenter, 2, mIsChecked ? &check : &uncheck);
-        ConsoleManager::printMessage(*this, vertCenter, 4, width() - 5, mText, focusForeColor(), focusBackColor(), Justification::Horizontal::left, true);
-    }
-    else
-    {
-        ConsoleManager::printMessage(*this, vertCenter, 1, 3, "   ", clientForeColor(), clientBackColor(), Justification::Horizontal::left, false);
-        mvwadd_wch(cursesWindow(), vertCenter, 2, mIsChecked ? &check : &uncheck);
-        ConsoleManager::printMessage(*this, vertCenter, 4, width() - 5, mText, clientForeColor(), clientBackColor(), Justification::Horizontal::left, true);
-    }
+  int vertCenter = height() / 2;
+
+  std::string check = mIsChecked ? u8"\u25A3 " : u8"\u25A1 ";
+  drawText(ws,
+    0,
+    vertCenter,
+    2,
+    check,
+    hasDirectFocus() ? focusForeColor() : clientForeColor(),
+    hasDirectFocus() ? focusBackColor() : clientBackColor());
+
+  if (width() < 3)
+  {
+    return;
+  }
+
+  drawText(ws,
+    2,
+    vertCenter,
+    width() - 2,
+    mText,
+    hasDirectFocus() ? focusForeColor() : clientForeColor(),
+    hasDirectFocus() ? focusBackColor() : clientBackColor());
 }
 
 bool TUI::CheckBox::isChecked () const
 {
-    return mIsChecked;
+  return mIsChecked;
 }
 
 void TUI::CheckBox::setIsChecked (bool value)
 {
-    mIsChecked = value;
+  mIsChecked = value;
 }
 
 void TUI::CheckBox::handleClick (WindowSystem * ws)
 {
-    mIsChecked = not mIsChecked;
+  mIsChecked = not mIsChecked;
 
-    mClicked->signal(ws, this);
+  mClicked->signal(ws, this);
 }
 
 TUI::CheckBox::ClickedEvent * TUI::CheckBox::clicked ()
 {
-    return mClicked.get();
+  return mClicked.get();
 }

@@ -11,8 +11,6 @@
 #include "Control.h"
 #include "Event.h"
 
-#include <memory>
-
 namespace TUCUT::TUI
 {
   class CheckBox : public Control
@@ -65,8 +63,6 @@ namespace TUCUT::TUI
       Color const & backColor,
       Color const & focusForeColor,
       Color const & focusBackColor);
-
-    void initialize () override;
 
   private:
     void handleClick (WindowSystem * ws);

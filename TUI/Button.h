@@ -11,8 +11,6 @@
 #include "Control.h"
 #include "Event.h"
 
-#include <memory>
-
 namespace TUCUT::TUI
 {
   class Button : public Control
