@@ -112,6 +112,9 @@ namespace TUCUT::TUI
     void blinkOn ();
     void blinkOff ();
 
+    void reverseOn ();
+    void reverseOff ();
+
     void moveCursor (unsigned int column, unsigned int row);
     void moveCursorUp (unsigned int lines);
     void moveCursorDown (unsigned int lines);

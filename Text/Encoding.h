@@ -22,15 +22,24 @@ namespace TUCUT::Text
   };
 
   std::string truncate (
-    size_t length,
-    std::string const & utf8);
+    std::string const & utf8,
+    size_t length);
 
   size_t countCodePoints (
     std::string const & utf8);
 
   size_t getCodePointSize (
-    size_t index,
-    std::string const & utf8);
+    std::string const & utf8,
+    size_t index),
+
+  std::string getCodePointAt (
+    std::string const & utf8,
+    size_t & index);
+
+  std::string setCodePoint (
+    std::string const & utf8,
+    std::string const & point,
+    size_t pos);
 
   CodePointResult getCodePoint (
     std::string const & utf8,

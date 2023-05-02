@@ -53,8 +53,8 @@ TUI::Window::Window (
   mWantEnter(false),
   mDefaultEnter(false),
   mDefaultEscape(false),
-  mVisibleState(VisibleState::shown),
-  mEnableState(EnableState::enabled)
+  mVisibleState(VisibleState::Shown),
+  mEnableState(EnableState::Enabled)
 {
   if (mX < 0)
   {
@@ -243,7 +243,9 @@ void TUI::Window::drawText (WindowSystem * ws,
   std::string const & utf8Fill,
   Color const & foreColor,
   Color const & backColor,
-  Justification::Horizontal justification) const
+  Justification::Horizontal justification,
+  int reverseX,
+  int reverseY) const
 {
   int maxX;
   int maxY;
@@ -251,6 +253,7 @@ void TUI::Window::drawText (WindowSystem * ws,
   {
     return;
   }
+
   if (x > maxX || y > maxY || width < 1)
   {
     return;
@@ -261,7 +264,7 @@ void TUI::Window::drawText (WindowSystem * ws,
     width = maxX - x + 1;
   }
 
-  std::string text = Text::truncate(width, utf8);
+  std::string text = Text::truncate(utf8, width);
   int margin = 0;
   size_t textLength = Text::countCodePoints(text);
   switch (justification)
@@ -288,29 +291,76 @@ void TUI::Window::drawText (WindowSystem * ws,
   auto & output = terminal.output();
   output << foreColor << backColor;
 
+  int worldX = worldX();
+  int worldY = worldY();
+
   if (not utf8Fill.empty())
   {
+    terminal.moveCursor(x + worldX, y + worldY);
     for (int i = x; i < textX; ++i)
     {
       if (i > maxX)
       {
         return;
       }
-      drawText(ws, i, y, utf8Fill);
+
+      if (i == reverseX && y == reverseY)
+      {
+        terminal.reverseOn();
+        output << utf8Fill;
+        terminal.reverseOff();
+      }
+      else
+      {
+        output << utf8Fill;
+      }
     }
   }
 
-  drawText(ws, textX, y, text);
+  terminal.moveCursor(textX + worldX, y + worldY);
+  size_t index {};
+  std::string codePoint = getCodePointAt(text, index);
+  while (not codePoint.empty())
+  {
+    if (textX > maxX)
+    {
+      return;
+    }
+
+    if (textX == reverseX && y == reverseY)
+    {
+      terminal.reverseOn();
+      output << codePoint;
+      terminal.reverseOff();
+    }
+    else
+    {
+      output << codePoint;
+    }
+
+    ++textX;
+    codePoint = getCodePointAt(text, index);
+  }
 
   if (not utf8Fill.empty())
   {
-    for (int i = textX + textLength; i < x + width; ++i)
+    for (int i = textX; i < x + width; ++i)
     {
       if (i > maxX)
       {
         return;
       }
-      drawText(ws, i, y, utf8Fill);
+
+      if (i == reverseX && y == reverseY)
+      {
+        terminal.reverseOn();
+        output << utf8Fill;
+        terminal.reverseOff();
+      }
+      else
+      {
+        output << utf8Fill;
+      }
     }
   }
 }

@@ -240,7 +240,9 @@ protected:
       Color const & backColor,
       std::string const & utf8Fill = "",
       Justification::Horizontal justification =
-        Justification::Horizontal::Left) const;
+        Justification::Horizontal::Left,
+      int reverseX = -1,
+      int reverseY = -1) const;
 
     void drawTiledText (WindowSystem * ws,
       int x,

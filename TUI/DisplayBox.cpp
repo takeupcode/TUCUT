@@ -49,7 +49,8 @@ TUI::DisplayBox::DisplayBox (std::string const & name,
     backColor,
     foreColor,
     backColor,
-    false),
+    true), // The border must be enabled in case the
+    // center controls are allowed.
   mClicked(new ClickedEvent(ClickedEventId)),
   mScrollChanged(new ScrollChangedEvent(ScrollChangedEventId)),
   mBeforeCenterChanged(new BeforeCenterChangedEvent(
@@ -73,94 +74,149 @@ TUI::DisplayBox::DisplayBox (std::string const & name,
   mAllowCenterControls(allowCenterControls),
   mShowClickLocation(false)
 {
-    if (height < 4)
-    {
-        throw std::out_of_range("height cannot be less than 4.");
-    }
-    if (width < 4)
-    {
-        throw std::out_of_range("width cannot be less than 4.");
-    }
-    if (contentHeight < 1)
-    {
-        throw std::out_of_range("content height cannot be less than 1.");
-    }
-    if (contentWidth < 1)
-    {
-        throw std::out_of_range("content width cannot be less than 1.");
-    }
-    if (scrollMarginTop < 0 || scrollMarginTop >= clientHeight() / 2)
-    {
-        throw std::out_of_range("scrollMarginTop must be less than half the window height.");
-    }
-    if (scrollMarginRight < 0 || scrollMarginRight >= textClientWidth() / 2)
-    {
-        throw std::out_of_range("scrollMarginRight must be less than half the window width.");
-    }
-    if (scrollMarginBottom < 0 || scrollMarginBottom >= clientHeight() / 2)
-    {
-        throw std::out_of_range("scrollMarginBottom must be less than half the window height.");
-    }
-    if (scrollMarginLeft < 0 || scrollMarginLeft >= textClientWidth() / 2)
-    {
-        throw std::out_of_range("scrollMarginLeft must be less than half the window width.");
-    }
+  mMinWidth = MinWidth;
+  if (width < mMinWidth)
+  {
+    mWidth = mMinWidth;
+  }
 
-    mMinHeight = 4;
-    mMinWidth = 4;
+  mMinHeight = MinHeight;
+  if (height < mMinHeight)
+  {
+    mHeight = mMinHeight;
+  }
 
-    setFillClientArea(false);
+  mMinContentWidth = MinContentWidth;
+  if (contentWidth < mMinContentWidth)
+  {
+    mContentWidth = mMinContentWidth;
+  }
 
-    for (int i = 0; i < mContentHeight; i++)
-    {
-        mContent.push_back(std::string(mContentWidth, ' '));
-    }
+  mMinContentHeight = MinContentHeight;
+  if (contentHeight < mMinContentHeight)
+  {
+    mContentHeight = mMinContentHeight;
+  }
+
+  if (scrollMarginTop < 0 ||
+    scrollMarginTop >= clientHeight() / 2)
+  {
+    throw std::out_of_range(
+      "scrollMarginTop must be less than half"
+      " the client height.");
+  }
+
+  if (scrollMarginRight < 0 ||
+    scrollMarginRight >= textClientWidth() / 2)
+  {
+    throw std::out_of_range(
+      "scrollMarginRight must be less than half"
+      " the client width.");
+  }
+
+  if (scrollMarginBottom < 0 ||
+    scrollMarginBottom >= clientHeight() / 2)
+  {
+    throw std::out_of_range(
+      "scrollMarginBottom must be less than half"
+      " the client height.");
+  }
+
+  if (scrollMarginLeft < 0 ||
+    scrollMarginLeft >= textClientWidth() / 2)
+  {
+    throw std::out_of_range(
+      "scrollMarginLeft must be less than half"
+      " the client width.");
+  }
+
+  setFillClientArea(false);
+
+  for (int i = 0; i < mContentHeight; ++i)
+  {
+    mContent.push_back(std::string(mContentWidth, ' '));
+  }
 }
 
 void TUI::DisplayBox::initialize ()
 {
-    Control::initialize();
+  Control::initialize();
 
-    if (mAllowCenterControls)
-    {
-        mMoveCenterLeftButton = Button::createSharedButton(moveCenterLeftButtonName, "<", 0, 0, 1, 1, Colors::COLOR_DIM_BLACK, Colors::COLOR_DIM_WHITE, Colors::COLOR_DIM_BLACK, Colors::COLOR_DIM_WHITE);
-        mMoveCenterLeftButton->clicked()->connect(windowName, getSharedDisplayBox());
-        mMoveCenterLeftButton->setIsDirectFocusPossible(false);
-        addControl(mMoveCenterLeftButton);
+  if (not mAllowCenterControls)
+  {
+    return;
+  }
 
-        mMoveCenterRightButton = Button::createSharedButton(moveCenterRightButtonName, ">", 0, 0, 1, 1, Colors::COLOR_DIM_BLACK, Colors::COLOR_DIM_WHITE, Colors::COLOR_DIM_BLACK, Colors::COLOR_DIM_WHITE);
-        mMoveCenterRightButton->clicked()->connect(windowName, getSharedDisplayBox());
-        mMoveCenterRightButton->setIsDirectFocusPossible(false);
-        addControl(mMoveCenterRightButton);
+  Color foreDimBlack(
+    TextLayer::Foreground,
+    Palette::ColorsTrue,
+    0, 0, 0);
+  Color backDimWhite(
+    TextLayer::Background,
+    Palette::ColorsTrue,
+    198, 198, 198);
 
-        mMoveCenterUpButton = Button::createSharedButton(moveCenterUpButtonName, "+", 0, 0, 1, 1, Colors::COLOR_DIM_BLACK, Colors::COLOR_DIM_WHITE, Colors::COLOR_DIM_BLACK, Colors::COLOR_DIM_WHITE);
-        mMoveCenterUpButton->clicked()->connect(windowName, getSharedDisplayBox());
-        mMoveCenterUpButton->setIsDirectFocusPossible(false);
-        addControl(mMoveCenterUpButton);
+  mMoveCenterLeftButton = Button::createSharedButton(
+    moveCenterLeftButtonName,
+    "<", 0, 0, 1, 1,
+    foreDimBlack,
+    backDimWhite,
+    foreDimBlack,
+    backDimWhite);
+  mMoveCenterLeftButton->clicked()->connect(name(),
+    getSharedDisplayBox());
+  mMoveCenterLeftButton->setIsDirectFocusPossible(false);
+  mMoveCenterLeftButton->setAnchorTop(2);
+  mMoveCenterLeftButton->setAnchorRight(0);
+  addControl(mMoveCenterLeftButton);
 
-        mMoveCenterDownButton = Button::createSharedButton(moveCenterDownButtonName, "-", 0, 0, 1, 1, Colors::COLOR_DIM_BLACK, Colors::COLOR_DIM_WHITE, Colors::COLOR_DIM_BLACK, Colors::COLOR_DIM_WHITE);
-        mMoveCenterDownButton->clicked()->connect(windowName, getSharedDisplayBox());
-        mMoveCenterDownButton->setIsDirectFocusPossible(false);
-        addControl(mMoveCenterDownButton);
+  mMoveCenterRightButton = Button::createSharedButton(
+    moveCenterRightButtonName,
+    ">", 0, 0, 1, 1,
+    foreDimBlack,
+    backDimWhite,
+    foreDimBlack,
+    backDimWhite);
+  mMoveCenterRightButton->clicked()->connect(name(),
+    getSharedDisplayBox());
+  mMoveCenterRightButton->setIsDirectFocusPossible(false);
+  mMoveCenterRightButton->setAnchorTop(3);
+  mMoveCenterRightButton->setAnchorRight(0);
+  addControl(mMoveCenterRightButton);
 
-        mMoveCenterUpButton->setAnchorTop(0);
-        mMoveCenterUpButton->setAnchorRight(0);
+  mMoveCenterUpButton = Button::createSharedButton(
+    moveCenterUpButtonName,
+    "+", 0, 0, 1, 1,
+    foreDimBlack,
+    backDimWhite,
+    foreDimBlack,
+    backDimWhite);
+  mMoveCenterUpButton->clicked()->connect(name(),
+    getSharedDisplayBox());
+  mMoveCenterUpButton->setIsDirectFocusPossible(false);
+  mMoveCenterUpButton->setAnchorTop(0);
+  mMoveCenterUpButton->setAnchorRight(0);
+  addControl(mMoveCenterUpButton);
 
-        mMoveCenterDownButton->setAnchorTop(1);
-        mMoveCenterDownButton->setAnchorRight(0);
-
-        mMoveCenterLeftButton->setAnchorTop(2);
-        mMoveCenterLeftButton->setAnchorRight(0);
-
-        mMoveCenterRightButton->setAnchorTop(3);
-        mMoveCenterRightButton->setAnchorRight(0);
-    }
+  mMoveCenterDownButton = Button::createSharedButton(
+    moveCenterDownButtonName,
+    "-", 0, 0, 1, 1,
+    foreDimBlack,
+    backDimWhite,
+    foreDimBlack,
+    backDimWhite);
+  mMoveCenterDownButton->clicked()->connect(name(),
+    getSharedDisplayBox());
+  mMoveCenterDownButton->setIsDirectFocusPossible(false);
+  mMoveCenterDownButton->setAnchorTop(1);
+  mMoveCenterDownButton->setAnchorRight(0);
+  addControl(mMoveCenterDownButton);
 }
 
 std::shared_ptr<DisplayBox>
 TUI::DisplayBox::createSharedDisplayBox (
   std::string const & name,
-  char centerChar,
+  std::string const & centerSymbol,
   int x,
   int y,
   int width,
@@ -178,7 +234,7 @@ TUI::DisplayBox::createSharedDisplayBox (
 {
   auto result = std::shared_ptr<DisplayBox>(new DisplayBox(
     name,
-    centerChar,
+    centerSymbol,
     x,
     y,
     width,
@@ -199,138 +255,146 @@ TUI::DisplayBox::createSharedDisplayBox (
   return result;
 }
 
-std::shared_ptr<DisplayBox> TUI::DisplayBox::getSharedDisplayBox ()
+std::shared_ptr<DisplayBox>
+TUI::DisplayBox::getSharedDisplayBox ()
 {
-    return std::static_pointer_cast<DisplayBox>(shared_from_this());
+  return std::static_pointer_cast<DisplayBox>(
+    shared_from_this());
 }
 
-bool TUI::DisplayBox::onKeyPress (WindowSystem * ws, int key)
+bool TUI::DisplayBox::onExtendedKeyPress (WindowSystem * ws,
+  ExtendedCharacterEvent const & event)
 {
-    if (enableState() != Window::EnableState::enabled)
+  if (enableState() != Window::EnableState::Enabled)
+  {
+    return false;
+  }
+
+  if (not mAllowCenterControls)
+  {
+    if (parent())
     {
-        return false;
+      return parent()->onExtendedKeyPress(ws, event);
     }
-
-    if (not mAllowCenterControls)
-    {
-        if (parent())
-        {
-            return parent()->onKeyPress(ws, key);
-        }
-    }
-    else
-    {
-        switch (key)
-        {
-            case KEY_UP:
-                handleMoveCenterUp(ws);
-                break;
-
-            case KEY_DOWN:
-                handleMoveCenterDown(ws);
-                break;
-
-            case KEY_LEFT:
-                handleMoveCenterLeft(ws);
-                break;
-
-            case KEY_RIGHT:
-                handleMoveCenterRight(ws);
-                break;
-
-            default:
-                if (parent())
-                {
-                    return parent()->onKeyPress(ws, key);
-                }
-                break;
-        }
-    }
-
     return true;
+  }
+
+  if (event.mKey == ExtendedKeys::ArrowUp)
+  {
+    handleMoveCenterUp(ws);
+  }
+  else if (event.mKey == ExtendedKeys::ArrowDown)
+  {
+    handleMoveCenterDown(ws);
+  }
+  else if (event.mKey == ExtendedKeys::ArrowRight)
+  {
+    handleMoveCenterRight(ws);
+  }
+  else if (event.mKey == ExtendedKeys::ArrowLeft)
+  {
+    handleMoveCenterLeft(ws);
+  }
+  else if (parent())
+  {
+    return parent()->onExtendedKeyPress(ws, event);
+  }
+
+  return true;
 }
 
-void TUI::DisplayBox::onMouseEvent (WindowSystem * ws, short id, int y, int x, mmask_t buttonState)
+void TUI::DisplayBox::onMouseEvent (WindowSystem * ws,
+  MouseEvent const & event)
 {
-    if (enableState() != Window::EnableState::enabled)
+  if (enableState() != Window::EnableState::Enabled)
+  {
+    return;
+  }
+
+  if (event.mAction == MouseActions::ButtonPressed &&
+    event.mButton == MouseButtons::Left)
+  {
+    int worldX = worldX();
+    int worldY = worldY();
+
+    // Don't move the cursor if the click is in the
+    // non-client area.
+    if (border() &&
+      (event.mX == worldX ||
+      event.mX == worldX + width() - 1 ||
+      event.mY == worldY ||
+      event.mY == worldY + height() - 1))
     {
-        return;
+      return;
     }
 
-    if (buttonState & BUTTON1_CLICKED)
+    int column = event.mX - worldX - clientX() + mScrollColumn;
+    int line = event.mY - worldY - clientY() + mScrollLine;
+
+    if (column >= mContentWidth)
     {
-        int winY = y - clientY();
-        int winX = x - clientX();
-
-        // Don't move the cursor if the click is in the non-client area.
-        if (winX == 0 ||
-            winX > textClientWidth())
-        {
-            return;
-        }
-        int line = winY + mScrollLine;
-        int column = winX + mScrollColumn - 1; // Subtract one for the focus marker.
-
-        if (line >= mContentHeight)
-        {
-            line = mContentHeight - 1;
-        }
-
-        if (column >= mContentWidth)
-        {
-            column = mContentWidth - 1;
-        }
-
-        if (mClickedLine != line || mClickedColumn != column)
-        {
-            mClickedLine = line;
-            mClickedColumn = column;
-        }
-
-        handleClicked(ws, mClickedLine, mClickedColumn);
+      column = mContentWidth - 1;
     }
+
+    if (line >= mContentHeight)
+    {
+      line = mContentHeight - 1;
+    }
+
+    if (mClickedColumn != column || mClickedLine != line)
+    {
+      mClickedColumn = column;
+      mClickedLine = line;
+    }
+
+    handleClicked(ws, mClickedColumn, mClickedLine);
+  }
 }
 
 void TUI::DisplayBox::onDrawClient () const
 {
-    if (visibleState() != Window::VisibleState::shown)
+  if (visibleState() != Window::VisibleState::Shown)
+  {
+    return;
+  }
+
+  int i = 0;
+  for (; i < clientHeight(); ++i)
+  {
+    if (i + mScrollLine >= mContentHeight)
     {
-        return;
+      break;
     }
 
-    int i = 0;
-    for (; i < clientHeight(); ++i)
+    std::string lineText = mContent[i + mScrollLine].substr(mScrollColumn, clientWidth());
+    if (mCenterChar && mCenterLine == (i + mScrollLine) && mCenterColumn >= mScrollColumn)
     {
-        if (i + mScrollLine >= mContentHeight)
-        {
-            break;
-        }
-
-        std::string lineText = mContent[i + mScrollLine].substr(mScrollColumn, textClientWidth());
-        if (mCenterChar && mCenterLine == (i + mScrollLine) && mCenterColumn >= mScrollColumn)
-        {
-            lineText[mCenterColumn - mScrollColumn] = mCenterChar;
-        }
-
-        if (mShowClickLocation && (mClickedLine >= mScrollLine) && (mClickedColumn >= mScrollColumn))
-        {
-            ConsoleManager::printMessage(*this, i, 1, textClientWidth(), lineText, clientForeColor(), clientBackColor(), Justification::Horizontal::left, true, mClickedLine - mScrollLine, mClickedColumn - mScrollColumn + 1);
-        }
-        else
-        {
-            ConsoleManager::printMessage(*this, i, 1, textClientWidth(), lineText, clientForeColor(), clientBackColor(), Justification::Horizontal::left, true);
-        }
+      lineText[mCenterColumn - mScrollColumn] = mCenterChar;
     }
-    for (; i < clientHeight(); ++i)
+
+    if (mShowClickLocation && (mClickedLine >= mScrollLine) && (mClickedColumn >= mScrollColumn))
     {
-        ConsoleManager::printMessage(*this, i, 1, textClientWidth(), " ", clientForeColor(), clientBackColor(), Justification::Horizontal::left, true);
+      ConsoleManager::printMessage(*this, i, 1, textClientWidth(), lineText, clientForeColor(), clientBackColor(), Justification::Horizontal::left, true, mClickedLine - mScrollLine, mClickedColumn - mScrollColumn + 1);
     }
+    else
+    {
+      ConsoleManager::printMessage(*this, i, 1, textClientWidth(), lineText, clientForeColor(), clientBackColor(), Justification::Horizontal::left, true);
+    }
+  }
+  for (; i < clientHeight(); ++i)
+  {
+    ConsoleManager::printMessage(*this, i, 1, textClientWidth(), " ", clientForeColor(), clientBackColor(), Justification::Horizontal::left, true);
+  }
 }
 
-int TUI::DisplayBox::textClientWidth () const
+void TUI::DisplayBox::setMinWidth (int width)
 {
-    // This method accounts for the area used by the scrolling buttons and focus marker.
-    return clientWidth() - 2;
+    if (width < 4)
+    {
+        throw std::out_of_range("width cannot be less than 4.");
+    }
+
+    mMinWidth = width;
 }
 
 void TUI::DisplayBox::setMinHeight (int height)
@@ -343,14 +407,16 @@ void TUI::DisplayBox::setMinHeight (int height)
     mMinHeight = height;
 }
 
-void TUI::DisplayBox::setMinWidth (int width)
+void TUI::DisplayBox::setBorder (bool border)
 {
-    if (width < 4)
-    {
-        throw std::out_of_range("width cannot be less than 4.");
-    }
+  if (mAllowCenterControls)
+  {
+    // The border cannot be changed if the controls are
+    // allowed.
+    return;
+  }
 
-    mMinWidth = width;
+  Control::setBorder(border);
 }
 
 void TUI::DisplayBox::verifyX (int x) const

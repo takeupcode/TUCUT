@@ -75,7 +75,7 @@ std::shared_ptr<CheckBox> TUI::CheckBox::getSharedCheckBox ()
 bool TUI::CheckBox::onKeyPress (WindowSystem * ws,
   CharacterEvent const & event)
 {
-  if (enableState() != Window::EnableState::enabled)
+  if (enableState() != Window::EnableState::Enabled)
   {
     return false;
   }
@@ -97,7 +97,7 @@ bool TUI::CheckBox::onKeyPress (WindowSystem * ws,
 bool TUI::CheckBox::onNonPrintingKeyPress (WindowSystem * ws,
   NonPrintingCharacterEvent const & event)
 {
-  if (enableState() != Window::EnableState::enabled)
+  if (enableState() != Window::EnableState::Enabled)
   {
     return false;
   }
@@ -119,7 +119,7 @@ bool TUI::CheckBox::onNonPrintingKeyPress (WindowSystem * ws,
 void TUI::CheckBox::onMouseEvent (WindowSystem * ws,
   MouseEvent const & event)
 {
-  if (enableState() != Window::EnableState::enabled)
+  if (enableState() != Window::EnableState::Enabled)
   {
     return;
   }

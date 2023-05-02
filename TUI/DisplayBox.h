@@ -64,11 +64,11 @@ namespace TUCUT::TUI
 
     void onDrawClient (WindowSystem * ws) const override;
 
-    int textClientWidth () const;
-
     void setMinWidth (int width) override;
 
     void setMinHeight (int height) override;
+
+    void setBorder (bool border) override;
 
     std::string symbol (int x, int y) const;
 
@@ -132,6 +132,11 @@ namespace TUCUT::TUI
     void initialize () override;
 
   private:
+    static int const MinWidth = 4;
+    static int const MinHeight = 4;
+    static int const MinContentWidth = 1;
+    static int const MinContentHeight = 1;
+
     void notify (int id, WindowSystem * ws,
       Button * button) override;
 
@@ -191,7 +196,7 @@ namespace TUCUT::TUI
     int mScrollMarginLeft;
     std::string mCenterSymbol;
     bool mAutoScrolling;
-    bool mAllowCenterControls;
+    bool const mAllowCenterControls;
     bool mShowClickLocation;
   };
 } // namespace TUCUT::TUI

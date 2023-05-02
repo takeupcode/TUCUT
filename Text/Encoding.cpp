@@ -9,14 +9,14 @@
 using namespace TUCUT;
 
 std::string Text::truncate (
-  size_t length,
-  std::string const & utf8)
+  std::string const & utf8,
+  size_t length)
 {
   size_t count {};
   size_t index {};
   while (count < length)
   {
-    size_t current = getCodePointSize(index, utf8);
+    size_t current = getCodePointSize(utf8, index);
     if (current == 0)
     {
       // If the current code point is invalid or the
@@ -39,7 +39,7 @@ size_t Text::countCodePoints (
   size_t index {};
   while (true)
   {
-    size_t current = getCodePointSize(index, utf8);
+    size_t current = getCodePointSize(utf8, index);
     if (current == 0)
     {
       // If the current code point is invalid or the
@@ -56,8 +56,8 @@ size_t Text::countCodePoints (
 }
 
 size_t Text::getCodePointSize (
-  size_t index,
-  std::string const & utf8)
+  std::string const & utf8,
+  size_t index)
 {
   if (index >= utf8.size())
   {
@@ -138,6 +138,57 @@ size_t Text::getCodePointSize (
   // Anything else is a malformed code point and we
   // return zero.
   return 0;
+}
+
+std::string Text::getCodePointAt (
+  std::string const & utf8,
+  size_t & index)
+{
+  size_t size = getCodePointSize(utf8, index);
+  if (size == 0)
+  {
+    return "";
+  }
+
+  std::string codePoint = utf8.substr(index, size);
+  index += size;
+
+  return codePoint;
+}
+
+std::string Text::setCodePoint (
+  std::string const & utf8,
+  std::string const & point,
+  size_t pos)
+{
+  size_t total = countCodePoints(utf8);
+  if (pos >= total)
+  {
+    return utf8;
+  }
+
+  size_t count {};
+  size_t index {};
+  while (count < pos)
+  {
+    size_t currentSize = getCodePointSize(utf8, index);
+    if (currentSize == 0)
+    {
+      // If the current code point is invalid or the
+      // index is past the end of the string, return
+      // the original string.
+      return utf8;
+    }
+
+    ++count;
+    index += currentSize;
+  }
+
+  std::string result = utf8.substr(0, index);
+  result += point;
+  size_t posSize = getCodePointSize(utf8, index);
+  result += utf8.substr(index + posSize);
+  return result;
 }
 
 Text::CodePointResult Text::getCodePoint (

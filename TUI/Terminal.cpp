@@ -257,6 +257,9 @@ namespace
     static std::string blinkOn ();
     static std::string blinkOff ();
 
+    static std::string reverseOn ();
+    static std::string reverseOff ();
+
     static std::string moveCursor (
       unsigned int column,
       unsigned int row);
@@ -363,6 +366,16 @@ std::string EscSequenceBuilder::blinkOn ()
 std::string EscSequenceBuilder::blinkOff ()
 {
   return setDisplayAttributes({"25"});
+}
+
+std::string EscSequenceBuilder::reverseOn ()
+{
+  return setDisplayAttributes({"7"});
+}
+
+std::string EscSequenceBuilder::reverseOff ()
+{
+  return setDisplayAttributes({"27"});
 }
 
 std::string EscSequenceBuilder::moveCursor (
@@ -546,6 +559,16 @@ void TUI::Terminal::blinkOn ()
 void TUI::Terminal::blinkOff ()
 {
   std::cout << EscSequenceBuilder::blinkOff();
+}
+
+void TUI::Terminal::reverseOn ()
+{
+  std::cout << EscSequenceBuilder::reverseOn();
+}
+
+void TUI::Terminal::reverseOff ()
+{
+  std::cout << EscSequenceBuilder::reverseOff();
 }
 
 void TUI::Terminal::moveCursor (

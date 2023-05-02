@@ -75,7 +75,7 @@ std::shared_ptr<Button> TUI::Button::getSharedButton ()
 bool TUI::Button::onKeyPress (WindowSystem * ws,
   CharacterEvent const & event)
 {
-  if (enableState() != Window::EnableState::enabled)
+  if (enableState() != Window::EnableState::Enabled)
   {
     return false;
   }
@@ -97,7 +97,7 @@ bool TUI::Button::onKeyPress (WindowSystem * ws,
 bool TUI::Button::onNonPrintingKeyPress (WindowSystem * ws,
   NonPrintingCharacterEvent const & event)
 {
-  if (enableState() != Window::EnableState::enabled)
+  if (enableState() != Window::EnableState::Enabled)
   {
     return false;
   }
@@ -119,7 +119,7 @@ bool TUI::Button::onNonPrintingKeyPress (WindowSystem * ws,
 void TUI::Button::onMouseEvent (WindowSystem * ws,
   MouseEvent const & event)
 {
-  if (enableState() != Window::EnableState::enabled)
+  if (enableState() != Window::EnableState::Enabled)
   {
     return;
   }
