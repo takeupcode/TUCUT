@@ -319,7 +319,7 @@ void TUI::Window::drawText (WindowSystem * ws,
 
   terminal.moveCursor(textX + worldX, y + worldY);
   size_t index {};
-  std::string codePoint = getCodePointAt(text, index);
+  std::string codePoint = getCodePoint(text, index);
   while (not codePoint.empty())
   {
     if (textX > maxX)
@@ -339,7 +339,7 @@ void TUI::Window::drawText (WindowSystem * ws,
     }
 
     ++textX;
-    codePoint = getCodePointAt(text, index);
+    codePoint = getCodePoint(text, index);
   }
 
   if (not utf8Fill.empty())

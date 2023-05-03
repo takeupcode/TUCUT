@@ -21,6 +21,17 @@ namespace TUCUT::Text
     Unsupported // Code point with more than 4 code units.
   };
 
+  std::string substr (
+    std::string const & utf8,
+    size_t pos,
+    size_t length);
+
+  std::string replace (
+    std::string const & utf8,
+    std::string const & text,
+    size_t pos,
+    size_t length);
+
   std::string truncate (
     std::string const & utf8,
     size_t length);
@@ -32,14 +43,9 @@ namespace TUCUT::Text
     std::string const & utf8,
     size_t index),
 
-  std::string getCodePointAt (
+  std::string getCodePoint (
     std::string const & utf8,
     size_t & index);
-
-  std::string setCodePoint (
-    std::string const & utf8,
-    std::string const & point,
-    size_t pos);
 
   CodePointResult getCodePoint (
     std::string const & utf8,

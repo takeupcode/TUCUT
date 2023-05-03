@@ -351,7 +351,7 @@ void TUI::DisplayBox::onMouseEvent (WindowSystem * ws,
   }
 }
 
-void TUI::DisplayBox::onDrawClient () const
+void TUI::DisplayBox::onDrawClient (WindowSystem * ws) const
 {
   if (visibleState() != Window::VisibleState::Shown)
   {
@@ -366,45 +366,77 @@ void TUI::DisplayBox::onDrawClient () const
       break;
     }
 
-    std::string lineText = mContent[i + mScrollLine].substr(mScrollColumn, clientWidth());
-    if (mCenterChar && mCenterLine == (i + mScrollLine) && mCenterColumn >= mScrollColumn)
+    std::string lineText = Text::substr(
+      mContent[i + mScrollLine],
+      mScrollColumn, clientWidth());
+    if (not mCenterSymbol.empty() &&
+      mCenterLine == (i + mScrollLine) &&
+      mCenterColumn >= mScrollColumn)
     {
-      lineText[mCenterColumn - mScrollColumn] = mCenterChar;
+      Text::replace(lineText,
+        mCenterSymbol,
+        mCenterColumn - mScrollColumn,
+        1);
     }
 
-    if (mShowClickLocation && (mClickedLine >= mScrollLine) && (mClickedColumn >= mScrollColumn))
+    if (mShowClickLocation &&
+      mClickedLine >= mScrollLine &&
+      mClickedColumn >= mScrollColumn)
     {
-      ConsoleManager::printMessage(*this, i, 1, textClientWidth(), lineText, clientForeColor(), clientBackColor(), Justification::Horizontal::left, true, mClickedLine - mScrollLine, mClickedColumn - mScrollColumn + 1);
+      drawText(ws,
+        clientX(),
+        clientY() + i,
+        clientWidth(),
+        lineText,
+        clientForeColor(),
+        clientBackColor(),
+        "",
+        Justification::Horizontal::Left,
+        mClickedColumn - mScrollColumn + clientX(),
+        mClickedLine - mScrollLine + clientY());
     }
     else
     {
-      ConsoleManager::printMessage(*this, i, 1, textClientWidth(), lineText, clientForeColor(), clientBackColor(), Justification::Horizontal::left, true);
+      drawText(ws,
+        clientX(),
+        clientY() + i,
+        clientWidth(),
+        lineText,
+        clientForeColor(),
+        clientBackColor());
     }
   }
   for (; i < clientHeight(); ++i)
   {
-    ConsoleManager::printMessage(*this, i, 1, textClientWidth(), " ", clientForeColor(), clientBackColor(), Justification::Horizontal::left, true);
+    drawText(ws,
+      clientX(),
+      clientY() + i,
+      clientWidth(),
+      lineText,
+      clientForeColor(),
+      clientBackColor(),
+      " ");
   }
 }
 
 void TUI::DisplayBox::setMinWidth (int width)
 {
-    if (width < 4)
-    {
-        throw std::out_of_range("width cannot be less than 4.");
-    }
+  if (width < MinWidth)
+  {
+    return;
+  }
 
-    mMinWidth = width;
+  Control::setMinWidth(width);
 }
 
 void TUI::DisplayBox::setMinHeight (int height)
 {
-    if (height < 4)
-    {
-        throw std::out_of_range("height cannot be less than 4.");
-    }
+  if (height < MinHeight)
+  {
+    return;
+  }
 
-    mMinHeight = height;
+  Control::setMinHeight(height);
 }
 
 void TUI::DisplayBox::setBorder (bool border)
@@ -443,50 +475,57 @@ void TUI::DisplayBox::verifyXY (int x, int y) const
   verifyY(y);
 }
 
-char TUI::DisplayBox::symbol (int x, int y) const
+std::string TUI::DisplayBox::symbol (int x, int y) const
 {
-    verifyXY(x, y);
+  verifyXY(x, y);
 
-    return mContent[y][x];
+  return Text::substr(mContent[y], x, 1);
 }
 
-void TUI::DisplayBox::setSymbol (char symbol, int x, int y)
+void TUI::DisplayBox::setSymbol (std::string const & symbol,
+  int x, int y)
 {
-    verifyXY(x, y);
+  verifyXY(x, y);
 
-    mContent[y][x] = symbol;
+  mContent[y] = Text::replace(mContent[y], symbol, x, 1);
 }
 
-void TUI::DisplayBox::setSymbols (std::string const & symbols, int y)
+void TUI::DisplayBox::setSymbols (std::string const & symbols,
+  int y)
 {
-    verifyY(y);
+  verifyY(y);
 
-    if (mContentWidth != static_cast<int>(symbols.size()))
-    {
-        throw std::out_of_range("symbols width must equal content width.");
-    }
+  if (mContentWidth != static_cast<int>(
+    Text::countCodePoints(symbols)))
+  {
+    throw std::out_of_range(
+      "symbols width must equal content width.");
+  }
 
-    mContent[y] = symbols;
+  mContent[y] = symbols;
 }
 
 TUI::DisplayBox::ClickedEvent * TUI::DisplayBox::clicked ()
 {
-    return mClicked.get();
+  return mClicked.get();
 }
 
-TUI::DisplayBox::ScrollChangedEvent * TUI::DisplayBox::scrollChanged ()
+TUI::DisplayBox::ScrollChangedEvent *
+TUI::DisplayBox::scrollChanged ()
 {
-    return mScrollChanged.get();
+  return mScrollChanged.get();
 }
 
-TUI::DisplayBox::BeforeCenterChangedEvent * TUI::DisplayBox::beforeCenterChanged ()
+TUI::DisplayBox::BeforeCenterChangedEvent *
+TUI::DisplayBox::beforeCenterChanged ()
 {
-    return mBeforeCenterChanged.get();
+  return mBeforeCenterChanged.get();
 }
 
-TUI::DisplayBox::AfterCenterChangedEvent * TUI::DisplayBox::afterCenterChanged ()
+TUI::DisplayBox::AfterCenterChangedEvent *
+TUI::DisplayBox::afterCenterChanged ()
 {
-    return mAfterCenterChanged.get();
+  return mAfterCenterChanged.get();
 }
 
 void TUI::DisplayBox::notify (int id, WindowSystem * ws, Button * button)
