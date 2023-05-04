@@ -528,411 +528,426 @@ TUI::DisplayBox::afterCenterChanged ()
   return mAfterCenterChanged.get();
 }
 
-void TUI::DisplayBox::notify (int id, WindowSystem * ws, Button * button)
+void TUI::DisplayBox::notify (int id, WindowSystem * ws,
+  Button * button)
 {
-    if (id != Button::ClickedEventId)
-    {
-        return;
-    }
+  if (id != Button::ClickedEventId)
+  {
+    return;
+  }
 
-    if (button->name() == moveCenterUpButtonName)
-    {
-        handleMoveCenterUp(ws);
-    }
-    else if (button->name() == moveCenterDownButtonName)
-    {
-        handleMoveCenterDown(ws);
-    }
-    else if (button->name() == moveCenterLeftButtonName)
-    {
-        handleMoveCenterLeft(ws);
-    }
-    else if (button->name() == moveCenterRightButtonName)
-    {
-        handleMoveCenterRight(ws);
-    }
+  if (button->name() == moveCenterUpButtonName)
+  {
+    handleMoveCenterUp(ws);
+  }
+  else if (button->name() == moveCenterDownButtonName)
+  {
+    handleMoveCenterDown(ws);
+  }
+  else if (button->name() == moveCenterLeftButtonName)
+  {
+    handleMoveCenterLeft(ws);
+  }
+  else if (button->name() == moveCenterRightButtonName)
+  {
+    handleMoveCenterRight(ws);
+  }
 }
 
-void TUI::DisplayBox::handleClicked (WindowSystem * ws, int x, int y)
+void TUI::DisplayBox::handleClicked (
+  WindowSystem * ws, int x, int y)
 {
-    mClicked->signal(ws, this, x, y);
+  mClicked->signal(ws, this, x, y);
 }
 
-void TUI::DisplayBox::handleScrollChanged (WindowSystem * ws, int x, int y)
+void TUI::DisplayBox::handleScrollChanged (
+  WindowSystem * ws, int x, int y)
 {
-    mScrollChanged->signal(ws, this, x, y);
+  mScrollChanged->signal(ws, this, x, y);
 }
 
-void TUI::DisplayBox::handleBeforeCenterChanged (WindowSystem * ws, int x, int y, bool & cancel)
+void TUI::DisplayBox::handleBeforeCenterChanged (
+  WindowSystem * ws, int x, int y, bool & cancel)
 {
-    mBeforeCenterChanged->signal(ws, this, x, y, cancel);
+  mBeforeCenterChanged->signal(ws, this, x, y, cancel);
 }
 
-void TUI::DisplayBox::handleAfterCenterChanged (WindowSystem * ws, int x, int y)
+void TUI::DisplayBox::handleAfterCenterChanged (
+  WindowSystem * ws, int x, int y)
 {
-    mAfterCenterChanged->signal(ws, this, x, y);
+  mAfterCenterChanged->signal(ws, this, x, y);
 }
 
 void TUI::DisplayBox::handleMoveCenterUp (WindowSystem * ws)
 {
-    if (canMoveCenterUp())
-    {
-        bool cancel = false;
+  if (canMoveCenterUp())
+  {
+    bool cancel = false;
 
-        handleBeforeCenterChanged(ws, getCenterY() - 1, getCenterX(), cancel);
-        if (cancel)
-        {
-            return;
-        }
-    }
-    else
+    handleBeforeCenterChanged(ws, getCenterY() - 1,
+      getCenterX(), cancel);
+    if (cancel)
     {
-        return;
+      return;
     }
+  }
+  else
+  {
+    return;
+  }
 
-    bool centerMoved = moveCenterUp();
+  bool centerMoved = moveCenterUp();
 
-    bool scrollMoved = false;
-    if (centerMoved && mAutoScrolling)
+  bool scrollMoved = false;
+  if (centerMoved && mAutoScrolling)
+  {
+    int scrollPoint = mScrollMarginTop;
+    if (mCenterLine < mScrollLine ||
+      mCenterLine - mScrollLine < scrollPoint)
     {
-        int scrollPoint = mScrollMarginTop;
-        if (mCenterLine < mScrollLine || (mCenterLine - mScrollLine) < scrollPoint)
-        {
-            scrollMoved = scrollDown();
-        }
+      scrollMoved = scrollDown();
     }
+  }
 
-    if (centerMoved)
-    {
-        handleAfterCenterChanged(ws, mCenterLine, mCenterColumn);
-    }
-    if (scrollMoved)
-    {
-        handleScrollChanged(ws, mScrollLine, mScrollColumn);
-    }
+  if (centerMoved)
+  {
+    handleAfterCenterChanged(ws, mCenterLine, mCenterColumn);
+  }
+  if (scrollMoved)
+  {
+    handleScrollChanged(ws, mScrollLine, mScrollColumn);
+  }
 }
 
 void TUI::DisplayBox::handleMoveCenterDown (WindowSystem * ws)
 {
-    if (canMoveCenterDown())
-    {
-        bool cancel = false;
+  if (canMoveCenterDown())
+  {
+    bool cancel = false;
 
-        handleBeforeCenterChanged(ws, getCenterY() + 1, getCenterX(), cancel);
-        if (cancel)
-        {
-            return;
-        }
-    }
-    else
+    handleBeforeCenterChanged(ws, getCenterY() + 1,
+      getCenterX(), cancel);
+    if (cancel)
     {
-        return;
+      return;
     }
+  }
+  else
+  {
+    return;
+  }
 
-    bool centerMoved = moveCenterDown();
+  bool centerMoved = moveCenterDown();
 
-    bool scrollMoved = false;
-    if (centerMoved && mAutoScrolling)
+  bool scrollMoved = false;
+  if (centerMoved && mAutoScrolling)
+  {
+    int scrollPoint = clientHeight() - mScrollMarginBottom;
+    if (mCenterLine > (mScrollLine + scrollPoint - 1))
     {
-        int scrollPoint = clientHeight() - mScrollMarginBottom;
-        if (mCenterLine > (mScrollLine + scrollPoint - 1))
-        {
-            scrollMoved = scrollUp();
-        }
+      scrollMoved = scrollUp();
     }
+  }
 
-    if (centerMoved)
-    {
-        handleAfterCenterChanged(ws, mCenterLine, mCenterColumn);
-    }
-    if (scrollMoved)
-    {
-        handleScrollChanged(ws, mScrollLine, mScrollColumn);
-    }
+  if (centerMoved)
+  {
+    handleAfterCenterChanged(ws, mCenterLine, mCenterColumn);
+  }
+  if (scrollMoved)
+  {
+    handleScrollChanged(ws, mScrollLine, mScrollColumn);
+  }
 }
 
 void TUI::DisplayBox::handleMoveCenterLeft (WindowSystem * ws)
 {
-    if (canMoveCenterLeft())
-    {
-        bool cancel = false;
+  if (canMoveCenterLeft())
+  {
+    bool cancel = false;
 
-        handleBeforeCenterChanged(ws, getCenterY(), getCenterX() - 1, cancel);
-        if (cancel)
-        {
-            return;
-        }
-    }
-    else
+    handleBeforeCenterChanged(ws, getCenterY(),
+      getCenterX() - 1, cancel);
+    if (cancel)
     {
-        return;
+      return;
     }
+  }
+  else
+  {
+    return;
+  }
 
-    bool centerMoved = moveCenterLeft();
+  bool centerMoved = moveCenterLeft();
 
-    bool scrollMoved = false;
-    if (centerMoved && mAutoScrolling)
+  bool scrollMoved = false;
+  if (centerMoved && mAutoScrolling)
+  {
+    int scrollPoint = mScrollMarginLeft;
+    if (mCenterColumn < mScrollColumn ||
+      mCenterColumn - mScrollColumn < scrollPoint)
     {
-        int scrollPoint = mScrollMarginLeft;
-        if (mCenterColumn < mScrollColumn || (mCenterColumn - mScrollColumn) < scrollPoint)
-        {
-            scrollMoved = scrollRight();
-        }
+      scrollMoved = scrollRight();
     }
+  }
 
-    if (centerMoved)
-    {
-        handleAfterCenterChanged(ws, mCenterLine, mCenterColumn);
-    }
-    if (scrollMoved)
-    {
-        handleScrollChanged(ws, mScrollLine, mScrollColumn);
-    }
+  if (centerMoved)
+  {
+    handleAfterCenterChanged(ws, mCenterLine, mCenterColumn);
+  }
+  if (scrollMoved)
+  {
+    handleScrollChanged(ws, mScrollLine, mScrollColumn);
+  }
 }
 
 void TUI::DisplayBox::handleMoveCenterRight (WindowSystem * ws)
 {
-    if (canMoveCenterRight())
-    {
-        bool cancel = false;
+  if (canMoveCenterRight())
+  {
+    bool cancel = false;
 
-        handleBeforeCenterChanged(ws, getCenterY(), getCenterX() + 1, cancel);
-        if (cancel)
-        {
-            return;
-        }
-    }
-    else
+    handleBeforeCenterChanged(ws, getCenterY(),
+      getCenterX() + 1, cancel);
+    if (cancel)
     {
-        return;
+      return;
     }
+  }
+  else
+  {
+    return;
+  }
 
-    bool centerMoved = moveCenterRight();
+  bool centerMoved = moveCenterRight();
 
-    bool scrollMoved = false;
-    if (centerMoved && mAutoScrolling)
+  bool scrollMoved = false;
+  if (centerMoved && mAutoScrolling)
+  {
+    int scrollPoint = textClientWidth() - mScrollMarginRight;
+    if (mCenterColumn > (mScrollColumn + scrollPoint - 1))
     {
-        int scrollPoint = textClientWidth() - mScrollMarginRight;
-        if (mCenterColumn > (mScrollColumn + scrollPoint - 1))
-        {
-            scrollMoved = scrollLeft();
-        }
+      scrollMoved = scrollLeft();
     }
+  }
 
-    if (centerMoved)
-    {
-        handleAfterCenterChanged(ws, mCenterLine, mCenterColumn);
-    }
-    if (scrollMoved)
-    {
-        handleScrollChanged(ws, mScrollLine, mScrollColumn);
-    }
+  if (centerMoved)
+  {
+    handleAfterCenterChanged(ws, mCenterLine, mCenterColumn);
+  }
+  if (scrollMoved)
+  {
+    handleScrollChanged(ws, mScrollLine, mScrollColumn);
+  }
 }
 
 bool TUI::DisplayBox::isClickLocationShown () const
 {
-    return mShowClickLocation;
+  return mShowClickLocation;
 }
 
 void TUI::DisplayBox::showClickLocation (bool show)
 {
-    mShowClickLocation = show;
+  mShowClickLocation = show;
 }
 
 int TUI::DisplayBox::getClickedY () const
 {
-    return mClickedLine;
+  return mClickedLine;
 }
 
 int TUI::DisplayBox::getClickedX () const
 {
-    return mClickedColumn;
+  return mClickedColumn;
 }
 
 int TUI::DisplayBox::getScrollY () const
 {
-    return mScrollLine;
+  return mScrollLine;
 }
 
 int TUI::DisplayBox::getScrollX () const
 {
-    return mScrollColumn;
+  return mScrollColumn;
 }
 
 bool TUI::DisplayBox::scrollUp ()
 {
-    if ((mContentHeight - mScrollLine) > clientHeight())
-    {
-        ++mScrollLine;
+  if ((mContentHeight - mScrollLine) > clientHeight())
+  {
+    ++mScrollLine;
 
-        return true;
-    }
+    return true;
+  }
 
-    return false;
+  return false;
 }
 
 bool TUI::DisplayBox::scrollDown ()
 {
-    if (mScrollLine > 0)
-    {
-        --mScrollLine;
+  if (mScrollLine > 0)
+  {
+    --mScrollLine;
 
-        return true;
-    }
+    return true;
+  }
 
-    return false;
+  return false;
 }
 
 bool TUI::DisplayBox::scrollLeft ()
 {
-    if ((mContentWidth - mScrollColumn) > textClientWidth())
-    {
-        ++mScrollColumn;
+  if ((mContentWidth - mScrollColumn) > clientWidth())
+  {
+    ++mScrollColumn;
 
-        return true;
-    }
+    return true;
+  }
 
-    return false;
+  return false;
 }
 
 bool TUI::DisplayBox::scrollRight ()
 {
-    if (mScrollColumn > 0)
-    {
-        --mScrollColumn;
+  if (mScrollColumn > 0)
+  {
+    --mScrollColumn;
 
-        return true;
-    }
+    return true;
+  }
 
-    return false;
+  return false;
 }
 
 void TUI::DisplayBox::ensurePointIsVisible (int x, int y)
 {
-    verifyXY(x, y);
+  verifyXY(x, y);
 
-    if (y < mScrollLine + mScrollMarginTop)
+  if (x < mScrollColumn + mScrollMarginLeft)
+  {
+    mScrollColumn = x - mScrollMarginLeft;
+    if (mScrollColumn < 0)
     {
-        mScrollLine = y - mScrollMarginTop;
-        if (mScrollLine < 0)
-        {
-            mScrollLine = 0;
-        }
+      mScrollColumn = 0;
     }
-    else if (y >= mScrollLine + clientHeight() - mScrollMarginBottom)
+  }
+  else if (
+    x >= mScrollColumn + clientWidth() - mScrollMarginRight)
+  {
+    mScrollColumn = x - clientWidth() + clientX() +
+      mScrollMarginRight;
+    if ((mScrollColumn + clientWidth()) > mContentWidth)
     {
-        mScrollLine = y - clientHeight() + 1 + mScrollMarginBottom;
-        if ((mScrollLine + clientHeight()) > mContentHeight)
-        {
-            mScrollLine = mContentHeight - clientHeight();
-        }
+      mScrollColumn = mContentWidth - clientWidth();
     }
+  }
 
-    if (x < mScrollColumn + mScrollMarginLeft)
+  if (y < mScrollLine + mScrollMarginTop)
+  {
+    mScrollLine = y - mScrollMarginTop;
+    if (mScrollLine < 0)
     {
-        mScrollColumn = x - mScrollMarginLeft;
-        if (mScrollColumn < 0)
-        {
-            mScrollColumn = 0;
-        }
+      mScrollLine = 0;
     }
-    else if (x >= mScrollColumn + textClientWidth() - mScrollMarginRight)
+  }
+  else if (
+    y >= mScrollLine + clientHeight() - mScrollMarginBottom)
+  {
+    mScrollLine = y - clientHeight() + clientY() +
+      mScrollMarginBottom;
+    if ((mScrollLine + clientHeight()) > mContentHeight)
     {
-        mScrollColumn = x - textClientWidth() + 1 + mScrollMarginRight;
-        if ((mScrollColumn + textClientWidth()) > mContentWidth)
-        {
-            mScrollColumn = mContentWidth - textClientWidth();
-        }
+      mScrollLine = mContentHeight - clientHeight();
     }
+  }
 }
 
 void TUI::DisplayBox::ensureCenterIsVisible ()
 {
-    ensurePointIsVisible(mCenterLine, mCenterColumn);
+  ensurePointIsVisible(mCenterLine, mCenterColumn);
 }
 
 int TUI::DisplayBox::getCenterY () const
 {
-    return mCenterLine;
+  return mCenterLine;
 }
 
 int TUI::DisplayBox::getCenterX () const
 {
-    return mCenterColumn;
+  return mCenterColumn;
 }
 
 void TUI::DisplayBox::setCenter (int x, int y)
 {
-    verifyXY(x, y);
+  verifyXY(x, y);
 
-    mCenterLine = y;
-    mCenterColumn = x;
+  mCenterColumn = x;
+  mCenterLine = y;
 }
 
 bool TUI::DisplayBox::canMoveCenterUp ()
 {
-    return mCenterLine > 0;
+  return mCenterLine > 0;
 }
 
 bool TUI::DisplayBox::canMoveCenterDown ()
 {
-    return mCenterLine < (mContentHeight - 1);
+  return mCenterLine < (mContentHeight - 1);
 }
 
 bool TUI::DisplayBox::canMoveCenterLeft ()
 {
-    return mCenterColumn > 0;
+  return mCenterColumn > 0;
 }
 
 bool TUI::DisplayBox::canMoveCenterRight ()
 {
-    return mCenterColumn < (mContentWidth - 1);
+  return mCenterColumn < (mContentWidth - 1);
 }
 
 bool TUI::DisplayBox::moveCenterUp ()
 {
-    if (canMoveCenterUp())
-    {
-        --mCenterLine;
+  if (canMoveCenterUp())
+  {
+    --mCenterLine;
 
-        return true;
-    }
+    return true;
+  }
 
-    return false;
+  return false;
 }
 
 bool TUI::DisplayBox::moveCenterDown ()
 {
-    if (canMoveCenterDown())
-    {
-        ++mCenterLine;
+  if (canMoveCenterDown())
+  {
+    ++mCenterLine;
 
-        return true;
-    }
+    return true;
+  }
 
-    return false;
+  return false;
 }
 
 bool TUI::DisplayBox::moveCenterLeft ()
 {
-    if (canMoveCenterLeft())
-    {
-        --mCenterColumn;
+  if (canMoveCenterLeft())
+  {
+    --mCenterColumn;
 
-        return true;
-    }
+    return true;
+  }
 
-    return false;
+  return false;
 }
 
 bool TUI::DisplayBox::moveCenterRight ()
 {
-    if (canMoveCenterRight())
-    {
-        ++mCenterColumn;
+  if (canMoveCenterRight())
+  {
+    ++mCenterColumn;
 
-        return true;
-    }
+    return true;
+  }
 
-    return false;
+  return false;
 }

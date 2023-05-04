@@ -6,8 +6,6 @@
 //
 #include "Label.h"
 
-#include "ConsoleManager.h"
-
 using namespace TUCUT;
 
 TUI::Label::Label (std::string const & name,
@@ -18,8 +16,8 @@ TUI::Label::Label (std::string const & name,
   int height,
   Color const & foreColor,
   Color const & backColor,
-  Justification::Horizontal horizontalJustification,
-  Justification::Vertical verticalJustification,
+  Justification::Horizontal horizontal,
+  Justification::Vertical vertical,
   bool multiline)
 : Control(name,
     x,
@@ -31,18 +29,13 @@ TUI::Label::Label (std::string const & name,
     foreColor,
     backColor),
   mText(text),
-  mHorizontalJustification(horizontalJustification),
-  mVerticalJustification(verticalJustification),
+  mHorizontal(horizontal),
+  mVertical(vertical),
   mMultiline(multiline)
 {
   setIsDirectFocusPossible(false);
 
   setFillClientArea(false);
-}
-
-void TUI::Label::initialize ()
-{
-    Control::initialize();
 }
 
 std::shared_ptr<Label> TUI::Label::createSharedLabel (
@@ -54,8 +47,8 @@ std::shared_ptr<Label> TUI::Label::createSharedLabel (
   int height,
   Color const & foreColor,
   Color const & backColor,
-  Justification::Horizontal horizontalJustification,
-  Justification::Vertical verticalJustification,
+  Justification::Horizontal horizontal,
+  Justification::Vertical vertical,
   bool multiline)
 {
   auto result = std::shared_ptr<Label>(new Label(
@@ -67,8 +60,8 @@ std::shared_ptr<Label> TUI::Label::createSharedLabel (
     height,
     foreColor,
     backColor,
-    horizontalJustification,
-    verticalJustification,
+    horizontal,
+    vertical,
     multiline));
 
   result->initialize();
@@ -78,81 +71,83 @@ std::shared_ptr<Label> TUI::Label::createSharedLabel (
 
 std::shared_ptr<Label> TUI::Label::getSharedLabel ()
 {
-    return std::static_pointer_cast<Label>(shared_from_this());
+  return std::static_pointer_cast<Label>(shared_from_this());
 }
 
-void TUI::Label::onDrawClient () const
+void TUI::Label::onDrawClient (WindowSystem * ws) const
 {
-    if (visibleState() != Window::VisibleState::shown)
+  if (visibleState() != Window::VisibleState::Shown)
+  {
+    return;
+  }
+
+  if (isMultiline())
+  {
+    std::vector<ConsoleManager::LineBreakpoint> lineBreakPoints =
+      ConsoleManager::calculateLineBreakpoints (mText, clientWidth());
+    int margin = 0;
+    switch (mVerticalJustification)
     {
-        return;
+    case Justification::Vertical::top:
+      margin = 0;
+      break;
+
+    case Justification::Vertical::center:
+      margin = (clientHeight() - static_cast<int>(lineBreakPoints.size())) / 2;
+      break;
+
+    case Justification::Vertical::bottom:
+      margin = clientHeight() - static_cast<int>(lineBreakPoints.size());
+      break;
+    }
+    if (margin < 0)
+    {
+      margin = 0;
     }
 
-    if (isMultiline())
+    int i = 0;
+    for (; i < margin; ++i)
     {
-        std::vector<ConsoleManager::LineBreakpoint> lineBreakPoints = ConsoleManager::calculateLineBreakpoints (mText, clientWidth());
-        int margin = 0;
-        switch (mVerticalJustification)
-        {
-            case Justification::Vertical::top:
-                margin = 0;
-                break;
-
-            case Justification::Vertical::center:
-                margin = (clientHeight() - static_cast<int>(lineBreakPoints.size())) / 2;
-                break;
-
-            case Justification::Vertical::bottom:
-                margin = clientHeight() - static_cast<int>(lineBreakPoints.size());
-                break;
-        }
-        if (margin < 0)
-        {
-            margin = 0;
-        }
-
-        int i = 0;
-        for (; i < margin; ++i)
-        {
-            ConsoleManager::printMessage(*this, i, 0, clientWidth(), " ", clientForeColor(), clientBackColor(), Justification::Horizontal::left, true);
-        }
-        for (auto & breakpoint: lineBreakPoints)
-        {
-            std::string lineText = mText.substr(breakpoint.beginIndex, breakpoint.endIndex - breakpoint.beginIndex + 1);
-            ConsoleManager::printMessage(*this, i, 0, clientWidth(), lineText, clientForeColor(), clientBackColor(), mHorizontalJustification, true);
-            ++i;
-        }
-        for (; i < clientHeight(); ++i)
-        {
-            ConsoleManager::printMessage(*this, i, 0, clientWidth(), " ", clientForeColor(), clientBackColor(), Justification::Horizontal::left, true);
-        }
+      ConsoleManager::printMessage(*this, i, 0, clientWidth(), " ", clientForeColor(), clientBackColor(),
+        Justification::Horizontal::left, true);
     }
-    else
+    for (auto & breakpoint: lineBreakPoints)
     {
-        int vertCenter = clientHeight() / 2;
-        ConsoleManager::printMessage(*this, vertCenter, 0, clientWidth(), mText, clientForeColor(), clientBackColor(), mHorizontalJustification, true);
+      std::string lineText = mText.substr(breakpoint.beginIndex, breakpoint.endIndex - breakpoint.beginIndex + 1);
+      ConsoleManager::printMessage(*this, i, 0, clientWidth(), lineText, clientForeColor(), clientBackColor(),
+        mHorizontalJustification, true);
+      ++i;
     }
+    for (; i < clientHeight(); ++i)
+    {
+      ConsoleManager::printMessage(*this, i, 0, clientWidth(), " ", clientForeColor(), clientBackColor(),
+        Justification::Horizontal::left, true);
+    }
+  }
+  else
+  {
+    int vertCenter = clientHeight() / 2;
+    ConsoleManager::printMessage(*this, vertCenter, 0, clientWidth(), mText, clientForeColor(), clientBackColor(),
+      mHorizontalJustification, true);
+  }
 }
-
-void TUI::Label::onDrawNonClient () const
-{ }
 
 bool TUI::Label::isMultiline () const
 {
-    return mMultiline;
+  return mMultiline;
 }
 
 void TUI::Label::setMultiline (bool multiline)
 {
-    mMultiline = multiline;
+  mMultiline = multiline;
 }
 
 std::string TUI::Label::text () const
 {
-    return mText;
+  return mText;
 }
 
 void TUI::Label::setText (std::string const & text)
 {
-    mText = text;
+  mText = text;
 }

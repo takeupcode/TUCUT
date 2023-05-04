@@ -8,7 +8,6 @@
 #define TUCUT_TUI_Label_h
 
 #include "Control.h"
-#include "Justification.h"
 
 namespace TUCUT::TUI
 {
@@ -24,17 +23,15 @@ namespace TUCUT::TUI
       int height,
       Color const & foreColor,
       Color const & backColor,
-      Justification::Horizontal horizontalJustification =
-        Justification::Horizontal::left,
-      Justification::Vertical verticalJustification =
-        Justification::Vertical::center,
+      Justification::Horizontal horizontal =
+        Justification::Horizontal::Left,
+      Justification::Vertical vertical =
+        Justification::Vertical::Center,
       bool multiline = false);
 
     std::shared_ptr<Label> getSharedLabel ();
 
     void onDrawClient (WindowSystem * ws) const override;
-
-    void onDrawNonClient (WindowSystem * ws) const override;
 
     bool isMultiline () const;
 
@@ -53,16 +50,14 @@ namespace TUCUT::TUI
       int height,
       Color const & foreColor,
       Color const & backColor,
-      Justification::Horizontal horizontalJustification,
-      Justification::Vertical verticalJustification,
+      Justification::Horizontal horizontal,
+      Justification::Vertical vertical,
       bool multiline);
-
-    void initialize () override;
 
   private:
     std::string mText;
-    Justification::Horizontal mHorizontalJustification;
-    Justification::Vertical mVerticalJustification;
+    Justification::Horizontal mHorizontal;
+    Justification::Vertical mVertical;
     bool mMultiline;
   };
 } // namespace TUCUT::TUI
