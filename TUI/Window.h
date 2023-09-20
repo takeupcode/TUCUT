@@ -22,13 +22,6 @@ namespace TUCUT::TUI
   class Window : public std::enable_shared_from_this<Window>
   {
   public:
-    enum class VisibleState
-    {
-      Collapsed,
-      Hidden,
-      Shown
-    };
-
     enum class EnableState
     {
       Disabled,
@@ -37,6 +30,8 @@ namespace TUCUT::TUI
     };
 
     virtual ~Window () = default;
+
+    bool isWindow () const override;
 
     static std::shared_ptr<Window> createSharedWindow (
       std::string const & name,
@@ -62,45 +57,13 @@ namespace TUCUT::TUI
 
     std::string const & name () const;
 
-    virtual int x () const;
-
-    virtual int worldX () const;
-
     virtual int clientX () const;
-
-    virtual void setX (int x);
-
-    virtual int y () const;
-
-    virtual int worldY () const;
 
     virtual int clientY () const;
 
-    virtual void setY (int y);
-
-    virtual void move (int x, int y);
-
-    virtual int width () const;
-
-    virtual int minWidth () const;
-
     virtual int clientWidth () const;
 
-    virtual void setWidth (int width);
-
-    virtual void setMinWidth (int width);
-
-    virtual int height () const;
-
-    virtual int minHeight () const;
-
     virtual int clientHeight () const;
-
-    virtual void setHeight (int height);
-
-    virtual void setMinHeight (int height);
-
-    virtual void resize (int width, int height);
 
     int anchorTop () const;
 
@@ -159,9 +122,9 @@ namespace TUCUT::TUI
 
     void addControl (std::shared_ptr<Window> && control);
 
-    Window * findWindow (int worldX, int worldY);
+    Window * findWindowAt (int worldX, int worldY);
 
-    Window * findFocus ();
+    Window * findWindowWithFocus ();
 
     Window * findDefaultEnter ();
 
@@ -179,11 +142,11 @@ namespace TUCUT::TUI
 
     virtual bool advanceFocus ();
 
-    Window * parent () const;
+    Window * parentWindow () const;
 
-    Window * root () const;
+    Window * rootWindow () const;
 
-    void setParent (Window * parent);
+    void setParentWindow (Window * parent);
 
     virtual bool wantTab () const;
 
@@ -201,9 +164,9 @@ namespace TUCUT::TUI
 
     virtual void setDefaultEscape (bool value);
 
-    virtual VisibleState visibleState () const;
+    VisibleState visibleState () const override;
 
-    virtual void setVisibleState (VisibleState value);
+    void setVisibleState (VisibleState value) override;
 
     virtual EnableState enableState () const;
 
@@ -280,9 +243,7 @@ protected:
     virtual void onMouseEvent (WindowSystem * ws,
       MouseEvent const & event);
 
-    virtual void onDrawClient (WindowSystem * ws) const;
-
-    virtual void onDrawNonClient (WindowSystem * ws) const;
+    virtual void onRender (WindowSystem * ws) const;
 
     virtual void onResize ();
 
@@ -308,7 +269,7 @@ protected:
     Color mFocusForeColor;
     Color mFocusBackColor;
     std::vector<std::shared_ptr<Window>> mControls;
-    Window * mParent;
+    Window * mParentWindow;
     bool mBorder;
     bool mHasFocus;
     bool mIsDirectFocusPossible;

@@ -172,7 +172,7 @@ void TUI::WindowSystem::render ()
     return;
   }
 
-  mCurrentWindow->draw();
+  mCurrentWindow->draw(this);
 }
 
 int TUI::WindowSystem::clampWidthBounds (int width) const

@@ -1,4 +1,4 @@
-//  Glyph.cpp
+//  Model.cpp
 //  TUCUT/Text (Take Up Code Utility)
 //
 //  Created by Abdul Wahid Tanner on 2023-05-05.
@@ -6,7 +6,37 @@
 //
 #include "Glyph.h"
 
+#include "Unicode.h"
+
 using namespace TUCUT;
+
+int Text::glyphWidth (uint32_t character)
+{
+  if (isControlCharacter(character))
+  {
+    // The caller should check for this return value
+    // and handle the width differently.
+    return -1;
+  }
+
+  if (isCombiningCharacter(character))
+  {
+    // These characters add on to the previous character
+    // and take up no space on their own.
+    return 0;
+  }
+
+  if (isSquareCharacter(character))
+  {
+    // The actual width is closer to 1.5 times that of a
+    // normal character but we round up to 2 for the terminal.
+    return 2;
+  }
+
+  // A normal character that is slightly more narrow than
+  // tall and takes up a single terminal location.
+  return 1;
+}
 
 std::string Text::substr (
   std::string const & utf8,

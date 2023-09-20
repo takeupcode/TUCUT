@@ -8,6 +8,7 @@
 #define TUCUT_Text_Encoding_h
 
 #include <string>
+#include <vector>
 
 namespace TUCUT::Text
 {

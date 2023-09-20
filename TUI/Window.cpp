@@ -13,6 +13,11 @@
 
 using namespace TUCUT;
 
+bool TUI::Window::isWindow () const
+{
+  return true;
+}
+
 TUI::Window::Window (
   std::string const & name,
   int x,
@@ -218,12 +223,12 @@ void TUI::Window::draw (WindowSystem * ws) const
       mClientForeColor, mClientBackColor);
   }
 
-  drawClient();
-  drawNonClient();
+  onDrawClient(ws);
+  onDrawNonClient(ws);
 
   for (auto const & control: mControls)
   {
-    control->draw();
+    control->draw(ws);
   }
 }
 
@@ -502,10 +507,7 @@ bool TUI::Window::onKeyPress (WindowSystem *, Event const &)
 void TUI::Window::onMouseEvent (WindowSystem *, Event const &)
 { }
 
-void TUI::Window::onDrawClient (WindowSystem *) const
-{ }
-
-void TUI::Window::onDrawNonClient (WindowSystem *) const
+void TUI::Window::onRender (WindowSystem *) const
 { }
 
 void TUI::Window::onResize ()
@@ -1273,23 +1275,23 @@ bool TUI::Window::advanceFocus ()
   }
 }
 
-Window * TUI::Window::parent () const
+Window * TUI::Window::parentWindow () const
 {
-  return mParent;
+  return mParentWindow;
 }
 
-Window * TUI::Window::root () const
+Window * TUI::Window::rootWindow () const
 {
-  if (mParent)
+  if (mParentWindow)
   {
-    return mParent->root();
+    return mParentWindow->rootWindow();
   }
   return this;
 }
 
-void TUI::Window::setParent (Window * parent)
+void TUI::Window::setParentWindow (Window * parent)
 {
-  mParent = parent;
+  mParentWindow = parent;
 }
 
 bool TUI::Window::wantTab () const
